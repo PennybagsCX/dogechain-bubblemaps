@@ -1,6 +1,7 @@
 
 // @ts-nocheck
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { Navbar } from './components/Navbar';
 import { BubbleMap } from './components/BubbleMap';
 import { WalletSidebar } from './components/WalletSidebar';
@@ -1374,8 +1375,9 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-space-900 text-slate-100 font-sans selection:bg-purple-500 selection:text-white flex flex-col overflow-x-hidden">
+      <Analytics />
       <ToastContainer toasts={toasts} onClose={removeToast} />
-      
+
       <Navbar 
         currentView={view} 
         onChangeView={handleViewChange} 

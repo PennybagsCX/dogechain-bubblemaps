@@ -4,8 +4,9 @@ import { validateTokenAddress, validateWalletAddress } from '../utils/validation
 import { fetchWithRateLimit, fetchWithRetry, dogechainApiLimiter, AdaptiveRequestScheduler } from '../utils/rateLimit';
 import { loadScanCache, saveScanCache, loadDiscoveredContracts, saveDiscoveredContracts, DbDiscoveredContracts } from './db';
 
-const EXPLORER_API_V1 = 'https://explorer.dogechain.dog/api';
-const EXPLORER_API_V2 = 'https://explorer.dogechain.dog/api/v2';
+// Using proxy to avoid SSL certificate issues with Arc Browser for iOS
+const EXPLORER_API_V1 = '/api/dogechain-proxy';
+const EXPLORER_API_V2 = '/api/dogechain-proxy';
 const METADATA_CACHE_KEY = 'doge_token_metadata_cache_v2';
 // Note: DISABLE_WALLET_ENDPOINTS removed - using fetchWalletAssetsHybrid instead
 
@@ -45,7 +46,7 @@ export const detectContractType = async (address: string): Promise<AssetType | n
 
         // 2) Check V2 token metadata
         try {
-            const v2Res = await fetchSafe(`${EXPLORER_API_V2}/tokens/${address}`);
+            const v2Res = await fetchSafe(`${EXPLORER_API_V2}?path=/v2/tokens/${address}`);
             if (v2Res.ok) {
                 const v2Json = await v2Res.json();
                 const typeField = v2Json?.type?.toString().toLowerCase();
@@ -195,7 +196,7 @@ const checkContractVerification = async (address: string): Promise<boolean> => {
 export const fetchMetadataFromTransfers = async (address: string): Promise<{name?: string, symbol?: string, decimals?: number} | null> => {
     try {
         // Fetch 1 recent transfer. The 'token' object in the transfer usually contains accurate metadata from the logs
-        const res = await fetchSafe(`${EXPLORER_API_V2}/tokens/${address}/transfers?limit=1`);
+        const res = await fetchSafe(`${EXPLORER_API_V2}?path=/v2/tokens/${address}/transfers&limit=1`);
         if (res.ok) {
             const data = await res.json();
             if (data.items && data.items.length > 0) {
@@ -733,7 +734,7 @@ export const fetchWalletAssets = async (walletAddress: string): Promise<{ tokens
             const collected: any[] = [];
             for (let page = 1; page <= maxPages; page++) {
                 try {
-                    const res = await fetchSafe(`${EXPLORER_API_V2}/addresses/${cleanWallet}/token-transfers?page=${page}&limit=200`);
+                    const res = await fetchSafe(`${EXPLORER_API_V2}?path=/v2/addresses/${cleanWallet}/token-transfers&page=${page}&limit=200`);
                     if (!res.ok) break;
                     const json = await res.json();
                     if (!Array.isArray(json?.items) || json.items.length === 0) break;
@@ -747,7 +748,7 @@ export const fetchWalletAssets = async (walletAddress: string): Promise<{ tokens
             const collected: any[] = [];
             for (let page = 1; page <= maxPages; page++) {
                 try {
-                    const res = await fetchSafe(`${EXPLORER_API_V2}/addresses/${cleanWallet}/token-balances?page=${page}&limit=200`);
+                    const res = await fetchSafe(`${EXPLORER_API_V2}?path=/v2/addresses/${cleanWallet}/token-balances&page=${page}&limit=200`);
                     if (!res.ok) break;
                     const json = await res.json();
                     if (!Array.isArray(json?.items) || json.items.length === 0) break;
@@ -907,7 +908,7 @@ export const fetchWalletAssetsHybrid = async (
                 try {
                     await sleep(delayMs);
                     totalRequests++;
-                    const res = await scheduler.schedule(() => fetchSafe(`${EXPLORER_API_V2}${endpoint}?page=${page}&limit=200`));
+                    const res = await scheduler.schedule(() => fetchSafe(`${EXPLORER_API_V2}?path=/v2${endpoint}&page=${page}&limit=200`));
                     if (!res.ok) break;
                     const json = await res.json();
                     if (!Array.isArray(json?.items) || json.items.length === 0) break;

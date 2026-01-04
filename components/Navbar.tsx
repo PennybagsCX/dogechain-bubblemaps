@@ -52,8 +52,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-space-700 bg-space-900/95 backdrop-blur-md">
-      <div className="w-full flex h-16 items-center justify-between px-4">
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b border-space-700 bg-space-900/95 backdrop-blur-md">
+        <div className="w-full flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-3 cursor-pointer" onClick={() => handleMobileNav(ViewState.HOME)}>
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-600 text-white font-bold shadow-lg shadow-purple-600/20">
             Ð
@@ -160,5 +161,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       )}
     </nav>
+    {/* Spacer to prevent content from going under fixed navbar */}
+    <div className="h-16"></div>
+    </>
   );
 };

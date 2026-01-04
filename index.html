@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SECURITY: Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self';
+                   script-src 'self' https://aistudiocdn.com;
+                   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+                   font-src 'self' https://fonts.gstatic.com;
+                   img-src 'self' data: blob: https:;
+                   connect-src 'self' https://explorer.dogechain.dog https://dogechain.dog;
+                   base-uri 'self';
+                   form-action 'self';">
+
+    <!-- SECURITY: Additional Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <!-- Note: frame-ancestors and X-Frame-Options must be set via server headers, not meta tags -->
+
+    <meta name="description" content="Dogechain BubbleMaps: Interactive on-chain intelligence platform. Visualize token distributions, track whales, and analyze wallet connections with AI." />
+    <meta name="keywords" content="Dogechain, Blockchain, Bubble Map, Crypto Visualization, Whale Tracker, DeFi, Analytics" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐕</text></svg>">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://dogechain-bubblemaps.web.app/" />
+    <meta property="og:title" content="Dogechain BubbleMaps - On-Chain Intelligence" />
+    <meta property="og:description" content="Visualize token distributions, track whales, and analyze wallet connections with AI-powered insights." />
+    <meta property="og:image" content="https://explorer.dogechain.dog/images/dogechain_logo.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://dogechain-bubblemaps.web.app/" />
+    <meta property="twitter:title" content="Dogechain BubbleMaps" />
+    <meta property="twitter:description" content="Interactive on-chain intelligence. Track whales and visualize DeFi data on Dogechain." />
+    <meta property="twitter:image" content="https://explorer.dogechain.dog/images/dogechain_logo.png" />
+
+    <meta name="theme-color" content="#0B0D17" />
+    <title>Dogechain BubbleMaps - On-Chain Intelligence & Visualization</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "d3": "https://aistudiocdn.com/d3@^7.9.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

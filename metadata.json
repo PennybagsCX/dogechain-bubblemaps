@@ -1,0 +1,5 @@
+{
+  "name": "Dogechain BubbleMaps",
+  "description": "An interactive on-chain intelligence platform for the Dogechain network. Visualize token distributions, track whales, and analyze wallet connections using interactive bubble maps and AI insights.",
+  "requestFramePermissions": []
+}

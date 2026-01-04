@@ -1,21 +1,62 @@
-MIT License
+Creative Commons Attribution-NonCommercial 4.0 International
 
-Copyright (c) 2026 Dogechain Bubblemaps Contributors
+Copyright (c) 2026 PennybagsCX
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+The code and creative works in this repository are licensed under the Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0).
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+You are free to:
+- **Share** — Copy and redistribute the material in any medium or format
+- **Adapt** — Remix, transform, and build upon the material
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Under the following terms:
+- **Attribution** — You must give appropriate credit to PennybagsCX, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+- **NonCommercial** — You may not use the material for commercial purposes. Commercial purposes are defined as primarily intended for or directed toward commercial advantage or monetary compensation.
+
+No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+
+To view a copy of this license, visit:
+http://creativecommons.org/licenses/by-nc/4.0/
+
+---
+
+## Summary of What You CAN Do:
+
+✅ View and study the source code
+✅ Use for personal projects, learning, and education
+✅ Use in portfolio showcases
+✅ Fork and modify for your own use
+✅ Share with others (with attribution)
+
+## What You CANNOT Do:
+
+❌ Use in commercial products or services
+❌ Sell the code or derivatives
+❌ Use for commercial gain or monetary compensation
+❌ Remove attribution or license notices
+
+## For Commercial Use
+
+If you wish to use this code for commercial purposes, please contact the copyright holder to obtain a separate commercial license.
+
+Contact: https://github.com/PennybagsCX/dogechain-bubblemaps
+
+---
+
+## Third-Party Licenses
+
+This project uses open-source libraries with their own licenses:
+
+- React (MIT License)
+- D3.js (BSD 3-Clause License)
+- TypeScript (Apache License 2.0)
+- Vite (MIT License)
+- Tailwind CSS (MIT License)
+- And others - see package.json for details
+
+These libraries are licensed separately and may be used under their respective terms.
+
+---
+
+**This is a human-readable summary of the Legal Code (the full license).**
+
+For the full legal text, visit: https://creativecommons.org/licenses/by-nc/4.0/legalcode

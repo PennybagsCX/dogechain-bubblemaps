@@ -1,7 +1,7 @@
 <div align="center">
 
 ![Dogechain BubbleMaps](https://img.shields.io/badge/Dogechain-BubbleMaps-purple)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-blue.svg)
 ![React](https://img.shields.io/badge/React-19.2.0-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-blue)
 ![Production](https://img.shields.io/badge/Status-Production-success)
@@ -259,7 +259,20 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
+
+**What you CAN do:**
+- ✅ View, study, and learn from the code
+- ✅ Use for personal projects and education
+- ✅ Fork and modify for your own use
+- ✅ Share with others (with attribution)
+
+**What you CANNOT do:**
+- ❌ Use for commercial purposes
+- ❌ Sell the code or derivatives
+- ❌ Use for commercial gain
+
+See [LICENSE](LICENSE) file for details. For commercial use inquiries, please [contact the owner](https://github.com/PennybagsCX/dogechain-bubblemaps).
 
 ---
 

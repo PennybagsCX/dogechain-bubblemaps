@@ -347,14 +347,6 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                     {isNFT ? 'TREASURY' : 'CONTRACT'}
                     </span>
                 )}
-                <a 
-                    href={`https://explorer.dogechain.dog/address/${wallet.address}`} 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-blue-400 hover:text-blue-300 bg-blue-400/10 border border-blue-400/20 rounded"
-                >
-                    Explorer <ExternalLink size={10} />
-                </a>
                 {onTraceConnections && (
                     <button 
                         onClick={handleTrace}

@@ -37,7 +37,15 @@ export default {
         'orange-500\\/50': 'rgba(249, 115, 22, 0.5)',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+        ],
       },
     },
   },

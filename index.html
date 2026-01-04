@@ -9,10 +9,10 @@
     <meta http-equiv="Content-Security-Policy"
           content="default-src 'self';
                    script-src 'self';
-                   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-                   font-src 'self' https://fonts.gstatic.com;
+                   style-src 'self' 'unsafe-inline';
+                   font-src 'self';
                    img-src 'self' data: blob: https:;
-                   connect-src 'self' https://explorer.dogechain.dog https://dogechain.dog;
+                   connect-src 'self' https://dogechain.dog;
                    base-uri 'self';
                    form-action 'self';">
 
@@ -30,22 +30,19 @@
     <meta property="og:url" content="https://dogechain-bubblemaps.web.app/" />
     <meta property="og:title" content="Dogechain BubbleMaps - On-Chain Intelligence" />
     <meta property="og:description" content="Visualize token distributions, track whales, and analyze wallet connections with AI-powered insights." />
-    <meta property="og:image" content="https://explorer.dogechain.dog/images/dogechain_logo.png" />
+    <meta property="og:image" content="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐕</text></svg>" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://dogechain-bubblemaps.web.app/" />
     <meta property="twitter:title" content="Dogechain BubbleMaps" />
     <meta property="twitter:description" content="Interactive on-chain intelligence. Track whales and visualize DeFi data on Dogechain." />
-    <meta property="twitter:image" content="https://explorer.dogechain.dog/images/dogechain_logo.png" />
+    <meta property="twitter:image" content="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐕</text></svg>" />
 
     <meta name="theme-color" content="#0B0D17" />
     <title>Dogechain BubbleMaps - On-Chain Intelligence & Visualization</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Using system fonts to avoid SSL issues on Arc iOS -->
     <link rel="stylesheet" href="/index.css">
 </head>
   <body>

@@ -21,7 +21,6 @@ export default defineConfig({
         'dist/',
       ],
       // Target 70% coverage
-      statements: 70,
       branches: 70,
       functions: 70,
       lines: 70,

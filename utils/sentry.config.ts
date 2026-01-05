@@ -41,7 +41,6 @@ export const initSentry = () => {
       ],
 
       // Filter sensitive data
-      beforeSend(event, hint) {
         // Remove sensitive data from event
         if (event.request) {
           // Don't send query parameters with potential sensitive data

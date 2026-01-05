@@ -1,5 +1,5 @@
-import Dexie, { Table } from 'dexie';
-import { AlertConfig, TriggeredEvent, Transaction, Token, ScanMetadata } from '../types';
+import Dexie, { Table } from "dexie";
+import { AlertConfig, TriggeredEvent, Transaction, Token, ScanMetadata } from "../types";
 
 // Database interface definitions
 export interface DbAlert {
@@ -116,79 +116,79 @@ class DogeDatabase extends Dexie {
   discoveredContracts!: Table<DbDiscoveredContracts>;
 
   constructor() {
-    super('DogechainBubbleMapsDB');
+    super("DogechainBubbleMapsDB");
 
     // Add error handler for database migration failures
-    this.on('blocked', () => {
-      console.warn('[DB] Database upgrade blocked. Other tabs may be open.');
+    this.on("blocked", () => {
+      console.warn("[DB] Database upgrade blocked. Other tabs may be open.");
     });
 
-    this.on('versionchange', () => {
-      console.log('[DB] Database version changed. Reloading page.');
+    this.on("versionchange", () => {
+      console.log("[DB] Database version changed. Reloading page.");
       window.location.reload();
     });
 
     try {
       // Define database schema with indexes
       this.version(1).stores({
-        alerts: '++id, alertId, walletAddress, name, createdAt',
-        alertStatuses: 'alertId, &alertId', // alertId is primary key
-        triggeredEvents: '++id, eventId, alertId, triggeredAt',
-        recentSearches: '++id, timestamp',
-        trendingAssets: '++id, symbol, address, hits'
+        alerts: "++id, alertId, walletAddress, name, createdAt",
+        alertStatuses: "alertId, &alertId", // alertId is primary key
+        triggeredEvents: "++id, eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits",
       });
 
       // Version 2: Simplified approach - remove unique constraint to prevent issues
       // Deduplication will be handled at the application level
       this.version(2).stores({
-        alerts: '++id, alertId, walletAddress, name, createdAt',
-        alertStatuses: 'alertId, &alertId',
-        triggeredEvents: '++id, eventId, alertId, triggeredAt',
-        recentSearches: '++id, timestamp',
-        trendingAssets: '++id, symbol, address, hits'  // Removed & constraint
+        alerts: "++id, alertId, walletAddress, name, createdAt",
+        alertStatuses: "alertId, &alertId",
+        triggeredEvents: "++id, eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits", // Removed & constraint
       });
 
       // Version 3: Add wallet scan cache for 48-hour intelligent caching
       this.version(3).stores({
-        alerts: '++id, alertId, walletAddress, name, createdAt',
-        alertStatuses: 'alertId, &alertId',
-        triggeredEvents: '++id, eventId, alertId, triggeredAt',
-        recentSearches: '++id, timestamp',
-        trendingAssets: '++id, symbol, address, hits',
-        walletScanCache: 'walletAddress, &walletAddress, scannedAt, expiresAt',
-        assetMetadataCache: 'address, &address, cachedAt, expiresAt'
+        alerts: "++id, alertId, walletAddress, name, createdAt",
+        alertStatuses: "alertId, &alertId",
+        triggeredEvents: "++id, eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits",
+        walletScanCache: "walletAddress, &walletAddress, scannedAt, expiresAt",
+        assetMetadataCache: "address, &address, cachedAt, expiresAt",
       });
 
       // Version 4: Add per-wallet forced contracts persistence
       this.version(4).stores({
-        alerts: '++id, alertId, walletAddress, name, createdAt',
-        alertStatuses: 'alertId, &alertId',
-        triggeredEvents: '++id, eventId, alertId, triggeredAt',
-        recentSearches: '++id, timestamp',
-        trendingAssets: '++id, symbol, address, hits',
-        walletScanCache: 'walletAddress, &walletAddress, scannedAt, expiresAt',
-        assetMetadataCache: 'address, &address, cachedAt, expiresAt',
-        walletForcedContracts: 'walletAddress, &walletAddress, updatedAt'
+        alerts: "++id, alertId, walletAddress, name, createdAt",
+        alertStatuses: "alertId, &alertId",
+        triggeredEvents: "++id, eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits",
+        walletScanCache: "walletAddress, &walletAddress, scannedAt, expiresAt",
+        assetMetadataCache: "address, &address, cachedAt, expiresAt",
+        walletForcedContracts: "walletAddress, &walletAddress, updatedAt",
       });
 
       // Version 5: Add discovered contracts database for whale enumeration
       // Note: Fixed to avoid ConstraintError by removing duplicate index syntax
       this.version(5).stores({
-        alerts: '++id, alertId, walletAddress, name, createdAt',
-        alertStatuses: 'alertId, &alertId',
-        triggeredEvents: '++id, eventId, alertId, triggeredAt',
-        recentSearches: '++id, timestamp',
-        trendingAssets: '++id, symbol, address, hits',
-        walletScanCache: 'walletAddress, scannedAt, expiresAt',
-        assetMetadataCache: 'address, cachedAt, expiresAt',
-        walletForcedContracts: 'walletAddress, updatedAt',
-        discoveredContracts: '++id, contractAddress, type, discoveredAt, lastSeenAt'
+        alerts: "++id, alertId, walletAddress, name, createdAt",
+        alertStatuses: "alertId, &alertId",
+        triggeredEvents: "++id, eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits",
+        walletScanCache: "walletAddress, scannedAt, expiresAt",
+        assetMetadataCache: "address, cachedAt, expiresAt",
+        walletForcedContracts: "walletAddress, updatedAt",
+        discoveredContracts: "++id, contractAddress, type, discoveredAt, lastSeenAt",
       });
     } catch (error) {
-      console.error('[DB] Database schema error:', error);
-      console.error('[DB] Please clear IndexedDB and reload the page.');
+      console.error("[DB] Database schema error:", error);
+      console.error("[DB] Please clear IndexedDB and reload the page.");
       // Store error for UI to display
-      localStorage.setItem('doge_db_error', 'schema_error');
+      localStorage.setItem("doge_db_error", "schema_error");
     }
   }
 }
@@ -207,7 +207,7 @@ export function toDbAlert(alert: AlertConfig): DbAlert {
     tokenSymbol: alert.tokenSymbol,
     threshold: alert.threshold,
     initialValue: alert.initialValue,
-    createdAt: Date.now()
+    createdAt: Date.now(),
   };
 }
 
@@ -220,7 +220,7 @@ export function fromDbAlert(dbAlert: DbAlert): AlertConfig {
     tokenName: dbAlert.tokenName,
     tokenSymbol: dbAlert.tokenSymbol,
     threshold: dbAlert.threshold,
-    initialValue: dbAlert.initialValue
+    initialValue: dbAlert.initialValue,
   };
 }
 
@@ -234,7 +234,7 @@ export function toDbTriggeredEvent(event: TriggeredEvent): DbTriggeredEvent {
     tokenSymbol: event.tokenSymbol,
     transactions: event.transactions,
     triggeredAt: event.triggeredAt,
-    notified: event.notified
+    notified: event.notified,
   };
 }
 
@@ -248,28 +248,29 @@ export function fromDbTriggeredEvent(dbEvent: DbTriggeredEvent): TriggeredEvent 
     tokenSymbol: dbEvent.tokenSymbol,
     transactions: dbEvent.transactions,
     triggeredAt: dbEvent.triggeredAt,
-    notified: dbEvent.notified
+    notified: dbEvent.notified,
   };
 }
 
 // Export all data to JSON
 export async function exportDatabase(): Promise<DatabaseExport> {
-  const [alerts, alertStatuses, triggeredEvents, trendingAssets, recentSearches] = await Promise.all([
-    db.alerts.toArray(),
-    db.alertStatuses.toArray(),
-    db.triggeredEvents.toArray(),
-    db.trendingAssets.toArray(),
-    db.recentSearches.toArray()
-  ]);
+  const [alerts, alertStatuses, triggeredEvents, trendingAssets, recentSearches] =
+    await Promise.all([
+      db.alerts.toArray(),
+      db.alertStatuses.toArray(),
+      db.triggeredEvents.toArray(),
+      db.trendingAssets.toArray(),
+      db.recentSearches.toArray(),
+    ]);
 
   return {
-    version: '1.0',
+    version: "1.0",
     exportedAt: Date.now(),
     alerts,
     alertStatuses,
     triggeredEvents,
     trendingAssets,
-    recentSearches
+    recentSearches,
   };
 }
 
@@ -280,20 +281,20 @@ export async function exportDatabaseAsCSV(): Promise<Blob> {
 
   // Define all tables with their names and data
   const tables = [
-    { name: 'alerts', data: data.alerts },
-    { name: 'alert_statuses', data: data.alertStatuses },
-    { name: 'triggered_events', data: data.triggeredEvents },
-    { name: 'trending_assets', data: data.trendingAssets },
-    { name: 'recent_searches', data: data.recentSearches }
+    { name: "alerts", data: data.alerts },
+    { name: "alert_statuses", data: data.alertStatuses },
+    { name: "triggered_events", data: data.triggeredEvents },
+    { name: "trending_assets", data: data.trendingAssets },
+    { name: "recent_searches", data: data.recentSearches },
   ];
 
   // Collect all unique column names across all tables
   const allColumns = new Set<string>();
-  allColumns.add('table_name'); // First column
+  allColumns.add("table_name"); // First column
 
-  tables.forEach(table => {
-    if (table.data.length > 0) {
-      Object.keys(table.data[0]).forEach(key => allColumns.add(key));
+  tables.forEach((table) => {
+    if (table.data.length > 0 && table.data[0]) {
+      Object.keys(table.data[0]).forEach((key) => allColumns.add(key));
     }
   });
 
@@ -303,47 +304,50 @@ export async function exportDatabaseAsCSV(): Promise<Blob> {
   const csvRows: string[] = [];
 
   // Header row
-  csvRows.push(columns.join(','));
+  csvRows.push(columns.join(","));
 
   // Data rows from each table
-  tables.forEach(table => {
-    table.data.forEach(item => {
-      const rowValues = columns.map(col => {
+  tables.forEach((table) => {
+    table.data.forEach((item) => {
+      const rowValues = columns.map((col) => {
         // Handle table_name column
-        if (col === 'table_name') {
+        if (col === "table_name") {
           return table.name;
         }
 
         // Get value or empty string if column doesn't exist
-        const value = item[col];
+        const value = (item as unknown as Record<string, unknown>)[col];
 
         // Handle null/undefined
         if (value === null || value === undefined) {
-          return '';
+          return "";
         }
 
         // Handle nested objects/arrays (serialize as JSON string)
-        if (typeof value === 'object') {
+        if (typeof value === "object") {
           const jsonString = JSON.stringify(value);
           // Escape quotes and wrap in quotes
           return `"${jsonString.replace(/"/g, '""')}"`;
         }
 
         // Handle strings with commas or quotes
-        if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
+        if (
+          typeof value === "string" &&
+          (value.includes(",") || value.includes('"') || value.includes("\n"))
+        ) {
           return `"${value.replace(/"/g, '""')}"`;
         }
 
         return String(value);
       });
 
-      csvRows.push(rowValues.join(','));
+      csvRows.push(rowValues.join(","));
     });
   });
 
   // Create CSV blob
-  const csvContent = csvRows.join('\n');
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const csvContent = csvRows.join("\n");
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
 
   return blob;
 }
@@ -356,7 +360,7 @@ export async function importDatabase(data: DatabaseExport): Promise<void> {
     db.alertStatuses.clear(),
     db.triggeredEvents.clear(),
     db.trendingAssets.clear(),
-    db.recentSearches.clear()
+    db.recentSearches.clear(),
   ]);
 
   // Import new data
@@ -374,7 +378,7 @@ export async function clearDatabase(): Promise<void> {
     db.alertStatuses.clear(),
     db.triggeredEvents.clear(),
     db.trendingAssets.clear(),
-    db.recentSearches.clear()
+    db.recentSearches.clear(),
   ]);
 }
 
@@ -390,8 +394,11 @@ export async function deduplicateTrendingAssets(): Promise<number> {
     const existing = addressMap.get(normalizedAddress);
 
     // Keep the asset with higher hits count, or the newer one if equal
-    if (!existing || asset.hits > existing.hits ||
-        (asset.hits === existing.hits && (asset.id || 0) > (existing.id || 0))) {
+    if (
+      !existing ||
+      asset.hits > existing.hits ||
+      (asset.hits === existing.hits && (asset.id || 0) > (existing.id || 0))
+    ) {
       addressMap.set(normalizedAddress, asset);
     }
   }
@@ -411,7 +418,7 @@ export async function deduplicateTrendingAssets(): Promise<number> {
 export async function resetDatabase(): Promise<void> {
   await db.delete();
   // Clear the error flag
-  localStorage.removeItem('doge_db_error');
+  localStorage.removeItem("doge_db_error");
   // The database will be automatically recreated with the latest schema on next access
 }
 
@@ -419,14 +426,14 @@ export async function resetDatabase(): Promise<void> {
  * Check if the database is in an error state
  */
 export function hasDatabaseError(): boolean {
-  return localStorage.getItem('doge_db_error') === 'schema_error';
+  return localStorage.getItem("doge_db_error") === "schema_error";
 }
 
 /**
  * Clear the database error flag
  */
 export function clearDatabaseError(): void {
-  localStorage.removeItem('doge_db_error');
+  localStorage.removeItem("doge_db_error");
 }
 
 /**
@@ -438,11 +445,11 @@ export async function testDatabaseHealth(): Promise<boolean> {
     // Try to open the database and read from a table
     await db.open();
     const count = await db.alerts.count();
-    console.log('[DB] Database health check passed. Alerts count:', count);
+    console.log("[DB] Database health check passed. Alerts count:", count);
     return true;
   } catch (error) {
-    console.error('[DB] Database health check failed:', error);
-    localStorage.setItem('doge_db_error', 'health_check_failed');
+    console.error("[DB] Database health check failed:", error);
+    localStorage.setItem("doge_db_error", "health_check_failed");
     return false;
   }
 }
@@ -473,13 +480,13 @@ export async function saveScanCache(
       tokens,
       nfts,
       scannedAt: now,
-      expiresAt: now + (48 * 60 * 60 * 1000), // 48 hours
-      scanMetadata
+      expiresAt: now + 48 * 60 * 60 * 1000, // 48 hours
+      scanMetadata,
     };
 
     await db.walletScanCache.put(cacheEntry);
   } catch (error) {
-    console.error('Failed to save scan cache:', error);
+    console.error("Failed to save scan cache:", error);
   }
 }
 
@@ -504,7 +511,7 @@ export async function loadScanCache(walletAddress: string): Promise<DbWalletScan
 
     return cacheEntry;
   } catch (error) {
-    console.error('Failed to load scan cache:', error);
+    console.error("Failed to load scan cache:", error);
     return null;
   }
 }
@@ -516,14 +523,14 @@ export async function loadScanCache(walletAddress: string): Promise<DbWalletScan
 export async function clearExpiredCache(): Promise<number> {
   try {
     const now = Date.now();
-    const sevenDaysAgo = now - (7 * 24 * 60 * 60 * 1000);
+    const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
 
     // Get all entries
     const allEntries = await db.walletScanCache.toArray();
 
     // Find expired or old entries
-    const toDelete = allEntries.filter(entry =>
-      entry.expiresAt < now || entry.scannedAt < sevenDaysAgo
+    const toDelete = allEntries.filter(
+      (entry) => entry.expiresAt < now || entry.scannedAt < sevenDaysAgo
     );
 
     // Delete expired entries
@@ -546,7 +553,7 @@ export async function clearExpiredCache(): Promise<number> {
 
     return toDelete.length;
   } catch (error) {
-    console.error('Failed to clear expired cache:', error);
+    console.error("Failed to clear expired cache:", error);
     return 0;
   }
 }
@@ -568,8 +575,11 @@ export async function deduplicateRecentSearches(): Promise<number> {
     const existing = queryMap.get(normalizedQuery);
 
     // Keep the search with more recent timestamp, or newer ID if equal
-    if (!existing || search.timestamp > existing.timestamp ||
-        (search.timestamp === existing.timestamp && (search.id || 0) > (existing.id || 0))) {
+    if (
+      !existing ||
+      search.timestamp > existing.timestamp ||
+      (search.timestamp === existing.timestamp && (search.id || 0) > (existing.id || 0))
+    ) {
       queryMap.set(normalizedQuery, search);
     }
   }
@@ -589,17 +599,20 @@ export async function deduplicateRecentSearches(): Promise<number> {
 /**
  * Save manually added contracts for a wallet
  */
-export async function saveWalletForcedContracts(walletAddress: string, contracts: string[]): Promise<void> {
+export async function saveWalletForcedContracts(
+  walletAddress: string,
+  contracts: string[]
+): Promise<void> {
   try {
     const entry: DbWalletForcedContracts = {
       walletAddress: walletAddress.toLowerCase(),
       contracts,
-      updatedAt: Date.now()
+      updatedAt: Date.now(),
     };
 
     await db.walletForcedContracts.put(entry);
   } catch (error) {
-    console.error('Failed to save wallet forced contracts:', error);
+    console.error("Failed to save wallet forced contracts:", error);
   }
 }
 
@@ -616,7 +629,7 @@ export async function loadWalletForcedContracts(walletAddress: string): Promise<
 
     return entry.contracts;
   } catch (error) {
-    console.error('Failed to load wallet forced contracts:', error);
+    console.error("Failed to load wallet forced contracts:", error);
     return [];
   }
 }
@@ -632,7 +645,10 @@ export async function saveDiscoveredContracts(contracts: DbDiscoveredContracts[]
 
     for (const contract of contracts) {
       // Check if contract already exists
-      const existing = await db.discoveredContracts.where('contractAddress').equals(contract.contractAddress.toLowerCase()).first();
+      const existing = await db.discoveredContracts
+        .where("contractAddress")
+        .equals(contract.contractAddress.toLowerCase())
+        .first();
 
       if (existing) {
         // Update lastSeenAt if it exists
@@ -640,7 +656,7 @@ export async function saveDiscoveredContracts(contracts: DbDiscoveredContracts[]
           lastSeenAt: now,
           type: contract.type || existing.type,
           symbol: contract.symbol || existing.symbol,
-          name: contract.name || existing.name
+          name: contract.name || existing.name,
         });
       } else {
         // Add new contract
@@ -650,12 +666,12 @@ export async function saveDiscoveredContracts(contracts: DbDiscoveredContracts[]
           symbol: contract.symbol,
           name: contract.name,
           discoveredAt: now,
-          lastSeenAt: now
+          lastSeenAt: now,
         });
       }
     }
   } catch (error) {
-    console.error('Failed to save discovered contracts:', error);
+    console.error("Failed to save discovered contracts:", error);
   }
 }
 
@@ -666,7 +682,7 @@ export async function loadDiscoveredContracts(): Promise<DbDiscoveredContracts[]
   try {
     return await db.discoveredContracts.toArray();
   } catch (error) {
-    console.error('Failed to load discovered contracts:', error);
+    console.error("Failed to load discovered contracts:", error);
     return [];
   }
 }
@@ -676,9 +692,9 @@ export async function loadDiscoveredContracts(): Promise<DbDiscoveredContracts[]
  */
 export async function getDiscoveredContractsByType(type: string): Promise<DbDiscoveredContracts[]> {
   try {
-    return await db.discoveredContracts.where('type').equals(type).toArray();
+    return await db.discoveredContracts.where("type").equals(type).toArray();
   } catch (error) {
-    console.error('Failed to get discovered contracts by type:', error);
+    console.error("Failed to get discovered contracts by type:", error);
     return [];
   }
 }
@@ -689,9 +705,12 @@ export async function getDiscoveredContractsByType(type: string): Promise<DbDisc
 export async function clearOldDiscoveredContracts(): Promise<number> {
   try {
     const now = Date.now();
-    const thirtyDaysAgo = now - (30 * 24 * 60 * 60 * 1000);
+    const thirtyDaysAgo = now - 30 * 24 * 60 * 60 * 1000;
 
-    const oldContracts = await db.discoveredContracts.where('lastSeenAt').below(thirtyDaysAgo).toArray();
+    const oldContracts = await db.discoveredContracts
+      .where("lastSeenAt")
+      .below(thirtyDaysAgo)
+      .toArray();
 
     for (const contract of oldContracts) {
       await db.discoveredContracts.delete(contract.id!);
@@ -699,8 +718,7 @@ export async function clearOldDiscoveredContracts(): Promise<number> {
 
     return oldContracts.length;
   } catch (error) {
-    console.error('Failed to clear old discovered contracts:', error);
+    console.error("Failed to clear old discovered contracts:", error);
     return 0;
   }
 }
-

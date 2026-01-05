@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { ViewState } from '../types';
-import { LayoutDashboard, Map, Search, Wallet as WalletIcon, LogOut, Loader2, Menu, X, AlertCircle } from 'lucide-react';
+import { LayoutDashboard, Map, Search, Wallet as WalletIcon, LogOut, Loader2, Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   currentView: ViewState;

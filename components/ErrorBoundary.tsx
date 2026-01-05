@@ -1,6 +1,6 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { AlertTriangle, RefreshCw } from 'lucide-react';
-import * as Sentry from '@sentry/react';
+import { Component, ErrorInfo, ReactNode } from "react";
+import { AlertTriangle, RefreshCw } from "lucide-react";
+import * as Sentry from "@sentry/react";
 
 interface Props {
   children: ReactNode;
@@ -12,17 +12,17 @@ interface State {
 }
 
 export class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
+  public override state: State = {
     hasError: false,
-    error: null
+    error: null,
   };
 
   public static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo);
+  public override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error("Uncaught error:", error, errorInfo);
 
     // Send error to Sentry if initialized
     Sentry.captureException(error, {
@@ -34,7 +34,7 @@ export class ErrorBoundary extends Component<Props, State> {
     });
   }
 
-  public render() {
+  public override render() {
     if (this.state.hasError) {
       return (
         <div className="min-h-screen flex items-center justify-center bg-space-900 p-4">
@@ -44,12 +44,13 @@ export class ErrorBoundary extends Component<Props, State> {
             </div>
             <h1 className="text-2xl font-bold text-white mb-2">Something went wrong</h1>
             <p className="text-slate-400 mb-6 text-sm">
-              The application encountered an unexpected error. This often happens due to network interruptions or invalid blockchain data.
+              The application encountered an unexpected error. This often happens due to network
+              interruptions or invalid blockchain data.
             </p>
             <div className="bg-space-900/50 p-4 rounded-lg border border-red-500/30 mb-6 text-left overflow-auto max-h-32">
-                <code className="text-xs text-red-300 font-mono break-all">
-                    {this.state.error?.message || 'Unknown Error'}
-                </code>
+              <code className="text-xs text-red-300 font-mono break-all">
+                {this.state.error?.message || "Unknown Error"}
+              </code>
             </div>
             <button
               onClick={() => window.location.reload()}
@@ -68,7 +69,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
 // Export Sentry-wrapped version for easier use
 export const SentryErrorBoundary = Sentry.withErrorBoundary(ErrorBoundary, {
-  fallback: ({ error, resetError }) => (
+  fallback: ({ resetError }) => (
     <div className="min-h-screen flex items-center justify-center bg-space-900 p-4">
       <div className="max-w-md w-full bg-space-800 border border-red-500/30 rounded-xl p-8 text-center shadow-2xl">
         <div className="w-16 h-16 bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -80,7 +81,7 @@ export const SentryErrorBoundary = Sentry.withErrorBoundary(ErrorBoundary, {
         </p>
         <div className="bg-space-900/50 p-4 rounded-lg border border-red-500/30 mb-6 text-left overflow-auto max-h-32">
           <code className="text-xs text-red-300 font-mono break-all">
-            {error?.message || 'Unknown Error'}
+            An error has occurred. Please try refreshing the page.
           </code>
         </div>
         <button

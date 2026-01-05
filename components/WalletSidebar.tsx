@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { BrainCircuit, Check, Copy, Tag, User, X, Loader2, Network, Sparkles, Send, RefreshCw, ChevronDown, ChevronUp } from 'lucide-react';
 import { Wallet, Transaction, AssetType } from '../types';
-import { X, ExternalLink, BrainCircuit, ShieldAlert, Send, Sparkles, User, Copy, Check, Network, Loader2, Tag } from 'lucide-react';
 import { createWalletChatSystemInstruction, sendChatToAI } from '../services/geminiService';
 import { fetchWalletTransactions, fetchTokenBalance } from '../services/dataService';
 

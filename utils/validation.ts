@@ -104,7 +104,7 @@ export const validateTokenAddress = (address: string): string => {
     return addressSchema.parse(address);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw new Error(error.issues[0].message);
+      throw new Error(error.issues[0]?.message || 'Invalid token address');
     }
     throw error;
   }
@@ -118,7 +118,7 @@ export const validateWalletAddress = (address: string): string => {
     return walletAddressInputSchema.parse(address);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw new Error(error.issues[0].message);
+      throw new Error(error.issues[0]?.message || 'Invalid wallet address');
     }
     throw error;
   }
@@ -132,7 +132,7 @@ export const validateSearchQuery = (query: string): string => {
     return searchQuerySchema.parse(query);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw new Error(error.issues[0].message);
+      throw new Error(error.issues[0]?.message || 'Invalid search query');
     }
     throw error;
   }
@@ -146,7 +146,7 @@ export const validateAlertConfig = (config: unknown) => {
     return alertConfigSchema.parse(config);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw new Error(error.issues[0].message);
+      throw new Error(error.issues[0]?.message || 'Invalid alert configuration');
     }
     throw error;
   }

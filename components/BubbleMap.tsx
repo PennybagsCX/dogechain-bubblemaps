@@ -762,75 +762,83 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         >
           <HelpCircle size={20} />
         </button>
-        <button
-          onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-          className={`p-2 rounded-full border shadow-lg transition-colors ${isSettingsOpen ? "bg-purple-600 border-purple-500 text-white" : "bg-space-800 border border-space-700 text-slate-400 hover:text-white hover:border-space-600"}`}
-          title="Map Settings"
-        >
-          <Settings size={20} />
-        </button>
-      </div>
 
-      {/* --- SETTINGS POPUP --- */}
-      {isSettingsOpen && (
-        <div
-          ref={settingsRef}
-          className="absolute top-4 left-14 z-30 bg-space-800 rounded-xl border border-space-700 shadow-2xl p-4 w-64 animate-in fade-in slide-in-from-left-2"
-        >
-          <h4 className="text-xs font-bold text-slate-400 uppercase mb-3 flex items-center gap-2">
-            <Sliders size={12} /> Filter Map
-          </h4>
+        {/* Settings button and popup container for click-outside detection */}
+        <div className="relative" ref={settingsRef}>
+          <button
+            onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+            className={`p-2 rounded-full border shadow-lg transition-colors ${isSettingsOpen ? "bg-purple-600 border-purple-500 text-white" : "bg-space-800 border border-space-700 text-slate-400 hover:text-white hover:border-space-600"}`}
+            title="Map Settings"
+          >
+            <Settings size={20} />
+          </button>
 
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-white flex items-center gap-2">
-                {showLinks ? <Eye size={14} /> : <EyeOff size={14} className="text-slate-500" />}{" "}
-                Links
-              </span>
-              <button
-                onClick={() => setShowLinks(!showLinks)}
-                className={`w-10 h-5 rounded-full relative transition-colors ${showLinks ? "bg-purple-600" : "bg-space-600"}`}
-              >
-                <span
-                  className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-transform ${showLinks ? "left-6" : "left-1"}`}
-                ></span>
-              </button>
-            </div>
+          {/* --- SETTINGS POPUP --- */}
+          {isSettingsOpen && (
+            <div className="absolute top-0 left-14 z-30 bg-space-800 rounded-xl border border-space-700 shadow-2xl p-4 w-64 animate-in fade-in slide-in-from-left-2">
+              <h4 className="text-xs font-bold text-slate-400 uppercase mb-3 flex items-center gap-2">
+                <Sliders size={12} /> Filter Map
+              </h4>
 
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-white flex items-center gap-2">
-                {showLabels ? <Eye size={14} /> : <EyeOff size={14} className="text-slate-500" />}{" "}
-                Labels
-              </span>
-              <button
-                onClick={() => setShowLabels(!showLabels)}
-                className={`w-10 h-5 rounded-full relative transition-colors ${showLabels ? "bg-purple-600" : "bg-space-600"}`}
-              >
-                <span
-                  className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-transform ${showLabels ? "left-6" : "left-1"}`}
-                ></span>
-              </button>
-            </div>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-white flex items-center gap-2">
+                    {showLinks ? (
+                      <Eye size={14} />
+                    ) : (
+                      <EyeOff size={14} className="text-slate-500" />
+                    )}{" "}
+                    Links
+                  </span>
+                  <button
+                    onClick={() => setShowLinks(!showLinks)}
+                    className={`w-10 h-5 rounded-full relative transition-colors ${showLinks ? "bg-purple-600" : "bg-space-600"}`}
+                  >
+                    <span
+                      className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-transform ${showLinks ? "left-6" : "left-1"}`}
+                    ></span>
+                  </button>
+                </div>
 
-            <div>
-              <div className="flex justify-between text-xs text-slate-400 mb-1">
-                <span>Filter Dust</span>
-                <span>{minBalancePercent}%</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-white flex items-center gap-2">
+                    {showLabels ? (
+                      <Eye size={14} />
+                    ) : (
+                      <EyeOff size={14} className="text-slate-500" />
+                    )}{" "}
+                    Labels
+                  </span>
+                  <button
+                    onClick={() => setShowLabels(!showLabels)}
+                    className={`w-10 h-5 rounded-full relative transition-colors ${showLabels ? "bg-purple-600" : "bg-space-600"}`}
+                  >
+                    <span
+                      className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-transform ${showLabels ? "left-6" : "left-1"}`}
+                    ></span>
+                  </button>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs text-slate-400 mb-1">
+                    <span>Filter Dust</span>
+                    <span>{minBalancePercent}%</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="50"
+                    step="1"
+                    value={minBalancePercent}
+                    onChange={(e) => setMinBalancePercent(parseInt(e.target.value))}
+                    className="w-full h-1 bg-space-600 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                  />
+                </div>
               </div>
-              <input
-                type="range"
-                min="0"
-                max="50"
-                step="1"
-                value={minBalancePercent}
-                onChange={(e) => setMinBalancePercent(parseInt(e.target.value))}
-                className="w-full h-1 bg-space-600 rounded-lg appearance-none cursor-pointer accent-purple-500"
-              />
             </div>
-          </div>
+          )}
         </div>
-      )}
-
+      </div>
       {/* --- HELP MODAL --- */}
       {isHelpOpen && (
         <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/70 p-4 animate-in fade-in">

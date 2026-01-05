@@ -1435,6 +1435,14 @@ const App: React.FC = () => {
                 <p className="text-sm sm:text-base text-slate-400 px-4 sm:px-0 max-w-2xl mx-auto leading-relaxed">
                   Visualize token & NFT distributions, uncover hidden whale connections, analyze on-chain risks, and set user & token alerts with <strong className="text-white">100% Live Data</strong>.
                 </p>
+
+                {/* Beta Badge */}
+                <div className="flex justify-center">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-wide">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                    Beta
+                  </span>
+                </div>
               </div>
 
               {/* Search Section - Completely Redesigned for Mobile */}

@@ -1,61 +1,62 @@
-import path from 'path';
-import fs from 'fs';
-import react from '@vitejs/plugin-react';
-import removeConsole from 'vite-plugin-remove-console';
+import { defineConfig } from "vite";
+import path from "path";
+import fs from "fs";
+import react from "@vitejs/plugin-react";
+import removeConsole from "vite-plugin-remove-console";
 
 export default defineConfig(({ mode }) => {
-    const isProduction = mode === 'production';
+  const isProduction = mode === "production";
 
-    // Read build metadata
-    let buildNumber = 0;
-    try {
-      const metadataPath = path.resolve(__dirname, 'build-metadata.json');
-      const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf-8'));
-      buildNumber = metadata.buildNumber;
-    } catch (error) {
-      console.warn('Could not read build metadata, defaulting to 0');
-    }
+  // Read build metadata
+  let buildNumber = 0;
+  try {
+    const metadataPath = path.resolve(__dirname, "build-metadata.json");
+    const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8"));
+    buildNumber = metadata.buildNumber;
+  } catch (error) {
+    console.warn("Could not read build metadata, defaulting to 0");
+  }
 
-    return {
-      server: {
-        port: 3000,
-        host: '0.0.0.0',
+  return {
+    server: {
+      port: 3000,
+      host: "0.0.0.0",
+    },
+    define: {
+      __BETA_BUILD_NUMBER__: JSON.stringify(buildNumber),
+    },
+    plugins: [
+      react(),
+      // SECURITY: Remove console.log in production builds
+      isProduction && removeConsole(),
+    ].filter(Boolean),
+    // SECURITY: Removed API key embedding to prevent exposure in client bundle
+    // API keys should only be used server-side through a backend proxy
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "."),
       },
-      define: {
-        __BETA_BUILD_NUMBER__: JSON.stringify(buildNumber),
-      },
-      plugins: [
-        react(),
-        // SECURITY: Remove console.log in production builds
-        isProduction && removeConsole()
-      ].filter(Boolean),
-      // SECURITY: Removed API key embedding to prevent exposure in client bundle
-      // API keys should only be used server-side through a backend proxy
-      resolve: {
-        alias: {
-          '@': path.resolve(__dirname, '.'),
-        }
-      },
-      build: {
-        // Split vendor code into separate chunks for better caching
-        rollupOptions: {
-          output: {
-            manualChunks: {
-              // React and React-DOM
-              'react-vendor': ['react', 'react-dom'],
-              // D3 visualization library
-              'd3': ['d3'],
-              // Database library
-              'dexie': ['dexie'],
-              // Icon library
-              'lucide-react': ['lucide-react'],
-              // AI SDK (optional)
-              'genai': ['@google/genai'],
-            },
+    },
+    build: {
+      // Split vendor code into separate chunks for better caching
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            // React and React-DOM
+            "react-vendor": ["react", "react-dom"],
+            // D3 visualization library
+            d3: ["d3"],
+            // Database library
+            dexie: ["dexie"],
+            // Icon library
+            "lucide-react": ["lucide-react"],
+            // AI SDK (optional)
+            genai: ["@google/genai"],
           },
         },
-        // Improve chunk size warning threshold
-        chunkSizeWarningLimit: 600,
       },
-    };
+      // Improve chunk size warning threshold
+      chunkSizeWarningLimit: 600,
+    },
+  };
 });

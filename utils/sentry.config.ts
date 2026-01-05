@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/react';
+import * as Sentry from "@sentry/react";
 
 /**
  * Sentry Error Tracking Configuration
@@ -12,7 +12,7 @@ import * as Sentry from '@sentry/react';
  * 4. Uncomment the init() call below
  */
 
-const SENTRY_DSN = import.meta.env.SENTRY_DSN || '';
+const SENTRY_DSN = import.meta.env.SENTRY_DSN || "";
 
 export const initSentry = () => {
   // Only initialize in production if DSN is available
@@ -36,11 +36,12 @@ export const initSentry = () => {
           blockAllMedia: true, // Block media in replays
         }),
         Sentry.captureConsoleIntegration({
-          levels: ['error'], // Only capture console.error
+          levels: ["error"], // Only capture console.error
         }),
       ],
 
       // Filter sensitive data
+      beforeSend(event) {
         // Remove sensitive data from event
         if (event.request) {
           // Don't send query parameters with potential sensitive data
@@ -50,9 +51,9 @@ export const initSentry = () => {
         // Filter out specific error messages that contain sensitive data
         if (event.message) {
           // Don't log events with wallet addresses in error messages
-          if (event.message.includes('0x')) {
+          if (event.message.includes("0x")) {
             // Mask wallet addresses
-            event.message = event.message.replace(/0x[a-fA-F0-9]{40}/g, '0x***MASKED***');
+            event.message = event.message.replace(/0x[a-fA-F0-9]{40}/g, "0x***MASKED***");
           }
         }
 
@@ -62,29 +63,29 @@ export const initSentry = () => {
       // Ignore specific errors
       ignoreErrors: [
         // Network errors that are expected
-        'Failed to fetch',
-        'NetworkError',
-        'AbortError',
+        "Failed to fetch",
+        "NetworkError",
+        "AbortError",
         // Browser extension errors
-        'Non-Error promise rejection captured',
+        "Non-Error promise rejection captured",
       ],
 
       // Performance monitoring
       beforeSendTransaction(event) {
         // Filter out transaction names with sensitive data
         if (event.transaction) {
-          event.transaction = event.transaction.replace(/0x[a-fA-F0-9]{40}/g, '0x***MASKED***');
+          event.transaction = event.transaction.replace(/0x[a-fA-F0-9]{40}/g, "0x***MASKED***");
         }
         return event;
       },
     });
 
-    console.log('Sentry initialized successfully');
+    console.log("Sentry initialized successfully");
   } else {
     if (import.meta.env.DEV) {
-      console.log('Sentry not initialized: Development mode');
+      console.log("Sentry not initialized: Development mode");
     } else if (!SENTRY_DSN) {
-      console.warn('Sentry not initialized: SENTRY_DSN not configured');
+      console.warn("Sentry not initialized: SENTRY_DSN not configured");
     }
   }
 };
@@ -101,7 +102,7 @@ export const captureError = (error: Error, context?: Record<string, any>) => {
 /**
  * Capture message with level
  */
-export const captureMessage = (message: string, level: Sentry.SeverityLevel = 'info') => {
+export const captureMessage = (message: string, level: Sentry.SeverityLevel = "info") => {
   Sentry.captureMessage(message, level);
 };
 
@@ -127,8 +128,8 @@ export const setUserContext = (walletAddress?: string) => {
 export const addBreadcrumb = (message: string, category?: string, data?: Record<string, any>) => {
   Sentry.addBreadcrumb({
     message,
-    category: category || 'custom',
+    category: category || "custom",
     data,
-    level: 'info',
+    level: "info",
   });
 };

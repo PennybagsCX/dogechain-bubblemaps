@@ -1483,7 +1483,7 @@ const App: React.FC = () => {
                     <input
                       type="text"
                       placeholder={searchType === AssetType.NFT ? "Collection Address..." : "Token Address..."}
-                      className="flex-1 bg-transparent py-3 px-2 text-white placeholder-slate-500 text-sm outline-none font-mono"
+                      className="flex-1 bg-transparent py-3 px-2 text-white placeholder-slate-500 text-base outline-none font-mono"
                       value={searchQuery}
                       onChange={e => setSearchQuery(e.target.value)}
                     />
@@ -1627,7 +1627,7 @@ const App: React.FC = () => {
                       value={contractInput}
                       onChange={(e) => setContractInput(e.target.value)}
                       placeholder="Add contract address"
-                      className="flex-1 bg-space-900 border border-space-700 rounded-md px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-space-500"
+                      className="flex-1 bg-space-900 border border-space-700 rounded-md px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-space-500"
                     />
                     <button
                       onClick={handleAddContract}

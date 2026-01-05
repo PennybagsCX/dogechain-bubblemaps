@@ -182,6 +182,21 @@ input[type="text"]:-webkit-autofill:focus {
   caret-color: #a855f7 !important;
 }
 
+/* Prevent mobile zoom on all input elements */
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea {
+  touch-action: manipulation;
+}
+
+/* Ensure touch targets meet iOS minimum */
+#root input:not([data-allow-zoom]) {
+  min-height: 48px;
+}
+
 /* Enable focus ring utilities */
 .focus-ring {
   outline: none;

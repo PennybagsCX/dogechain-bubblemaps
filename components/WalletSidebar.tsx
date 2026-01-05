@@ -485,7 +485,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Ask about risks, patterns..."
-                  className="flex-1 bg-space-900 border border-space-700 rounded-md px-3 py-1.5 text-xs text-white focus:outline-none focus:border-space-600"
+                  className="flex-1 bg-space-900 border border-space-700 rounded-md px-3 py-1.5 text-sm text-white focus:outline-none focus:border-space-600"
                 />
                 <button
                   type="submit"

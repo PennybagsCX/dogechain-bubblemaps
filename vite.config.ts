@@ -21,6 +21,14 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       host: "0.0.0.0",
+      proxy: {
+        // Proxy API requests to the production deployment during development
+        "/api/dogechain-proxy": {
+          target: "https://www.dogechain-bubblemaps.xyz",
+          changeOrigin: true,
+          rewrite: (path) => path,
+        },
+      },
     },
     define: {
       __BETA_BUILD_NUMBER__: JSON.stringify(buildNumber),

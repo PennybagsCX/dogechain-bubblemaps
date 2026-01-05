@@ -123,19 +123,41 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .raise();
   };
 
-  // Helper: map click selection to parent + highlight
-  const handleSelectNode = useCallback(
-    (wallet: Wallet | null) => {
-      onWalletClick(wallet);
-      applySelectionHighlight(wallet ? wallet.id : null, showLabels);
-    },
-    [onWalletClick, showLabels]
-  );
-
   // --- MAP SETTINGS ---
   const [showLinks, setShowLinks] = useState(true);
   const [showLabels, setShowLabels] = useState(true);
   const [minBalancePercent, setMinBalancePercent] = useState(0); // 0 to 100 slider representing % of max balance or just arbitrary threshold
+
+  // Helper: map click selection to parent + highlight
+  const handleSelectNode = (wallet: Wallet | null) => {
+    onWalletClick(wallet);
+    applySelectionHighlight(wallet ? wallet.id : null, showLabels);
+  };
+
+  // Helper: get node color based on properties
+  const getNodeColor = (d: any) => {
+    if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return "#fbbf24"; // Amber-400 (User)
+    if (d.label) return "#fb7185"; // Rose-400 (Known Entity)
+    if (d.isContract) return "#fb7185"; // Rose-400 (Warning/Special)
+
+    // Logic for NFTs (Count based)
+    if (assetType === AssetType.NFT) {
+      const bal = d.balance;
+      if (bal >= 50) return "#ef4444"; // Red (Hot)
+      if (bal >= 20) return "#f97316"; // Orange
+      if (bal >= 5) return "#eab308"; // Yellow
+      if (bal >= 2) return "#10b981"; // Green
+      return "#06b6d4"; // Cyan (Cold)
+    }
+
+    // Logic for Tokens (Percentage based)
+    const pct = d.percentage;
+    if (pct >= 5.0) return "#ef4444"; // Red (Massive)
+    if (pct >= 1.0) return "#f97316"; // Orange (Whale)
+    if (pct >= 0.5) return "#eab308"; // Yellow (Large)
+    if (pct >= 0.1) return "#10b981"; // Green (Medium)
+    return "#06b6d4"; // Cyan (Retail)
+  };
 
   // --- RESIZE OBSERVER ---
   useEffect(() => {
@@ -190,35 +212,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     window.addEventListener("keydown", handleKeyNav);
     return () => window.removeEventListener("keydown", handleKeyNav);
-  }, [wallets, focusedIndex, onWalletClick, handleSelectNode]);
-
-  // --- COLOR SCALES (Scientific/Heatmap) ---
-  const getNodeColor = useCallback(
-    (d: any) => {
-      if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return "#fbbf24"; // Amber-400 (User)
-      if (d.label) return "#fb7185"; // Rose-400 (Known Entity)
-      if (d.isContract) return "#fb7185"; // Rose-400 (Warning/Special)
-
-      // Logic for NFTs (Count based)
-      if (assetType === AssetType.NFT) {
-        const bal = d.balance;
-        if (bal >= 50) return "#ef4444"; // Red (Hot)
-        if (bal >= 20) return "#f97316"; // Orange
-        if (bal >= 5) return "#eab308"; // Yellow
-        if (bal >= 2) return "#10b981"; // Green
-        return "#06b6d4"; // Cyan (Cold)
-      }
-
-      // Logic for Tokens (Percentage based)
-      const pct = d.percentage;
-      if (pct >= 5.0) return "#ef4444"; // Red (Massive)
-      if (pct >= 1.0) return "#f97316"; // Orange (Whale)
-      if (pct >= 0.5) return "#eab308"; // Yellow (Large)
-      if (pct >= 0.1) return "#10b981"; // Green (Medium)
-      return "#06b6d4"; // Cyan (Retail)
-    },
-    [userAddress, assetType]
-  );
+  }, [wallets, focusedIndex, onWalletClick]); // eslint-disable-line react-hooks/exhaustive-deps -- handleSelectNode is defined inline
 
   // --- UPDATE VISIBILITY ---
   useEffect(() => {
@@ -617,12 +611,10 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     onWalletClick,
     assetType,
     userAddress,
-    getNodeColor,
-    handleSelectNode,
     minBalancePercent,
     showLabels,
     showLinks,
-  ]); // Dependencies
+  ]); // eslint-disable-line react-hooks/exhaustive-deps -- getNodeColor and handleSelectNode are defined inline
 
   // --- ACTIONS ---
   const handleZoomIn = () => {

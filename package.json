@@ -13,7 +13,7 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css,scss}\" \"**/*.{ts,tsx,css,scss,json,md}\"",
     "type-check": "tsc --noEmit",
     "prepare": "husky",
-    "increment-build": "node scripts/increment-build.js",
+    "increment-build": "node scripts/increment-build.cjs",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",

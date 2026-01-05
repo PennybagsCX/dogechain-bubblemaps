@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { AlertConfig, AlertStatus, Transaction, TriggeredEvent } from "../types";
 import {
   Trash2,

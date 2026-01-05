@@ -9,3 +9,6 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv
 }
+
+// Declare global for build number
+declare const __BETA_BUILD_NUMBER__: number;

@@ -31,6 +31,7 @@ export const Footer: React.FC = () => {
 
         <div className="mt-12 pt-8 border-t border-space-700 flex flex-col md:flex-row justify-between items-center text-xs text-slate-600 gap-4">
           <p>&copy; 2026 Dogechain BubbleMaps. All rights reserved.</p>
+          <p>Beta Build #{__BETA_BUILD_NUMBER__}</p>
         </div>
 
         <div className="mt-6 p-4 rounded-lg bg-space-800/50 border border-space-800 text-[10px] text-slate-500 text-center md:text-left">

@@ -3,6 +3,13 @@
 
 echo "🔍 Running pre-commit checks..."
 
+# Increment build number
+echo "📦 Incrementing beta build number..."
+npm run increment-build
+
+# Stage the updated build-metadata.json
+git add build-metadata.json
+
 # Run lint-staged
 npx lint-staged
 

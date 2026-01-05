@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import removeConsole from 'vite-plugin-remove-console';
@@ -7,10 +8,23 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     const isProduction = mode === 'production';
 
+    // Read build metadata
+    let buildNumber = 0;
+    try {
+      const metadataPath = path.resolve(__dirname, 'build-metadata.json');
+      const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf-8'));
+      buildNumber = metadata.buildNumber;
+    } catch (error) {
+      console.warn('Could not read build metadata, defaulting to 0');
+    }
+
     return {
       server: {
         port: 3000,
         host: '0.0.0.0',
+      },
+      define: {
+        __BETA_BUILD_NUMBER__: JSON.stringify(buildNumber),
       },
       plugins: [
         react(),

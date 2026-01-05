@@ -29,6 +29,7 @@ import {
   detectContractType,
   fetchMetadataFromTransfers,
 } from "./services/dataService";
+import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 
 // Helper functions from dataService (accessed via global scope or re-export)
 const getCachedMetadata = (address: string) => {
@@ -355,6 +356,37 @@ const App: React.FC = () => {
     };
 
     loadData();
+  }, []);
+
+  // Fetch server-side trending on mount and refresh periodically
+  useEffect(() => {
+    const fetchServerTrending = async () => {
+      try {
+        const serverTrending = await getTrendingAssets("ALL", 20);
+
+        if (serverTrending.length > 0) {
+          // Convert server format to local TrendingAsset format
+          const converted = serverTrending.map((asset) => ({
+            symbol: asset.symbol || (asset.type === "NFT" ? "NFT" : "TOKEN"),
+            name: asset.name || (asset.type === "NFT" ? "NFT Collection" : "Token"),
+            address: asset.address,
+            type: asset.type as AssetType,
+            hits: Math.round(asset.velocityScore),
+          }));
+
+          setTrendingAssets(converted);
+        }
+      } catch (error) {
+        console.warn("[Trending] Server fetch failed, keeping local trending");
+      }
+    };
+
+    // Fetch server trending immediately after mount
+    fetchServerTrending();
+
+    // Refresh every 15 minutes
+    const interval = setInterval(fetchServerTrending, 15 * 60 * 1000);
+    return () => clearInterval(interval);
   }, []);
 
   // Save alerts to IndexedDB when they change
@@ -794,6 +826,11 @@ const App: React.FC = () => {
       setToken(tokenData);
       addToHistory(cleanQuery, typeToUse, tokenData.symbol);
       updateTrending(tokenData);
+
+      // Log to server-side trending (fire-and-forget, don't block UI)
+      logSearchQuery(tokenData.address, tokenData.type, tokenData.symbol, tokenData.name).catch(
+        (err) => console.warn("Failed to log search to server:", err)
+      );
 
       // Fetch Data (Live)
       const result = await fetchTokenHolders(tokenData);

@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getClient } from "@vercel/postgres";
+import { sql } from "@vercel/postgres";
 
 // In-memory cache
 let cachedTrending: any[] | null = null;
@@ -61,14 +61,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    const client = getClient();
-
     // Calculate time buckets for velocity calculation
     const threeHoursAgo = new Date(now - 3 * 60 * 60 * 1000);
     const sixHoursAgo = new Date(now - 6 * 60 * 60 * 1000);
 
     // Fetch recent search data with velocity calculation
-    const result = await client.sql`
+    const result = await sql`
       WITH recent_counts AS (
         SELECT
           address,
@@ -101,7 +99,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     `;
 
     // Calculate velocity scores and rank
-    const assets = result.rows.map((row) => ({
+    const assets = result.rows.map((row: any) => ({
       address: row.address,
       symbol: row.symbol,
       name: row.name,
@@ -117,9 +115,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }));
 
     // Sort by velocity score (descending) and assign ranks
-    assets.sort((a, b) => b.velocityScore - a.velocityScore);
-    assets.forEach((asset, index) => {
-      (asset as any).rank = index + 1;
+    assets.sort((a: any, b: any) => b.velocityScore - a.velocityScore);
+    assets.forEach((asset: any, index: number) => {
+      asset.rank = index + 1;
     });
 
     // Update cache
@@ -127,7 +125,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     cacheTimestamp = now;
 
     // Filter by type if requested
-    const filtered = type === "ALL" ? assets : assets.filter((a) => a.type === type);
+    const filtered = type === "ALL" ? assets : assets.filter((a: any) => a.type === type);
 
     return res.status(200).json({
       assets: filtered.slice(0, limit),
@@ -141,7 +139,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (cachedTrending) {
       const type = (req.query.type as string)?.toUpperCase() || "ALL";
       const filtered =
-        type === "ALL" ? cachedTrending : cachedTrending.filter((a) => a.asset_type === type);
+        type === "ALL" ? cachedTrending : cachedTrending.filter((a: any) => a.asset_type === type);
 
       return res.status(200).json({
         assets: filtered.slice(0, 20),

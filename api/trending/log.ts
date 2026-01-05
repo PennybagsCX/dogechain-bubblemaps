@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getClient } from "@vercel/postgres";
+import { sql } from "@vercel/postgres";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS headers
@@ -28,10 +28,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const normalizedAddress = address.toLowerCase();
-    const client = getClient();
 
     // Log to main table (trending_searches)
-    await client.sql`
+    await sql`
       INSERT INTO trending_searches (address, asset_type, symbol, name)
       VALUES (${normalizedAddress}, ${assetType}, ${symbol || null}, ${name || null})
       ON CONFLICT (address)
@@ -43,7 +42,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     `;
 
     // Log to time-series table (trending_search_history) with hour buckets
-    await client.sql`
+    await sql`
       INSERT INTO trending_search_history (address, hour_bucket, search_count)
       VALUES (
         ${normalizedAddress},
@@ -58,11 +57,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error("[Trending Log] Error:", error);
-    return res
-      .status(500)
-      .json({
-        error: "Failed to log search",
-        details: error instanceof Error ? error.message : "Unknown error",
-      });
+    return res.status(500).json({
+      error: "Failed to log search",
+      details: error instanceof Error ? error.message : "Unknown error",
+    });
   }
 }

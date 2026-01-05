@@ -1873,8 +1873,8 @@ const App: React.FC = () => {
                     {/* Main Visualization Area */}
                     <div className="flex-1 relative bg-space-900">
                     {/* Mobile Stats Toggle Button */}
-                    <button 
-                        className="lg:hidden absolute top-4 left-4 z-30 p-2 bg-space-800/95 rounded-lg border border-space-700 text-slate-300 hover:text-white shadow-lg"
+                    <button
+                        className="lg:hidden absolute top-4 left-4 z-30 p-2 bg-space-800 rounded-lg border border-space-700 text-slate-300 hover:text-white shadow-lg"
                         onClick={() => setIsMobileStatsOpen(true)}
                     >
                         <Menu size={20} />

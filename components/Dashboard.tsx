@@ -88,7 +88,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       : null;
 
   // --- SCAN LOGIC ---
-  const playAlertSound = () => {
+  const playAlertSound = useCallback(() => {
     if (!soundEnabled) return;
 
     // Create audio context for notification sound
@@ -111,9 +111,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
     } catch (e) {
       console.warn("Could not play sound:", e);
     }
-  };
+  }, [soundEnabled]);
 
-  const runScan = async () => {
+  const runScan = useCallback(async () => {
     if (alerts.length === 0) return;
 
     setIsScanning(true);
@@ -198,7 +198,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
     onUpdateStatuses({ ...statuses, ...newStatuses });
     setIsScanning(false);
-  };
+  }, [alerts, statuses, onUpdateStatuses]);
 
   // Auto-scan logic: Run if we have alerts that are missing statuses (pending)
   useEffect(() => {
@@ -208,7 +208,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         runScan();
       }
     }
-  }, [alerts, statuses, isScanning]);
+  }, [alerts, statuses, isScanning, runScan]);
 
   // Periodic automatic scanning every 30 seconds
   useEffect(() => {
@@ -234,7 +234,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
     // Cleanup interval on unmount
     return () => clearInterval(intervalId);
-  }, [alerts.length]); // Re-setup when alerts length changes
+  }, [alerts.length, isScanning, runScan]); // Re-setup when alerts length changes
 
   // Show browser notifications when alerts trigger
   useEffect(() => {
@@ -336,7 +336,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
         [alert.id]: { ...status, newTransactions: undefined },
       });
     });
-  }, [statuses, alerts, inAppNotifications, triggeredEvents, onTriggeredEventsChange]);
+  }, [
+    statuses,
+    alerts,
+    inAppNotifications,
+    triggeredEvents,
+    onTriggeredEventsChange,
+    playAlertSound,
+    onUpdateStatuses,
+  ]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

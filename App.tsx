@@ -921,7 +921,7 @@ const App: React.FC = () => {
         eth.removeListener("chainChanged", () => {});
       }
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps -- Intentional: only run on mount
 
   const handleConnectWallet = async () => {
     if (typeof (window as any).ethereum === "undefined") {

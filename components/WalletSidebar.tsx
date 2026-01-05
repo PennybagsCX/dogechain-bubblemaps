@@ -129,7 +129,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
 
       setActiveTab("details");
     }
-  }, [wallet, tokenAddress, assetType, tokenDecimals]);
+  }, [wallet, tokenAddress, assetType, tokenDecimals, tokenName, tokenSymbol]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -179,14 +179,17 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
   }, [allTransactionsCache, directionFilter, pageSize, wallet]);
 
   // Helper functions (must be before useMemo that uses them)
-  const filterTransactions = (txs: Transaction[], filter: "ALL" | "IN" | "OUT"): Transaction[] => {
-    if (!wallet) return txs;
-    if (filter === "ALL") return txs;
-    return txs.filter((tx) => {
-      const direction = tx.from.toLowerCase() === wallet.address.toLowerCase() ? "OUT" : "IN";
-      return direction === filter;
-    });
-  };
+  const filterTransactions = useCallback(
+    (txs: Transaction[], filter: "ALL" | "IN" | "OUT"): Transaction[] => {
+      if (!wallet) return txs;
+      if (filter === "ALL") return txs;
+      return txs.filter((tx) => {
+        const direction = tx.from.toLowerCase() === wallet.address.toLowerCase() ? "OUT" : "IN";
+        return direction === filter;
+      });
+    },
+    [wallet]
+  );
 
   const paginateTransactions = (txs: Transaction[], page: number, size: number): Transaction[] => {
     const startIndex = (page - 1) * size;
@@ -197,7 +200,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
   // Get filtered and paginated transactions with memoization (must be before early return)
   const filteredTransactions = useMemo(
     () => filterTransactions(allTransactionsCache, directionFilter),
-    [allTransactionsCache, directionFilter, wallet]
+    [allTransactionsCache, directionFilter, filterTransactions]
   );
 
   const paginatedTransactions = useMemo(

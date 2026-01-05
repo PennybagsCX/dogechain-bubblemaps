@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { useClickOutside } from "../hooks/useClickOutside";
 import { Wallet, Link, AssetType } from "../types";
@@ -69,10 +69,15 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     return true;
   });
 
+  // Memoize close handlers for click-outside hook
+  const closeSettings = useCallback(() => setIsSettingsOpen(false), []);
+  const closeLegend = useCallback(() => setIsLegendOpen(false), []);
+  const closeControls = useCallback(() => setAreControlsOpen(false), []);
+
   // Apply click-outside hooks for menus
-  useClickOutside(settingsRef, () => setIsSettingsOpen(false), isSettingsOpen);
-  useClickOutside(legendRef, () => setIsLegendOpen(false), isLegendOpen);
-  useClickOutside(controlsRef, () => setAreControlsOpen(false), areControlsOpen);
+  useClickOutside(settingsRef, closeSettings, isSettingsOpen);
+  useClickOutside(legendRef, closeLegend, isLegendOpen);
+  useClickOutside(controlsRef, closeControls, areControlsOpen);
 
   // Keep track of selected index for keyboard nav
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);

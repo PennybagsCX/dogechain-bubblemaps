@@ -62,8 +62,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Calculate time buckets for velocity calculation
-    const threeHoursAgo = new Date(now - 3 * 60 * 60 * 1000);
-    const sixHoursAgo = new Date(now - 6 * 60 * 60 * 1000);
+    const threeHoursAgo = new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString();
+    const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
 
     // Fetch recent search data with velocity calculation
     const result = await sql`
@@ -72,7 +72,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           address,
           COALESCE(SUM(search_count), 0) as recent_searches
         FROM trending_search_history
-        WHERE hour_bucket >= ${threeHoursAgo}
+        WHERE hour_bucket >= ${threeHoursAgo}::timestamp
         GROUP BY address
       ),
       previous_counts AS (
@@ -80,7 +80,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           address,
           COALESCE(SUM(search_count), 0) as previous_searches
         FROM trending_search_history
-        WHERE hour_bucket >= ${sixHoursAgo} AND hour_bucket < ${threeHoursAgo}
+        WHERE hour_bucket >= ${sixHoursAgo}::timestamp AND hour_bucket < ${threeHoursAgo}::timestamp
         GROUP BY address
       )
       SELECT

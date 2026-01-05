@@ -10,9 +10,6 @@ import {
   Network,
   Sparkles,
   Send,
-  RefreshCw,
-  ChevronDown,
-  ChevronUp,
   ShieldAlert,
 } from "lucide-react";
 import { Wallet, Transaction, AssetType } from "../types";
@@ -62,7 +59,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
     onCreateAlert,
     onTraceConnections,
   } = props;
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [_transactions, setTransactions] = useState<Transaction[]>([]);
   const [activeTab, setActiveTab] = useState<"details" | "txs">("details");
   const [copied, setCopied] = useState<boolean>(false);
   const [isTracing, setIsTracing] = useState<boolean>(false);

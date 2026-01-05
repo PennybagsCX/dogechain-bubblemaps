@@ -7,7 +7,7 @@ import { useEffect, RefObject } from "react";
  * @param isActive - Optional flag to enable/disable detection
  */
 export function useClickOutside(
-  ref: RefObject<HTMLElement>,
+  ref: RefObject<HTMLElement | null>,
   callback: () => void,
   isActive: boolean = true
 ) {

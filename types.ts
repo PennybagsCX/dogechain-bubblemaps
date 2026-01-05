@@ -1,7 +1,6 @@
-
 export enum AssetType {
-  TOKEN = 'TOKEN',
-  NFT = 'NFT'
+  TOKEN = "TOKEN",
+  NFT = "NFT",
 }
 
 export interface Token {
@@ -48,9 +47,9 @@ export interface Transaction {
 }
 
 export enum ViewState {
-  HOME = 'HOME',
-  ANALYSIS = 'ANALYSIS',
-  DASHBOARD = 'DASHBOARD',
+  HOME = "HOME",
+  ANALYSIS = "ANALYSIS",
+  DASHBOARD = "DASHBOARD",
 }
 
 export interface AlertConfig {
@@ -77,18 +76,18 @@ export interface TriggeredEvent {
 }
 
 export interface AlertStatus {
-    currentValue: number;
-    triggered: boolean;
-    checkedAt: number;
-    notified?: boolean; // Whether user has been notified about this trigger
-    // Transaction tracking
-    lastSeenTransactions?: string[]; // Array of transaction hashes we've already seen
-    newTransactions?: Transaction[]; // New transactions detected in latest scan
+  currentValue: number;
+  triggered: boolean;
+  checkedAt: number;
+  notified?: boolean; // Whether user has been notified about this trigger
+  // Transaction tracking
+  lastSeenTransactions?: string[]; // Array of transaction hashes we've already seen
+  newTransactions?: Transaction[]; // New transactions detected in latest scan
 }
 
 // Wallet Scanner Types
 export interface ScanProgressUpdate {
-  phase: 'quick' | 'deep-v2' | 'deep-v1' | 'balance-check';
+  phase: "quick" | "deep-v2" | "deep-v1" | "balance-check" | "whale-scan";
   progress: number; // 0-100
   tokens: Token[];
   nfts: Token[];

@@ -1,10 +1,30 @@
-
-import React, { useState, useEffect } from 'react';
-import { AlertConfig, AlertStatus, Transaction, TriggeredEvent } from '../types';
-import { Trash2, Bell, Plus, X, Loader2, Save, RefreshCw, AlertTriangle, ShieldCheck, Volume2, VolumeX, ArrowUpRight, ArrowDownLeft, Clock, Download, Edit } from 'lucide-react';
-import { fetchTokenBalance, fetchWalletTransactions, fetchTokenData } from '../services/dataService';
-import { exportDatabaseAsCSV } from '../services/db';
-import { validateTokenAddress, validateWalletAddress } from '../utils/validation';
+import React, { useState, useEffect } from "react";
+import { AlertConfig, AlertStatus, Transaction, TriggeredEvent } from "../types";
+import {
+  Trash2,
+  Bell,
+  Plus,
+  X,
+  Loader2,
+  Save,
+  RefreshCw,
+  AlertTriangle,
+  ShieldCheck,
+  Volume2,
+  VolumeX,
+  ArrowUpRight,
+  ArrowDownLeft,
+  Clock,
+  Download,
+  Edit,
+} from "lucide-react";
+import {
+  fetchTokenBalance,
+  fetchWalletTransactions,
+  fetchTokenData,
+} from "../services/dataService";
+import { exportDatabaseAsCSV } from "../services/db";
+import { validateTokenAddress, validateWalletAddress } from "../utils/validation";
 
 interface InAppNotification {
   id: string;
@@ -20,21 +40,29 @@ interface DashboardProps {
   statuses: Record<string, AlertStatus>;
   onUpdateStatuses: (newStatuses: Record<string, AlertStatus>) => void;
   onRemoveAlert: (id: string) => void;
-  onAddAlert: (alert: { name: string; walletAddress: string; tokenAddress?: string; threshold: number }) => Promise<void>;
-  onUpdateAlert: (id: string, alert: { name: string; walletAddress: string; tokenAddress?: string; threshold: number }) => Promise<void>;
+  onAddAlert: (alert: {
+    name: string;
+    walletAddress: string;
+    tokenAddress?: string;
+    threshold: number;
+  }) => Promise<void>;
+  onUpdateAlert: (
+    id: string,
+    alert: { name: string; walletAddress: string; tokenAddress?: string; threshold: number }
+  ) => Promise<void>;
   triggeredEvents: TriggeredEvent[];
   onTriggeredEventsChange: (events: TriggeredEvent[]) => void;
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({
-    alerts,
-    statuses,
-    onUpdateStatuses,
-    onRemoveAlert,
-    onAddAlert,
-    onUpdateAlert,
-    triggeredEvents,
-    onTriggeredEventsChange
+  alerts,
+  statuses,
+  onUpdateStatuses,
+  onRemoveAlert,
+  onAddAlert,
+  onUpdateAlert,
+  triggeredEvents,
+  onTriggeredEventsChange,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,19 +72,20 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const [editingAlertId, setEditingAlertId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
-    name: '',
-    walletAddress: '',
-    tokenAddress: '',
-    threshold: ''
+    name: "",
+    walletAddress: "",
+    tokenAddress: "",
+    threshold: "",
   });
 
-  const trackedWalletsCount = new Set(alerts.map(a => a.walletAddress)).size;
+  const trackedWalletsCount = new Set(alerts.map((a) => a.walletAddress)).size;
   const activeTriggers = Object.values(statuses).filter((s: AlertStatus) => s.triggered).length;
 
   // Find the most recent scan time
-  const lastScanTime = Object.values(statuses).length > 0
-    ? Math.max(...Object.values(statuses).map((s: AlertStatus) => s.checkedAt))
-    : null;
+  const lastScanTime =
+    Object.values(statuses).length > 0
+      ? Math.max(...Object.values(statuses).map((s: AlertStatus) => s.checkedAt))
+      : null;
 
   // --- SCAN LOGIC ---
   const playAlertSound = () => {
@@ -73,14 +102,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       // Play a pleasant notification sound
       oscillator.frequency.value = 800;
-      oscillator.type = 'sine';
+      oscillator.type = "sine";
       gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
 
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.5);
     } catch (e) {
-      console.warn('Could not play sound:', e);
+      console.warn("Could not play sound:", e);
     }
   };
 
@@ -91,75 +120,81 @@ export const Dashboard: React.FC<DashboardProps> = ({
     const newStatuses: Record<string, AlertStatus> = {};
 
     // Parallel processing for speed
-    await Promise.all(alerts.map(async (alert) => {
+    await Promise.all(
+      alerts.map(async (alert) => {
         try {
-            // Validate addresses; skip invalid to avoid repeated bad requests
+          // Validate addresses; skip invalid to avoid repeated bad requests
+          try {
+            validateWalletAddress(alert.walletAddress);
+            if (alert.tokenAddress) validateTokenAddress(alert.tokenAddress);
+          } catch (e) {
+            console.warn(`Skipping alert ${alert.id} due to invalid address`, e);
+            return;
+          }
+
+          // Ensure we have a baseline for new alerts so we don't loop forever
+          const existingStatus = statuses[alert.id];
+
+          // Fetch transactions for the wallet (needed both for init and comparisons)
+          const transactions = await fetchWalletTransactions(
+            alert.walletAddress,
+            alert.tokenAddress
+          );
+
+          // Get previously seen transactions or initialize baseline
+          const previousTxs =
+            existingStatus?.lastSeenTransactions || transactions.map((tx) => tx.hash);
+          const previousTxSet = new Set(previousTxs);
+
+          // Find new transactions (transactions we haven't seen before)
+          const newTransactions = transactions.filter((tx) => !previousTxSet.has(tx.hash));
+
+          // Create new set of all seen transactions
+          const allSeenTxs = [...new Set([...previousTxs, ...transactions.map((tx) => tx.hash)])];
+
+          // Trigger alert if we found new transactions (only after initial baseline)
+          const hasNewActivity = existingStatus ? newTransactions.length > 0 : false;
+
+          // Also fetch current balance for display
+          let currentBalance = 0;
+          if (alert.tokenAddress) {
+            // Get token info first to ensure correct decimals
             try {
-                validateWalletAddress(alert.walletAddress);
-                if (alert.tokenAddress) validateTokenAddress(alert.tokenAddress);
+              const tokenData = await fetchTokenData(alert.tokenAddress);
+              if (tokenData) {
+                currentBalance = await fetchTokenBalance(
+                  alert.walletAddress,
+                  alert.tokenAddress,
+                  tokenData.decimals
+                );
+              }
             } catch (e) {
-                console.warn(`Skipping alert ${alert.id} due to invalid address`, e);
-                return;
+              // Fallback without decimals
+              currentBalance = await fetchTokenBalance(alert.walletAddress, alert.tokenAddress);
             }
+          } else {
+            // Default to wDOGE if no token specified
+            const wDogeAddress = "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101";
+            currentBalance = await fetchTokenBalance(alert.walletAddress, wDogeAddress, 18);
+          }
 
-            // Ensure we have a baseline for new alerts so we don't loop forever
-            const existingStatus = statuses[alert.id];
-
-            // Fetch transactions for the wallet (needed both for init and comparisons)
-            const transactions = await fetchWalletTransactions(
-                alert.walletAddress,
-                alert.tokenAddress
-            );
-
-            // Get previously seen transactions or initialize baseline
-            const previousTxs = existingStatus?.lastSeenTransactions || transactions.map(tx => tx.hash);
-            const previousTxSet = new Set(previousTxs);
-
-            // Find new transactions (transactions we haven't seen before)
-            const newTransactions = transactions.filter(tx => !previousTxSet.has(tx.hash));
-
-            // Create new set of all seen transactions
-            const allSeenTxs = [...new Set([...previousTxs, ...transactions.map(tx => tx.hash)])];
-
-            // Trigger alert if we found new transactions (only after initial baseline)
-            const hasNewActivity = existingStatus ? newTransactions.length > 0 : false;
-
-            // Also fetch current balance for display
-            let currentBalance = 0;
-            if (alert.tokenAddress) {
-                // Get token info first to ensure correct decimals
-                try {
-                    const tokenData = await fetchTokenData(alert.tokenAddress);
-                    if (tokenData) {
-                        currentBalance = await fetchTokenBalance(alert.walletAddress, alert.tokenAddress, tokenData.decimals);
-                    }
-                } catch (e) {
-                    // Fallback without decimals
-                    currentBalance = await fetchTokenBalance(alert.walletAddress, alert.tokenAddress);
-                }
-            } else {
-                // Default to wDOGE if no token specified
-                const wDogeAddress = '0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101';
-                currentBalance = await fetchTokenBalance(alert.walletAddress, wDogeAddress, 18);
-            }
-
-            newStatuses[alert.id] = {
-                currentValue: currentBalance,
-                triggered: hasNewActivity,
-                checkedAt: Date.now(),
-                lastSeenTransactions: allSeenTxs,
-                newTransactions: hasNewActivity ? newTransactions : undefined
-            };
-
+          newStatuses[alert.id] = {
+            currentValue: currentBalance,
+            triggered: hasNewActivity,
+            checkedAt: Date.now(),
+            lastSeenTransactions: allSeenTxs,
+            newTransactions: hasNewActivity ? newTransactions : undefined,
+          };
         } catch (e) {
-            console.error(`Failed to check alert ${alert.id}`, e);
-             newStatuses[alert.id] = {
-                currentValue: 0,
-                triggered: false,
-                checkedAt: Date.now()
-            };
+          console.error(`Failed to check alert ${alert.id}`, e);
+          newStatuses[alert.id] = {
+            currentValue: 0,
+            triggered: false,
+            checkedAt: Date.now(),
+          };
         }
-    }));
+      })
+    );
 
     onUpdateStatuses({ ...statuses, ...newStatuses });
     setIsScanning(false);
@@ -167,12 +202,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   // Auto-scan logic: Run if we have alerts that are missing statuses (pending)
   useEffect(() => {
-      if (alerts.length > 0) {
-          const hasPending = alerts.some(a => !statuses[a.id]);
-          if (hasPending && !isScanning) {
-              runScan();
-          }
+    if (alerts.length > 0) {
+      const hasPending = alerts.some((a) => !statuses[a.id]);
+      if (hasPending && !isScanning) {
+        runScan();
       }
+    }
   }, [alerts, statuses, isScanning]);
 
   // Periodic automatic scanning every 30 seconds
@@ -181,7 +216,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     if (alerts.length === 0) return;
 
     // Request notification permission on mount
-    if ('Notification' in window && Notification.permission === 'default') {
+    if ("Notification" in window && Notification.permission === "default") {
       Notification.requestPermission();
     }
 
@@ -204,19 +239,25 @@ export const Dashboard: React.FC<DashboardProps> = ({
   // Show browser notifications when alerts trigger
   useEffect(() => {
     // Get currently triggered alerts
-    const triggeredAlerts = alerts.filter(alert => {
+    const triggeredAlerts = alerts.filter((alert) => {
       const status = statuses[alert.id];
-      return status && status.triggered && status.newTransactions && status.newTransactions.length > 0;
+      return (
+        status && status.triggered && status.newTransactions && status.newTransactions.length > 0
+      );
     });
 
     // Process each triggered alert's new transactions
-    triggeredAlerts.forEach(alert => {
+    triggeredAlerts.forEach((alert) => {
       const status = statuses[alert.id];
       if (!status || !status.newTransactions) return;
 
       // Save triggered event to history (once per alert trigger)
       const eventId = `event-${alert.id}-${Date.now()}`;
-      const alreadyRecorded = triggeredEvents.some(e => e.alertId === alert.id && e.transactions.some(t => status.newTransactions?.some(nt => nt.hash === t.hash)));
+      const alreadyRecorded = triggeredEvents.some(
+        (e) =>
+          e.alertId === alert.id &&
+          e.transactions.some((t) => status.newTransactions?.some((nt) => nt.hash === t.hash))
+      );
 
       if (!alreadyRecorded) {
         const triggeredEvent: TriggeredEvent = {
@@ -228,18 +269,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
           tokenSymbol: alert.tokenSymbol,
           transactions: status.newTransactions,
           triggeredAt: Date.now(),
-          notified: true
+          notified: true,
         };
 
         // Add to triggered events history (keep last 100)
         onTriggeredEventsChange([triggeredEvent, ...triggeredEvents].slice(0, 100));
       }
 
-      status.newTransactions.forEach(tx => {
+      status.newTransactions.forEach((tx) => {
         const notifId = `notif-${alert.id}-${tx.hash}`;
 
         // Check if we already created a notification for this transaction
-        const alreadyNotified = inAppNotifications.some(n => n.id === notifId);
+        const alreadyNotified = inAppNotifications.some((n) => n.id === notifId);
         if (alreadyNotified) return;
 
         // Play sound
@@ -247,15 +288,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
         // Determine transaction direction
         const isIncoming = tx.to.toLowerCase() === alert.walletAddress.toLowerCase();
-        const txDirection = isIncoming ? 'INCOMING' : 'OUTGOING';
+        const txDirection = isIncoming ? "INCOMING" : "OUTGOING";
 
         // Try browser notification first
-        if ('Notification' in window && Notification.permission === 'granted') {
+        if ("Notification" in window && Notification.permission === "granted") {
           const notification = new Notification(`${txDirection}: ${alert.name}`, {
-            body: `${tx.value.toLocaleString()} ${tx.tokenSymbol || 'tokens'}\nFrom: ${tx.from.slice(0, 8)}...\nTo: ${tx.to.slice(0, 8)}...`,
-            icon: '/favicon.ico',
+            body: `${tx.value.toLocaleString()} ${tx.tokenSymbol || "tokens"}\nFrom: ${tx.from.slice(0, 8)}...\nTo: ${tx.to.slice(0, 8)}...`,
+            icon: "/favicon.ico",
             tag: notifId,
-            requireInteraction: true
+            requireInteraction: true,
           });
 
           notification.onclick = () => {
@@ -270,10 +311,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
             alertName: alert.name,
             walletAddress: alert.walletAddress,
             transaction: tx,
-            timestamp: Date.now()
+            timestamp: Date.now(),
           };
 
-          setInAppNotifications(prev => [inAppNotif, ...prev].slice(0, 10));
+          setInAppNotifications((prev) => [inAppNotif, ...prev].slice(0, 10));
         } else {
           // Fallback to in-app notification only
           const inAppNotif: InAppNotification = {
@@ -282,17 +323,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
             alertName: alert.name,
             walletAddress: alert.walletAddress,
             transaction: tx,
-            timestamp: Date.now()
+            timestamp: Date.now(),
           };
 
-          setInAppNotifications(prev => [inAppNotif, ...prev].slice(0, 10));
+          setInAppNotifications((prev) => [inAppNotif, ...prev].slice(0, 10));
         }
       });
 
       // Mark transactions as notified by clearing newTransactions array
       onUpdateStatuses({
         ...statuses,
-        [alert.id]: { ...status, newTransactions: undefined }
+        [alert.id]: { ...status, newTransactions: undefined },
       });
     });
   }, [statuses, alerts, inAppNotifications, triggeredEvents, onTriggeredEventsChange]);
@@ -309,7 +350,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           name: formData.name,
           walletAddress: formData.walletAddress,
           tokenAddress: formData.tokenAddress || undefined,
-          threshold: parseFloat(formData.threshold)
+          threshold: parseFloat(formData.threshold),
         });
       } else {
         // Create new alert
@@ -317,12 +358,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
           name: formData.name,
           walletAddress: formData.walletAddress,
           tokenAddress: formData.tokenAddress || undefined,
-          threshold: parseFloat(formData.threshold)
+          threshold: parseFloat(formData.threshold),
         });
       }
       setIsModalOpen(false);
       setEditingAlertId(null);
-      setFormData({ name: '', walletAddress: '', tokenAddress: '', threshold: '' });
+      setFormData({ name: "", walletAddress: "", tokenAddress: "", threshold: "" });
     } catch (error) {
       console.error("Failed to save alert", error);
     } finally {
@@ -335,8 +376,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
     setFormData({
       name: alert.name,
       walletAddress: alert.walletAddress,
-      tokenAddress: alert.tokenAddress || '',
-      threshold: alert.threshold.toString()
+      tokenAddress: alert.tokenAddress || "",
+      threshold: alert.threshold.toString(),
     });
     setIsModalOpen(true);
   };
@@ -344,7 +385,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const closeModal = () => {
     setIsModalOpen(false);
     setEditingAlertId(null);
-    setFormData({ name: '', walletAddress: '', tokenAddress: '', threshold: '' });
+    setFormData({ name: "", walletAddress: "", tokenAddress: "", threshold: "" });
   };
 
   // Export data
@@ -352,16 +393,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
     try {
       const blob = await exportDatabaseAsCSV();
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = `dogechain-bubblemaps-backup-${new Date().toISOString().split('T')[0]}.csv`;
+      a.download = `dogechain-bubblemaps-backup-${new Date().toISOString().split("T")[0]}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('Failed to export data:', error);
-      alert('Failed to export data. Please try again.');
+      console.error("Failed to export data:", error);
+      alert("Failed to export data. Please try again.");
     }
   };
 
@@ -370,44 +411,52 @@ export const Dashboard: React.FC<DashboardProps> = ({
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <h1 className="text-3xl font-bold text-white">My Dashboard</h1>
         <div className="flex gap-3 w-full sm:w-auto flex-wrap">
-            <button
-                onClick={runScan}
-                disabled={isScanning || alerts.length === 0}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-space-800 border border-space-700 text-slate-300 rounded-lg hover:bg-space-700 hover:text-white hover:border-space-600 transition-colors disabled:opacity-50"
-            >
-                <RefreshCw size={18} className={isScanning ? "animate-spin" : ""} />
-                {isScanning ? 'Scanning...' : 'Scan Now'}
-            </button>
-            <button
+          <button
+            onClick={runScan}
+            disabled={isScanning || alerts.length === 0}
+            className="flex items-center justify-center gap-2 px-4 py-2 bg-space-800 border border-space-700 text-slate-300 rounded-lg hover:bg-space-700 hover:text-white hover:border-space-600 transition-colors disabled:opacity-50"
+          >
+            <RefreshCw size={18} className={isScanning ? "animate-spin" : ""} />
+            {isScanning ? "Scanning..." : "Scan Now"}
+          </button>
+          <button
             onClick={() => setIsModalOpen(true)}
             className="flex items-center justify-center gap-2 px-4 py-2 bg-doge-600 text-white rounded-lg hover:bg-doge-500 transition-colors shadow-lg shadow-doge-600/20"
-            >
+          >
             <Plus size={18} /> New Alert
-            </button>
-            <button
-              onClick={() => setSoundEnabled(!soundEnabled)}
-              className="flex items-center justify-center gap-2 px-3 py-2 bg-space-800 text-slate-300 rounded-lg hover:bg-space-700 hover:text-white transition-colors"
-              title={soundEnabled ? "Mute notifications" : "Enable notification sound"}
-            >
-              {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
-            </button>
-            <button
-              onClick={handleExport}
-              className="flex items-center justify-center gap-2 px-3 py-2 bg-space-800 text-slate-300 rounded-lg hover:bg-space-700 hover:text-white transition-colors"
-              title="Export all data as CSV"
-            >
-              <Download size={18} />
-            </button>
+          </button>
+          <button
+            onClick={() => setSoundEnabled(!soundEnabled)}
+            className="flex items-center justify-center gap-2 px-3 py-2 bg-space-800 text-slate-300 rounded-lg hover:bg-space-700 hover:text-white transition-colors"
+            title={soundEnabled ? "Mute notifications" : "Enable notification sound"}
+          >
+            {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
+          </button>
+          <button
+            onClick={handleExport}
+            className="flex items-center justify-center gap-2 px-3 py-2 bg-space-800 text-slate-300 rounded-lg hover:bg-space-700 hover:text-white transition-colors"
+            title="Export all data as CSV"
+          >
+            <Download size={18} />
+          </button>
         </div>
       </div>
 
       {/* In-App Notifications */}
       {inAppNotifications.length > 0 && (
         <div className="mb-6 space-y-3">
-          {inAppNotifications.map(notif => {
-            const isIncoming = notif.transaction && notif.transaction.to.toLowerCase() === notif.walletAddress.toLowerCase();
-            const txColor = isIncoming ? 'from-green-900/30 to-green-800/30 border-green-500/50' : 'from-red-900/30 to-orange-900/30 border-red-500/50';
-            const txIcon = isIncoming ? <ArrowDownLeft size={20} className="text-green-400" /> : <ArrowUpRight size={20} className="text-red-400" />;
+          {inAppNotifications.map((notif) => {
+            const isIncoming =
+              notif.transaction &&
+              notif.transaction.to.toLowerCase() === notif.walletAddress.toLowerCase();
+            const txColor = isIncoming
+              ? "from-green-900/30 to-green-800/30 border-green-500/50"
+              : "from-red-900/30 to-orange-900/30 border-red-500/50";
+            const txIcon = isIncoming ? (
+              <ArrowDownLeft size={20} className="text-green-400" />
+            ) : (
+              <ArrowUpRight size={20} className="text-red-400" />
+            );
 
             return (
               <div
@@ -416,27 +465,40 @@ export const Dashboard: React.FC<DashboardProps> = ({
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3 flex-1">
-                    <div className={`p-2 rounded-lg ${isIncoming ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+                    <div
+                      className={`p-2 rounded-lg ${isIncoming ? "bg-green-500/20" : "bg-red-500/20"}`}
+                    >
                       {txIcon}
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <h4 className="font-bold text-white">{notif.alertName}</h4>
-                        <span className={`text-xs px-2 py-0.5 rounded-full ${isIncoming ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
-                          {isIncoming ? 'RECEIVED' : 'SENT'}
+                        <span
+                          className={`text-xs px-2 py-0.5 rounded-full ${isIncoming ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}`}
+                        >
+                          {isIncoming ? "RECEIVED" : "SENT"}
                         </span>
                       </div>
                       {notif.transaction && (
                         <>
                           <p className="text-lg font-bold text-white mb-1">
-                            {notif.transaction.value.toLocaleString()} {notif.transaction.tokenSymbol || 'tokens'}
+                            {notif.transaction.value.toLocaleString()}{" "}
+                            {notif.transaction.tokenSymbol || "tokens"}
                           </p>
                           <div className="space-y-1 text-sm">
                             <p className="text-slate-300">
-                              <span className="text-slate-400">From:</span> <code className="text-purple-400">{notif.transaction.from.slice(0, 8)}...{notif.transaction.from.slice(-6)}</code>
+                              <span className="text-slate-400">From:</span>{" "}
+                              <code className="text-purple-400">
+                                {notif.transaction.from.slice(0, 8)}...
+                                {notif.transaction.from.slice(-6)}
+                              </code>
                             </p>
                             <p className="text-slate-300">
-                              <span className="text-slate-400">To:</span> <code className="text-purple-400">{notif.transaction.to.slice(0, 8)}...{notif.transaction.to.slice(-6)}</code>
+                              <span className="text-slate-400">To:</span>{" "}
+                              <code className="text-purple-400">
+                                {notif.transaction.to.slice(0, 8)}...
+                                {notif.transaction.to.slice(-6)}
+                              </code>
                             </p>
                             <p className="text-xs text-slate-500 mt-1">
                               {new Date(notif.transaction.timestamp).toLocaleString()}
@@ -444,16 +506,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
                           </div>
                         </>
                       )}
-                      </div>
                     </div>
-                    <button
-                      onClick={() => setInAppNotifications(prev => prev.filter(n => n.id !== notif.id))}
-                      className="flex-none p-1 hover:bg-black/20 rounded-lg transition-colors text-slate-400 hover:text-white"
-                    >
-                      <X size={18} />
-                    </button>
                   </div>
+                  <button
+                    onClick={() =>
+                      setInAppNotifications((prev) => prev.filter((n) => n.id !== notif.id))
+                    }
+                    className="flex-none p-1 hover:bg-black/20 rounded-lg transition-colors text-slate-400 hover:text-white"
+                  >
+                    <X size={18} />
+                  </button>
                 </div>
+              </div>
             );
           })}
         </div>
@@ -465,18 +529,22 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <p className="text-3xl font-bold text-white mt-2">{trackedWalletsCount}</p>
         </div>
         <div className="p-6 bg-space-800 rounded-xl border border-space-700">
-            <p className="text-slate-400 text-sm">Active Alerts</p>
-            <p className="text-3xl font-bold text-white mt-2">{alerts.length}</p>
+          <p className="text-slate-400 text-sm">Active Alerts</p>
+          <p className="text-3xl font-bold text-white mt-2">{alerts.length}</p>
         </div>
         <div className="p-6 bg-space-800 rounded-xl border border-space-700 relative overflow-hidden">
-            {activeTriggers > 0 && (
-                <div className="absolute top-0 right-0 w-16 h-16 bg-red-500/20 rounded-bl-full -mr-8 -mt-8"></div>
-            )}
-            <p className="text-slate-400 text-sm">Triggered Events</p>
-            <div className="flex items-center gap-2 mt-2">
-                <p className={`text-3xl font-bold ${activeTriggers > 0 ? 'text-red-500' : 'text-green-500'}`}>{activeTriggers}</p>
-                {activeTriggers > 0 && <AlertTriangle size={24} className="text-red-500" />}
-            </div>
+          {activeTriggers > 0 && (
+            <div className="absolute top-0 right-0 w-16 h-16 bg-red-500/20 rounded-bl-full -mr-8 -mt-8"></div>
+          )}
+          <p className="text-slate-400 text-sm">Triggered Events</p>
+          <div className="flex items-center gap-2 mt-2">
+            <p
+              className={`text-3xl font-bold ${activeTriggers > 0 ? "text-red-500" : "text-green-500"}`}
+            >
+              {activeTriggers}
+            </p>
+            {activeTriggers > 0 && <AlertTriangle size={24} className="text-red-500" />}
+          </div>
         </div>
       </div>
 
@@ -489,7 +557,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </h2>
             <button
               onClick={() => {
-                if (confirm('Clear all event history?')) {
+                if (confirm("Clear all event history?")) {
                   onTriggeredEventsChange([]);
                 }
               }}
@@ -499,7 +567,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </button>
           </div>
           <div className="space-y-3">
-            {triggeredEvents.slice(0, 10).map(event => (
+            {triggeredEvents.slice(0, 10).map((event) => (
               <div key={event.id} className="bg-space-800 rounded-xl border border-space-700 p-6">
                 <div className="flex items-start justify-between mb-3">
                   <div>
@@ -509,23 +577,32 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     </p>
                   </div>
                   <span className="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400">
-                    {event.transactions.length} {event.transactions.length === 1 ? 'Transaction' : 'Transactions'}
+                    {event.transactions.length}{" "}
+                    {event.transactions.length === 1 ? "Transaction" : "Transactions"}
                   </span>
                 </div>
                 <div className="space-y-2">
                   {event.transactions.slice(0, 3).map((tx, idx) => {
                     const isIncoming = tx.to.toLowerCase() === event.walletAddress.toLowerCase();
                     return (
-                      <div key={idx} className={`flex items-center gap-3 p-2 rounded-lg ${isIncoming ? 'bg-green-500/10' : 'bg-red-500/10'}`}>
+                      <div
+                        key={idx}
+                        className={`flex items-center gap-3 p-2 rounded-lg ${isIncoming ? "bg-green-500/10" : "bg-red-500/10"}`}
+                      >
                         <div className="flex-none">
-                          {isIncoming ? <ArrowDownLeft size={16} className="text-green-400" /> : <ArrowUpRight size={16} className="text-red-400" />}
+                          {isIncoming ? (
+                            <ArrowDownLeft size={16} className="text-green-400" />
+                          ) : (
+                            <ArrowUpRight size={16} className="text-red-400" />
+                          )}
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-white truncate">
-                            {tx.value.toLocaleString()} {tx.tokenSymbol || 'tokens'}
+                            {tx.value.toLocaleString()} {tx.tokenSymbol || "tokens"}
                           </p>
                           <p className="text-xs text-slate-500">
-                            {isIncoming ? 'From' : 'To'}: {isIncoming ? tx.from : tx.to.slice(0, 10)}...
+                            {isIncoming ? "From" : "To"}:{" "}
+                            {isIncoming ? tx.from : tx.to.slice(0, 10)}...
                           </p>
                         </div>
                       </div>
@@ -545,101 +622,119 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <Bell size={20} /> Alert Configurations
+          <Bell size={20} /> Alert Configurations
         </h2>
         {lastScanTime && (
-            <span className="text-xs text-slate-500">Last scanned: {new Date(lastScanTime).toLocaleTimeString()}</span>
+          <span className="text-xs text-slate-500">
+            Last scanned: {new Date(lastScanTime).toLocaleTimeString()}
+          </span>
         )}
       </div>
 
       {alerts.length === 0 ? (
-          <div className="bg-space-800 rounded-xl border border-space-700 p-12 text-center">
-            <ShieldCheck size={48} className="text-slate-600 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-white mb-2">No Alerts Configured</h3>
-            <p className="text-slate-400 mb-6">Create your first alert to start monitoring wallet activity.</p>
-            <button
-                onClick={() => setIsModalOpen(true)}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-doge-600 text-white rounded-lg hover:bg-doge-500 transition-colors shadow-lg shadow-doge-600/20"
-            >
-                <Plus size={18} /> Create Alert
-            </button>
-          </div>
+        <div className="bg-space-800 rounded-xl border border-space-700 p-12 text-center">
+          <ShieldCheck size={48} className="text-slate-600 mx-auto mb-4" />
+          <h3 className="text-xl font-bold text-white mb-2">No Alerts Configured</h3>
+          <p className="text-slate-400 mb-6">
+            Create your first alert to start monitoring wallet activity.
+          </p>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-doge-600 text-white rounded-lg hover:bg-doge-500 transition-colors shadow-lg shadow-doge-600/20"
+          >
+            <Plus size={18} /> Create Alert
+          </button>
+        </div>
       ) : (
-          <div className="bg-space-800 rounded-xl border border-space-700 overflow-hidden">
-            <div className="overflow-x-auto">
-                <table className="w-full">
-                    <thead className="bg-space-900 border-b border-space-700">
-                        <tr>
-                            <th className="text-left px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Alert Name</th>
-                            <th className="text-left px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Wallet</th>
-                            <th className="text-left px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Status</th>
-                            <th className="text-right px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-space-700">
-                        {alerts.map(alert => {
-                            const status = statuses[alert.id];
-                            return (
-                                <tr key={alert.id} className="hover:bg-space-700/50 transition-colors">
-                                    <td className="px-6 py-4">
-                                        <div className="text-sm font-medium text-white">{alert.name}</div>
-                                        <div className="text-xs text-slate-500 mt-1">
-                                            Threshold: {alert.threshold.toLocaleString()}
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <div className="text-sm font-mono text-slate-300">
-                                            {alert.walletAddress.slice(0, 8)}...{alert.walletAddress.slice(-6)}
-                                        </div>
-                                        {alert.tokenAddress && (
-                                            <div className="text-xs text-purple-400 mt-1">
-                                                Token: {alert.tokenSymbol || alert.tokenName || alert.tokenAddress.slice(0, 8)}
-                                            </div>
-                                        )}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {status ? (
-                                            <div className="flex items-center gap-2">
-                                                <span className={`inline-flex items-center px-2 py-1 text-xs font-bold rounded-full ${
-                                                    status.triggered
-                                                        ? 'bg-red-500/20 text-red-400'
-                                                        : 'bg-green-500/20 text-green-400'
-                                                }`}>
-                                                    {status.triggered ? 'Triggered' : 'Normal'}
-                                                </span>
-                                                <span className="text-xs text-slate-500">
-                                                    {triggeredEvents.filter(e => e.alertId === alert.id).length} {triggeredEvents.filter(e => e.alertId === alert.id).length === 1 ? 'event' : 'events'}
-                                                </span>
-                                            </div>
-                                        ) : (
-                                            <span className="inline-flex items-center px-2 py-1 text-xs font-bold rounded-full bg-slate-500/20 text-slate-400">
-                                                Pending
-                                            </span>
-                                        )}
-                                    </td>
-                                    <td className="px-6 py-4 text-right">
-                                        <button
-                                            onClick={() => openEditModal(alert)}
-                                            className="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg transition-colors mr-1"
-                                            title="Edit alert"
-                                        >
-                                            <Edit size={16} />
-                                        </button>
-                                        <button
-                                            onClick={() => onRemoveAlert(alert.id)}
-                                            className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
-                                            title="Remove alert"
-                                        >
-                                            <Trash2 size={16} />
-                                        </button>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </div>
+        <div className="bg-space-800 rounded-xl border border-space-700 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-space-900 border-b border-space-700">
+                <tr>
+                  <th className="text-left px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    Alert Name
+                  </th>
+                  <th className="text-left px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    Wallet
+                  </th>
+                  <th className="text-left px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="text-right px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-space-700">
+                {alerts.map((alert) => {
+                  const status = statuses[alert.id];
+                  return (
+                    <tr key={alert.id} className="hover:bg-space-700/50 transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="text-sm font-medium text-white">{alert.name}</div>
+                        <div className="text-xs text-slate-500 mt-1">
+                          Threshold: {alert.threshold.toLocaleString()}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm font-mono text-slate-300">
+                          {alert.walletAddress.slice(0, 8)}...{alert.walletAddress.slice(-6)}
+                        </div>
+                        {alert.tokenAddress && (
+                          <div className="text-xs text-purple-400 mt-1">
+                            Token:{" "}
+                            {alert.tokenSymbol || alert.tokenName || alert.tokenAddress.slice(0, 8)}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-6 py-4">
+                        {status ? (
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`inline-flex items-center px-2 py-1 text-xs font-bold rounded-full ${
+                                status.triggered
+                                  ? "bg-red-500/20 text-red-400"
+                                  : "bg-green-500/20 text-green-400"
+                              }`}
+                            >
+                              {status.triggered ? "Triggered" : "Normal"}
+                            </span>
+                            <span className="text-xs text-slate-500">
+                              {triggeredEvents.filter((e) => e.alertId === alert.id).length}{" "}
+                              {triggeredEvents.filter((e) => e.alertId === alert.id).length === 1
+                                ? "event"
+                                : "events"}
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="inline-flex items-center px-2 py-1 text-xs font-bold rounded-full bg-slate-500/20 text-slate-400">
+                            Pending
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <button
+                          onClick={() => openEditModal(alert)}
+                          className="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg transition-colors mr-1"
+                          title="Edit alert"
+                        >
+                          <Edit size={16} />
+                        </button>
+                        <button
+                          onClick={() => onRemoveAlert(alert.id)}
+                          className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                          title="Remove alert"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
+        </div>
       )}
 
       {/* New Alert Modal */}
@@ -647,7 +742,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 animate-in fade-in duration-200">
           <div className="bg-space-800 rounded-xl border border-space-700 shadow-2xl w-full max-w-md overflow-hidden">
             <div className="p-6 border-b border-space-700 flex justify-between items-center">
-              <h3 className="text-xl font-bold text-white">{editingAlertId ? 'Edit Alert' : 'Create New Alert'}</h3>
+              <h3 className="text-xl font-bold text-white">
+                {editingAlertId ? "Edit Alert" : "Create New Alert"}
+              </h3>
               <button
                 onClick={closeModal}
                 className="text-slate-400 hover:text-white transition-colors"
@@ -657,77 +754,105 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </div>
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Alert Name
+                <label
+                  htmlFor="alert-name"
+                  className="block text-sm font-medium text-slate-300 mb-2"
+                >
+                  Alert Name
                 </label>
                 <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-space-600"
-                    placeholder="e.g., My Wallet Monitor"
-                    required
+                  id="alert-name"
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-space-600"
+                  placeholder="e.g., My Wallet Monitor"
+                  required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Wallet Address
+                <label
+                  htmlFor="wallet-address"
+                  className="block text-sm font-medium text-slate-300 mb-2"
+                >
+                  Wallet Address
                 </label>
                 <input
-                    type="text"
-                    value={formData.walletAddress}
-                    onChange={(e) => setFormData({...formData, walletAddress: e.target.value})}
-                    className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white font-mono placeholder-slate-500 focus:outline-none focus:border-space-600"
-                    placeholder="0x..."
-                    required
+                  id="wallet-address"
+                  type="text"
+                  value={formData.walletAddress}
+                  onChange={(e) => setFormData({ ...formData, walletAddress: e.target.value })}
+                  className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white font-mono placeholder-slate-500 focus:outline-none focus:border-space-600"
+                  placeholder="0x..."
+                  required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Token Address (Optional)
+                <label
+                  htmlFor="token-address"
+                  className="block text-sm font-medium text-slate-300 mb-2"
+                >
+                  Token Address (Optional)
                 </label>
                 <input
-                    type="text"
-                    value={formData.tokenAddress}
-                    onChange={(e) => setFormData({...formData, tokenAddress: e.target.value})}
-                    className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white font-mono placeholder-slate-500 focus:outline-none focus:border-space-600"
-                    placeholder="0x... (leave blank for general monitoring)"
+                  id="token-address"
+                  type="text"
+                  value={formData.tokenAddress}
+                  onChange={(e) => setFormData({ ...formData, tokenAddress: e.target.value })}
+                  className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white font-mono placeholder-slate-500 focus:outline-none focus:border-space-600"
+                  placeholder="0x... (leave blank for general monitoring)"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Threshold Amount
+                <label
+                  htmlFor="threshold-amount"
+                  className="block text-sm font-medium text-slate-300 mb-2"
+                >
+                  Threshold Amount
                 </label>
                 <input
-                    type="number"
-                    step="any"
-                    value={formData.threshold}
-                    onChange={(e) => setFormData({...formData, threshold: e.target.value})}
-                    className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-space-600"
-                    placeholder="1000"
-                    required
+                  id="threshold-amount"
+                  type="number"
+                  step="any"
+                  value={formData.threshold}
+                  onChange={(e) => setFormData({ ...formData, threshold: e.target.value })}
+                  className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-space-600"
+                  placeholder="1000"
+                  required
                 />
-                <p className="text-xs text-slate-500 mt-1">Alert when balance changes by this amount</p>
+                <p className="text-xs text-slate-500 mt-1">
+                  Alert when balance changes by this amount
+                </p>
               </div>
 
               <div className="flex gap-3 pt-4">
                 <button
-                    type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="flex-1 px-4 py-2 bg-space-700 text-slate-300 rounded-lg hover:bg-space-600 transition-colors"
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="flex-1 px-4 py-2 bg-space-700 text-slate-300 rounded-lg hover:bg-space-600 transition-colors"
                 >
-                    Cancel
+                  Cancel
                 </button>
                 <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="flex-1 px-4 py-2 bg-doge-600 text-white rounded-lg hover:bg-doge-500 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex-1 px-4 py-2 bg-doge-600 text-white rounded-lg hover:bg-doge-500 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                    {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
-                    {isSubmitting ? (editingAlertId ? 'Updating...' : 'Creating...') : (editingAlertId ? 'Update Alert' : 'Create Alert')}
+                  {isSubmitting ? (
+                    <Loader2 size={16} className="animate-spin" />
+                  ) : (
+                    <Save size={16} />
+                  )}
+                  {isSubmitting
+                    ? editingAlertId
+                      ? "Updating..."
+                      : "Creating..."
+                    : editingAlertId
+                      ? "Update Alert"
+                      : "Create Alert"}
                 </button>
               </div>
             </form>

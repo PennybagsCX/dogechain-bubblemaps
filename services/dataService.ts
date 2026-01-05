@@ -688,7 +688,7 @@ export const fetchWalletTransactions = async (
     const offsets = [100, 500, 1000, 2500];
 
     for (let i = 0; i < offsets.length; i++) {
-      const offset = offsets[i];
+      const offset = offsets[i]!;
       console.log(
         `[fetchWalletTransactions] Attempting offset ${offset} for ${cleanWallet.slice(0, 8)}...`
       );
@@ -1479,6 +1479,8 @@ export const fetchWalletAssetsHybrid = async (
                   type: type === AssetType.NFT ? "NFT" : "TOKEN",
                   symbol: cached?.symbol,
                   name: cached?.name,
+                  discoveredAt: Date.now(),
+                  lastSeenAt: Date.now(),
                 });
               }
             } catch (e) {

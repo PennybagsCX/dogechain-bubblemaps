@@ -8,15 +8,13 @@ interface RateLimitConfig {
   windowMs: number; // Time window in milliseconds
 }
 
-interface RequestQueue {
+export interface RequestQueue {
   timestamp: number;
   promise: Promise<unknown>;
 }
 
 export class RateLimiter {
   private requests: number[] = [];
-  private queue: RequestQueue[] = [];
-  private processing: boolean = false;
   private config: RateLimitConfig;
 
   constructor(config: RateLimitConfig) {
@@ -30,9 +28,7 @@ export class RateLimiter {
     const now = Date.now();
 
     // Remove timestamps outside the current window
-    this.requests = this.requests.filter(
-      (timestamp) => now - timestamp < this.config.windowMs
-    );
+    this.requests = this.requests.filter((timestamp) => now - timestamp < this.config.windowMs);
 
     return this.requests.length < this.config.maxRequests;
   }
@@ -72,9 +68,7 @@ export class RateLimiter {
    */
   getStats(): { used: number; remaining: number; resetTime: number } {
     const now = Date.now();
-    this.requests = this.requests.filter(
-      (timestamp) => now - timestamp < this.config.windowMs
-    );
+    this.requests = this.requests.filter((timestamp) => now - timestamp < this.config.windowMs);
 
     const oldestRequest = this.requests.length > 0 ? Math.min(...this.requests) : now;
     const resetTime = oldestRequest + this.config.windowMs;
@@ -91,7 +85,6 @@ export class RateLimiter {
    */
   reset(): void {
     this.requests = [];
-    this.queue = [];
   }
 }
 
@@ -126,10 +119,7 @@ export class TokenBucket {
     const tokensToAdd = Math.floor(elapsed / this.config.refillInterval);
 
     if (tokensToAdd > 0) {
-      this.tokens = Math.min(
-        this.config.maxTokens,
-        this.tokens + tokensToAdd
-      );
+      this.tokens = Math.min(this.config.maxTokens, this.tokens + tokensToAdd);
       this.lastRefill = now;
     }
   }
@@ -200,14 +190,14 @@ export const fetchWithRateLimit = async (
     const response = await fetch(url, {
       ...options,
       headers: {
-        'Accept': 'application/json',
+        Accept: "application/json",
         ...options?.headers,
       },
     });
 
     // Handle rate limiting from server (429 Too Many Requests)
     if (response.status === 429) {
-      const retryAfter = response.headers.get('Retry-After');
+      const retryAfter = response.headers.get("Retry-After");
       const waitTime = retryAfter ? parseInt(retryAfter) * 1000 : 5000;
 
       console.warn(`Rate limited. Waiting ${waitTime}ms before retry...`);
@@ -325,7 +315,7 @@ export class AdaptiveRequestScheduler {
       const waitTime = Math.max(delay - timeSinceLastRequest, 500);
 
       if (waitTime > 0) {
-        await new Promise(resolve => setTimeout(resolve, waitTime));
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
       }
 
       const request = this.queue.shift();
@@ -338,7 +328,7 @@ export class AdaptiveRequestScheduler {
         if (error.status === 429) {
           // Wait 60 seconds and retry
           console.warn(`Rate limit hit. Waiting 60s before retry...`);
-          await new Promise(resolve => setTimeout(resolve, 60000));
+          await new Promise((resolve) => setTimeout(resolve, 60000));
 
           // Re-queue the failed request
           this.queue.unshift(request);
@@ -360,9 +350,9 @@ export class AdaptiveRequestScheduler {
  * Priority levels for request queue
  */
 export enum RequestPriority {
-  HIGH = 0,    // User actions
-  MEDIUM = 1,  // Active scan
-  LOW = 2      // Background tasks
+  HIGH = 0, // User actions
+  MEDIUM = 1, // Active scan
+  LOW = 2, // Background tasks
 }
 
 /**
@@ -424,6 +414,6 @@ export class PriorityRequestQueue {
   }
 
   clear() {
-    this.queues.forEach(queue => queue.length = 0);
+    this.queues.forEach((queue) => (queue.length = 0));
   }
 }

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual Factory Entry - Dogechain DEX Scanner</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 30px;
+    }
+
+    h1 {
+      color: #1f2937;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      margin-bottom: 30px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 16px;
+      font-family: monospace;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    button.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    button.secondary {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    button.secondary:hover {
+      background: #e5e7eb;
+    }
+
+    button.danger {
+      background: #ef4444;
+      color: white;
+    }
+
+    button.danger:hover {
+      background: #dc2626;
+    }
+
+    .factory-list {
+      margin-top: 30px;
+    }
+
+    .factory-item {
+      background: #f9fafb;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .factory-info {
+      flex: 1;
+    }
+
+    .factory-name {
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 4px;
+    }
+
+    .factory-address {
+      font-family: monospace;
+      font-size: 0.9em;
+      color: #6b7280;
+    }
+
+    .remove-btn {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .log-container {
+      background: #1f2937;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 30px;
+      max-height: 300px;
+      overflow-y: auto;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    .log-entry {
+      margin-bottom: 6px;
+      color: #e5e7eb;
+    }
+
+    .log-entry.success {
+      color: #10b981;
+    }
+
+    .log-entry.error {
+      color: #ef4444;
+    }
+
+    .log-entry.info {
+      color: #3b82f6;
+    }
+
+    .suggestions {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 4px;
+    }
+
+    .suggestions h3 {
+      color: #1e40af;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .suggestions ul {
+      margin-left: 20px;
+      color: #1e40af;
+    }
+
+    .suggestions li {
+      margin-bottom: 5px;
+    }
+
+    .dex-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .dex-item {
+      background: white;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #dbeafe;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .dex-item:hover {
+      background: #eff6ff;
+      border-color: #3b82f6;
+    }
+
+    .dex-name {
+      font-weight: 600;
+      color: #1e40af;
+      margin-bottom: 5px;
+    }
+
+    .dex-address {
+      font-family: monospace;
+      font-size: 0.85em;
+      color: #6b7280;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🏭 Manual Factory Entry</h1>
+    <p class="subtitle">Add DEX factory addresses manually, then scan for all LP pairs</p>
+
+    <div class="input-group">
+      <label for="factoryName">DEX Name</label>
+      <input type="text" id="factoryName" placeholder="e.g., Yodeswap, Kibbleswap, Dogeswap">
+    </div>
+
+    <div class="input-group">
+      <label for="factoryAddress">Factory Address</label>
+      <input type="text" id="factoryAddress" placeholder="0x..." maxlength="42">
+    </div>
+
+    <div class="button-group">
+      <button class="primary" onclick="addFactory()">Add Factory</button>
+      <button class="secondary" onclick="clearForm()">Clear</button>
+    </div>
+
+    <div class="factory-list">
+      <h3 style="margin-bottom: 15px; color: #1f2937;">Added Factories (<span id="factoryCount">0</span>)</h3>
+      <div id="factoryListContainer"></div>
+    </div>
+
+    <div class="button-group">
+      <button class="primary" onclick="scanAllFactories()">🔍 Scan All Factories for LP Pairs</button>
+      <button class="danger" onclick="clearAllFactories()">🗑️ Clear All</button>
+    </div>
+
+    <div class="suggestions">
+      <h3>💡 Known Dogechain DEX Addresses</h3>
+      <p style="color: #1e40af; margin-bottom: 10px;">Click to auto-add:</p>
+      <div class="dex-list" id="knownDexList">
+        <!-- Will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <div class="log-container" id="logContainer">
+      <div class="log-entry info">Ready to add factories...</div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { saveLPPairs, loadAllLPPairs } from './services/db.ts';
+    import { saveDiscoveredFactories } from './services/db.ts';
+    import { PAIR_CREATED_EVENT_SIGNATURE } from './services/knownFactories.js';
+
+    const EXPLORER_API_V1 = "https://explorer.dogechain.dog/api";
+
+    // Known DEXes on Dogechain
+    const KNOWN_DEXES = [
+      { name: "ChewySwap", address: "0x7C10a3b7EcD42dd7D79C0b9d58dDB812f92B574A" },
+      { name: "QuickSwap", address: "0xC3550497E591Ac6ed7a7E03ffC711CfB7412E57F" },
+      { name: "KibbleSwap", address: "0xf4bc79d32a7defd87c8a9c100fd83206bbf19af5" },
+      { name: "DogeSwap", address: "0xd27d9d61590874bf9ee2a19b27e265399929c9c3" },
+      // Add more as you discover them
+    ];
+
+    let addedFactories = [];
+
+    // Initialize UI
+    function init() {
+      // Render known DEXes
+      const container = document.getElementById('knownDexList');
+      container.innerHTML = KNOWN_DEXES.map(dex => `
+        <div class="dex-item" onclick="addKnownFactory('${dex.name}', '${dex.address}')">
+          <div class="dex-name">${dex.name}</div>
+          <div class="dex-address">${dex.address}</div>
+        </div>
+      `).join('');
+    }
+
+    // Log function
+    function log(message, type = '') {
+      const container = document.getElementById('logContainer');
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${type}`;
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      container.appendChild(entry);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    // Add factory from form
+    window.addFactory = function() {
+      const name = document.getElementById('factoryName').value.trim();
+      const address = document.getElementById('factoryAddress').value.trim();
+
+      if (!name || !address) {
+        log('Please enter both name and address', 'error');
+        return;
+      }
+
+      if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
+        log('Invalid address format. Must be 42 characters (0x + 40 hex chars)', 'error');
+        return;
+      }
+
+      // Check for duplicates
+      if (addedFactories.some(f => f.address.toLowerCase() === address.toLowerCase())) {
+        log(`Factory ${name} already added!`, 'error');
+        return;
+      }
+
+      addedFactories.push({ name, address });
+      updateFactoryList();
+      clearForm();
+      log(`✓ Added ${name}`, 'success');
+    };
+
+    // Add known factory
+    window.addKnownFactory = function(name, address) {
+      if (addedFactories.some(f => f.address.toLowerCase() === address.toLowerCase())) {
+        log(`${name} already added!`, 'info');
+        return;
+      }
+
+      addedFactories.push({ name, address });
+      updateFactoryList();
+      log(`✓ Added ${name}`, 'success');
+    };
+
+    // Update factory list UI
+    function updateFactoryList() {
+      const container = document.getElementById('factoryListContainer');
+      const count = document.getElementById('factoryCount');
+
+      count.textContent = addedFactories.length;
+
+      if (addedFactories.length === 0) {
+        container.innerHTML = '<div style="color: #9ca3af; font-style: italic;">No factories added yet</div>';
+        return;
+      }
+
+      container.innerHTML = addedFactories.map((factory, index) => `
+        <div class="factory-item">
+          <div class="factory-info">
+            <div class="factory-name">${factory.name}</div>
+            <div class="factory-address">${factory.address}</div>
+          </div>
+          <button class="remove-btn" onclick="removeFactory(${index})">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    // Remove factory
+    window.removeFactory = function(index) {
+      const factory = addedFactories[index];
+      addedFactories.splice(index, 1);
+      updateFactoryList();
+      log(`Removed ${factory.name}`, 'info');
+    };
+
+    // Clear form
+    window.clearForm = function() {
+      document.getElementById('factoryName').value = '';
+      document.getElementById('factoryAddress').value = '';
+    };
+
+    // Clear all factories
+    window.clearAllFactories = function() {
+      if (confirm('Remove all factories?')) {
+        addedFactories = [];
+        updateFactoryList();
+        log('Cleared all factories', 'info');
+      }
+    };
+
+    // Scan all factories for LP pairs
+    window.scanAllFactories = async function() {
+      if (addedFactories.length === 0) {
+        log('No factories to scan! Add factories first.', 'error');
+        return;
+      }
+
+      log(`Starting scan for ${addedFactories.length} factories...`, 'info');
+
+      let totalPairs = 0;
+
+      for (let i = 0; i < addedFactories.length; i++) {
+        const factory = addedFactories[i];
+        log(`[${i + 1}/${addedFactories.length}] Scanning ${factory.name}...`, 'info');
+
+        try {
+          // Try to fetch logs from block 0 to a high block number
+          const url = `${EXPLORER_API_V1}?module=logs&action=getLogs&address=${factory.address}&topic0=${PAIR_CREATED_EVENT_SIGNATURE}&fromBlock=0&toBlock=999999999`;
+
+          const response = await fetch(url);
+          const data = await response.json();
+
+          console.log(`API Response for ${factory.name}:`, data);
+
+          if (data.status === "1" && data.result && Array.isArray(data.result)) {
+            const pairCount = data.result.length;
+            totalPairs += pairCount;
+
+            log(`✓ ${factory.name}: Found ${pairCount} LP pairs`, 'success');
+
+            // Save factory to registry
+            await saveDiscoveredFactories([{
+              address: factory.address,
+              name: factory.name,
+              type: 'UNISWAP_V2',
+              initCodeHash: '0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5',
+              deployBlock: 0,
+              status: 'ACTIVE',
+              description: `Manually added - ${pairCount} pairs`
+            }]);
+
+            // Parse and save LP pairs
+            const pairs = data.result.map(log => {
+              const token0 = log.topics[1] ? "0x" + log.topics[1].slice(26) : "0x0";
+              const token1 = log.topics[2] ? "0x" + log.topics[2].slice(26) : "0x0";
+              const pairAddress = "0x" + log.data.slice(26, 66);
+
+              return {
+                pairAddress,
+                factoryAddress: factory.address,
+                token0Address: token0,
+                token1Address: token1,
+                dexName: factory.name,
+                discoveredAt: Date.now(),
+                lastVerifiedAt: Date.now(),
+                isValid: true
+              };
+            });
+
+            await saveLPPairs(pairs);
+            log(`  Saved ${pairs.length} pairs to database`, 'info');
+
+          } else {
+            log(`✗ ${factory.name}: No pairs found (API: ${data.message || 'Unknown error'})`, 'error');
+          }
+
+          // Rate limiting
+          await new Promise(resolve => setTimeout(resolve, 1000));
+
+        } catch (error) {
+          log(`✗ ${factory.name}: ${error.message}`, 'error');
+        }
+      }
+
+      log(`\n✅ Scan complete! Total LP pairs: ${totalPairs}`, 'success');
+
+      // Show final count from database
+      const allPairs = await loadAllLPPairs();
+      log(`Database now contains ${allPairs.length} total LP pairs`, 'info');
+    };
+
+    // Initialize on load
+    init();
+    updateFactoryList();
+  </script>
+</body>
+</html>

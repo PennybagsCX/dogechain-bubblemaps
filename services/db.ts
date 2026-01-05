@@ -92,6 +92,19 @@ export interface DbDiscoveredContracts {
   lastSeenAt: number; // Timestamp when last seen in whale transfers
 }
 
+// LP Pairs database (DEX liquidity pool tracking)
+export interface DbLPPair {
+  id?: number; // Auto-incremented primary key
+  pairAddress: string; // Pair contract address (unique)
+  factoryAddress: string; // Factory that created this pair
+  token0Address: string; // First token in pair
+  token1Address: string; // Second token in pair
+  dexName: string; // DEX name (e.g., "ChewySwap", "QuickSwap")
+  discoveredAt: number; // Timestamp when discovered
+  lastVerifiedAt: number; // Timestamp when last verified
+  isValid: boolean; // false if pair was destroyed or factory renounced
+}
+
 // Export data structure
 export interface DatabaseExport {
   version: string;
@@ -114,6 +127,9 @@ class DogeDatabase extends Dexie {
   assetMetadataCache!: Table<DbAssetMetadataCache>;
   walletForcedContracts!: Table<DbWalletForcedContracts>;
   discoveredContracts!: Table<DbDiscoveredContracts>;
+  lpPairs!: Table<DbLPPair>;
+  scanCheckpoints!: Table<any>;
+  discoveredFactories!: Table<any>;
 
   constructor() {
     super("DogechainBubbleMapsDB");
@@ -184,6 +200,51 @@ class DogeDatabase extends Dexie {
         walletForcedContracts: "walletAddress, updatedAt",
         discoveredContracts: "++id, contractAddress, type, discoveredAt, lastSeenAt",
       });
+
+      // Version 6: Add LP pairs database for DEX liquidity pool tracking
+      this.version(6).stores({
+        alerts: "++id, alertId, walletAddress, name, createdAt",
+        alertStatuses: "alertId, &alertId",
+        triggeredEvents: "++id, eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits",
+        walletScanCache: "walletAddress, scannedAt, expiresAt",
+        assetMetadataCache: "address, cachedAt, expiresAt",
+        walletForcedContracts: "walletAddress, updatedAt",
+        discoveredContracts: "++id, contractAddress, type, discoveredAt, lastSeenAt",
+        lpPairs: "++id, &pairAddress, factoryAddress, dexName, discoveredAt, lastVerifiedAt",
+      });
+
+      // Version 7: Add scan checkpoints for comprehensive DEX/LP scanning
+      this.version(7).stores({
+        alerts: "++id, alertId, walletAddress, name, createdAt",
+        alertStatuses: "alertId, &alertId",
+        triggeredEvents: "++id, eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits",
+        walletScanCache: "walletAddress, scannedAt, expiresAt",
+        assetMetadataCache: "address, cachedAt, expiresAt",
+        walletForcedContracts: "walletAddress, updatedAt",
+        discoveredContracts: "++id, contractAddress, type, discoveredAt, lastSeenAt",
+        lpPairs: "++id, &pairAddress, factoryAddress, dexName, discoveredAt, lastVerifiedAt",
+        scanCheckpoints: "++id, phase, lastUpdated",
+      });
+
+      // Version 8: Add discovered factories registry for dynamic DEX tracking
+      this.version(8).stores({
+        alerts: "++id, alertId, walletAddress, name, createdAt",
+        alertStatuses: "alertId, &alertId",
+        triggeredEvents: "++id, eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits",
+        walletScanCache: "walletAddress, scannedAt, expiresAt",
+        assetMetadataCache: "address, cachedAt, expiresAt",
+        walletForcedContracts: "walletAddress, updatedAt",
+        discoveredContracts: "++id, contractAddress, type, discoveredAt, lastSeenAt",
+        lpPairs: "++id, &pairAddress, factoryAddress, dexName, discoveredAt, lastVerifiedAt",
+        scanCheckpoints: "++id, phase, lastUpdated",
+        discoveredFactories: "++id, &address, name, status, discoveredAt",
+      });
     } catch (error) {
       console.error("[DB] Database schema error:", error);
       console.error("[DB] Please clear IndexedDB and reload the page.");
@@ -195,6 +256,30 @@ class DogeDatabase extends Dexie {
 
 // Export single instance
 export const db = new DogeDatabase();
+
+/**
+ * Ensure LP detection is initialized by checking if the LP pairs database is empty
+ * and initializing it if needed. This is a non-blocking operation that only runs
+ * once when the database is empty.
+ */
+export async function ensureLPDetectionInitialized(): Promise<void> {
+  try {
+    const { loadAllLPPairs, initializeLPDetection } = await import("./lpDetection");
+    const existingPairs = await loadAllLPPairs();
+
+    if (existingPairs.length === 0) {
+      console.log("[DB] LP pairs database is empty, initializing...");
+      await initializeLPDetection(false, (msg, progress) => {
+        console.log(`[LP Init] ${msg} (${progress.toFixed(0)}%)`);
+      });
+      console.log("[DB] LP detection initialization complete");
+    } else {
+      console.log(`[DB] LP detection already initialized with ${existingPairs.length} pairs`);
+    }
+  } catch (error) {
+    console.error("[DB] Failed to initialize LP detection:", error);
+  }
+}
 
 // Helper functions to convert between app types and DB types
 export function toDbAlert(alert: AlertConfig): DbAlert {
@@ -720,5 +805,241 @@ export async function clearOldDiscoveredContracts(): Promise<number> {
   } catch (error) {
     console.error("Failed to clear old discovered contracts:", error);
     return 0;
+  }
+}
+
+// --- LP Pairs Database Functions ---
+
+/**
+ * Save discovered LP pairs to database
+ * Updates existing entries if they already exist
+ */
+export async function saveLPPairs(pairs: DbLPPair[]): Promise<void> {
+  try {
+    const now = Date.now();
+
+    for (const pair of pairs) {
+      // Check if pair already exists
+      const existing = await db.lpPairs
+        .where("pairAddress")
+        .equals(pair.pairAddress.toLowerCase())
+        .first();
+
+      if (existing) {
+        // Update lastVerifiedAt and validity
+        await db.lpPairs.update(existing.id!, {
+          lastVerifiedAt: now,
+          isValid: pair.isValid,
+          dexName: pair.dexName || existing.dexName,
+        });
+      } else {
+        // Add new pair
+        await db.lpPairs.add({
+          pairAddress: pair.pairAddress.toLowerCase(),
+          factoryAddress: pair.factoryAddress.toLowerCase(),
+          token0Address: pair.token0Address.toLowerCase(),
+          token1Address: pair.token1Address.toLowerCase(),
+          dexName: pair.dexName,
+          discoveredAt: now,
+          lastVerifiedAt: now,
+          isValid: pair.isValid,
+        });
+      }
+    }
+
+    console.log(`[DB] Saved ${pairs.length} LP pairs to database`);
+  } catch (error) {
+    console.error("[DB] Failed to save LP pairs:", error);
+  }
+}
+
+/**
+ * Load all LP pairs from database
+ */
+export async function loadAllLPPairs(): Promise<DbLPPair[]> {
+  try {
+    return await db.lpPairs.toArray();
+  } catch (error) {
+    console.error("[DB] Failed to load LP pairs:", error);
+    return [];
+  }
+}
+
+/**
+ * Check if an address is an LP pair
+ * Returns the pair data if found, null otherwise
+ */
+export async function isAddressLPPair(address: string): Promise<DbLPPair | null> {
+  try {
+    const pair = await db.lpPairs
+      .where("pairAddress")
+      .equals(address.toLowerCase())
+      .first();
+
+    return pair || null;
+  } catch (error) {
+    console.error("[DB] Failed to check if address is LP pair:", error);
+    return null;
+  }
+}
+
+/**
+ * Clear old LP pairs (older than 30 days and marked as invalid)
+ * Returns the number of pairs deleted
+ */
+export async function clearOldLPPairs(): Promise<number> {
+  try {
+    const now = Date.now();
+    const thirtyDaysAgo = now - 30 * 24 * 60 * 60 * 1000;
+
+    const oldPairs = await db.lpPairs
+      .where("lastVerifiedAt")
+      .below(thirtyDaysAgo)
+      .and((pair) => !pair.isValid)
+      .toArray();
+
+    for (const pair of oldPairs) {
+      await db.lpPairs.delete(pair.id!);
+    }
+
+    if (oldPairs.length > 0) {
+      console.log(`[DB] Cleared ${oldPairs.length} old invalid LP pairs`);
+    }
+
+    return oldPairs.length;
+  } catch (error) {
+    console.error("[DB] Failed to clear old LP pairs:", error);
+    return 0;
+  }
+}
+
+/**
+ * Get LP pairs by DEX name
+ */
+export async function getLPPairsByDEX(dexName: string): Promise<DbLPPair[]> {
+  try {
+    return await db.lpPairs.where("dexName").equals(dexName).toArray();
+  } catch (error) {
+    console.error("[DB] Failed to get LP pairs by DEX:", error);
+    return [];
+  }
+}
+
+/**
+ * Get LP pairs containing a specific token
+ */
+export async function getLPPairsByToken(tokenAddress: string): Promise<DbLPPair[]> {
+  try {
+    const lowerAddress = tokenAddress.toLowerCase();
+    const allPairs = await db.lpPairs.toArray();
+
+    return allPairs.filter(
+      (pair) =>
+        pair.token0Address.toLowerCase() === lowerAddress ||
+        pair.token1Address.toLowerCase() === lowerAddress
+    );
+  } catch (error) {
+    console.error("[DB] Failed to get LP pairs by token:", error);
+    return [];
+  }
+}
+
+// --- Discovered Factories Registry ---
+
+/**
+ * Discovered DEX Factory database entry
+ */
+export interface DbDiscoveredFactory {
+  id?: number;
+  address: string; // Factory address (unique)
+  name: string;
+  type: string;
+  initCodeHash: string;
+  deployBlock: number;
+  status: string;
+  description?: string;
+  discoveredAt: number;
+}
+
+/**
+ * Save discovered factories to database
+ * Updates existing entries if they already exist
+ */
+export async function saveDiscoveredFactories(factories: Partial<DbDiscoveredFactory>[]): Promise<void> {
+  try {
+    const table = db.discoveredFactories;
+    const now = Date.now();
+
+    for (const factory of factories) {
+      const address = factory.address!.toLowerCase();
+
+      // Check if factory already exists
+      const existing = await table.where("address").equals(address).first();
+
+      if (existing) {
+        // Update existing factory
+        await table.update(existing.id!, {
+          name: factory.name || existing.name,
+          type: factory.type || existing.type,
+          initCodeHash: factory.initCodeHash || existing.initCodeHash,
+          deployBlock: factory.deployBlock || existing.deployBlock,
+          status: factory.status || existing.status,
+          description: factory.description || existing.description,
+        });
+      } else {
+        // Add new factory
+        await table.add({
+          address,
+          name: factory.name || "Unknown DEX",
+          type: factory.type || "UNISWAP_V2",
+          initCodeHash: factory.initCodeHash || "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
+          deployBlock: factory.deployBlock || 0,
+          status: factory.status || "ACTIVE",
+          description: factory.description,
+          discoveredAt: now,
+        });
+      }
+    }
+
+    console.log(`[DB] Saved ${factories.length} discovered factories to database`);
+  } catch (error) {
+    console.error("[DB] Failed to save discovered factories:", error);
+  }
+}
+
+/**
+ * Load all discovered factories
+ */
+export async function loadDiscoveredFactories(): Promise<DbDiscoveredFactory[]> {
+  try {
+    return await db.discoveredFactories.toArray();
+  } catch (error) {
+    console.error("[DB] Failed to load discovered factories:", error);
+    return [];
+  }
+}
+
+/**
+ * Get discovered factory by address
+ */
+export async function getDiscoveredFactory(address: string): Promise<DbDiscoveredFactory | null> {
+  try {
+    const factory = await db.discoveredFactories.where("address").equals(address.toLowerCase()).first();
+    return factory || null;
+  } catch (error) {
+    console.error("[DB] Failed to get discovered factory:", error);
+    return null;
+  }
+}
+
+/**
+ * Get all active discovered factories
+ */
+export async function getActiveDiscoveredFactories(): Promise<DbDiscoveredFactory[]> {
+  try {
+    return await db.discoveredFactories.where("status").equals("ACTIVE").toArray();
+  } catch (error) {
+    console.error("[DB] Failed to get active discovered factories:", error);
+    return [];
   }
 }

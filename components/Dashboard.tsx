@@ -168,7 +168,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   tokenData.decimals
                 );
               }
-            } catch (e) {
+            } catch {
               // Fallback without decimals
               currentBalance = await fetchTokenBalance(alert.walletAddress, alert.tokenAddress);
             }

@@ -698,7 +698,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
   // Simple snapshot handler placeholder to avoid runtime errors
   const handleSnapshot = () => {
-    console.log("Snapshot not implemented in this build");
+    // Snapshot functionality not implemented
   };
 
   return (

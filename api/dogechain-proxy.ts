@@ -1,31 +1,31 @@
 // Vercel serverless function to proxy Dogechain API requests
 // This fixes SSL certificate issues with Arc Browser for iOS
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-const DOGECHAIN_API_BASE = 'https://explorer.dogechain.dog';
+const DOGECHAIN_API_BASE = "https://explorer.dogechain.dog";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Enable CORS
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
   // Handle preflight requests
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
 
   // Only allow GET requests
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== "GET") {
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
     // Get the path from the query
     // If path starts with /v2, use V2 API, otherwise use V1
-    const path = req.query.path as string || '';
-    const isV2 = path.startsWith('/v2');
+    const path = (req.query.path as string) || "";
+    const isV2 = path.startsWith("/v2");
 
     // Remove the path from query params
     const { path: _, ...queryParams } = req.query as Record<string, string>;
@@ -46,14 +46,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       targetUrl = `${DOGECHAIN_API_BASE}/api?${queryString}`;
     }
 
-    console.log(`Proxying request to: ${targetUrl}`);
-
     // Forward the request to Dogechain API
     const response = await fetch(targetUrl, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'User-Agent': 'DogechainBubblemaps/1.0',
-        'Accept': 'application/json',
+        "User-Agent": "DogechainBubblemaps/1.0",
+        Accept: "application/json",
       },
     });
 
@@ -66,12 +64,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Return the response
     return res.status(200).json(data);
-
   } catch (error) {
-    console.error('Proxy error:', error);
+    console.error("Proxy error:", error);
     return res.status(500).json({
-      error: 'Failed to fetch from Dogechain API',
-      message: error instanceof Error ? error.message : 'Unknown error',
+      error: "Failed to fetch from Dogechain API",
+      message: error instanceof Error ? error.message : "Unknown error",
     });
   }
 }

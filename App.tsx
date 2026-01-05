@@ -37,7 +37,7 @@ const getCachedMetadata = (address: string) => {
     if (!cacheRaw) return null;
     const cache = JSON.parse(cacheRaw);
     return cache[address.toLowerCase()];
-  } catch (e) {
+  } catch {
     return null;
   }
 };
@@ -51,7 +51,7 @@ const saveMetadataToCache = (
     const cache = cacheRaw ? JSON.parse(cacheRaw) : {};
     cache[address.toLowerCase()] = { ...data, timestamp: Date.now() };
     localStorage.setItem("doge_token_metadata_cache_v2", JSON.stringify(cache));
-  } catch (e) {
+  } catch {
     console.warn("Failed to save token metadata", e);
   }
 };
@@ -546,7 +546,7 @@ const App: React.FC = () => {
         url.searchParams.set("view", newView.toLowerCase());
       }
       window.history.pushState({}, "", url);
-    } catch (e) {
+    } catch {
       // console.debug('History pushState disabled in this environment');
     }
   };
@@ -698,7 +698,7 @@ const App: React.FC = () => {
 
             return [...currentWallets, userWallet];
           }
-        } catch (e) {
+        } catch {
           console.warn("Failed to inject user wallet", e);
         }
       }
@@ -825,7 +825,7 @@ const App: React.FC = () => {
         newUrl.searchParams.set("type", typeToUse);
         newUrl.searchParams.set("view", "analysis");
         window.history.pushState({}, "", newUrl);
-      } catch (e) {
+      } catch {
         /* ignore */
       }
 
@@ -1003,13 +1003,13 @@ const App: React.FC = () => {
         let bal = 0;
         try {
           bal = await fetchTokenBalance(userAddress, meta.address, meta.decimals);
-        } catch (e) {
+        } catch {
           bal = 0;
         }
         const enriched = { ...meta, totalSupply: meta.totalSupply || 0, holderCount: bal };
         if (meta.type === AssetType.NFT) nfts.push(enriched);
         else tokens.push(enriched);
-      } catch (e) {
+      } catch {
         console.warn("Forced contract fetch failed", contract, e);
       }
     }
@@ -1044,13 +1044,6 @@ const App: React.FC = () => {
       // Load cached scan results to restore token/NFT list
       loadScanCache(userAddress).then((cached) => {
         if (cached && (cached.tokens.length > 0 || cached.nfts.length > 0)) {
-          console.log(
-            "Restoring wallet scan from cache:",
-            cached.tokens.length,
-            "tokens,",
-            cached.nfts.length,
-            "NFTs"
-          );
           setWalletAssets({
             tokens: cached.tokens,
             nfts: cached.nfts,
@@ -1150,7 +1143,7 @@ const App: React.FC = () => {
           `Scan complete: ${result.tokens.length} tokens, ${result.nfts.length} NFTs (${Math.floor(result.metadata.duration / 1000)}s)`,
           "info"
         );
-      } catch (e) {
+      } catch {
         // Handle scan cancellation
         if (e instanceof Error && e.message === "Scan cancelled") {
           addToast("Scan cancelled", "info");
@@ -1209,8 +1202,7 @@ const App: React.FC = () => {
     // Clear cache and do a fresh scan
     try {
       db.walletScanCache.delete(userAddress.toLowerCase());
-      console.log("Scan: Cleared cache for fresh scan");
-    } catch (e) {
+    } catch {
       console.warn("Failed to clear cache:", e);
     }
     scanWalletAssets(userAddress, true); // Force refresh (bypasses cache)
@@ -1226,7 +1218,6 @@ const App: React.FC = () => {
     }
 
     // Quick refresh using cache if available
-    console.log("Refresh: Loading from cache if available");
     scanWalletAssets(userAddress, false); // Normal scan (uses cache if available)
     setTimeout(() => {
       fetchForcedContracts();
@@ -1279,7 +1270,7 @@ const App: React.FC = () => {
               symbol = metadata.symbol;
               name = metadata.name;
             }
-          } catch (e) {
+          } catch {
             console.warn("Failed to fetch metadata from transfers:", e);
           }
 
@@ -1377,7 +1368,7 @@ const App: React.FC = () => {
         const wDogeAddress = "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101";
         initialVal = await fetchTokenBalance(wallet.address, wDogeAddress);
       }
-    } catch (e) {
+    } catch {
       console.warn("Failed to fetch initial alert balance");
     }
 
@@ -1418,7 +1409,7 @@ const App: React.FC = () => {
           tokenInfo = { symbol: fetchedToken.symbol, name: fetchedToken.name };
         }
         initialVal = await fetchTokenBalance(data.walletAddress, data.tokenAddress);
-      } catch (e) {
+      } catch {
         console.warn("Could not fetch token info for alert", e);
       }
     } else {
@@ -1432,7 +1423,7 @@ const App: React.FC = () => {
     try {
       const transactions = await fetchWalletTransactions(data.walletAddress, data.tokenAddress);
       initialTxs = transactions.map((tx) => tx.hash);
-    } catch (e) {
+    } catch {
       console.warn("Could not fetch initial transactions", e);
     }
 
@@ -1494,7 +1485,7 @@ const App: React.FC = () => {
           if (fetchedToken) {
             tokenInfo = { symbol: fetchedToken.symbol, name: fetchedToken.name };
           }
-        } catch (e) {
+        } catch {
           console.warn("Could not fetch token info for alert", e);
         }
       } else if (!data.tokenAddress) {
@@ -1517,7 +1508,7 @@ const App: React.FC = () => {
         try {
           const transactions = await fetchWalletTransactions(data.walletAddress, data.tokenAddress);
           initialTxs = transactions.map((tx) => tx.hash);
-        } catch (e) {
+        } catch {
           console.warn("Could not fetch initial transactions", e);
         }
       } else {

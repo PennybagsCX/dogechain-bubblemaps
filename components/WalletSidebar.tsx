@@ -224,7 +224,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
       if (typeof window !== "undefined" && window.innerWidth < 768) {
         onClose();
       }
-    } catch (e) {
+    } catch {
       // Error handled by parent via toast usually
     } finally {
       setIsTracing(false);
@@ -246,7 +246,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
     try {
       const responseText = await sendChatToAI(newHistory, systemInstruction, userMsg);
       setMessages((prev) => [...prev, { role: "model", text: responseText }]);
-    } catch (error) {
+    } catch {
       setMessages((prev) => [
         ...prev,
         { role: "model", text: "Connection error. Please try again." },

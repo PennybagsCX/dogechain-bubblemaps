@@ -35,7 +35,7 @@ const getCachedMetadata = (address: string) => {
     if (!cacheRaw) return null;
     const cache = JSON.parse(cacheRaw);
     return cache[address.toLowerCase()];
-  } catch (e) {
+  } catch {
     return null;
   }
 };
@@ -69,7 +69,7 @@ export const detectContractType = async (address: string): Promise<AssetType | n
           if (rawType?.includes("20")) return AssetType.TOKEN;
         }
       }
-    } catch (e) {
+    } catch {
       /* ignore */
     }
 
@@ -82,7 +82,7 @@ export const detectContractType = async (address: string): Promise<AssetType | n
         if (typeField?.includes("721") || typeField?.includes("1155")) return AssetType.NFT;
         if (typeField?.includes("20")) return AssetType.TOKEN;
       }
-    } catch (e) {
+    } catch {
       /* ignore */
     }
 
@@ -134,7 +134,7 @@ export const detectContractType = async (address: string): Promise<AssetType | n
           }
         }
       }
-    } catch (e) {
+    } catch {
       /* ignore */
     }
 
@@ -161,7 +161,7 @@ export const detectContractType = async (address: string): Promise<AssetType | n
     }
 
     return null;
-  } catch (e) {
+  } catch {
     return null;
   }
 };
@@ -175,7 +175,7 @@ const saveMetadataToCache = (
     const cache = cacheRaw ? JSON.parse(cacheRaw) : {};
     cache[address.toLowerCase()] = { ...data, timestamp: Date.now() };
     localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(cache));
-  } catch (e) {
+  } catch {
     console.warn("Failed to save token metadata", e);
   }
 };
@@ -283,7 +283,7 @@ const checkContractVerification = async (address: string): Promise<boolean> => {
       return true;
     }
     return false;
-  } catch (e) {
+  } catch {
     return false;
   }
 };
@@ -309,7 +309,7 @@ export const fetchMetadataFromTransfers = async (
       }
     }
     return null;
-  } catch (e) {
+  } catch {
     console.warn("fetchMetadataFromTransfers failed:", e);
     return null;
   }
@@ -338,7 +338,7 @@ const fetchMetadataFromTokenList = async (
       }
     }
     return null;
-  } catch (e) {
+  } catch {
     console.warn("fetchMetadataFromTokenList failed:", e);
     return null;
   }
@@ -371,7 +371,6 @@ export const fetchTokenData = async (
       cached.name === "Unverified Token" ||
       cached.name === "Unknown Token")
   ) {
-    console.log(`Clearing stale cache for ${cleanAddress}`);
     try {
       const cacheRaw = localStorage.getItem(METADATA_CACHE_KEY);
       if (cacheRaw) {
@@ -380,7 +379,7 @@ export const fetchTokenData = async (
         localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(cache));
         cached = null;
       }
-    } catch (e) {
+    } catch {
       console.warn("Failed to clear stale cache", e);
     }
   }
@@ -435,7 +434,7 @@ export const fetchTokenData = async (
       if (v1Data.status === "1" || (v1Data.result && !isNaN(parseFloat(v1Data.result)))) {
         totalSupply = parseBalance(v1Data.result, finalDecimals);
       }
-    } catch (e) {
+    } catch {
       // ignore supply failure
     }
 
@@ -542,13 +541,13 @@ export const fetchTokenHolders = async (
             }
           });
         }
-      } catch (e) {
+      } catch {
         // ignore
       }
     }
 
     return { wallets: processedWallets.slice(0, 100), links };
-  } catch (e) {
+  } catch {
     console.warn("V1 holder endpoint failed for", cleanAddress);
     return { wallets: [], links: [] };
   }
@@ -608,7 +607,7 @@ export const fetchWalletTransactions = async (
             if (detectedType === AssetType.NFT) {
               nftContracts.add(contract);
             }
-          } catch (e) {
+          } catch {
             // On detection failure, include transaction to avoid false negatives
             console.warn(`Failed to detect type for ${contract}, including transaction`);
             nftContracts.add(contract);
@@ -689,17 +688,10 @@ export const fetchWalletTransactions = async (
 
     for (let i = 0; i < offsets.length; i++) {
       const offset = offsets[i]!;
-      console.log(
-        `[fetchWalletTransactions] Attempting offset ${offset} for ${cleanWallet.slice(0, 8)}...`
-      );
-
       const transactions = await fetchWithOffset(offset);
 
       // If we found transactions, return them immediately
       if (transactions.length > 0) {
-        console.log(
-          `[fetchWalletTransactions] Found ${transactions.length} transactions with offset ${offset}`
-        );
         return transactions;
       }
 
@@ -711,9 +703,6 @@ export const fetchWalletTransactions = async (
     }
 
     // No transactions found at any offset
-    console.log(
-      `[fetchWalletTransactions] No transactions found for ${cleanWallet.slice(0, 8)}... after trying all offsets`
-    );
     return [];
   } catch (error) {
     console.error("Error fetching wallet transactions:", error);
@@ -739,7 +728,7 @@ export const fetchTokenBalance = async (
       return parseBalance(data.result, decimals);
     }
     return 0;
-  } catch (e) {
+  } catch {
     return 0;
   }
 };
@@ -765,13 +754,10 @@ export const scanWhaleContracts = async (
   const discoveredContracts = new Set<string>();
   const scheduler = new AdaptiveRequestScheduler();
 
-  console.log("[Whale Scan] Starting whale contract enumeration...");
   onProgress?.("Scanning whale wallets for contracts...");
 
   for (const whale of WHALE_ADDRESSES) {
     try {
-      console.log(`[Whale Scan] Scanning whale: ${whale}`);
-
       // Use tokentx endpoint to get all transfers (tokens + NFTs)
       // Reduced from 5 to 3 offsets for better performance
       const offsets = [100, 1000, 5000];
@@ -793,16 +779,10 @@ export const scanWhaleContracts = async (
           }
         }
       }
-
-      console.log(
-        `[Whale Scan] Whale ${whale}: found ${discoveredContracts.size} contracts so far`
-      );
-    } catch (e) {
+    } catch {
       console.warn(`[Whale Scan] Failed to scan whale ${whale}:`, e);
     }
   }
-
-  console.log(`[Whale Scan] Complete: discovered ${discoveredContracts.size} unique contracts`);
   onProgress?.(`Discovered ${discoveredContracts.size} contracts from whale wallets`);
 
   return discoveredContracts;
@@ -829,7 +809,7 @@ export const checkTokenBalance = async (
     }
 
     return { balance: "0", hasBalance: false };
-  } catch (e) {
+  } catch {
     console.warn(`Failed to check balance for ${contractAddress}:`, e);
     return { balance: "0", hasBalance: false };
   }
@@ -885,7 +865,7 @@ export const fetchWalletAssets = async (
           if (json.status === "1" && Array.isArray(json.result)) {
             return json.result as any[];
           }
-        } catch (e) {
+        } catch {
           // try next offset on 400/other failures
           continue;
         }
@@ -904,7 +884,7 @@ export const fetchWalletAssets = async (
           const json = await res.json();
           if (!Array.isArray(json?.items) || json.items.length === 0) break;
           collected.push(...json.items);
-        } catch (e) {
+        } catch {
           break;
         }
       }
@@ -922,7 +902,7 @@ export const fetchWalletAssets = async (
           const json = await res.json();
           if (!Array.isArray(json?.items) || json.items.length === 0) break;
           collected.push(...json.items);
-        } catch (e) {
+        } catch {
           break;
         }
       }
@@ -976,7 +956,7 @@ export const fetchWalletAssets = async (
             );
           });
           if (v1.length > 0) break;
-        } catch (e) {
+        } catch {
           break;
         }
       }
@@ -986,13 +966,13 @@ export const fetchWalletAssets = async (
     const sortByHits = (items: Map<string, Token & { hits: number }>) =>
       Array.from(items.values())
         .sort((a, b) => b.hits - a.hits)
-        .map(({ hits, ...rest }) => rest);
+        .map(({ hits: _hits, ...rest }) => rest);
 
     return {
       tokens: sortByHits(tokensMap),
       nfts: sortByHits(nftsMap),
     };
-  } catch (e) {
+  } catch {
     console.warn("fetchWalletAssets error", e);
     return { tokens: [], nfts: [] };
   }
@@ -1023,14 +1003,13 @@ export const fetchWalletAssetsHybrid = async (
     try {
       const cached = await loadScanCache(walletAddress);
       if (cached) {
-        console.log(`Loaded wallet scan from cache: ${walletAddress}`);
         return {
           tokens: cached.tokens,
           nfts: cached.nfts,
           metadata: cached.scanMetadata,
         };
       }
-    } catch (e) {
+    } catch {
       console.warn("Failed to load cache, proceeding with scan", e);
     }
   }
@@ -1115,7 +1094,7 @@ export const fetchWalletAssetsHybrid = async (
           // Update progress (20% per phase)
           const phaseProgress = ((page - startPage + 1) / (maxPages - startPage + 1)) * 20;
           triggerProgress("deep-v2", Math.floor(phaseProgress), `Scanning V2 page ${page}...`);
-        } catch (e) {
+        } catch {
           console.warn(`V2 page ${page} failed:`, e);
           break;
         }
@@ -1140,7 +1119,7 @@ export const fetchWalletAssetsHybrid = async (
           if (json.status === "1" && Array.isArray(json.result)) {
             results.push(...json.result);
           }
-        } catch (e) {
+        } catch {
           console.warn(`V1 offset ${offset} failed:`, e);
           continue;
         }
@@ -1150,7 +1129,6 @@ export const fetchWalletAssetsHybrid = async (
 
     // --- PHASE 1: QUICK SCAN (5-10 seconds) ---
     triggerProgress("quick", 5, "Starting quick scan...");
-    console.log("[Phase 1] Quick scan: V2 pages 1-3 + V1 NFT probe");
 
     // V2 token transfers (pages 1-3)
     const quickV2Transfers = await fetchV2Pages(
@@ -1219,7 +1197,7 @@ export const fetchWalletAssetsHybrid = async (
           });
         }
       }
-    } catch (e) {
+    } catch {
       console.warn("V1 NFT probe failed:", e);
     }
 
@@ -1231,7 +1209,6 @@ export const fetchWalletAssetsHybrid = async (
     );
 
     // --- PHASE 2: DEEP V2 SCAN (30-60 seconds) ---
-    console.log("[Phase 2] Deep V2 scan: pages 4-20");
     triggerProgress("deep-v2", 15, "Starting deep V2 scan...");
 
     const deepV2Transfers = await fetchV2Pages(
@@ -1283,7 +1260,6 @@ export const fetchWalletAssetsHybrid = async (
     );
 
     // --- PHASE 3: DEEP V1 SCAN (60-90 seconds) ---
-    console.log("[Phase 3] Deep V1 scan: comprehensive NFT search + token history");
     triggerProgress("deep-v1", 40, "Starting deep V1 scan...");
 
     // COMPREHENSIVE ASSET SEARCH - Using tokentx for both tokens and NFTs
@@ -1296,12 +1272,8 @@ export const fetchWalletAssetsHybrid = async (
     // Combine all offsets (removed 20000, 50000 to improve performance)
     const allNftOffsets = [...nftOffsetsRecent, ...nftOffsetsMedium, ...nftOffsetsLarge];
 
-    console.log(
-      `[Phase 3] Searching for all transfers with ${allNftOffsets.length} different offsets`
-    );
     // Use tokentx endpoint (works for both tokens and NFTs)
     const v1AllTransfers = await fetchV1Offsets("tokentx", allNftOffsets, 2000);
-    console.log(`[Phase 3] Found ${v1AllTransfers.length} total transfers (tokens + NFTs)`);
 
     // Extract unique contract addresses
     const uniqueContracts = new Set<string>();
@@ -1309,8 +1281,6 @@ export const fetchWalletAssetsHybrid = async (
       const contract = tx.contractAddress || tx.contract;
       if (contract) uniqueContracts.add(contract.toLowerCase());
     });
-
-    console.log(`[Phase 3] Detecting types for ${uniqueContracts.size} unique contracts...`);
 
     // Detect contract types (batch processing to avoid rate limits)
     const detectedTypes = new Map<string, AssetType>();
@@ -1357,17 +1327,12 @@ export const fetchWalletAssetsHybrid = async (
           `Detecting contract types... ${Math.floor(((i + batch.length) / contractsArray.length) * 100)}%`
         );
       }
-
-      console.log(`[Phase 3] Successfully detected ${detectedTypes.size} contract types`);
     } catch (e: any) {
       console.error("[Phase 3] Error during contract type detection:", e);
       // Continue anyway - transfers will be categorized as TOKEN by default
     }
 
     // Categorize transfers based on detected contract types
-    let v1NFTCount = 0;
-    let v1TokenCount = 0;
-
     v1AllTransfers.forEach((tx: any) => {
       const contract = (tx.contractAddress || tx.contract)?.toLowerCase();
       const decimals = tx.tokenDecimal ? parseInt(tx.tokenDecimal) : undefined;
@@ -1379,15 +1344,11 @@ export const fetchWalletAssetsHybrid = async (
       const type = detectedType || AssetType.TOKEN;
 
       if (type === AssetType.NFT) {
-        v1NFTCount++;
         recordAsset(contract, symbol, name, decimals, AssetType.NFT);
       } else {
-        v1TokenCount++;
         recordAsset(contract, symbol, name, decimals, AssetType.TOKEN);
       }
     });
-
-    console.log(`[Phase 3] Categorized transfers: ${v1TokenCount} tokens, ${v1NFTCount} NFTs`);
 
     phasesCompleted.push("deep-v1");
     triggerProgress(
@@ -1397,7 +1358,6 @@ export const fetchWalletAssetsHybrid = async (
     );
 
     // --- PHASE 4: BALANCE VERIFICATION (10-30 seconds) ---
-    console.log("[Phase 4] Balance verification for discovered contracts");
     triggerProgress("balance-check", 65, "Verifying balances...");
 
     // For discovered tokens, verify current holdings (batch of 10)
@@ -1420,9 +1380,8 @@ export const fetchWalletAssetsHybrid = async (
           const json = await res.json();
           if (json.status === "1" && json.result && parseFloat(json.result) > 0) {
             // Keep assets with non-zero balance
-            console.log(`Balance check: ${contract} has ${json.result}`);
           }
-        } catch (e) {
+        } catch {
           // Ignore balance check failures
         }
       }
@@ -1438,7 +1397,6 @@ export const fetchWalletAssetsHybrid = async (
     phasesCompleted.push("balance-check");
 
     // --- PHASE 5: WHALE ENUMERATION (3-8 minutes) ---
-    console.log("[Phase 5] Whale enumeration for minted-but-never-transferred assets");
     triggerProgress("whale-scan", 80, "Discovering contracts from whale wallets...");
 
     try {
@@ -1449,12 +1407,11 @@ export const fetchWalletAssetsHybrid = async (
         discoveredContracts.some((c) => (c.lastSeenAt || 0) < Date.now() - 7 * 24 * 60 * 60 * 1000); // 7 days
 
       if (needsRefresh) {
-        console.log("[Phase 5] Contract database stale or empty, scanning whales...");
         triggerProgress("whale-scan", 80, "Scanning whale wallets (one-time setup)...");
 
         // Scan whale wallets to discover contracts
-        const whaleContracts = await scanWhaleContracts((msg) => {
-          console.log(`[Phase 5] ${msg}`);
+        const whaleContracts = await scanWhaleContracts((_msg) => {
+          // Progress callback
         });
 
         // Detect types and save to database
@@ -1483,7 +1440,7 @@ export const fetchWalletAssetsHybrid = async (
                   lastSeenAt: Date.now(),
                 });
               }
-            } catch (e) {
+            } catch {
               console.warn(`Failed to detect type for whale contract ${contract}:`, e);
             }
           }
@@ -1499,13 +1456,10 @@ export const fetchWalletAssetsHybrid = async (
         // Save to database
         if (contractsToSave.length > 0) {
           await saveDiscoveredContracts(contractsToSave);
-          console.log(`[Phase 5] Saved ${contractsToSave.length} contracts to database`);
         }
 
         discoveredContracts = contractsToSave;
       }
-
-      console.log(`[Phase 5] Using ${discoveredContracts.length} discovered contracts`);
 
       // Check balances for all discovered contracts
       triggerProgress("whale-scan", 85, "Verifying holdings in discovered contracts...");
@@ -1539,11 +1493,10 @@ export const fetchWalletAssetsHybrid = async (
                 type
               );
               newAssetsFound++;
-              console.log(`[Phase 5] Found new asset: ${dbContract.symbol || contract} (${type})`);
             }
 
             checkedContracts.add(contract);
-          } catch (e) {
+          } catch {
             console.warn(`Failed to check contract ${dbContract.contractAddress}:`, e);
           }
         }
@@ -1555,8 +1508,6 @@ export const fetchWalletAssetsHybrid = async (
           `Checking discovered contracts... ${Math.floor(((i + batch.length) / discoveredContracts.length) * 100)}%`
         );
       }
-
-      console.log(`[Phase 5] Whale enumeration complete: ${newAssetsFound} new assets found`);
     } catch (e: any) {
       console.error("[Phase 5] Whale enumeration failed:", e?.message || e);
       // Continue anyway - this is an optional phase
@@ -1568,7 +1519,7 @@ export const fetchWalletAssetsHybrid = async (
     const sortByHits = (items: Map<string, Token & { hits: number }>) =>
       Array.from(items.values())
         .sort((a, b) => b.hits - a.hits)
-        .map(({ hits, ...rest }) => rest);
+        .map(({ hits: _hits, ...rest }) => rest);
 
     const finalTokens = sortByHits(tokensMap);
     const finalNfts = sortByHits(nftsMap);
@@ -1590,18 +1541,13 @@ export const fetchWalletAssetsHybrid = async (
       `Complete: ${finalTokens.length} tokens, ${finalNfts.length} NFTs in ${Math.floor(duration / 1000)}s`
     );
 
-    console.log(
-      `[Complete] Found ${finalTokens.length} tokens, ${finalNfts.length} NFTs in ${Math.floor(duration / 1000)}s (${totalRequests} requests)`
-    );
-
     return {
       tokens: finalTokens,
       nfts: finalNfts,
       metadata,
     };
-  } catch (e) {
+  } catch {
     if (e instanceof Error && e.message === "Scan cancelled") {
-      console.log("[Scan] Cancelled by user");
       throw e;
     }
     console.error("Hybrid scan failed:", e);
@@ -1631,7 +1577,7 @@ export const findInteractions = async (
       });
     }
     return newLinks;
-  } catch (e) {
+  } catch {
     return [];
   }
 };

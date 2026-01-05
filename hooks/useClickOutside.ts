@@ -15,19 +15,17 @@ export function useClickOutside(
   useEffect(() => {
     if (!isActive) return;
 
-    const handleClick = (event: MouseEvent | TouchEvent) => {
+    const handleClick = (event: Event) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
         callback();
       }
     };
 
-    // Listen for both mouse (desktop) and touch (mobile) events
-    document.addEventListener("mousedown", handleClick);
-    document.addEventListener("touchstart", handleClick);
+    // Use click event which works reliably on both desktop and mobile
+    document.addEventListener("click", handleClick, true); // Use capture phase
 
     return () => {
-      document.removeEventListener("mousedown", handleClick);
-      document.removeEventListener("touchstart", handleClick);
+      document.removeEventListener("click", handleClick, true);
     };
   }, [ref, callback, isActive]);
 }

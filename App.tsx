@@ -705,6 +705,27 @@ const App: React.FC = () => {
     }
   };
 
+  // --- REMOVE CONNECTION ---
+  const handleRemoveConnection = (linkToRemove: Link) => {
+    setLinks((prev) => {
+      // Normalize link identifiers for comparison
+      const sourceId =
+        typeof linkToRemove.source === "string" ? linkToRemove.source : linkToRemove.source.id;
+      const targetId =
+        typeof linkToRemove.target === "string" ? linkToRemove.target : linkToRemove.target.id;
+
+      // Filter out the matching link
+      return prev.filter((link) => {
+        const linkSourceId = typeof link.source === "string" ? link.source : link.source.id;
+        const linkTargetId = typeof link.target === "string" ? link.target : link.target.id;
+
+        return !(linkSourceId === sourceId && linkTargetId === targetId);
+      });
+    });
+
+    addToast("Connection removed", "info");
+  };
+
   // --- USER INJECTION LOGIC ---
   const injectUserWallet = useCallback(
     async (currentWallets: Wallet[], currentToken: Token, address: string) => {
@@ -1837,8 +1858,7 @@ const App: React.FC = () => {
                     </p>
                     <p className="text-amber-200/90 mt-2">
                       <strong>More tokens and NFTs may appear than what you currently hold</strong>,
-                      as the scanner may detect tokens and NFTs you&apos;ve held in the past. Use
-                      manual add below for missing contracts.
+                      as the scanner may detect tokens and NFTs you&apos;ve held in the past.
                     </p>
                   </div>
 
@@ -2282,6 +2302,7 @@ const App: React.FC = () => {
                     userAddress={userAddress}
                     onWalletClick={setSelectedWallet}
                     targetWalletId={targetWalletId}
+                    onRemoveLink={handleRemoveConnection}
                   />
                 </div>
 

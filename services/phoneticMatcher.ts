@@ -110,33 +110,39 @@ export function levenshtein(a: string, b: string): number {
   // Initialize matrix
   const matrix: number[][] = [];
   for (let i = 0; i <= lenB; i++) {
-    matrix[i] = [i];
+    matrix[i] = [];
+    matrix[i][0] = i;
   }
-  for (let j = 0; j <= lenA; j++) {
+  for (let j = 1; j <= lenA; j++) {
     matrix[0][j] = j;
   }
 
   // Fill matrix
   for (let i = 1; i <= lenB; i++) {
     for (let j = 1; j <= lenA; j++) {
+      const diagonal = matrix[i - 1]?.[j - 1] ?? 0;
+      const left = matrix[i]?.[j - 1] ?? 0;
+      const top = matrix[i - 1]?.[j] ?? 0;
+
       if (b.charAt(i - 1) === a.charAt(j - 1)) {
-        matrix[i][j] = matrix[i - 1][j - 1];
+        matrix[i]![j] = diagonal;
       } else {
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j - 1] + 1, // substitution
-          matrix[i][j - 1] + 1, // insertion
-          matrix[i - 1][j] + 1 // deletion
+        matrix[i]![j] = Math.min(
+          diagonal + 1, // substitution
+          left + 1, // insertion
+          top + 1 // deletion
         );
       }
 
       // Early exit if already too far
-      if (matrix[i][j] > 3) {
-        return matrix[i][j];
+      const current = matrix[i]![j];
+      if (current && current > 3) {
+        return current;
       }
     }
   }
 
-  return matrix[lenB][lenA];
+  return matrix[lenB]?.[lenA] ?? 0;
 }
 
 /**
@@ -189,11 +195,12 @@ export function phoneticSimilarity(query: string, target: string): number {
 
       const longerSkeleton =
         shorter === queryPhonetic.skeleton.length
-          ? targetPhonetic.skeleton
-          : queryPhonetic.skeleton;
+          ? (targetPhonetic.skeleton || "")
+          : (queryPhonetic.skeleton || "");
 
       for (let i = 0; i < shorterSkeleton.length; i++) {
-        if (longerSkeleton.includes(shorterSkeleton[i])) {
+        const char = shorterSkeleton[i];
+        if (char && longerSkeleton.includes(char)) {
           matches++;
         }
       }

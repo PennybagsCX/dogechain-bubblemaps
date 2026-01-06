@@ -226,10 +226,10 @@ export async function searchTrigramIndexDB(
       const tokens = await db.tokenSearchIndex
         .where("address")
         .anyOf(perfectMatches)
-        .filter((t) => t.type === type)
+        .filter((t: any) => t.type === type)
         .toArray();
 
-      return tokens.map((t) => t.address);
+      return tokens.map((t: any) => t.address);
     }
 
     // Fallback: Return addresses with most trigram matches (partial match)
@@ -241,10 +241,10 @@ export async function searchTrigramIndexDB(
     const tokens = await db.tokenSearchIndex
       .where("address")
       .anyOf(partialMatches)
-      .filter((t) => t.type === type)
+      .filter((t: any) => t.type === type)
       .toArray();
 
-    return tokens.map((t) => t.address);
+    return tokens.map((t: any) => t.address);
   } catch (error) {
     console.error("[Trigram Index] Search failed:", error);
     return [];

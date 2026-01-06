@@ -159,7 +159,7 @@ export async function trackResultClick(
 export async function trackSearchAbandonment(
   query: string,
   resultsShown: number,
-  sessionId: string = getSessionId()
+  _sessionId: string = getSessionId()
 ): Promise<void> {
   try {
     // Abandonment is implied by lack of clicks

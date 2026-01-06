@@ -651,7 +651,11 @@ export async function searchTokensHybrid(
     .slice(0, limit);
 
   // Apply popularity boosts (async, non-blocking)
-  await applyPopularityBoosts(allResults);
+  const resultsWithScores = allResults.map((r) => ({
+    address: r.address,
+    score: r.score || 0,
+  }));
+  await applyPopularityBoosts(resultsWithScores);
 
   // Re-sort after popularity boosts
   allResults.sort((a, b) => (b.score || 0) - (a.score || 0));
@@ -747,7 +751,7 @@ export async function* searchProgressive(
   query: string,
   type: AssetType,
   limit: number = 10
-): AsyncGenerator<SearchResult[], void, SearchResult[]> {
+): AsyncGenerator<SearchResult[], void, unknown> {
   if (!query || query.length < 2) {
     yield [];
     return;
@@ -826,14 +830,12 @@ async function searchExactMatches(
     for (const pair of lpPairs) {
       if (results.length >= limit) break;
 
-      const token0Exact =
-        pair.token0Address.toLowerCase() === queryLower ||
-        pair.token0Symbol.toLowerCase() === queryLower;
+      const token0Exact = pair.token0Address.toLowerCase() === queryLower;
       if (token0Exact) {
         results.push({
           address: pair.token0Address,
           name: `Token from ${pair.dexName}`,
-          symbol: pair.token0Symbol || "TOKEN",
+          symbol: "TOKEN",
           type: AssetType.TOKEN,
           source: "local",
           decimals: 18,
@@ -843,14 +845,12 @@ async function searchExactMatches(
 
       if (results.length >= limit) break;
 
-      const token1Exact =
-        pair.token1Address.toLowerCase() === queryLower ||
-        pair.token1Symbol.toLowerCase() === queryLower;
+      const token1Exact = pair.token1Address.toLowerCase() === queryLower;
       if (token1Exact) {
         results.push({
           address: pair.token1Address,
           name: `Token from ${pair.dexName}`,
-          symbol: pair.token1Symbol || "TOKEN",
+          symbol: "TOKEN",
           type: AssetType.TOKEN,
           source: "local",
           decimals: 18,
@@ -975,7 +975,7 @@ async function searchSubstringMatches(
  */
 async function searchPhoneticMatches(
   query: string,
-  queryLower: string,
+  _queryLower: string,
   type: AssetType,
   limit: number
 ): Promise<SearchResult[]> {

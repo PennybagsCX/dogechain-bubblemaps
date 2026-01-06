@@ -52,7 +52,7 @@ export function buildPhoneticIndexEntries(tokens: TokenData[]): PhoneticIndexEnt
 
   for (const token of tokens) {
     const namePhonetic = phoneticKey(token.name);
-    const symbolPhonetic = phoneticKey(token.symbol);
+    // const symbolPhonetic = phoneticKey(token.symbol); // Reserved for future use
 
     // Use name phonetic key as primary, symbol as fallback
     const entry: PhoneticIndexEntry = {
@@ -107,7 +107,8 @@ function calculatePhoneticSimilarity(
 
       let matches = 0;
       for (let i = 0; i < shorterSkeleton.length; i++) {
-        if (longerSkeleton.includes(shorterSkeleton[i])) {
+        const char = shorterSkeleton[i];
+        if (char && longerSkeleton.includes(char)) {
           matches++;
         }
       }
@@ -248,16 +249,16 @@ export async function searchPhoneticIndexDB(
     const tokens = await db.tokenSearchIndex
       .where("address")
       .anyOf(addresses)
-      .filter((t) => t.type === type)
+      .filter((t: any) => t.type === type)
       .toArray();
 
     // Map back to similarities
     return tokens
-      .map((t) => ({
+      .map((t: any) => ({
         address: t.address,
         similarity: matches.find((m) => m.address === t.address.toLowerCase())?.similarity || 0,
       }))
-      .sort((a, b) => b.similarity - a.similarity);
+      .sort((a: any, b: any) => b.similarity - a.similarity);
   } catch (error) {
     console.error("[Phonetic Index] Search failed:", error);
     return [];

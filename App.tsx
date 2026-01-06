@@ -31,7 +31,6 @@ import {
   detectContractType,
   fetchMetadataFromTransfers,
 } from "./services/dataService";
-import { fetchConnectionDetails } from "./services/connectionService";
 import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 
 // Helper functions from dataService (accessed via global scope or re-export)
@@ -737,14 +736,8 @@ const App: React.FC = () => {
       setSelectedConnection(loadingConnection);
       setSelectedWallet(null); // Clear wallet selection
 
-      // Fetch connection details
-      const connectionWithDetails = await fetchConnectionDetails(
-        link,
-        token?.address || "",
-        token?.type || AssetType.TOKEN
-      );
-
-      setSelectedConnection(connectionWithDetails);
+      // Connection details are already included in the link object
+      setSelectedConnection(link);
     } catch (error) {
       console.error("[App] Failed to load connection details:", error);
       addToast("Failed to load connection details", "error");

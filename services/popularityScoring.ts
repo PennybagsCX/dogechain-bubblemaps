@@ -50,14 +50,16 @@ export async function getPopularityBoost(tokenAddress: string): Promise<number> 
     if (serverData && serverData[tokenAddress.toLowerCase()]) {
       const popularity = serverData[tokenAddress.toLowerCase()];
 
+      if (!popularity) return 0;
+
       // Update cache
       localCache.set(tokenAddress.toLowerCase(), {
         tokenAddress: tokenAddress.toLowerCase(),
-        searchCount: popularity.searchCount,
-        clickCount: popularity.clickCount,
-        ctr: popularity.ctr,
-        lastSearched: popularity.lastSearched,
-        lastClicked: popularity.lastClicked,
+        searchCount: popularity.searchCount ?? 0,
+        clickCount: popularity.clickCount ?? 0,
+        ctr: popularity.ctr ?? 0,
+        lastSearched: popularity.lastSearched ?? 0,
+        lastClicked: popularity.lastClicked ?? 0,
         cachedAt: Date.now(),
         expiresAt: Date.now() + CACHE_TTL,
       });

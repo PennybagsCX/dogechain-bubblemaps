@@ -5,10 +5,8 @@
  * Scans for factories and discovers all LP pairs from them.
  */
 
-import { AssetType } from "../types";
-
-// Known DEX factory patterns
-const FACTORY_PATTERNS = [
+// Known DEX factory patterns (reserved for future use)
+// const FACTORY_PATTERNS = [
   {
     name: "Uniswap V2 Factory",
     method: "createPair(address,address)",
@@ -24,7 +22,7 @@ const FACTORY_PATTERNS = [
     method: "createPair(address,address)",
     event: "PairCreated(address,address,address,uint256)",
   },
-];
+// ];
 
 // Registry of discovered factories
 interface DiscoveredFactory {
@@ -46,11 +44,9 @@ const factoryRegistry = new Map<string, DiscoveredFactory>();
  * @param limit - Maximum number of factories to discover
  * @returns Array of discovered factories
  */
-export async function discoverNewFactories(limit: number = 10): Promise<DiscoveredFactory[]> {
+export async function discoverNewFactories(_limit: number = 10): Promise<DiscoveredFactory[]> {
   try {
     console.log("[Factory Discovery] Scanning for new factories...");
-
-    const discovered: DiscoveredFactory[] = [];
 
     // Scan recent contract deployments (would use explorer API in production)
     // For now, return known factories from registry
@@ -59,7 +55,7 @@ export async function discoverNewFactories(limit: number = 10): Promise<Discover
     );
 
     console.log(`[Factory Discovery] Found ${knownFactories.length} active factories`);
-    return knownFactories.slice(0, limit);
+    return knownFactories.slice(0, _limit);
   } catch (error) {
     console.error("[Factory Discovery] Failed to discover factories:", error);
     return [];

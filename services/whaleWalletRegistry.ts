@@ -5,30 +5,8 @@
  * Scans whale wallets to find tokens they interact with.
  */
 
-// Known whale wallets on Dogechain
-export const WHALE_WALLETS = [
-  {
-    address: "0x66aB144DEE239bb9FE2fB6FA28672611A2C0D854", // Dogechain Bridge
-    name: "Dogechain Bridge",
-    volume: "high",
-    priority: 1,
-  },
-  {
-    address: "0xf93cE2EeF8a97e6D9c0d39bb9cEbA8bbDbAa4570", // Dogechain Token
-    name: "Dogechain Token Contract",
-    volume: "high",
-    priority: 2,
-  },
-  {
-    address: "0xd7eF39F971F5199EB3661F1C6947EA27d6D173c5", // Multisig
-    name: "Multi-sig Wallet",
-    volume: "medium",
-    priority: 3,
-  },
-];
-
 // Registry for community-suggested wallets
-interface WhaleWalletEntry {
+export interface WhaleWalletEntry {
   address: string;
   name: string;
   volume: "high" | "medium" | "low";
@@ -37,6 +15,37 @@ interface WhaleWalletEntry {
   lastVerified: number;
   transactionCount: number;
 }
+
+// Known whale wallets on Dogechain
+export const WHALE_WALLETS: WhaleWalletEntry[] = [
+  {
+    address: "0x66aB144DEE239bb9FE2fB6FA28672611A2C0D854", // Dogechain Bridge
+    name: "Dogechain Bridge",
+    volume: "high",
+    priority: 1,
+    discoveredAt: 0,
+    lastVerified: 0,
+    transactionCount: 0,
+  },
+  {
+    address: "0xf93cE2EeF8a97e6D9c0d39bb9cEbA8bbDbAa4570", // Dogechain Token
+    name: "Dogechain Token Contract",
+    volume: "high",
+    priority: 2,
+    discoveredAt: 0,
+    lastVerified: 0,
+    transactionCount: 0,
+  },
+  {
+    address: "0xd7eF39F971F5199EB3661F1C6947EA27d6D173c5", // Multisig
+    name: "Multi-sig Wallet",
+    volume: "medium",
+    priority: 3,
+    discoveredAt: 0,
+    lastVerified: 0,
+    transactionCount: 0,
+  },
+];
 
 const whaleWalletRegistry = new Map<string, WhaleWalletEntry>();
 
@@ -59,105 +68,36 @@ export function initializeWhaleRegistry(): void {
 /**
  * Get all whale wallet addresses
  */
-export function getWhaleWallets(): WhaleWalletEntry[] {
-  return Array.from(whaleWalletRegistry.values()).sort((a, b) => a.priority - b.priority);
+export function getWhaleWalletAddresses(): string[] {
+  return Array.from(whaleWalletRegistry.keys());
 }
 
 /**
- * Add community-suggested whale wallet
- *
- * @param address - Wallet address
- * @param name - Wallet name/description
- * @param volume - Estimated volume level
- * @returns Success status
+ * Get whale wallet entry
  */
-export async function suggestWhaleWallet(
-  address: string,
-  name: string,
-  volume: "high" | "medium" | "low"
-): Promise<boolean> {
-  try {
-    // Validate address
-    const addressRegex = /^0x[a-f0-9]{40}$/i;
-    if (!addressRegex.test(address)) {
-      throw new Error("Invalid Ethereum address");
-    }
+export function getWhaleWallet(address: string): WhaleWalletEntry | undefined {
+  return whaleWalletRegistry.get(address.toLowerCase());
+}
 
-    // Check if already exists
-    if (whaleWalletRegistry.has(address.toLowerCase())) {
-      console.warn("[Whale Registry] Wallet already registered:", address);
-      return false;
-    }
+/**
+ * Add community-suggested wallet
+ */
+export function addWhaleWallet(entry: Omit<WhaleWalletEntry, "discoveredAt" | "lastVerified" | "transactionCount">): void {
+  whaleWalletRegistry.set(entry.address.toLowerCase(), {
+    ...entry,
+    discoveredAt: Date.now(),
+    lastVerified: Date.now(),
+    transactionCount: 0,
+  });
+}
 
-    // Verify wallet has high transaction volume
-    const verified = await verifyWalletVolume(address);
-    if (!verified) {
-      throw new Error("Wallet does not meet volume threshold");
-    }
-
-    // Add to registry
-    whaleWalletRegistry.set(address.toLowerCase(), {
-      address: address.toLowerCase(),
-      name,
-      volume,
-      priority: whaleWalletRegistry.size + 1,
-      discoveredAt: Date.now(),
-      lastVerified: Date.now(),
-      transactionCount: 0,
-    });
-
-    console.log("[Whale Registry] Added new whale wallet:", address);
-    return true;
-  } catch (error) {
-    console.error("[Whale Registry] Failed to add wallet:", error);
-    return false;
+/**
+ * Update whale wallet stats
+ */
+export function updateWhaleWallet(address: string, transactionCount: number): void {
+  const entry = whaleWalletRegistry.get(address.toLowerCase());
+  if (entry) {
+    entry.lastVerified = Date.now();
+    entry.transactionCount += transactionCount;
   }
-}
-
-/**
- * Verify wallet has sufficient transaction volume
- */
-async function verifyWalletVolume(address: string): Promise<boolean> {
-  try {
-    // Check transaction count via Blockscout API
-    const response = await fetch(
-      `https://explorer.dogechain.dog/api?module=account&action=txlist&address=${address}`
-    );
-
-    if (!response.ok) {
-      return false;
-    }
-
-    const data = await response.json();
-    const txCount = data.result?.length || 0;
-
-    // Require at least 100 transactions to be considered a "whale"
-    return txCount >= 100;
-  } catch (error) {
-    console.warn("[Whale Registry] Volume verification failed:", error);
-    return false;
-  }
-}
-
-/**
- * Get whale wallet priority for scanning
- */
-export function getWhaleScanOrder(): string[] {
-  return getWhaleWallets()
-    .sort((a, b) => {
-      // Prioritize high volume wallets
-      const volumeOrder = { high: 3, medium: 2, low: 1 };
-      const volumeDiff = volumeOrder[b.volume] - volumeOrder[a.volume];
-
-      if (volumeDiff !== 0) return volumeDiff;
-
-      // Then by priority (lower = higher priority)
-      return a.priority - b.priority;
-    })
-    .map((w) => w.address);
-}
-
-// Auto-initialize
-if (typeof window !== "undefined") {
-  initializeWhaleRegistry();
 }

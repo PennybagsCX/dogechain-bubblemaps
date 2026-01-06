@@ -173,29 +173,35 @@ function levenshtein(a: string, b: string): number {
 
   const matrix: number[][] = [];
   for (let i = 0; i <= lenB; i++) {
-    matrix[i] = [i];
+    matrix[i] = [];
+    matrix[i][0] = i;
   }
-  for (let j = 0; j <= lenA; j++) {
+  for (let j = 1; j <= lenA; j++) {
     matrix[0][j] = j;
   }
 
   for (let i = 1; i <= lenB; i++) {
     for (let j = 1; j <= lenA; j++) {
+      const diagonal = matrix[i - 1]?.[j - 1] ?? 0;
+      const left = matrix[i]?.[j - 1] ?? 0;
+      const top = matrix[i - 1]?.[j] ?? 0;
+
       if (b.charAt(i - 1) === a.charAt(j - 1)) {
-        matrix[i][j] = matrix[i - 1][j - 1];
+        matrix[i]![j] = diagonal;
       } else {
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j - 1] + 1,
-          matrix[i][j - 1] + 1,
-          matrix[i - 1][j] + 1
+        matrix[i]![j] = Math.min(
+          diagonal + 1,
+          left + 1,
+          top + 1
         );
       }
 
-      if (matrix[i][j] > 3) return matrix[i][j];
+      const current = matrix[i]![j];
+      if (current && current > 3) return current;
     }
   }
 
-  return matrix[lenB][lenA];
+  return matrix[lenB]?.[lenA] ?? 0;
 }
 
 // Worker message handler
@@ -229,7 +235,7 @@ self.onmessage = async (event: MessageEvent<WorkerMessage>) => {
           query,
           expandedQuery,
           expandedQuery === queryLower ? expandedQueries : [],
-          tokenAbbrs?.[token.address.toLowerCase()]
+          tokenAbbrs?.get(token.address.toLowerCase())
         );
 
         if (score > maxScore) {

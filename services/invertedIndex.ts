@@ -267,10 +267,10 @@ export async function searchInvertedIndexDB(
     const tokens = await db.tokenSearchIndex
       .where("address")
       .anyOf(addresses)
-      .filter((t) => t.type === type)
+      .filter((t: any) => t.type === type)
       .toArray();
 
-    return tokens.map((t) => t.address);
+    return tokens.map((t: any) => t.address);
   } catch (error) {
     console.error("[Inverted Index] Search failed:", error);
     return [];

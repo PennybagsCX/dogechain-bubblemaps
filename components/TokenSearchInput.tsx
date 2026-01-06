@@ -3,6 +3,7 @@ import { Search, Loader2, Coins, Image as ImageIcon } from "lucide-react";
 import { AssetType, SearchResult, TokenSearchInputProps } from "../types";
 import { searchTokensHybrid, generatePhoneticSuggestions } from "../services/tokenSearchService";
 import { trackSearch, trackResultClick, getSessionId } from "../services/searchAnalytics";
+import SearchWorkerInstance from "../services/searchWorker.ts?worker";
 
 // Worker pool management
 let searchWorker: Worker | null = null;
@@ -22,9 +23,8 @@ async function initializeSearchWorker(): Promise<boolean> {
         return true;
       }
 
-      // Create worker from external file
-      const workerUrl = new URL("../services/searchWorker.ts", import.meta.url);
-      searchWorker = new Worker(workerUrl, { type: "module" });
+      // Create worker from external file using Vite's worker import
+      searchWorker = new SearchWorkerInstance({ type: "module" });
 
       console.log("[Token Search] Worker initialized successfully");
       return true;

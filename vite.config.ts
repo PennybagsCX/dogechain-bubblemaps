@@ -40,6 +40,9 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "."),
       },
     },
+    worker: {
+      format: "es",
+    },
     build: {
       // SECURITY: Use esbuild to drop console statements in production
       minify: "esbuild",

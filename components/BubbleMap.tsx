@@ -669,13 +669,13 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           .style("filter", "url(#glow)");
 
         linkSelection
+          .select(".neural-vein") // Target the visible path inside wrapper
           .transition()
           .duration(400)
           .attr("opacity", 0.5)
           .attr("stroke", "url(#veinGradient)")
           .attr("stroke-width", 2)
           .style("filter", "none")
-          .attr("class", "neural-vein")
           .style("display", showLinks ? "block" : "none"); // Respect filter
 
         rankSelection.transition().duration(400).attr("opacity", 1);
@@ -1123,8 +1123,11 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               {isPaused ? "Physics Paused" : "Live Physics Engine"}
             </div>
             <button
-              onClick={() => setAreControlsOpen((prev) => !prev)}
-              className="p-2 bg-space-800 border border-space-700 rounded-lg text-slate-200 hover:bg-space-700 transition-all"
+              onClick={(e) => {
+                e.stopPropagation();
+                setAreControlsOpen((prev) => !prev);
+              }}
+              className="p-2 bg-space-800 border border-space-700 rounded-lg text-slate-200 hover:bg-space-700 transition-all cursor-pointer [touch-action:manipulation]"
               aria-label={areControlsOpen ? "Hide controls" : "Show controls"}
             >
               <ChevronUp

@@ -45,6 +45,7 @@
 - **♿ Accessible** - WCAG 2.1 AA compliant, keyboard navigation
 - **🎨 Space Theme** - Dark mode UI with smooth animations
 - **📊 Analytics Ready** - Sentry error tracking integration
+- **🔗 REST API** - Full-featured backend API for analytics, trending, and recommendations
 
 ---
 
@@ -80,6 +81,47 @@ npm run preview
 
 ---
 
+## 📚 API Documentation
+
+### Quick Start
+
+The backend API is deployed at: **https://dogechain-bubblemaps-api.vercel.app**
+
+### Available Endpoints
+
+- **Analytics** - Track searches and clicks for learning and relevance
+- **Trending** - Get trending tokens and NFTs based on search frequency
+- **Recommendations** - Collaborative filtering suggestions based on peer behavior
+- **Proxy** - Dogechain Explorer API proxy to avoid CORS issues
+- **Health** - System health check and monitoring
+
+### Full Documentation
+
+- **[API Reference](docs/API_REFERENCE.md)** - Complete endpoint documentation with examples
+- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** - Setup and deployment instructions
+
+### Example Usage
+
+```bash
+# Get trending tokens
+curl "https://dogechain-bubblemaps-api.vercel.app/api/trending?type=TOKEN&limit=10"
+
+# Health check
+curl https://dogechain-bubblemaps-api.vercel.app/api/health
+
+# Log a search
+curl -X POST https://dogechain-bubblemaps-api.vercel.app/api/trending/log \
+  -H "Content-Type: application/json" \
+  -d '{
+    "address": "0xbdaD927604c5cB78F15b3669a92Fa5A1427d33a2",
+    "assetType": "TOKEN",
+    "symbol": "DOGE",
+    "name": "DogeCoin"
+  }'
+```
+
+---
+
 ## 🛠️ Tech Stack
 
 **Frontend Framework**
@@ -104,9 +146,11 @@ npm run preview
 
 **Infrastructure**
 
-- Vercel - Deployment platform
-- GitHub Actions - CI/CD pipeline
-- Sentry - Error tracking
+- **Vercel** - Frontend deployment platform
+- **Vercel** - Backend API deployment platform
+- **Neon PostgreSQL** - Serverless database for analytics and trending
+- **GitHub Actions** - CI/CD pipeline
+- **Sentry** - Error tracking (optional)
 
 ---
 
@@ -131,11 +175,23 @@ cp .env.example .env.local
 
 **Required Variables:**
 
-| Variable             | Description        | Default       |
-| -------------------- | ------------------ | ------------- |
-| `SENTRY_DSN`         | Error tracking DSN | Optional      |
-| `NODE_ENV`           | Environment mode   | `development` |
-| `FEATURE_AI_ENABLED` | Enable AI features | `false`       |
+| Variable                      | Description        | Default           | Required |
+| ----------------------------- | ------------------ | ----------------- | -------- |
+| `VITE_API_BASE_URL`           | Backend API URL    | (empty for local) | Yes      |
+| `VITE_ANALYTICS_API_ENDPOINT` | Analytics API URL  | (empty for local) | Yes      |
+| `SENTRY_DSN`                  | Error tracking DSN | -                 | Optional |
+| `NODE_ENV`                    | Environment mode   | `development`     | No       |
+| `FEATURE_AI_ENABLED`          | Enable AI features | `false`           | No       |
+
+**Production Values:**
+
+```bash
+VITE_API_BASE_URL=https://dogechain-bubblemaps-api.vercel.app
+VITE_ANALYTICS_API_ENDPOINT=https://dogechain-bubblemaps-api.vercel.app
+```
+
+**Local Development:**
+Leave `VITE_API_BASE_URL` and `VITE_ANALYTICS_API_ENDPOINT` empty to use relative paths (proxied to local backend).
 
 **See [.env.example](.env.example)** for all available options.
 

@@ -24,17 +24,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build production bundle
-        run: npm run build
-        env:
-          NODE_ENV: production
-          VITE_API_BASE_URL: https://dogechain-bubblemaps-api.vercel.app
-
       - name: Deploy to Vercel (Production)
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod --force --no-build'
+          vercel-args: '--prod'
           working-directory: ./

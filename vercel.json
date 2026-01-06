@@ -1,4 +1,9 @@
 {
+  "build": {
+    "env": {
+      "VITE_API_BASE_URL": "https://dogechain-bubblemaps-api.vercel.app"
+    }
+  },
   "env": {
     "VITE_API_BASE_URL": "https://dogechain-bubblemaps-api.vercel.app"
   },

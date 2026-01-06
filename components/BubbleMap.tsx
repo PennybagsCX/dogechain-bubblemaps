@@ -415,7 +415,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         if (highlightedLinks.size > 0) {
           highlightedLinks.clear();
           // Reset all links to normal appearance
-          d3.selectAll(".link-wrapper .neural-vein")
+          svg
+            .selectAll(".link-wrapper .neural-vein")
             .transition()
             .duration(150)
             .attr("stroke", "url(#veinGradient)")

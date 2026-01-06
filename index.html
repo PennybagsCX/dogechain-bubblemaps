@@ -5,16 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <!-- SECURITY: Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self';
-                   script-src 'self' https://va.vercel-scripts.com;
-                   style-src 'self' 'unsafe-inline';
-                   font-src 'self';
-                   img-src 'self' data: blob: https:;
-                   connect-src 'self' https://dogechain.dog https://explorer.dogechain.dog https://rpc.dogechain.dog;
-                   base-uri 'self';
-                   form-action 'self';">
+    <!-- REMOVED: CSP is now set via HTTP headers in vercel.json -->
+    <!-- This eliminates conflicts and ensures consistent policy enforcement -->
 
     <!-- SECURITY: Additional Security Headers -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">

@@ -231,8 +231,9 @@ async function saveClickEventLocally(event: ClickAnalyticsEvent): Promise<void> 
  */
 async function sendSearchEventToServer(event: SearchAnalyticsEvent): Promise<void> {
   try {
-    // Check if analytics endpoint is configured
-    const apiEndpoint = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "/api/analytics/search";
+    // Construct full URL for analytics endpoint
+    const apiBase = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "";
+    const apiEndpoint = apiBase ? `${apiBase}/api/analytics/search` : "/api/analytics/search";
 
     const response = await fetch(apiEndpoint, {
       method: "POST",
@@ -265,7 +266,8 @@ async function sendSearchEventToServer(event: SearchAnalyticsEvent): Promise<voi
  */
 async function sendClickEventToServer(event: ClickAnalyticsEvent): Promise<void> {
   try {
-    const apiEndpoint = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "/api/analytics/click";
+    const apiBase = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "";
+    const apiEndpoint = apiBase ? `${apiBase}/api/analytics/click` : "/api/analytics/click";
 
     const response = await fetch(apiEndpoint, {
       method: "POST",

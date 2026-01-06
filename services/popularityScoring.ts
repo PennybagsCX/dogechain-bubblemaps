@@ -203,7 +203,8 @@ async function fetchPopularityFromServer(
   addresses: string[]
 ): Promise<Record<string, TokenPopularity> | null> {
   try {
-    const apiEndpoint = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "/api/trending/popularity";
+    const apiBase = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "";
+    const apiEndpoint = apiBase ? `${apiBase}/api/trending/popularity` : "/api/trending/popularity";
 
     const params = new URLSearchParams();
     for (const address of addresses) {
@@ -236,7 +237,8 @@ async function sendPopularityUpdate(
   appearedInResults: boolean,
   wasClicked: boolean
 ): Promise<void> {
-  const apiEndpoint = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "/api/trending/popularity";
+  const apiBase = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "";
+  const apiEndpoint = apiBase ? `${apiBase}/api/trending/popularity` : "/api/trending/popularity";
 
   const response = await fetch(apiEndpoint, {
     method: "POST",

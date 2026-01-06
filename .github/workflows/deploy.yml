@@ -34,3 +34,4 @@ jobs:
           working-directory: ./
         env:
           VITE_API_BASE_URL: https://dogechain-bubblemaps-api.vercel.app
+          VITE_ANALYTICS_API_ENDPOINT: https://dogechain-bubblemaps-api.vercel.app

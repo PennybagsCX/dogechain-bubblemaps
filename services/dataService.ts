@@ -317,7 +317,7 @@ const resolveKnownLabel = async (
     } else {
       console.log(`[LP Detection] ✗ Not an LP pair: ${lowerAddr}`);
     }
-  } catch {
+  } catch (e) {
     // Silently fail - don't break existing functionality
     console.error(`[LP Detection] Error checking ${lowerAddr}:`, e);
   }
@@ -361,7 +361,7 @@ export const fetchMetadataFromTransfers = async (
       }
     }
     return null;
-  } catch {
+  } catch (e) {
     console.warn("fetchMetadataFromTransfers failed:", e);
     return null;
   }
@@ -390,7 +390,7 @@ const fetchMetadataFromTokenList = async (
       }
     }
     return null;
-  } catch {
+  } catch (e) {
     console.warn("fetchMetadataFromTokenList failed:", e);
     return null;
   }
@@ -966,7 +966,7 @@ export const scanWhaleContracts = async (
           }
         }
       }
-    } catch {
+    } catch (e) {
       console.warn(`[Whale Scan] Failed to scan whale ${whale}:`, e);
     }
   }
@@ -996,7 +996,7 @@ export const checkTokenBalance = async (
     }
 
     return { balance: "0", hasBalance: false };
-  } catch {
+  } catch (e) {
     console.warn(`Failed to check balance for ${contractAddress}:`, e);
     return { balance: "0", hasBalance: false };
   }
@@ -1209,6 +1209,7 @@ export const fetchWalletAssetsHybrid = async (
     const nftsMap = new Map<string, Token & { hits: number }>();
     let totalRequests = 0;
     const phasesCompleted: string[] = [];
+    let newAssetsFound = 0; // Declare here so it's accessible after catch block
 
     // Helper to record assets
     const recordAsset = (
@@ -1281,7 +1282,7 @@ export const fetchWalletAssetsHybrid = async (
           // Update progress (20% per phase)
           const phaseProgress = ((page - startPage + 1) / (maxPages - startPage + 1)) * 20;
           triggerProgress("deep-v2", Math.floor(phaseProgress), `Scanning V2 page ${page}...`);
-        } catch {
+        } catch (e) {
           console.warn(`V2 page ${page} failed:`, e);
           break;
         }
@@ -1306,7 +1307,7 @@ export const fetchWalletAssetsHybrid = async (
           if (json.status === "1" && Array.isArray(json.result)) {
             results.push(...json.result);
           }
-        } catch {
+        } catch (e) {
           console.warn(`V1 offset ${offset} failed:`, e);
           continue;
         }
@@ -1384,7 +1385,7 @@ export const fetchWalletAssetsHybrid = async (
           });
         }
       }
-    } catch {
+    } catch (e) {
       console.warn("V1 NFT probe failed:", e);
     }
 
@@ -1627,7 +1628,7 @@ export const fetchWalletAssetsHybrid = async (
                   lastSeenAt: Date.now(),
                 });
               }
-            } catch {
+            } catch (e) {
               console.warn(`Failed to detect type for whale contract ${contract}:`, e);
             }
           }
@@ -1651,7 +1652,7 @@ export const fetchWalletAssetsHybrid = async (
       // Check balances for all discovered contracts
       triggerProgress("whale-scan", 85, "Verifying holdings in discovered contracts...");
 
-      let newAssetsFound = 0;
+      // newAssetsFound already declared above
       const checkedContracts = new Set<string>();
 
       for (let i = 0; i < discoveredContracts.length; i += 20) {
@@ -1753,7 +1754,7 @@ export const fetchWalletAssetsHybrid = async (
                     );
                   }
                 }
-              } catch {
+              } catch (e) {
                 // Continue on error - individual LP check failures shouldn't break the scan
                 console.error(`[LP Detection] Failed to check LP pair ${lpPair.pairAddress}:`, e);
               }
@@ -1780,7 +1781,7 @@ export const fetchWalletAssetsHybrid = async (
       } else {
         console.log("[LP Detection] LP detection is disabled via feature flag");
       }
-    } catch {
+    } catch (e) {
       console.error("[LP Detection] LP detection phase failed:", e);
       // Non-critical phase - continue anyway
     }
@@ -1818,7 +1819,7 @@ export const fetchWalletAssetsHybrid = async (
       nfts: finalNfts,
       metadata,
     };
-  } catch {
+  } catch (e) {
     if (e instanceof Error && e.message === "Scan cancelled") {
       throw e;
     }

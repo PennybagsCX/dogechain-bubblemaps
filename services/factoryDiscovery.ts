@@ -159,7 +159,7 @@ export function getDiscoveredFactories(): DiscoveredFactory[] {
  */
 export async function discoverFactoryPairs(
   factoryAddress: string,
-  limit: number = 100
+  _limit: number = 100
 ): Promise<string[]> {
   try {
     console.log(`[Factory Discovery] Discovering pairs for factory: ${factoryAddress}`);

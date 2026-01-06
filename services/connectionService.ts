@@ -14,11 +14,7 @@ function getCacheKey(sourceId: string, targetId: string): string {
 /**
  * Calculate statistics for transactions between two wallets
  */
-function calculateConnectionStats(
-  transactions: Transaction[],
-  sourceId: string,
-  targetId: string
-): ConnectionStats {
+function calculateConnectionStats(transactions: Transaction[], sourceId: string): ConnectionStats {
   const totalTransactions = transactions.length;
 
   // Calculate total volume in each direction
@@ -130,7 +126,7 @@ export async function fetchConnectionDetails(
     uniqueTransactions.sort((a, b) => b.timestamp - a.timestamp);
 
     // Calculate statistics
-    const stats = calculateConnectionStats(uniqueTransactions, sourceId, targetId);
+    const stats = calculateConnectionStats(uniqueTransactions, sourceId);
 
     const connection: Connection = {
       ...link,

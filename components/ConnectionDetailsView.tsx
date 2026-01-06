@@ -1,6 +1,6 @@
-import React, { useState, useMemo, useCallback } from "react";
-import { Connection, Wallet, Transaction, ConnectionStats } from "../types";
-import { ExternalLink, ArrowUpDown } from "lucide-react";
+import { useState, useMemo, useCallback } from "react";
+import { Connection, Wallet, ConnectionStats } from "../types";
+import { ExternalLink } from "lucide-react";
 
 type DirectionFilter = "ALL" | "IN" | "OUT";
 
@@ -9,7 +9,6 @@ interface ConnectionDetailsViewProps {
   sourceWallet: Wallet | undefined;
   targetWallet: Wallet | undefined;
   tokenSymbol: string;
-  tokenDecimals?: number;
 }
 
 export function ConnectionDetailsView({
@@ -17,7 +16,6 @@ export function ConnectionDetailsView({
   sourceWallet,
   targetWallet,
   tokenSymbol,
-  tokenDecimals = 18,
 }: ConnectionDetailsViewProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [directionFilter, setDirectionFilter] = useState<DirectionFilter>("ALL");

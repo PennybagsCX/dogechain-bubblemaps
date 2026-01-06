@@ -551,7 +551,6 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                     : connection!.target.id)
               )}
               tokenSymbol={tokenSymbol}
-              tokenDecimals={tokenDecimals}
             />
           ) : (
             <>

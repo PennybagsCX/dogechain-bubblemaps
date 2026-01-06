@@ -83,15 +83,31 @@ export async function getTrendingAssets(
   try {
     const response = await fetch(`/api/trending?type=${type}&limit=${limit}&cache=true`);
 
+    // Handle 404 gracefully - API endpoint doesn't exist
+    if (response.status === 404) {
+      console.log("[Trending] Server endpoint not available, using local trending only");
+      return [];
+    }
+
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    // Validate content type before parsing JSON
+    const contentType = response.headers.get("content-type");
+    if (!contentType?.includes("application/json")) {
+      console.warn("[Trending] Server returned non-JSON response, using local trending");
+      return [];
     }
 
     const data: TrendingApiResponse = await response.json();
     return data.assets || [];
   } catch (error) {
-    console.warn("[Trending] Server fetch failed, falling back to local trending:", error);
-    return []; // Return empty array - caller should fall back to local trending
+    // Only log if not a 404 or JSON error (expected in development)
+    if (!(error instanceof TypeError) || !error.message.includes("JSON")) {
+      console.warn("[Trending] Server fetch failed, falling back to local trending:", error);
+    }
+    return [];
   }
 }
 

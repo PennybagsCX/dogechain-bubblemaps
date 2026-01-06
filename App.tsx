@@ -12,6 +12,7 @@ import {
   Token,
   Wallet,
   Link,
+  Connection,
   ViewState,
   AssetType,
   AlertConfig,
@@ -30,6 +31,7 @@ import {
   detectContractType,
   fetchMetadataFromTransfers,
 } from "./services/dataService";
+import { fetchConnectionDetails } from "./services/connectionService";
 import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 
 // Helper functions from dataService (accessed via global scope or re-export)
@@ -210,6 +212,8 @@ const App: React.FC = () => {
   const [wallets, setWallets] = useState<Wallet[]>([]);
   const [links, setLinks] = useState<Link[]>([]);
   const [selectedWallet, setSelectedWallet] = useState<Wallet | null>(null);
+  const [selectedConnection, setSelectedConnection] = useState<Connection | null>(null);
+  const [selectedConnectionId, setSelectedConnectionId] = useState<string | null>(null);
   const [holdersPage, setHoldersPage] = useState(1);
   const [targetWalletId, setTargetWalletId] = useState<string | null>(null);
 
@@ -713,25 +717,38 @@ const App: React.FC = () => {
     }
   };
 
-  // --- REMOVE CONNECTION ---
-  const handleRemoveConnection = (linkToRemove: Link) => {
-    setLinks((prev) => {
-      // Normalize link identifiers for comparison
-      const sourceId =
-        typeof linkToRemove.source === "string" ? linkToRemove.source : linkToRemove.source.id;
-      const targetId =
-        typeof linkToRemove.target === "string" ? linkToRemove.target : linkToRemove.target.id;
+  // --- CONNECTION DETAILS ---
+  const handleConnectionClick = async (link: Link) => {
+    try {
+      // Generate link ID
+      const sourceId = typeof link.source === "string" ? link.source : link.source.id;
+      const targetId = typeof link.target === "string" ? link.target : link.target.id;
+      const linkId = `${sourceId}-${targetId}`;
 
-      // Filter out the matching link
-      return prev.filter((link) => {
-        const linkSourceId = typeof link.source === "string" ? link.source : link.source.id;
-        const linkTargetId = typeof link.target === "string" ? link.target : link.target.id;
+      // Set selected connection ID
+      setSelectedConnectionId(linkId);
 
-        return !(linkSourceId === sourceId && linkTargetId === targetId);
-      });
-    });
+      // Create connection object with loading state
+      const loadingConnection: Connection = {
+        ...link,
+        loading: true,
+      };
 
-    addToast("Connection removed", "info");
+      setSelectedConnection(loadingConnection);
+      setSelectedWallet(null); // Clear wallet selection
+
+      // Fetch connection details
+      const connectionWithDetails = await fetchConnectionDetails(
+        link,
+        token?.address || "",
+        token?.type || AssetType.TOKEN
+      );
+
+      setSelectedConnection(connectionWithDetails);
+    } catch (error) {
+      console.error("[App] Failed to load connection details:", error);
+      addToast("Failed to load connection details", "error");
+    }
   };
 
   // --- USER INJECTION LOGIC ---
@@ -1753,7 +1770,9 @@ const App: React.FC = () => {
                   searchType={searchType}
                   onSearch={(address, type) => handleSearch(undefined, address, type)}
                   placeholder={
-                    searchType === AssetType.NFT ? "Search collections..." : "Search tokens..."
+                    searchType === AssetType.NFT
+                      ? "Search collections..."
+                      : "Search token or contract ..."
                   }
                   disabled={loading}
                 />
@@ -2295,20 +2314,27 @@ const App: React.FC = () => {
                     userAddress={userAddress}
                     onWalletClick={setSelectedWallet}
                     targetWalletId={targetWalletId}
-                    onRemoveLink={handleRemoveConnection}
+                    onConnectionClick={handleConnectionClick}
+                    selectedConnectionId={selectedConnectionId}
                   />
                 </div>
 
                 {/* Slide Over Details */}
                 <WalletSidebar
                   wallet={selectedWallet}
+                  connection={selectedConnection}
+                  wallets={wallets}
                   tokenSymbol={token.symbol}
                   tokenName={token.name}
                   tokenAddress={token.address}
                   tokenDecimals={token.decimals}
                   assetType={token.type}
                   iconUrl={token.iconUrl}
-                  onClose={() => setSelectedWallet(null)}
+                  onClose={() => {
+                    setSelectedWallet(null);
+                    setSelectedConnection(null);
+                    setSelectedConnectionId(null);
+                  }}
                   onCreateAlert={(config) => handleAddAlertFromSidebar(selectedWallet!, config)}
                   onTraceConnections={handleTraceConnections}
                 />

@@ -37,6 +37,27 @@ export interface Link {
   value: number;
 }
 
+export interface Connection extends Link {
+  // Transaction data fetched between wallets
+  transactions?: Transaction[];
+  stats?: ConnectionStats;
+  loading?: boolean;
+  error?: string;
+}
+
+export interface ConnectionStats {
+  totalTransactions: number;
+  totalVolume: number;
+  firstTransaction?: number; // timestamp
+  lastTransaction?: number; // timestamp
+  averageAmount: number;
+  flowDirection: "balanced" | "source_to_target" | "target_to_source";
+  fromCount: number; // transactions from source to target
+  toCount: number; // transactions from target to source
+  fromVolume: number;
+  toVolume: number;
+}
+
 export interface Transaction {
   hash: string;
   from: string;
@@ -110,6 +131,7 @@ export interface SearchResult {
   type: AssetType;
   source: "local" | "remote" | "recent";
   decimals?: number;
+  score?: number; // For temporary sorting during search (removed before display)
 }
 
 export interface TokenSearchInputProps {
@@ -118,4 +140,61 @@ export interface TokenSearchInputProps {
   placeholder?: string;
   disabled?: boolean;
   autoFocus?: boolean;
+}
+
+// =====================================================
+// Search Analytics Types
+// =====================================================
+
+export interface SearchAnalyticsEvent {
+  sessionId: string;
+  query: string;
+  results: string[]; // Token addresses
+  resultCount: number;
+  timestamp: number;
+}
+
+export interface ClickAnalyticsEvent {
+  sessionId: string;
+  query: string;
+  clickedAddress: string;
+  resultRank: number;
+  resultScore: number;
+  timeToClickMs: number;
+  timestamp: number;
+}
+
+export interface SearchSession {
+  sessionId: string;
+  startTime: number;
+  lastActivity: number;
+  searchCount: number;
+  clickCount: number;
+}
+
+export interface TokenPopularity {
+  tokenAddress: string;
+  searchCount: number;
+  clickCount: number;
+  ctr: number; // Click-through rate (0-1)
+  lastSearched: number | null;
+  lastClicked: number | null;
+}
+
+export interface AnalyticsSummary {
+  date: string;
+  totalSearches: number;
+  totalClicks: number;
+  uniqueSessions: number;
+  avgCtr: number;
+  topQueries: Array<{ query: string; count: number }>;
+  topTokens: Array<{ address: string; clicks: number }>;
+}
+
+export interface PeerRecommendation {
+  address: string;
+  name: string;
+  symbol: string;
+  score: number;
+  reason: string;
 }

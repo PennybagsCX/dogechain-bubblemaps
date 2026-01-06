@@ -33,9 +33,8 @@ interface BubbleMapProps {
   width?: number; // Optional now, used for initial override only
   height?: number; // Optional now
   targetWalletId?: string | null; // New: ID of wallet to zoom to
-  onRemoveLink?: (link: Link) => void; // New: handler for removing connections
-  onConnectionClick?: (link: Link) => void; // Track selected connection
-  selectedConnectionId?: string | null; // Track selected connection
+  onConnectionClick?: (link: Link) => void; // Handler for clicking connections (view details)
+  selectedConnectionId?: string | null; // ID of selected connection for persistent highlight
 }
 
 export const BubbleMap: React.FC<BubbleMapProps> = ({
@@ -47,7 +46,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   width: initialWidth,
   height: initialHeight,
   targetWalletId,
-  onRemoveLink,
   onConnectionClick,
   selectedConnectionId,
 }) => {
@@ -116,8 +114,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const lastSelectedIdRef = useRef<string | null>(null);
 
-  // Connection selection state
-  const [selectedConnectionId, setSelectedConnectionId] = useState<string | null>(null);
+  // Keep track of selected connection
   const lastSelectedConnectionIdRef = useRef<string | null>(null);
 
   // Helper: apply highlight and label visibility for a given wallet id
@@ -158,6 +155,59 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .style("display", "block")
       .style("opacity", 1)
       .raise();
+  };
+
+  // Helper: apply connection selection highlight
+  const applyConnectionHighlight = (connectionId: string | null) => {
+    if (!svgRef.current) return;
+
+    const linkSelection = d3.select(svgRef.current).selectAll(".link-wrapper");
+
+    // Clear previous selection
+    linkSelection.select(".neural-vein").classed("link-selected", false);
+    lastSelectedConnectionIdRef.current = null;
+
+    if (!connectionId) {
+      // Reset all links to default
+      linkSelection
+        .select(".neural-vein")
+        .transition()
+        .duration(150)
+        .attr("stroke", "url(#veinGradient)")
+        .attr("stroke-width", 3)
+        .attr("stroke-dasharray", "4, 4")
+        .attr("opacity", 0.6)
+        .style("filter", "none")
+        .style("animation-play-state", "running");
+      return;
+    }
+
+    // Highlight selected connection with purple glow
+    linkSelection
+      .filter((d: any) => {
+        const source = d.source;
+        const target = d.target;
+
+        // Handle both string IDs and node objects with id property
+        const sourceId = typeof source === "string" ? source : source?.id;
+        const targetId = typeof target === "string" ? target : target?.id;
+
+        if (!sourceId || !targetId) return false;
+
+        return `${sourceId}-${targetId}` === connectionId;
+      })
+      .select(".neural-vein")
+      .classed("link-selected", true)
+      .style("animation-play-state", "paused")
+      .transition()
+      .duration(150)
+      .attr("stroke", "#a855f7")
+      .attr("stroke-width", 6)
+      .attr("stroke-dasharray", "none")
+      .attr("opacity", 1)
+      .style("filter", "drop-shadow(0 0 8px rgba(168, 85, 247, 0.8))");
+
+    lastSelectedConnectionIdRef.current = connectionId;
   };
 
   // --- MAP SETTINGS ---
@@ -438,6 +488,10 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         setFocusedIndex(null);
         applySelectionHighlight(null, showLabels);
 
+        // Clear connection selection
+        lastSelectedConnectionIdRef.current = null;
+        applyConnectionHighlight(null);
+
         // Clear mobile link highlights
         if (highlightedLinks.size > 0) {
           highlightedLinks.clear();
@@ -497,9 +551,25 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     const highlightedLinks = new Set<string>();
 
     // Helper to get link ID
-    const getLinkId = (d: LinkDatum) => {
-      const sourceId = (d.source as any).id || d.source;
-      const targetId = (d.target as any).id || d.target;
+    const getLinkId = (d: LinkDatum | any) => {
+      // Check if this is an event object (not actual data)
+      if (!d || typeof d !== "object" || !("source" in d) || !("target" in d)) {
+        console.warn("[BubbleMap] Invalid link data received:", d);
+        return null;
+      }
+
+      const source = d.source;
+      const target = d.target;
+
+      // Handle both string IDs and node objects with id property
+      const sourceId = typeof source === "string" ? source : (source as any)?.id;
+      const targetId = typeof target === "string" ? target : (target as any)?.id;
+
+      if (!sourceId || !targetId) {
+        console.warn("[BubbleMap] Invalid link data (missing IDs):", d);
+        return null;
+      }
+
       return `${sourceId}-${targetId}`;
     };
 
@@ -508,40 +578,32 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .on("click", (event: any, d: LinkDatum) => {
         event.stopPropagation();
 
-        if (!onRemoveLink) return;
+        if (!onConnectionClick) return;
 
         const linkId = getLinkId(d);
+        if (!linkId) return; // Guard against invalid link data
+
         const isTouch = "ontouchstart" in window;
 
         if (isTouch) {
-          // Mobile: Two-tap to remove
+          // Mobile: Two-tap to view details
           const wrapper = d3.select(event.currentTarget);
           const visiblePath = wrapper.select(".neural-vein");
 
           if (highlightedLinks.has(linkId)) {
-            // Second tap: Remove the connection
+            // Second tap: View connection details
             highlightedLinks.delete(linkId);
 
-            // Stabilize simulation before removal
-            if (simulationRef.current) {
-              simulationRef.current.alphaTarget(0.3);
-              simulationRef.current.alpha(0.3);
-            }
+            const source = d.source;
+            const target = d.target;
 
-            const linkToRemove: Link = {
-              source: (d.source as any).id || d.source,
-              target: (d.target as any).id || d.target,
+            const link: Link = {
+              source: typeof source === "string" ? source : (source as any)?.id || source,
+              target: typeof target === "string" ? target : (target as any)?.id || target,
               value: d.value,
             };
 
-            onRemoveLink(linkToRemove);
-
-            // Stabilize after removal
-            setTimeout(() => {
-              if (simulationRef.current) {
-                simulationRef.current.alphaTarget(0);
-              }
-            }, 300);
+            onConnectionClick(link);
           } else {
             // First tap: Highlight the connection
             // Clear other highlights
@@ -565,39 +627,39 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               .style("animation-play-state", "paused")
               .transition()
               .duration(150)
-              .attr("stroke", "#ef4444")
+              .attr("stroke", "#a855f7") // Purple color
               .attr("stroke-width", 6)
               .attr("stroke-dasharray", "none")
               .attr("opacity", 1)
-              .style("filter", "drop-shadow(0 0 8px rgba(239, 68, 68, 0.8))");
+              .style("filter", "drop-shadow(0 0 8px rgba(168, 85, 247, 0.8))"); // Purple glow
           }
         } else {
-          // Desktop: Single click to remove
-          // Stabilize simulation before removal
-          if (simulationRef.current) {
-            simulationRef.current.alphaTarget(0.3);
-            simulationRef.current.alpha(0.3);
-          }
+          // Desktop: Single click to view details
+          const linkId = getLinkId(d);
+          if (!linkId) return; // Guard against invalid link data
 
-          const linkToRemove: Link = {
-            source: (d.source as any).id || d.source,
-            target: (d.target as any).id || d.target,
+          // Clear wallet selection
+          onWalletClick(null);
+          setFocusedIndex(null);
+          applySelectionHighlight(null, showLabels);
+
+          // Set connection selection highlight (parent manages state via onConnectionClick)
+          applyConnectionHighlight(linkId);
+
+          const source = d.source;
+          const target = d.target;
+
+          const link: Link = {
+            source: typeof source === "string" ? source : (source as any)?.id || source,
+            target: typeof target === "string" ? target : (target as any)?.id || target,
             value: d.value,
           };
 
-          onRemoveLink(linkToRemove);
-
-          // Stabilize after removal
-          setTimeout(() => {
-            if (simulationRef.current) {
-              simulationRef.current.alphaTarget(0);
-            }
-          }, 300);
+          onConnectionClick(link);
         }
       })
-      .on("mouseover", function (this: any) {
-        // Turn connection solid red to indicate it can be deleted
-        // Update both hitbox (cursor) and visible path (appearance)
+      .on("mouseover", function (this: any, _d: LinkDatum) {
+        // Turn connection purple to indicate details available
         const wrapper = d3.select(this);
         wrapper.select(".link-hitbox").style("cursor", "pointer");
 
@@ -606,21 +668,28 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           .style("animation-play-state", "paused") // Pause animation
           .transition()
           .duration(150)
-          .attr("stroke", "#ef4444") // Red color
+          .attr("stroke", "#a855f7") // Purple color
           .attr("stroke-width", 6) // Thicker for easier clicking
           .attr("stroke-dasharray", "none") // Solid line (not dashed)
           .attr("opacity", 1)
-          .style("filter", "drop-shadow(0 0 8px rgba(239, 68, 68, 0.8))"); // Glow effect
+          .style("filter", "drop-shadow(0 0 8px rgba(168, 85, 247, 0.8))"); // Purple glow
       })
-      .on("mouseout", function (this: any, d: LinkDatum) {
+      .on("mouseout", function (this: any, _event: any, d: LinkDatum) {
         // Don't reset if this link is highlighted on mobile
         const linkId = getLinkId(d);
+        if (!linkId) return; // Guard against invalid link data
+
+        // Don't reset if this link is selected (persistent highlight)
+        if (linkId === lastSelectedConnectionIdRef.current) {
+          return;
+        }
+
         if (highlightedLinks.has(linkId)) {
           return;
         }
 
         // Restore gradient appearance
-        d3.select(this)
+        d3.select(this as any)
           .select(".neural-vein")
           .transition()
           .duration(150)
@@ -726,6 +795,11 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     nodeSelection
       .on("click", (event: any, d: NodeDatum) => {
         event.stopPropagation();
+
+        // Clear connection selection
+        lastSelectedConnectionIdRef.current = null;
+        applyConnectionHighlight(null);
+
         handleSelectNode(d);
         setFocusedIndex(wallets.indexOf(d));
       })
@@ -854,6 +928,13 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     showLabels,
     showLinks,
   ]);
+
+  // Re-apply connection selection after re-renders (resize, etc)
+  useEffect(() => {
+    if (selectedConnectionId) {
+      applyConnectionHighlight(selectedConnectionId);
+    }
+  }, [selectedConnectionId, wallets, links, dimensions]);
 
   // --- ACTIONS ---
   const handleZoomIn = () => {
@@ -1065,6 +1146,14 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
             stroke: #a855f7 !important;
             stroke-width: 3 !important;
             filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.7)) !important;
+          }
+          .neural-vein.link-selected {
+            stroke: #a855f7 !important;
+            stroke-width: 6 !important;
+            opacity: 1 !important;
+            filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.8)) !important;
+            animation-play-state: paused !important;
+            stroke-dasharray: none !important;
           }
           /* Remove square outlines on the SVG container */
           svg:focus, svg:focus-visible {

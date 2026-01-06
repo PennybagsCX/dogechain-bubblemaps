@@ -1,0 +1,408 @@
+/**
+ * Search Analytics Service
+ *
+ * Tracks search queries and user interactions to improve search relevance over time.
+ * Uses hybrid architecture: IndexedDB for local storage + API for server aggregation.
+ *
+ * Features:
+ * - Anonymous session tracking
+ * - Search query logging
+ * - Click tracking
+ * - Time-to-click measurement
+ * - Async non-blocking analytics
+ */
+
+import { SearchAnalyticsEvent, ClickAnalyticsEvent, SearchSession, SearchResult } from "../types";
+
+// =====================================================
+// SESSION MANAGEMENT
+// =====================================================
+
+let currentSession: SearchSession | null = null;
+const SESSION_DURATION_MS = 30 * 60 * 1000; // 30 minutes
+
+/**
+ * Generate or retrieve current session ID
+ */
+export function getSessionId(): string {
+  const now = Date.now();
+
+  // Check if session exists and is valid
+  if (currentSession && now - currentSession.lastActivity < SESSION_DURATION_MS) {
+    currentSession.lastActivity = now;
+    return currentSession.sessionId;
+  }
+
+  // Create new session
+  currentSession = {
+    sessionId: generateSessionId(),
+    startTime: now,
+    lastActivity: now,
+    searchCount: 0,
+    clickCount: 0,
+  };
+
+  return currentSession.sessionId;
+}
+
+/**
+ * Generate anonymous session ID
+ */
+function generateSessionId(): string {
+  // Generate 128-bit random session ID (32 hex chars)
+  const array = new Uint8Array(16);
+  crypto.getRandomValues(array);
+  return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+// =====================================================
+// SEARCH TRACKING
+// =====================================================
+
+/**
+ * Track search query and results
+ *
+ * @param query - Search query text
+ * @param results - Array of search results
+ * @param sessionId - Anonymous session identifier
+ */
+export async function trackSearch(
+  query: string,
+  results: SearchResult[],
+  sessionId: string = getSessionId()
+): Promise<void> {
+  try {
+    const event: SearchAnalyticsEvent = {
+      sessionId,
+      query,
+      results: results.map((r) => r.address),
+      resultCount: results.length,
+      timestamp: Date.now(),
+    };
+
+    // Update session stats
+    if (currentSession) {
+      currentSession.searchCount++;
+      currentSession.lastActivity = event.timestamp;
+    }
+
+    // Save to IndexedDB (local)
+    await saveSearchEventLocally(event);
+
+    // Send to server (async, non-blocking)
+    sendSearchEventToServer(event).catch((error) => {
+      console.warn("[Analytics] Failed to send search event to server:", error);
+    });
+
+    console.log(`[Analytics] Tracked search: "${query}" (${results.length} results)`);
+  } catch (error) {
+    console.error("[Analytics] Failed to track search:", error);
+  }
+}
+
+/**
+ * Track result click
+ *
+ * @param query - Search query text
+ * @param clickedAddress - Token address that was clicked
+ * @param resultRank - Position in results (0-indexed)
+ * @param resultScore - Relevance score
+ * @param timeToClickMs - Time from search to click (ms)
+ * @param sessionId - Session identifier
+ */
+export async function trackResultClick(
+  query: string,
+  clickedAddress: string,
+  resultRank: number,
+  resultScore: number,
+  timeToClickMs: number,
+  sessionId: string = getSessionId()
+): Promise<void> {
+  try {
+    const event: ClickAnalyticsEvent = {
+      sessionId,
+      query,
+      clickedAddress,
+      resultRank,
+      resultScore,
+      timeToClickMs,
+      timestamp: Date.now(),
+    };
+
+    // Update session stats
+    if (currentSession) {
+      currentSession.clickCount++;
+      currentSession.lastActivity = event.timestamp;
+    }
+
+    // Save to IndexedDB (local)
+    await saveClickEventLocally(event);
+
+    // Send to server (async, non-blocking)
+    sendClickEventToServer(event).catch((error) => {
+      console.warn("[Analytics] Failed to send click event to server:", error);
+    });
+
+    console.log(`[Analytics] Tracked click: ${clickedAddress} (rank ${resultRank})`);
+  } catch (error) {
+    console.error("[Analytics] Failed to track click:", error);
+  }
+}
+
+/**
+ * Track search abandonment (no clicks within timeout)
+ *
+ * @param query - Search query text
+ * @param resultsShown - Number of results shown
+ * @param sessionId - Session identifier
+ */
+export async function trackSearchAbandonment(
+  query: string,
+  resultsShown: number,
+  sessionId: string = getSessionId()
+): Promise<void> {
+  try {
+    // Abandonment is implied by lack of clicks
+    // Just log locally, no need to send to server
+    console.log(`[Analytics] Search abandoned: "${query}" (${resultsShown} results, no clicks)`);
+  } catch (error) {
+    console.error("[Analytics] Failed to track abandonment:", error);
+  }
+}
+
+// =====================================================
+// LOCAL STORAGE (IndexedDB)
+// =====================================================
+
+/**
+ * Save search event to IndexedDB
+ * (Requires searchAnalytics store to be added to db.ts)
+ */
+async function saveSearchEventLocally(event: SearchAnalyticsEvent): Promise<void> {
+  try {
+    // Dynamic import to avoid circular dependency
+    const { default: db } = await import("./db");
+
+    // Check if searchAnalytics store exists (v14+)
+    if ("searchAnalytics" in db) {
+      await db.searchAnalytics.add({
+        sessionId: event.sessionId,
+        query: event.query,
+        results: event.results,
+        resultCount: event.resultCount,
+        timestamp: event.timestamp,
+      });
+    }
+  } catch (error) {
+    console.warn("[Analytics] Failed to save search event locally:", error);
+  }
+}
+
+/**
+ * Save click event to IndexedDB
+ */
+async function saveClickEventLocally(event: ClickAnalyticsEvent): Promise<void> {
+  try {
+    const { default: db } = await import("./db");
+
+    if ("searchAnalytics" in db) {
+      await db.searchAnalytics.add({
+        sessionId: event.sessionId,
+        query: event.query,
+        clickedAddress: event.clickedAddress,
+        resultRank: event.resultRank,
+        resultScore: event.resultScore,
+        timeToClickMs: event.timeToClickMs,
+        timestamp: event.timestamp,
+        type: "click", // Distinguish from search events
+      });
+    }
+  } catch (error) {
+    console.warn("[Analytics] Failed to save click event locally:", error);
+  }
+}
+
+// =====================================================
+// SERVER COMMUNICATION
+// =====================================================
+
+/**
+ * Send search event to server
+ */
+async function sendSearchEventToServer(event: SearchAnalyticsEvent): Promise<void> {
+  try {
+    // Check if analytics endpoint is configured
+    const apiEndpoint = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "/api/analytics/search";
+
+    const response = await fetch(apiEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sessionId: event.sessionId,
+        query: event.query,
+        results: event.results,
+        resultCount: event.resultCount,
+        timestamp: event.timestamp,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    console.log(`[Analytics] Search event sent to server: "${event.query}"`);
+  } catch (error) {
+    // Silent fail - analytics shouldn't break search
+    console.warn("[Analytics] Server unavailable, search event not sent");
+    throw error;
+  }
+}
+
+/**
+ * Send click event to server
+ */
+async function sendClickEventToServer(event: ClickAnalyticsEvent): Promise<void> {
+  try {
+    const apiEndpoint = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "/api/analytics/click";
+
+    const response = await fetch(apiEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sessionId: event.sessionId,
+        query: event.query,
+        clickedAddress: event.clickedAddress,
+        resultRank: event.resultRank,
+        resultScore: event.resultScore,
+        timeToClickMs: event.timeToClickMs,
+        timestamp: event.timestamp,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    console.log(`[Analytics] Click event sent to server: ${event.clickedAddress}`);
+  } catch (error) {
+    console.warn("[Analytics] Server unavailable, click event not sent");
+    throw error;
+  }
+}
+
+// =====================================================
+// ANALYTICS QUERIES (Local)
+// =====================================================
+
+/**
+ * Get recent search events from local IndexedDB
+ */
+export async function getRecentSearches(limit: number = 100): Promise<SearchAnalyticsEvent[]> {
+  try {
+    const { default: db } = await import("./db");
+
+    if (!("searchAnalytics" in db)) {
+      return [];
+    }
+
+    const events = await db.searchAnalytics
+      .where("timestamp")
+      .above(Date.now() - 7 * 24 * 60 * 60 * 1000) // Last 7 days
+      .reverse()
+      .limit(limit)
+      .toArray();
+
+    return events
+      .filter((e: any) => !e.type || e.type !== "click")
+      .map((e: any) => ({
+        sessionId: e.sessionId,
+        query: e.query,
+        results: e.results || [],
+        resultCount: e.resultCount || 0,
+        timestamp: e.timestamp,
+      }));
+  } catch (error) {
+    console.error("[Analytics] Failed to get recent searches:", error);
+    return [];
+  }
+}
+
+/**
+ * Get top search queries (local only)
+ */
+export async function getTopQueries(
+  limit: number = 20
+): Promise<Array<{ query: string; count: number }>> {
+  try {
+    const recentSearches = await getRecentSearches(1000);
+    const queryCounts = new Map<string, number>();
+
+    for (const search of recentSearches) {
+      const normalized = search.query.toLowerCase().trim();
+      queryCounts.set(normalized, (queryCounts.get(normalized) || 0) + 1);
+    }
+
+    return Array.from(queryCounts.entries())
+      .map(([query, count]) => ({ query, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, limit);
+  } catch (error) {
+    console.error("[Analytics] Failed to get top queries:", error);
+    return [];
+  }
+}
+
+/**
+ * Get current session stats
+ */
+export function getSessionStats(): SearchSession | null {
+  return currentSession;
+}
+
+// =====================================================
+// INITIALIZATION
+// =====================================================
+
+/**
+ * Initialize analytics on app load
+ */
+export function initializeAnalytics(): void {
+  try {
+    // Generate session ID
+    getSessionId();
+
+    console.log("[Analytics] Initialized with session:", currentSession?.sessionId);
+  } catch (error) {
+    console.error("[Analytics] Failed to initialize:", error);
+  }
+}
+
+/**
+ * Cleanup on app unload
+ */
+export function cleanupAnalytics(): void {
+  try {
+    if (currentSession) {
+      console.log("[Analytics] Session ended:", {
+        sessionId: currentSession.sessionId,
+        duration: Date.now() - currentSession.startTime,
+        searches: currentSession.searchCount,
+        clicks: currentSession.clickCount,
+      });
+    }
+  } catch (error) {
+    console.error("[Analytics] Failed to cleanup:", error);
+  }
+}
+
+// Auto-initialize
+if (typeof window !== "undefined") {
+  initializeAnalytics();
+
+  // Cleanup on page unload
+  window.addEventListener("beforeunload", cleanupAnalytics);
+}

@@ -1,7 +1,54 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Search, Loader2, Coins, Image as ImageIcon } from "lucide-react";
 import { AssetType, SearchResult, TokenSearchInputProps } from "../types";
-import { searchTokensHybrid } from "../services/tokenSearchService";
+import { searchTokensHybrid, generatePhoneticSuggestions } from "../services/tokenSearchService";
+import { trackSearch, trackResultClick, getSessionId } from "../services/searchAnalytics";
+
+// Worker pool management
+let searchWorker: Worker | null = null;
+let workerInitializationPromise: Promise<boolean> | null = null;
+
+/**
+ * Initialize search worker (singleton pattern)
+ */
+async function initializeSearchWorker(): Promise<boolean> {
+  if (workerInitializationPromise) {
+    return workerInitializationPromise;
+  }
+
+  workerInitializationPromise = (async () => {
+    try {
+      if (searchWorker) {
+        return true;
+      }
+
+      // Create worker from external file
+      const workerUrl = new URL("../services/searchWorker.ts", import.meta.url);
+      searchWorker = new Worker(workerUrl, { type: "module" });
+
+      console.log("[Token Search] Worker initialized successfully");
+      return true;
+    } catch (error) {
+      console.warn("[Token Search] Worker initialization failed:", error);
+      searchWorker = null;
+      return false;
+    }
+  })();
+
+  return workerInitializationPromise;
+}
+
+/**
+ * Terminate search worker (call on app unmount)
+ */
+export function terminateSearchWorker(): void {
+  if (searchWorker) {
+    searchWorker.terminate();
+    searchWorker = null;
+    workerInitializationPromise = null;
+    console.log("[Token Search] Worker terminated");
+  }
+}
 
 export function TokenSearchInput({
   searchType,
@@ -15,13 +62,40 @@ export function TokenSearchInput({
   const [isSearching, setIsSearching] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [phoneticSuggestions, setPhoneticSuggestions] = useState<SearchResult[]>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchAbortRef = useRef<AbortController | null>(null);
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const workerReadyRef = useRef(false);
 
-  // Debounced search function
+  // Analytics tracking refs
+  const searchTimestampRef = useRef<number>(0);
+  const currentQueryRef = useRef<string>("");
+  const sessionIdRef = useRef<string>("");
+
+  // Initialize worker and session on mount
+  useEffect(() => {
+    initializeSearchWorker().then((ready) => {
+      workerReadyRef.current = ready;
+    });
+
+    // Initialize analytics session
+    sessionIdRef.current = getSessionId();
+
+    // Cleanup on unmount
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+      if (searchAbortRef.current) {
+        searchAbortRef.current.abort();
+      }
+    };
+  }, []);
+
+  // Debounced search function (optimized: 150ms + immediate for addresses)
   const performSearch = async (searchQuery: string) => {
     if (!searchQuery || searchQuery.length < 2) {
       setResults([]);
@@ -31,6 +105,8 @@ export function TokenSearchInput({
     }
 
     setIsSearching(true);
+    currentQueryRef.current = searchQuery;
+    searchTimestampRef.current = Date.now(); // Record search start time
 
     // Cancel previous search
     if (searchAbortRef.current) {
@@ -41,6 +117,7 @@ export function TokenSearchInput({
     searchAbortRef.current = new AbortController();
 
     try {
+      // Use main thread search for now (worker integration in next phase)
       const { all } = await searchTokensHybrid(searchQuery, searchType, {
         limit: 10,
         includeRemote: true,
@@ -48,6 +125,20 @@ export function TokenSearchInput({
 
       if (!searchAbortRef.current.signal.aborted) {
         setResults(all);
+
+        // Track search analytics (async, non-blocking)
+        trackSearch(searchQuery, all, sessionIdRef.current).catch((error) => {
+          console.warn("[Token Search] Analytics tracking failed:", error);
+        });
+
+        // If no results, fetch phonetic suggestions
+        if (all.length === 0 && searchQuery.length >= 3) {
+          const suggestions = await generatePhoneticSuggestions(searchQuery, searchType, 3);
+          setPhoneticSuggestions(suggestions);
+        } else {
+          setPhoneticSuggestions([]);
+        }
+
         setShowDropdown(true);
         setSelectedIndex(-1);
       }
@@ -60,7 +151,7 @@ export function TokenSearchInput({
     }
   };
 
-  // Handle input change
+  // Handle input change (optimized debounce)
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
@@ -70,10 +161,16 @@ export function TokenSearchInput({
       clearTimeout(debounceTimerRef.current);
     }
 
-    // Debounce search
+    // Immediate search for addresses (0x prefix)
+    if (value.startsWith("0x") && value.length >= 2) {
+      performSearch(value);
+      return;
+    }
+
+    // Optimized debounce: 150ms (down from 300ms)
     debounceTimerRef.current = setTimeout(() => {
       performSearch(value);
-    }, 300);
+    }, 150);
   };
 
   // Handle keyboard navigation
@@ -109,6 +206,26 @@ export function TokenSearchInput({
 
   // Handle result selection
   const handleSelectResult = (result: SearchResult) => {
+    // Calculate time-to-click
+    const timeToClickMs = Date.now() - searchTimestampRef.current;
+
+    // Find result rank
+    const resultRank = results.findIndex((r) => r.address === result.address);
+
+    // Track click analytics (async, non-blocking)
+    if (resultRank >= 0) {
+      trackResultClick(
+        currentQueryRef.current,
+        result.address,
+        resultRank,
+        result.score || 0,
+        timeToClickMs,
+        sessionIdRef.current
+      ).catch((error) => {
+        console.warn("[Token Search] Click tracking failed:", error);
+      });
+    }
+
     setQuery(result.address);
     setShowDropdown(false);
     onSearch(result.address, searchType);
@@ -153,18 +270,6 @@ export function TokenSearchInput({
       inputRef.current?.focus();
     }
   }, [autoFocus]);
-
-  // Cleanup timers on unmount
-  useEffect(() => {
-    return () => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-      if (searchAbortRef.current) {
-        searchAbortRef.current.abort();
-      }
-    };
-  }, []);
 
   return (
     <div className="relative">
@@ -272,14 +377,56 @@ export function TokenSearchInput({
         </div>
       )}
 
-      {/* No Results */}
+      {/* No Results with Phonetic Suggestions */}
       {showDropdown && !isSearching && results.length === 0 && query.length >= 2 && (
         <div
           ref={dropdownRef}
-          className="absolute z-50 w-full mt-2 bg-space-800 border border-space-700 rounded-lg shadow-xl p-4 text-center"
+          className="absolute z-50 w-full mt-2 bg-space-800 border border-space-700 rounded-lg shadow-xl"
         >
-          <p className="text-sm text-slate-500">No tokens found</p>
-          <p className="text-xs text-slate-600 mt-1">Try entering a full contract address</p>
+          {/* Did you mean? suggestions */}
+          {phoneticSuggestions.length > 0 && (
+            <div className="p-3 border-b border-space-700">
+              <p className="text-xs text-slate-500 mb-2">Did you mean?</p>
+              {phoneticSuggestions.map((suggestion) => (
+                <button
+                  key={suggestion.address}
+                  type="button"
+                  onClick={() => handleSelectResult(suggestion)}
+                  className="w-full px-3 py-2 text-left hover:bg-space-700 rounded text-slate-300 transition-colors flex items-center gap-3"
+                >
+                  <div
+                    className={`p-2 rounded-md ${
+                      suggestion.type === AssetType.NFT
+                        ? "bg-blue-600/20 text-blue-400"
+                        : "bg-purple-600/20 text-purple-400"
+                    }`}
+                  >
+                    {suggestion.type === AssetType.NFT ? (
+                      <ImageIcon size={16} />
+                    ) : (
+                      <Coins size={16} />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className="font-semibold text-white">{suggestion.symbol}</span>
+                    <span className="text-xs text-slate-500 ml-2">{suggestion.name}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Fallback message */}
+          <div className="p-4 text-center">
+            <p className="text-sm text-slate-500">
+              {phoneticSuggestions.length > 0 ? "No exact matches found" : "No tokens found"}
+            </p>
+            <p className="text-xs text-slate-600 mt-1">
+              {phoneticSuggestions.length > 0
+                ? "Try a different search term or select a suggestion above"
+                : "Try entering a full contract address"}
+            </p>
+          </div>
         </div>
       )}
     </div>

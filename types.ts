@@ -101,3 +101,21 @@ export interface ScanMetadata {
   totalPages: number;
   duration: number;
 }
+
+// Token Search Types
+export interface SearchResult {
+  address: string;
+  name: string;
+  symbol: string;
+  type: AssetType;
+  source: "local" | "remote" | "recent";
+  decimals?: number;
+}
+
+export interface TokenSearchInputProps {
+  searchType: AssetType;
+  onSearch: (address: string, type: AssetType) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  autoFocus?: boolean;
+}

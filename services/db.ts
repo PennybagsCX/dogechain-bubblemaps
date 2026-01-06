@@ -105,6 +105,18 @@ export interface DbLPPair {
   isValid: boolean; // false if pair was destroyed or factory renounced
 }
 
+// Token Search Index for fast autocomplete
+export interface DbTokenSearchIndex {
+  id?: number; // Auto-incremented primary key
+  address: string; // Token contract address (unique)
+  name: string; // Token name
+  symbol: string; // Token symbol
+  type: string; // 'TOKEN' or 'NFT'
+  source: string; // 'lp_pair', 'user_search', 'whale', 'blockscout'
+  decimals: number; // Token decimals
+  indexedAt: number; // Timestamp when indexed
+}
+
 // Export data structure
 export interface DatabaseExport {
   version: string;
@@ -130,6 +142,7 @@ class DogeDatabase extends Dexie {
   lpPairs!: Table<DbLPPair>;
   scanCheckpoints!: Table<any>;
   discoveredFactories!: Table<any>;
+  tokenSearchIndex!: Table<DbTokenSearchIndex>;
 
   constructor() {
     super("DogechainBubbleMapsDB");
@@ -244,6 +257,23 @@ class DogeDatabase extends Dexie {
         lpPairs: "++id, &pairAddress, factoryAddress, dexName, discoveredAt, lastVerifiedAt",
         scanCheckpoints: "++id, phase, lastUpdated",
         discoveredFactories: "++id, &address, name, status, discoveredAt",
+      });
+
+      // Version 9: Add token search index for autocomplete functionality
+      this.version(9).stores({
+        alerts: "++id, alertId, walletAddress, name, createdAt",
+        alertStatuses: "alertId, &alertId",
+        triggeredEvents: "++id, eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits",
+        walletScanCache: "walletAddress, scannedAt, expiresAt",
+        assetMetadataCache: "address, cachedAt, expiresAt",
+        walletForcedContracts: "walletAddress, updatedAt",
+        discoveredContracts: "++id, contractAddress, type, discoveredAt, lastSeenAt",
+        lpPairs: "++id, &pairAddress, factoryAddress, dexName, discoveredAt, lastVerifiedAt",
+        scanCheckpoints: "++id, phase, lastUpdated",
+        discoveredFactories: "++id, &address, name, status, discoveredAt",
+        tokenSearchIndex: "++id, &address, name, symbol, type, source, indexedAt",
       });
     } catch (error) {
       console.error("[DB] Database schema error:", error);
@@ -1045,5 +1075,126 @@ export async function getActiveDiscoveredFactories(): Promise<DbDiscoveredFactor
   } catch (error) {
     console.error("[DB] Failed to get active discovered factories:", error);
     return [];
+  }
+}
+
+// --- Token Search Index Functions ---
+
+/**
+ * Save a single token to the search index
+ * Updates existing entry if address already exists
+ */
+export async function saveTokenToSearchIndex(token: DbTokenSearchIndex): Promise<void> {
+  try {
+    const existing = await db.tokenSearchIndex
+      .where("address")
+      .equals(token.address.toLowerCase())
+      .first();
+
+    if (existing) {
+      // Update existing entry
+      await db.tokenSearchIndex.update(existing.id!, {
+        name: token.name,
+        symbol: token.symbol,
+        indexedAt: Date.now(),
+      });
+    } else {
+      // Add new entry
+      await db.tokenSearchIndex.add({
+        address: token.address.toLowerCase(),
+        name: token.name,
+        symbol: token.symbol,
+        type: token.type,
+        source: token.source,
+        decimals: token.decimals,
+        indexedAt: Date.now(),
+      });
+    }
+  } catch (error) {
+    console.error("[DB] Failed to save token to search index:", error);
+  }
+}
+
+/**
+ * Bulk save multiple tokens to the search index
+ * Updates existing entries if addresses already exist
+ */
+export async function bulkSaveTokensToSearchIndex(tokens: DbTokenSearchIndex[]): Promise<void> {
+  try {
+    for (const token of tokens) {
+      await saveTokenToSearchIndex(token);
+    }
+    console.log(`[DB] Saved ${tokens.length} tokens to search index`);
+  } catch (error) {
+    console.error("[DB] Failed to bulk save tokens to search index:", error);
+  }
+}
+
+/**
+ * Search tokens locally by query string
+ * Searches across address, symbol, and name fields
+ */
+export async function searchTokensLocally(
+  query: string,
+  type: string
+): Promise<DbTokenSearchIndex[]> {
+  try {
+    const queryLower = query.toLowerCase();
+
+    // Search by matching address, symbol, or name
+    const results = await db.tokenSearchIndex
+      .filter((token) => {
+        const matchesType = token.type === type;
+        const matchesQuery =
+          token.symbol?.toLowerCase().includes(queryLower) ||
+          token.name?.toLowerCase().includes(queryLower) ||
+          token.address?.toLowerCase().includes(queryLower);
+
+        return matchesType && matchesQuery;
+      })
+      .limit(20)
+      .toArray();
+
+    return results;
+  } catch (error) {
+    console.error("[DB] Failed to search tokens locally:", error);
+    return [];
+  }
+}
+
+/**
+ * Get all tokens from the search index
+ */
+export async function getAllTokenSearchIndex(): Promise<DbTokenSearchIndex[]> {
+  try {
+    return await db.tokenSearchIndex.toArray();
+  } catch (error) {
+    console.error("[DB] Failed to get all tokens from search index:", error);
+    return [];
+  }
+}
+
+/**
+ * Clear old tokens from the search index (older than 30 days)
+ */
+export async function clearOldTokenSearchIndex(): Promise<number> {
+  try {
+    const now = Date.now();
+    const thirtyDaysAgo = now - 30 * 24 * 60 * 60 * 1000;
+
+    const oldTokens = await db.tokenSearchIndex.where("indexedAt").below(thirtyDaysAgo).toArray();
+
+    for (const token of oldTokens) {
+      await db.tokenSearchIndex.delete(token.id!);
+    }
+
+    if (oldTokens.length > 0) {
+      console.log(`[DB] Cleared ${oldTokens.length} old tokens from search index`);
+    }
+
+    return oldTokens.length;
+  } catch (error) {
+    console.error("[DB] Failed to clear old token search index:", error);
+    return 0;
   }
 }

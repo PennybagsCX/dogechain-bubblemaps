@@ -265,7 +265,7 @@ export async function getCachedAbbreviations(
   if (tokenInfo) {
     return abbreviationCache.getOrGenerate(address, tokenInfo);
   }
-  return abbreviationCache.get(address) || [];
+  return abbreviationCache.get(address) ?? [];
 }
 
 /**

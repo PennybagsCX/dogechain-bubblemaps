@@ -111,10 +111,10 @@ export function levenshtein(a: string, b: string): number {
   const matrix: number[][] = [];
   for (let i = 0; i <= lenB; i++) {
     matrix[i] = [];
-    matrix[i][0] = i;
+    matrix[i]![0] = i;
   }
   for (let j = 1; j <= lenA; j++) {
-    matrix[0][j] = j;
+    matrix[0]![j] = j;
   }
 
   // Fill matrix
@@ -195,8 +195,8 @@ export function phoneticSimilarity(query: string, target: string): number {
 
       const longerSkeleton =
         shorter === queryPhonetic.skeleton.length
-          ? (targetPhonetic.skeleton || "")
-          : (queryPhonetic.skeleton || "");
+          ? targetPhonetic.skeleton || ""
+          : queryPhonetic.skeleton || "";
 
       for (let i = 0; i < shorterSkeleton.length; i++) {
         const char = shorterSkeleton[i];

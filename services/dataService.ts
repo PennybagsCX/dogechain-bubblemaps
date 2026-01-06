@@ -176,7 +176,7 @@ const saveMetadataToCache = (
     const cache = cacheRaw ? JSON.parse(cacheRaw) : {};
     cache[address.toLowerCase()] = { ...data, timestamp: Date.now() };
     localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(cache));
-  } catch {
+  } catch (e) {
     console.warn("Failed to save token metadata", e);
   }
 };
@@ -431,7 +431,7 @@ export const fetchTokenData = async (
         localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(cache));
         cached = null;
       }
-    } catch {
+    } catch (e) {
       console.warn("Failed to clear stale cache", e);
     }
   }
@@ -1159,7 +1159,7 @@ export const fetchWalletAssets = async (
       tokens: sortByHits(tokensMap),
       nfts: sortByHits(nftsMap),
     };
-  } catch {
+  } catch (e) {
     console.warn("fetchWalletAssets error", e);
     return { tokens: [], nfts: [] };
   }
@@ -1196,7 +1196,7 @@ export const fetchWalletAssetsHybrid = async (
           metadata: cached.scanMetadata,
         };
       }
-    } catch {
+    } catch (e) {
       console.warn("Failed to load cache, proceeding with scan", e);
     }
   }

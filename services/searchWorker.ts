@@ -174,10 +174,10 @@ function levenshtein(a: string, b: string): number {
   const matrix: number[][] = [];
   for (let i = 0; i <= lenB; i++) {
     matrix[i] = [];
-    matrix[i][0] = i;
+    matrix[i]![0] = i;
   }
   for (let j = 1; j <= lenA; j++) {
-    matrix[0][j] = j;
+    matrix[0]![j] = j;
   }
 
   for (let i = 1; i <= lenB; i++) {
@@ -189,11 +189,7 @@ function levenshtein(a: string, b: string): number {
       if (b.charAt(i - 1) === a.charAt(j - 1)) {
         matrix[i]![j] = diagonal;
       } else {
-        matrix[i]![j] = Math.min(
-          diagonal + 1,
-          left + 1,
-          top + 1
-        );
+        matrix[i]![j] = Math.min(diagonal + 1, left + 1, top + 1);
       }
 
       const current = matrix[i]![j];

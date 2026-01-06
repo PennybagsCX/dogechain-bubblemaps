@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { ViewState } from "../types";
 import { useClickOutside } from "../hooks/useClickOutside";
+import { handleTouchStopPropagation } from "../utils/touchHandlers";
 import {
   LayoutDashboard,
   Map,
@@ -79,6 +80,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="w-full flex h-16 items-center justify-between px-4">
           <div
             className="flex items-center gap-3 cursor-pointer"
+            onTouchStart={handleTouchStopPropagation}
             onClick={() => handleMobileNav(ViewState.HOME)}
             onKeyDown={handleLogoKeyDown}
             role="button"
@@ -96,6 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-2">
             <button
+              onTouchStart={handleTouchStopPropagation}
               onClick={() => onChangeView(ViewState.HOME)}
               className={navClass(ViewState.HOME)}
             >
@@ -103,6 +106,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>Search</span>
             </button>
             <button
+              onTouchStart={handleTouchStopPropagation}
               onClick={() => onChangeView(ViewState.ANALYSIS)}
               className={navClass(ViewState.ANALYSIS)}
             >
@@ -113,6 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </button>
             <button
+              onTouchStart={handleTouchStopPropagation}
               onClick={() => onChangeView(ViewState.DASHBOARD)}
               className={navClass(ViewState.DASHBOARD)}
             >
@@ -134,6 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </div>
                 </div>
                 <button
+                  onTouchStart={handleTouchStopPropagation}
                   onClick={onDisconnectWallet}
                   className="p-2 text-slate-400 hover:text-red-400 hover:bg-space-800 rounded-md transition-colors"
                   title="Disconnect"
@@ -143,6 +149,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
             ) : (
               <button
+                onTouchStart={handleTouchStopPropagation}
                 onClick={onConnectWallet}
                 disabled={isConnecting}
                 className="flex items-center gap-2 rounded-md bg-space-700 px-3 sm:px-4 py-2 text-sm font-medium text-white hover:bg-space-600 hover:text-purple-500 border border-space-600 hover:border-purple-500 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed focus:ring-2 focus:ring-purple-500 focus:outline-none"
@@ -161,6 +168,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Mobile Menu Toggle */}
             <button
+              onTouchStart={handleTouchStopPropagation}
               className="md:hidden p-3 text-slate-400 hover:text-white hover:bg-space-800 rounded-md transition-colors focus:ring-2 focus:ring-purple-500 focus:outline-none"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
@@ -177,18 +185,21 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="md:hidden border-t border-space-700 bg-space-800 px-4 py-4 flex flex-col gap-2 absolute w-full shadow-2xl animate-in slide-in-from-top-5 z-50"
           >
             <button
+              onTouchStart={handleTouchStopPropagation}
               onClick={() => handleMobileNav(ViewState.HOME)}
               className={mobileNavClass(ViewState.HOME)}
             >
               <Search size={20} /> Search Asset
             </button>
             <button
+              onTouchStart={handleTouchStopPropagation}
               onClick={() => handleMobileNav(ViewState.ANALYSIS)}
               className={mobileNavClass(ViewState.ANALYSIS)}
             >
               <Map size={20} /> Map Analysis
             </button>
             <button
+              onTouchStart={handleTouchStopPropagation}
               onClick={() => handleMobileNav(ViewState.DASHBOARD)}
               className={mobileNavClass(ViewState.DASHBOARD)}
             >

@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import { useClickOutside } from "../hooks/useClickOutside";
 import { Wallet, Link, AssetType } from "../types";
 import { ensureLPDetectionInitialized } from "../services/db";
+import { handleTouchStopPropagation } from "../utils/touchHandlers";
 import {
   Move,
   MousePointer2,
@@ -409,6 +410,21 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         onWalletClick(null);
         setFocusedIndex(null);
         applySelectionHighlight(null, showLabels);
+
+        // Clear mobile link highlights
+        if (highlightedLinks.size > 0) {
+          highlightedLinks.clear();
+          // Reset all links to normal appearance
+          d3.selectAll(".link-wrapper .neural-vein")
+            .transition()
+            .duration(150)
+            .attr("stroke", "url(#veinGradient)")
+            .attr("stroke-width", 3)
+            .attr("stroke-dasharray", "4, 4")
+            .attr("opacity", 0.6)
+            .style("filter", "none")
+            .style("animation-play-state", "running");
+        }
       }
     };
     svg.on("click", handleBackgroundClick as any);
@@ -449,6 +465,16 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .style("pointer-events", "none") // Let events pass through to hitbox
       .style("display", showLinks ? "block" : "none");
 
+    // Track highlighted links for mobile two-tap removal
+    const highlightedLinks = new Set<string>();
+
+    // Helper to get link ID
+    const getLinkId = (d: LinkDatum) => {
+      const sourceId = (d.source as any).id || d.source;
+      const targetId = (d.target as any).id || d.target;
+      return `${sourceId}-${targetId}`;
+    };
+
     // Link click and hover handlers on hitbox
     linkSelection
       .on("click", (event: any, d: LinkDatum) => {
@@ -456,26 +482,90 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
         if (!onRemoveLink) return;
 
-        // Stabilize simulation before removal to reduce violent movement
-        if (simulationRef.current) {
-          simulationRef.current.alphaTarget(0.3); // Quick settle
-          simulationRef.current.alpha(0.3);
-        }
+        const linkId = getLinkId(d);
+        const isTouch = "ontouchstart" in window;
 
-        const linkToRemove: Link = {
-          source: (d.source as any).id || d.source,
-          target: (d.target as any).id || d.target,
-          value: d.value,
-        };
+        if (isTouch) {
+          // Mobile: Two-tap to remove
+          const wrapper = d3.select(event.currentTarget);
+          const visiblePath = wrapper.select(".neural-vein");
 
-        onRemoveLink(linkToRemove);
+          if (highlightedLinks.has(linkId)) {
+            // Second tap: Remove the connection
+            highlightedLinks.delete(linkId);
 
-        // Stabilize after removal
-        setTimeout(() => {
-          if (simulationRef.current) {
-            simulationRef.current.alphaTarget(0);
+            // Stabilize simulation before removal
+            if (simulationRef.current) {
+              simulationRef.current.alphaTarget(0.3);
+              simulationRef.current.alpha(0.3);
+            }
+
+            const linkToRemove: Link = {
+              source: (d.source as any).id || d.source,
+              target: (d.target as any).id || d.target,
+              value: d.value,
+            };
+
+            onRemoveLink(linkToRemove);
+
+            // Stabilize after removal
+            setTimeout(() => {
+              if (simulationRef.current) {
+                simulationRef.current.alphaTarget(0);
+              }
+            }, 300);
+          } else {
+            // First tap: Highlight the connection
+            // Clear other highlights
+            highlightedLinks.clear();
+            highlightedLinks.add(linkId);
+
+            // Reset all other links
+            linkSelection
+              .select(".neural-vein")
+              .transition()
+              .duration(150)
+              .attr("stroke", "url(#veinGradient)")
+              .attr("stroke-width", 3)
+              .attr("stroke-dasharray", "4, 4")
+              .attr("opacity", 0.6)
+              .style("filter", "none")
+              .style("animation-play-state", "running");
+
+            // Highlight this link
+            visiblePath
+              .style("animation-play-state", "paused")
+              .transition()
+              .duration(150)
+              .attr("stroke", "#ef4444")
+              .attr("stroke-width", 6)
+              .attr("stroke-dasharray", "none")
+              .attr("opacity", 1)
+              .style("filter", "drop-shadow(0 0 8px rgba(239, 68, 68, 0.8))");
           }
-        }, 300);
+        } else {
+          // Desktop: Single click to remove
+          // Stabilize simulation before removal
+          if (simulationRef.current) {
+            simulationRef.current.alphaTarget(0.3);
+            simulationRef.current.alpha(0.3);
+          }
+
+          const linkToRemove: Link = {
+            source: (d.source as any).id || d.source,
+            target: (d.target as any).id || d.target,
+            value: d.value,
+          };
+
+          onRemoveLink(linkToRemove);
+
+          // Stabilize after removal
+          setTimeout(() => {
+            if (simulationRef.current) {
+              simulationRef.current.alphaTarget(0);
+            }
+          }, 300);
+        }
       })
       .on("mouseover", function (this: any) {
         // Turn connection solid red to indicate it can be deleted
@@ -494,7 +584,13 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           .attr("opacity", 1)
           .style("filter", "drop-shadow(0 0 8px rgba(239, 68, 68, 0.8))"); // Glow effect
       })
-      .on("mouseout", function (this: any) {
+      .on("mouseout", function (this: any, d: LinkDatum) {
+        // Don't reset if this link is highlighted on mobile
+        const linkId = getLinkId(d);
+        if (highlightedLinks.has(linkId)) {
+          return;
+        }
+
         // Restore gradient appearance
         d3.select(this)
           .select(".neural-vein")
@@ -964,6 +1060,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       {/* --- TOP LEFT: CONTROLS --- */}
       <div className="absolute top-16 md:top-16 left-3 md:left-4 z-20 flex flex-col gap-3 md:gap-3">
         <button
+          onTouchStart={handleTouchStopPropagation}
           onClick={() => setIsHelpOpen(true)}
           className="p-2 bg-space-800 border border-space-700 text-slate-400 hover:text-white hover:border-space-600 rounded-full shadow-lg transition-colors"
           title="Visualization Guide"
@@ -974,6 +1071,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         {/* Settings button and popup container for click-outside detection */}
         <div className="relative" ref={settingsRef}>
           <button
+            onTouchStart={handleTouchStopPropagation}
             onClick={() => setIsSettingsOpen(!isSettingsOpen)}
             className={`p-2 rounded-full border shadow-lg transition-colors ${isSettingsOpen ? "bg-purple-600 border-purple-500 text-white" : "bg-space-800 border border-space-700 text-slate-400 hover:text-white hover:border-space-600"}`}
             title="Map Settings"
@@ -999,6 +1097,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
                     Links
                   </span>
                   <button
+                    onTouchStart={handleTouchStopPropagation}
                     onClick={() => setShowLinks(!showLinks)}
                     className={`w-10 h-5 rounded-full relative transition-colors ${showLinks ? "bg-purple-600" : "bg-space-600"}`}
                   >
@@ -1018,6 +1117,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
                     Labels
                   </span>
                   <button
+                    onTouchStart={handleTouchStopPropagation}
                     onClick={() => setShowLabels(!showLabels)}
                     className={`w-10 h-5 rounded-full relative transition-colors ${showLabels ? "bg-purple-600" : "bg-space-600"}`}
                   >
@@ -1056,6 +1156,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
                 <HelpCircle size={18} /> Interactive Guide
               </h3>
               <button
+                onTouchStart={handleTouchStopPropagation}
                 onClick={() => setIsHelpOpen(false)}
                 className="text-slate-400 hover:text-white"
               >
@@ -1123,6 +1224,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               {isPaused ? "Physics Paused" : "Live Physics Engine"}
             </div>
             <button
+              onTouchStart={handleTouchStopPropagation}
               onClick={(e) => {
                 e.stopPropagation();
                 setAreControlsOpen((prev) => !prev);
@@ -1144,6 +1246,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
             <div className="flex flex-col gap-2">
               {userNodeFound && (
                 <button
+                  onTouchStart={handleTouchStopPropagation}
                   onClick={handleLocateUser}
                   className="p-2 bg-purple-600 border border-purple-500 text-white rounded-lg shadow-lg transition-all hover:bg-purple-500 hover:border-purple-400"
                   title="Locate My Wallet"
@@ -1153,6 +1256,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               )}
               <div className="h-px bg-space-700 w-full my-1"></div>
               <button
+                onTouchStart={handleTouchStopPropagation}
                 onClick={handleSnapshot}
                 className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
                 title="Download Image Snapshot"
@@ -1160,6 +1264,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
                 <Camera size={20} className={isSnapshotting ? "text-purple-500" : ""} />
               </button>
               <button
+                onTouchStart={handleTouchStopPropagation}
                 onClick={togglePause}
                 className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
                 title={isPaused ? "Resume Simulation" : "Pause Simulation"}
@@ -1167,6 +1272,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
                 {isPaused ? <Play size={20} /> : <Pause size={20} />}
               </button>
               <button
+                onTouchStart={handleTouchStopPropagation}
                 onClick={handleZoomIn}
                 className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
                 title="Zoom In"
@@ -1174,13 +1280,15 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
                 <ZoomIn size={20} />
               </button>
               <button
+                onTouchStart={handleTouchStopPropagation}
                 onClick={handleZoomOut}
-                className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover-border-space-600 rounded-lg shadow-lg transition-all"
+                className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
                 title="Zoom Out"
               >
                 <ZoomOut size={20} />
               </button>
               <button
+                onTouchStart={handleTouchStopPropagation}
                 onClick={handleReset}
                 className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
                 title="Reset View"
@@ -1195,6 +1303,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         <div ref={legendRef} className="w-full max-w-[240px]">
           <div className="bg-space-900 rounded-xl border border-space-700 shadow-xl overflow-hidden transition-all duration-300">
             <button
+              onTouchStart={handleTouchStopPropagation}
               onClick={() => setIsLegendOpen(!isLegendOpen)}
               className="w-full px-4 py-2 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-500 font-bold hover:bg-space-800/50"
             >
@@ -1261,6 +1370,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         <div className="flex flex-col gap-2">
           {userNodeFound && (
             <button
+              onTouchStart={handleTouchStopPropagation}
               onClick={handleLocateUser}
               className="p-2 bg-purple-600 border border-purple-500 text-white rounded-lg shadow-lg transition-all hover:bg-purple-500 hover:border-purple-400"
               title="Locate My Wallet"
@@ -1270,6 +1380,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           )}
           <div className="h-px bg-space-700 w-full my-1"></div>
           <button
+            onTouchStart={handleTouchStopPropagation}
             onClick={handleSnapshot}
             className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
             title="Download Image Snapshot"
@@ -1277,29 +1388,33 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
             <Camera size={20} className={isSnapshotting ? "text-purple-500" : ""} />
           </button>
           <button
+            onTouchStart={handleTouchStopPropagation}
             onClick={togglePause}
-            className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover-border-space-600 rounded-lg shadow-lg transition-all"
+            className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
             title={isPaused ? "Resume Simulation" : "Pause Simulation"}
           >
             {isPaused ? <Play size={20} /> : <Pause size={20} />}
           </button>
           <button
+            onTouchStart={handleTouchStopPropagation}
             onClick={handleZoomIn}
-            className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover-border-space-600 rounded-lg shadow-lg transition-all"
+            className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
             title="Zoom In"
           >
             <ZoomIn size={20} />
           </button>
           <button
+            onTouchStart={handleTouchStopPropagation}
             onClick={handleZoomOut}
-            className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover-bg-space-700 hover-border-space-600 rounded-lg shadow-lg transition-all"
+            className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
             title="Zoom Out"
           >
             <ZoomOut size={20} />
           </button>
           <button
+            onTouchStart={handleTouchStopPropagation}
             onClick={handleReset}
-            className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover-bg-space-700 hover-border-space-600 rounded-lg shadow-lg transition-all"
+            className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
             title="Reset View"
           >
             <RotateCcw size={20} />
@@ -1311,6 +1426,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       <div ref={legendRef} className="hidden md:block absolute bottom-6 left-6 z-20 max-w-[220px]">
         <div className="bg-space-900 rounded-xl border border-space-700 shadow-xl overflow-hidden transition-all duration-300">
           <button
+            onTouchStart={handleTouchStopPropagation}
             onClick={() => setIsLegendOpen(!isLegendOpen)}
             className="w-full px-4 py-2 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-500 font-bold hover:bg-space-800/50"
           >

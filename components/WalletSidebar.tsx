@@ -16,6 +16,7 @@ import {
 import { Wallet, Transaction, AssetType } from "../types";
 import { createWalletChatSystemInstruction, sendChatToAI } from "../services/geminiService";
 import { fetchWalletTransactions, fetchTokenBalance } from "../services/dataService";
+import { handleTouchStopPropagation } from "../utils/touchHandlers";
 
 interface WalletSidebarProps {
   wallet: Wallet | null;
@@ -284,6 +285,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
         {/* Mobile Drag Handle */}
         <div
           className="md:hidden w-full flex justify-center pt-3 pb-1"
+          onTouchStart={handleTouchStopPropagation}
           onClick={onClose}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
@@ -346,6 +348,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                 {wallet.address.slice(0, 6)}...{wallet.address.slice(-4)}
               </p>
               <button
+                onTouchStart={handleTouchStopPropagation}
                 onClick={handleCopyAddress}
                 className="text-slate-500 hover:text-white transition-colors"
                 title="Copy Address"
@@ -356,6 +359,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                 href={`https://explorer.dogechain.dog/address/${wallet.address}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                onTouchStart={handleTouchStopPropagation}
                 className="text-slate-500 hover:text-white transition-colors p-2 rounded hover:bg-space-600 min-w-[44px] min-h-[44px] inline-flex items-center justify-center [touch-action:manipulation]"
                 title="View on Blockscout"
               >
@@ -364,6 +368,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
             </div>
           </div>
           <button
+            onTouchStart={handleTouchStopPropagation}
             onClick={onClose}
             className="p-2 bg-space-700 hover:bg-red-500/20 hover:text-red-400 text-slate-400 rounded-lg transition-all shrink-0"
             aria-label="Close sidebar"
@@ -413,6 +418,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
             )}
             {onTraceConnections && (
               <button
+                onTouchStart={handleTouchStopPropagation}
                 onClick={handleTrace}
                 disabled={isTracing}
                 className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-purple-300 hover:text-white bg-purple-500/20 hover:bg-purple-500/40 rounded transition-colors disabled:opacity-50"
@@ -427,12 +433,14 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
           {/* Tabs */}
           <div className="flex border-b border-space-700">
             <button
+              onTouchStart={handleTouchStopPropagation}
               className={`flex-1 pb-2 text-sm font-medium transition-colors ${activeTab === "details" ? "text-doge-500" : "text-slate-400 hover:text-slate-200"}`}
               onClick={() => setActiveTab("details")}
             >
               AI Analyst
             </button>
             <button
+              onTouchStart={handleTouchStopPropagation}
               className={`flex-1 pb-2 text-sm font-medium transition-colors ${activeTab === "txs" ? "text-doge-500" : "text-slate-400 hover:text-slate-200"}`}
               onClick={() => setActiveTab("txs")}
             >
@@ -498,6 +506,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   className="flex-1 bg-space-900 border border-space-700 rounded-md px-3 py-1.5 text-sm text-white focus:outline-none focus:border-space-600"
                 />
                 <button
+                  onTouchStart={handleTouchStopPropagation}
                   type="submit"
                   disabled={isChatLoading || !input.trim()}
                   className="p-1.5 bg-purple-600 text-white rounded-md hover:bg-purple-500 disabled:opacity-50"
@@ -526,6 +535,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   {(["ALL", "IN", "OUT"] as const).map((filter) => (
                     <button
                       key={filter}
+                      onTouchStart={handleTouchStopPropagation}
                       onClick={() => {
                         setDirectionFilter(filter);
                         setCurrentPage(1); // Reset to page 1 on filter change
@@ -565,6 +575,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                       href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onTouchStart={handleTouchStopPropagation}
                       className="block p-4 rounded-lg bg-space-900 border border-space-700 flex justify-between items-center gap-2 min-w-0 hover:border-space-600 hover:border-blue-500/50 transition-colors group [touch-action:manipulation]"
                       title="View transaction on Blockscout"
                     >
@@ -605,6 +616,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   {paginationMode === "load-more" && totalPages < 5 ? (
                     // Load More Button (initial pages)
                     <button
+                      onTouchStart={handleTouchStopPropagation}
                       onClick={() => setCurrentPage((p) => p + 1)}
                       disabled={currentPage >= totalPages}
                       className="w-full py-3 bg-space-700 hover:bg-space-600 text-slate-300 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
@@ -617,6 +629,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                     // Numbered Pagination (5+ pages)
                     <div className="flex items-center justify-center gap-2">
                       <button
+                        onTouchStart={handleTouchStopPropagation}
                         onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                         disabled={currentPage === 1}
                         className="px-3 py-1 text-xs bg-space-800 border border-space-700 rounded hover:bg-space-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -640,6 +653,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                         return (
                           <button
                             key={pageNum}
+                            onTouchStart={handleTouchStopPropagation}
                             onClick={() => setCurrentPage(pageNum)}
                             className={`min-w-[32px] h-8 px-2 text-xs font-medium rounded-lg border transition-colors ${
                               currentPage === pageNum
@@ -653,6 +667,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                       })}
 
                       <button
+                        onTouchStart={handleTouchStopPropagation}
                         onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                         disabled={currentPage === totalPages}
                         className="px-3 py-1 text-xs bg-space-800 border border-space-700 rounded hover:bg-space-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -677,6 +692,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
         {/* Action Buttons Footer - Fixed to Bottom */}
         <div className="p-5 bg-space-800 border-t border-space-700 shrink-0">
           <button
+            onTouchStart={handleTouchStopPropagation}
             onClick={() => onCreateAlert({ type: "WALLET" })}
             className="w-full py-3 flex items-center justify-center gap-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white border border-purple-500 transition-colors font-semibold shadow-lg shadow-purple-500/20"
           >

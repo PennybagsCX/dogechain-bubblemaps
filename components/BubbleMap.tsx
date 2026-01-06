@@ -449,10 +449,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .style("pointer-events", "none") // Let events pass through to hitbox
       .style("display", showLinks ? "block" : "none");
 
-    // Get references to both hitbox and visible paths
-    const hitboxPaths = linkGroup.selectAll(".link-hitbox");
-    const visiblePaths = linkGroup.selectAll(".neural-vein");
-
     // Link click and hover handlers on hitbox
     linkSelection
       .on("click", (event: any, d: LinkDatum) => {
@@ -632,13 +628,13 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
             (l: LinkDatum) =>
               (l.source as NodeDatum).id === hoveredId || (l.target as NodeDatum).id === hoveredId
           )
+          .select(".neural-vein") // Target the visible path inside wrapper
           .transition()
           .duration(200)
           .attr("opacity", 1)
           .attr("stroke-width", 4)
           .attr("stroke", "#ffffff")
           .style("filter", "url(#glow)")
-          .attr("class", "neural-vein active")
           .style("display", "block") // Force show even if filtered hidden
           .each((l: LinkDatum) => {
             connectedIds.add((l.source as NodeDatum).id);

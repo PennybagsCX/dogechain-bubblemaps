@@ -70,6 +70,8 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
   const [_transactions, setTransactions] = useState<Transaction[]>([]);
   const [activeTab, setActiveTab] = useState<"details" | "txs">("details");
   const [copied, setCopied] = useState<boolean>(false);
+  const [sourceCopied, setSourceCopied] = useState<boolean>(false);
+  const [targetCopied, setTargetCopied] = useState<boolean>(false);
   const [isTracing, setIsTracing] = useState<boolean>(false);
   const [isTransactionsLoading, setIsTransactionsLoading] = useState<boolean>(false);
 
@@ -230,6 +232,30 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleCopySourceAddress = () => {
+    const sourceWallet = wallets.find(
+      (w) =>
+        w.id ===
+        (typeof connection!.source === "string" ? connection!.source : connection!.source.id)
+    );
+    if (!sourceWallet) return;
+    navigator.clipboard.writeText(sourceWallet.address);
+    setSourceCopied(true);
+    setTimeout(() => setSourceCopied(false), 2000);
+  };
+
+  const handleCopyTargetAddress = () => {
+    const targetWallet = wallets.find(
+      (w) =>
+        w.id ===
+        (typeof connection!.target === "string" ? connection!.target : connection!.target.id)
+    );
+    if (!targetWallet) return;
+    navigator.clipboard.writeText(targetWallet.address);
+    setTargetCopied(true);
+    setTimeout(() => setTargetCopied(false), 2000);
+  };
+
   const handleTrace = async () => {
     if (!onTraceConnections || !wallet) return;
     setIsTracing(true);
@@ -294,7 +320,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
       <div
         className={`fixed z-[100] bg-space-800 shadow-2xl flex flex-col transition-transform duration-300 ease-out will-change-transform
        /50 rounded-t-2xl inset-x-0 bottom-0 h-[85vh]
-           md:inset-y-0 md:right-0 md:left-auto md:w-96 md:max-w-[90vw] md:h-auto md:rounded-none md:top-16 md:z-40`}
+           md:inset-y-0 md:right-0 md:left-auto md:w-96 md:max-w-[90vw] md:h-auto md:rounded-none md:top-16`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="wallet-details-title"
@@ -361,27 +387,31 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
             )}
 
             <div className="flex items-center gap-2 mt-1">
-              <p className="text-xs text-slate-400 font-mono" title={wallet?.address}>
-                {wallet?.address.slice(0, 6)}...{wallet?.address.slice(-4)}
-              </p>
-              <button
-                onTouchStart={handleTouchStopPropagation}
-                onClick={handleCopyAddress}
-                className="text-slate-500 hover:text-white transition-colors"
-                title="Copy Address"
-              >
-                {copied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
-              </button>
-              <a
-                href={`https://explorer.dogechain.dog/address/${wallet?.address}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onTouchStart={handleTouchStopPropagation}
-                className="text-slate-500 hover:text-white transition-colors p-2 rounded hover:bg-space-600 min-w-[44px] min-h-[44px] inline-flex items-center justify-center [touch-action:manipulation]"
-                title="View on Blockscout"
-              >
-                <ExternalLink size={14} />
-              </a>
+              {!isConnectionView && (
+                <>
+                  <p className="text-xs text-slate-400 font-mono" title={wallet?.address}>
+                    {wallet?.address.slice(0, 6)}...{wallet?.address.slice(-4)}
+                  </p>
+                  <button
+                    onTouchStart={handleTouchStopPropagation}
+                    onClick={handleCopyAddress}
+                    className="text-slate-500 hover:text-white transition-colors"
+                    title="Copy Address"
+                  >
+                    {copied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+                  </button>
+                  <a
+                    href={`https://explorer.dogechain.dog/address/${wallet?.address}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onTouchStart={handleTouchStopPropagation}
+                    className="text-slate-500 hover:text-white transition-colors p-2 rounded hover:bg-space-600 min-w-[44px] min-h-[44px] inline-flex items-center justify-center [touch-action:manipulation]"
+                    title="View on Blockscout"
+                  >
+                    <ExternalLink size={14} />
+                  </a>
+                </>
+              )}
             </div>
           </div>
           <button
@@ -397,33 +427,105 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
         {/* Connection Info Banner */}
         {isConnectionView && connection && (
           <div className="px-5 py-3 bg-purple-900/20 border-b border-purple-700/50">
-            <p className="text-xs text-slate-300 mb-2">Transactions between two wallets</p>
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500 font-mono">
-                {wallets
-                  .find(
-                    (w) =>
-                      w.id ===
-                      (typeof connection.source === "string"
-                        ? connection.source
-                        : connection.source.id)
-                  )
-                  ?.address.slice(0, 8)}
-                ...
-              </span>
-              <ArrowUpDown className="w-4 h-4 text-purple-400" />
-              <span className="text-slate-500 font-mono">
-                {wallets
-                  .find(
-                    (w) =>
-                      w.id ===
-                      (typeof connection.target === "string"
-                        ? connection.target
-                        : connection.target.id)
-                  )
-                  ?.address.slice(0, 8)}
-                ...
-              </span>
+            <p className="text-xs text-slate-300 mb-3">Transactions between two wallets</p>
+
+            <div className="flex items-center justify-between gap-2">
+              {/* Source Wallet */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1 mb-1">
+                  <span className="text-xs text-slate-400">From:</span>
+                  <button
+                    onTouchStart={handleTouchStopPropagation}
+                    onClick={handleCopySourceAddress}
+                    className="text-xs font-mono text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 min-w-[44px] min-h-[44px] inline-flex justify-center [touch-action:manipulation]"
+                    title={sourceCopied ? "Copied!" : "Click to copy full address"}
+                  >
+                    {wallets
+                      .find(
+                        (w) =>
+                          w.id ===
+                          (typeof connection.source === "string"
+                            ? connection.source
+                            : connection.source.id)
+                      )
+                      ?.address.slice(0, 8)}
+                    ...
+                    {sourceCopied ? (
+                      <Check size={10} className="text-green-500" />
+                    ) : (
+                      <Copy size={10} />
+                    )}
+                  </button>
+                </div>
+                <a
+                  href={`https://explorer.dogechain.dog/address/${
+                    wallets.find(
+                      (w) =>
+                        w.id ===
+                        (typeof connection.source === "string"
+                          ? connection.source
+                          : connection.source.id)
+                    )?.address
+                  }`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onTouchStart={handleTouchStopPropagation}
+                  className="text-[10px] text-slate-500 hover:text-purple-400 transition-colors flex items-center gap-1"
+                >
+                  <ExternalLink size={8} />
+                  View on Explorer
+                </a>
+              </div>
+
+              {/* Arrow Icon */}
+              <ArrowUpDown className="w-4 h-4 text-purple-400 flex-shrink-0" />
+
+              {/* Target Wallet */}
+              <div className="flex-1 min-w-0 text-right">
+                <div className="flex items-center justify-end gap-1 mb-1">
+                  <span className="text-xs text-slate-400">To:</span>
+                  <button
+                    onTouchStart={handleTouchStopPropagation}
+                    onClick={handleCopyTargetAddress}
+                    className="text-xs font-mono text-green-400 hover:text-green-300 transition-colors flex items-center gap-1 min-w-[44px] min-h-[44px] inline-flex justify-center [touch-action:manipulation]"
+                    title={targetCopied ? "Copied!" : "Click to copy full address"}
+                  >
+                    ...
+                    {wallets
+                      .find(
+                        (w) =>
+                          w.id ===
+                          (typeof connection.target === "string"
+                            ? connection.target
+                            : connection.target.id)
+                      )
+                      ?.address.slice(-8)}
+                    {targetCopied ? (
+                      <Check size={10} className="text-green-500" />
+                    ) : (
+                      <Copy size={10} />
+                    )}
+                  </button>
+                </div>
+                <a
+                  href={`https://explorer.dogechain.dog/address/${
+                    wallets.find(
+                      (w) =>
+                        w.id ===
+                        (typeof connection.target === "string"
+                          ? connection.target
+                          : connection.target.id)
+                    )?.address
+                  }`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onTouchStart={handleTouchStopPropagation}
+                  className="text-[10px] text-slate-500 hover:text-purple-400 transition-colors flex items-center gap-1 justify-end"
+                >
+                  View on Explorer
+                  <ExternalLink size={8} />
+                </a>
+              </div>
             </div>
           </div>
         )}

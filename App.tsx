@@ -1649,7 +1649,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="h-[100dvh] bg-space-900 text-slate-100 font-sans selection:bg-purple-500 selection:text-white flex flex-col overflow-x-hidden overflow-hidden">
+    <div className="min-h-screen bg-space-900 text-slate-100 font-sans selection:bg-purple-500 selection:text-white flex flex-col overflow-x-hidden">
       <Analytics />
       <ToastContainer toasts={toasts} onClose={removeToast} />
 

@@ -2322,7 +2322,9 @@ const App: React.FC = () => {
                     setSelectedConnection(null);
                     setSelectedConnectionId(null);
                   }}
-                  onCreateAlert={(config) => handleAddAlertFromSidebar(selectedWallet!, config)}
+                  onCreateAlert={(config) =>
+                    selectedWallet && handleAddAlertFromSidebar(selectedWallet, config)
+                  }
                   onTraceConnections={handleTraceConnections}
                 />
               </div>

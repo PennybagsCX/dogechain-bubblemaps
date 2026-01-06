@@ -1252,8 +1252,8 @@ export const fetchWalletAssetsHybrid = async (
         onProgress({
           phase,
           progress,
-          tokens: Array.from(tokensMap.values()).map(({ hits, ...rest }) => rest),
-          nfts: Array.from(nftsMap.values()).map(({ hits, ...rest }) => rest),
+          tokens: Array.from(tokensMap.values()).map(({ hits: _hits, ...rest }) => rest),
+          nfts: Array.from(nftsMap.values()).map(({ hits: _hits, ...rest }) => rest),
           currentOperation: operation,
           totalRequests,
         });

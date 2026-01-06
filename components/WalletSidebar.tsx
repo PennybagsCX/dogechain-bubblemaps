@@ -233,10 +233,10 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
   };
 
   const handleCopySourceAddress = () => {
+    if (!connection) return;
     const sourceWallet = wallets.find(
       (w) =>
-        w.id ===
-        (typeof connection!.source === "string" ? connection!.source : connection!.source.id)
+        w.id === (typeof connection.source === "string" ? connection.source : connection.source.id)
     );
     if (!sourceWallet) return;
     navigator.clipboard.writeText(sourceWallet.address);
@@ -245,10 +245,10 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
   };
 
   const handleCopyTargetAddress = () => {
+    if (!connection) return;
     const targetWallet = wallets.find(
       (w) =>
-        w.id ===
-        (typeof connection!.target === "string" ? connection!.target : connection!.target.id)
+        w.id === (typeof connection.target === "string" ? connection.target : connection.target.id)
     );
     if (!targetWallet) return;
     navigator.clipboard.writeText(targetWallet.address);
@@ -533,22 +533,18 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
         {/* Scrollable Content Area */}
         <div className="flex-1 overflow-y-auto p-5 space-y-5 overscroll-contain">
           {/* Connection Details View or Wallet Details */}
-          {isConnectionView ? (
+          {isConnectionView && connection ? (
             <ConnectionDetailsView
-              connection={connection!}
+              connection={connection}
               sourceWallet={wallets.find(
                 (w) =>
                   w.id ===
-                  (typeof connection!.source === "string"
-                    ? connection!.source
-                    : connection!.source.id)
+                  (typeof connection.source === "string" ? connection.source : connection.source.id)
               )}
               targetWallet={wallets.find(
                 (w) =>
                   w.id ===
-                  (typeof connection!.target === "string"
-                    ? connection!.target
-                    : connection!.target.id)
+                  (typeof connection.target === "string" ? connection.target : connection.target.id)
               )}
               tokenSymbol={tokenSymbol}
             />

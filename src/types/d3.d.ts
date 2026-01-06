@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module "d3" {
   // Minimal surface to satisfy app typings; all are loose any-based.
   export type ZoomTransform = any;

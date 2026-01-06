@@ -63,6 +63,15 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const zoomTransformRef = useRef<d3.ZoomTransform>(d3.zoomIdentity);
   const zoomBehaviorRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
   const simulationRef = useRef<d3.Simulation<any, undefined> | null>(null);
+  const previousLinksLengthRef = useRef<number>(0);
+  const nodePositionsRef = useRef<Map<string, { x: number; y: number }>>(new Map());
+
+  // Store function props in refs to prevent unnecessary rebuilds
+  const onWalletClickRef = useRef(onWalletClick);
+  const onConnectionClickRef = useRef(onConnectionClick);
+  const getNodeColorRef = useRef<any>(null);
+  const handleSelectNodeRef = useRef<any>(null);
+
   const [isPaused, setIsPaused] = useState(false);
   const [isLegendOpen, setIsLegendOpen] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
@@ -217,7 +226,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
   // Helper: map click selection to parent + highlight
   const handleSelectNode = (wallet: Wallet | null) => {
-    onWalletClick(wallet);
+    onWalletClickRef.current(wallet);
     applySelectionHighlight(wallet ? wallet.id : null, showLabels);
   };
 
@@ -257,6 +266,14 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     if (pct >= 0.1) return "#10b981"; // Green (Medium)
     return "#06b6d4"; // Cyan (Retail)
   };
+
+  // Update refs when functions change (must be after function definitions)
+  useEffect(() => {
+    onWalletClickRef.current = onWalletClick;
+    onConnectionClickRef.current = onConnectionClick;
+    getNodeColorRef.current = getNodeColor;
+    handleSelectNodeRef.current = handleSelectNode;
+  }, [onWalletClick, onConnectionClick, getNodeColor, handleSelectNode]);
 
   // --- RESIZE OBSERVER ---
   useEffect(() => {
@@ -298,14 +315,14 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       if (e.key === "ArrowRight" || e.key === "ArrowDown") {
         newIndex = focusedIndex === null ? 0 : (focusedIndex + 1) % wallets.length;
         setFocusedIndex(newIndex);
-        handleSelectNode(getWalletAt(newIndex));
+        handleSelectNodeRef.current(getWalletAt(newIndex));
       } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
         newIndex =
           focusedIndex === null
             ? wallets.length - 1
             : (focusedIndex - 1 + wallets.length) % wallets.length;
         setFocusedIndex(newIndex);
-        handleSelectNode(getWalletAt(newIndex));
+        handleSelectNodeRef.current(getWalletAt(newIndex));
       }
     };
 
@@ -377,6 +394,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove(); // Clear previous render
 
+    // Add desktop optimization - prevent browser interference with drag
+    svg.style("touch-action", "none");
+
     // Check if user is in the dataset
     const foundUser = userAddress
       ? wallets.some((w) => w.address.toLowerCase() === userAddress.toLowerCase())
@@ -410,12 +430,15 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     gradient.append("stop").attr("offset", "100%").attr("stop-color", "#c084fc"); // Purple
 
     // --- DATA PREPARATION ---
-    const nodes: NodeDatum[] = wallets.map((w, idx) => ({
-      ...w,
-      x: width / 2,
-      y: height / 2,
-      rank: idx + 1,
-    })) as NodeDatum[];
+    const nodes: NodeDatum[] = wallets.map((w, idx) => {
+      const savedPosition = nodePositionsRef.current.get(w.id);
+      return {
+        ...w,
+        x: savedPosition?.x ?? width / 2,
+        y: savedPosition?.y ?? height / 2,
+        rank: idx + 1,
+      };
+    }) as NodeDatum[];
 
     const maxBalance = d3.max(nodes, (d: NodeDatum) => d.balance) || 1;
     const minBalance = d3.min(nodes, (d: NodeDatum) => d.balance) || 0;
@@ -426,7 +449,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       n.r = radiusScale(n.balance);
     });
 
-    // HYBRID LAYOUT: Initial Pack
+    // HYBRID LAYOUT: Initial Pack (only for nodes without saved positions)
     const pack = d3.pack().size([width, height]).padding(5);
 
     const root = d3.hierarchy({ children: nodes }).sum((d: any) => d.balance);
@@ -437,8 +460,12 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       const node = nodes[i];
       const packed = packedData[i];
       if (!node || !packed) continue;
-      if (packed.x !== undefined) node.x = packed.x;
-      if (packed.y !== undefined) node.y = packed.y;
+      // Only use pack position if we don't have a saved position
+      const savedPosition = nodePositionsRef.current.get(node.id);
+      if (!savedPosition) {
+        if (packed.x !== undefined) node.x = packed.x;
+        if (packed.y !== undefined) node.y = packed.y;
+      }
     }
 
     const linksCopy: LinkDatum[] = links.map((l) => {
@@ -447,11 +474,27 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       return { source: sourceId, target: targetId, value: l.value };
     });
 
+    // --- DETECT TRACE CONNECTIONS EARLY ---
+    // Detect if this is a trace connections operation (links changed)
+    const isTraceConnections = links.length !== previousLinksLengthRef.current;
+
+    // Clear saved positions if this is trace connections (let bubbles reshuffle)
+    if (isTraceConnections) {
+      nodePositionsRef.current.clear();
+    }
+
+    previousLinksLengthRef.current = links.length;
+
     // --- LAYOUT ENGINE: FORCE SIMULATION ---
+    // Check if we have saved positions AND simulation has ended before
+    const hasSettledPositions =
+      nodes.length > 0 && nodes.every((n) => nodePositionsRef.current.has(n.id));
+
     const simulation = d3
       .forceSimulation(nodes)
       .velocityDecay(0.2)
-      .alphaDecay(0.005)
+      .alphaDecay(0.02) // Balanced decay speed
+      .alpha(hasSettledPositions ? 0.3 : 1) // Moderate alpha if we have settled positions
       .force(
         "link",
         d3
@@ -484,7 +527,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     const handleBackgroundClick = (event: any) => {
       // If clicking directly on the SVG (background) and not a node
       if (event && event.target === svg.node()) {
-        onWalletClick(null);
+        onWalletClickRef.current(null);
         setFocusedIndex(null);
         applySelectionHighlight(null, showLabels);
 
@@ -603,7 +646,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               value: d.value,
             };
 
-            onConnectionClick(link);
+            onConnectionClickRef.current(link);
           } else {
             // First tap: Highlight the connection
             // Clear other highlights
@@ -639,7 +682,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           if (!linkId) return; // Guard against invalid link data
 
           // Clear wallet selection
-          onWalletClick(null);
+          onWalletClickRef.current(null);
           setFocusedIndex(null);
           applySelectionHighlight(null, showLabels);
 
@@ -714,11 +757,11 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         const isUser = userAddress && d.address.toLowerCase() === userAddress.toLowerCase();
         return `synapse-node ${isUser ? "user-node" : ""}`;
       })
-      .attr("fill", (d: NodeDatum) => getNodeColor(d))
+      .attr("fill", (d: NodeDatum) => getNodeColorRef.current(d))
       .attr("stroke", (d: NodeDatum) => {
         const isUser = userAddress && d.address.toLowerCase() === userAddress.toLowerCase();
         if (isUser) return "#ffffff"; // Bright white stroke for user
-        return d3.color(getNodeColor(d))?.brighter(0.8).formatHex() || "#fff";
+        return d3.color(getNodeColorRef.current(d))?.brighter(0.8).formatHex() || "#fff";
       })
       .attr("stroke-width", (d: NodeDatum) => {
         const isUser = userAddress && d.address.toLowerCase() === userAddress.toLowerCase();
@@ -773,8 +816,16 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     const drag = d3
       .drag<SVGCircleElement, NodeDatum>()
       .on("start", (event: any, d: NodeDatum) => {
-        if (!event.active && simulationRef.current)
-          simulationRef.current.alphaTarget(0.3).restart();
+        // Detect input type - touch events use pointerType property
+        const isTouch =
+          event.sourceEvent.pointerType === "touch" ||
+          ("ontouchstart" in window && event.sourceEvent.type.startsWith("touch"));
+
+        if (!event.active && simulationRef.current) {
+          // Use even lower alpha for desktop mouse to match mobile responsiveness
+          const targetAlpha = isTouch ? 0.005 : 0.003;
+          simulationRef.current.alphaTarget(targetAlpha).restart();
+        }
         d.fx = d.x;
         d.fy = d.y;
         d3.select(event.sourceEvent.target).attr("cursor", "grabbing");
@@ -784,7 +835,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         d.fy = event.y;
       })
       .on("end", (event: any, d: NodeDatum) => {
-        if (!event.active && simulationRef.current) simulationRef.current.alphaTarget(0);
+        if (!event.active && simulationRef.current) {
+          simulationRef.current.alphaTarget(0);
+        }
         d.fx = null;
         d.fy = null;
         d3.select(event.sourceEvent.target).attr("cursor", "grab");
@@ -800,12 +853,12 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         lastSelectedConnectionIdRef.current = null;
         applyConnectionHighlight(null);
 
-        handleSelectNode(d);
+        handleSelectNodeRef.current(d);
         setFocusedIndex(wallets.indexOf(d));
       })
       .on("keydown", (event: any, d: NodeDatum) => {
         if (event.key === "Enter" || event.key === " ") {
-          handleSelectNode(d);
+          handleSelectNodeRef.current(d);
           setFocusedIndex(wallets.indexOf(d));
         }
       })
@@ -861,9 +914,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           .attr("stroke", (d: NodeDatum) => {
             const isUser = userAddress && d.address.toLowerCase() === userAddress.toLowerCase();
             if (isUser) return "#ffffff";
-            return d3.color(getNodeColor(d))?.brighter(0.8).formatHex() || "#fff";
+            return d3.color(getNodeColorRef.current(d))?.brighter(0.8).formatHex() || "#fff";
           })
-          .attr("fill", (d: NodeDatum) => getNodeColor(d))
+          .attr("fill", (d: NodeDatum) => getNodeColorRef.current(d))
           .style("filter", "url(#glow)");
 
         linkSelection
@@ -882,6 +935,15 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     // --- TICK ---
     simulation.on("tick", () => {
+      // Save node positions only when simulation is ending (alpha < 0.1)
+      if (simulation.alpha() < 0.1) {
+        nodes.forEach((node) => {
+          if (node.x !== undefined && node.y !== undefined) {
+            nodePositionsRef.current.set(node.id, { x: node.x, y: node.y });
+          }
+        });
+      }
+
       // Update both hitbox and visible paths
       linkSelection.selectAll("path").attr("d", (d: LinkDatum) => {
         const source = d.source as NodeDatum;
@@ -921,10 +983,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     wallets,
     links,
     dimensions,
-    onWalletClick,
-    onConnectionClick,
-    getNodeColor,
-    handleSelectNode,
     assetType,
     userAddress,
     minBalancePercent,

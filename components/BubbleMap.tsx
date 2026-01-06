@@ -167,7 +167,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   };
 
   // Helper: apply connection selection highlight
-  const applyConnectionHighlight = (connectionId: string | null) => {
+  const applyConnectionHighlight = useCallback((connectionId: string | null) => {
     if (!svgRef.current) return;
 
     const linkSelection = d3.select(svgRef.current).selectAll(".link-wrapper");
@@ -217,7 +217,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .style("filter", "drop-shadow(0 0 8px rgba(168, 85, 247, 0.8))");
 
     lastSelectedConnectionIdRef.current = connectionId;
-  };
+  }, []);
 
   // --- MAP SETTINGS ---
   const [showLinks, setShowLinks] = useState(true);
@@ -225,47 +225,41 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const [minBalancePercent, setMinBalancePercent] = useState(0); // 0 to 100 slider representing % of max balance or just arbitrary threshold
 
   // Helper: map click selection to parent + highlight
-  const handleSelectNode = (wallet: Wallet | null) => {
-    onWalletClickRef.current(wallet);
-    applySelectionHighlight(wallet ? wallet.id : null, showLabels);
-  };
+  const handleSelectNode = useCallback(
+    (wallet: Wallet | null) => {
+      onWalletClickRef.current(wallet);
+      applySelectionHighlight(wallet ? wallet.id : null, showLabels);
+    },
+    [showLabels]
+  );
 
   // Helper: get node color based on properties
-  const getNodeColor = (d: any) => {
-    // Debug logging for LP pools
-    if (d.label && d.label.includes("LP Pool")) {
-      console.log("[BubbleMap] LP Pool node:", {
-        address: d.address,
-        label: d.label,
-        isContract: d.isContract,
-        balance: d.balance,
-        percentage: d.percentage,
-        color: "#fb7185",
-      });
-    }
+  const getNodeColor = useCallback(
+    (d: any) => {
+      if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return "#fbbf24"; // Amber-400 (User)
+      if (d.label) return "#fb7185"; // Rose-400 (Known Entity)
+      if (d.isContract) return "#fb7185"; // Rose-400 (Warning/Special)
 
-    if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return "#fbbf24"; // Amber-400 (User)
-    if (d.label) return "#fb7185"; // Rose-400 (Known Entity)
-    if (d.isContract) return "#fb7185"; // Rose-400 (Warning/Special)
+      // Logic for NFTs (Count based)
+      if (assetType === AssetType.NFT) {
+        const bal = d.balance;
+        if (bal >= 50) return "#ef4444"; // Red (Hot)
+        if (bal >= 20) return "#f97316"; // Orange
+        if (bal >= 5) return "#eab308"; // Yellow
+        if (bal >= 2) return "#10b981"; // Green
+        return "#06b6d4"; // Cyan (Cold)
+      }
 
-    // Logic for NFTs (Count based)
-    if (assetType === AssetType.NFT) {
-      const bal = d.balance;
-      if (bal >= 50) return "#ef4444"; // Red (Hot)
-      if (bal >= 20) return "#f97316"; // Orange
-      if (bal >= 5) return "#eab308"; // Yellow
-      if (bal >= 2) return "#10b981"; // Green
-      return "#06b6d4"; // Cyan (Cold)
-    }
-
-    // Logic for Tokens (Percentage based)
-    const pct = d.percentage;
-    if (pct >= 5.0) return "#ef4444"; // Red (Massive)
-    if (pct >= 1.0) return "#f97316"; // Orange (Whale)
-    if (pct >= 0.5) return "#eab308"; // Yellow (Large)
-    if (pct >= 0.1) return "#10b981"; // Green (Medium)
-    return "#06b6d4"; // Cyan (Retail)
-  };
+      // Logic for Tokens (Percentage based)
+      const pct = d.percentage;
+      if (pct >= 5.0) return "#ef4444"; // Red (Massive)
+      if (pct >= 1.0) return "#f97316"; // Orange (Whale)
+      if (pct >= 0.5) return "#eab308"; // Yellow (Large)
+      if (pct >= 0.1) return "#10b981"; // Green (Medium)
+      return "#06b6d4"; // Cyan (Retail)
+    },
+    [userAddress, assetType]
+  );
 
   // Update refs when functions change (must be after function definitions)
   useEffect(() => {
@@ -328,18 +322,15 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     window.addEventListener("keydown", handleKeyNav);
     return () => window.removeEventListener("keydown", handleKeyNav);
-  }, [wallets, focusedIndex, onWalletClick]); // eslint-disable-line react-hooks/exhaustive-deps -- handleSelectNode is defined inline
+  }, [wallets, focusedIndex, onWalletClick]);
 
   // --- DEBUG: Log labeled wallets on mount ---
   useEffect(() => {
     if (wallets.length > 0) {
       const labeled = wallets.filter((w) => w.label);
-      console.log(`[BubbleMap] Received ${wallets.length} wallets, ${labeled.length} with labels`);
       if (labeled.length > 0) {
-        labeled.forEach((w) => {
-          console.log(
-            `[BubbleMap] Labeled wallet: ${w.address} - label: "${w.label}", isContract: ${w.isContract}`
-          );
+        labeled.forEach((_w) => {
+          // Debug logging for LP pools
         });
       }
     }
@@ -988,6 +979,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     minBalancePercent,
     showLabels,
     showLinks,
+    onConnectionClick,
   ]);
 
   // Re-apply connection selection after re-renders (resize, etc)
@@ -995,7 +987,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     if (selectedConnectionId) {
       applyConnectionHighlight(selectedConnectionId);
     }
-  }, [selectedConnectionId, wallets, links, dimensions]);
+  }, [selectedConnectionId, wallets, links, dimensions, applyConnectionHighlight]);
 
   // --- ACTIONS ---
   const handleZoomIn = () => {

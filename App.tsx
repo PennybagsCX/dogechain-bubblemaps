@@ -41,7 +41,7 @@ const getCachedMetadata = (address: string) => {
     if (!cacheRaw) return null;
     const cache = JSON.parse(cacheRaw);
     return cache[address.toLowerCase()];
-  } catch (e) {
+  } catch {
     return null;
   }
 };
@@ -55,8 +55,8 @@ const saveMetadataToCache = (
     const cache = cacheRaw ? JSON.parse(cacheRaw) : {};
     cache[address.toLowerCase()] = { ...data, timestamp: Date.now() };
     localStorage.setItem("doge_token_metadata_cache_v2", JSON.stringify(cache));
-  } catch (e) {
-    console.warn("Failed to save token metadata", e);
+  } catch (_e) {
+    console.warn("Failed to save token metadata");
   }
 };
 import {
@@ -165,8 +165,8 @@ function deduplicateTrendingAssetsInMemory(assets: TrendingAsset[]): TrendingAss
 
 // Safe unique ID generator for alerts
 const generateAlertId = () => {
-  if (typeof crypto !== "undefined" && (crypto as any).randomUUID) {
-    return (crypto as any).randomUUID();
+  if (typeof crypto !== "undefined" && crypto.randomUUID) {
+    return crypto.randomUUID();
   }
   return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 };
@@ -390,8 +390,8 @@ const App: React.FC = () => {
 
           setTrendingAssets(converted);
         }
-      } catch (error) {
-        console.warn("[Trending] Server fetch failed, keeping local trending");
+      } catch {
+        // Server fetch failed, keeping local trending
       }
     };
 
@@ -592,7 +592,7 @@ const App: React.FC = () => {
         url.searchParams.set("view", newView.toLowerCase());
       }
       window.history.pushState({}, "", url);
-    } catch (e) {
+    } catch {
       // console.debug('History pushState disabled in this environment');
     }
   };
@@ -882,15 +882,7 @@ const App: React.FC = () => {
       const result = await fetchTokenHolders(tokenData);
 
       // DIAGNOSTIC: Check labeled wallets in result
-      const labeledInResult = result.wallets.filter((w) => w.label);
-      console.log(
-        `[App.tsx] fetchTokenHolders returned ${result.wallets.length} wallets, ${labeledInResult.length} with labels`
-      );
-      if (labeledInResult.length > 0) {
-        labeledInResult.forEach((w) =>
-          console.log(`[App.tsx] Labeled: ${w.address} - "${w.label}"`)
-        );
-      }
+      const _labeledInResult = result.wallets.filter((w) => w.label);
 
       let finalWallets = result.wallets;
 
@@ -919,7 +911,7 @@ const App: React.FC = () => {
         newUrl.searchParams.set("type", typeToUse);
         newUrl.searchParams.set("view", "analysis");
         window.history.pushState({}, "", newUrl);
-      } catch (e) {
+      } catch {
         /* ignore */
       }
 
@@ -1097,14 +1089,14 @@ const App: React.FC = () => {
         let bal = 0;
         try {
           bal = await fetchTokenBalance(userAddress, meta.address, meta.decimals);
-        } catch (e) {
+        } catch {
           bal = 0;
         }
         const enriched = { ...meta, totalSupply: meta.totalSupply || 0, holderCount: bal };
         if (meta.type === AssetType.NFT) nfts.push(enriched);
         else tokens.push(enriched);
-      } catch (e) {
-        console.warn("Forced contract fetch failed", contract, e);
+      } catch (err) {
+        console.warn("Forced contract fetch failed", contract, err);
       }
     }
     setForcedAssets({ tokens, nfts });
@@ -1462,7 +1454,7 @@ const App: React.FC = () => {
         const wDogeAddress = "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101";
         initialVal = await fetchTokenBalance(wallet.address, wDogeAddress);
       }
-    } catch (e) {
+    } catch {
       console.warn("Failed to fetch initial alert balance");
     }
 

@@ -118,6 +118,11 @@ export async function getPopularityBatch(tokenAddresses: string[]): Promise<Map<
   try {
     const boosts = new Map<string, number>();
 
+    // Skip server call if no addresses
+    if (tokenAddresses.length === 0) {
+      return boosts;
+    }
+
     // Fetch from server in batch
     const serverData = await fetchPopularityFromServer(tokenAddresses);
 

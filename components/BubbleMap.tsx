@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { useClickOutside } from "../hooks/useClickOutside";
 import { Wallet, Link, AssetType } from "../types";
+import { ensureLPDetectionInitialized } from "../services/db";
 import {
   Move,
   MousePointer2,
@@ -61,7 +62,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [userNodeFound, setUserNodeFound] = useState(false);
-  const [isSnapshotting] = useState(false);
+  const [isSnapshotting, setIsSnapshotting] = useState(false);
   const [areControlsOpen, setAreControlsOpen] = useState<boolean>(() => {
     if (typeof window !== "undefined") {
       return window.innerWidth >= 768; // default open on desktop, collapsed on small screens
@@ -78,6 +79,12 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   useClickOutside(settingsRef, closeSettings, isSettingsOpen);
   useClickOutside(legendRef, closeLegend, isLegendOpen);
   useClickOutside(controlsRef, closeControls, areControlsOpen);
+
+  // --- LP DETECTION INITIALIZATION ---
+  useEffect(() => {
+    // Initialize LP detection database on first load (non-blocking)
+    ensureLPDetectionInitialized();
+  }, []);
 
   // Keep track of selected index for keyboard nav
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
@@ -136,6 +143,18 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
   // Helper: get node color based on properties
   const getNodeColor = (d: any) => {
+    // Debug logging for LP pools
+    if (d.label && d.label.includes("LP Pool")) {
+      console.log("[BubbleMap] LP Pool node:", {
+        address: d.address,
+        label: d.label,
+        isContract: d.isContract,
+        balance: d.balance,
+        percentage: d.percentage,
+        color: "#fb7185",
+      });
+    }
+
     if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return "#fbbf24"; // Amber-400 (User)
     if (d.label) return "#fb7185"; // Rose-400 (Known Entity)
     if (d.isContract) return "#fb7185"; // Rose-400 (Warning/Special)
@@ -214,6 +233,21 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     return () => window.removeEventListener("keydown", handleKeyNav);
   }, [wallets, focusedIndex, onWalletClick]); // eslint-disable-line react-hooks/exhaustive-deps -- handleSelectNode is defined inline
 
+  // --- DEBUG: Log labeled wallets on mount ---
+  useEffect(() => {
+    if (wallets.length > 0) {
+      const labeled = wallets.filter((w) => w.label);
+      console.log(`[BubbleMap] Received ${wallets.length} wallets, ${labeled.length} with labels`);
+      if (labeled.length > 0) {
+        labeled.forEach((w) => {
+          console.log(
+            `[BubbleMap] Labeled wallet: ${w.address} - label: "${w.label}", isContract: ${w.isContract}`
+          );
+        });
+      }
+    }
+  }, [wallets]);
+
   // --- UPDATE VISIBILITY ---
   useEffect(() => {
     if (!svgRef.current) return;
@@ -267,7 +301,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     const foundUser = userAddress
       ? wallets.some((w) => w.address.toLowerCase() === userAddress.toLowerCase())
       : false;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     setUserNodeFound(foundUser);
 
     // --- DEFINITIONS ---
@@ -614,7 +647,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     minBalancePercent,
     showLabels,
     showLinks,
-  ]); // eslint-disable-line react-hooks/exhaustive-deps -- getNodeColor and handleSelectNode are defined inline
+  ]);
 
   // --- ACTIONS ---
   const handleZoomIn = () => {
@@ -706,9 +739,85 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     }
   }, [targetWalletId, dimensions, showLabels]);
 
-  // Simple snapshot handler placeholder to avoid runtime errors
-  const handleSnapshot = () => {
-    // Snapshot functionality not implemented
+  // Screenshot handler using SVG serialization
+  const handleSnapshot = async () => {
+    if (!svgRef.current) return;
+    setIsSnapshotting(true);
+    try {
+      const svg = svgRef.current;
+
+      // Clone the SVG to avoid modifying the original
+      const clone = svg.cloneNode(true) as SVGSVGElement;
+
+      // Get the computed dimensions
+      const bbox = svg.getBoundingClientRect();
+      clone.setAttribute("width", bbox.width.toString());
+      clone.setAttribute("height", bbox.height.toString());
+
+      // Set explicit background
+      const bgRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      bgRect.setAttribute("width", "100%");
+      bgRect.setAttribute("height", "100%");
+      bgRect.setAttribute("fill", "#0f0f1a");
+      clone.insertBefore(bgRect, clone.firstChild);
+
+      // Serialize SVG to string
+      const serializer = new XMLSerializer();
+      const svgString = serializer.serializeToString(clone);
+
+      // Create a Blob from the SVG string
+      const blob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+
+      // Create an image element
+      const img = new Image();
+
+      // Load the image and convert to PNG
+      await new Promise<void>((resolve, reject) => {
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          if (!ctx) {
+            reject(new Error("Failed to get canvas context"));
+            return;
+          }
+
+          // Set canvas size (2x for higher quality)
+          canvas.width = bbox.width * 2;
+          canvas.height = bbox.height * 2;
+
+          // Draw the image
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          // Convert to blob and download
+          canvas.toBlob((blob) => {
+            if (!blob) {
+              reject(new Error("Failed to create blob"));
+              return;
+            }
+            const link = document.createElement("a");
+            link.download = `bubblemap-${Date.now()}.png`;
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            URL.revokeObjectURL(link.href);
+            resolve();
+          }, "image/png");
+        };
+
+        img.onerror = () => {
+          reject(new Error("Failed to load SVG image"));
+        };
+
+        img.src = url;
+      });
+
+      // Clean up
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Screenshot failed:", error);
+    } finally {
+      setIsSnapshotting(false);
+    }
   };
 
   return (

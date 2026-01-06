@@ -1,3 +1,4 @@
+// Diagnostic logging added for LP pair detection
 import {
   Token,
   Wallet,
@@ -35,7 +36,7 @@ const getCachedMetadata = (address: string) => {
     if (!cacheRaw) return null;
     const cache = JSON.parse(cacheRaw);
     return cache[address.toLowerCase()];
-  } catch {
+  } catch (e) {
     return null;
   }
 };
@@ -69,7 +70,7 @@ export const detectContractType = async (address: string): Promise<AssetType | n
           if (rawType?.includes("20")) return AssetType.TOKEN;
         }
       }
-    } catch {
+    } catch (e) {
       /* ignore */
     }
 
@@ -82,7 +83,7 @@ export const detectContractType = async (address: string): Promise<AssetType | n
         if (typeField?.includes("721") || typeField?.includes("1155")) return AssetType.NFT;
         if (typeField?.includes("20")) return AssetType.TOKEN;
       }
-    } catch {
+    } catch (e) {
       /* ignore */
     }
 
@@ -134,7 +135,7 @@ export const detectContractType = async (address: string): Promise<AssetType | n
           }
         }
       }
-    } catch {
+    } catch (e) {
       /* ignore */
     }
 
@@ -161,7 +162,7 @@ export const detectContractType = async (address: string): Promise<AssetType | n
     }
 
     return null;
-  } catch {
+  } catch (e) {
     return null;
   }
 };
@@ -175,7 +176,7 @@ const saveMetadataToCache = (
     const cache = cacheRaw ? JSON.parse(cacheRaw) : {};
     cache[address.toLowerCase()] = { ...data, timestamp: Date.now() };
     localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(cache));
-  } catch {
+  } catch (e) {
     console.warn("Failed to save token metadata", e);
   }
 };
@@ -266,10 +267,61 @@ const getDecimals = (
   return type === AssetType.NFT ? 0 : 18;
 };
 
-const resolveKnownLabel = (address: string, tokenAddress?: string): string | undefined => {
+// Flag to ensure we only log LP pairs once per token
+const loggedTokens = new Set<string>();
+
+const resolveKnownLabel = async (
+  address: string,
+  tokenAddress?: string
+): Promise<string | undefined> => {
   const lowerAddr = address.toLowerCase();
+
+  // 1. Check hardcoded labels
   if (KNOWN_LABELS[lowerAddr]) return KNOWN_LABELS[lowerAddr];
+
+  // 2. Check if this is the token contract itself
   if (tokenAddress && lowerAddr === tokenAddress.toLowerCase()) return "Token Contract";
+
+  // 3. Check if this is an LP pair
+  try {
+    const { isAddressLPPair, loadAllLPPairs } = await import("./lpDetection");
+
+    // Log LP pairs for this token (only once)
+    if (tokenAddress && !loggedTokens.has(tokenAddress.toLowerCase())) {
+      loggedTokens.add(tokenAddress.toLowerCase());
+
+      const allPairs = await loadAllLPPairs();
+      const tokenLPairs = allPairs.filter(
+        (p) =>
+          p.token0Address.toLowerCase() === tokenAddress.toLowerCase() ||
+          p.token1Address.toLowerCase() === tokenAddress.toLowerCase()
+      );
+
+      console.log(
+        `[LP Detection] Token ${tokenAddress}: Found ${tokenLPairs.length} LP pairs in database:`
+      );
+      if (tokenLPairs.length > 0) {
+        tokenLPairs.forEach((p) => {
+          console.log(
+            `[LP Detection]   - LP Pair: ${p.pairAddress} (${p.dexName}) [${p.token0Address} / ${p.token1Address}]`
+          );
+        });
+      }
+    }
+
+    console.log(`[LP Detection] Checking holder: ${lowerAddr}`);
+    const lpPair = await isAddressLPPair(lowerAddr);
+    if (lpPair && lpPair.isValid) {
+      console.log(`[LP Detection] ✓ Found LP pair: ${lowerAddr} (${lpPair.dexName})`);
+      return "LP Pool";
+    } else {
+      console.log(`[LP Detection] ✗ Not an LP pair: ${lowerAddr}`);
+    }
+  } catch (e) {
+    // Silently fail - don't break existing functionality
+    console.error(`[LP Detection] Error checking ${lowerAddr}:`, e);
+  }
+
   return undefined;
 };
 
@@ -283,7 +335,7 @@ const checkContractVerification = async (address: string): Promise<boolean> => {
       return true;
     }
     return false;
-  } catch {
+  } catch (e) {
     return false;
   }
 };
@@ -309,7 +361,7 @@ export const fetchMetadataFromTransfers = async (
       }
     }
     return null;
-  } catch {
+  } catch (e) {
     console.warn("fetchMetadataFromTransfers failed:", e);
     return null;
   }
@@ -338,7 +390,7 @@ const fetchMetadataFromTokenList = async (
       }
     }
     return null;
-  } catch {
+  } catch (e) {
     console.warn("fetchMetadataFromTokenList failed:", e);
     return null;
   }
@@ -379,7 +431,7 @@ export const fetchTokenData = async (
         localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(cache));
         cached = null;
       }
-    } catch {
+    } catch (e) {
       console.warn("Failed to clear stale cache", e);
     }
   }
@@ -434,7 +486,7 @@ export const fetchTokenData = async (
       if (v1Data.status === "1" || (v1Data.result && !isNaN(parseFloat(v1Data.result)))) {
         totalSupply = parseBalance(v1Data.result, finalDecimals);
       }
-    } catch {
+    } catch (e) {
       // ignore supply failure
     }
 
@@ -457,6 +509,10 @@ export const fetchTokenData = async (
 export const fetchTokenHolders = async (
   token: Token
 ): Promise<{ wallets: Wallet[]; links: Link[] }> => {
+  console.log(
+    `[LP Detection] ===== fetchTokenHolders called for ${token.symbol || token.address} =====`
+  );
+
   const cleanAddress = validateTokenAddress(token.address);
   const decimals =
     token.decimals !== undefined ? token.decimals : token.type === AssetType.NFT ? 0 : 18;
@@ -483,19 +539,114 @@ export const fetchTokenHolders = async (
 
     if (holders.length === 0) return { wallets: [], links: [] };
 
-    const processedWallets: Wallet[] = holders.map((h) => {
-      const balance = parseBalance(h.balance, decimals);
-      return {
-        id: h.address,
-        address: h.address,
-        balance,
-        percentage: 0,
-        isWhale: false,
-        isContract: h.is_contract,
-        label: resolveKnownLabel(h.address, token.address),
-        connections: [],
-      };
-    });
+    const processedWallets: Wallet[] = await Promise.all(
+      holders.map(async (h) => {
+        const balance = parseBalance(h.balance, decimals);
+        const label = await resolveKnownLabel(h.address, token.address);
+        return {
+          id: h.address,
+          address: h.address,
+          balance,
+          percentage: 0,
+          isWhale: false,
+          isContract: h.is_contract || label === "LP Pool", // Mark LP pairs as contracts
+          label: label,
+          connections: [],
+        };
+      })
+    );
+
+    // Add LP pairs from database that involve this token
+    try {
+      const { loadAllLPPairs } = await import("./lpDetection");
+      const allLPPairs = await loadAllLPPairs();
+
+      console.log(`[LP Detection] Loaded ${allLPPairs.length} LP pairs from database`);
+      console.log(`[LP Detection] Looking for pairs with token: ${cleanAddress.toLowerCase()}`);
+
+      // Filter LP pairs that involve this token
+      const tokenLPPairs = allLPPairs.filter(
+        (lp) =>
+          lp.token0Address.toLowerCase() === cleanAddress.toLowerCase() ||
+          lp.token1Address.toLowerCase() === cleanAddress.toLowerCase()
+      );
+
+      console.log(`[LP Detection] Found ${tokenLPPairs.length} LP pairs for this token`);
+
+      if (tokenLPPairs.length > 0) {
+        console.log(
+          `[LP Detection] Adding ${tokenLPPairs.length} LP pairs to visualization for ${token.symbol || token.address}`
+        );
+
+        // For each LP pair, query its token balance
+        for (const lpPair of tokenLPPairs) {
+          try {
+            await sleep(100); // gentle rate limiting
+
+            // Query the balance of this token in the LP pair contract
+            const balanceUrl = `${EXPLORER_API_V1}?module=account&action=tokenbalance&contractaddress=${cleanAddress}&address=${lpPair.pairAddress}`;
+            const balanceRes = await fetchSafe(balanceUrl);
+            const balanceData = await balanceRes.json();
+
+            if (balanceData.status === "1" && balanceData.result) {
+              const lpBalance = parseBalance(balanceData.result, decimals);
+
+              // Only add if LP pair has non-zero balance of this token
+              if (lpBalance > 0) {
+                const lpWallet: Wallet = {
+                  id: lpPair.pairAddress,
+                  address: lpPair.pairAddress,
+                  balance: lpBalance,
+                  percentage: 0, // Will be calculated below
+                  isWhale: true, // LP pairs are important
+                  isContract: true,
+                  label: `LP Pool (${lpPair.dexName})`,
+                  connections: [],
+                };
+
+                // Check if this LP pair is already in the list (from holder API)
+                const existingIndex = processedWallets.findIndex(
+                  (w) => w.address.toLowerCase() === lpPair.pairAddress.toLowerCase()
+                );
+
+                if (existingIndex >= 0) {
+                  // Update existing entry with proper LP label
+                  processedWallets[existingIndex] = lpWallet;
+                } else {
+                  // Add new LP pair to the list
+                  processedWallets.push(lpWallet);
+                }
+
+                console.log(
+                  `[LP Detection] ✓ Added LP pair: ${lpPair.pairAddress} with balance ${lpBalance.toFixed(2)} ${token.symbol || "tokens"}`
+                );
+
+                // DIAGNOSTIC: Check wallet immediately after addition
+                console.log(
+                  `[LP Detection] After add/update - Total wallets: ${processedWallets.length}, This wallet label: "${lpWallet.label}", isContract: ${lpWallet.isContract}`
+                );
+              }
+            }
+          } catch (error) {
+            console.error(
+              `[LP Detection] Failed to get balance for LP pair ${lpPair.pairAddress}:`,
+              error
+            );
+          }
+        }
+      }
+    } catch (error) {
+      console.error("[LP Detection] Failed to add LP pairs to visualization:", error);
+    }
+
+    // DIAGNOSTIC: Check labeled wallets before whale recalculation
+    const labeledBeforeRecalc = processedWallets.filter((w) => w.label);
+    console.log(
+      `[LP Detection] Before recalc - Total: ${processedWallets.length}, Labeled: ${labeledBeforeRecalc.length}`
+    );
+    if (labeledBeforeRecalc.length > 0) {
+      labeledBeforeRecalc.forEach((w) => console.log(`  Labeled: ${w.address} - "${w.label}"`));
+    }
 
     const totalWalletBalance = processedWallets.reduce((acc, w) => acc + w.balance, 0);
     const effectiveTotalSupply = token.totalSupply > 0 ? token.totalSupply : totalWalletBalance;
@@ -504,6 +655,15 @@ export const fetchTokenHolders = async (
       w.percentage = effectiveTotalSupply > 0 ? (w.balance / effectiveTotalSupply) * 100 : 0;
       w.isWhale = index < 10;
     });
+
+    // DIAGNOSTIC: Check labeled wallets after whale recalculation
+    const labeledAfterRecalc = processedWallets.filter((w) => w.label);
+    console.log(
+      `[LP Detection] After recalc - Total: ${processedWallets.length}, Labeled: ${labeledAfterRecalc.length}`
+    );
+    if (labeledAfterRecalc.length > 0) {
+      labeledAfterRecalc.forEach((w) => console.log(`  Labeled: ${w.address} - "${w.label}"`));
+    }
 
     const links: Link[] = [];
     const topWallets = processedWallets.slice(0, 3);
@@ -541,13 +701,40 @@ export const fetchTokenHolders = async (
             }
           });
         }
-      } catch {
+      } catch (e) {
         // ignore
       }
     }
 
-    return { wallets: processedWallets.slice(0, 100), links };
-  } catch {
+    // Debug: Log all wallets with labels to verify LP pairs
+    // IMPORTANT: Preserve labeled wallets even if they're outside the top 100
+    const top100Wallets = processedWallets.slice(0, 100);
+    const labeledWallets = processedWallets.filter((w) => w.label);
+
+    // Create a set of addresses from top 100 to avoid duplicates
+    const top100Addresses = new Set(top100Wallets.map((w) => w.address.toLowerCase()));
+
+    // Add labeled wallets that aren't already in the top 100
+    const additionalLabeled = labeledWallets.filter(
+      (w) => !top100Addresses.has(w.address.toLowerCase())
+    );
+
+    // Combine: top 100 + any labeled wallets that were excluded
+    const walletsToShow = [...top100Wallets, ...additionalLabeled].slice(0, 105); // Max 105 to prevent huge arrays
+
+    console.log(
+      `[LP Detection] Top 100: ${top100Wallets.length}, Labeled wallets: ${labeledWallets.length}, Additional labeled: ${additionalLabeled.length}, Final: ${walletsToShow.length}`
+    );
+    if (labeledWallets.length > 0) {
+      labeledWallets.forEach((w) => {
+        console.log(
+          `[LP Detection] Labeled wallet: ${w.address} - label: "${w.label}", isContract: ${w.isContract}, balance: ${w.balance}`
+        );
+      });
+    }
+
+    return { wallets: walletsToShow, links };
+  } catch (e) {
     console.warn("V1 holder endpoint failed for", cleanAddress);
     return { wallets: [], links: [] };
   }
@@ -607,7 +794,7 @@ export const fetchWalletTransactions = async (
             if (detectedType === AssetType.NFT) {
               nftContracts.add(contract);
             }
-          } catch {
+          } catch (e) {
             // On detection failure, include transaction to avoid false negatives
             console.warn(`Failed to detect type for ${contract}, including transaction`);
             nftContracts.add(contract);
@@ -728,7 +915,7 @@ export const fetchTokenBalance = async (
       return parseBalance(data.result, decimals);
     }
     return 0;
-  } catch {
+  } catch (e) {
     return 0;
   }
 };
@@ -779,7 +966,7 @@ export const scanWhaleContracts = async (
           }
         }
       }
-    } catch {
+    } catch (e) {
       console.warn(`[Whale Scan] Failed to scan whale ${whale}:`, e);
     }
   }
@@ -809,7 +996,7 @@ export const checkTokenBalance = async (
     }
 
     return { balance: "0", hasBalance: false };
-  } catch {
+  } catch (e) {
     console.warn(`Failed to check balance for ${contractAddress}:`, e);
     return { balance: "0", hasBalance: false };
   }
@@ -865,7 +1052,7 @@ export const fetchWalletAssets = async (
           if (json.status === "1" && Array.isArray(json.result)) {
             return json.result as any[];
           }
-        } catch {
+        } catch (e) {
           // try next offset on 400/other failures
           continue;
         }
@@ -884,7 +1071,7 @@ export const fetchWalletAssets = async (
           const json = await res.json();
           if (!Array.isArray(json?.items) || json.items.length === 0) break;
           collected.push(...json.items);
-        } catch {
+        } catch (e) {
           break;
         }
       }
@@ -902,7 +1089,7 @@ export const fetchWalletAssets = async (
           const json = await res.json();
           if (!Array.isArray(json?.items) || json.items.length === 0) break;
           collected.push(...json.items);
-        } catch {
+        } catch (e) {
           break;
         }
       }
@@ -956,7 +1143,7 @@ export const fetchWalletAssets = async (
             );
           });
           if (v1.length > 0) break;
-        } catch {
+        } catch (e) {
           break;
         }
       }
@@ -972,7 +1159,7 @@ export const fetchWalletAssets = async (
       tokens: sortByHits(tokensMap),
       nfts: sortByHits(nftsMap),
     };
-  } catch {
+  } catch (e) {
     console.warn("fetchWalletAssets error", e);
     return { tokens: [], nfts: [] };
   }
@@ -1009,7 +1196,7 @@ export const fetchWalletAssetsHybrid = async (
           metadata: cached.scanMetadata,
         };
       }
-    } catch {
+    } catch (e) {
       console.warn("Failed to load cache, proceeding with scan", e);
     }
   }
@@ -1094,7 +1281,7 @@ export const fetchWalletAssetsHybrid = async (
           // Update progress (20% per phase)
           const phaseProgress = ((page - startPage + 1) / (maxPages - startPage + 1)) * 20;
           triggerProgress("deep-v2", Math.floor(phaseProgress), `Scanning V2 page ${page}...`);
-        } catch {
+        } catch (e) {
           console.warn(`V2 page ${page} failed:`, e);
           break;
         }
@@ -1119,7 +1306,7 @@ export const fetchWalletAssetsHybrid = async (
           if (json.status === "1" && Array.isArray(json.result)) {
             results.push(...json.result);
           }
-        } catch {
+        } catch (e) {
           console.warn(`V1 offset ${offset} failed:`, e);
           continue;
         }
@@ -1197,7 +1384,7 @@ export const fetchWalletAssetsHybrid = async (
           });
         }
       }
-    } catch {
+    } catch (e) {
       console.warn("V1 NFT probe failed:", e);
     }
 
@@ -1381,7 +1568,7 @@ export const fetchWalletAssetsHybrid = async (
           if (json.status === "1" && json.result && parseFloat(json.result) > 0) {
             // Keep assets with non-zero balance
           }
-        } catch {
+        } catch (e) {
           // Ignore balance check failures
         }
       }
@@ -1440,7 +1627,7 @@ export const fetchWalletAssetsHybrid = async (
                   lastSeenAt: Date.now(),
                 });
               }
-            } catch {
+            } catch (e) {
               console.warn(`Failed to detect type for whale contract ${contract}:`, e);
             }
           }
@@ -1496,7 +1683,7 @@ export const fetchWalletAssetsHybrid = async (
             }
 
             checkedContracts.add(contract);
-          } catch {
+          } catch (e) {
             console.warn(`Failed to check contract ${dbContract.contractAddress}:`, e);
           }
         }
@@ -1514,6 +1701,86 @@ export const fetchWalletAssetsHybrid = async (
     }
 
     phasesCompleted.push("whale-scan");
+
+    // --- PHASE 6: LP POOL DETECTION (5-10 seconds) ---
+    try {
+      triggerProgress("lp-detection", 95, "Detecting liquidity pool contracts...");
+
+      // Import LP detection utilities
+      const { loadAllLPPairs, LP_DETECTION_ENABLED } = await import("./lpDetection");
+
+      // Check if LP detection is enabled
+      if (LP_DETECTION_ENABLED) {
+        // Load all cached LP pairs from database
+        const allLPPairs = await loadAllLPPairs();
+
+        if (allLPPairs.length > 0) {
+          console.log(`[LP Detection] Checking ${allLPPairs.length} cached LP pairs for wallet...`);
+
+          let foundLPPairs = 0;
+
+          // Check balances for LP pairs in batches
+          for (let i = 0; i < allLPPairs.length; i += 20) {
+            const batch = allLPPairs.slice(i, i + 20);
+
+            for (const lpPair of batch) {
+              try {
+                // Check if wallet holds this LP token
+                const { hasBalance } = await checkTokenBalance(walletAddress, lpPair.pairAddress);
+
+                if (hasBalance) {
+                  // Add LP token to discovered tokens
+                  const tokenKey = lpPair.pairAddress.toLowerCase();
+
+                  if (!tokensMap.has(tokenKey)) {
+                    tokensMap.set(tokenKey, {
+                      address: lpPair.pairAddress,
+                      symbol: "LP",
+                      name: `${lpPair.dexName} LP`,
+                      decimals: 18, // LP tokens always 18 decimals
+                      type: AssetType.TOKEN,
+                      hits: 1,
+                    });
+
+                    foundLPPairs++;
+                    console.log(
+                      `[LP Detection] Found LP pair: ${lpPair.dexName} - ${lpPair.pairAddress}`
+                    );
+                  }
+                }
+              } catch (e) {
+                // Continue on error - individual LP check failures shouldn't break the scan
+                console.error(`[LP Detection] Failed to check LP pair ${lpPair.pairAddress}:`, e);
+              }
+            }
+
+            // Update progress
+            const progress =
+              95 + ((i + Math.min(20, allLPPairs.length - i)) / allLPPairs.length) * 5;
+            triggerProgress(
+              "lp-detection",
+              Math.floor(progress),
+              `Checking LP pairs... ${Math.floor(((i + Math.min(20, allLPPairs.length - i)) / allLPPairs.length) * 100)}%`
+            );
+          }
+
+          if (foundLPPairs > 0) {
+            console.log(
+              `[LP Detection] Found ${foundLPPairs} LP pairs for wallet ${walletAddress}`
+            );
+          }
+        } else {
+          console.log("[LP Detection] No LP pairs cached. Run factory scan to populate database.");
+        }
+      } else {
+        console.log("[LP Detection] LP detection is disabled via feature flag");
+      }
+    } catch (e) {
+      console.error("[LP Detection] LP detection phase failed:", e);
+      // Non-critical phase - continue anyway
+    }
+
+    phasesCompleted.push("lp-detection");
 
     // Sort by interaction count
     const sortByHits = (items: Map<string, Token & { hits: number }>) =>
@@ -1546,7 +1813,7 @@ export const fetchWalletAssetsHybrid = async (
       nfts: finalNfts,
       metadata,
     };
-  } catch {
+  } catch (e) {
     if (e instanceof Error && e.message === "Scan cancelled") {
       throw e;
     }
@@ -1577,7 +1844,7 @@ export const findInteractions = async (
       });
     }
     return newLinks;
-  } catch {
+  } catch (e) {
     return [];
   }
 };

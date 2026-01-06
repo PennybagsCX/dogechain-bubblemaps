@@ -13,7 +13,8 @@
 import type { ScanCheckpoint, ScanError } from "../services/scanProgress";
 
 const EXPLORER_API_V1 = "https://explorer.dogechain.dog/api";
-const PAIR_CREATED_EVENT_SIGNATURE = "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9";
+const PAIR_CREATED_EVENT_SIGNATURE =
+  "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9";
 
 export interface DiscoveredFactory {
   address: string;
@@ -71,7 +72,7 @@ export async function discoverAllFactories(
             pairCount: 1,
             firstPairBlock: blockNumber,
             lastPairBlock: blockNumber,
-            samplePairs: []
+            samplePairs: [],
           });
         } else {
           const factory = factoryMap.get(factoryAddress)!;
@@ -102,11 +103,11 @@ export async function discoverAllFactories(
 
     console.log("[Factory Discovery] Scan complete!");
     console.table(
-      factories.map(f => ({
+      factories.map((f) => ({
         Factory: f.address.substring(0, 10) + "...",
         Pairs: f.pairCount,
         "First Block": f.firstPairBlock,
-        "Last Block": f.lastPairBlock
+        "Last Block": f.lastPairBlock,
       }))
     );
 
@@ -120,10 +121,7 @@ export async function discoverAllFactories(
 /**
  * Fetch all PairCreated events from blockchain
  */
-async function fetchPairCreatedEvents(
-  fromBlock: number,
-  toBlock: number | string
-): Promise<any[]> {
+async function fetchPairCreatedEvents(fromBlock: number, toBlock: number | string): Promise<any[]> {
   // Note: Dogechain explorer API has limitations on log range
   // We may need to fetch in batches
 
@@ -133,11 +131,12 @@ async function fetchPairCreatedEvents(
   let shouldContinue = true;
 
   while (shouldContinue) {
+    let endBlock: number;
     try {
-      const endBlock =
+      endBlock =
         toBlock === "latest"
           ? Math.min(currentBlock + BLOCK_BATCH_SIZE, 999999999)
-          : Math.min(currentBlock + BLOCK_BATCH_SIZE, toBlock);
+          : Math.min(currentBlock + BLOCK_BATCH_SIZE, toBlock as number);
 
       const url = `${EXPLORER_API_V1}?module=logs&action=getLogs&topic0=${PAIR_CREATED_EVENT_SIGNATURE}&fromBlock=${currentBlock}&toBlock=${endBlock}`;
 
@@ -146,7 +145,9 @@ async function fetchPairCreatedEvents(
 
       if (data.status === "1" && data.result && Array.isArray(data.result)) {
         allEvents.push(...data.result);
-        console.log(`[Factory Discovery] Fetched ${data.result.length} events from blocks ${currentBlock}-${endBlock}`);
+        console.log(
+          `[Factory Discovery] Fetched ${data.result.length} events from blocks ${currentBlock}-${endBlock}`
+        );
 
         // If we got fewer results than expected, we've reached the end
         if (data.result.length < 1000) {
@@ -164,7 +165,10 @@ async function fetchPairCreatedEvents(
         shouldContinue = false;
       }
     } catch (error) {
-      console.error(`[Factory Discovery] Failed to fetch blocks ${currentBlock}-${endBlock}:`, error);
+      console.error(
+        `[Factory Discovery] Failed to fetch blocks ${currentBlock}-${endBlock}:`,
+        error
+      );
       shouldContinue = false;
     }
   }
@@ -183,7 +187,7 @@ function extractPairAddressFromEvent(event: any): string | null {
       return "0x" + event.data.slice(26, 66);
     }
     return null;
-  } catch {
+  } catch (e) {
     return null;
   }
 }
@@ -223,7 +227,7 @@ export async function verifyFactory(factoryAddress: string): Promise<boolean> {
     }
 
     return false;
-  } catch {
+  } catch (e) {
     return false;
   }
 }
@@ -249,7 +253,9 @@ export async function getFactoryName(factoryAddress: string): Promise<string> {
       // Extract from source code if possible
       if (contract.SourceCode) {
         // Look for name variable in source
-        const nameMatch = contract.SourceCode.match(/string\s+public\s+name\s*=\s*["']([^"']+)["']/);
+        const nameMatch = contract.SourceCode.match(
+          /string\s+public\s+name\s*=\s*["']([^"']+)["']/
+        );
         if (nameMatch && nameMatch[1]) {
           return nameMatch[1];
         }
@@ -257,7 +263,7 @@ export async function getFactoryName(factoryAddress: string): Promise<string> {
     }
 
     return "Unknown DEX";
-  } catch {
+  } catch (e) {
     return "Unknown DEX";
   }
 }
@@ -345,11 +351,15 @@ export async function discoverAllFactoriesWithCheckpoint(
   console.log("[Factory Discovery] Starting comprehensive factory scan with checkpointing...");
 
   // Resume from checkpoint if provided
-  let startFromBlock = checkpoint ? checkpoint.currentBlock : fromBlock;
-  const discoveredFactoriesMap = checkpoint ? new Map<string, DiscoveredFactory>() : new Map<string, DiscoveredFactory>();
+  const startFromBlock = checkpoint ? checkpoint.currentBlock : fromBlock;
+  const discoveredFactoriesMap = checkpoint
+    ? new Map<string, DiscoveredFactory>()
+    : new Map<string, DiscoveredFactory>();
 
   onProgress?.(
-    checkpoint ? `Resuming from block ${startFromBlock}...` : "Discovering DEX factories from known list...",
+    checkpoint
+      ? `Resuming from block ${startFromBlock}...`
+      : "Discovering DEX factories from known list...",
     10
   );
 
@@ -364,8 +374,12 @@ export async function discoverAllFactoriesWithCheckpoint(
   // For each known factory, fetch their PairCreated events to verify they exist
   for (let i = 0; i < KNOWN_FACTORIES.length; i++) {
     const factory = KNOWN_FACTORIES[i];
+    if (!factory) continue;
 
-    onProgress?.(`Verifying factory ${i + 1}/${KNOWN_FACTORIES.length}...`, 10 + (i / KNOWN_FACTORIES.length) * 80);
+    onProgress?.(
+      `Verifying factory ${i + 1}/${KNOWN_FACTORIES.length}...`,
+      10 + (i / KNOWN_FACTORIES.length) * 80
+    );
 
     try {
       const url = `${EXPLORER_API_V1}?module=logs&action=getLogs&address=${factory.address}&topic0=${PAIR_CREATED_EVENT_SIGNATURE}&fromBlock=${factory.deployBlock}&toBlock=100000`;
@@ -390,7 +404,7 @@ export async function discoverAllFactoriesWithCheckpoint(
             pairCount,
             firstPairBlock: firstBlock,
             lastPairBlock: lastBlock,
-            samplePairs: []
+            samplePairs: [],
           });
 
           console.log(`[Factory Discovery] ✓ ${factory.name}: ${pairCount} pairs`);
@@ -452,9 +466,7 @@ export async function discoverAllFactoriesWithCheckpoint(
 /**
  * Auto-add discovered factories to known factories registry
  */
-export async function autoAddDiscoveredFactories(
-  factories: DiscoveredFactory[]
-): Promise<void> {
+export async function autoAddDiscoveredFactories(factories: DiscoveredFactory[]): Promise<void> {
   try {
     const { saveDiscoveredFactories } = await import("../services/db");
 
@@ -497,12 +509,19 @@ export async function runFactoryDiscoveryWithCheckpoint(
   const existingCheckpoint = await loadCheckpoint();
 
   if (existingCheckpoint && existingCheckpoint.phase === "factory_discovery") {
-    console.log(`[Factory Discovery] Found checkpoint from block ${existingCheckpoint.currentBlock}`);
+    console.log(
+      `[Factory Discovery] Found checkpoint from block ${existingCheckpoint.currentBlock}`
+    );
     console.log("[Factory Discovery] Resuming from checkpoint...");
   }
 
   // Discover all factories
-  const result = await discoverAllFactoriesWithCheckpoint(0, "latest", onProgress, existingCheckpoint || undefined);
+  const result = await discoverAllFactoriesWithCheckpoint(
+    0,
+    "latest",
+    onProgress,
+    existingCheckpoint || undefined
+  );
 
   if (result.factories.length === 0) {
     console.warn("No factories discovered!");

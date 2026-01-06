@@ -12,7 +12,7 @@
                    style-src 'self' 'unsafe-inline';
                    font-src 'self';
                    img-src 'self' data: blob: https:;
-                   connect-src 'self' https://dogechain.dog;
+                   connect-src 'self' https://dogechain.dog https://explorer.dogechain.dog https://rpc.dogechain.dog;
                    base-uri 'self';
                    form-action 'self';">
 
@@ -45,6 +45,15 @@
 
     <!-- Using system fonts to avoid SSL issues on Arc iOS -->
     <link rel="stylesheet" href="/index.css">
+
+    <!-- Custom animations -->
+    <style>
+      @keyframes pulse-green-glow {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); opacity: 1; }
+        50% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); opacity: 0.8; }
+      }
+      .live-badge-pulse { animation: pulse-green-glow 2s ease-in-out infinite; }
+    </style>
 </head>
   <body>
     <div id="root"></div>

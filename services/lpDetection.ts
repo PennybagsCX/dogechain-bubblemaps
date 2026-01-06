@@ -18,7 +18,7 @@ const EXPLORER_API_V1 = "https://explorer.dogechain.dog/api";
 export async function fetchPairCreatedEvents(
   factoryAddress: string,
   fromBlock: number,
-  toBlock: number = "latest"
+  toBlock: number | "latest" = "latest"
 ): Promise<any[]> {
   try {
     const url = `${EXPLORER_API_V1}?module=logs&action=getLogs&address=${factoryAddress}&topic0=${PAIR_CREATED_EVENT_SIGNATURE}&fromBlock=${fromBlock}&toBlock=${toBlock}`;
@@ -53,10 +53,10 @@ export async function fetchPairCreatedEvents(
  * for proper keccak256 hashing.
  */
 export function calculatePairAddress(
-  factoryAddress: string,
-  token0: string,
-  token1: string,
-  initCodeHash: string
+  _factoryAddress: string,
+  _token0: string,
+  _token1: string,
+  _initCodeHash: string
 ): string {
   // This is a placeholder implementation
   // In a real scenario, you would use ethers.js:
@@ -76,7 +76,11 @@ export function calculatePairAddress(
 /**
  * Parse PairCreated event logs
  */
-export function parsePairCreatedEvents(logs: any[], factoryAddress: string, dexName: string): DbLPPair[] {
+export function parsePairCreatedEvents(
+  logs: any[],
+  factoryAddress: string,
+  dexName: string
+): DbLPPair[] {
   const pairs: DbLPPair[] = [];
 
   for (const log of logs) {
@@ -128,6 +132,7 @@ export async function scanAllFactories(
 
   for (let i = 0; i < KNOWN_FACTORIES.length; i++) {
     const factory = KNOWN_FACTORIES[i];
+    if (!factory) continue;
 
     if (factory.status !== "ACTIVE") {
       console.log(`[LP Detection] Skipping ${factory.name} (status: ${factory.status})`);
@@ -140,11 +145,7 @@ export async function scanAllFactories(
       console.log(`[LP Detection] Scanning ${factory.name} factory...`);
 
       // Fetch events from factory (from deploy block to latest)
-      const events = await fetchPairCreatedEvents(
-        factory.address,
-        factory.deployBlock,
-        "latest"
-      );
+      const events = await fetchPairCreatedEvents(factory.address, factory.deployBlock, "latest");
 
       console.log(`[LP Detection] Found ${events.length} PairCreated events for ${factory.name}`);
 

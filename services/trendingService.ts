@@ -46,8 +46,17 @@ export async function logSearchQuery(
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      console.warn("[Trending] Failed to log search:", error.error || response.statusText);
+      // Silently skip logging in development if API doesn't exist
+      if (response.status === 404) {
+        return false;
+      }
+      // Try to parse error message, but don't fail if it's not JSON
+      try {
+        const error = await response.json();
+        console.warn("[Trending] Failed to log search:", error.error || response.statusText);
+      } catch {
+        console.warn("[Trending] Failed to log search:", response.statusText);
+      }
       return false;
     }
 

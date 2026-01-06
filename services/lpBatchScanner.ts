@@ -81,7 +81,10 @@ async function fetchEventsBatch(
       console.warn(`[Batch Scanner] API returned status ${data.status}: ${data.message}`);
       return [];
     } catch (error) {
-      console.error(`[Batch Scanner] Fetch attempt ${attempt + 1} failed for blocks ${fromBlock}-${toBlock}:`, error);
+      console.error(
+        `[Batch Scanner] Fetch attempt ${attempt + 1} failed for blocks ${fromBlock}-${toBlock}:`,
+        error
+      );
 
       if (attempt === retries - 1) {
         // Final attempt failed
@@ -133,7 +136,9 @@ async function scanBatch(
   endBlock: number
 ): Promise<{ pairs: DbLPPair[]; error?: ScanError }> {
   try {
-    console.log(`[Batch Scanner] Scanning blocks ${startBlock}-${endBlock} for ${config.factoryName}`);
+    console.log(
+      `[Batch Scanner] Scanning blocks ${startBlock}-${endBlock} for ${config.factoryName}`
+    );
 
     // Fetch events for this batch
     const events = await fetchEventsBatch(config.factoryAddress, startBlock, endBlock);
@@ -169,9 +174,7 @@ async function scanBatch(
 /**
  * Main batch scanning function for a single factory
  */
-export async function scanFactoryInBatches(
-  config: BatchScanConfig
-): Promise<BatchScanResult> {
+export async function scanFactoryInBatches(config: BatchScanConfig): Promise<BatchScanResult> {
   const startTime = Date.now();
   const errors: ScanError[] = [];
   let totalPairs = 0;
@@ -188,6 +191,7 @@ export async function scanFactoryInBatches(
   console.log(`[Batch Scanner] Batch size: ${config.batchSize} blocks`);
   console.log(`[Batch Scanner] Estimated batches: ${totalBatches}`);
 
+  // eslint-disable-next-line no-constant-condition -- Intentional infinite loop with break conditions inside
   while (true) {
     batchNumber++;
 
@@ -233,7 +237,9 @@ export async function scanFactoryInBatches(
     if (config.endBlock === "latest" && result.pairs.length === 0) {
       // Try a few more batches to confirm we're really at the end
       if (batchNumber >= 3) {
-        console.log(`[Batch Scanner] No events in last ${batchNumber} batches, assuming scan complete`);
+        console.log(
+          `[Batch Scanner] No events in last ${batchNumber} batches, assuming scan complete`
+        );
         break;
       }
     }
@@ -270,18 +276,20 @@ export async function scanMultipleFactories(
 ): Promise<BatchScanResult[]> {
   const results: BatchScanResult[] = [];
 
-  console.log(`[Batch Scanner] Scanning ${configs.length} factories with concurrency ${concurrency}`);
+  console.log(
+    `[Batch Scanner] Scanning ${configs.length} factories with concurrency ${concurrency}`
+  );
 
   // Process in batches
   for (let i = 0; i < configs.length; i += concurrency) {
     const batch = configs.slice(i, i + concurrency);
-    const batchResults = await Promise.all(
-      batch.map((config) => scanFactoryInBatches(config))
-    );
+    const batchResults = await Promise.all(batch.map((config) => scanFactoryInBatches(config)));
 
     results.push(...batchResults);
 
-    console.log(`[Batch Scanner] Completed ${Math.min(i + concurrency, configs.length)}/${configs.length} factories`);
+    console.log(
+      `[Batch Scanner] Completed ${Math.min(i + concurrency, configs.length)}/${configs.length} factories`
+    );
   }
 
   return results;

@@ -11,6 +11,7 @@ import {
   Sparkles,
   Send,
   ShieldAlert,
+  ExternalLink,
 } from "lucide-react";
 import { Wallet, Transaction, AssetType } from "../types";
 import { createWalletChatSystemInstruction, sendChatToAI } from "../services/geminiService";
@@ -351,6 +352,15 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
               >
                 {copied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
               </button>
+              <a
+                href={`https://explorer.dogechain.dog/address/${wallet.address}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-500 hover:text-white transition-colors"
+                title="View on Blockscout"
+              >
+                <ExternalLink size={14} />
+              </a>
             </div>
           </div>
           <button
@@ -550,9 +560,13 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   </div>
                 ) : (
                   paginatedTransactions.map((tx) => (
-                    <div
+                    <a
                       key={tx.hash}
-                      className="p-4 rounded-lg bg-space-900 border border-space-700 flex justify-between items-center gap-2 min-w-0 hover:border-space-600 transition-colors"
+                      href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block p-4 rounded-lg bg-space-900 border border-space-700 flex justify-between items-center gap-2 min-w-0 hover:border-space-600 hover:border-blue-500/50 transition-colors group"
+                      title="View transaction on Blockscout"
                     >
                       <div>
                         <div
@@ -564,17 +578,23 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                           {new Date(tx.timestamp).toLocaleDateString()}
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-sm font-mono text-white truncate">
-                          {tx.value.toLocaleString(undefined, {
-                            maximumFractionDigits: isNFT ? 0 : 4,
-                          })}
+                      <div className="text-right flex items-center gap-2">
+                        <div>
+                          <div className="text-sm font-mono text-white truncate">
+                            {tx.value.toLocaleString(undefined, {
+                              maximumFractionDigits: isNFT ? 0 : 4,
+                            })}
+                          </div>
+                          <div className="text-[10px] text-slate-500">
+                            {isNFT ? "NFTs" : tx.tokenSymbol || tokenSymbol}
+                          </div>
                         </div>
-                        <div className="text-[10px] text-slate-500">
-                          {isNFT ? "NFTs" : tx.tokenSymbol || tokenSymbol}
-                        </div>
+                        <ExternalLink
+                          size={14}
+                          className="text-slate-500 group-hover:text-blue-400 transition-colors flex-shrink-0"
+                        />
                       </div>
-                    </div>
+                    </a>
                   ))
                 )}
               </div>

@@ -38,7 +38,7 @@ const getCachedMetadata = (address: string) => {
     if (!cacheRaw) return null;
     const cache = JSON.parse(cacheRaw);
     return cache[address.toLowerCase()];
-  } catch {
+  } catch (e) {
     return null;
   }
 };
@@ -52,7 +52,7 @@ const saveMetadataToCache = (
     const cache = cacheRaw ? JSON.parse(cacheRaw) : {};
     cache[address.toLowerCase()] = { ...data, timestamp: Date.now() };
     localStorage.setItem("doge_token_metadata_cache_v2", JSON.stringify(cache));
-  } catch {
+  } catch (e) {
     console.warn("Failed to save token metadata", e);
   }
 };
@@ -93,6 +93,7 @@ import {
   ScanLine,
   CircleDollarSign,
   Shield,
+  ExternalLink,
 } from "lucide-react";
 
 interface RecentSearch {
@@ -578,7 +579,7 @@ const App: React.FC = () => {
         url.searchParams.set("view", newView.toLowerCase());
       }
       window.history.pushState({}, "", url);
-    } catch {
+    } catch (e) {
       // console.debug('History pushState disabled in this environment');
     }
   };
@@ -730,7 +731,7 @@ const App: React.FC = () => {
 
             return [...currentWallets, userWallet];
           }
-        } catch {
+        } catch (e) {
           console.warn("Failed to inject user wallet", e);
         }
       }
@@ -835,6 +836,17 @@ const App: React.FC = () => {
       // Fetch Data (Live)
       const result = await fetchTokenHolders(tokenData);
 
+      // DIAGNOSTIC: Check labeled wallets in result
+      const labeledInResult = result.wallets.filter((w) => w.label);
+      console.log(
+        `[App.tsx] fetchTokenHolders returned ${result.wallets.length} wallets, ${labeledInResult.length} with labels`
+      );
+      if (labeledInResult.length > 0) {
+        labeledInResult.forEach((w) =>
+          console.log(`[App.tsx] Labeled: ${w.address} - "${w.label}"`)
+        );
+      }
+
       let finalWallets = result.wallets;
 
       // Inject User if connected
@@ -862,7 +874,7 @@ const App: React.FC = () => {
         newUrl.searchParams.set("type", typeToUse);
         newUrl.searchParams.set("view", "analysis");
         window.history.pushState({}, "", newUrl);
-      } catch {
+      } catch (e) {
         /* ignore */
       }
 
@@ -1040,13 +1052,13 @@ const App: React.FC = () => {
         let bal = 0;
         try {
           bal = await fetchTokenBalance(userAddress, meta.address, meta.decimals);
-        } catch {
+        } catch (e) {
           bal = 0;
         }
         const enriched = { ...meta, totalSupply: meta.totalSupply || 0, holderCount: bal };
         if (meta.type === AssetType.NFT) nfts.push(enriched);
         else tokens.push(enriched);
-      } catch {
+      } catch (e) {
         console.warn("Forced contract fetch failed", contract, e);
       }
     }
@@ -1180,7 +1192,7 @@ const App: React.FC = () => {
           `Scan complete: ${result.tokens.length} tokens, ${result.nfts.length} NFTs (${Math.floor(result.metadata.duration / 1000)}s)`,
           "info"
         );
-      } catch {
+      } catch (e) {
         // Handle scan cancellation
         if (e instanceof Error && e.message === "Scan cancelled") {
           addToast("Scan cancelled", "info");
@@ -1239,7 +1251,7 @@ const App: React.FC = () => {
     // Clear cache and do a fresh scan
     try {
       db.walletScanCache.delete(userAddress.toLowerCase());
-    } catch {
+    } catch (e) {
       console.warn("Failed to clear cache:", e);
     }
     scanWalletAssets(userAddress, true); // Force refresh (bypasses cache)
@@ -1307,7 +1319,7 @@ const App: React.FC = () => {
               symbol = metadata.symbol;
               name = metadata.name;
             }
-          } catch {
+          } catch (e) {
             console.warn("Failed to fetch metadata from transfers:", e);
           }
 
@@ -1405,7 +1417,7 @@ const App: React.FC = () => {
         const wDogeAddress = "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101";
         initialVal = await fetchTokenBalance(wallet.address, wDogeAddress);
       }
-    } catch {
+    } catch (e) {
       console.warn("Failed to fetch initial alert balance");
     }
 
@@ -1446,7 +1458,7 @@ const App: React.FC = () => {
           tokenInfo = { symbol: fetchedToken.symbol, name: fetchedToken.name };
         }
         initialVal = await fetchTokenBalance(data.walletAddress, data.tokenAddress);
-      } catch {
+      } catch (e) {
         console.warn("Could not fetch token info for alert", e);
       }
     } else {
@@ -1460,7 +1472,7 @@ const App: React.FC = () => {
     try {
       const transactions = await fetchWalletTransactions(data.walletAddress, data.tokenAddress);
       initialTxs = transactions.map((tx) => tx.hash);
-    } catch {
+    } catch (e) {
       console.warn("Could not fetch initial transactions", e);
     }
 
@@ -1522,7 +1534,7 @@ const App: React.FC = () => {
           if (fetchedToken) {
             tokenInfo = { symbol: fetchedToken.symbol, name: fetchedToken.name };
           }
-        } catch {
+        } catch (e) {
           console.warn("Could not fetch token info for alert", e);
         }
       } else if (!data.tokenAddress) {
@@ -1545,7 +1557,7 @@ const App: React.FC = () => {
         try {
           const transactions = await fetchWalletTransactions(data.walletAddress, data.tokenAddress);
           initialTxs = transactions.map((tx) => tx.hash);
-        } catch {
+        } catch (e) {
           console.warn("Could not fetch initial transactions", e);
         }
       } else {
@@ -1820,7 +1832,12 @@ const App: React.FC = () => {
                     <p className="text-amber-200/90">
                       Scanning takes <strong>5-8 minutes</strong>. May find slightly different
                       counts than explorer due to: transfers vs current holdings, timing
-                      differences, and API rate limits. Use manual add below for missing contracts.
+                      differences, and API rate limits.
+                    </p>
+                    <p className="text-amber-200/90 mt-2">
+                      <strong>More tokens and NFTs may appear than what you currently hold</strong>,
+                      as the scanner may detect tokens and NFTs you&apos;ve held in the past. Use
+                      manual add below for missing contracts.
                     </p>
                   </div>
 
@@ -2050,7 +2067,9 @@ const App: React.FC = () => {
                         <span className="flex items-center gap-1">
                           <Users size={14} /> Holders Tracked
                         </span>
-                        <span className="text-[10px] bg-space-800 px-1.5 py-0.5 rounded">Live</span>
+                        <span className="text-[10px] bg-green-500 text-white px-1.5 py-0.5 rounded live-badge-pulse">
+                          Live
+                        </span>
                       </div>
                       <div className="text-xl font-bold text-white">
                         {wallets.length.toLocaleString()}
@@ -2130,11 +2149,34 @@ const App: React.FC = () => {
                                 {w.address.slice(0, 6)}...{w.address.slice(-4)}
                               </span>
                             </div>
-                            <span
-                              className={`${token.type === AssetType.NFT ? "text-purple-400" : "text-doge-500"} font-bold text-xs`}
-                            >
-                              {w.percentage.toFixed(1)}%
-                            </span>
+                            <div className="flex items-center gap-2">
+                              <span
+                                className={`${token.type === AssetType.NFT ? "text-purple-400" : "text-doge-500"} font-bold text-xs`}
+                              >
+                                {w.percentage.toFixed(1)}%
+                              </span>
+                              <a
+                                href={`https://explorer.dogechain.dog/address/${w.address}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-slate-500 hover:text-white transition-colors p-1 rounded hover:bg-space-600"
+                                title="View on Blockscout"
+                                onClick={(e) => e.stopPropagation()}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter" || e.key === " ") {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                    window.open(
+                                      `https://explorer.dogechain.dog/address/${w.address}`,
+                                      "_blank",
+                                      "noopener,noreferrer"
+                                    );
+                                  }
+                                }}
+                              >
+                                <ExternalLink size={12} />
+                              </a>
+                            </div>
                           </div>
                         );
                       })}

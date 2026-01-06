@@ -22,10 +22,12 @@
   "dependencies": {
     "@google/genai": "^1.30.0",
     "@sentry/react": "^10.32.1",
+    "@types/html2canvas": "^0.5.35",
     "@vercel/analytics": "^1.6.1",
     "@vercel/postgres": "^0.10.0",
     "d3": "^7.9.0",
     "dexie": "^4.2.1",
+    "html2canvas": "^1.4.1",
     "jszip": "^3.10.1",
     "lucide-react": "^0.554.0",
     "react": "^19.2.0",

@@ -9,12 +9,17 @@
 
 import type { ScanCheckpoint, ScanPhase, ScanProgress } from "./scanProgress";
 import type { DiscoveredFactory } from "../utils/discoverFactories";
-import type { DbLPPair, DbDiscoveredFactory } from "./db";
 import type { BatchScanResult } from "./lpBatchScanner";
-import { loadCheckpoint, saveCheckpoint, clearCheckpoints, buildScanProgress, validateCheckpoint } from "./scanProgress";
+import {
+  loadCheckpoint,
+  saveCheckpoint,
+  clearCheckpoints,
+  buildScanProgress,
+  validateCheckpoint,
+} from "./scanProgress";
 import { loadAllLPPairs } from "./db";
-import { scanFactoryInBatches, scanMultipleFactories, validateLPPairs, saveLPPairsInBatches } from "./lpBatchScanner";
-import { getActiveDiscoveredFactories, loadDiscoveredFactories, saveLPPairs } from "./db";
+import { scanMultipleFactories, validateLPPairs } from "./lpBatchScanner";
+import { getActiveDiscoveredFactories } from "./db";
 
 export interface ComprehensiveScanConfig {
   startFromBlock?: number; // For factory discovery (default: 0)
@@ -43,7 +48,7 @@ export interface ComprehensiveScanResult {
  */
 async function phase1FactoryDiscovery(
   config: ComprehensiveScanConfig,
-  checkpoint?: ScanCheckpoint
+  _checkpoint?: ScanCheckpoint
 ): Promise<{ factories: DiscoveredFactory[]; checkpoint: ScanCheckpoint }> {
   config.onLog?.("[Phase 1] Starting factory discovery...");
   config.onPhaseChange?.("factory_discovery");
@@ -51,7 +56,7 @@ async function phase1FactoryDiscovery(
   const { runFactoryDiscoveryWithCheckpoint } = await import("../utils/discoverFactories");
 
   const result = await runFactoryDiscoveryWithCheckpoint(
-    (message, progress) => {
+    (message, _progress) => {
       config.onProgress?.(
         buildScanProgress({
           phase: "factory_discovery",
@@ -122,7 +127,6 @@ async function phase2LPScanning(
 
   // Calculate totals
   const totalPairs = results.reduce((sum, r) => sum + r.totalPairs, 0);
-  const totalErrors = results.reduce((sum, r) => sum + r.errors.length, 0);
 
   config.onLog?.(`[Phase 2] ✅ Discovered ${totalPairs} LP pairs from ${results.length} factories`);
 
@@ -232,8 +236,12 @@ export async function runComprehensiveScan(
     const existingCheckpoint = await loadCheckpoint();
 
     if (existingCheckpoint) {
-      config.onLog?.(`Found checkpoint from ${new Date(existingCheckpoint.lastUpdated).toLocaleString()}`);
-      config.onLog?.(`Phase: ${existingCheckpoint.phase}, Block: ${existingCheckpoint.currentBlock.toLocaleString()}`);
+      config.onLog?.(
+        `Found checkpoint from ${new Date(existingCheckpoint.lastUpdated).toLocaleString()}`
+      );
+      config.onLog?.(
+        `Phase: ${existingCheckpoint.phase}, Block: ${existingCheckpoint.currentBlock.toLocaleString()}`
+      );
 
       if (!validateCheckpoint(existingCheckpoint)) {
         config.onLog?.("⚠️ Checkpoint validation failed. Starting fresh...");

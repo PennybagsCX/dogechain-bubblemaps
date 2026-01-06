@@ -32,6 +32,7 @@ interface BubbleMapProps {
   width?: number; // Optional now, used for initial override only
   height?: number; // Optional now
   targetWalletId?: string | null; // New: ID of wallet to zoom to
+  onRemoveLink?: (link: Link) => void; // New: handler for removing connections
 }
 
 export const BubbleMap: React.FC<BubbleMapProps> = ({
@@ -43,6 +44,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   width: initialWidth,
   height: initialHeight,
   targetWalletId,
+  onRemoveLink,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -420,13 +422,102 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .enter()
       .append("path")
       .attr("stroke", "url(#veinGradient)")
-      .attr("stroke-width", 2)
+      .attr("stroke-width", 3)
       .attr("fill", "none")
-      .attr("opacity", 0.5)
+      .attr("opacity", 0.6)
       .attr("stroke-dasharray", "4, 4")
       .attr("class", "neural-vein")
-      .style("pointer-events", "none")
+      .style("pointer-events", "stroke")
+      .style("cursor", "pointer")
+      .attr("role", "button")
+      .attr("aria-label", (d: LinkDatum) => `Connection. Click to remove.`)
       .style("display", showLinks ? "block" : "none");
+
+    // Create X icon overlays (hidden by default, shown on hover)
+    const linkGroup = g.select(".links");
+
+    linkSelection.each((d: LinkDatum, i: number, nodes: any[]) => {
+      const path = d3.select(nodes[i]);
+
+      // Create X icon group (positioned at link midpoint)
+      const iconGroup = linkGroup
+        .append("g")
+        .attr("class", "link-delete-icon")
+        .style("pointer-events", "none")
+        .style("opacity", "0")
+        .style("display", "none");
+
+      // Red circle background
+      iconGroup
+        .append("circle")
+        .attr("r", 10)
+        .attr("fill", "#ef4444")
+        .attr("stroke", "#ffffff")
+        .attr("stroke-width", 2);
+
+      // X mark
+      iconGroup
+        .append("path")
+        .attr("d", "M -4 -4 L 4 4 M -4 4 L 4 -4")
+        .attr("stroke", "#ffffff")
+        .attr("stroke-width", 2)
+        .attr("stroke-linecap", "round");
+
+      // Store reference on the path element for hover handlers
+      path.datum({ ...d, iconGroup });
+    });
+
+    // Link click and hover handlers
+    linkSelection
+      .on("click", (event: any, d: LinkDatum) => {
+        event.stopPropagation();
+
+        if (!onRemoveLink) return;
+
+        const linkToRemove: Link = {
+          source: (d.source as any).id || d.source,
+          target: (d.target as any).id || d.target,
+          value: d.value,
+        };
+
+        onRemoveLink(linkToRemove);
+      })
+      .on("mouseover", function (event: any, d: LinkDatum) {
+        // Show X icon at midpoint
+        const iconGroup = (d as any).iconGroup;
+        if (iconGroup) {
+          const source = d.source as any;
+          const target = d.target as any;
+
+          // Calculate midpoint
+          const midX = (source.x + target.x) / 2;
+          const midY = (source.y + target.y) / 2;
+
+          iconGroup
+            .attr("transform", `translate(${midX}, ${midY})`)
+            .style("display", "block")
+            .transition()
+            .duration(150)
+            .style("opacity", "1");
+        }
+
+        // Subtle highlight on the link itself
+        d3.select(this).transition().duration(150).attr("stroke-width", 4).attr("opacity", 0.8);
+      })
+      .on("mouseout", function (event: any, d: LinkDatum) {
+        // Hide X icon
+        const iconGroup = (d as any).iconGroup;
+        if (iconGroup) {
+          iconGroup
+            .transition()
+            .duration(150)
+            .style("opacity", "0")
+            .on("end", () => iconGroup.style("display", "none"));
+        }
+
+        // Restore link appearance
+        d3.select(this).transition().duration(150).attr("stroke-width", 3).attr("opacity", 0.6);
+      });
 
     // --- RENDER: NODES ---
     const nodeGroup = g.append("g").attr("class", "nodes");
@@ -609,6 +700,19 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         const target = d.target as NodeDatum;
         return `M${source.x},${source.y} L${target.x},${target.y}`;
       });
+
+      // Update X icon positions
+      linkSelection.each((d: LinkDatum) => {
+        const iconGroup = (d as any).iconGroup;
+        if (iconGroup) {
+          const source = d.source as NodeDatum;
+          const target = d.target as NodeDatum;
+          const midX = (source.x + target.x) / 2;
+          const midY = (source.y + target.y) / 2;
+          iconGroup.attr("transform", `translate(${midX}, ${midY})`);
+        }
+      });
+
       nodeSelection.attr("cx", (d: NodeDatum) => d.x).attr("cy", (d: NodeDatum) => d.y);
       rankSelection
         .attr("x", (d: NodeDatum) => d.x)
@@ -829,8 +933,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       <style>
         {`
           @keyframes flow { 0% { stroke-dashoffset: 16; } 100% { stroke-dashoffset: 0; } }
-          .neural-vein { animation: flow 1s linear infinite; }
+          .neural-vein { animation: flow 1s linear infinite; transition: stroke-width 0.15s ease, opacity 0.15s ease; cursor: pointer; }
           .neural-vein.active { animation: flow 0.2s linear infinite; }
+          .link-delete-icon { transition: opacity 0.15s ease; }
           @keyframes pulse-gold { 0% { stroke-width: 3px; opacity: 1; } 50% { stroke-width: 6px; opacity: 0.7; } 100% { stroke-width: 3px; opacity: 1; } }
           .user-node { stroke: #fbbf24 !important; animation: pulse-gold 2s infinite; }
           /* Disable default focus ring (we highlight via .node-selected only) */

@@ -8,6 +8,7 @@
  * import('./utils/lpDetectionInit').then(m => m.initializeLPDetectionFromConsole())
  */
 
+/* eslint-disable no-console */
 import { initializeLPDetection, loadAllLPPairs } from "../services/lpDetection";
 import { clearOldLPPairs } from "../services/db";
 

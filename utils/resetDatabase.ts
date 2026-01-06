@@ -5,6 +5,7 @@
  * when you encounter schema errors or corruption.
  */
 
+/* eslint-disable no-console */
 export async function resetDatabaseFromConsole(): Promise<void> {
   console.log("=== Database Reset ===");
   console.log("This will delete all local data and recreate the database.");

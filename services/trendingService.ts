@@ -90,7 +90,6 @@ export async function getTrendingAssets(
 
     // Handle 404 gracefully - API endpoint doesn't exist
     if (response.status === 404) {
-      console.log("[Trending] Server endpoint not available, using local trending only");
       return [];
     }
 
@@ -101,17 +100,13 @@ export async function getTrendingAssets(
     // Validate content type before parsing JSON
     const contentType = response.headers.get("content-type");
     if (!contentType?.includes("application/json")) {
-      console.warn("[Trending] Server returned non-JSON response, using local trending");
       return [];
     }
 
     const data: TrendingApiResponse = await response.json();
     return data.assets || [];
-  } catch (error) {
-    // Only log if not a 404 or JSON error (expected in development)
-    if (!(error instanceof TypeError) || !error.message.includes("JSON")) {
-      console.warn("[Trending] Server fetch failed, falling back to local trending:", error);
-    }
+  } catch {
+    // Silently fall back to local trending
     return [];
   }
 }
@@ -143,8 +138,8 @@ export async function getTrendingAssetsWithFallback<T extends { hits: number }>(
         hits: Math.round(asset.velocityScore),
       })) as unknown as T[];
     }
-  } catch (error) {
-    console.warn("[Trending] Server fetch failed, using local trending");
+  } catch {
+    // Silently fall back to local trending
   }
 
   // Fallback to local trending

@@ -24,8 +24,9 @@ import {
 } from "./db";
 
 // Using proxy to avoid SSL certificate issues with Arc Browser for iOS
-const EXPLORER_API_V1 = "/api/dogechain-proxy";
-const EXPLORER_API_V2 = "/api/dogechain-proxy";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "";
+const EXPLORER_API_V1 = `${API_BASE}/api/dogechain-proxy`;
+const EXPLORER_API_V2 = `${API_BASE}/api/dogechain-proxy`;
 const METADATA_CACHE_KEY = "doge_token_metadata_cache_v2";
 // Note: DISABLE_WALLET_ENDPOINTS removed - using fetchWalletAssetsHybrid instead
 

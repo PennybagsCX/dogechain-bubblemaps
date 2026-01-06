@@ -3,6 +3,9 @@
  * Handles communication with trending aggregation API
  */
 
+// Get API base URL from environment variable
+const getApiBaseUrl = () => import.meta.env.VITE_API_BASE_URL || "";
+
 export interface TrendingAsset {
   address: string;
   symbol: string | null;
@@ -39,7 +42,8 @@ export async function logSearchQuery(
   name?: string
 ): Promise<boolean> {
   try {
-    const response = await fetch("/api/trending/log", {
+    const apiBase = getApiBaseUrl();
+    const response = await fetch(`${apiBase}/api/trending/log`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ address, assetType, symbol, name }),
@@ -81,7 +85,8 @@ export async function getTrendingAssets(
   limit: number = 20
 ): Promise<TrendingAsset[]> {
   try {
-    const response = await fetch(`/api/trending?type=${type}&limit=${limit}&cache=true`);
+    const apiBase = getApiBaseUrl();
+    const response = await fetch(`${apiBase}/api/trending?type=${type}&limit=${limit}&cache=true`);
 
     // Handle 404 gracefully - API endpoint doesn't exist
     if (response.status === 404) {

@@ -21,9 +21,9 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       host: "0.0.0.0",
       proxy: {
-        // Proxy API requests to the production deployment during development
-        "/api/dogechain-proxy": {
-          target: "https://www.dogechain-bubblemaps.xyz",
+        // Proxy all API requests to the backend deployment during development
+        "/api": {
+          target: "https://dogechain-bubblemaps-api.vercel.app",
           changeOrigin: true,
           rewrite: (path) => path,
         },

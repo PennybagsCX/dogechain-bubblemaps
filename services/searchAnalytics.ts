@@ -82,7 +82,6 @@ export async function trackSearch(
 
     // Skip tracking if no results (not a useful search event)
     if (results.length === 0) {
-      console.log(`[Analytics] Skipped tracking search with no results: "${query}"`);
       return;
     }
 
@@ -96,11 +95,9 @@ export async function trackSearch(
     await saveSearchEventLocally(event);
 
     // Send to server (async, non-blocking)
-    sendSearchEventToServer(event).catch((error) => {
-      console.warn("[Analytics] Failed to send search event to server:", error);
+    sendSearchEventToServer(event).catch((_err) => {
+      // Silently fail if server is unavailable
     });
-
-    console.log(`[Analytics] Tracked search: "${query}" (${results.length} results)`);
   } catch (error) {
     console.error("[Analytics] Failed to track search:", error);
   }
@@ -145,11 +142,9 @@ export async function trackResultClick(
     await saveClickEventLocally(event);
 
     // Send to server (async, non-blocking)
-    sendClickEventToServer(event).catch((error) => {
-      console.warn("[Analytics] Failed to send click event to server:", error);
+    sendClickEventToServer(event).catch((_err) => {
+      // Silently fail if server is unavailable
     });
-
-    console.log(`[Analytics] Tracked click: ${clickedAddress} (rank ${resultRank})`);
   } catch (error) {
     console.error("[Analytics] Failed to track click:", error);
   }
@@ -169,8 +164,7 @@ export async function trackSearchAbandonment(
 ): Promise<void> {
   try {
     // Abandonment is implied by lack of clicks
-    // Just log locally, no need to send to server
-    console.log(`[Analytics] Search abandoned: "${query}" (${resultsShown} results, no clicks)`);
+    // Tracking is implicit - no action needed
   } catch (error) {
     console.error("[Analytics] Failed to track abandonment:", error);
   }
@@ -236,34 +230,26 @@ async function saveClickEventLocally(event: ClickAnalyticsEvent): Promise<void> 
  * Send search event to server
  */
 async function sendSearchEventToServer(event: SearchAnalyticsEvent): Promise<void> {
-  try {
-    // Construct full URL for analytics endpoint
-    const apiBase = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "";
-    const apiEndpoint = apiBase ? `${apiBase}/api/analytics/search` : "/api/analytics/search";
+  // Construct full URL for analytics endpoint
+  const apiBase = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "";
+  const apiEndpoint = apiBase ? `${apiBase}/api/analytics/search` : "/api/analytics/search";
 
-    const response = await fetch(apiEndpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        sessionId: event.sessionId,
-        query: event.query,
-        results: event.results,
-        resultCount: event.resultCount,
-        timestamp: event.timestamp,
-      }),
-    });
+  const response = await fetch(apiEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      sessionId: event.sessionId,
+      query: event.query,
+      results: event.results,
+      resultCount: event.resultCount,
+      timestamp: event.timestamp,
+    }),
+  });
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-    }
-
-    console.log(`[Analytics] Search event sent to server: "${event.query}"`);
-  } catch (error) {
-    // Silent fail - analytics shouldn't break search
-    console.warn("[Analytics] Server unavailable, search event not sent");
-    throw error;
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
   }
 }
 
@@ -271,34 +257,27 @@ async function sendSearchEventToServer(event: SearchAnalyticsEvent): Promise<voi
  * Send click event to server
  */
 async function sendClickEventToServer(event: ClickAnalyticsEvent): Promise<void> {
-  try {
-    const apiBase = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "";
-    const apiEndpoint = apiBase ? `${apiBase}/api/analytics/click` : "/api/analytics/click";
+  const apiBase = import.meta.env.VITE_ANALYTICS_API_ENDPOINT || "";
+  const apiEndpoint = apiBase ? `${apiBase}/api/analytics/click` : "/api/analytics/click";
 
-    const response = await fetch(apiEndpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        sessionId: event.sessionId,
-        query: event.query,
-        clickedAddress: event.clickedAddress,
-        resultRank: event.resultRank,
-        resultScore: event.resultScore,
-        timeToClickMs: event.timeToClickMs,
-        timestamp: event.timestamp,
-      }),
-    });
+  const response = await fetch(apiEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      sessionId: event.sessionId,
+      query: event.query,
+      clickedAddress: event.clickedAddress,
+      resultRank: event.resultRank,
+      resultScore: event.resultScore,
+      timeToClickMs: event.timeToClickMs,
+      timestamp: event.timestamp,
+    }),
+  });
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-    }
-
-    console.log(`[Analytics] Click event sent to server: ${event.clickedAddress}`);
-  } catch (error) {
-    console.warn("[Analytics] Server unavailable, click event not sent");
-    throw error;
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
   }
 }
 
@@ -382,8 +361,6 @@ export function initializeAnalytics(): void {
   try {
     // Generate session ID
     getSessionId();
-
-    console.log("[Analytics] Initialized with session:", currentSession?.sessionId);
   } catch (error) {
     console.error("[Analytics] Failed to initialize:", error);
   }
@@ -394,14 +371,7 @@ export function initializeAnalytics(): void {
  */
 export function cleanupAnalytics(): void {
   try {
-    if (currentSession) {
-      console.log("[Analytics] Session ended:", {
-        sessionId: currentSession.sessionId,
-        duration: Date.now() - currentSession.startTime,
-        searches: currentSession.searchCount,
-        clicks: currentSession.clickCount,
-      });
-    }
+    // Session data is automatically cleaned up
   } catch (error) {
     console.error("[Analytics] Failed to cleanup:", error);
   }

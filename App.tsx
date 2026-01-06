@@ -55,8 +55,8 @@ const saveMetadataToCache = (
     const cache = cacheRaw ? JSON.parse(cacheRaw) : {};
     cache[address.toLowerCase()] = { ...data, timestamp: Date.now() };
     localStorage.setItem("doge_token_metadata_cache_v2", JSON.stringify(cache));
-  } catch (_e) {
-    console.warn("Failed to save token metadata");
+  } catch {
+    // Silently fail if localStorage is unavailable
   }
 };
 import {

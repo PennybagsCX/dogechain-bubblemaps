@@ -26,7 +26,6 @@ async function initializeSearchWorker(): Promise<boolean> {
       // Create worker from external file using Vite's worker import
       searchWorker = new SearchWorkerInstance({ type: "module" });
 
-      console.log("[Token Search] Worker initialized successfully");
       return true;
     } catch (error) {
       console.warn("[Token Search] Worker initialization failed:", error);
@@ -46,7 +45,6 @@ export function terminateSearchWorker(): void {
     searchWorker.terminate();
     searchWorker = null;
     workerInitializationPromise = null;
-    console.log("[Token Search] Worker terminated");
   }
 }
 

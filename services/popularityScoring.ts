@@ -75,8 +75,8 @@ export async function getPopularityBoost(tokenAddress: string): Promise<number> 
 
     // No popularity data
     return 0;
-  } catch (error) {
-    console.warn("[Popularity] Failed to get popularity boost:", error);
+  } catch {
+    // Silently fail if popularity data is unavailable
     return 0;
   }
 }
@@ -150,8 +150,8 @@ export async function getPopularityBatch(tokenAddresses: string[]): Promise<Map<
     }
 
     return boosts;
-  } catch (error) {
-    console.warn("[Popularity] Batch fetch failed:", error);
+  } catch {
+    // Silently fail if batch fetch fails
     return new Map(tokenAddresses.map((addr) => [addr.toLowerCase(), 0]));
   }
 }
@@ -186,8 +186,8 @@ export async function updateTokenPopularity(
     }
 
     // Send to server (async, non-blocking)
-    sendPopularityUpdate(normalized, appearedInResults, wasClicked).catch((error) => {
-      console.warn("[Popularity] Failed to send update to server:", error);
+    sendPopularityUpdate(normalized, appearedInResults, wasClicked).catch((_err) => {
+      // Silently fail if server is unavailable
     });
 
     // Update IndexedDB
@@ -228,7 +228,7 @@ async function fetchPopularityFromServer(
 
     const data: Record<string, TokenPopularity> = await response.json();
     return data;
-  } catch (error) {
+  } catch {
     // Silent fail - popularity scoring is optional enhancement
     return null;
   }
@@ -299,8 +299,8 @@ async function getPopularityFromDB(tokenAddress: string): Promise<TokenPopularit
       lastSearched: data.lastSearched || null,
       lastClicked: data.lastClicked || null,
     };
-  } catch (error) {
-    console.warn("[Popularity] Failed to get from DB:", error);
+  } catch {
+    // Silently fail if DB is unavailable
     return null;
   }
 }
@@ -347,8 +347,8 @@ async function updatePopularityInDB(
         updatedAt: Date.now(),
       });
     }
-  } catch (error) {
-    console.warn("[Popularity] Failed to update DB:", error);
+  } catch {
+    // Silently fail if DB update fails
   }
 }
 
@@ -365,9 +365,7 @@ export async function clearExpiredPopularityCache(): Promise<void> {
 
     const now = Date.now();
     await db.tokenPopularity.where("expiresAt").below(now).delete();
-
-    console.log("[Popularity] Cleared expired cache entries");
-  } catch (error) {
-    console.warn("[Popularity] Failed to clear cache:", error);
+  } catch {
+    // Silently fail if cache clear fails
   }
 }

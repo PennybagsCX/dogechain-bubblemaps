@@ -456,7 +456,7 @@ export async function searchTokensLocally(
     const sortedResults = Array.from(resultsMap.values())
       .sort((a, b) => b.score - a.score)
       .slice(0, limit)
-      .map(({ score, ...rest }) => rest); // Remove score from final result
+      .map(({ score: _score, ...rest }) => rest); // Remove score from final result
 
     // Cache results for future searches
     setCachedSearchResults(query, type, sortedResults);
@@ -726,7 +726,7 @@ export async function generatePhoneticSuggestions(
     return suggestions
       .sort((a, b) => b.score - a.score)
       .slice(0, limit)
-      .map(({ score, ...rest }) => rest);
+      .map(({ score: _score, ...rest }) => rest);
   } catch (error) {
     console.error("[Token Search] Failed to generate phonetic suggestions:", error);
     return [];
@@ -911,7 +911,7 @@ async function searchExactMatches(
       }
     }
 
-    return results.map(({ score, ...rest }) => rest);
+    return results.map(({ score: _score, ...rest }) => rest);
   } catch (error) {
     console.error("[Progressive Search] Stage 1 failed:", error);
     return [];

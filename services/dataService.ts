@@ -36,7 +36,7 @@ const getCachedMetadata = (address: string) => {
     if (!cacheRaw) return null;
     const cache = JSON.parse(cacheRaw);
     return cache[address.toLowerCase()];
-  } catch (e) {
+  } catch {
     return null;
   }
 };
@@ -70,7 +70,7 @@ export const detectContractType = async (address: string): Promise<AssetType | n
           if (rawType?.includes("20")) return AssetType.TOKEN;
         }
       }
-    } catch (e) {
+    } catch {
       /* ignore */
     }
 
@@ -83,7 +83,7 @@ export const detectContractType = async (address: string): Promise<AssetType | n
         if (typeField?.includes("721") || typeField?.includes("1155")) return AssetType.NFT;
         if (typeField?.includes("20")) return AssetType.TOKEN;
       }
-    } catch (e) {
+    } catch {
       /* ignore */
     }
 
@@ -135,7 +135,7 @@ export const detectContractType = async (address: string): Promise<AssetType | n
           }
         }
       }
-    } catch (e) {
+    } catch {
       /* ignore */
     }
 
@@ -162,7 +162,7 @@ export const detectContractType = async (address: string): Promise<AssetType | n
     }
 
     return null;
-  } catch (e) {
+  } catch {
     return null;
   }
 };
@@ -176,7 +176,7 @@ const saveMetadataToCache = (
     const cache = cacheRaw ? JSON.parse(cacheRaw) : {};
     cache[address.toLowerCase()] = { ...data, timestamp: Date.now() };
     localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(cache));
-  } catch (e) {
+  } catch {
     console.warn("Failed to save token metadata", e);
   }
 };
@@ -317,7 +317,7 @@ const resolveKnownLabel = async (
     } else {
       console.log(`[LP Detection] ✗ Not an LP pair: ${lowerAddr}`);
     }
-  } catch (e) {
+  } catch {
     // Silently fail - don't break existing functionality
     console.error(`[LP Detection] Error checking ${lowerAddr}:`, e);
   }
@@ -335,7 +335,7 @@ const checkContractVerification = async (address: string): Promise<boolean> => {
       return true;
     }
     return false;
-  } catch (e) {
+  } catch {
     return false;
   }
 };
@@ -361,7 +361,7 @@ export const fetchMetadataFromTransfers = async (
       }
     }
     return null;
-  } catch (e) {
+  } catch {
     console.warn("fetchMetadataFromTransfers failed:", e);
     return null;
   }
@@ -390,7 +390,7 @@ const fetchMetadataFromTokenList = async (
       }
     }
     return null;
-  } catch (e) {
+  } catch {
     console.warn("fetchMetadataFromTokenList failed:", e);
     return null;
   }
@@ -431,7 +431,7 @@ export const fetchTokenData = async (
         localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(cache));
         cached = null;
       }
-    } catch (e) {
+    } catch {
       console.warn("Failed to clear stale cache", e);
     }
   }
@@ -486,7 +486,7 @@ export const fetchTokenData = async (
       if (v1Data.status === "1" || (v1Data.result && !isNaN(parseFloat(v1Data.result)))) {
         totalSupply = parseBalance(v1Data.result, finalDecimals);
       }
-    } catch (e) {
+    } catch {
       // ignore supply failure
     }
 
@@ -701,7 +701,7 @@ export const fetchTokenHolders = async (
             }
           });
         }
-      } catch (e) {
+      } catch {
         // ignore
       }
     }
@@ -734,7 +734,7 @@ export const fetchTokenHolders = async (
     }
 
     return { wallets: walletsToShow, links };
-  } catch (e) {
+  } catch {
     console.warn("V1 holder endpoint failed for", cleanAddress);
     return { wallets: [], links: [] };
   }
@@ -794,7 +794,7 @@ export const fetchWalletTransactions = async (
             if (detectedType === AssetType.NFT) {
               nftContracts.add(contract);
             }
-          } catch (e) {
+          } catch {
             // On detection failure, include transaction to avoid false negatives
             console.warn(`Failed to detect type for ${contract}, including transaction`);
             nftContracts.add(contract);
@@ -915,7 +915,7 @@ export const fetchTokenBalance = async (
       return parseBalance(data.result, decimals);
     }
     return 0;
-  } catch (e) {
+  } catch {
     return 0;
   }
 };
@@ -966,7 +966,7 @@ export const scanWhaleContracts = async (
           }
         }
       }
-    } catch (e) {
+    } catch {
       console.warn(`[Whale Scan] Failed to scan whale ${whale}:`, e);
     }
   }
@@ -996,7 +996,7 @@ export const checkTokenBalance = async (
     }
 
     return { balance: "0", hasBalance: false };
-  } catch (e) {
+  } catch {
     console.warn(`Failed to check balance for ${contractAddress}:`, e);
     return { balance: "0", hasBalance: false };
   }
@@ -1052,7 +1052,7 @@ export const fetchWalletAssets = async (
           if (json.status === "1" && Array.isArray(json.result)) {
             return json.result as any[];
           }
-        } catch (e) {
+        } catch {
           // try next offset on 400/other failures
           continue;
         }
@@ -1071,7 +1071,7 @@ export const fetchWalletAssets = async (
           const json = await res.json();
           if (!Array.isArray(json?.items) || json.items.length === 0) break;
           collected.push(...json.items);
-        } catch (e) {
+        } catch {
           break;
         }
       }
@@ -1089,7 +1089,7 @@ export const fetchWalletAssets = async (
           const json = await res.json();
           if (!Array.isArray(json?.items) || json.items.length === 0) break;
           collected.push(...json.items);
-        } catch (e) {
+        } catch {
           break;
         }
       }
@@ -1143,7 +1143,7 @@ export const fetchWalletAssets = async (
             );
           });
           if (v1.length > 0) break;
-        } catch (e) {
+        } catch {
           break;
         }
       }
@@ -1159,7 +1159,7 @@ export const fetchWalletAssets = async (
       tokens: sortByHits(tokensMap),
       nfts: sortByHits(nftsMap),
     };
-  } catch (e) {
+  } catch {
     console.warn("fetchWalletAssets error", e);
     return { tokens: [], nfts: [] };
   }
@@ -1196,7 +1196,7 @@ export const fetchWalletAssetsHybrid = async (
           metadata: cached.scanMetadata,
         };
       }
-    } catch (e) {
+    } catch {
       console.warn("Failed to load cache, proceeding with scan", e);
     }
   }
@@ -1281,7 +1281,7 @@ export const fetchWalletAssetsHybrid = async (
           // Update progress (20% per phase)
           const phaseProgress = ((page - startPage + 1) / (maxPages - startPage + 1)) * 20;
           triggerProgress("deep-v2", Math.floor(phaseProgress), `Scanning V2 page ${page}...`);
-        } catch (e) {
+        } catch {
           console.warn(`V2 page ${page} failed:`, e);
           break;
         }
@@ -1306,7 +1306,7 @@ export const fetchWalletAssetsHybrid = async (
           if (json.status === "1" && Array.isArray(json.result)) {
             results.push(...json.result);
           }
-        } catch (e) {
+        } catch {
           console.warn(`V1 offset ${offset} failed:`, e);
           continue;
         }
@@ -1384,7 +1384,7 @@ export const fetchWalletAssetsHybrid = async (
           });
         }
       }
-    } catch (e) {
+    } catch {
       console.warn("V1 NFT probe failed:", e);
     }
 
@@ -1568,7 +1568,7 @@ export const fetchWalletAssetsHybrid = async (
           if (json.status === "1" && json.result && parseFloat(json.result) > 0) {
             // Keep assets with non-zero balance
           }
-        } catch (e) {
+        } catch {
           // Ignore balance check failures
         }
       }
@@ -1627,7 +1627,7 @@ export const fetchWalletAssetsHybrid = async (
                   lastSeenAt: Date.now(),
                 });
               }
-            } catch (e) {
+            } catch {
               console.warn(`Failed to detect type for whale contract ${contract}:`, e);
             }
           }
@@ -1700,6 +1700,10 @@ export const fetchWalletAssetsHybrid = async (
       // Continue anyway - this is an optional phase
     }
 
+    if (newAssetsFound > 0) {
+      console.log(`[Phase 5] Found ${newAssetsFound} new assets from whale wallets`);
+    }
+
     phasesCompleted.push("whale-scan");
 
     // --- PHASE 6: LP POOL DETECTION (5-10 seconds) ---
@@ -1749,7 +1753,7 @@ export const fetchWalletAssetsHybrid = async (
                     );
                   }
                 }
-              } catch (e) {
+              } catch {
                 // Continue on error - individual LP check failures shouldn't break the scan
                 console.error(`[LP Detection] Failed to check LP pair ${lpPair.pairAddress}:`, e);
               }
@@ -1776,7 +1780,7 @@ export const fetchWalletAssetsHybrid = async (
       } else {
         console.log("[LP Detection] LP detection is disabled via feature flag");
       }
-    } catch (e) {
+    } catch {
       console.error("[LP Detection] LP detection phase failed:", e);
       // Non-critical phase - continue anyway
     }
@@ -1814,7 +1818,7 @@ export const fetchWalletAssetsHybrid = async (
       nfts: finalNfts,
       metadata,
     };
-  } catch (e) {
+  } catch {
     if (e instanceof Error && e.message === "Scan cancelled") {
       throw e;
     }
@@ -1845,7 +1849,7 @@ export const findInteractions = async (
       });
     }
     return newLinks;
-  } catch (e) {
+  } catch {
     return [];
   }
 };

@@ -281,7 +281,7 @@ self.onmessage = async (event: MessageEvent<WorkerMessage>) => {
     const allResults = [...filteredResults, ...phoneticCandidates]
       .sort((a, b) => b.score - a.score)
       .slice(0, 20)
-      .map(({ score, ...rest }) => rest);
+      .map(({ score: _score, ...rest }) => rest);
 
     // Send final results
     postMessage({

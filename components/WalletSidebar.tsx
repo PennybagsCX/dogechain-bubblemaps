@@ -18,6 +18,7 @@ import { Wallet, Transaction, AssetType, Connection } from "../types";
 import { createWalletChatSystemInstruction, sendChatToAI } from "../services/geminiService";
 import { fetchWalletTransactions, fetchTokenBalance } from "../services/dataService";
 import { handleTouchStopPropagation } from "../utils/touchHandlers";
+import { ConnectionDetailsView } from "./ConnectionDetailsView";
 
 interface WalletSidebarProps {
   wallet: Wallet | null;
@@ -533,29 +534,25 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
         <div className="flex-1 overflow-y-auto p-5 space-y-5 overscroll-contain">
           {/* Connection Details View or Wallet Details */}
           {isConnectionView ? (
-            <div className="space-y-4">
-              <p className="text-sm text-slate-300">Connection details view</p>
-              <p className="text-xs text-slate-500">
-                Source:{" "}
-                {wallets.find(
-                  (w) =>
-                    w.id ===
-                    (typeof connection!.source === "string"
-                      ? connection!.source
-                      : connection!.source.id)
-                )?.address || "Unknown"}
-              </p>
-              <p className="text-xs text-slate-500">
-                Target:{" "}
-                {wallets.find(
-                  (w) =>
-                    w.id ===
-                    (typeof connection!.target === "string"
-                      ? connection!.target
-                      : connection!.target.id)
-                )?.address || "Unknown"}
-              </p>
-            </div>
+            <ConnectionDetailsView
+              connection={connection!}
+              sourceWallet={wallets.find(
+                (w) =>
+                  w.id ===
+                  (typeof connection!.source === "string"
+                    ? connection!.source
+                    : connection!.source.id)
+              )}
+              targetWallet={wallets.find(
+                (w) =>
+                  w.id ===
+                  (typeof connection!.target === "string"
+                    ? connection!.target
+                    : connection!.target.id)
+              )}
+              tokenSymbol={tokenSymbol}
+              tokenDecimals={tokenDecimals}
+            />
           ) : (
             <>
               {/* Quick Stats */}

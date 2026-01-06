@@ -32,3 +32,5 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
           working-directory: ./
+        env:
+          VITE_API_BASE_URL: https://dogechain-bubblemaps-api.vercel.app

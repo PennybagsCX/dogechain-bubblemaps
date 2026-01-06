@@ -6,8 +6,6 @@ import {
   searchTokensLocally as dbSearchTokensLocally,
 } from "./db";
 
-const BLOCKSCOUT_API = "https://explorer.dogechain.dog/api";
-
 /**
  * Debounce function to limit API calls
  */
@@ -192,10 +190,10 @@ export async function searchTokensBlockscout(
   if (!query || query.length < 2) return [];
 
   try {
-    // Try V2 API
-    const v2Url = `${BLOCKSCOUT_API}/v2/tokens?q=${encodeURIComponent(query)}`;
+    // Use the working endpoint: /tokens?type=JSON&query=SEARCH_TERM
+    const apiUrl = `https://explorer.dogechain.dog/tokens?type=JSON&query=${encodeURIComponent(query)}`;
 
-    const response = await fetch(v2Url);
+    const response = await fetch(apiUrl);
     if (!response.ok) {
       console.warn("[Token Search] Blockscout API request failed:", response.status);
       return [];
@@ -207,37 +205,63 @@ export async function searchTokensBlockscout(
       return [];
     }
 
-    // Filter by type and map to SearchResult
-    const results: SearchResult[] = data.items
-      .filter((item: any) => {
-        // Determine type from token data
-        const tokenType = item.type?.toString().toLowerCase() || "";
-        const isNFT = tokenType.includes("721") || tokenType.includes("1155");
-        const matchesType = type === AssetType.NFT ? isNFT : !isNFT;
+    // Parse HTML table rows to extract token data
+    const results: SearchResult[] = [];
 
-        return matchesType;
-      })
-      .slice(0, limit)
-      .map((item: any) => ({
-        address: item.address || item.hash,
-        name: item.name || "Unknown Token",
-        symbol: item.symbol || "UNKNOWN",
-        type: type,
-        source: "remote" as const,
-        decimals: item.decimals ? parseInt(item.decimals) : type === AssetType.NFT ? 0 : 18,
-      }));
+    for (const htmlRow of data.items) {
+      try {
+        // Extract token address from href="/token/0x..."
+        const addressMatch = htmlRow.match(/href="\/token\/(0x[a-fA-F0-9]+)"/);
+        if (!addressMatch) continue;
 
-    // Auto-save to local cache for future searches
-    for (const result of results) {
-      await saveTokenToSearchIndex({
-        address: result.address,
-        name: result.name,
-        symbol: result.symbol,
-        type: result.type,
-        source: "blockscout",
-        decimals: result.decimals || (type === AssetType.NFT ? 0 : 18),
-        indexedAt: Date.now(),
-      });
+        const address = addressMatch[1];
+
+        // Extract token name from <a href...>TOKEN_NAME</a>
+        const nameMatch = htmlRow.match(/<a[^>]*>([^<]+)<\/a>/);
+        const name = nameMatch ? nameMatch[1].trim() : "Unknown Token";
+
+        // Extract symbol from table cells (usually in the 3rd column)
+        const cells = htmlRow.match(/<td[^>]*>([^<]+)<\/td>/g);
+        let symbol = "UNKNOWN";
+
+        if (cells && cells.length >= 3) {
+          // Third cell usually contains the symbol
+          const symbolText = cells[2].replace(/<td[^>]*>|<\/td>/g, "").trim();
+          if (symbolText) symbol = symbolText;
+        }
+
+        // For now, assume all are TOKEN type (NFT detection would need additional API call)
+        const matchesType = type === AssetType.TOKEN;
+
+        if (matchesType) {
+          results.push({
+            address: address,
+            name: name,
+            symbol: symbol,
+            type: type,
+            source: "remote" as const,
+            decimals: 18, // Default to 18 for ERC20 tokens
+          });
+
+          // Auto-save to local cache
+          await saveTokenToSearchIndex({
+            address: address,
+            name: name,
+            symbol: symbol,
+            type: type,
+            source: "blockscout",
+            decimals: 18,
+            indexedAt: Date.now(),
+          });
+        }
+
+        // Stop if we've reached the limit
+        if (results.length >= limit) break;
+      } catch (parseError) {
+        // Skip rows that fail to parse
+        console.warn("[Token Search] Failed to parse token row:", parseError);
+        continue;
+      }
     }
 
     return results;

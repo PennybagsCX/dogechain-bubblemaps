@@ -1649,7 +1649,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-space-900 text-slate-100 font-sans selection:bg-purple-500 selection:text-white flex flex-col overflow-x-hidden">
+    <div className="h-[100dvh] bg-space-900 text-slate-100 font-sans selection:bg-purple-500 selection:text-white flex flex-col overflow-x-hidden overflow-hidden">
       <Analytics />
       <ToastContainer toasts={toasts} onClose={removeToast} />
 
@@ -2031,7 +2031,7 @@ const App: React.FC = () => {
         {view === ViewState.ANALYSIS && (
           <>
             {token ? (
-              <div className="flex h-[calc(100vh-64px)]">
+              <div className="flex h-[calc(100dvh-64px)] overflow-hidden">
                 {/* Sidebar Left (Stats) - Responsive Drawer for Mobile */}
                 <div
                   className={`
@@ -2173,7 +2173,7 @@ const App: React.FC = () => {
                                 href={`https://explorer.dogechain.dog/address/${w.address}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-slate-500 hover:text-white transition-colors p-2 rounded hover:bg-space-600 min-w-[44px] min-h-[44px] inline-flex items-center justify-center touch-manipulation"
+                                className="text-slate-500 hover:text-white transition-colors p-2 rounded hover:bg-space-600 min-w-[44px] min-h-[44px] inline-flex items-center justify-center [touch-action:manipulation]"
                                 title="View on Blockscout"
                                 onClick={(e) => e.stopPropagation()}
                                 onKeyDown={(e) => {

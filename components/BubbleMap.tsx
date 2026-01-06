@@ -414,12 +414,31 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     svg.on("click", handleBackgroundClick as any);
 
     // --- RENDER: CONNECTIONS ---
-    const linkSelection = g
-      .append("g")
-      .attr("class", "links")
-      .selectAll("path")
+    // Create wider invisible clickable areas for easier selection
+    const linkGroup = g.append("g").attr("class", "links");
+
+    const linkSelection = linkGroup
+      .selectAll("g.link-wrapper")
       .data(linksCopy)
       .enter()
+      .append("g")
+      .attr("class", "link-wrapper");
+
+    // Invisible wide path for easier clicking (the "hitbox")
+    linkSelection
+      .append("path")
+      .attr("class", "link-hitbox")
+      .attr("stroke", "transparent")
+      .attr("stroke-width", 20) // Wide invisible hitbox
+      .attr("fill", "none")
+      .attr("opacity", 0)
+      .style("cursor", "pointer")
+      .attr("role", "button")
+      .attr("aria-label", () => `Connection. Click to remove.`)
+      .style("display", showLinks ? "block" : "none");
+
+    // Visible path (the actual connection line)
+    linkSelection
       .append("path")
       .attr("stroke", "url(#veinGradient)")
       .attr("stroke-width", 3)
@@ -427,18 +446,25 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .attr("opacity", 0.6)
       .attr("stroke-dasharray", "4, 4")
       .attr("class", "neural-vein")
-      .style("pointer-events", "stroke")
-      .style("cursor", "pointer")
-      .attr("role", "button")
-      .attr("aria-label", () => `Connection. Click to remove.`)
+      .style("pointer-events", "none") // Let events pass through to hitbox
       .style("display", showLinks ? "block" : "none");
 
-    // Link click and hover handlers
+    // Get references to both hitbox and visible paths
+    const hitboxPaths = linkGroup.selectAll(".link-hitbox");
+    const visiblePaths = linkGroup.selectAll(".neural-vein");
+
+    // Link click and hover handlers on hitbox
     linkSelection
       .on("click", (event: any, d: LinkDatum) => {
         event.stopPropagation();
 
         if (!onRemoveLink) return;
+
+        // Stabilize simulation before removal to reduce violent movement
+        if (simulationRef.current) {
+          simulationRef.current.alphaTarget(0.3); // Quick settle
+          simulationRef.current.alpha(0.3);
+        }
 
         const linkToRemove: Link = {
           source: (d.source as any).id || d.source,
@@ -447,10 +473,22 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         };
 
         onRemoveLink(linkToRemove);
+
+        // Stabilize after removal
+        setTimeout(() => {
+          if (simulationRef.current) {
+            simulationRef.current.alphaTarget(0);
+          }
+        }, 300);
       })
       .on("mouseover", function (this: any) {
         // Turn connection solid red to indicate it can be deleted
-        d3.select(this)
+        // Update both hitbox (cursor) and visible path (appearance)
+        const wrapper = d3.select(this);
+        wrapper.select(".link-hitbox").style("cursor", "pointer");
+
+        wrapper
+          .select(".neural-vein")
           .style("animation-play-state", "paused") // Pause animation
           .transition()
           .duration(150)
@@ -463,6 +501,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .on("mouseout", function (this: any) {
         // Restore gradient appearance
         d3.select(this)
+          .select(".neural-vein")
           .transition()
           .duration(150)
           .attr("stroke", "url(#veinGradient)")
@@ -649,7 +688,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     // --- TICK ---
     simulation.on("tick", () => {
-      linkSelection.attr("d", (d: LinkDatum) => {
+      // Update both hitbox and visible paths
+      linkSelection.selectAll("path").attr("d", (d: LinkDatum) => {
         const source = d.source as NodeDatum;
         const target = d.target as NodeDatum;
         return `M${source.x},${source.y} L${target.x},${target.y}`;
@@ -1091,7 +1131,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               className="p-2 bg-space-800 border border-space-700 rounded-lg text-slate-200 hover:bg-space-700 transition-all"
               aria-label={areControlsOpen ? "Hide controls" : "Show controls"}
             >
-              <ChevronDown
+              <ChevronUp
                 size={18}
                 className={`transition-transform ${areControlsOpen ? "rotate-180" : ""}`}
               />

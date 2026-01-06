@@ -7,6 +7,7 @@ import { Dashboard } from "./components/Dashboard";
 import { Footer } from "./components/Footer";
 import { ToastContainer, ToastMessage, ToastType } from "./components/Toast";
 import { BlockchainBackground } from "./components/BlockchainBackground";
+import { TokenSearchInput } from "./components/TokenSearchInput";
 import {
   Token,
   Wallet,
@@ -347,6 +348,14 @@ const App: React.FC = () => {
 
         // Also deduplicate in database to prevent future issues
         await deduplicateRecentSearches();
+
+        // Initialize token search index
+        try {
+          const { initializeTokenSearchIndex } = await import("./services/tokenSearchService");
+          await initializeTokenSearchIndex();
+        } catch (error) {
+          console.error("[App] Failed to initialize token search index:", error);
+        }
 
         setDbLoaded(true);
       } catch (error) {
@@ -1741,29 +1750,14 @@ const App: React.FC = () => {
                 </div>
 
                 {/* Search Form - Simplified */}
-                <form onSubmit={handleSearch} className="relative">
-                  <div className="flex items-center bg-space-800 rounded-lg border border-space-700 overflow-hidden">
-                    <div className="pl-3 pr-2 text-slate-500">
-                      <Search size={18} />
-                    </div>
-                    <input
-                      type="text"
-                      placeholder={
-                        searchType === AssetType.NFT ? "Collection Address..." : "Token Address..."
-                      }
-                      className="flex-1 bg-transparent py-3 px-2 text-white placeholder-slate-500 text-base outline-none font-mono"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium disabled:opacity-50 transition-colors"
-                    >
-                      {loading ? <Loader2 className="animate-spin" size={16} /> : "Go"}
-                    </button>
-                  </div>
-                </form>
+                <TokenSearchInput
+                  searchType={searchType}
+                  onSearch={handleSearch}
+                  placeholder={
+                    searchType === AssetType.NFT ? "Search collections..." : "Search tokens..."
+                  }
+                  disabled={loading}
+                />
 
                 {/* Recent Searches - Wrapped (moved above scanner) */}
                 {recentSearches.length > 0 && (
@@ -2180,7 +2174,7 @@ const App: React.FC = () => {
                                 href={`https://explorer.dogechain.dog/address/${w.address}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-slate-500 hover:text-white transition-colors p-1 rounded hover:bg-space-600"
+                                className="text-slate-500 hover:text-white transition-colors p-2 rounded hover:bg-space-600 min-w-[44px] min-h-[44px] inline-flex items-center justify-center touch-manipulation"
                                 title="View on Blockscout"
                                 onClick={(e) => e.stopPropagation()}
                                 onKeyDown={(e) => {

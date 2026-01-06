@@ -449,13 +449,16 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         onRemoveLink(linkToRemove);
       })
       .on("mouseover", function (this: any) {
-        // Turn connection red to indicate it can be deleted
+        // Turn connection solid red to indicate it can be deleted
         d3.select(this)
+          .style("animation-play-state", "paused") // Pause animation
           .transition()
           .duration(150)
-          .attr("stroke", "#ef4444")
-          .attr("stroke-width", 4)
-          .attr("opacity", 1);
+          .attr("stroke", "#ef4444") // Red color
+          .attr("stroke-width", 6) // Thicker for easier clicking
+          .attr("stroke-dasharray", "none") // Solid line (not dashed)
+          .attr("opacity", 1)
+          .style("filter", "drop-shadow(0 0 8px rgba(239, 68, 68, 0.8))"); // Glow effect
       })
       .on("mouseout", function (this: any) {
         // Restore gradient appearance
@@ -464,7 +467,10 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           .duration(150)
           .attr("stroke", "url(#veinGradient)")
           .attr("stroke-width", 3)
-          .attr("opacity", 0.6);
+          .attr("stroke-dasharray", "4, 4") // Restore dashed animation
+          .attr("opacity", 0.6)
+          .style("filter", "none")
+          .style("animation-play-state", "running"); // Resume animation
       });
 
     // --- RENDER: NODES ---
@@ -649,18 +655,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         return `M${source.x},${source.y} L${target.x},${target.y}`;
       });
 
-      // Update X icon positions
-      linkSelection.each((d: LinkDatum) => {
-        const iconGroup = (d as any).iconGroup;
-        if (iconGroup) {
-          const source = d.source as NodeDatum;
-          const target = d.target as NodeDatum;
-          const midX = (source.x + target.x) / 2;
-          const midY = (source.y + target.y) / 2;
-          iconGroup.attr("transform", `translate(${midX}, ${midY})`);
-        }
-      });
-
       nodeSelection.attr("cx", (d: NodeDatum) => d.x).attr("cy", (d: NodeDatum) => d.y);
       rankSelection
         .attr("x", (d: NodeDatum) => d.x)
@@ -813,6 +807,23 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       bgRect.setAttribute("fill", "#0f0f1a");
       clone.insertBefore(bgRect, clone.firstChild);
 
+      // Inject font styles into the SVG to ensure proper rendering in canvas
+      const styleElement = document.createElementNS("http://www.w3.org/2000/svg", "style");
+      styleElement.textContent = `
+        text {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+        }
+        .rank-label {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+          font-weight: 800 !important;
+        }
+        .name-label {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+          font-weight: 700 !important;
+        }
+      `;
+      clone.insertBefore(styleElement, clone.firstChild);
+
       // Serialize SVG to string
       const serializer = new XMLSerializer();
       const svgString = serializer.serializeToString(clone);
@@ -881,9 +892,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       <style>
         {`
           @keyframes flow { 0% { stroke-dashoffset: 16; } 100% { stroke-dashoffset: 0; } }
-          .neural-vein { animation: flow 1s linear infinite; transition: stroke-width 0.15s ease, opacity 0.15s ease; cursor: pointer; }
+          .neural-vein { animation: flow 1s linear infinite; transition: stroke-width 0.15s ease, opacity 0.15s ease, stroke 0.15s ease; cursor: pointer; }
           .neural-vein.active { animation: flow 0.2s linear infinite; }
-          .link-delete-icon { transition: opacity 0.15s ease; }
           @keyframes pulse-gold { 0% { stroke-width: 3px; opacity: 1; } 50% { stroke-width: 6px; opacity: 0.7; } 100% { stroke-width: 3px; opacity: 1; } }
           .user-node { stroke: #fbbf24 !important; animation: pulse-gold 2s infinite; }
           /* Disable default focus ring (we highlight via .node-selected only) */

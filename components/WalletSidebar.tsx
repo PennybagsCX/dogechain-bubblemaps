@@ -356,7 +356,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                 href={`https://explorer.dogechain.dog/address/${wallet.address}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-500 hover:text-white transition-colors"
+                className="text-slate-500 hover:text-white transition-colors p-2 rounded hover:bg-space-600 min-w-[44px] min-h-[44px] inline-flex items-center justify-center touch-manipulation"
                 title="View on Blockscout"
               >
                 <ExternalLink size={14} />
@@ -565,7 +565,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                       href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block p-4 rounded-lg bg-space-900 border border-space-700 flex justify-between items-center gap-2 min-w-0 hover:border-space-600 hover:border-blue-500/50 transition-colors group"
+                      className="block p-4 rounded-lg bg-space-900 border border-space-700 flex justify-between items-center gap-2 min-w-0 hover:border-space-600 hover:border-blue-500/50 transition-colors group touch-manipulation"
                       title="View transaction on Blockscout"
                     >
                       <div>

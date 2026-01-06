@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import path from "path";
 import fs from "fs";
 import react from "@vitejs/plugin-react";
-import removeConsole from "vite-plugin-remove-console";
 
 export default defineConfig(({ mode }) => {
   const isProduction = mode === "production";
@@ -33,11 +32,7 @@ export default defineConfig(({ mode }) => {
     define: {
       __BETA_BUILD_NUMBER__: JSON.stringify(buildNumber),
     },
-    plugins: [
-      react(),
-      // SECURITY: Remove console.log in production builds
-      isProduction && removeConsole(),
-    ].filter(Boolean),
+    plugins: [react()].filter(Boolean),
     // SECURITY: Removed API key embedding to prevent exposure in client bundle
     // API keys should only be used server-side through a backend proxy
     resolve: {
@@ -46,6 +41,11 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
+      // SECURITY: Use esbuild to drop console statements in production
+      minify: "esbuild",
+      esbuild: {
+        drop: isProduction ? ["console", "debugger"] : [],
+      },
       // Split vendor code into separate chunks for better caching
       rollupOptions: {
         output: {

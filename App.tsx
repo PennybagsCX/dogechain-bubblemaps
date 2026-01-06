@@ -881,9 +881,6 @@ const App: React.FC = () => {
       // Fetch Data (Live)
       const result = await fetchTokenHolders(tokenData);
 
-      // DIAGNOSTIC: Check labeled wallets in result
-      const _labeledInResult = result.wallets.filter((w) => w.label);
-
       let finalWallets = result.wallets;
 
       // Inject User if connected

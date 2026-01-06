@@ -637,7 +637,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               value: d.value,
             };
 
-            onConnectionClickRef.current(link);
+            onConnectionClickRef.current?.(link);
           } else {
             // First tap: Highlight the connection
             // Clear other highlights

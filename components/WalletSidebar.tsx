@@ -536,10 +536,24 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
             <div className="space-y-4">
               <p className="text-sm text-slate-300">Connection details view</p>
               <p className="text-xs text-slate-500">
-                Source: {wallets.find((w) => w.id === (typeof connection!.source === "string" ? connection!.source : connection!.source.id))?.address || "Unknown"}
+                Source:{" "}
+                {wallets.find(
+                  (w) =>
+                    w.id ===
+                    (typeof connection!.source === "string"
+                      ? connection!.source
+                      : connection!.source.id)
+                )?.address || "Unknown"}
               </p>
               <p className="text-xs text-slate-500">
-                Target: {wallets.find((w) => w.id === (typeof connection!.target === "string" ? connection!.target : connection!.target.id))?.address || "Unknown"}
+                Target:{" "}
+                {wallets.find(
+                  (w) =>
+                    w.id ===
+                    (typeof connection!.target === "string"
+                      ? connection!.target
+                      : connection!.target.id)
+                )?.address || "Unknown"}
               </p>
             </div>
           ) : (

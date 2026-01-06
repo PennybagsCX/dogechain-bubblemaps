@@ -1,0 +1,7 @@
+# Console logs and debug output
+console.md
+*.log
+
+# Build outputs
+dist/
+build/

@@ -82,7 +82,9 @@ export function getWhaleWallet(address: string): WhaleWalletEntry | undefined {
 /**
  * Add community-suggested wallet
  */
-export function addWhaleWallet(entry: Omit<WhaleWalletEntry, "discoveredAt" | "lastVerified" | "transactionCount">): void {
+export function addWhaleWallet(
+  entry: Omit<WhaleWalletEntry, "discoveredAt" | "lastVerified" | "transactionCount">
+): void {
   whaleWalletRegistry.set(entry.address.toLowerCase(), {
     ...entry,
     discoveredAt: Date.now(),

@@ -430,42 +430,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .style("pointer-events", "stroke")
       .style("cursor", "pointer")
       .attr("role", "button")
-      .attr("aria-label", (d: LinkDatum) => `Connection. Click to remove.`)
+      .attr("aria-label", () => `Connection. Click to remove.`)
       .style("display", showLinks ? "block" : "none");
-
-    // Create X icon overlays (hidden by default, shown on hover)
-    const linkGroup = g.select(".links");
-
-    linkSelection.each((d: LinkDatum, i: number, nodes: any[]) => {
-      const path = d3.select(nodes[i]);
-
-      // Create X icon group (positioned at link midpoint)
-      const iconGroup = linkGroup
-        .append("g")
-        .attr("class", "link-delete-icon")
-        .style("pointer-events", "none")
-        .style("opacity", "0")
-        .style("display", "none");
-
-      // Red circle background
-      iconGroup
-        .append("circle")
-        .attr("r", 10)
-        .attr("fill", "#ef4444")
-        .attr("stroke", "#ffffff")
-        .attr("stroke-width", 2);
-
-      // X mark
-      iconGroup
-        .append("path")
-        .attr("d", "M -4 -4 L 4 4 M -4 4 L 4 -4")
-        .attr("stroke", "#ffffff")
-        .attr("stroke-width", 2)
-        .attr("stroke-linecap", "round");
-
-      // Store reference on the path element for hover handlers
-      path.datum({ ...d, iconGroup });
-    });
 
     // Link click and hover handlers
     linkSelection
@@ -482,41 +448,23 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
         onRemoveLink(linkToRemove);
       })
-      .on("mouseover", function (event: any, d: LinkDatum) {
-        // Show X icon at midpoint
-        const iconGroup = (d as any).iconGroup;
-        if (iconGroup) {
-          const source = d.source as any;
-          const target = d.target as any;
-
-          // Calculate midpoint
-          const midX = (source.x + target.x) / 2;
-          const midY = (source.y + target.y) / 2;
-
-          iconGroup
-            .attr("transform", `translate(${midX}, ${midY})`)
-            .style("display", "block")
-            .transition()
-            .duration(150)
-            .style("opacity", "1");
-        }
-
-        // Subtle highlight on the link itself
-        d3.select(this).transition().duration(150).attr("stroke-width", 4).attr("opacity", 0.8);
+      .on("mouseover", function (this: any) {
+        // Turn connection red to indicate it can be deleted
+        d3.select(this)
+          .transition()
+          .duration(150)
+          .attr("stroke", "#ef4444")
+          .attr("stroke-width", 4)
+          .attr("opacity", 1);
       })
-      .on("mouseout", function (event: any, d: LinkDatum) {
-        // Hide X icon
-        const iconGroup = (d as any).iconGroup;
-        if (iconGroup) {
-          iconGroup
-            .transition()
-            .duration(150)
-            .style("opacity", "0")
-            .on("end", () => iconGroup.style("display", "none"));
-        }
-
-        // Restore link appearance
-        d3.select(this).transition().duration(150).attr("stroke-width", 3).attr("opacity", 0.6);
+      .on("mouseout", function (this: any) {
+        // Restore gradient appearance
+        d3.select(this)
+          .transition()
+          .duration(150)
+          .attr("stroke", "url(#veinGradient)")
+          .attr("stroke-width", 3)
+          .attr("opacity", 0.6);
       });
 
     // --- RENDER: NODES ---

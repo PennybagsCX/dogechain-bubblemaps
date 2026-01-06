@@ -70,7 +70,6 @@ import {
   loadScanCache,
 } from "./services/db";
 import {
-  Search,
   Loader2,
   Users,
   Layers,
@@ -1752,7 +1751,7 @@ const App: React.FC = () => {
                 {/* Search Form - Simplified */}
                 <TokenSearchInput
                   searchType={searchType}
-                  onSearch={handleSearch}
+                  onSearch={(address, type) => handleSearch(undefined, address, type)}
                   placeholder={
                     searchType === AssetType.NFT ? "Search collections..." : "Search tokens..."
                   }

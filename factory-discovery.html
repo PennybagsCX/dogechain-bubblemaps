@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEX Factory Discovery - Dogechain</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        h1 {
+            color: #fbbf24;
+        }
+        .container {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #fbbf24;
+            color: #1a1a1a;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #f59e0b;
+        }
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        #log {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 15px;
+            height: 400px;
+            overflow-y: auto;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        .log-entry {
+            margin: 4px 0;
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+        .log-info {
+            color: #60a5fa;
+        }
+        .log-success {
+            color: #4ade80;
+            background: rgba(74, 222, 128, 0.1);
+        }
+        .log-warning {
+            color: #fbbf24;
+            background: rgba(251, 191, 36, 0.1);
+        }
+        .log-error {
+            color: #f87171;
+            background: rgba(248, 113, 113, 0.1);
+        }
+        .progress {
+            width: 100%;
+            height: 30px;
+            background: #333;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+        th {
+            background: #333;
+            color: #fbbf24;
+        }
+        tr:hover {
+            background: #333;
+        }
+        #results {
+            display: none;
+        }
+        code {
+            background: #333;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 DEX Factory Discovery - Dogechain</h1>
+
+    <div class="container">
+        <h2>Discovery Tools</h2>
+        <p>This tool scans the entire Dogechain blockchain for DEX factory contracts.</p>
+
+        <button id="discoverBtn" onclick="startDiscovery()">
+            🚀 Start Factory Discovery
+        </button>
+
+        <button onclick="clearLog()">
+            🗑️ Clear Log
+        </button>
+
+        <div class="progress">
+            <div id="progressBar" class="progress-bar" style="width: 0%">0%</div>
+        </div>
+
+        <div id="status" style="margin-top: 10px; color: #9ca3af;"></div>
+    </div>
+
+    <div class="container">
+        <h3>Log Output</h3>
+        <div id="log"></div>
+    </div>
+
+    <div id="results" class="container">
+        <h2>Discovered Factories</h2>
+        <table id="factoryTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Factory Address</th>
+                    <th>Pairs Created</th>
+                    <th>First Block</th>
+                    <th>Last Block</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <h3>Generated Code</h3>
+        <p>Copy this code and add to <code>/services/knownFactories.ts</code>:</p>
+        <pre id="generatedCode" style="background: #0a0a0a; padding: 15px; border-radius: 6px; overflow-x: auto;"></pre>
+    </div>
+
+    <script type="module">
+        const EXPLORER_API_V1 = "https://explorer.dogechain.dog/api";
+        const PAIR_CREATED_EVENT_SIGNATURE = "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9";
+
+        let isRunning = false;
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function updateProgress(percent, message) {
+            const progressBar = document.getElementById('progressBar');
+            const status = document.getElementById('status');
+            progressBar.style.width = `${percent}%`;
+            progressBar.textContent = `${percent}%`;
+            status.textContent = message;
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        async function fetchPairCreatedEvents(fromBlock, toBlock, onProgress) {
+            const allEvents = [];
+            let currentBlock = fromBlock;
+            const BLOCK_BATCH_SIZE = 10000;
+
+            while (true) {
+                try {
+                    const endBlock = toBlock === 'latest'
+                        ? Math.min(currentBlock + BLOCK_BATCH_SIZE, 999999999)
+                        : Math.min(currentBlock + BLOCK_BATCH_SIZE, toBlock);
+
+                    const url = `${EXPLORER_API_V1}?module=logs&action=getLogs&topic0=${PAIR_CREATED_EVENT_SIGNATURE}&fromBlock=${currentBlock}&toBlock=${endBlock}`;
+
+                    const response = await fetch(url);
+                    const data = await response.json();
+
+                    if (data.status === "1" && data.result && Array.isArray(data.result)) {
+                        allEvents.push(...data.result);
+                        log(`Fetched ${data.result.length} events from blocks ${currentBlock}-${endBlock}`, 'info');
+
+                        // Update progress
+                        const percent = Math.min(90, Math.floor((endBlock / 10000000) * 100));
+                        onProgress(percent, `Scanning blocks ${currentBlock}-${endBlock}...`);
+
+                        if (data.result.length < 1000) {
+                            break;
+                        }
+
+                        currentBlock = endBlock + 1;
+
+                        if (typeof toBlock === 'number' && currentBlock > toBlock) {
+                            break;
+                        }
+
+                        // Small delay to avoid overwhelming the API
+                        await new Promise(resolve => setTimeout(resolve, 200));
+                    } else {
+                        break;
+                    }
+                } catch (error) {
+                    log(`Failed to fetch blocks ${currentBlock}-${endBlock}: ${error.message}`, 'error');
+                    break;
+                }
+            }
+
+            return allEvents;
+        }
+
+        function extractPairAddressFromEvent(event) {
+            try {
+                if (event.data && event.data.length >= 66) {
+                    return "0x" + event.data.slice(26, 66);
+                }
+                return null;
+            } catch {
+                return null;
+            }
+        }
+
+        async function startDiscovery() {
+            if (isRunning) {
+                log('Discovery already running...', 'warning');
+                return;
+            }
+
+            isRunning = true;
+            document.getElementById('discoverBtn').disabled = true;
+            clearLog();
+
+            log('=== Starting Comprehensive Factory Discovery ===', 'info');
+            log('This will scan the entire Dogechain blockchain...', 'info');
+            log('Please be patient - this may take several minutes!', 'warning');
+
+            try {
+                updateProgress(0, 'Initializing...');
+
+                const events = await fetchPairCreatedEvents(0, 'latest', (percent, message) => {
+                    updateProgress(percent, message);
+                });
+
+                log(`Found ${events.length} PairCreated events total`, 'success');
+
+                if (events.length === 0) {
+                    log('No PairCreated events found!', 'warning');
+                    return;
+                }
+
+                updateProgress(91, 'Processing events...');
+
+                // Extract unique factories
+                const factoryMap = new Map();
+
+                for (const event of events) {
+                    try {
+                        const factoryAddress = event.address;
+                        const blockNumber = parseInt(event.blockNumber, 16);
+
+                        if (!factoryMap.has(factoryAddress)) {
+                            factoryMap.set(factoryAddress, {
+                                address: factoryAddress,
+                                pairCount: 1,
+                                firstPairBlock: blockNumber,
+                                lastPairBlock: blockNumber,
+                                samplePairs: []
+                            });
+                        } else {
+                            const factory = factoryMap.get(factoryAddress);
+                            factory.pairCount++;
+                            factory.lastPairBlock = Math.max(factory.lastPairBlock, blockNumber);
+                            factory.firstPairBlock = Math.min(factory.firstPairBlock, blockNumber);
+
+                            if (factory.samplePairs.length < 5) {
+                                const pairAddress = extractPairAddressFromEvent(event);
+                                if (pairAddress) {
+                                    factory.samplePairs.push(pairAddress);
+                                }
+                            }
+                        }
+                    } catch (e) {
+                        log(`Failed to process event: ${e.message}`, 'error');
+                    }
+                }
+
+                const factories = Array.from(factoryMap.values());
+                factories.sort((a, b) => b.pairCount - a.pairCount);
+
+                updateProgress(95, 'Displaying results...');
+
+                // Display results
+                displayResults(factories);
+
+                updateProgress(100, 'Discovery complete!');
+                log(`✅ Discovery complete! Found ${factories.length} unique factories`, 'success');
+                log('', 'info');
+
+                // Log summary to console
+                log('=== Factory Summary ===', 'info');
+                factories.forEach((factory, index) => {
+                    log(`${index + 1}. ${factory.address}`, 'info');
+                    log(`   Pairs: ${factory.pairCount} | First: ${factory.firstPairBlock} | Last: ${factory.lastPairBlock}`, 'info');
+                });
+
+                document.getElementById('results').style.display = 'block';
+
+            } catch (error) {
+                log(`Discovery failed: ${error.message}`, 'error');
+                console.error(error);
+            } finally {
+                isRunning = false;
+                document.getElementById('discoverBtn').disabled = false;
+            }
+        }
+
+        function displayResults(factories) {
+            const tbody = document.querySelector('#factoryTable tbody');
+            tbody.innerHTML = '';
+
+            factories.forEach((factory, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td><code>${factory.address}</code></td>
+                    <td>${factory.pairCount}</td>
+                    <td>${factory.firstPairBlock.toLocaleString()}</td>
+                    <td>${factory.lastPairBlock.toLocaleString()}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Generate code
+            let code = "// Discovered DEX Factories on Dogechain\n";
+            code += "// Add these to KNOWN_FACTORIES in /services/knownFactories.ts\n\n";
+
+            factories.forEach((factory, index) => {
+                const name = index === 0 ? "ChewySwap" :
+                           index === 1 ? "QuickSwap" :
+                           `DEX ${index + 1}`;
+
+                code += `{\n`;
+                code += `  address: "${factory.address}",\n`;
+                code += `  name: "${name}", // TODO: Verify actual name with getFactoryName()\n`;
+                code += `  type: "UNISWAP_V2",\n`;
+                code += `  initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",\n`;
+                code += `  deployBlock: ${factory.firstPairBlock},\n`;
+                code += `  status: "ACTIVE",\n`;
+                code += `  description: "Discovered factory with ${factory.pairCount} pairs"\n`;
+                code += `},\n\n`;
+            });
+
+            document.getElementById('generatedCode').textContent = code;
+        }
+
+        // Expose functions globally
+        window.startDiscovery = startDiscovery;
+        window.clearLog = clearLog;
+
+        log('Factory Discovery Tool loaded!', 'success');
+        log('Click "Start Factory Discovery" to begin scanning...', 'info');
+    </script>
+</body>
+</html>

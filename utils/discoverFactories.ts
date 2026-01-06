@@ -131,7 +131,7 @@ async function fetchPairCreatedEvents(fromBlock: number, toBlock: number | strin
   let shouldContinue = true;
 
   while (shouldContinue) {
-    let endBlock: number;
+    let endBlock: number = currentBlock; // Initialize with default value
     try {
       endBlock =
         toBlock === "latest"
@@ -341,7 +341,7 @@ export async function runFactoryDiscovery(
  */
 export async function discoverAllFactoriesWithCheckpoint(
   fromBlock: number = 0,
-  toBlock: number | string = "latest",
+  _toBlock: number | string = "latest",
   onProgress?: (message: string, progress: number) => void,
   checkpoint?: ScanCheckpoint
 ): Promise<{ factories: DiscoveredFactory[]; checkpoint: ScanCheckpoint }> {

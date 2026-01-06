@@ -87,7 +87,7 @@ export interface AlertStatus {
 
 // Wallet Scanner Types
 export interface ScanProgressUpdate {
-  phase: "quick" | "deep-v2" | "deep-v1" | "balance-check" | "whale-scan";
+  phase: "quick" | "deep-v2" | "deep-v1" | "balance-check" | "whale-scan" | "lp-detection";
   progress: number; // 0-100
   tokens: Token[];
   nfts: Token[];

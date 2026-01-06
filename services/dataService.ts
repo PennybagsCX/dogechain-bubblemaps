@@ -1739,6 +1739,7 @@ export const fetchWalletAssetsHybrid = async (
                       name: `${lpPair.dexName} LP`,
                       decimals: 18, // LP tokens always 18 decimals
                       type: AssetType.TOKEN,
+                      totalSupply: 0, // LP pairs don't have a fixed total supply
                       hits: 1,
                     });
 

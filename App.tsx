@@ -185,6 +185,7 @@ const App: React.FC = () => {
       | "deep-v1"
       | "balance-check"
       | "whale-scan"
+      | "lp-detection"
       | "complete"
       | "error";
     progress: number; // 0-100

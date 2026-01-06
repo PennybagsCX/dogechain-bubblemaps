@@ -120,7 +120,7 @@ export async function getTrendingAssetsWithFallback<T extends { hits: number }>(
         address: asset.address,
         type: asset.type,
         hits: Math.round(asset.velocityScore),
-      })) as T[];
+      })) as unknown as T[];
     }
   } catch (error) {
     console.warn("[Trending] Server fetch failed, using local trending");

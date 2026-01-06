@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEX Factory Discovery V2 - Dogechain</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        h1 { color: #fbbf24; }
+        .container {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #fbbf24;
+            color: #1a1a1a;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover { background: #f59e0b; }
+        button:disabled { background: #666; cursor: not-allowed; }
+        #log {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 15px;
+            height: 400px;
+            overflow-y: auto;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        .log-entry { margin: 4px 0; padding: 4px 8px; border-radius: 3px; }
+        .log-info { color: #60a5fa; }
+        .log-success { color: #4ade80; background: rgba(74, 222, 128, 0.1); }
+        .log-warning { color: #fbbf24; background: rgba(251, 191, 36, 0.1); }
+        .log-error { color: #f87171; background: rgba(248, 113, 113, 0.1); }
+        .progress {
+            width: 100%; height: 30px; background: #333;
+            border-radius: 15px; overflow: hidden; margin: 10px 0;
+        }
+        .progress-bar {
+            height: 100%; background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            transition: width 0.3s; display: flex; align-items: center;
+            justify-content: center; font-weight: bold; color: #1a1a1a;
+        }
+        table {
+            width: 100%; border-collapse: collapse; margin: 20px 0;
+        }
+        th, td {
+            padding: 10px; text-align: left; border-bottom: 1px solid #444;
+        }
+        th { background: #333; color: #fbbf24; }
+        tr:hover { background: #333; }
+        input[type="text"] {
+            width: 100%; padding: 10px;
+            background: #0a0a0a; border: 1px solid #444;
+            border-radius: 4px; color: #e0e0e0; font-family: inherit;
+            margin: 5px 0;
+        }
+        code {
+            background: #333; padding: 2px 6px;
+            border-radius: 3px; font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 DEX Factory Discovery V2 - Dogechain</h1>
+
+    <div class="container">
+        <h2>Discovery Methods</h2>
+        <p><strong>Method 1:</strong> Query known LP pairs to find their factories</p>
+        <p><strong>Method 2:</strong> Search top tokens for their pairs</p>
+
+        <div style="margin: 20px 0;">
+            <label><strong>Enter Known Pair Addresses (one per line):</strong></label>
+            <textarea id="pairAddresses" rows="6" placeholder="0xc2b089efd7255046f899082a864be9361413aae6
+0xc1c10b8beec82e840990a2c60a54ccdb39b2153f">0xc2b089efd7255046f899082a864be9361413aae6
+0xc1c10b8beec82e840990a2c60a54ccdb39b2153f</textarea>
+        </div>
+
+        <button id="discoverBtn" onclick="startDiscovery()">🚀 Discover Factories from Pairs</button>
+        <button onclick="clearLog()">🗑️ Clear Log</button>
+        <button onclick="testAPI()">🧪 Test API</button>
+
+        <div class="progress">
+            <div id="progressBar" class="progress-bar" style="width: 0%">0%</div>
+        </div>
+        <div id="status" style="margin-top: 10px; color: #9ca3af;"></div>
+    </div>
+
+    <div class="container">
+        <h3>Log Output</h3>
+        <div id="log"></div>
+    </div>
+
+    <div id="results" class="container" style="display:none;">
+        <h2>Discovered Factories</h2>
+        <table id="factoryTable">
+            <thead>
+                <tr>
+                    <th>Factory Address</th>
+                    <th>Source</th>
+                    <th>Pair Count</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <h3>Generated Code</h3>
+        <p>Copy this code and add to <code>/services/knownFactories.ts</code>:</p>
+        <pre id="generatedCode" style="background: #0a0a0a; padding: 15px; border-radius: 6px; overflow-x: auto;"></pre>
+    </div>
+
+    <script type="module">
+        const EXPLORER_API_V1 = "https://explorer.dogechain.dog/api";
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function updateProgress(percent, message) {
+            document.getElementById('progressBar').style.width = `${percent}%`;
+            document.getElementById('progressBar').textContent = `${percent}%`;
+            document.getElementById('status').textContent = message;
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        // Test if API is accessible
+        async function testAPI() {
+            clearLog();
+            log('Testing Dogechain Explorer API...', 'info');
+
+            try {
+                // Test 1: Get token holders (should work)
+                const url1 = `${EXPLORER_API_V1}?module=account&action=tokenbalance&contractaddress=0x7b4328c127b85369d9f82ca0503b000d09cf9180&address=0x000000000000000000000000000000000000dead`;
+                log(`Test URL: ${url1}`, 'info');
+
+                const response1 = await fetch(url1);
+                const data1 = await response1.json();
+                log(`Test 1 Response: ${JSON.stringify(data1).substring(0, 100)}...`, 'success');
+
+                // Test 2: Get contract source code
+                const url2 = `${EXPLORER_API_V1}?module=contract&action=getsourcecode&address=0xC3550497E591Ac6ed7a7E03ffC711CfB7412E57F`;
+                log(`Test URL: ${url2}`, 'info');
+
+                const response2 = await fetch(url2);
+                const data2 = await response2.json();
+                log(`Test 2 Response: ${JSON.stringify(data2).substring(0, 150)}...`, 'success');
+
+            } catch (error) {
+                log(`API Test Failed: ${error.message}`, 'error');
+            }
+        }
+
+        // Get factory address from a pair contract
+        async function getFactoryFromPair(pairAddress) {
+            try {
+                // Method 1: Try to call factory() method on pair contract
+                const rpcUrl = 'https://rpc.dogechain.dog';
+                const payload = {
+                    jsonrpc: "2.0",
+                    method: "eth_call",
+                    params: [{
+                        to: pairAddress,
+                        data: "0xc45a0155" // factory() method signature
+                    }, "latest"],
+                    id: 1
+                };
+
+                const response = await fetch(rpcUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (data.result && data.result !== "0x") {
+                    // Extract address from result
+                    const factoryAddress = "0x" + data.result.slice(26, 66);
+                    return factoryAddress;
+                }
+
+                return null;
+            } catch (error) {
+                log(`Failed to get factory from ${pairAddress}: ${error.message}`, 'error');
+                return null;
+            }
+        }
+
+        // Alternative: Search token transactions for swap patterns
+        async function findPairsForToken(tokenAddress) {
+            try {
+                const url = `${EXPLORER_API_V1}?module=account&action=tokentx&contractaddress=${tokenAddress}&page=1&offset=100`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.status === "1" && data.result) {
+                    const pairAddresses = new Set();
+
+                    // Look for transactions that might be swaps
+                    for (const tx of data.result) {
+                        // Check if the other address might be a pair contract
+                        if (tx.to && tx.to.toLowerCase() !== tokenAddress.toLowerCase()) {
+                            pairAddresses.add(tx.to);
+                        }
+                    }
+
+                    return Array.from(pairAddresses);
+                }
+
+                return [];
+            } catch (error) {
+                log(`Failed to find pairs for ${tokenAddress}: ${error.message}`, 'error');
+                return [];
+            }
+        }
+
+        async function startDiscovery() {
+            if (isRunning) return;
+
+            isRunning = true;
+            document.getElementById('discoverBtn').disabled = true;
+            clearLog();
+
+            log('=== Starting Factory Discovery V2 ===', 'info');
+            log('Method: Working backwards from known LP pairs', 'info');
+
+            try {
+                const pairInput = document.getElementById('pairAddresses').value.trim();
+                const pairAddresses = pairInput.split('\n').map(s => s.trim()).filter(s => s.startsWith('0x'));
+
+                if (pairAddresses.length === 0) {
+                    log('No pair addresses provided!', 'warning');
+                    return;
+                }
+
+                log(`Checking ${pairAddresses.length} pair addresses...`, 'info');
+                updateProgress(10, `Checking ${pairAddresses.length} pairs...`);
+
+                const factoryMap = new Map();
+
+                for (let i = 0; i < pairAddresses.length; i++) {
+                    const pairAddress = pairAddresses[i];
+                    log(`[${i + 1}/${pairAddresses.length}] Checking pair: ${pairAddress}`, 'info');
+
+                    updateProgress(
+                        10 + ((i + 1) / pairAddresses.length) * 70,
+                        `Checking pair ${i + 1} of ${pairAddresses.length}...`
+                    );
+
+                    // Try to get factory from pair
+                    const factoryAddress = await getFactoryFromPair(pairAddress);
+
+                    if (factoryAddress) {
+                        log(`✓ Found factory: ${factoryAddress}`, 'success');
+
+                        if (!factoryMap.has(factoryAddress)) {
+                            factoryMap.set(factoryAddress, {
+                                address: factoryAddress,
+                                source: 'Pair contract',
+                                pairs: [pairAddress]
+                            });
+                        } else {
+                            factoryMap.get(factoryAddress).pairs.push(pairAddress);
+                        }
+                    } else {
+                        log(`✗ Could not determine factory for ${pairAddress}`, 'warning');
+                    }
+
+                    // Small delay to be nice to RPC
+                    await new Promise(resolve => setTimeout(resolve, 200));
+                }
+
+                updateProgress(90, 'Processing results...');
+
+                const factories = Array.from(factoryMap.values());
+
+                if (factories.length === 0) {
+                    log('No factories discovered!', 'warning');
+                    log('Trying alternative method: Search token transactions...', 'info');
+
+                    // Alternative: Search for popular tokens
+                    const popularTokens = [
+                        '0x7b4328c127b85369d9f82ca0503b000d09cf9180', // DC
+                        '0x7c10a3b7ecd42dd7d79c0b9d58ddb812f92b574a', // DOGE
+                    ];
+
+                    for (const token of popularTokens) {
+                        log(`Searching for pairs of token: ${token}`, 'info');
+                        const pairs = await findPairsForToken(token);
+                        log(`Found ${pairs.length} potential pairs`, pairs.length > 0 ? 'success' : 'info');
+
+                        for (const pair of pairs.slice(0, 5)) { // Check first 5
+                            const factory = await getFactoryFromPair(pair);
+                            if (factory && !factoryMap.has(factory)) {
+                                factoryMap.set(factory, {
+                                    address: factory,
+                                    source: 'Token transaction search',
+                                    pairs: [pair]
+                                });
+                                log(`✓ Discovered new factory: ${factory}`, 'success');
+                            }
+                        }
+                    }
+                }
+
+                updateProgress(95, 'Displaying results...');
+
+                // Display results
+                displayResults(Array.from(factoryMap.values()));
+
+                updateProgress(100, 'Discovery complete!');
+                log(`✅ Discovery complete! Found ${factoryMap.size} unique factories`, 'success');
+
+            } catch (error) {
+                log(`Discovery failed: ${error.message}`, 'error');
+                console.error(error);
+            } finally {
+                isRunning = false;
+                document.getElementById('discoverBtn').disabled = false;
+            }
+        }
+
+        function displayResults(factories) {
+            const tbody = document.querySelector('#factoryTable tbody');
+            tbody.innerHTML = '';
+
+            factories.forEach((factory) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><code>${factory.address}</code></td>
+                    <td>${factory.source}</td>
+                    <td>${factory.pairs.length}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Generate code
+            let code = "// Discovered DEX Factories on Dogechain\n";
+            code += "// Add these to KNOWN_FACTORIES in /services/knownFactories.ts\n\n";
+
+            factories.forEach((factory, index) => {
+                const name = `Factory ${index + 1}`;
+                code += `{\n`;
+                code += `  address: "${factory.address}",\n`;
+                code += `  name: "${name}", // TODO: Verify actual name\n`;
+                code += `  type: "UNISWAP_V2",\n`;
+                code += `  initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",\n`;
+                code += `  deployBlock: 0, // TODO: Find actual block\n`;
+                code += `  status: "ACTIVE",\n`;
+                code += `  description: "Discovered via ${factory.source.toLowerCase()}"\n`;
+                code += `},\n\n`;
+            });
+
+            document.getElementById('generatedCode').textContent = code;
+            document.getElementById('results').style.display = 'block';
+        }
+
+        let isRunning = false;
+        window.startDiscovery = startDiscovery;
+        window.clearLog = clearLog;
+        window.testAPI = testAPI;
+
+        log('Factory Discovery V2 loaded!', 'success');
+        log('Enter known pair addresses and click "Discover Factories"', 'info');
+    </script>
+</body>
+</html>

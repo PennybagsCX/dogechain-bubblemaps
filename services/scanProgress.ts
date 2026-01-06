@@ -115,16 +115,22 @@ export async function loadCheckpoint(): Promise<ScanCheckpoint | null> {
     }
 
     // Get the most recent checkpoint
-    const latest = checkpoints.sort((a: ScanCheckpoint, b: ScanCheckpoint) => b.lastUpdated - a.lastUpdated)[0];
+    const latest = checkpoints.sort(
+      (a: ScanCheckpoint, b: ScanCheckpoint) => b.lastUpdated - a.lastUpdated
+    )[0];
 
     // Check if checkpoint is stale (older than 24 hours)
     const age = Date.now() - latest.lastUpdated;
     if (age > 24 * 60 * 60 * 1000) {
-      console.warn(`[Scan Progress] Checkpoint is stale (${Math.round(age / 3600000)}h old). Recommend starting fresh.`);
+      console.warn(
+        `[Scan Progress] Checkpoint is stale (${Math.round(age / 3600000)}h old). Recommend starting fresh.`
+      );
       // Return it anyway, let the user decide
     }
 
-    console.log(`[Scan Progress] Loaded checkpoint from ${new Date(latest.lastUpdated).toLocaleString()}`);
+    console.log(
+      `[Scan Progress] Loaded checkpoint from ${new Date(latest.lastUpdated).toLocaleString()}`
+    );
     return latest;
   } catch (error) {
     console.error("[Scan Progress] Failed to load checkpoint:", error);

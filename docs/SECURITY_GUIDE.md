@@ -63,6 +63,7 @@ User Display
 ### Files
 
 **`.env.local` (NOT in Git)**
+
 ```bash
 # Actual secrets - NEVER commit
 SENTRY_DSN=https://abc123@sentry.io/456
@@ -70,6 +71,7 @@ GEMINI_API_KEY=AIzaSyCabc123...
 ```
 
 **`.env.example` (IN Git)**
+
 ```bash
 # Template - safe to commit
 SENTRY_DSN=your_sentry_dsn_here
@@ -79,18 +81,20 @@ GEMINI_API_KEY=your_gemini_api_key_here
 ### Vercel Environment Variables
 
 **Setup:**
+
 1. Go to Vercel Dashboard → Project → Settings → Environment Variables
 2. Add variables for each environment
 
 **Required Variables:**
 
-| Variable | Production | Description |
-|----------|-----------|-------------|
-| `NODE_ENV` | `production` | Environment mode |
-| `SENTRY_DSN` | Your DSN | Error tracking |
-| `GEMINI_API_KEY` | (Optional) | AI features |
+| Variable         | Production   | Description      |
+| ---------------- | ------------ | ---------------- |
+| `NODE_ENV`       | `production` | Environment mode |
+| `SENTRY_DSN`     | Your DSN     | Error tracking   |
+| `GEMINI_API_KEY` | (Optional)   | AI features      |
 
 **Accessing in Code:**
+
 ```typescript
 const dsn = import.meta.env.SENTRY_DSN;
 ```
@@ -125,17 +129,17 @@ Content Security Policy prevents XSS attacks by controlling which resources can 
 
 ### CSP Directives Explained
 
-| Directive | Value | Purpose |
-|-----------|-------|---------|
-| `default-src` | `'self'` | Only load from same origin |
-| `script-src` | `'self' https://aistudiocdn.com` | JavaScript sources |
-| `style-src` | `'self' 'unsafe-inline' https://fonts.googleapis.com` | CSS sources |
-| `font-src` | `'self' https://fonts.gstatic.com` | Font sources |
-| `img-src` | `'self' data: https:` | Image sources |
-| `connect-src` | `'self' https://explorer.dogechain.dog` | API calls |
-| `frame-ancestors` | `'none'` | Prevent clickjacking |
-| `base-uri` | `'self'` | Restrict `<base>` tags |
-| `form-action` | `'self'` | Restrict form submissions |
+| Directive         | Value                                                 | Purpose                    |
+| ----------------- | ----------------------------------------------------- | -------------------------- |
+| `default-src`     | `'self'`                                              | Only load from same origin |
+| `script-src`      | `'self' https://aistudiocdn.com`                      | JavaScript sources         |
+| `style-src`       | `'self' 'unsafe-inline' https://fonts.googleapis.com` | CSS sources                |
+| `font-src`        | `'self' https://fonts.gstatic.com`                    | Font sources               |
+| `img-src`         | `'self' data: https:`                                 | Image sources              |
+| `connect-src`     | `'self' https://explorer.dogechain.dog`               | API calls                  |
+| `frame-ancestors` | `'none'`                                              | Prevent clickjacking       |
+| `base-uri`        | `'self'`                                              | Restrict `<base>` tags     |
+| `form-action`     | `'self'`                                              | Restrict form submissions  |
 
 ### Updating CSP for Custom Domains
 
@@ -148,6 +152,7 @@ If you deploy to a custom domain, update `connect-src`:
 ### Testing CSP
 
 **Browser DevTools:**
+
 1. Open Console
 2. Look for CSP violations
 3. Fix any blocked resources
@@ -166,6 +171,7 @@ https://securityheaders.com/
 **Algorithm**: Sliding window with token bucket
 
 **Configuration:**
+
 ```bash
 API_RATE_LIMIT_PER_MINUTE=60
 API_MAX_RETRIES=3
@@ -182,9 +188,9 @@ Request → Check Bucket → If tokens available → Process → Deduct token
 
 ### Rate Limits
 
-| Endpoint | Limit | Window |
-|----------|-------|--------|
-| Dogechain API | 60/min | Rolling |
+| Endpoint       | Limit  | Window  |
+| -------------- | ------ | ------- |
+| Dogechain API  | 60/min | Rolling |
 | Wallet Scanner | 30/min | Rolling |
 | Token Analysis | 20/min | Rolling |
 
@@ -213,17 +219,20 @@ All user inputs are validated using Zod schemas.
 ### Example Schemas
 
 **Wallet Address Validation:**
+
 ```typescript
-const walletAddressSchema = z.string()
+const walletAddressSchema = z
+  .string()
   .regex(/^0x[a-fA-F0-9]{40}$/, "Invalid Ethereum address")
-  .transform(val => val.toLowerCase());
+  .transform((val) => val.toLowerCase());
 ```
 
 **Token Contract Validation:**
+
 ```typescript
 const tokenContractSchema = z.object({
   address: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
-  network: z.enum(['dogechain', 'ethereum', 'bsc']),
+  network: z.enum(["dogechain", "ethereum", "bsc"]),
 });
 ```
 
@@ -244,8 +253,9 @@ Use in Application
 ### Adding Validation
 
 **1. Define Schema:**
+
 ```typescript
-import { z } from 'zod';
+import { z } from "zod";
 
 const mySchema = z.object({
   field1: z.string().min(1).max(100),
@@ -254,20 +264,22 @@ const mySchema = z.object({
 ```
 
 **2. Validate Input:**
+
 ```typescript
 try {
   const validated = mySchema.parse(userInput);
   // Use validated data
 } catch (error) {
   // Handle validation error
-  console.error('Invalid input:', error.errors);
+  console.error("Invalid input:", error.errors);
 }
 ```
 
 **3. Display Errors:**
+
 ```typescript
 if (error instanceof z.ZodError) {
-  const errorMessages = error.errors.map(e => e.message);
+  const errorMessages = error.errors.map((e) => e.message);
   setErrors(errorMessages);
 }
 ```
@@ -280,37 +292,39 @@ if (error instanceof z.ZodError) {
 
 ✅ **Public (Safe in Git/Client-Side)**
 
-| Secret | Why Safe |
-|--------|----------|
-| Sentry DSN | Designed for public use, error reporting only |
-| Public API URLs | Endpoints are public anyway |
-| Feature flags | Boolean values, no secrets |
-| Configuration values | Non-sensitive settings |
+| Secret               | Why Safe                                      |
+| -------------------- | --------------------------------------------- |
+| Sentry DSN           | Designed for public use, error reporting only |
+| Public API URLs      | Endpoints are public anyway                   |
+| Feature flags        | Boolean values, no secrets                    |
+| Configuration values | Non-sensitive settings                        |
 
 ❌ **Private (Keep Secret)**
 
-| Secret | Why Private |
-|--------|-------------|
-| API keys | Can be used to make API calls on your behalf |
-| Database URLs | Direct access to your data |
-| Private keys | Cryptographic secrets |
-| Session secrets | Can compromise user sessions |
-| Webhook URLs | Can be used to send fake events |
+| Secret          | Why Private                                  |
+| --------------- | -------------------------------------------- |
+| API keys        | Can be used to make API calls on your behalf |
+| Database URLs   | Direct access to your data                   |
+| Private keys    | Cryptographic secrets                        |
+| Session secrets | Can compromise user sessions                 |
+| Webhook URLs    | Can be used to send fake events              |
 
 ### Examples
 
 **✅ Safe (Public):**
+
 ```typescript
-const DSN = 'https://abc123@sentry.io/456'; // Safe
-const API_URL = 'https://explorer.dogechain.dog'; // Public endpoint
+const DSN = "https://abc123@sentry.io/456"; // Safe
+const API_URL = "https://explorer.dogechain.dog"; // Public endpoint
 const FEATURE_ENABLED = true; // Configuration
 ```
 
 **❌ Unsafe (Private):**
+
 ```typescript
-const API_KEY = 'AIzaSyCabc123...'; // Secret! Use serverless function
-const DB_URL = 'postgres://user:pass@host...'; // Secret!
-const PRIVATE_KEY = '0xabc123...'; // Secret!
+const API_KEY = "AIzaSyCabc123..."; // Secret! Use serverless function
+const DB_URL = "postgres://user:pass@host..."; // Secret!
+const PRIVATE_KEY = "0xabc123..."; // Secret!
 ```
 
 ---
@@ -394,23 +408,25 @@ All security headers are pre-configured:
 
 ### Header Explanations
 
-| Header | Purpose | Value |
-|--------|---------|-------|
-| `X-Content-Type-Options` | Prevent MIME sniffing | `nosniff` |
-| `X-Frame-Options` | Prevent clickjacking | `DENY` |
-| `X-XSS-Protection` | XSS filter | `1; mode=block` |
-| `Referrer-Policy` | Control referrer info | `strict-origin-when-cross-origin` |
-| `Permissions-Policy` | Control browser features | Minimal permissions |
-| `Strict-Transport-Security` | Force HTTPS | `max-age=31536000` |
+| Header                      | Purpose                  | Value                             |
+| --------------------------- | ------------------------ | --------------------------------- |
+| `X-Content-Type-Options`    | Prevent MIME sniffing    | `nosniff`                         |
+| `X-Frame-Options`           | Prevent clickjacking     | `DENY`                            |
+| `X-XSS-Protection`          | XSS filter               | `1; mode=block`                   |
+| `Referrer-Policy`           | Control referrer info    | `strict-origin-when-cross-origin` |
+| `Permissions-Policy`        | Control browser features | Minimal permissions               |
+| `Strict-Transport-Security` | Force HTTPS              | `max-age=31536000`                |
 
 ### Testing Security Headers
 
 **Command Line:**
+
 ```bash
 curl -I https://your-app.vercel.app
 ```
 
 **Expected Output:**
+
 ```
 HTTP/2 200
 content-type: text/html; charset=utf-8
@@ -430,6 +446,7 @@ strict-transport-security: max-age=31536000; includeSubDomains
 **File**: `utils/sentry.config.ts`
 
 Sentry captures:
+
 - JavaScript errors
 - Unhandled promise rejections
 - Performance data
@@ -445,22 +462,24 @@ Sentry captures:
 
 ### Error Types Tracked
 
-| Error Type | Severity | Action |
-|------------|----------|--------|
-| JavaScript errors | High | Fix immediately |
-| API failures | Medium | Monitor and fix |
-| Performance issues | Low | Optimize if needed |
-| User feedback | Medium | Review and address |
+| Error Type         | Severity | Action             |
+| ------------------ | -------- | ------------------ |
+| JavaScript errors  | High     | Fix immediately    |
+| API failures       | Medium   | Monitor and fix    |
+| Performance issues | Low      | Optimize if needed |
+| User feedback      | Medium   | Review and address |
 
 ### Monitoring Dashboards
 
 **Sentry Dashboard:**
+
 - Error rate
 - Performance metrics
 - User impact
 - Release health
 
 **Vercel Analytics:**
+
 - Page views
 - Bandwidth usage
 - Edge function calls
@@ -473,15 +492,17 @@ Sentry captures:
 ### Development
 
 1. **Never disable security features**
+
    ```typescript
    // ❌ BAD
-   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
    // ✅ GOOD
    // Always use HTTPS
    ```
 
 2. **Validate all inputs**
+
    ```typescript
    // ❌ BAD
    const address = req.body.address;
@@ -499,18 +520,20 @@ Sentry captures:
 ### Production
 
 1. **Keep dependencies updated**
+
    ```bash
    npm audit
    npm update
    ```
 
 2. **Use HTTPS only**
+
    ```typescript
    // ✅ GOOD
-   fetch('https://api.example.com/data');
+   fetch("https://api.example.com/data");
 
    // ❌ BAD
-   fetch('http://api.example.com/data');
+   fetch("http://api.example.com/data");
    ```
 
 3. **Enable security headers**
@@ -538,10 +561,12 @@ Sentry captures:
 ### Problem: CSP Violations in Console
 
 **Symptoms:**
+
 - Errors in browser console about CSP
 - Resources not loading
 
 **Solutions:**
+
 1. Check what's being blocked
 2. Update CSP to allow resource
 3. Use nonce or hash for inline scripts
@@ -549,10 +574,12 @@ Sentry captures:
 ### Problem: Rate Limiting Too Aggressive
 
 **Symptoms:**
+
 - Legitimate requests blocked
 - 429 errors
 
 **Solutions:**
+
 1. Increase rate limit in `.env.local`
 2. Implement user-based rate limiting
 3. Add rate limit status indicator
@@ -560,10 +587,12 @@ Sentry captures:
 ### Problem: XSS Vulnerabilities
 
 **Symptoms:**
+
 - Suspicious scripts executing
 - Data corruption
 
 **Solutions:**
+
 1. Enable React's built-in XSS protection (automatic)
 2. Validate all inputs with Zod
 3. Sanitize user-generated content

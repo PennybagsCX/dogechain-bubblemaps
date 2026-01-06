@@ -7,24 +7,24 @@
 export const generateKey = async (password: string): Promise<CryptoKey> => {
   const encoder = new TextEncoder();
   const keyMaterial = await crypto.subtle.importKey(
-    'raw',
+    "raw",
     encoder.encode(password),
-    'PBKDF2',
+    "PBKDF2",
     false,
-    ['deriveKey']
+    ["deriveKey"]
   );
 
   return crypto.subtle.deriveKey(
     {
-      name: 'PBKDF2',
-      salt: encoder.encode('dogechain-bubblemaps-salt'),
+      name: "PBKDF2",
+      salt: encoder.encode("dogechain-bubblemaps-salt"),
       iterations: 100000,
-      hash: 'SHA-256',
+      hash: "SHA-256",
     },
     keyMaterial,
-    { name: 'AES-GCM', length: 256 },
+    { name: "AES-GCM", length: 256 },
     false,
-    ['encrypt', 'decrypt']
+    ["encrypt", "decrypt"]
   );
 };
 
@@ -35,7 +35,7 @@ export const encryptData = async (data: string, key: CryptoKey): Promise<string>
 
   const encrypted = await crypto.subtle.encrypt(
     {
-      name: 'AES-GCM',
+      name: "AES-GCM",
       iv: iv,
     },
     key,
@@ -61,7 +61,7 @@ export const decryptData = async (encryptedData: string, key: CryptoKey): Promis
 
   const decrypted = await crypto.subtle.decrypt(
     {
-      name: 'AES-GCM',
+      name: "AES-GCM",
       iv: iv,
     },
     key,
@@ -75,8 +75,8 @@ export const decryptData = async (encryptedData: string, key: CryptoKey): Promis
 // Generate a secure random key for session-based encryption
 export const generateSessionKey = async (): Promise<{ key: CryptoKey; password: string }> => {
   const password = Array.from(crypto.getRandomValues(new Uint8Array(32)))
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('');
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 
   const key = await generateKey(password);
 
@@ -87,9 +87,9 @@ export const generateSessionKey = async (): Promise<{ key: CryptoKey; password: 
 export const hashWalletAddress = async (address: string): Promise<string> => {
   const encoder = new TextEncoder();
   const data = encoder.encode(address.toLowerCase());
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
 };
 
 // Mask wallet address for display purposes
@@ -121,7 +121,7 @@ export class EncryptionService {
   // Encrypt an object
   async encryptObject<T>(data: T): Promise<string> {
     if (!this.key) {
-      throw new Error('EncryptionService not initialized');
+      throw new Error("EncryptionService not initialized");
     }
     const json = JSON.stringify(data);
     return encryptData(json, this.key);
@@ -130,7 +130,7 @@ export class EncryptionService {
   // Decrypt an object
   async decryptObject<T>(encryptedData: string): Promise<T> {
     if (!this.key) {
-      throw new Error('EncryptionService not initialized');
+      throw new Error("EncryptionService not initialized");
     }
     const json = await decryptData(encryptedData, this.key);
     return JSON.parse(json) as T;
@@ -164,18 +164,16 @@ export const getEncryptionService = async (): Promise<EncryptionService> => {
  */
 export const shouldEncryptField = (fieldName: string): boolean => {
   const sensitiveFields = [
-    'walletAddress',
-    'address',
-    'privateKey',
-    'mnemonic',
-    'seed',
-    'password',
-    'apiKey',
-    'secret',
-    'token',
+    "walletAddress",
+    "address",
+    "privateKey",
+    "mnemonic",
+    "seed",
+    "password",
+    "apiKey",
+    "secret",
+    "token",
   ];
 
-  return sensitiveFields.some((field) =>
-    fieldName.toLowerCase().includes(field.toLowerCase())
-  );
+  return sensitiveFields.some((field) => fieldName.toLowerCase().includes(field.toLowerCase()));
 };

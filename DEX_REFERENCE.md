@@ -21,6 +21,7 @@ This document lists all DEX (Decentralized Exchange) factories currently support
 **Description:** Originally launched as Dogeshrek, later rebranded to ChewySwap. One of the major DEXes on Dogechain.
 
 **Documentation:**
+
 - GitHub: https://github.com/ChewySwap/dogeshrek-contracts
 - Docs: https://docs.chewyswap.com
 
@@ -41,6 +42,7 @@ This document lists all DEX (Decentralized Exchange) factories currently support
 **Description:** QuickSwap V2 on Dogechain - 2nd largest DEX by volume (~45% market share)
 
 **Documentation:**
+
 - Docs: https://docs.quickswap.exchange
 - Contracts: https://docs.quickswap.exchange/overview/contracts-and-addresses
 
@@ -121,6 +123,7 @@ This document lists all DEX (Decentralized Exchange) factories currently support
 **Website:** https://app.yodeswap.dog
 
 **Documentation:**
+
 - GitHub: https://github.com/yodedex/yodeswap-default-tokenlist
 
 **Init Code Hash:** `0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5`
@@ -144,6 +147,7 @@ This document lists all DEX (Decentralized Exchange) factories currently support
 **Documentation:** https://docs.wojak.fi/contracts
 
 **Market Data:**
+
 - Price: ~$0.0011 USD
 - TVL: $11,914
 - 24h Volume: ~$60-70 USD
@@ -155,31 +159,37 @@ This document lists all DEX (Decentralized Exchange) factories currently support
 ## Pending Integration (Research Needed)
 
 ### ToolSwap
+
 - Factory Address: TBD
 - Status: 🔍 Research needed
 - Notes: Mentioned in community discussions
 
 ### DegenDex
+
 - Factory Address: TBD
 - Status: 🔍 Research needed
 - Notes: Mentioned in community discussions
 
 ### Fraxswap
+
 - Factory Address: TBD
 - Status: 🔍 Research needed
 - Notes: Listed on GeckoTerminal
 
 ### Bourbon Defi
+
 - Factory Address: TBD
 - Status: 🔍 Research needed
 - Notes: Listed on GeckoTerminal
 
 ### PupSwap
+
 - Factory Address: TBD
 - Status: 🔍 Research needed
 - Notes: Listed on GeckoTerminal
 
 ### Radioshack
+
 - Factory Address: TBD
 - Status: 🔍 Research needed
 - Notes: Listed on GeckoTerminal
@@ -209,12 +219,14 @@ The platform automatically detects LP (Liquidity Provider) pools by:
 As of the latest initialization, the platform has detected **195 LP pairs** across all registered DEXes.
 
 **Example Pairs:**
+
 - OMNOM/WWDOGE (DogeSwap)
 - Various token pairs on ChewySwap, QuickSwap, KibbleSwap
 
 ### Adding New LP Pairs
 
 LP pairs are automatically discovered when:
+
 1. You search for a token
 2. The platform queries the factory for PairCreated events
 3. New pairs are saved to IndexedDB
@@ -229,11 +241,13 @@ Use `manual-factory-entry.html` to add new factories and scan for all their LP p
 ### Uniswap V2 PairCreated Event
 
 **Event Signature:**
+
 ```
 0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9
 ```
 
 **Event Structure:**
+
 ```solidity
 event PairCreated(
     address indexed token0,
@@ -246,6 +260,7 @@ event PairCreated(
 ### CREATE2 Address Calculation
 
 LP pair addresses are deterministically calculated using CREATE2:
+
 ```
 pair_address = keccak256(0xff ++ factory_address ++ keccak256(abi.encodePacked(token0, token1)) ++ init_code_hash)
 ```
@@ -266,6 +281,7 @@ All registered DEXes use the standard Uniswap V2 init code hash.
 ### Tables
 
 **lpPairs:**
+
 - `pairAddress` (unique) - LP pair contract address
 - `factoryAddress` - Factory that created the pair
 - `token0Address` - First token in pair
@@ -276,6 +292,7 @@ All registered DEXes use the standard Uniswap V2 init code hash.
 - `isValid` - Pair validity status
 
 **discoveredFactories:**
+
 - `address` (unique) - Factory contract address
 - `name` - DEX name
 - `type` - DEX type (usually UNISWAP_V2)
@@ -293,6 +310,7 @@ All registered DEXes use the standard Uniswap V2 init code hash.
 **Base URL:** `https://explorer.dogechain.dog/api`
 
 **Limitations:**
+
 - Does not support topic-only queries (cannot scan entire blockchain for PairCreated events)
 - Requires specific factory address for event queries
 - Rate limited to ~60 requests/minute
@@ -306,6 +324,7 @@ Use `manual-factory-entry.html` for factory-specific LP pair discovery.
 ## Update Log
 
 ### January 5, 2025
+
 - ✅ Added YodeSwap factory (0xAaA04462e35f3e40D798331657cA015169e005d7)
 - ✅ Added Wojak Finance factory (0xc7c86B4f940Ff1C13c736b697e3FbA5a6Bc979F9)
 - ✅ Added DogeSwap V2 factory (0x72ca245B078966578aB45e89067cc1245E3186c0)
@@ -314,6 +333,7 @@ Use `manual-factory-entry.html` for factory-specific LP pair discovery.
 - ✅ Total DEX coverage: 7 factories
 
 ### Previous Updates
+
 - Initial implementation with 4 DEXes (ChewySwap, QuickSwap, KibbleSwap, DogeSwap)
 - Added LP pair detection and caching
 - Implemented auto-initialization on app startup
@@ -323,12 +343,15 @@ Use `manual-factory-entry.html` for factory-specific LP pair discovery.
 ## Resources
 
 ### Block Explorers
+
 - **Dogechain Explorer:** https://explorer.dogechain.dog
 
 ### DEX Analytics
+
 - **GeckoTerminal:** https://www.geckoterminal.com/dogechain/pools
 
 ### Developer Tools
+
 - **manual-factory-entry.html** - Add factories manually
 - **comprehensive-scanner.html** - Full blockchain scan (when API supports it)
 
@@ -348,6 +371,7 @@ Use `manual-factory-entry.html` for factory-specific LP pair discovery.
 ## Contact & Support
 
 For issues or questions about DEX integration:
+
 1. Check console logs for error messages
 2. Verify factory addresses on Dogechain explorer
 3. Ensure LP detection has initialized (check console)

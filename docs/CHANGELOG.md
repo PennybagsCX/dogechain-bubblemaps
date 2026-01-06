@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
+
 - Custom domain configuration
 - Analytics integration (Google Analytics / PostHog)
 - Enhanced AI features with serverless backend
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2026-01-04
 
 ### Added
+
 - Interactive blockchain visualization platform for Dogechain network
 - Token distribution bubble map with D3.js force-directed graphs
 - Wallet address scanner with multi-phase scanning (quick → deep)
@@ -39,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vercel deployment configuration
 
 ### Security
+
 - Content Security Policy (CSP) configured
 - HTTP security headers (HSTS, X-Frame-Options, etc.)
 - Input validation on all user inputs
@@ -48,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Production console log removal
 
 ### Documentation
+
 - Comprehensive README with features and setup guide
 - Environment variable template (.env.example)
 - Security documentation
@@ -56,6 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Development history archived in docs/dev/
 
 ### Performance
+
 - Optimized production build (~420KB initial load)
 - Code splitting with 6 vendor chunks
 - Tree shaking enabled
@@ -64,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Core Web Vitals optimized (LCP < 2.5s, FID < 100ms, CLS < 0.1)
 
 ### Developer Experience
+
 - ESLint with TypeScript, React, and A11y rules
 - Prettier code formatting
 - Husky pre-commit hooks
@@ -73,6 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive error handling
 
 ### Infrastructure
+
 - Vite 6.2.0 build system
 - React 19.2.0 with TypeScript 5.8.2
 - Tailwind CSS 4.1.18 for styling
@@ -85,6 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0] - 2025-12-31
 
 ### Added
+
 - Phase 1 complete: Core bubble map visualization
 - Token holder analysis
 - Whale tracking functionality
@@ -94,11 +102,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub Actions CI/CD setup
 
 ### Fixed
+
 - Border rendering issues in visualization
 - Memory leaks in D3.js simulations
 - API timeout handling
 
 ### Documentation
+
 - PHASE1_COMPLETE.md
 - BORDER_MIGRATION_LOG.md
 
@@ -107,6 +117,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2025-12-25
 
 ### Added
+
 - Initial project setup
 - Basic blockchain data fetching
 - Simple token visualization
@@ -116,11 +127,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version Summary
 
-| Version | Date | Status | Key Features |
-|---------|------|--------|--------------|
-| 1.0.0 | 2026-01-04 | Production | Full platform with all features, security, CI/CD |
-| 0.2.0 | 2025-12-31 | Beta | Core visualization and dashboard |
-| 0.1.0 | 2025-12-25 | Alpha | Initial development |
+| Version | Date       | Status     | Key Features                                     |
+| ------- | ---------- | ---------- | ------------------------------------------------ |
+| 1.0.0   | 2026-01-04 | Production | Full platform with all features, security, CI/CD |
+| 0.2.0   | 2025-12-31 | Beta       | Core visualization and dashboard                 |
+| 0.1.0   | 2025-12-25 | Alpha      | Initial development                              |
 
 ---
 
@@ -133,6 +144,7 @@ None at this time.
 ## Future Roadmap
 
 ### Version 1.1.0 (Planned)
+
 - [ ] Enhanced AI features with serverless backend
 - [ ] Custom domain configuration guide
 - [ ] Analytics integration (Google Analytics / PostHog)
@@ -140,6 +152,7 @@ None at this time.
 - [ ] Additional blockchain networks support
 
 ### Version 1.2.0 (Planned)
+
 - [ ] Real-time WebSocket updates
 - [ ] Mobile app (React Native)
 - [ ] Advanced filtering and search
@@ -147,6 +160,7 @@ None at this time.
 - [ ] User authentication and personalization
 
 ### Version 2.0.0 (Planned)
+
 - [ ] Multi-chain support
 - [ ] Advanced analytics and insights
 - [ ] Collaboration features
@@ -158,6 +172,7 @@ None at this time.
 ## Security Updates
 
 ### Version 1.0.0
+
 - Implemented comprehensive security headers
 - Added Content Security Policy (CSP)
 - Integrated rate limiting

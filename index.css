@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
 /* Universal box-sizing for proper width calculations */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -15,19 +17,20 @@
 @layer theme {
   :root {
     /* Space theme colors */
-    --color-space-900: #0B0D17;
-    --color-space-800: #15192B;
-    --color-space-700: #1F253D;
+    --color-space-900: #0b0d17;
+    --color-space-800: #15192b;
+    --color-space-700: #1f253d;
     --color-space-600: #334155;
 
     /* Doge theme colors */
-    --color-doge-500: #BA9F33;
-    --color-doge-600: #A08825;
+    --color-doge-500: #ba9f33;
+    --color-doge-600: #a08825;
   }
 }
 
 /* Custom Styles */
-html, body {
+html,
+body {
   overflow-x: hidden !important;
   width: 100% !important;
   max-width: 100% !important;
@@ -35,7 +38,7 @@ html, body {
 }
 
 body {
-  background-color: #0B0D17;
+  background-color: #0b0d17;
   color: #ffffff;
 }
 
@@ -117,7 +120,7 @@ body {
   left: 16px;
   z-index: 9999;
   padding: 12px 24px;
-  background: #BA9F33;
+  background: #ba9f33;
   color: white;
   border-radius: 8px;
   text-decoration: none;
@@ -134,7 +137,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #15192B;
+  background: #15192b;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -148,7 +151,8 @@ body {
 
 /* Animation utilities */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -176,7 +180,7 @@ input[type="text"]:focus-visible {
 input[type="text"]:-webkit-autofill,
 input[type="text"]:-webkit-autofill:hover,
 input[type="text"]:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px #15192B inset !important;
+  -webkit-box-shadow: 0 0 0 1000px #15192b inset !important;
   -webkit-text-fill-color: #ffffff !important;
   transition: background-color 5000s ease-in-out 0s;
   caret-color: #a855f7 !important;

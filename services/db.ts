@@ -871,10 +871,7 @@ export async function loadAllLPPairs(): Promise<DbLPPair[]> {
  */
 export async function isAddressLPPair(address: string): Promise<DbLPPair | null> {
   try {
-    const pair = await db.lpPairs
-      .where("pairAddress")
-      .equals(address.toLowerCase())
-      .first();
+    const pair = await db.lpPairs.where("pairAddress").equals(address.toLowerCase()).first();
 
     return pair || null;
   } catch (error) {
@@ -965,7 +962,9 @@ export interface DbDiscoveredFactory {
  * Save discovered factories to database
  * Updates existing entries if they already exist
  */
-export async function saveDiscoveredFactories(factories: Partial<DbDiscoveredFactory>[]): Promise<void> {
+export async function saveDiscoveredFactories(
+  factories: Partial<DbDiscoveredFactory>[]
+): Promise<void> {
   try {
     const table = db.discoveredFactories;
     const now = Date.now();
@@ -992,7 +991,9 @@ export async function saveDiscoveredFactories(factories: Partial<DbDiscoveredFac
           address,
           name: factory.name || "Unknown DEX",
           type: factory.type || "UNISWAP_V2",
-          initCodeHash: factory.initCodeHash || "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
+          initCodeHash:
+            factory.initCodeHash ||
+            "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
           deployBlock: factory.deployBlock || 0,
           status: factory.status || "ACTIVE",
           description: factory.description,
@@ -1024,7 +1025,10 @@ export async function loadDiscoveredFactories(): Promise<DbDiscoveredFactory[]> 
  */
 export async function getDiscoveredFactory(address: string): Promise<DbDiscoveredFactory | null> {
   try {
-    const factory = await db.discoveredFactories.where("address").equals(address.toLowerCase()).first();
+    const factory = await db.discoveredFactories
+      .where("address")
+      .equals(address.toLowerCase())
+      .first();
     return factory || null;
   } catch (error) {
     console.error("[DB] Failed to get discovered factory:", error);

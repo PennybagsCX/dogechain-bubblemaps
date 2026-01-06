@@ -1,15 +1,14 @@
-
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import { ErrorBoundary } from './components/ErrorBoundary';
-import './index.css';
-import { initSentry } from './utils/sentry.config';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import "./index.css";
+import { initSentry } from "./utils/sentry.config";
 
 // Initialize Sentry error tracking
 initSentry();
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 if (!rootElement) {
   throw new Error("Could not find root element to mount to");
 }

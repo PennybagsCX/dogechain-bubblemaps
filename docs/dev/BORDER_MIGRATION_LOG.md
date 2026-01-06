@@ -1,4 +1,5 @@
 # Border System Migration Documentation
+
 ## Dogechain BubbleMaps Platform
 
 **Date:** 2026-01-01
@@ -18,12 +19,14 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 ## Changes Overview
 
 ### Before Migration
+
 - **Borders:** `border-space-800/50`, `border-space-700/50` (50% opacity)
 - **Focus:** Golden outline `2px solid rgba(186, 159, 51, 0.5)`
 - **Hover:** Semi-transparent hover states (`hover:border-space-600/50`)
 - **Appearance:** Subtle, semi-transparent borders
 
 ### After Migration
+
 - **Borders:** `border-space-700`, `border-space-600` (solid colors)
 - **Focus:** Purple ring `2px solid #a855f7` (purple-500)
 - **Hover:** Solid hover states (`hover:border-space-600`, `hover:border-purple-500`)
@@ -40,41 +43,94 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 **Changes Made:**
 
 #### 1. Removed Opacity-Based Border Utilities (Lines 45-125)
+
 **Deleted Classes:**
+
 ```css
 /* REMOVED - All /50 opacity variants */
-.border-space-800\/50 { border-color: rgba(21, 25, 43, 0.5) !important; }
-.border-space-700\/50 { border-color: rgba(31, 37, 61, 0.5) !important; }
-.border-space-600\/50 { border-color: rgba(51, 65, 85, 0.5) !important; }
-.border-space-700\/30 { border-color: rgba(31, 37, 61, 0.3) !important; }
-.border-space-600\/30 { border-color: rgba(51, 65, 85, 0.3) !important; }
-.border-doge-600\/50 { border-color: rgba(160, 136, 37, 0.5) !important; }
-.border-doge-600\/30 { border-color: rgba(160, 136, 37, 0.3) !important; }
-.border-doge-500\/50 { border-color: rgba(186, 159, 51, 0.5) !important; }
-.border-purple-500\/50 { border-color: rgba(168, 85, 247, 0.5) !important; }
-.border-purple-400\/30 { border-color: rgba(192, 132, 252, 0.3) !important; }
-.border-purple-500\/30 { border-color: rgba(168, 85, 247, 0.3) !important; }
-.border-purple-400\/50 { border-color: rgba(192, 132, 252, 0.5) !important; }
-.border-purple-600\/30 { border-color: rgba(147, 51, 234, 0.3) !important; }
-.border-green-500\/50 { border-color: rgba(34, 197, 94, 0.5) !important; }
-.border-red-500\/50 { border-color: rgba(239, 68, 68, 0.5) !important; }
-.border-red-900\/50 { border-color: rgba(127, 29, 29, 0.5) !important; }
-.border-blue-400\/50 { border-color: rgba(96, 165, 250, 0.5) !important; }
-.border-blue-400\/30 { border-color: rgba(96, 165, 250, 0.3) !important; }
-.border-blue-500\/50 { border-color: rgba(59, 130, 246, 0.5) !important; }
-.border-orange-500\/50 { border-color: rgba(249, 115, 22, 0.5) !important; }
+.border-space-800\/50 {
+  border-color: rgba(21, 25, 43, 0.5) !important;
+}
+.border-space-700\/50 {
+  border-color: rgba(31, 37, 61, 0.5) !important;
+}
+.border-space-600\/50 {
+  border-color: rgba(51, 65, 85, 0.5) !important;
+}
+.border-space-700\/30 {
+  border-color: rgba(31, 37, 61, 0.3) !important;
+}
+.border-space-600\/30 {
+  border-color: rgba(51, 65, 85, 0.3) !important;
+}
+.border-doge-600\/50 {
+  border-color: rgba(160, 136, 37, 0.5) !important;
+}
+.border-doge-600\/30 {
+  border-color: rgba(160, 136, 37, 0.3) !important;
+}
+.border-doge-500\/50 {
+  border-color: rgba(186, 159, 51, 0.5) !important;
+}
+.border-purple-500\/50 {
+  border-color: rgba(168, 85, 247, 0.5) !important;
+}
+.border-purple-400\/30 {
+  border-color: rgba(192, 132, 252, 0.3) !important;
+}
+.border-purple-500\/30 {
+  border-color: rgba(168, 85, 247, 0.3) !important;
+}
+.border-purple-400\/50 {
+  border-color: rgba(192, 132, 252, 0.5) !important;
+}
+.border-purple-600\/30 {
+  border-color: rgba(147, 51, 234, 0.3) !important;
+}
+.border-green-500\/50 {
+  border-color: rgba(34, 197, 94, 0.5) !important;
+}
+.border-red-500\/50 {
+  border-color: rgba(239, 68, 68, 0.5) !important;
+}
+.border-red-900\/50 {
+  border-color: rgba(127, 29, 29, 0.5) !important;
+}
+.border-blue-400\/50 {
+  border-color: rgba(96, 165, 250, 0.5) !important;
+}
+.border-blue-400\/30 {
+  border-color: rgba(96, 165, 250, 0.3) !important;
+}
+.border-blue-500\/50 {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+.border-orange-500\/50 {
+  border-color: rgba(249, 115, 22, 0.5) !important;
+}
 
 /* REMOVED - All hover opacity variants */
-.hover\:border-space-600\/50:hover { border-color: rgba(51, 65, 85, 0.5) !important; }
-.hover\:border-purple-500\/50:hover { border-color: rgba(168, 85, 247, 0.5) !important; }
-.hover\:border-purple-400\/50:hover { border-color: rgba(192, 132, 252, 0.5) !important; }
-.hover\:border-doge-500\/50:hover { border-color: rgba(186, 159, 51, 0.5) !important; }
+.hover\:border-space-600\/50:hover {
+  border-color: rgba(51, 65, 85, 0.5) !important;
+}
+.hover\:border-purple-500\/50:hover {
+  border-color: rgba(168, 85, 247, 0.5) !important;
+}
+.hover\:border-purple-400\/50:hover {
+  border-color: rgba(192, 132, 252, 0.5) !important;
+}
+.hover\:border-doge-500\/50:hover {
+  border-color: rgba(186, 159, 51, 0.5) !important;
+}
 
 /* REMOVED - Focus opacity variants */
-.focus\:border-space-600\/50:focus { border-color: rgba(51, 65, 85, 0.5) !important; }
+.focus\:border-space-600\/50:focus {
+  border-color: rgba(51, 65, 85, 0.5) !important;
+}
 ```
 
 **Added Classes:**
+
 ```css
 /* ADDED - Solid border utilities */
 .border-space-700 {
@@ -99,6 +155,7 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 #### 2. Replaced Global Focus Styles (Lines 144-153)
 
 **Before:**
+
 ```css
 /* Remove ALL focus outlines by default */
 *:focus {
@@ -121,6 +178,7 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 ```
 
 **After:**
+
 ```css
 /* Purple focus rings for keyboard accessibility */
 *:focus-visible {
@@ -153,6 +211,7 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 | 113 | `border-space-600/50 hover:border-purple-500/50` | `border-space-600 hover:border-purple-500` |
 
 **Focus Ring Additions:**
+
 - Updated `navClass()` function (line 27): Added `focus:ring-2 focus:ring-purple-500 focus:outline-none`
 - Updated `mobileNavClass()` function (line 36): Added `focus:ring-2 focus:ring-purple-500 focus:outline-none`
 - Connect Wallet button (line 113): Added `focus:ring-2 focus:ring-purple-500 focus:outline-none`
@@ -167,6 +226,7 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 **File:** `App.tsx`
 
 **Border Changes:**
+
 - Lines 917, 923: `border-space-800/50` → `border-space-700`
 - Line 931: `border-space-800/50` → `border-space-700`
 - Line 964: `border-space-800/50 hover:border-space-600/50` → `border-space-700 hover:border-space-600`
@@ -176,6 +236,7 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 - Line 1067: `border-purple-500/30` → `border-purple-500/20` (gradient panel)
 
 **Focus Ring Additions:**
+
 - All `rounded-lg transition-colors` buttons: Added `focus:ring-2 focus:ring-purple-500 focus:outline-none`
 - All `rounded-md transition-all` buttons: Added `focus:ring-2 focus:ring-purple-500 focus:outline-none`
 - Search input (`placeholder:text-slate-500`): Added `focus:ring-2 focus:ring-purple-500 focus:outline-none`
@@ -189,6 +250,7 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 **File:** `components/BubbleMap.tsx`
 
 **Border Changes:**
+
 - Lines 532, 558, 565, 574, 626, 627, 633, 640, 648, 664, 696, 720: `border-space-800/50` → `border-space-700`
 - Line 672: `border-purple-500/50` → `border-purple-500`
 - Lines 677, 680, 683, 686, 689: `border-space-800/50 hover:border-space-600/50` → `border-space-600 hover:border-space-500`
@@ -197,6 +259,7 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 - Locate user button (line 672): `hover:border-purple-400/50` → `hover:border-purple-400`
 
 **Focus Ring Additions:**
+
 - All `rounded-lg transition-all` buttons: Added `focus:ring-2 focus:ring-purple-500 focus:outline-none`
 - All `rounded-md transition-all` buttons: Added `focus:ring-2 focus:ring-purple-500 focus:outline-none`
 
@@ -209,12 +272,14 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 **File:** `components/Dashboard.tsx`
 
 **Border Changes:**
+
 - Line 413: `border-space-800/50 hover:border-space-600/50` → `border-space-700 hover:border-space-600`
 - Lines 453, 507, 511, 515, 547, 600, 612, 692, 693: All `/50` → solid
 - Lines 711, 725, 739, 753: `border-space-800/50 focus:border-space-600/50` → `border-space-700 focus:border-purple-500`
 - Focus states updated: `focus:outline-none focus:border-purple-500` → `focus:ring-2 focus:ring-purple-500 focus:outline-none`
 
 **Focus Ring Updates:**
+
 - All input fields: Replaced `focus:border-*` with `focus:ring-2 focus:ring-purple-500 focus:outline-none`
 
 **Total Changes:** 12+ borders + focus rings
@@ -226,6 +291,7 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 **File:** `components/WalletSidebar.tsx`
 
 **Border Changes:**
+
 - Lines 168, 226, 235, 277, 293, 295, 327, 362, 381: `border-space-800/50` → `border-space-700`
 - Line 174: `border-space-600/50` → `border-space-600`
 - Lines 246, 306: `border-space-700/30` → `border-space-700/20`
@@ -278,6 +344,7 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 **File:** `components/ErrorBoundary.tsx`
 
 **Border Changes:**
+
 - Lines 41, 49, 73, 81: `border-red-500/50` → `border-red-500/30`
 
 **Note:** Error messages keep `/30` opacity for a softer, less alarming appearance
@@ -289,6 +356,7 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 ## Migration Statistics
 
 ### Files Modified: 9
+
 1. `index.css` (Foundation)
 2. `components/Navbar.tsx`
 3. `App.tsx`
@@ -300,6 +368,7 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 9. `components/ErrorBoundary.tsx`
 
 ### Border Changes by Type
+
 - **Space Colors (`space-700`, `space-600`, `space-800`)**: ~60 instances
   - `border-space-800/50` → `border-space-700`: ~40 instances
   - `border-space-700/50` → `border-space-700`: ~12 instances
@@ -313,6 +382,7 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
   - `border-blue-400/30` → `border-blue-400/20`
 
 ### Focus Rings Added: 20+
+
 - Navigation buttons: 5 rings
 - App.tsx buttons/inputs: 8+ rings
 - BubbleMap controls: 5+ rings
@@ -320,6 +390,7 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 - WalletSidebar: 2+ rings
 
 ### Build Verification
+
 - **Before:** Built successfully (opacity system)
 - **After:** Built successfully (solid system)
 - **Build Time:** ~19 seconds
@@ -331,20 +402,24 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 ## Visual Design Changes
 
 ### Border Visibility
+
 - **Before:** Semi-transparent, subtle borders (50% opacity)
 - **After:** Solid, clearly visible borders (100% opacity)
 
 **Example:**
+
 - Before: Card with `border-space-800/50` (rgba(21, 25, 43, 0.5))
 - After: Card with `border-space-700` (#1F253D)
 
 ### Focus Indicators
+
 - **Before:** Golden outline (`rgba(186, 159, 51, 0.5)`)
 - **After:** Purple ring (`#a855f7`)
 
 **Accessibility:** Both meet WCAG AA contrast requirements. Purple provides better visibility against dark backgrounds.
 
 ### Interactive Elements
+
 - **Buttons:** Now show `focus:ring-2 focus:ring-purple-500` on keyboard navigation
 - **Inputs:** Show purple ring on focus
 - **Hover States:** Solid colors instead of semi-transparent
@@ -356,23 +431,28 @@ Successfully migrated the entire platform from semi-transparent opacity-based bo
 The following opacity levels are intentionally retained for specific purposes:
 
 ### `/95` opacity
+
 - Background transparency: `bg-space-900/95` (Navbar backdrop)
 
 ### `/90` opacity
+
 - Background transparency: `bg-space-800/90` (removed, converted to solid)
 
 ### `/30` opacity
+
 - Notification borders: `border-green-500/30`, `border-red-500/30`, `border-orange-500/30`, `border-blue-400/30`
 - Error messages: `border-red-500/30`
 - NFT badges: `border-purple-600/20` (even softer)
 - Tags/labels: `border-space-700/20`, `border-purple-500/20`
 
 ### `/20` opacity
+
 - Background overlays: `bg-purple-600/20`, `bg-red-500/20`
 - Subtle badges: `border-purple-600/20`
 - Gradient panels: `border-purple-500/20`
 
 ### `/10` opacity
+
 - Background highlights: `bg-purple-500/10`, `bg-green-500/10`, `bg-red-500/10`, `bg-blue-500/10`
 
 **Rationale:** These softer opacity levels are used for decorative elements, notifications, and backgrounds where subtlety is desired. They are NOT used for primary borders on interactive components.
@@ -382,6 +462,7 @@ The following opacity levels are intentionally retained for specific purposes:
 ## Testing & Verification
 
 ### Visual Checks Performed
+
 ✅ All borders are solid and visible
 ✅ No white borders remain
 ✅ Borders match backup version appearance
@@ -390,6 +471,7 @@ The following opacity levels are intentionally retained for specific purposes:
 ✅ Dark mode compatibility maintained
 
 ### Build Verification
+
 ```bash
 cd "/Volumes/DEV Projects/Dogechain Bubblemaps"
 npm run build
@@ -398,10 +480,12 @@ npm run build
 ```
 
 ### Browser Testing
+
 - Tested in: Chrome (Chromium-based)
 - Expected compatibility: Firefox, Safari, Edge
 
 ### Accessibility Verification
+
 - [x] Focus indicators visible on all interactive elements
 - [x] Focus rings meet WCAG AA contrast (3:1 minimum)
 - [x] Keyboard navigation works throughout
@@ -431,6 +515,7 @@ npm run build
 ```
 
 **Note:** Git version control provides easier rollback:
+
 ```bash
 git checkout HEAD~1 -- .
 npm run build
@@ -441,20 +526,24 @@ npm run build
 ## Known Issues & Considerations
 
 ### 1. Pre-existing CSS Warning
+
 **File:** `index.css` (line 141)
 **Warning:** `'not-sr-only' is not recognized as a valid pseudo-class`
 **Status:** Pre-existing, not caused by this migration
 **Impact:** Minimal (only affects screen reader visibility)
 
 ### 2. Focus Ring Prominence
+
 **Observation:** Purple rings are more visible than golden outlines
 **User Feedback:** If rings are too prominent, adjust:
+
 ```css
 /* In components, change ring-2 to ring-1 */
 focus:ring-1 focus:ring-purple-500 /* Subtler */
 ```
 
 ### 3. Border Consistency
+
 **Status:** All borders now use solid colors (except intentionally soft elements)
 **Result:** Visual consistency improved throughout the platform
 
@@ -463,7 +552,9 @@ focus:ring-1 focus:ring-purple-500 /* Subtler */
 ## Future Considerations
 
 ### 1. Design System Tokens
+
 Consider defining border weights as design tokens:
+
 ```css
 :root {
   --border-primary: var(--color-space-700);
@@ -474,9 +565,11 @@ Consider defining border weights as design tokens:
 ```
 
 ### 2. Component Library
+
 Extract common button/input patterns into reusable components to ensure consistent focus ring application.
 
 ### 3. Accessibility Enhancements
+
 - Add `:focus-within` for form containers
 - Consider `:focus-visible` enhancement for mouse-only focus
 - Test with screen readers for focus announcement
@@ -497,41 +590,50 @@ Successfully migrated the Dogechain BubbleMaps platform from opacity-based borde
 ## Appendix: File-by-File Change Log
 
 ### index.css
+
 - **Lines Removed:** 80+ (all opacity border utilities)
 - **Lines Added:** 20 (solid border utilities)
 - **Focus System:** Completely replaced (golden → purple)
 
 ### components/Navbar.tsx
+
 - **Borders Updated:** 4
 - **Focus Rings Added:** 5
 - **Functions Modified:** 2 (navClass, mobileNavClass)
 
 ### App.tsx
+
 - **Borders Updated:** 11+
 - **Focus Rings Added:** 8+
 - **Opacity Adjusted:** 2 (kept at /20 for softness)
 
 ### components/BubbleMap.tsx
+
 - **Borders Updated:** 16+
 - **Focus Rings Added:** 5+
 - **Color Replacements:** 1 (slate-500 → space-600)
 
 ### components/Dashboard.tsx
+
 - **Borders Updated:** 12+
 - **Focus Replaced:** All with ring utilities
 
 ### components/WalletSidebar.tsx
+
 - **Borders Updated:** 15+
 - **Opacity Levels:** Mixed (/20, /30, solid)
 
 ### components/Footer.tsx
+
 - **Borders Updated:** 3
 
 ### components/Toast.tsx
+
 - **Borders Updated:** 4
 - **Opacity:** All kept at /30 for notifications
 
 ### components/ErrorBoundary.tsx
+
 - **Borders Updated:** 4
 - **Opacity:** All kept at /30 for errors
 

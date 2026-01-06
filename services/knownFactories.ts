@@ -40,7 +40,7 @@ export const KNOWN_FACTORIES: DEXFactory[] = [
     initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
     deployBlock: 0, // TODO: Find actual deployment block
     status: "ACTIVE",
-    description: "Formerly Dogeshrek - Uniswap V2 fork on Dogechain"
+    description: "Formerly Dogeshrek - Uniswap V2 fork on Dogechain",
   },
   {
     address: "0xC3550497E591Ac6ed7a7E03ffC711CfB7412E57F",
@@ -50,7 +50,7 @@ export const KNOWN_FACTORIES: DEXFactory[] = [
     initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
     deployBlock: 0, // TODO: Find actual deployment block
     status: "ACTIVE",
-    description: "QuickSwap V2 on Dogechain - 2nd largest DEX by volume (~45% market share)"
+    description: "QuickSwap V2 on Dogechain - 2nd largest DEX by volume (~45% market share)",
   },
   {
     address: "0xf4bc79d32a7defd87c8a9c100fd83206bbf19af5",
@@ -60,7 +60,7 @@ export const KNOWN_FACTORIES: DEXFactory[] = [
     initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
     deployBlock: 0, // TODO: Find actual deployment block
     status: "ACTIVE",
-    description: "First native DEX on Dogechain - discovered via pair contract queries"
+    description: "First native DEX on Dogechain - discovered via pair contract queries",
   },
   {
     address: "0xd27d9d61590874bf9ee2a19b27e265399929c9c3",
@@ -70,7 +70,8 @@ export const KNOWN_FACTORIES: DEXFactory[] = [
     initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
     deployBlock: 0, // TODO: Find actual deployment block
     status: "ACTIVE",
-    description: "DogeSwap V1 - LARGEST DEX on Dogechain (~54.6% market share) - discovered via OMNOM/WWDOGE pair"
+    description:
+      "DogeSwap V1 - LARGEST DEX on Dogechain (~54.6% market share) - discovered via OMNOM/WWDOGE pair",
   },
   {
     address: "0x72ca245B078966578aB45e89067cc1245E3186c0",
@@ -80,7 +81,7 @@ export const KNOWN_FACTORIES: DEXFactory[] = [
     initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
     deployBlock: 0,
     status: "ACTIVE",
-    description: "DogeSwap V2 - Updated factory contract (user-provided address)"
+    description: "DogeSwap V2 - Updated factory contract (user-provided address)",
   },
   {
     address: "0xAaA04462e35f3e40D798331657cA015169e005d7",
@@ -90,7 +91,7 @@ export const KNOWN_FACTORIES: DEXFactory[] = [
     initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
     deployBlock: 0,
     status: "ACTIVE",
-    description: "YodeSwap AMM on Dogechain"
+    description: "YodeSwap AMM on Dogechain",
   },
   {
     address: "0xc7c86B4f940Ff1C13c736b697e3FbA5a6Bc979F9",
@@ -100,7 +101,7 @@ export const KNOWN_FACTORIES: DEXFactory[] = [
     initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
     deployBlock: 0,
     status: "ACTIVE",
-    description: "Wojak Finance DEX on Dogechain"
+    description: "Wojak Finance DEX on Dogechain",
   },
   // Additional factories will be added here as they are discovered
   // Priority targets:
@@ -120,18 +121,14 @@ export const PAIR_CREATED_EVENT_SIGNATURE =
  * Helper function to get factory by address
  */
 export function getFactoryByAddress(address: string): DEXFactory | undefined {
-  return KNOWN_FACTORIES.find(
-    (factory) => factory.address.toLowerCase() === address.toLowerCase()
-  );
+  return KNOWN_FACTORIES.find((factory) => factory.address.toLowerCase() === address.toLowerCase());
 }
 
 /**
  * Helper function to check if address is a known factory
  */
 export function isKnownFactory(address: string): boolean {
-  return KNOWN_FACTORIES.some(
-    (factory) => factory.address.toLowerCase() === address.toLowerCase()
-  );
+  return KNOWN_FACTORIES.some((factory) => factory.address.toLowerCase() === address.toLowerCase());
 }
 
 /**

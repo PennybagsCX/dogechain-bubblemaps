@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 /**
  * Validation schemas for Dogechain BubbleMaps
@@ -6,80 +6,86 @@ import { z } from 'zod';
  */
 
 // Ethereum/Dogechain address validation (checksummed)
-export const addressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/, {
-  message: 'Invalid address format. Must be a valid 0x-prefixed hexadecimal address.'
-})
-.transform((val) => val.toLowerCase().trim());
+export const addressSchema = z
+  .string()
+  .regex(/^0x[a-fA-F0-9]{40}$/, {
+    message: "Invalid address format. Must be a valid 0x-prefixed hexadecimal address.",
+  })
+  .transform((val) => val.toLowerCase().trim());
 
 // Token/NFT name validation
-export const tokenNameSchema = z.string()
-  .min(1, 'Token name is required')
-  .max(100, 'Token name too long')
+export const tokenNameSchema = z
+  .string()
+  .min(1, "Token name is required")
+  .max(100, "Token name too long")
   .transform((val) => val.trim())
   .transform((val) => {
     // Remove any HTML tags to prevent XSS
-    return val.replace(/<[^>]*>/g, '');
+    return val.replace(/<[^>]*>/g, "");
   });
 
 // Token symbol validation
-export const tokenSymbolSchema = z.string()
-  .min(1, 'Token symbol is required')
-  .max(20, 'Token symbol too long')
+export const tokenSymbolSchema = z
+  .string()
+  .min(1, "Token symbol is required")
+  .max(20, "Token symbol too long")
   .transform((val) => val.trim().toUpperCase())
   .transform((val) => {
     // Remove any HTML tags to prevent XSS
-    return val.replace(/<[^>]*>/g, '');
+    return val.replace(/<[^>]*>/g, "");
   });
 
 // Search query validation
-export const searchQuerySchema = z.string()
-  .min(1, 'Search query is required')
-  .max(200, 'Search query too long')
+export const searchQuerySchema = z
+  .string()
+  .min(1, "Search query is required")
+  .max(200, "Search query too long")
   .transform((val) => val.trim())
   .transform((val) => {
     // Remove any HTML tags to prevent XSS
-    return val.replace(/<[^>]*>/g, '');
+    return val.replace(/<[^>]*>/g, "");
   });
 
 // Wallet address input validation (user-provided)
-export const walletAddressInputSchema = z.string()
-  .min(1, 'Wallet address is required')
-  .max(42, 'Invalid address length')
+export const walletAddressInputSchema = z
+  .string()
+  .min(1, "Wallet address is required")
+  .max(42, "Invalid address length")
   .transform((val) => val.trim())
   .transform((val) => {
     // Remove any HTML tags to prevent XSS
-    return val.replace(/<[^>]*>/g, '');
+    return val.replace(/<[^>]*>/g, "");
   })
   .refine((val) => /^0x[a-fA-F0-9]{40}$/.test(val), {
-    message: 'Invalid wallet address format'
+    message: "Invalid wallet address format",
   })
   .transform((val) => val.toLowerCase());
 
 // Asset type validation
-export const assetTypeSchema = z.enum(['TOKEN', 'NFT'], {
-  message: 'Invalid asset type. Must be TOKEN or NFT.'
+export const assetTypeSchema = z.enum(["TOKEN", "NFT"], {
+  message: "Invalid asset type. Must be TOKEN or NFT.",
 });
 
 // Alert configuration validation
 export const alertConfigSchema = z.object({
   walletAddress: addressSchema,
-  threshold: z.number().min(0).max(1000000000, 'Threshold out of range'),
-  condition: z.enum(['above', 'below'], {
-    message: 'Invalid condition. Must be above or below.'
+  threshold: z.number().min(0).max(1000000000, "Threshold out of range"),
+  condition: z.enum(["above", "below"], {
+    message: "Invalid condition. Must be above or below.",
   }),
-  assetType: assetTypeSchema.optional().default('TOKEN')
+  assetType: assetTypeSchema.optional().default("TOKEN"),
 });
 
 // Pagination parameters
 export const paginationSchema = z.object({
   page: z.number().int().min(1).default(1),
-  limit: z.number().int().min(1).max(100).default(20)
+  limit: z.number().int().min(1).max(100).default(20),
 });
 
 // Combined search parameters validation
 export const searchParamsSchema = z.object({
   query: searchQuerySchema,
-  type: assetTypeSchema.optional().default('TOKEN')
+  type: assetTypeSchema.optional().default("TOKEN"),
 });
 
 /**
@@ -88,12 +94,12 @@ export const searchParamsSchema = z.object({
  */
 export const sanitizeHTML = (html: string): string => {
   return html
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .replace(/\//g, '&#x2F;');
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;")
+    .replace(/\//g, "&#x2F;");
 };
 
 /**
@@ -104,7 +110,7 @@ export const validateTokenAddress = (address: string): string => {
     return addressSchema.parse(address);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw new Error(error.issues[0]?.message || 'Invalid token address');
+      throw new Error(error.issues[0]?.message || "Invalid token address");
     }
     throw error;
   }
@@ -118,7 +124,7 @@ export const validateWalletAddress = (address: string): string => {
     return walletAddressInputSchema.parse(address);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw new Error(error.issues[0]?.message || 'Invalid wallet address');
+      throw new Error(error.issues[0]?.message || "Invalid wallet address");
     }
     throw error;
   }
@@ -132,7 +138,7 @@ export const validateSearchQuery = (query: string): string => {
     return searchQuerySchema.parse(query);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw new Error(error.issues[0]?.message || 'Invalid search query');
+      throw new Error(error.issues[0]?.message || "Invalid search query");
     }
     throw error;
   }
@@ -146,7 +152,7 @@ export const validateAlertConfig = (config: unknown) => {
     return alertConfigSchema.parse(config);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw new Error(error.issues[0]?.message || 'Invalid alert configuration');
+      throw new Error(error.issues[0]?.message || "Invalid alert configuration");
     }
     throw error;
   }

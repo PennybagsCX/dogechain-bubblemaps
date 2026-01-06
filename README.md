@@ -83,23 +83,27 @@ npm run preview
 ## 🛠️ Tech Stack
 
 **Frontend Framework**
+
 - React 19.2.0 - UI framework
 - TypeScript 5.8.2 - Type safety
 - Vite 6.2.0 - Build tool
 
 **Core Libraries**
+
 - D3.js 7.9.0 - Data visualization
 - Dexie 4.2.1 - IndexedDB wrapper
 - Zod 4.3.4 - Input validation
 - Tailwind CSS 4.1.18 - Styling
 
 **Developer Tools**
+
 - ESLint + Prettier - Code quality
 - Vitest - Testing framework
 - Husky - Git hooks
 - TypeScript Strict Mode - Type safety
 
 **Infrastructure**
+
 - Vercel - Deployment platform
 - GitHub Actions - CI/CD pipeline
 - Sentry - Error tracking
@@ -127,11 +131,11 @@ cp .env.example .env.local
 
 **Required Variables:**
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `SENTRY_DSN` | Error tracking DSN | Optional |
-| `NODE_ENV` | Environment mode | `development` |
-| `FEATURE_AI_ENABLED` | Enable AI features | `false` |
+| Variable             | Description        | Default       |
+| -------------------- | ------------------ | ------------- |
+| `SENTRY_DSN`         | Error tracking DSN | Optional      |
+| `NODE_ENV`           | Environment mode   | `development` |
+| `FEATURE_AI_ENABLED` | Enable AI features | `false`       |
 
 **See [.env.example](.env.example)** for all available options.
 
@@ -164,6 +168,7 @@ dogechain-bubblemaps/
 ### Bubble Map Visualization
 
 Powered by D3.js force-directed graphs:
+
 - Interactive node positioning
 - Color-coded by holding size
 - Real-time physics simulation
@@ -173,6 +178,7 @@ Powered by D3.js force-directed graphs:
 ### Wallet Scanner
 
 Multi-phase analysis:
+
 1. **Quick Scan** - Basic balance and token info
 2. **Deep Scan** - Full transaction history
 3. **Connection Analysis** - Related wallets
@@ -219,6 +225,7 @@ Multi-phase analysis:
 4. Deploy!
 
 **Or manually:**
+
 ```bash
 npm run build
 # Upload 'dist/' folder to hosting provider
@@ -262,12 +269,14 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 
 **What you CAN do:**
+
 - ✅ View, study, and learn from the code
 - ✅ Use for personal projects and education
 - ✅ Fork and modify for your own use
 - ✅ Share with others (with attribution)
 
 **What you CANNOT do:**
+
 - ❌ Use for commercial purposes
 - ❌ Sell the code or derivatives
 - ❌ Use for commercial gain

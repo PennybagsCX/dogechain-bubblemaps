@@ -23,6 +23,7 @@ Your Dogechain Bubblemaps project is **already secure** for public repository de
 ### What's Protected
 
 **`.env.local` (NOT in Git)**
+
 ```bash
 # This file is in .gitignore - NEVER committed
 SENTRY_DSN=https://abc123@sentry.io/456
@@ -30,6 +31,7 @@ GEMINI_API_KEY=AIzaSyCabc123xyz...
 ```
 
 **`.env.example` (Committed to Git)**
+
 ```bash
 # This template IS in Git - safe to share
 SENTRY_DSN=your_sentry_dsn_here
@@ -64,6 +66,7 @@ When you make your repository public, users will see:
 ### Example: What Users See
 
 **In your public repository:**
+
 ```bash
 # .env.example (SAFE - users see this)
 GEMINI_API_KEY=your_gemini_api_key_here
@@ -71,6 +74,7 @@ SENTRY_DSN=your_sentry_dsn_here
 ```
 
 **On your machine (NOT in Git):**
+
 ```bash
 # .env.local (PRIVATE - users don't see this)
 GEMINI_API_KEY=AIzaSyCabc123xyz...
@@ -78,6 +82,7 @@ SENTRY_DSN=https://abc123@sentry.io/456
 ```
 
 **In Vercel dashboard (NOT in Git):**
+
 ```
 Environment Variables:
 NODE_ENV = production
@@ -95,8 +100,8 @@ GEMINI_API_KEY = AIzaSyCabc123xyz...
 
 ```typescript
 const isAIEnabled = (): boolean => {
-    // AI features require backend proxy - disabled for security
-    return false;
+  // AI features require backend proxy - disabled for security
+  return false;
 };
 ```
 
@@ -109,10 +114,11 @@ If you put API keys in environment variables and use them directly in React code
 ```typescript
 // ❌ INSECURE - Don't do this!
 const apiKey = import.meta.env.GEMINI_API_KEY;
-fetch('https://generativelanguage.googleapis.com/v1/models/...' + apiKey);
+fetch("https://generativelanguage.googleapis.com/v1/models/..." + apiKey);
 ```
 
 **During build process:**
+
 1. Vite includes environment variables in the JavaScript bundle
 2. Anyone can inspect your site's JavaScript in browser DevTools
 3. API keys are visible in plain text in the bundled code
@@ -127,12 +133,14 @@ fetch('https://generativelanguage.googleapis.com/v1/models/...' + apiKey);
 ### Option 1: Keep AI Disabled (Current State) ✅
 
 **Pros:**
+
 - Zero security risk
 - App works perfectly without AI
 - No API costs
 - Simpler architecture
 
 **Cons:**
+
 - No AI-powered features
 - Missed opportunities for intelligent analysis
 
@@ -151,12 +159,14 @@ User's Browser → Your Vercel Serverless Function → Gemini API
 ```
 
 **Pros:**
+
 - API key never exposed to browser
 - Users can use AI features safely
 - You can add rate limiting server-side
 - Monitor and control usage
 
 **Cons:**
+
 - Requires implementation work (2-4 hours)
 - Need Vercel Pro plan for unlimited functions (free tier has limits)
 
@@ -184,22 +194,19 @@ Browser → Your API → Gemini API (API key hidden on server)
 
 ```typescript
 // api/gemini.ts - Vercel Serverless Function
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Only allow POST requests
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   // Get API key from environment variables (server-side only!)
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
-    return res.status(500).json({ error: 'API key not configured' });
+    return res.status(500).json({ error: "API key not configured" });
   }
 
   try {
@@ -209,17 +216,21 @@ export default async function handler(
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`,
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: prompt
-            }]
-          }]
-        })
+          contents: [
+            {
+              parts: [
+                {
+                  text: prompt,
+                },
+              ],
+            },
+          ],
+        }),
       }
     );
 
@@ -227,10 +238,9 @@ export default async function handler(
 
     // Return only the AI response (API key stays on server!)
     return res.status(200).json(data);
-
   } catch (error) {
-    console.error('Gemini API error:', error);
-    return res.status(500).json({ error: 'Failed to process request' });
+    console.error("Gemini API error:", error);
+    return res.status(500).json({ error: "Failed to process request" });
   }
 }
 ```
@@ -251,23 +261,22 @@ export default async function handler(
 // Update the service to call YOUR serverless function
 export async function generateAnalysis(prompt: string): Promise<string> {
   try {
-    const response = await fetch('/api/gemini', {
-      method: 'POST',
+    const response = await fetch("/api/gemini", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ prompt }),
     });
 
     if (!response.ok) {
-      throw new Error('Failed to generate analysis');
+      throw new Error("Failed to generate analysis");
     }
 
     const data = await response.json();
     return data.candidates[0].content.parts[0].text;
-
   } catch (error) {
-    console.error('Error generating analysis:', error);
+    console.error("Error generating analysis:", error);
     throw error;
   }
 }
@@ -314,12 +323,14 @@ git push origin main
 ### ✅ DO
 
 1. **Keep `.env.local` in `.gitignore`**
+
    ```gitignore
    .env.local
    .env.*.local
    ```
 
 2. **Use `.env.example` as template only**
+
    ```bash
    # .env.example
    API_KEY=your_api_key_here  # Placeholder, not real key
@@ -331,6 +342,7 @@ git push origin main
    - Never include API keys in client-side code
 
 4. **Use environment-specific variables**
+
    ```bash
    # Production: Vercel environment variables
    # Development: .env.local (not in Git)
@@ -344,6 +356,7 @@ git push origin main
 ### ❌ DON'T
 
 1. **Never commit `.env.local`**
+
    ```bash
    # Check what's being committed
    git status
@@ -351,9 +364,10 @@ git push origin main
    ```
 
 2. **Never hardcode API keys**
+
    ```typescript
    // ❌ BAD
-   const apiKey = 'AIzaSyCabc123...'; // Don't do this!
+   const apiKey = "AIzaSyCabc123..."; // Don't do this!
 
    // ✅ GOOD
    const apiKey = import.meta.env.GEMINI_API_KEY;
@@ -378,12 +392,14 @@ git push origin main
 ### Why Sentry DSN is Safe
 
 **What it does:**
+
 - Sends error reports to your Sentry dashboard
 - Allows clients to report errors only
 - Cannot read data from your Sentry account
 - Cannot delete or modify your Sentry data
 
 **What it CANNOT do:**
+
 - ❌ Access your Sentry dashboard
 - ❌ Read your project data
 - ❌ Modify your settings
@@ -394,6 +410,7 @@ git push origin main
 ### Example: Public Sentry DSNs
 
 Many major companies have public Sentry DSNs in their open-source code:
+
 - Mozilla Firefox
 - WordPress
 - Next.js
@@ -426,6 +443,7 @@ GEMINI_API_KEY = AIzaSyCabc123...
 ```
 
 **Benefits:**
+
 - Encrypted at rest
 - Never exposed in Git
 - Easy to rotate
@@ -443,6 +461,7 @@ You're using the API key client-side. Move to serverless function (see [Serverle
 ### Problem: `.env.local` accidentally committed
 
 **Solution:**
+
 ```bash
 # Remove from Git history (use with caution!)
 git filter-branch --force --index-filter \
@@ -460,6 +479,7 @@ git commit -m "chore: remove .env.local from version control"
 ### Problem: Serverless function not working on Vercel
 
 **Solution:**
+
 1. Check Vercel function logs
 2. Verify environment variables are set
 3. Ensure function is in `/api/` directory
@@ -468,6 +488,7 @@ git commit -m "chore: remove .env.local from version control"
 ### Problem: API calls failing with 401/403 errors
 
 **Solution:**
+
 1. Verify API key is correct
 2. Check API key has required permissions
 3. Ensure API key is not expired
@@ -493,13 +514,13 @@ git commit -m "chore: remove .env.local from version control"
 
 ### Quick Reference
 
-| What | Safe to Commit? | Why |
-|------|----------------|-----|
-| `.env.local` | ❌ NO | Contains actual secrets |
-| `.env.example` | ✅ YES | Contains placeholders only |
-| Sentry DSN | ✅ YES | Designed to be public |
-| API keys in code | ❌ NO | Will be exposed in bundle |
-| Serverless functions | ✅ YES | API keys server-side |
+| What                 | Safe to Commit? | Why                        |
+| -------------------- | --------------- | -------------------------- |
+| `.env.local`         | ❌ NO           | Contains actual secrets    |
+| `.env.example`       | ✅ YES          | Contains placeholders only |
+| Sentry DSN           | ✅ YES          | Designed to be public      |
+| API keys in code     | ❌ NO           | Will be exposed in bundle  |
+| Serverless functions | ✅ YES          | API keys server-side       |
 
 ---
 

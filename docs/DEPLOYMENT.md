@@ -27,6 +27,7 @@ Complete deployment guide for Dogechain Bubblemaps platform.
 ### 5-Minute Deploy
 
 1. **Push to GitHub**
+
    ```bash
    git push origin main
    ```
@@ -62,6 +63,7 @@ Complete deployment guide for Dogechain Bubblemaps platform.
 **Framework Preset**: Vite (auto-detected)
 
 **Build Settings** (auto-detected):
+
 ```
 Build Command: npm run build
 Output Directory: dist
@@ -73,6 +75,7 @@ Install Command: npm ci
 ### Step 4: Get Deployment URL
 
 Vercel will provide:
+
 ```
 https://dogechain-bubblemaps.vercel.app
 or
@@ -87,10 +90,10 @@ https://dogechain-bubblemaps-[your-username].vercel.app
 
 **Vercel Dashboard** → Project → Settings → Environment Variables
 
-| Variable | Value | Environments |
-|----------|-------|-------------|
-| `NODE_ENV` | `production` | Production, Preview |
-| `SENTRY_DSN` | Your DSN | All |
+| Variable     | Value        | Environments        |
+| ------------ | ------------ | ------------------- |
+| `NODE_ENV`   | `production` | Production, Preview |
+| `SENTRY_DSN` | Your DSN     | All                 |
 
 ### Adding Variables
 
@@ -104,6 +107,7 @@ https://dogechain-bubblemaps-[your-username].vercel.app
 ### Re-deploy After Adding Variables
 
 After adding environment variables:
+
 1. Go to "Deployments" tab
 2. Click "Redeploy"
 3. Or push a new commit
@@ -115,12 +119,14 @@ After adding environment variables:
 ### Configuration Files
 
 **`.github/workflows/ci.yml`** - Continuous Integration
+
 - Linting
 - Type checking
 - Testing
 - Security audit
 
 **`.github/workflows/deploy.yml`** - Automated Deployment
+
 - Triggers on push to `main`
 - Builds and deploys to Vercel
 
@@ -142,6 +148,7 @@ After adding environment variables:
    - Copy "Project ID"
 
 **Add to GitHub:**
+
 1. Repository → Settings → Secrets and variables → Actions
 2. Click "New repository secret"
 3. Add each secret
@@ -149,6 +156,7 @@ After adding environment variables:
 ### Deployment Workflow
 
 **Automatic Deployment:**
+
 ```bash
 git add .
 git commit -m "feat: new feature"
@@ -157,6 +165,7 @@ git push origin main
 ```
 
 **Manual Deployment:**
+
 ```bash
 # Trigger via GitHub Actions UI
 # Repository → Actions → Deploy to Production → Run workflow
@@ -169,6 +178,7 @@ git push origin main
 ### Using Default Vercel URL
 
 Your app is accessible at:
+
 ```
 https://dogechain-bubblemaps.vercel.app
 ```
@@ -178,6 +188,7 @@ https://dogechain-bubblemaps.vercel.app
 ### Adding Custom Domain
 
 **Prerequisites:**
+
 - Purchased domain
 - Access to DNS settings
 
@@ -195,6 +206,7 @@ https://dogechain-bubblemaps.vercel.app
    - Add records:
 
    **A Record** (if using root domain):
+
    ```
    Type: A
    Name: @
@@ -202,6 +214,7 @@ https://dogechain-bubblemaps.vercel.app
    ```
 
    **CNAME Record** (if using subdomain):
+
    ```
    Type: CNAME
    Name: www
@@ -245,6 +258,7 @@ https://dogechain-bubblemaps.vercel.app
 **Problem**: Build fails in Vercel
 
 **Solutions**:
+
 1. Check build logs in Vercel Dashboard
 2. Ensure `package.json` scripts are correct
 3. Verify all dependencies are in `package.json`
@@ -255,6 +269,7 @@ https://dogechain-bubblemaps.vercel.app
 **Problem**: `process.env.VARIABLE` is undefined
 
 **Solutions**:
+
 1. Ensure variable name matches (case-sensitive)
 2. Re-deploy after adding variables
 3. Check variable is added to correct environment
@@ -265,6 +280,7 @@ https://dogechain-bubblemaps.vercel.app
 **Problem**: Page loads but is blank
 
 **Solutions**:
+
 1. Check browser console for errors
 2. Verify `dist/` directory is created
 3. Check `index.html` is in `dist/`
@@ -275,6 +291,7 @@ https://dogechain-bubblemaps.vercel.app
 **Problem**: API requests fail with CORS errors
 
 **Solutions**:
+
 1. Check CSP allows API domain
 2. Verify API URL is correct
 3. Check API is accessible from browser
@@ -285,6 +302,7 @@ https://dogechain-bubblemaps.vercel.app
 **Problem**: Workflow fails in GitHub Actions
 
 **Solutions**:
+
 1. Check secrets are configured correctly
 2. Verify Vercel token is valid
 3. Check workflow logs in Actions tab
@@ -362,6 +380,7 @@ https://dogechain-bubblemaps.vercel.app
 **URL**: https://vercel.com/dashboard
 
 **Metrics to Track**:
+
 - Page views
 - Bandwidth usage
 - Build duration
@@ -373,6 +392,7 @@ https://dogechain-bubblemaps.vercel.app
 **URL**: https://sentry.io
 
 **Metrics to Track**:
+
 - Error rate
 - Performance
 - User impact
@@ -382,12 +402,14 @@ https://dogechain-bubblemaps.vercel.app
 ### Manual Testing
 
 **Daily Checks**:
+
 - Site loads correctly
 - Core features work
 - No console errors
 - API calls succeed
 
 **Weekly Checks**:
+
 - Security headers present
 - SSL certificate valid
 - Performance metrics
@@ -400,11 +422,13 @@ https://dogechain-bubblemaps.vercel.app
 ### If Deployment Fails
 
 **Option 1: Vercel Dashboard**
+
 1. Go to "Deployments" tab
 2. Find previous successful deployment
 3. Click "Promote to Production"
 
 **Option 2: Git Revert**
+
 ```bash
 git revert HEAD
 git push origin main
@@ -412,6 +436,7 @@ git push origin main
 ```
 
 **Option 3: Redeploy Previous**
+
 ```bash
 git checkout <previous-commit-hash>
 git push origin main --force
@@ -424,25 +449,30 @@ git push origin main --force
 ### Vercel-Specific
 
 **Edge Functions**:
+
 - Move static API calls to Edge Functions
 - Reduce cold starts
 
 **Image Optimization**:
+
 - Use Vercel Image Optimization
 - Serve next-gen formats (WebP, AVIF)
 
 **Analytics**:
+
 - Enable Vercel Analytics
 - Monitor Core Web Vitals
 
 ### Application-Level
 
 **Code Splitting** (Already configured):
+
 - Vendor chunks separated
 - Lazy loading enabled
 - Tree shaking active
 
 **Bundle Size**:
+
 - Main bundle: ~369 KB
 - Total initial: ~420 KB
 - Target: < 500 KB ✅
@@ -454,12 +484,14 @@ git push origin main --force
 ### Vercel Free Tier Limits
 
 **Hobby Plan** (Free):
+
 - 100GB bandwidth/month
 - 100GB-hours of execution
 - 6 deployments per day
 - Automatic SSL
 
 **When to Upgrade**:
+
 - Bandwidth exceeds 100GB/month
 - Need more deployments
 - Require edge functions

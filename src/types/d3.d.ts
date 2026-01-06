@@ -1,4 +1,4 @@
-declare module 'd3' {
+declare module "d3" {
   // Minimal surface to satisfy app typings; all are loose any-based.
   export type ZoomTransform = any;
   export type ZoomBehavior<GElement = any, Datum = any> = any;
@@ -26,5 +26,7 @@ declare module 'd3' {
 
   export function max<T>(arr: Iterable<T>, accessor?: (d: T) => number): number | undefined;
   export function min<T>(arr: Iterable<T>, accessor?: (d: T) => number): number | undefined;
-  export function color(value: string): { brighter: (k?: number) => { formatHex: () => string } } | null;
+  export function color(
+    value: string
+  ): { brighter: (k?: number) => { formatHex: () => string } } | null;
 }

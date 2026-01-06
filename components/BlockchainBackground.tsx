@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
 interface BlockchainBackgroundProps {
   className?: string;
@@ -12,7 +12,7 @@ interface Node {
   radius: number;
 }
 
-export const BlockchainBackground: React.FC<BlockchainBackgroundProps> = ({ className = '' }) => {
+export const BlockchainBackground: React.FC<BlockchainBackgroundProps> = ({ className = "" }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number | null>(null);
   const mouseRef = useRef({ x: -1000, y: -1000 });
@@ -24,7 +24,7 @@ export const BlockchainBackground: React.FC<BlockchainBackgroundProps> = ({ clas
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const setCanvasSize = () => {
@@ -104,8 +104,8 @@ export const BlockchainBackground: React.FC<BlockchainBackgroundProps> = ({ clas
       clearIdle();
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseout', handleMouseLeave);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseout", handleMouseLeave);
 
     // Touch support for mobile
     const handleTouchMove = (e: TouchEvent) => {
@@ -121,8 +121,8 @@ export const BlockchainBackground: React.FC<BlockchainBackgroundProps> = ({ clas
       clearIdle();
     };
 
-    window.addEventListener('touchmove', handleTouchMove);
-    window.addEventListener('touchend', handleTouchEnd);
+    window.addEventListener("touchmove", handleTouchMove);
+    window.addEventListener("touchend", handleTouchEnd);
 
     // Animation loop
     const animate = () => {
@@ -181,7 +181,7 @@ export const BlockchainBackground: React.FC<BlockchainBackgroundProps> = ({ clas
         // Draw node
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(147, 51, 234, 0.7)';
+        ctx.fillStyle = "rgba(147, 51, 234, 0.7)";
         ctx.fill();
       });
 
@@ -193,10 +193,10 @@ export const BlockchainBackground: React.FC<BlockchainBackgroundProps> = ({ clas
     // Cleanup
     return () => {
       resizeObserver.disconnect();
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseout', handleMouseLeave);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseout", handleMouseLeave);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
@@ -208,7 +208,7 @@ export const BlockchainBackground: React.FC<BlockchainBackgroundProps> = ({ clas
     <canvas
       ref={canvasRef}
       className={`absolute inset-0 w-full h-full block ${className}`}
-      style={{ pointerEvents: 'none', maxWidth: '100%', maxHeight: '100%' }}
+      style={{ pointerEvents: "none", maxWidth: "100%", maxHeight: "100%" }}
     />
   );
 };

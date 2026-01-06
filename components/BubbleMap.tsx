@@ -34,6 +34,8 @@ interface BubbleMapProps {
   height?: number; // Optional now
   targetWalletId?: string | null; // New: ID of wallet to zoom to
   onRemoveLink?: (link: Link) => void; // New: handler for removing connections
+  onConnectionClick?: (link: Link) => void; // Track selected connection
+  selectedConnectionId?: string | null; // Track selected connection
 }
 
 export const BubbleMap: React.FC<BubbleMapProps> = ({
@@ -46,12 +48,15 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   height: initialHeight,
   targetWalletId,
   onRemoveLink,
+  onConnectionClick,
+  selectedConnectionId,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const settingsRef = useRef<HTMLDivElement>(null);
   const legendRef = useRef<HTMLDivElement>(null);
   const controlsRef = useRef<HTMLDivElement>(null);
+  const mobileControlsRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({
     width: initialWidth || 800,
     height: initialHeight || 600,
@@ -81,7 +86,25 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   // Apply click-outside hooks for menus
   useClickOutside(settingsRef, closeSettings, isSettingsOpen);
   useClickOutside(legendRef, closeLegend, isLegendOpen);
-  useClickOutside(controlsRef, closeControls, areControlsOpen);
+
+  // Custom click-outside handler for controls (checks both desktop and mobile refs)
+  useEffect(() => {
+    if (!areControlsOpen) return;
+
+    const handleClick = (event: Event) => {
+      const isInsideDesktop = controlsRef.current?.contains(event.target as Node);
+      const isInsideMobile = mobileControlsRef.current?.contains(event.target as Node);
+
+      if (!isInsideDesktop && !isInsideMobile) {
+        closeControls();
+      }
+    };
+
+    document.addEventListener("click", handleClick, true);
+    return () => {
+      document.removeEventListener("click", handleClick, true);
+    };
+  }, [areControlsOpen, closeControls]);
 
   // --- LP DETECTION INITIALIZATION ---
   useEffect(() => {
@@ -92,6 +115,10 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   // Keep track of selected index for keyboard nav
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const lastSelectedIdRef = useRef<string | null>(null);
+
+  // Connection selection state
+  const [selectedConnectionId, setSelectedConnectionId] = useState<string | null>(null);
+  const lastSelectedConnectionIdRef = useRef<string | null>(null);
 
   // Helper: apply highlight and label visibility for a given wallet id
   const applySelectionHighlight = (walletId: string | null, showLabels: boolean) => {
@@ -1216,7 +1243,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       {/* --- BOTTOM STACK (MOBILE) --- */}
       <div className="absolute inset-x-0 bottom-4 z-20 flex flex-col items-end gap-3 px-3 md:hidden">
         {/* Controls */}
-        <div ref={controlsRef} className="flex flex-col gap-2 w-full max-w-[240px]">
+        <div ref={mobileControlsRef} className="flex flex-col gap-2 w-full max-w-[240px]">
           <div className="flex items-center gap-2 justify-between">
             <div className="pointer-events-none bg-space-900 border border-space-700 px-3 py-1 rounded-full text-[10px] text-slate-300 flex items-center gap-2 justify-center shadow-lg">
               <span
@@ -1225,7 +1252,11 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               {isPaused ? "Physics Paused" : "Live Physics Engine"}
             </div>
             <button
-              onTouchStart={handleTouchStopPropagation}
+              onTouchEnd={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                setAreControlsOpen((prev) => !prev);
+              }}
               onClick={(e) => {
                 e.stopPropagation();
                 setAreControlsOpen((prev) => !prev);

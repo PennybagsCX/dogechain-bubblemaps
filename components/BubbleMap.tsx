@@ -616,7 +616,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
         // Logic to dim everyone but connected
         nodeSelection.transition().duration(200).attr("opacity", 0.15).style("filter", "none");
-        linkSelection.transition().duration(200).attr("opacity", 0.05);
+        linkSelection.select(".neural-vein").transition().duration(200).attr("opacity", 0.05);
         rankSelection.transition().duration(200).attr("opacity", 0.1);
         labelSelection.transition().duration(200).attr("opacity", 0.1);
 

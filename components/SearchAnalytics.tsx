@@ -11,7 +11,7 @@
  * Data sources: IndexedDB (local) + optional server aggregation
  */
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BarChart3, Search, MousePointerClick, Clock, TrendingUp, Activity, X } from "lucide-react";
 import { getRecentSearches, getTopQueries, getSessionStats } from "../services/searchAnalytics";
 

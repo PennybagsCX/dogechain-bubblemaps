@@ -181,7 +181,7 @@ export async function trackSearchAbandonment(
 async function saveSearchEventLocally(event: SearchAnalyticsEvent): Promise<void> {
   try {
     // Dynamic import to avoid circular dependency
-    const { default: db } = await import("./db");
+    const { db } = await import("./db");
 
     // Check if searchAnalytics store exists (v14+)
     if ("searchAnalytics" in db) {
@@ -203,7 +203,7 @@ async function saveSearchEventLocally(event: SearchAnalyticsEvent): Promise<void
  */
 async function saveClickEventLocally(event: ClickAnalyticsEvent): Promise<void> {
   try {
-    const { default: db } = await import("./db");
+    const { db } = await import("./db");
 
     if ("searchAnalytics" in db) {
       await db.searchAnalytics.add({
@@ -303,7 +303,7 @@ async function sendClickEventToServer(event: ClickAnalyticsEvent): Promise<void>
  */
 export async function getRecentSearches(limit: number = 100): Promise<SearchAnalyticsEvent[]> {
   try {
-    const { default: db } = await import("./db");
+    const { db } = await import("./db");
 
     if (!("searchAnalytics" in db)) {
       return [];

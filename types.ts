@@ -129,7 +129,7 @@ export interface SearchResult {
   name: string;
   symbol: string;
   type: AssetType;
-  source: "local" | "remote" | "recent";
+  source: "local" | "remote" | "recent" | "peer";
   decimals?: number;
   score?: number; // For temporary sorting during search (removed before display)
 }

@@ -263,7 +263,7 @@ async function sendPopularityUpdate(
  */
 async function getPopularityFromDB(tokenAddress: string): Promise<TokenPopularity | null> {
   try {
-    const { default: db } = await import("./db");
+    const { db } = await import("./db");
 
     // Check if tokenPopularity store exists (v15+)
     if (!("tokenPopularity" in db)) {
@@ -305,7 +305,7 @@ async function updatePopularityInDB(
   wasClicked: boolean
 ): Promise<void> {
   try {
-    const { default: db } = await import("./db");
+    const { db } = await import("./db");
 
     if (!("tokenPopularity" in db)) {
       return;
@@ -348,7 +348,7 @@ async function updatePopularityInDB(
  */
 export async function clearExpiredPopularityCache(): Promise<void> {
   try {
-    const { default: db } = await import("./db");
+    const { db } = await import("./db");
 
     if (!("tokenPopularity" in db)) {
       return;

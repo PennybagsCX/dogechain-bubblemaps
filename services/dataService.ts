@@ -1812,6 +1812,22 @@ export const fetchWalletAssetsHybrid = async (
     // Save to cache
     await saveScanCache(walletAddress, finalTokens, finalNfts, metadata);
 
+    // =====================================================
+    // SUBMIT DISCOVERIES TO LEARNING SYSTEM
+    // =====================================================
+    // Async, non-blocking submission to crowdsourced learning system
+    try {
+      const { submitWalletScanDiscoveries } = await import("./learningService");
+      // Fire and forget - don't await or block user experience
+      submitWalletScanDiscoveries(finalTokens, finalNfts, metadata).catch((error) => {
+        // Silent fail - don't disrupt user experience
+        console.warn("[Scanner] Failed to submit discoveries to learning system:", error);
+      });
+    } catch (error) {
+      // Learning service not available or feature disabled
+      console.debug("[Scanner] Learning service unavailable:", error);
+    }
+
     triggerProgress(
       "balance-check",
       100,

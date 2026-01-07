@@ -180,9 +180,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
             currentBalance = await fetchTokenBalance(alert.walletAddress, wDogeAddress, 18);
           }
 
+          // Keep triggered state persistent - once triggered, stay triggered until manually reset
+          const wasTriggered = existingStatus?.triggered || false;
+          const shouldTrigger = hasNewActivity || wasTriggered;
+
           newStatuses[alert.id] = {
             currentValue: currentBalance,
-            triggered: hasNewActivity,
+            triggered: shouldTrigger,
             checkedAt: Date.now(),
             lastSeenTransactions: allSeenTxs,
             newTransactions: hasNewActivity ? newTransactions : undefined,
@@ -396,6 +400,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
     setIsModalOpen(false);
     setEditingAlertId(null);
     setFormData({ name: "", walletAddress: "", tokenAddress: "", threshold: "" });
+  };
+
+  const handleDismissTrigger = (alertId: string) => {
+    setAlertStatuses((prev) => ({
+      ...prev,
+      [alertId]: {
+        ...prev[alertId],
+        triggered: false,
+        checkedAt: Date.now(),
+      },
+    }));
   };
 
   // Export data
@@ -687,13 +702,29 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm font-mono text-slate-300">
+                        <a
+                          href={`https://explorer.dogechain.dog/address/${alert.walletAddress}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm font-mono text-purple-400 hover:text-purple-300 transition-colors inline-flex items-center gap-1"
+                          title="View on Dogechain Explorer"
+                        >
                           {alert.walletAddress.slice(0, 8)}...{alert.walletAddress.slice(-6)}
-                        </div>
+                        </a>
                         {alert.tokenAddress && (
-                          <div className="text-xs text-purple-400 mt-1">
+                          <div className="text-xs text-slate-400 mt-1">
                             Token:{" "}
-                            {alert.tokenSymbol || alert.tokenName || alert.tokenAddress.slice(0, 8)}
+                            <a
+                              href={`https://explorer.dogechain.dog/address/${alert.tokenAddress}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-purple-400 hover:text-purple-300 transition-colors"
+                              title="View token on explorer"
+                            >
+                              {alert.tokenSymbol ||
+                                alert.tokenName ||
+                                alert.tokenAddress.slice(0, 8)}
+                            </a>
                           </div>
                         )}
                       </td>
@@ -715,6 +746,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
                                 ? "event"
                                 : "events"}
                             </span>
+                            {status.triggered && (
+                              <button
+                                onClick={() => handleDismissTrigger(alert.id)}
+                                className="text-xs text-slate-400 hover:text-green-400 transition-colors underline"
+                                title="Dismiss triggered status"
+                              >
+                                Dismiss
+                              </button>
+                            )}
                           </div>
                         ) : (
                           <span className="inline-flex items-center px-2 py-1 text-xs font-bold rounded-full bg-slate-500/20 text-slate-400">
@@ -776,9 +816,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-space-600"
-                  placeholder="e.g., My Wallet Monitor"
+                  placeholder={
+                    formData.tokenAddress ? "e.g., wDOGE Wallet Alert" : "e.g., My Wallet Monitor"
+                  }
                   required
                 />
+                <p className="text-xs text-slate-500 mt-1">
+                  Tip: Include token symbol for clarity, e.g., &quot;wDOGE Alert&quot;
+                </p>
               </div>
 
               <div>

@@ -34,6 +34,7 @@ import {
 } from "./services/dataService";
 import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 import { fetchConnectionDetails } from "./services/connectionService";
+import { startBackgroundSync, stopBackgroundSync } from "./services/backgroundSync";
 
 // Helper functions from dataService (accessed via global scope or re-export)
 const getCachedMetadata = (address: string) => {
@@ -402,6 +403,17 @@ const App: React.FC = () => {
     // Refresh every 15 minutes
     const interval = setInterval(fetchServerTrending, 15 * 60 * 1000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Initialize background sync for learning search system
+  useEffect(() => {
+    // Start background sync
+    startBackgroundSync();
+
+    // Cleanup on unmount
+    return () => {
+      stopBackgroundSync();
+    };
   }, []);
 
   // Save alerts to IndexedDB when they change
@@ -1012,7 +1024,10 @@ const App: React.FC = () => {
 
   const handleConnectWallet = async () => {
     if (typeof (window as any).ethereum === "undefined") {
-      addToast("Please install MetaMask to connect.", "warning");
+      addToast(
+        "Please install MetaMask or your preferred EVM compatible wallet to connect.",
+        "warning"
+      );
       return;
     }
 
@@ -1437,10 +1452,18 @@ const App: React.FC = () => {
       tAddr = token?.address;
       tSym = token?.symbol;
       tName = token?.name;
-      alertName = `${config.type === "WHALE" ? "Whale" : token?.symbol} Watch`;
+      // More descriptive alert name with token symbol
+      if (config.type === "WHALE") {
+        alertName = `Whale Watch - ${token?.symbol || "Token"}`;
+      } else {
+        alertName = `${token?.symbol || "Token"} Movement Alert`;
+      }
       if (config.type === "TOKEN" && !thresh) thresh = 1; // Minimal movement
     } else {
-      alertName = `Wallet Watch`;
+      // For wallet watch, include the token being monitored
+      alertName = token
+        ? `Wallet Watch - ${token.symbol} (${wallet.address.substring(0, 6)}...)`
+        : `Wallet Watch (${wallet.address.substring(0, 6)}...)`;
       thresh = 1;
     }
 
@@ -2364,16 +2387,45 @@ const App: React.FC = () => {
         {/* DASHBOARD VIEW */}
         {view === ViewState.DASHBOARD && (
           <div className="flex flex-col min-h-full">
-            <Dashboard
-              alerts={alerts}
-              statuses={alertStatuses}
-              onUpdateStatuses={setAlertStatuses}
-              onRemoveAlert={handleRemoveAlert}
-              onAddAlert={handleCreateAlert}
-              onUpdateAlert={handleUpdateAlert}
-              triggeredEvents={triggeredEvents}
-              onTriggeredEventsChange={setTriggeredEvents}
-            />
+            {!userAddress ? (
+              <div className="flex-1 flex flex-col items-center justify-center min-h-[60vh] p-8 text-center">
+                <div className="w-20 h-20 bg-space-800 rounded-full flex items-center justify-center mb-6 shadow-xl">
+                  <WalletIcon size={40} className="text-slate-500" />
+                </div>
+                <h2 className="text-2xl font-bold text-white mb-3">Wallet Connection Required</h2>
+                <p className="text-slate-400 max-w-md mb-8">
+                  Please connect your wallet to access the Dashboard and manage your alerts.
+                </p>
+                <button
+                  onClick={handleConnectWallet}
+                  disabled={isConnecting}
+                  className="flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-500 transition-colors font-medium disabled:opacity-50"
+                >
+                  {isConnecting ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" />
+                      Connecting...
+                    </>
+                  ) : (
+                    <>
+                      <WalletIcon size={18} />
+                      Connect Wallet
+                    </>
+                  )}
+                </button>
+              </div>
+            ) : (
+              <Dashboard
+                alerts={alerts}
+                statuses={alertStatuses}
+                onUpdateStatuses={setAlertStatuses}
+                onRemoveAlert={handleRemoveAlert}
+                onAddAlert={handleCreateAlert}
+                onUpdateAlert={handleUpdateAlert}
+                triggeredEvents={triggeredEvents}
+                onTriggeredEventsChange={setTriggeredEvents}
+              />
+            )}
             <div className="mt-auto">
               <Footer />
             </div>

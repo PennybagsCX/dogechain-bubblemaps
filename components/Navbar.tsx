@@ -63,6 +63,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   const handleMobileNav = (view: ViewState) => {
+    // Check if user is trying to access Dashboard without wallet connection
+    if (view === ViewState.DASHBOARD && !userAddress) {
+      // Prompt user to connect wallet
+      onConnectWallet();
+      return;
+    }
     onChangeView(view);
     setIsMobileMenuOpen(false);
   };
@@ -118,8 +124,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
             <button
               onTouchStart={handleTouchStopPropagation}
-              onClick={() => onChangeView(ViewState.DASHBOARD)}
+              onClick={() => handleMobileNav(ViewState.DASHBOARD)}
               className={navClass(ViewState.DASHBOARD)}
+              title={!userAddress ? "Connect wallet to access Dashboard" : undefined}
             >
               <LayoutDashboard size={18} />
               <span>Dashboard</span>

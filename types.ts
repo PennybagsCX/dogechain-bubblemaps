@@ -201,3 +201,50 @@ export interface PeerRecommendation {
   score: number;
   reason: string;
 }
+
+// =====================================================
+// Learning Search System Types
+// =====================================================
+
+export type DiscoverySource =
+  | "wallet_scan"
+  | "whale_enumeration"
+  | "lp_detection"
+  | "user_submission"
+  | "verified_contract"
+  | "blockscout_api";
+
+export interface DiscoveredToken {
+  address: string;
+  name: string;
+  symbol: string;
+  decimals: number;
+  type: AssetType;
+  source: DiscoverySource;
+  confidence: number; // 0-1
+  holderCount?: number;
+  discoveredAt: number;
+}
+
+export interface PendingValidation {
+  id: number;
+  tokenAddress: string;
+  source: DiscoverySource;
+  metadata: DiscoveredToken;
+  priority: number; // 0-10
+  submittedAt: number;
+  validationAttempts: number;
+  lastAttemptAt?: number;
+  status: "pending" | "validating" | "validated" | "rejected";
+}
+
+export interface TokenMergeHistory {
+  id: number;
+  tokenAddress: string;
+  source: DiscoverySource;
+  sourceMetadata: DiscoveredToken;
+  mergedMetadata: DiscoveredToken;
+  mergedAt: number;
+  confidenceScore: number; // 0-1
+  contributorHash: string;
+}

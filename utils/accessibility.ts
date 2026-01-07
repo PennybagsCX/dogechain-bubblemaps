@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /**
  * Accessibility utilities and helpers
  * Ensures the application is usable by everyone

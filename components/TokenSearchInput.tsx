@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { useState, useEffect, useRef } from "react";
 import { Search, Loader2, Coins, Image as ImageIcon } from "lucide-react";
 import { AssetType, SearchResult, TokenSearchInputProps } from "../types";

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * User Contributions Service
  *

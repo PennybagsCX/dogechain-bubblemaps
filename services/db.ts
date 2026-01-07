@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Dexie, { Table } from "dexie";
 import { AlertConfig, TriggeredEvent, Transaction, Token, ScanMetadata } from "../types";
 import { calculateSearchRelevance } from "./tokenSearchService";

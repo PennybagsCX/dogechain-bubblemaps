@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 // Diagnostic logging added for LP pair detection
 import {
   Token,

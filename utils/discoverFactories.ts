@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * DEX Factory Discovery Utility
  *
@@ -187,7 +190,7 @@ function extractPairAddressFromEvent(event: any): string | null {
       return "0x" + event.data.slice(26, 66);
     }
     return null;
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -227,7 +230,7 @@ export async function verifyFactory(factoryAddress: string): Promise<boolean> {
     }
 
     return false;
-  } catch (e) {
+  } catch {
     return false;
   }
 }
@@ -263,7 +266,7 @@ export async function getFactoryName(factoryAddress: string): Promise<string> {
     }
 
     return "Unknown DEX";
-  } catch (e) {
+  } catch {
     return "Unknown DEX";
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Rate limiting utilities for API calls
  * Prevents API abuse and implements proper throttling

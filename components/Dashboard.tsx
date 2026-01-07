@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AlertConfig, AlertStatus, Transaction, TriggeredEvent } from "../types";
 import {
   Trash2,

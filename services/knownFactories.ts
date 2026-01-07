@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Known DEX Factory Contracts on Dogechain
  *

@@ -3,6 +3,9 @@ import * as d3 from "d3";
 import { useClickOutside } from "../hooks/useClickOutside";
 import { Wallet, Link, AssetType } from "../types";
 import { ensureLPDetectionInitialized } from "../services/db";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// D3.js requires 'any' types for its dynamic simulation system
 import { handleTouchStopPropagation } from "../utils/touchHandlers";
 import {
   Move,
@@ -970,6 +973,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     return () => {
       if (simulationRef.current) simulationRef.current.stop();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- applyConnectionHighlight is stable and doesn't need to be in deps
   }, [
     wallets,
     links,

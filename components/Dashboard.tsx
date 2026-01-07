@@ -625,20 +625,20 @@ export const Dashboard: React.FC<DashboardProps> = ({
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-white truncate">
+                          <a
+                            href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm font-medium text-white hover:text-purple-400 transition-colors truncate block"
+                            title="View transaction on Dogechain Explorer"
+                          >
                             {tx.value.toLocaleString()} {tx.tokenSymbol || "tokens"}
-                          </p>
+                          </a>
                           <p className="text-xs text-slate-500">
                             {isIncoming ? "From" : "To"}:{" "}
-                            <a
-                              href={`https://explorer.dogechain.dog/address/${isIncoming ? tx.from : tx.to}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-purple-400 hover:text-purple-300 transition-colors font-mono"
-                              title="View on Dogechain Explorer"
-                            >
+                            <span className="font-mono">
                               {isIncoming ? tx.from.slice(0, 10) : tx.to.slice(0, 10)}...
-                            </a>
+                            </span>
                           </p>
                         </div>
                       </div>

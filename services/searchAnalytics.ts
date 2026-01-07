@@ -159,8 +159,8 @@ export async function trackResultClick(
  * @param sessionId - Session identifier
  */
 export async function trackSearchAbandonment(
-  query: string,
-  resultsShown: number,
+  _query: string,
+  _resultsShown: number,
   _sessionId: string = getSessionId()
 ): Promise<void> {
   try {

@@ -34,7 +34,6 @@ import {
 } from "./services/dataService";
 import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 import { fetchConnectionDetails } from "./services/connectionService";
-import { startBackgroundSync, stopBackgroundSync } from "./services/backgroundSync";
 
 // Helper functions from dataService (accessed via global scope or re-export)
 const getCachedMetadata = (address: string) => {
@@ -403,17 +402,6 @@ const App: React.FC = () => {
     // Refresh every 15 minutes
     const interval = setInterval(fetchServerTrending, 15 * 60 * 1000);
     return () => clearInterval(interval);
-  }, []);
-
-  // Initialize background sync for learning search system
-  useEffect(() => {
-    // Start background sync
-    startBackgroundSync();
-
-    // Cleanup on unmount
-    return () => {
-      stopBackgroundSync();
-    };
   }, []);
 
   // Save alerts to IndexedDB when they change

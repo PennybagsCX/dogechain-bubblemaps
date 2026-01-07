@@ -403,14 +403,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
   };
 
   const handleDismissTrigger = (alertId: string) => {
-    setAlertStatuses((prev) => ({
-      ...prev,
+    onUpdateStatuses({
+      ...statuses,
       [alertId]: {
-        ...prev[alertId],
+        ...statuses[alertId],
         triggered: false,
         checkedAt: Date.now(),
       },
-    }));
+    });
   };
 
   // Export data

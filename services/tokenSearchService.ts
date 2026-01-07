@@ -618,60 +618,13 @@ export async function searchTokensHybrid(
     remoteResults = await searchTokensBlockscout(query, type, limit - localResults.length);
   }
 
-  // 3. Learned data from server (NEW)
-  let learnedResults: SearchResult[] = [];
-  if (includeLearned) {
-    try {
-      // Dynamic import to avoid circular dependency
-      const { fetchMergedTokenIndex } = await import("./learningService");
-      const learnedTokens = await fetchMergedTokenIndex(type);
-
-      // Score learned tokens
-      const queryLower = query.toLowerCase();
-      learnedResults = learnedTokens
-        .map((token) => ({
-          address: token.address,
-          name: token.name,
-          symbol: token.symbol,
-          type: type,
-          source: "peer" as const, // Mark as crowdsourced
-          decimals: token.decimals,
-          score: calculateSearchRelevance(token, query, queryLower),
-        }))
-        .filter((r) => r.score > 30) // Only keep decent matches
-        .sort((a, b) => (b.score || 0) - (a.score || 0))
-        .slice(0, limit);
-    } catch (error) {
-      // Silent fail - learned data is optional enhancement
-      console.warn("[Search] Failed to fetch learned data:", error);
-    }
-  }
-
-  // 4. Merge and deduplicate with score-aware logic
+  // 3. Merge and deduplicate with score-aware logic
   const allResultsMap = new Map<string, SearchResult>();
   const queryLower = query.toLowerCase();
 
   // Add local results first (prioritize local)
   localResults.forEach((r) => {
     allResultsMap.set(r.address.toLowerCase(), r);
-  });
-
-  // Add learned results if not already present OR if learned has higher score
-  learnedResults.forEach((r) => {
-    const key = r.address.toLowerCase();
-    const existing = allResultsMap.get(key);
-
-    if (!existing) {
-      allResultsMap.set(key, { ...r, source: "peer" });
-    } else {
-      // Compare scores - learned might be more relevant
-      const existingScore = calculateSearchRelevance(existing, query, queryLower);
-      const learnedScore = calculateSearchRelevance(r, query, queryLower);
-
-      if (learnedScore > existingScore) {
-        allResultsMap.set(key, { ...r, source: "peer" });
-      }
-    }
   });
 
   // Add remote results if not already present OR if remote has higher score
@@ -714,7 +667,6 @@ export async function searchTokensHybrid(
   return {
     local: localResults,
     remote: remoteResults,
-    learned: learnedResults, // NEW: Return learned results separately
     all: allResults,
   };
 }

@@ -2,16 +2,6 @@
   "env": {
     "VITE_API_BASE_URL": "https://dogechain-bubblemaps-api.vercel.app"
   },
-  "crons": [
-    {
-      "path": "/api/crons/validate-queue",
-      "schedule": "*/5 * * * *"
-    },
-    {
-      "path": "/api/crons/aggregate-popularity",
-      "schedule": "0 * * * *"
-    }
-  ],
   "headers": [
     {
       "source": "/assets/(.*)",

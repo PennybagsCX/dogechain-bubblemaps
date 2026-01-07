@@ -403,10 +403,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
   };
 
   const handleDismissTrigger = (alertId: string) => {
+    const existingStatus = statuses[alertId];
+    if (!existingStatus) return;
+
     onUpdateStatuses({
       ...statuses,
       [alertId]: {
-        ...statuses[alertId],
+        ...existingStatus,
         triggered: false,
         checkedAt: Date.now(),
       },

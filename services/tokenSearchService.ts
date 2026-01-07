@@ -599,15 +599,14 @@ export async function searchTokensHybrid(
   options: {
     limit?: number;
     includeRemote?: boolean;
-    includeLearned?: boolean; // NEW: Include crowdsourced learned data
   } = {}
 ): Promise<{
   local: SearchResult[];
   remote: SearchResult[];
-  learned: SearchResult[]; // NEW: Learned from crowd
+  learned: SearchResult[]; // Empty array for compatibility
   all: SearchResult[];
 }> {
-  const { limit = 10, includeRemote = true, includeLearned = true } = options;
+  const { limit = 10, includeRemote = true } = options;
 
   // 1. Local search (instant)
   const localResults = await searchTokensLocally(query, type, limit);
@@ -667,6 +666,7 @@ export async function searchTokensHybrid(
   return {
     local: localResults,
     remote: remoteResults,
+    learned: [], // Empty for compatibility with return type
     all: allResults,
   };
 }

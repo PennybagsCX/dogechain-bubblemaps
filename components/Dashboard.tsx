@@ -630,7 +630,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
                           </p>
                           <p className="text-xs text-slate-500">
                             {isIncoming ? "From" : "To"}:{" "}
-                            {isIncoming ? tx.from : tx.to.slice(0, 10)}...
+                            <a
+                              href={`https://explorer.dogechain.dog/address/${isIncoming ? tx.from : tx.to}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-purple-400 hover:text-purple-300 transition-colors font-mono"
+                              title="View on Dogechain Explorer"
+                            >
+                              {isIncoming ? tx.from.slice(0, 10) : tx.to.slice(0, 10)}...
+                            </a>
                           </p>
                         </div>
                       </div>

@@ -839,15 +839,18 @@ const App: React.FC = () => {
 
     if (!cleanQuery) return;
 
+    // Update input immediately for visual feedback
+    if (overrideQuery) setSearchQuery(cleanQuery);
+    if (overrideType) setSearchType(overrideType);
+
+    // Small delay to let user see the address in the search bar
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
     setLoading(true);
     setSummary(null);
     setWallets([]);
     setLinks([]);
     setIsMobileStatsOpen(false);
-
-    // If triggered by UI click (not URL load), update input
-    if (overrideQuery) setSearchQuery(cleanQuery);
-    if (overrideType) setSearchType(overrideType);
 
     try {
       const tokenData = await fetchTokenData(cleanQuery, typeToUse);
@@ -1763,6 +1766,8 @@ const App: React.FC = () => {
                       : "Search token or contract ..."
                   }
                   disabled={loading}
+                  value={searchQuery}
+                  onChange={setSearchQuery}
                 />
 
                 {/* Recent Searches - Wrapped (moved above scanner) */}
@@ -2010,8 +2015,13 @@ const App: React.FC = () => {
                     return (
                       <button
                         key={uniqueKey}
-                        onClick={(e) => handleSearch(e, asset.address, asset.type)}
-                        className="relative p-3 bg-space-800 hover:bg-space-700 rounded-lg border border-space-700 transition-all text-center flex flex-col items-center gap-1"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleSearch(e, asset.address, asset.type);
+                        }}
+                        className="relative p-3 bg-space-800 hover:bg-space-700 rounded-lg border border-space-700 transition-all text-center flex flex-col items-center gap-1 cursor-pointer"
+                        type="button"
                       >
                         <div className="text-xl sm:text-2xl">{getAssetIcon(asset, idx)}</div>
                         <div className="font-bold text-white text-xs sm:text-sm truncate w-full">

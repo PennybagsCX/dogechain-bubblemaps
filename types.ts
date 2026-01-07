@@ -140,6 +140,9 @@ export interface TokenSearchInputProps {
   placeholder?: string;
   disabled?: boolean;
   autoFocus?: boolean;
+  // Support controlled pattern
+  value?: string;
+  onChange?: (query: string) => void;
 }
 
 // =====================================================

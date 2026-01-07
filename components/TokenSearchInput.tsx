@@ -55,8 +55,15 @@ export function TokenSearchInput({
   placeholder,
   disabled = false,
   autoFocus = false,
+  value: externalValue,
+  onChange: externalOnChange,
 }: TokenSearchInputProps) {
-  const [query, setQuery] = useState("");
+  // Determine if controlled mode
+  const isControlled = externalValue !== undefined;
+
+  // Use external value if controlled, otherwise use local state
+  const [internalQuery, setInternalQuery] = useState("");
+  const query = isControlled ? externalValue : internalQuery;
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -153,7 +160,13 @@ export function TokenSearchInput({
   // Handle input change (optimized debounce)
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setQuery(value);
+
+    // Update both internal state and external onChange
+    if (isControlled) {
+      externalOnChange?.(value);
+    } else {
+      setInternalQuery(value);
+    }
 
     // Clear previous timer
     if (debounceTimerRef.current) {
@@ -225,7 +238,11 @@ export function TokenSearchInput({
       });
     }
 
-    setQuery(result.address);
+    if (isControlled) {
+      externalOnChange?.(result.address);
+    } else {
+      setInternalQuery(result.address);
+    }
     setShowDropdown(false);
     onSearch(result.address, searchType);
   };
@@ -241,7 +258,11 @@ export function TokenSearchInput({
 
   // Clear input
   const handleClear = () => {
-    setQuery("");
+    if (isControlled) {
+      externalOnChange?.("");
+    } else {
+      setInternalQuery("");
+    }
     setResults([]);
     setShowDropdown(false);
     inputRef.current?.focus();

@@ -134,7 +134,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     if (!svgRef.current) return;
 
     const nodeSelection = d3.select(svgRef.current).selectAll(".synapse-node");
-    const nodeWrapperSelection = d3.select(svgRef.current).selectAll<SVGGElement, any>(".node-wrapper");
+    const nodeWrapperSelection = d3
+      .select(svgRef.current)
+      .selectAll<SVGGElement, any>(".node-wrapper");
     const rankSelection = d3.select(svgRef.current).selectAll(".rank-label");
     const labelSelection = d3.select(svgRef.current).selectAll(".name-label");
 

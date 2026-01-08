@@ -347,8 +347,13 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     // Update Links
     svg.selectAll(".neural-vein").style("display", showLinks ? "block" : "none");
 
-    // Update Labels
-    svg.selectAll("text").style("display", showLabels ? "block" : "none");
+    // Update Labels - Only target bubble labels
+    // IMPORTANT: Only update display property, NOT opacity
+    // Opacity is managed by hover animations and should not be reset here
+    svg
+      .selectAll("text.rank-label, text.name-label")
+      .style("display", showLabels ? "block" : "none");
+    // Note: We DON'T set opacity here to avoid conflicts with hover animations
 
     // Update Nodes based on slider (Simple logic: filter by % of max holding in this set)
     if (wallets.length > 0) {
@@ -738,13 +743,19 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           .style("animation-play-state", "running"); // Resume animation
       });
 
-    // --- RENDER: NODES ---
+    // --- RENDER: NODES WITH LABELS (each node has a wrapper group containing circle + labels) ---
     const nodeGroup = g.append("g").attr("class", "nodes");
 
-    const nodeSelection = nodeGroup
-      .selectAll("circle")
+    // Create a wrapper group for each node (will contain circle + labels)
+    const nodeWrapperSelection = nodeGroup
+      .selectAll("g.node-wrapper")
       .data(nodes)
       .enter()
+      .append("g")
+      .attr("class", "node-wrapper");
+
+    // Render circle inside the wrapper
+    const nodeSelection = nodeWrapperSelection
       .append("circle")
       .attr("r", (d: NodeDatum) => d.r)
       .attr("class", (d: NodeDatum) => {
@@ -767,11 +778,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .attr("role", "button")
       .attr("tabindex", "0");
 
-    // --- RENDER: LABELS ---
-    const rankSelection = nodeGroup
-      .selectAll("text.rank-label")
-      .data(nodes)
-      .enter()
+    // Render rank label inside the wrapper (after circle so circle receives events first)
+    const rankSelection = nodeWrapperSelection
       .append("text")
       .attr("class", "rank-label")
       .attr("text-anchor", "middle")
@@ -782,12 +790,11 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .style("pointer-events", "none")
       .style("text-shadow", "0px 1px 3px rgba(0,0,0,0.9)")
       .style("display", showLabels ? "block" : "none")
+      .attr("opacity", 1)
       .text((d: NodeDatum) => `#${d.rank}`);
 
-    const labelSelection = nodeGroup
-      .selectAll("text.name-label")
-      .data(nodes)
-      .enter()
+    // Render name label inside the wrapper
+    const labelSelection = nodeWrapperSelection
       .append("text")
       .attr("class", "name-label")
       .attr("text-anchor", "middle")
@@ -798,9 +805,10 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .style("pointer-events", "none")
       .style("text-shadow", "0px 1px 3px rgba(0,0,0,0.9)")
       .style("display", showLabels ? "block" : "none")
+      .attr("opacity", 1)
       .text((d: NodeDatum) => {
         if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return "YOU";
-        if (d.label) return d.label.length > 8 ? d.label.substring(0, 6) + ".." : d.label; // Show label if exists
+        if (d.label) return d.label.length > 8 ? d.label.substring(0, 6) + ".." : d.label;
         if (d.isContract) return "C";
         if (assetType === AssetType.NFT && d.r > 20) return d.balance.toString();
         return `${d.percentage.toFixed(2)} %`;
@@ -808,7 +816,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     // --- INTERACTION HANDLERS ---
     const drag = d3
-      .drag<SVGCircleElement, NodeDatum>()
+      .drag<SVGGElement, NodeDatum>()
       .on("start", (event: any, d: NodeDatum) => {
         // Detect input type - touch events use pointerType property
         const isTouch =
@@ -837,9 +845,11 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         d3.select(event.sourceEvent.target).attr("cursor", "grab");
       });
 
-    nodeSelection.call(drag);
+    nodeWrapperSelection.call(drag);
 
-    nodeSelection
+    // Attach event handlers to the wrapper group (not the circle)
+    // This way, hovering over labels won't trigger mouseout on the node
+    nodeWrapperSelection
       .on("click", (event: any, d: NodeDatum) => {
         event.stopPropagation();
 
@@ -856,14 +866,26 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           setFocusedIndex(wallets.indexOf(d));
         }
       })
-      .on("mouseover", function (_event: any, d: NodeDatum) {
+      .on("mouseover", function (this: any, _event: any, d: NodeDatum) {
         const hoveredId = d.id;
 
+        // Mark that this node wrapper is being hovered
+        d3.select(this).classed("hovering", true);
+
         // Logic to dim everyone but connected
-        nodeSelection.transition().duration(200).attr("opacity", 0.15).style("filter", "none");
-        linkSelection.select(".neural-vein").transition().duration(200).attr("opacity", 0.05);
-        rankSelection.transition().duration(200).attr("opacity", 0.1);
-        labelSelection.transition().duration(200).attr("opacity", 0.1);
+        nodeSelection
+          .interrupt()
+          .transition()
+          .duration(200)
+          .attr("opacity", 0.15)
+          .style("filter", "none");
+        linkSelection
+          .select(".neural-vein")
+          .interrupt()
+          .transition()
+          .duration(200)
+          .attr("opacity", 0.05);
+        // NOTE: Labels are NO LONGER dimmed on hover - they stay fully visible
 
         const connectedIds = new Set<string>();
         connectedIds.add(hoveredId);
@@ -874,6 +896,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               (l.source as NodeDatum).id === hoveredId || (l.target as NodeDatum).id === hoveredId
           )
           .select(".neural-vein") // Target the visible path inside wrapper
+          .interrupt()
           .transition()
           .duration(200)
           .attr("opacity", 1)
@@ -888,6 +911,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
         nodeSelection
           .filter((n: NodeDatum) => connectedIds.has(n.id))
+          .raise() // Bring connected nodes to front during hover to prevent flickering
+          .interrupt()
           .transition()
           .duration(200);
 
@@ -895,6 +920,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         const threshold = (max * minBalancePercent) / 100;
 
         nodeSelection
+          .interrupt()
           .transition()
           .duration(400)
           .attr("opacity", (d: NodeDatum) => {
@@ -915,6 +941,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
         linkSelection
           .select(".neural-vein") // Target the visible path inside wrapper
+          .interrupt()
           .transition()
           .duration(400)
           .attr("opacity", 0.5)
@@ -923,8 +950,32 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           .style("filter", "none")
           .style("display", showLinks ? "block" : "none"); // Respect filter
 
-        rankSelection.transition().duration(400).attr("opacity", 1);
-        labelSelection.transition().duration(400).attr("opacity", 1);
+        // NOTE: Labels are NOT filtered - all labels stay visible during hover
+      })
+      .on("mouseout", function (this: any) {
+        // Remove hover state from wrapper
+        d3.select(this).classed("hovering", false);
+
+        // Reset all nodes to normal appearance
+        nodeSelection
+          .interrupt()
+          .transition()
+          .duration(200)
+          .attr("opacity", 1)
+          .style("filter", "url(#glow)");
+        linkSelection
+          .select(".neural-vein")
+          .interrupt()
+          .transition()
+          .duration(200)
+          .attr("opacity", 0.6)
+          .attr("stroke", "url(#veinGradient)")
+          .attr("stroke-width", 3)
+          .attr("stroke-dasharray", "4, 4")
+          .style("filter", "none")
+          .style("animation-play-state", "running");
+
+        // NOTE: Labels are NOT reset - they stay visible throughout since we no longer dim them on hover
       });
 
     // --- TICK ---

@@ -23,12 +23,26 @@ export interface CacheEntry {
 }
 
 /**
- * LRU cache implementation for search results
+ * LRU cache implementation for search results with adaptive TTL
  */
 class SearchCache {
   private cache = new Map<string, CacheEntry>();
   private readonly MAX_SIZE = 100;
-  private readonly TTL = 5 * 60 * 1000; // 5 minutes in milliseconds
+  private queryFrequency = new Map<string, number>(); // Track query popularity
+
+  /**
+   * Get adaptive TTL based on query frequency
+   * Popular queries cache longer
+   */
+  private getAdaptiveTTL(query: string): number {
+    const frequency = this.queryFrequency.get(query.toLowerCase()) || 0;
+
+    // Adaptive TTL based on query frequency
+    if (frequency > 20) return 2 * 60 * 60 * 1000; // 2 hours for very frequent
+    if (frequency > 10) return 1 * 60 * 60 * 1000; // 1 hour for frequent
+    if (frequency > 5) return 30 * 60 * 1000; // 30 min for medium
+    return 5 * 60 * 1000; // 5 min default
+  }
 
   /**
    * Get cached search results
@@ -41,14 +55,27 @@ class SearchCache {
     const key = `${query.toLowerCase()}:${type}`;
     const entry = this.cache.get(key);
 
-    if (entry && Date.now() - entry.timestamp < this.TTL) {
-      entry.hits++; // Track popularity
+    if (entry) {
+      // Use adaptive TTL for this query
+      const ttl = this.getAdaptiveTTL(query);
+      const age = Date.now() - entry.timestamp;
 
-      // MRU (Most Recently Used) update
-      this.cache.delete(key);
-      this.cache.set(key, entry);
+      if (age < ttl) {
+        entry.hits++; // Track popularity
 
-      return entry.results;
+        // Track query frequency for adaptive TTL
+        const queryLower = query.toLowerCase();
+        this.queryFrequency.set(queryLower, (this.queryFrequency.get(queryLower) || 0) + 1);
+
+        // MRU (Most Recently Used) update
+        this.cache.delete(key);
+        this.cache.set(key, entry);
+
+        return entry.results;
+      } else {
+        // Expired - remove from cache
+        this.cache.delete(key);
+      }
     }
 
     return null;
@@ -93,7 +120,13 @@ class SearchCache {
     const key = `${query.toLowerCase()}:${type}`;
     const entry = this.cache.get(key);
 
-    return entry !== undefined && Date.now() - entry.timestamp < this.TTL;
+    if (!entry) return false;
+
+    // Use adaptive TTL
+    const ttl = this.getAdaptiveTTL(query);
+    const age = Date.now() - entry.timestamp;
+
+    return age < ttl;
   }
 
   /**
@@ -104,7 +137,7 @@ class SearchCache {
   }
 
   /**
-   * Clear expired entries
+   * Clear expired entries (uses adaptive TTL)
    *
    * @returns Number of entries cleared
    */
@@ -113,7 +146,10 @@ class SearchCache {
     let cleared = 0;
 
     for (const [key, entry] of this.cache.entries()) {
-      if (now - entry.timestamp >= this.TTL) {
+      const ttl = this.getAdaptiveTTL(entry.query);
+      const age = now - entry.timestamp;
+
+      if (age >= ttl) {
         this.cache.delete(key);
         cleared++;
       }

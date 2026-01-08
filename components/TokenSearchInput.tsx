@@ -1,9 +1,23 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useState, useEffect, useRef } from "react";
-import { Search, Loader2, Coins, Image as ImageIcon } from "lucide-react";
+import { Search, Loader2, Coins, Image as ImageIcon, Clock } from "lucide-react";
 import { AssetType, SearchResult, TokenSearchInputProps } from "../types";
-import { searchTokensHybrid, generatePhoneticSuggestions } from "../services/tokenSearchService";
-import { trackSearch, trackResultClick, getSessionId } from "../services/searchAnalytics";
+import {
+  searchTokensHybrid,
+  generatePhoneticSuggestions,
+  searchProgressiveAll,
+} from "../services/tokenSearchService";
+import { fuzzySearch as fuzzySearchMini } from "../services/fuzzySearchService";
+import {
+  trackSearch,
+  trackResultClick,
+  getSessionId,
+  getRecentSearchHistory,
+} from "../services/searchAnalytics";
+import { highlightMatch } from "../utils/highlightText";
+import { getNicknameExpansions } from "../services/tokenNicknameRegistry";
+import { getCachedSearchResults, cacheSearchResults } from "../utils/searchCacheManager";
+import { trackSearchPerformance } from "../utils/performanceMonitor";
 import SearchWorkerInstance from "../services/searchWorker.ts?worker";
 
 // Worker pool management
@@ -69,6 +83,11 @@ export function TokenSearchInput({
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [phoneticSuggestions, setPhoneticSuggestions] = useState<SearchResult[]>([]);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [showHistory, setShowHistory] = useState(false);
+  const [resultCountMessage, setResultCountMessage] = useState<string>("");
+  const useProgressiveSearch = true; // Enable progressive search by default
+  const useMiniSearch = true; // Enable MiniSearch fuzzy matching by default
 
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -90,6 +109,15 @@ export function TokenSearchInput({
     // Initialize analytics session
     sessionIdRef.current = getSessionId();
 
+    // Load recent searches
+    getRecentSearchHistory(5)
+      .then((history) => {
+        setRecentSearches(history);
+      })
+      .catch((error) => {
+        console.warn("[Token Search] Failed to load search history:", error);
+      });
+
     // Cleanup on unmount
     return () => {
       if (debounceTimerRef.current) {
@@ -100,6 +128,60 @@ export function TokenSearchInput({
       }
     };
   }, []);
+
+  // Search with Web Worker (background processing, no UI blocking)
+  const searchWithWorker = async (
+    searchQuery: string,
+    type: AssetType
+  ): Promise<SearchResult[]> => {
+    return new Promise((resolve, reject) => {
+      if (!searchWorker) {
+        reject(new Error("Worker not available"));
+        return;
+      }
+
+      // Get token data for worker
+      import("../services/db")
+        .then(({ getAllTokenSearchIndex }) => {
+          getAllTokenSearchIndex()
+            .then((tokens) => {
+              const queryLower = searchQuery.toLowerCase();
+              const expandedQueries = [queryLower, ...getNicknameExpansions(queryLower)];
+
+              // Send search request to worker
+              searchWorker!.postMessage({
+                messageType: "search",
+                query: searchQuery,
+                queryLower,
+                tokens,
+                assetType: type,
+                expandedQueries,
+              });
+
+              // Set up one-time listener for response
+              const handler = (e: MessageEvent) => {
+                if (e.data.type === "complete") {
+                  searchWorker!.removeEventListener("message", handler);
+                  resolve(e.data.results);
+                } else if (e.data.type === "error") {
+                  searchWorker!.removeEventListener("message", handler);
+                  reject(new Error(e.data.error));
+                }
+              };
+
+              searchWorker!.addEventListener("message", handler);
+
+              // Timeout after 5 seconds
+              setTimeout(() => {
+                searchWorker!.removeEventListener("message", handler);
+                reject(new Error("Worker search timeout"));
+              }, 5000);
+            })
+            .catch(reject);
+        })
+        .catch(reject);
+    });
+  };
 
   // Debounced search function (optimized: 150ms + immediate for addresses)
   const performSearch = async (searchQuery: string) => {
@@ -114,6 +196,9 @@ export function TokenSearchInput({
     currentQueryRef.current = searchQuery;
     searchTimestampRef.current = Date.now(); // Record search start time
 
+    // PERFORMANCE TRACKING: Record search start time
+    const searchStartTime = performance.now();
+
     // Cancel previous search
     if (searchAbortRef.current) {
       searchAbortRef.current.abort();
@@ -123,22 +208,111 @@ export function TokenSearchInput({
     searchAbortRef.current = new AbortController();
 
     try {
-      // Use main thread search for now (worker integration in next phase)
-      const { all } = await searchTokensHybrid(searchQuery, searchType, {
-        limit: 10,
-        includeRemote: true,
-      });
+      let searchResults: SearchResult[];
+      let cacheHit = false;
+
+      // SERVICE WORKER CACHE: Check cache first for instant results
+      console.log("[Token Search] Checking search cache...");
+      const cachedResults = await getCachedSearchResults(searchQuery, searchType);
+
+      if (cachedResults && cachedResults.length > 0) {
+        console.log(`[Token Search] Cache HIT! Found ${cachedResults.length} cached results`);
+        searchResults = cachedResults;
+        cacheHit = true;
+      } else {
+        console.log("[Token Search] Cache miss - performing search...");
+
+        // MINISEARCH FUZZY SEARCH: Fast, typo-tolerant search (3KB library vs 15KB custom)
+        if (useMiniSearch && !searchQuery.startsWith("0x")) {
+          console.log("[Token Search] Using MiniSearch fuzzy matching (fast + typo tolerant)");
+          try {
+            searchResults = await fuzzySearchMini(searchQuery, 10);
+
+            // If MiniSearch found results, use them; otherwise fallback to progressive search
+            if (searchResults.length > 0) {
+              console.log(`[Token Search] MiniSearch found ${searchResults.length} results`);
+            } else {
+              console.log("[Token Search] MiniSearch found no results, using progressive search");
+              searchResults = await searchProgressiveAll(searchQuery, searchType, 10);
+            }
+          } catch (miniSearchError) {
+            console.warn(
+              "[Token Search] MiniSearch failed, using progressive search:",
+              miniSearchError
+            );
+            searchResults = await searchProgressiveAll(searchQuery, searchType, 10);
+          }
+        }
+        // PROGRESSIVE SEARCH: Stream results in stages for instant feedback (<50ms to first result)
+        else if (useProgressiveSearch && !searchQuery.startsWith("0x")) {
+          console.log("[Token Search] Using Progressive Search (staged results)");
+          searchResults = await searchProgressiveAll(searchQuery, searchType, 10);
+        }
+        // Try Web Worker for addresses (background processing, no UI blocking)
+        else if (workerReadyRef.current && searchWorker && searchQuery.startsWith("0x")) {
+          console.log("[Token Search] Using Web Worker for address search (background)");
+          try {
+            searchResults = await searchWithWorker(searchQuery, searchType);
+          } catch (workerError) {
+            console.warn(
+              "[Token Search] Worker search failed, falling back to main thread:",
+              workerError
+            );
+            const { all } = await searchTokensHybrid(searchQuery, searchType, {
+              limit: 10,
+              includeRemote: true,
+            });
+            searchResults = all;
+          }
+        }
+        // Fallback to main thread search
+        else {
+          console.log("[Token Search] Using main thread search");
+          const { all } = await searchTokensHybrid(searchQuery, searchType, {
+            limit: 10,
+            includeRemote: true,
+          });
+          searchResults = all;
+        }
+
+        // CACHE RESULTS: Store in cache for future use (non-blocking)
+        if (searchResults.length > 0) {
+          cacheSearchResults(searchQuery, searchType, searchResults).catch((error) => {
+            console.warn("[Token Search] Failed to cache results:", error);
+          });
+        }
+      }
 
       if (!searchAbortRef.current.signal.aborted) {
-        setResults(all);
+        setResults(searchResults);
+
+        // PERFORMANCE TRACKING: Record search performance
+        const responseTime = performance.now() - searchStartTime;
+        trackSearchPerformance(
+          searchQuery,
+          searchType,
+          responseTime,
+          cacheHit,
+          searchResults.length
+        );
+
+        // Announce result count for screen readers
+        const count = searchResults.length;
+        if (count > 0) {
+          setResultCountMessage(
+            `Found ${count} ${count === 1 ? "result" : "results"} for "${searchQuery}"`
+          );
+        } else {
+          setResultCountMessage(`No results found for "${searchQuery}"`);
+        }
 
         // Track search analytics (async, non-blocking)
-        trackSearch(searchQuery, all, sessionIdRef.current).catch((error) => {
+        trackSearch(searchQuery, searchResults, sessionIdRef.current).catch((error) => {
           console.warn("[Token Search] Analytics tracking failed:", error);
         });
 
         // If no results, fetch phonetic suggestions
-        if (all.length === 0 && searchQuery.length >= 3) {
+        if (searchResults.length === 0 && searchQuery.length >= 3) {
           const suggestions = await generatePhoneticSuggestions(searchQuery, searchType, 3);
           setPhoneticSuggestions(suggestions);
         } else {
@@ -157,9 +331,23 @@ export function TokenSearchInput({
     }
   };
 
+  // Handle input focus - show history if empty
+  const handleInputFocus = () => {
+    // Show history if input is empty and we have recent searches
+    if (!query.trim() && recentSearches.length > 0) {
+      setShowHistory(true);
+      setShowDropdown(false);
+    }
+  };
+
   // Handle input change (optimized debounce)
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+
+    // Hide history when user starts typing
+    if (showHistory) {
+      setShowHistory(false);
+    }
 
     // Update both internal state and external onChange
     if (isControlled) {
@@ -265,7 +453,20 @@ export function TokenSearchInput({
     }
     setResults([]);
     setShowDropdown(false);
+    setShowHistory(false);
     inputRef.current?.focus();
+  };
+
+  // Handle history item selection
+  const handleHistorySelect = (historyQuery: string) => {
+    if (isControlled) {
+      externalOnChange?.(historyQuery);
+    } else {
+      setInternalQuery(historyQuery);
+    }
+    setShowHistory(false);
+    // Trigger search immediately for history items
+    performSearch(historyQuery);
   };
 
   // Close dropdown when clicking outside
@@ -277,6 +478,7 @@ export function TokenSearchInput({
         !inputRef.current?.contains(event.target as Node)
       ) {
         setShowDropdown(false);
+        setShowHistory(false);
       }
     };
 
@@ -293,6 +495,26 @@ export function TokenSearchInput({
 
   return (
     <div className="relative">
+      {/* Hidden screen reader instructions */}
+      <span
+        id="search-instructions"
+        className="sr-only"
+        style={{
+          position: "absolute",
+          width: "1px",
+          height: "1px",
+          padding: 0,
+          margin: "-1px",
+          overflow: "hidden",
+          clip: "rect(0, 0, 0, 0)",
+          whiteSpace: "nowrap",
+          borderWidth: 0,
+        }}
+      >
+        Search for tokens by name, symbol, or contract address. Use arrow keys to navigate results,
+        Enter to select.
+      </span>
+
       {/* Search Input */}
       <form onSubmit={handleSubmit} className="relative">
         <div className="flex items-center bg-space-800 rounded-lg border border-space-700 overflow-hidden">
@@ -307,10 +529,21 @@ export function TokenSearchInput({
               (searchType === AssetType.NFT ? "Collection Address..." : "Token Address...")
             }
             className="flex-1 bg-transparent py-3 px-2 text-white placeholder-slate-500 text-base outline-none font-mono"
+            style={{ touchAction: "manipulation" }}
             value={query}
             onChange={handleInputChange}
+            onFocus={handleInputFocus}
             onKeyDown={handleKeyDown}
             disabled={disabled}
+            aria-label={searchType === AssetType.NFT ? "Search NFT collections" : "Search tokens"}
+            aria-describedby="search-instructions"
+            aria-autocomplete="list"
+            aria-controls="search-results-listbox"
+            aria-activedescendant={
+              selectedIndex >= 0 ? `search-result-${selectedIndex}` : undefined
+            }
+            role="combobox"
+            aria-expanded={showDropdown || showHistory}
           />
           {query && (
             <button
@@ -341,22 +574,97 @@ export function TokenSearchInput({
         </div>
       </form>
 
+      {/* Search History Dropdown */}
+      {showHistory && recentSearches.length > 0 && (
+        <div
+          ref={dropdownRef}
+          className="fixed left-0 right-0 mx-4 md:absolute md:mx-0 md:w-full mt-2 bg-space-800 border border-space-700 rounded-lg shadow-xl z-50"
+          style={{ top: "100%" }}
+          role="listbox"
+          aria-label="Recent searches"
+        >
+          <div className="px-4 py-3 border-b border-space-700 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-300">
+              <Clock size={16} className="text-purple-500" />
+              <span>Recent Searches</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setRecentSearches([]);
+                setShowHistory(false);
+              }}
+              className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+              title="Clear history"
+              aria-label="Clear search history"
+            >
+              Clear
+            </button>
+          </div>
+          {recentSearches.map((historyQuery, index) => (
+            <button
+              key={`${historyQuery}-${index}`}
+              type="button"
+              onClick={() => handleHistorySelect(historyQuery)}
+              className="w-full px-4 py-3 text-left flex items-center gap-3 hover:bg-space-700 active:bg-space-600 transition-colors text-slate-300"
+              style={{ touchAction: "manipulation", minHeight: "44px" }}
+              role="option"
+              aria-selected="false"
+              aria-label={`Search for "${historyQuery}"`}
+            >
+              <Clock size={16} className="text-slate-500 shrink-0" />
+              <span className="flex-1 truncate">{historyQuery}</span>
+              <span className="text-xs text-slate-500 shrink-0">Search again</span>
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Autocomplete Dropdown */}
       {showDropdown && results.length > 0 && (
         <div
           ref={dropdownRef}
-          className="absolute z-50 w-full mt-2 bg-space-800 border border-space-700 rounded-lg shadow-xl max-h-96 overflow-y-auto"
+          className="fixed left-0 right-0 mx-4 md:absolute md:mx-0 md:w-full mt-2 bg-space-800 border border-space-700 rounded-lg shadow-xl max-h-96 overflow-y-auto z-50"
+          style={{ top: "100%" }}
+          role="listbox"
+          id="search-results-listbox"
+          aria-label="Search results"
         >
+          {/* Live region for screen readers */}
+          <div
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            className="sr-only"
+            style={{
+              position: "absolute",
+              width: "1px",
+              height: "1px",
+              padding: 0,
+              margin: "-1px",
+              overflow: "hidden",
+              clip: "rect(0, 0, 0, 0)",
+              whiteSpace: "nowrap",
+              borderWidth: 0,
+            }}
+          >
+            {resultCountMessage}
+          </div>
+
           {results.map((result, index) => (
             <button
               key={result.address}
+              id={`search-result-${index}`}
               type="button"
               onClick={() => handleSelectResult(result)}
               className={`w-full px-4 py-3 text-left flex items-center gap-3 transition-colors ${
                 index === selectedIndex
                   ? "bg-purple-600/20 text-white"
-                  : "hover:bg-space-700 text-slate-300"
+                  : "hover:bg-space-700 active:bg-space-600 text-slate-300"
               }`}
+              style={{ touchAction: "manipulation", minHeight: "44px" }}
+              role="option"
+              aria-selected={index === selectedIndex}
             >
               <div
                 className={`p-2 rounded-md ${
@@ -369,16 +677,23 @@ export function TokenSearchInput({
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold text-white truncate">{result.symbol}</span>
+                  <span className="font-semibold text-white truncate">
+                    {highlightMatch(result.symbol, query)}
+                  </span>
                   {result.source === "remote" && (
                     <span className="text-xs px-1.5 py-0.5 rounded bg-blue-600/20 text-blue-400">
                       New
                     </span>
                   )}
                 </div>
-                <div className="text-xs text-slate-500 truncate">{result.name}</div>
+                <div className="text-xs text-slate-500 truncate">
+                  {highlightMatch(result.name, query)}
+                </div>
                 <div className="text-xs text-slate-600 font-mono truncate">
-                  {result.address.slice(0, 8)}...{result.address.slice(-6)}
+                  {highlightMatch(
+                    `${result.address.slice(0, 8)}...${result.address.slice(-6)}`,
+                    query
+                  )}
                 </div>
               </div>
             </button>
@@ -436,7 +751,7 @@ export function TokenSearchInput({
             </div>
           )}
 
-          {/* Fallback message */}
+          {/* Fallback message with helpful guidance */}
           <div className="p-4 text-center">
             <p className="text-sm text-slate-500">
               {phoneticSuggestions.length > 0 ? "No exact matches found" : "No tokens found"}
@@ -446,6 +761,30 @@ export function TokenSearchInput({
                 ? "Try a different search term or select a suggestion above"
                 : "Try entering a full contract address"}
             </p>
+
+            {/* Popular token suggestions */}
+            {phoneticSuggestions.length === 0 && (
+              <div className="mt-4 pt-4 border-t border-space-700">
+                <p className="text-xs text-slate-500 mb-2">Popular tokens to try:</p>
+                <div className="flex flex-wrap gap-2 justify-center">
+                  {["DOGE", "wDOGE", "USDC", "USDT", "ETH"]
+                    .slice(0, searchType === AssetType.NFT ? 2 : 5)
+                    .map((token) => (
+                      <button
+                        key={token}
+                        type="button"
+                        onClick={() => handleHistorySelect(token)}
+                        className="px-3 py-1.5 bg-space-700 hover:bg-space-600 rounded-full text-xs text-purple-400 font-medium transition-colors"
+                      >
+                        {token}
+                      </button>
+                    ))}
+                </div>
+                <p className="text-xs text-slate-600 mt-3">
+                  💡 Search by token symbol, name, or contract address
+                </p>
+              </div>
+            )}
           </div>
         </div>
       )}

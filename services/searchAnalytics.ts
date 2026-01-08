@@ -345,6 +345,63 @@ export async function getTopQueries(
 }
 
 /**
+ * Get recent unique search queries for search history
+ * Returns deduplicated list of recent queries, most recent first
+ *
+ * @param limit - Maximum number of unique queries to return
+ * @returns Array of unique search query strings
+ */
+export async function getRecentSearchHistory(limit: number = 10): Promise<string[]> {
+  try {
+    const recentSearches = await getRecentSearches(100);
+    const uniqueQueries = new Set<string>();
+    const history: string[] = [];
+
+    // Get unique queries in reverse order (most recent first)
+    for (let i = recentSearches.length - 1; i >= 0; i--) {
+      const searchEntry = recentSearches[i];
+      if (!searchEntry) continue;
+
+      const query = searchEntry.query.trim();
+
+      // Skip empty queries or addresses
+      if (!query || query.startsWith("0x")) continue;
+
+      // Skip if already in history
+      if (uniqueQueries.has(query.toLowerCase())) continue;
+
+      uniqueQueries.add(query.toLowerCase());
+      history.push(query);
+
+      // Stop when we reach the limit
+      if (history.length >= limit) break;
+    }
+
+    return history;
+  } catch (error) {
+    console.error("[Analytics] Failed to get search history:", error);
+    return [];
+  }
+}
+
+/**
+ * Clear all search analytics data from IndexedDB
+ * Useful for privacy or resetting analytics
+ */
+export async function clearSearchAnalytics(): Promise<void> {
+  try {
+    const { db } = await import("./db");
+
+    if ("searchAnalytics" in db) {
+      await db.searchAnalytics.clear();
+      console.log("[Analytics] Search analytics cleared");
+    }
+  } catch (error) {
+    console.error("[Analytics] Failed to clear search analytics:", error);
+  }
+}
+
+/**
  * Get current session stats
  */
 export function getSessionStats(): SearchSession | null {

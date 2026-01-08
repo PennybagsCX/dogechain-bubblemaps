@@ -814,6 +814,10 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         return `${d.percentage.toFixed(2)} %`;
       });
 
+    // Raise labels to ensure they render on top of circles (prevents visual occlusion)
+    rankSelection.raise();
+    labelSelection.raise();
+
     // --- INTERACTION HANDLERS ---
     const drag = d3
       .drag<SVGGElement, NodeDatum>()

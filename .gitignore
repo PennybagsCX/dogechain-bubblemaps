@@ -35,4 +35,10 @@ dist-ssr
 SCREENSHOTS/
 CONSOLE LOGS/
 
+# Playwright test artifacts
+.playwright-mcp/
+
+# Development build directories
+dev-dist/
+
 .vercel

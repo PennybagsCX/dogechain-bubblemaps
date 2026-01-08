@@ -142,10 +142,13 @@ export async function getTrendingLearnedTokens(
 ): Promise<SearchResult[]> {
   try {
     const typeParam = type === AssetType.NFT ? "NFT" : "TOKEN";
-    const response = await fetch(`${API_BASE}/api/trending?type=${typeParam}&limit=${limit}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
+    const response = await fetch(
+      `${API_BASE}/api/trending-wallet?type=${typeParam}&limit=${limit}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
 
     if (!response.ok) {
       return [];

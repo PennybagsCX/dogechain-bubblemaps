@@ -1264,6 +1264,37 @@ export const fetchWalletAssetsHybrid = async (
       }
     };
 
+    // Helper to fetch V2 pages
+    const fetchV2Pages = async (
+      endpoint: string,
+      startPage: number,
+      maxPages: number,
+      delayMs: number
+    ) => {
+      const results: any[] = [];
+      for (let page = startPage; page <= maxPages; page++) {
+        try {
+          await sleep(delayMs);
+          totalRequests++;
+          const res = await scheduler.schedule(() =>
+            fetchSafe(`${EXPLORER_API_V2}?path=/v2${endpoint}&page=${page}&limit=200`)
+          );
+          if (!res.ok) break;
+          const json = await res.json();
+          if (!Array.isArray(json?.items) || json.items.length === 0) break;
+          results.push(...json.items);
+
+          // Update progress (20% per phase)
+          const phaseProgress = ((page - startPage + 1) / (maxPages - startPage + 1)) * 20;
+          triggerProgress("deep-v2", Math.floor(phaseProgress), `Scanning V2 page ${page}...`);
+        } catch (e) {
+          console.warn(`V2 page ${page} failed:`, e);
+          break;
+        }
+      }
+      return results;
+    };
+
     // Helper to fetch V1 with offsets
     const fetchV1Offsets = async (action: string, offsets: number[], delayMs: number) => {
       const results: any[] = [];
@@ -1289,8 +1320,52 @@ export const fetchWalletAssetsHybrid = async (
       return results;
     };
 
-    // --- PHASE 1: QUICK V1 PROBE (2-3 seconds) ---
-    triggerProgress("quick", 5, "Starting quick V1 probe...");
+    // --- PHASE 1: QUICK SCAN (5-10 seconds) ---
+    triggerProgress("quick", 5, "Starting quick scan...");
+
+    // V2 token transfers (pages 1-3)
+    const quickV2Transfers = await fetchV2Pages(
+      `/addresses/${cleanWallet}/token-transfers`,
+      1,
+      3,
+      1000
+    );
+    quickV2Transfers.forEach((tx: any) => {
+      const decimals = tx.tokenDecimal
+        ? parseInt(tx.tokenDecimal)
+        : tx.token?.decimals
+          ? parseInt(tx.token.decimals)
+          : undefined;
+      const address = tx.contractAddress || tx.contract || tx.token?.address;
+      const symbol = tx.tokenSymbol || tx.token?.symbol;
+      const name = tx.tokenName || tx.token?.name;
+      // Detect type from token object
+      const type =
+        tx.token?.type?.toString().toLowerCase().includes("721") ||
+        tx.token?.type?.toString().toLowerCase().includes("1155")
+          ? AssetType.NFT
+          : AssetType.TOKEN;
+      recordAsset(address, symbol, name, decimals, type);
+    });
+
+    // V2 token balances (pages 1-3)
+    const quickV2Balances = await fetchV2Pages(
+      `/addresses/${cleanWallet}/token-balances`,
+      1,
+      3,
+      1000
+    );
+    quickV2Balances.forEach((entry: any) => {
+      const address = entry.contractAddress || entry.contract || entry.token?.address;
+      const symbol = entry.tokenSymbol || entry.token?.symbol;
+      const name = entry.tokenName || entry.token?.name;
+      const type =
+        entry.token?.type?.toString().toLowerCase().includes("721") ||
+        entry.token?.type?.toString().toLowerCase().includes("1155")
+          ? AssetType.NFT
+          : AssetType.TOKEN;
+      recordAsset(address, symbol, name, 0, type);
+    });
 
     // V1 NFT probe (small offset to detect NFT contracts)
     try {
@@ -1323,10 +1398,61 @@ export const fetchWalletAssetsHybrid = async (
     triggerProgress(
       "quick",
       15,
-      `Quick V1 probe complete: ${tokensMap.size} tokens, ${nftsMap.size} NFTs found`
+      `Quick scan complete: ${tokensMap.size} tokens, ${nftsMap.size} NFTs found`
     );
 
-    // --- PHASE 2: DEEP V1 SCAN (60-90 seconds) ---
+    // --- PHASE 2: DEEP V2 SCAN (30-60 seconds) ---
+    triggerProgress("deep-v2", 15, "Starting deep V2 scan...");
+
+    const deepV2Transfers = await fetchV2Pages(
+      `/addresses/${cleanWallet}/token-transfers`,
+      4,
+      20,
+      2000
+    );
+    deepV2Transfers.forEach((tx: any) => {
+      const decimals = tx.tokenDecimal
+        ? parseInt(tx.tokenDecimal)
+        : tx.token?.decimals
+          ? parseInt(tx.token.decimals)
+          : undefined;
+      const address = tx.contractAddress || tx.contract || tx.token?.address;
+      const symbol = tx.tokenSymbol || tx.token?.symbol;
+      const name = tx.tokenName || tx.token?.name;
+      const type =
+        tx.token?.type?.toString().toLowerCase().includes("721") ||
+        tx.token?.type?.toString().toLowerCase().includes("1155")
+          ? AssetType.NFT
+          : AssetType.TOKEN;
+      recordAsset(address, symbol, name, decimals, type);
+    });
+
+    const deepV2Balances = await fetchV2Pages(
+      `/addresses/${cleanWallet}/token-balances`,
+      4,
+      20,
+      2000
+    );
+    deepV2Balances.forEach((entry: any) => {
+      const address = entry.contractAddress || entry.contract || entry.token?.address;
+      const symbol = entry.tokenSymbol || entry.token?.symbol;
+      const name = entry.tokenName || entry.token?.name;
+      const type =
+        entry.token?.type?.toString().toLowerCase().includes("721") ||
+        entry.token?.type?.toString().toLowerCase().includes("1155")
+          ? AssetType.NFT
+          : AssetType.TOKEN;
+      recordAsset(address, symbol, name, 0, type);
+    });
+
+    phasesCompleted.push("deep-v2");
+    triggerProgress(
+      "deep-v2",
+      40,
+      `Deep V2 scan complete: ${tokensMap.size} tokens, ${nftsMap.size} NFTs found`
+    );
+
+    // --- PHASE 3: DEEP V1 SCAN (60-90 seconds) ---
     triggerProgress("deep-v1", 40, "Starting deep V1 scan...");
 
     // COMPREHENSIVE ASSET SEARCH - Using tokentx for both tokens and NFTs
@@ -1424,7 +1550,46 @@ export const fetchWalletAssetsHybrid = async (
       `Deep V1 scan complete: ${tokensMap.size} tokens, ${nftsMap.size} NFTs found`
     );
 
-    // --- PHASE 3: WHALE ENUMERATION (3-8 minutes) ---
+    // --- PHASE 4: BALANCE VERIFICATION (10-30 seconds) ---
+    triggerProgress("balance-check", 65, "Verifying balances...");
+
+    // For discovered tokens, verify current holdings (batch of 10)
+    const allContracts = Array.from(
+      new Set([...Array.from(tokensMap.keys()), ...Array.from(nftsMap.keys())])
+    );
+
+    for (let i = 0; i < allContracts.length; i += 10) {
+      const batch = allContracts.slice(i, i + 10);
+      await sleep(1000);
+
+      for (const contract of batch) {
+        try {
+          totalRequests++;
+          const res = await scheduler.schedule(() =>
+            fetchSafe(
+              `${EXPLORER_API_V1}?module=account&action=tokenbalance&contractaddress=${contract}&address=${cleanWallet}`
+            )
+          );
+          const json = await res.json();
+          if (json.status === "1" && json.result && parseFloat(json.result) > 0) {
+            // Keep assets with non-zero balance
+          }
+        } catch {
+          // Ignore balance check failures
+        }
+      }
+
+      const progress = 65 + ((i + batch.length) / allContracts.length) * 15;
+      triggerProgress(
+        "balance-check",
+        Math.floor(progress),
+        `Verifying balances... ${Math.floor(((i + batch.length) / allContracts.length) * 100)}%`
+      );
+    }
+
+    phasesCompleted.push("balance-check");
+
+    // --- PHASE 5: WHALE ENUMERATION (3-8 minutes) ---
     triggerProgress("whale-scan", 80, "Discovering contracts from whale wallets...");
 
     try {
@@ -1547,7 +1712,7 @@ export const fetchWalletAssetsHybrid = async (
 
     phasesCompleted.push("whale-scan");
 
-    // --- PHASE 4: LP POOL DETECTION (5-10 seconds) ---
+    // --- PHASE 6: LP POOL DETECTION (5-10 seconds) ---
     try {
       triggerProgress("lp-detection", 95, "Detecting liquidity pool contracts...");
 
@@ -1641,7 +1806,7 @@ export const fetchWalletAssetsHybrid = async (
     const metadata: ScanMetadata = {
       totalRequests,
       phasesCompleted,
-      totalPages: 0, // V2 pagination removed
+      totalPages: Math.ceil((quickV2Transfers.length + deepV2Transfers.length) / 200),
       duration,
     };
 
@@ -1654,7 +1819,7 @@ export const fetchWalletAssetsHybrid = async (
     );
 
     triggerProgress(
-      "complete",
+      "balance-check",
       100,
       `Complete: ${finalTokens.length} tokens, ${finalNfts.length} NFTs in ${Math.floor(duration / 1000)}s`
     );

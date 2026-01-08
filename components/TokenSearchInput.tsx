@@ -599,7 +599,7 @@ export function TokenSearchInput({
               placeholder ||
               (searchType === AssetType.NFT ? "Collection Address..." : "Token Address...")
             }
-            className="flex-1 bg-transparent py-3 px-2 text-white placeholder-slate-500 text-base outline-none font-mono"
+            className="flex-1 min-w-0 bg-transparent py-3 px-2 text-white placeholder-slate-500 text-base outline-none font-mono"
             style={{ touchAction: "manipulation" }}
             value={query}
             onChange={handleInputChange}
@@ -620,7 +620,7 @@ export function TokenSearchInput({
             <button
               type="button"
               onClick={handleClear}
-              className="px-3 text-slate-500 hover:text-slate-300 transition-colors"
+              className="px-3 text-slate-500 hover:text-slate-300 transition-colors shrink-0"
             >
               ×
             </button>
@@ -628,7 +628,7 @@ export function TokenSearchInput({
           <button
             type="submit"
             disabled={disabled || isSearching || !query.trim()}
-            className="px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium disabled:opacity-50 transition-colors flex items-center gap-2"
+            className="px-3 sm:px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium disabled:opacity-50 transition-colors flex items-center gap-2 shrink-0"
           >
             {isSearching ? (
               <>

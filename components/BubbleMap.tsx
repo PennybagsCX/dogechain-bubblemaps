@@ -453,7 +453,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     const root = d3.hierarchy({ children: nodes }).sum((d: any) => d.balance);
 
-    const packedData = pack(root).leaves() as Array<{ x?: number; y?: number }>;
+    const packedData = pack(root as any).leaves() as Array<{ x?: number; y?: number }>;
 
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
@@ -990,7 +990,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       }
 
       // Update both hitbox and visible paths
-      linkSelection.selectAll("path").attr("d", (d: LinkDatum) => {
+      linkSelection.selectAll("path").attr("d", (d: any) => {
         const source = d.source as NodeDatum;
         const target = d.target as NodeDatum;
         return `M${source.x},${source.y} L${target.x},${target.y}`;
@@ -1018,7 +1018,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     // Restore previous zoom transform after rebuilds (e.g., tracing adds links)
     if (zoomTransformRef.current) {
       svg.call(zoom.transform, zoomTransformRef.current);
-      g.attr("transform", zoomTransformRef.current);
+      g.attr("transform", zoomTransformRef.current as any);
     }
 
     return () => {

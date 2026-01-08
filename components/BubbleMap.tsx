@@ -72,8 +72,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   // Store function props in refs to prevent unnecessary rebuilds
   const onWalletClickRef = useRef(onWalletClick);
   const onConnectionClickRef = useRef(onConnectionClick);
-  const getNodeColorRef = useRef<any>(null);
-  const handleSelectNodeRef = useRef<any>(null);
+  // Provide safe defaults to avoid undefined during initial render
+  const getNodeColorRef = useRef<(d: any) => string>(() => "#06b6d4");
+  const handleSelectNodeRef = useRef<(w: Wallet | null) => void>(() => {});
 
   const [isPaused, setIsPaused] = useState(false);
   const [isLegendOpen, setIsLegendOpen] = useState(false);

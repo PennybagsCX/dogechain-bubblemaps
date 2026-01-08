@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Search, Loader2, Coins, Image as ImageIcon, Clock } from "lucide-react";
 import { AssetType, SearchResult, TokenSearchInputProps } from "../types";
 import {
@@ -13,8 +13,10 @@ import {
   trackResultClick,
   getSessionId,
   getRecentSearchHistory,
+  getTopQueries,
 } from "../services/searchAnalytics";
 import { highlightMatch } from "../utils/highlightText";
+import { logSearchQuery, getTrendingAssetsWithFallback } from "../services/trendingService";
 import { getNicknameExpansions } from "../services/tokenNicknameRegistry";
 import { getCachedSearchResults, cacheSearchResults } from "../utils/searchCacheManager";
 import { trackSearchPerformance } from "../utils/performanceMonitor";
@@ -84,10 +86,38 @@ export function TokenSearchInput({
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [phoneticSuggestions, setPhoneticSuggestions] = useState<SearchResult[]>([]);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [popularQueries, setPopularQueries] = useState<string[]>([]);
+  const [trendingQueries, setTrendingQueries] = useState<string[]>([]);
   const [showHistory, setShowHistory] = useState(false);
   const [resultCountMessage, setResultCountMessage] = useState<string>("");
   const useProgressiveSearch = true; // Enable progressive search by default
   const useMiniSearch = true; // Enable MiniSearch fuzzy matching by default
+
+  // Sanitize suggestion tokens to avoid logging/noise appearing in UI
+  const sanitizeSuggestion = useCallback((value: string | null | undefined) => {
+    if (!value) return null;
+    const trimmed = value.trim();
+    // Drop extremely long values or values with obvious URLs/paths
+    if (trimmed.length === 0 || trimmed.length > 24) return null;
+    if (trimmed.includes("http") || trimmed.includes("://") || trimmed.includes("/")) return null;
+    // Allow only basic token characters (letters, numbers, underscores, dots, dashes)
+    if (!/^[A-Za-z0-9._-]+$/.test(trimmed)) return null;
+    return trimmed;
+  }, []);
+
+  // Combined popular suggestions (local + global)
+  const suggestionTokens = useMemo(() => {
+    const combined = [...popularQueries, ...trendingQueries];
+    const seen = new Set<string>();
+    const unique: string[] = [];
+    for (const token of combined) {
+      const key = token.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      unique.push(token);
+    }
+    return unique;
+  }, [popularQueries, trendingQueries]);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -116,6 +146,33 @@ export function TokenSearchInput({
       })
       .catch((error) => {
         console.warn("[Token Search] Failed to load search history:", error);
+      });
+
+    // Load popular queries (local, last 7 days)
+    getTopQueries(20)
+      .then((queries) => {
+        const filtered = queries
+          .map((q) => sanitizeSuggestion(q.query))
+          .filter((q): q is string => !!q);
+        setPopularQueries(filtered);
+      })
+      .catch((error) => {
+        console.warn("[Token Search] Failed to load popular queries:", error);
+      });
+
+    // Load global trending assets (server with local fallback)
+    getTrendingAssetsWithFallback<
+      { hits: number; symbol?: string | null; name?: string | null; address?: string; type?: string }
+    >([], searchType === AssetType.NFT ? "NFT" : "TOKEN", 20)
+      .then((assets) => {
+        const symbols = assets
+          // assets may be TrendingAsset or minimal shape from fallback
+          .map((a: any) => sanitizeSuggestion(a.symbol || a.name || ""))
+          .filter((s): s is string => !!s);
+        setTrendingQueries(symbols);
+      })
+      .catch((error) => {
+        console.warn("[Token Search] Failed to load trending assets:", error);
       });
 
     // Cleanup on unmount
@@ -425,6 +482,13 @@ export function TokenSearchInput({
         console.warn("[Token Search] Click tracking failed:", error);
       });
     }
+
+    // Log search to global trending service (fire-and-forget)
+    logSearchQuery(result.address, result.type === AssetType.NFT ? "NFT" : "TOKEN", result.symbol, result.name).catch(
+      (error) => {
+        console.warn("[Trending] Failed to log search query:", error);
+      }
+    );
 
     if (isControlled) {
       externalOnChange?.(result.address);
@@ -763,12 +827,12 @@ export function TokenSearchInput({
             </p>
 
             {/* Popular token suggestions */}
-            {phoneticSuggestions.length === 0 && (
+            {phoneticSuggestions.length === 0 && suggestionTokens.length > 0 && (
               <div className="mt-4 pt-4 border-t border-space-700">
                 <p className="text-xs text-slate-500 mb-2">Popular tokens to try:</p>
                 <div className="flex flex-wrap gap-2 justify-center">
-                  {["DOGE", "wDOGE", "USDC", "USDT", "ETH"]
-                    .slice(0, searchType === AssetType.NFT ? 2 : 5)
+                  {suggestionTokens
+                    .slice(0, searchType === AssetType.NFT ? 6 : 10)
                     .map((token) => (
                       <button
                         key={token}

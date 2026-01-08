@@ -227,6 +227,8 @@ const App: React.FC = () => {
   // Toast State
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
+  const isLocalDev = typeof window !== "undefined" && window.location.hostname === "localhost";
+
   // State with IndexedDB persistence
   const [trendingAssets, setTrendingAssets] = useState<TrendingAsset[]>(INITIAL_TRENDING);
   const [alertStatuses, setAlertStatuses] = useState<Record<string, AlertStatus>>({});
@@ -375,6 +377,9 @@ const App: React.FC = () => {
 
   // Fetch server-side trending on mount and refresh periodically
   useEffect(() => {
+    // Skip server trending fetch in local dev to avoid CORS errors; rely on local trending
+    if (isLocalDev) return;
+
     const fetchServerTrending = async () => {
       try {
         const serverTrending = await getTrendingAssets("ALL", 20);
@@ -399,10 +404,10 @@ const App: React.FC = () => {
     // Fetch server trending immediately after mount
     fetchServerTrending();
 
-    // Refresh every 15 minutes
-    const interval = setInterval(fetchServerTrending, 15 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, []);
+    // Refresh server trending every 10 minutes
+    const intervalId = setInterval(fetchServerTrending, 10 * 60 * 1000);
+    return () => clearInterval(intervalId);
+  }, [isLocalDev]);
 
   // Save alerts to IndexedDB when they change
   useEffect(() => {

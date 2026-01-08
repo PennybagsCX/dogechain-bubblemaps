@@ -6,6 +6,9 @@
 // Get API base URL from environment variable
 const getApiBaseUrl = () => import.meta.env.VITE_API_BASE_URL || "";
 
+// Detect local/dev to avoid CORS against production endpoints
+const isLocalDev = typeof window !== "undefined" && window.location.hostname === "localhost";
+
 export interface TrendingAsset {
   address: string;
   symbol: string | null;
@@ -41,6 +44,9 @@ export async function logSearchQuery(
   symbol?: string,
   name?: string
 ): Promise<boolean> {
+  // Skip server logging in local dev to avoid CORS noise
+  if (isLocalDev) return false;
+
   try {
     const apiBase = getApiBaseUrl();
     const response = await fetch(`${apiBase}/api/trending/log`, {
@@ -84,6 +90,11 @@ export async function getTrendingAssets(
   type: "TOKEN" | "NFT" | "ALL" = "ALL",
   limit: number = 20
 ): Promise<TrendingAsset[]> {
+  // Skip server fetch in local dev to avoid CORS blocking; caller should fall back to local
+  if (isLocalDev) {
+    return [];
+  }
+
   try {
     const apiBase = getApiBaseUrl();
     const response = await fetch(`${apiBase}/api/trending?type=${type}&limit=${limit}&cache=true`);

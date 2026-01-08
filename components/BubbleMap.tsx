@@ -134,6 +134,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     if (!svgRef.current) return;
 
     const nodeSelection = d3.select(svgRef.current).selectAll(".synapse-node");
+    const nodeWrapperSelection = d3.select(svgRef.current).selectAll<SVGGElement, any>(".node-wrapper");
     const rankSelection = d3.select(svgRef.current).selectAll(".rank-label");
     const labelSelection = d3.select(svgRef.current).selectAll(".name-label");
 
@@ -148,11 +149,11 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     }
 
     // Highlight target
-    nodeSelection
-      .filter((d: any) => d.id === walletId)
-      .classed("node-selected", true)
-      .raise();
+    nodeSelection.filter((d: any) => d.id === walletId).classed("node-selected", true);
     lastSelectedIdRef.current = walletId;
+
+    // Raise the entire wrapper so labels remain above the circle
+    nodeWrapperSelection.filter((d: any) => d.id === walletId).raise();
 
     // Ensure labels visible for target
     rankSelection.style("display", showLabels ? "block" : "none").style("opacity", 1);
@@ -913,9 +914,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
             connectedIds.add((l.target as NodeDatum).id);
           });
 
-        nodeSelection
+        nodeWrapperSelection
           .filter((n: NodeDatum) => connectedIds.has(n.id))
-          .raise() // Bring connected nodes to front during hover to prevent flickering
+          .raise() // Bring connected nodes (and their labels) to front during hover
           .interrupt()
           .transition()
           .duration(200);

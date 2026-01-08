@@ -161,9 +161,13 @@ export function TokenSearchInput({
       });
 
     // Load global trending assets (server with local fallback)
-    getTrendingAssetsWithFallback<
-      { hits: number; symbol?: string | null; name?: string | null; address?: string; type?: string }
-    >([], searchType === AssetType.NFT ? "NFT" : "TOKEN", 20)
+    getTrendingAssetsWithFallback<{
+      hits: number;
+      symbol?: string | null;
+      name?: string | null;
+      address?: string;
+      type?: string;
+    }>([], searchType === AssetType.NFT ? "NFT" : "TOKEN", 20)
       .then((assets) => {
         const symbols = assets
           // assets may be TrendingAsset or minimal shape from fallback
@@ -484,11 +488,14 @@ export function TokenSearchInput({
     }
 
     // Log search to global trending service (fire-and-forget)
-    logSearchQuery(result.address, result.type === AssetType.NFT ? "NFT" : "TOKEN", result.symbol, result.name).catch(
-      (error) => {
-        console.warn("[Trending] Failed to log search query:", error);
-      }
-    );
+    logSearchQuery(
+      result.address,
+      result.type === AssetType.NFT ? "NFT" : "TOKEN",
+      result.symbol,
+      result.name
+    ).catch((error) => {
+      console.warn("[Trending] Failed to log search query:", error);
+    });
 
     if (isControlled) {
       externalOnChange?.(result.address);
@@ -831,18 +838,16 @@ export function TokenSearchInput({
               <div className="mt-4 pt-4 border-t border-space-700">
                 <p className="text-xs text-slate-500 mb-2">Popular tokens to try:</p>
                 <div className="flex flex-wrap gap-2 justify-center">
-                  {suggestionTokens
-                    .slice(0, searchType === AssetType.NFT ? 6 : 10)
-                    .map((token) => (
-                      <button
-                        key={token}
-                        type="button"
-                        onClick={() => handleHistorySelect(token)}
-                        className="px-3 py-1.5 bg-space-700 hover:bg-space-600 rounded-full text-xs text-purple-400 font-medium transition-colors"
-                      >
-                        {token}
-                      </button>
-                    ))}
+                  {suggestionTokens.slice(0, searchType === AssetType.NFT ? 6 : 10).map((token) => (
+                    <button
+                      key={token}
+                      type="button"
+                      onClick={() => handleHistorySelect(token)}
+                      className="px-3 py-1.5 bg-space-700 hover:bg-space-600 rounded-full text-xs text-purple-400 font-medium transition-colors"
+                    >
+                      {token}
+                    </button>
+                  ))}
                 </div>
                 <p className="text-xs text-slate-600 mt-3">
                   💡 Search by token symbol, name, or contract address

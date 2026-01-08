@@ -25,6 +25,7 @@ import {
   saveDiscoveredContracts,
   DbDiscoveredContracts,
 } from "./db";
+import { submitWalletScanResults } from "./learnedTokensService";
 
 // Using proxy to avoid SSL certificate issues with Arc Browser for iOS
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "";
@@ -1811,6 +1812,11 @@ export const fetchWalletAssetsHybrid = async (
 
     // Save to cache
     await saveScanCache(walletAddress, finalTokens, finalNfts, metadata);
+
+    // Submit scan results to learning database (non-blocking, fire-and-forget)
+    submitWalletScanResults(walletAddress, finalTokens, finalNfts).catch((err) =>
+      console.warn("[Data Service] Failed to submit scan results to learning database:", err)
+    );
 
     triggerProgress(
       "balance-check",

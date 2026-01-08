@@ -129,9 +129,11 @@ export interface SearchResult {
   name: string;
   symbol: string;
   type: AssetType;
-  source: "local" | "remote" | "recent" | "peer";
+  source: "local" | "remote" | "recent" | "peer" | "learned";
   decimals?: number;
   score?: number; // For temporary sorting during search (removed before display)
+  popularityScore?: number; // Learned token popularity score
+  priority?: "high" | "medium" | "low"; // Priority level for sorting
 }
 
 export interface TokenSearchInputProps {

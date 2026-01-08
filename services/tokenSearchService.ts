@@ -18,6 +18,7 @@ import { generateAbbreviations } from "./abbreviationGenerator";
 import { phoneticSimilarity } from "./phoneticMatcher";
 import { getCachedSearchResults, setCachedSearchResults } from "./searchCache";
 import { getPopularityBatch } from "./popularityScoring";
+import { fetchLearnedTokens } from "./learnedTokensService";
 
 /**
  * Debounce function to limit API calls
@@ -590,8 +591,8 @@ export async function searchTokensBlockscout(
 }
 
 /**
- * Hybrid search: local + remote
- * Returns local results instantly, then fetches remote results
+ * Hybrid search: learned + local + remote
+ * Returns local results instantly, then fetches learned and remote results
  */
 export async function searchTokensHybrid(
   query: string,
@@ -603,7 +604,7 @@ export async function searchTokensHybrid(
 ): Promise<{
   local: SearchResult[];
   remote: SearchResult[];
-  learned: SearchResult[]; // Empty array for compatibility
+  learned: SearchResult[];
   all: SearchResult[];
 }> {
   const { limit = 10, includeRemote = true } = options;
@@ -611,19 +612,39 @@ export async function searchTokensHybrid(
   // 1. Local search (instant)
   const localResults = await searchTokensLocally(query, type, limit);
 
-  // 2. Remote search (async, only if needed)
+  // 2. Learned tokens search (HIGH PRIORITY) - non-blocking
+  const learnedResultsPromise = fetchLearnedTokens(type, limit * 2);
+
+  // 3. Remote search (async, only if needed)
   let remoteResults: SearchResult[] = [];
   if (includeRemote && localResults.length < limit) {
     remoteResults = await searchTokensBlockscout(query, type, limit - localResults.length);
   }
 
-  // 3. Merge and deduplicate with score-aware logic
+  // Wait for learned tokens
+  const learnedResults = await learnedResultsPromise;
+
+  // 4. Merge and deduplicate with score-aware logic
   const allResultsMap = new Map<string, SearchResult>();
   const queryLower = query.toLowerCase();
 
-  // Add local results first (prioritize local)
+  // Add learned tokens FIRST (highest priority)
+  learnedResults.forEach((r) => {
+    const key = r.address.toLowerCase();
+    allResultsMap.set(key, {
+      ...r,
+      source: "learned" as const,
+      priority: "high" as const,
+      score: (r.score || 0) + (r.popularityScore || 0), // Boost with popularity
+    });
+  });
+
+  // Add local results (deduplicate)
   localResults.forEach((r) => {
-    allResultsMap.set(r.address.toLowerCase(), r);
+    const key = r.address.toLowerCase();
+    if (!allResultsMap.has(key)) {
+      allResultsMap.set(key, r);
+    }
   });
 
   // Add remote results if not already present OR if remote has higher score
@@ -634,21 +655,29 @@ export async function searchTokensHybrid(
     if (!existing) {
       allResultsMap.set(key, { ...r, source: "remote" });
     } else {
-      // Compare scores - remote might be more relevant
-      const existingScore = calculateSearchRelevance(existing, query, queryLower);
-      const remoteScore = calculateSearchRelevance(r, query, queryLower);
+      // Don't override learned tokens with remote results
+      if (existing.source !== "learned") {
+        // Compare scores - remote might be more relevant
+        const existingScore = calculateSearchRelevance(existing, query, queryLower);
+        const remoteScore = calculateSearchRelevance(r, query, queryLower);
 
-      if (remoteScore > existingScore) {
-        allResultsMap.set(key, { ...r, source: "remote" });
+        if (remoteScore > existingScore) {
+          allResultsMap.set(key, { ...r, source: "remote" });
+        }
       }
     }
   });
 
-  // Sort ALL results by score desc
+  // Sort ALL results: learned tokens first, then by score
   const allResults = Array.from(allResultsMap.values())
     .sort((a, b) => {
-      const scoreA = calculateSearchRelevance(a, query, queryLower);
-      const scoreB = calculateSearchRelevance(b, query, queryLower);
+      // Learned tokens always first
+      if (a.source === "learned" && b.source !== "learned") return -1;
+      if (b.source === "learned" && a.source !== "learned") return 1;
+
+      // Then by relevance score (including popularity boost for learned)
+      const scoreA = calculateSearchRelevance(a, query, queryLower) + (a.popularityScore || 0);
+      const scoreB = calculateSearchRelevance(b, query, queryLower) + (b.popularityScore || 0);
       return scoreB - scoreA;
     })
     .slice(0, limit);
@@ -661,12 +690,19 @@ export async function searchTokensHybrid(
   await applyPopularityBoosts(resultsWithScores);
 
   // Re-sort after popularity boosts
-  allResults.sort((a, b) => (b.score || 0) - (a.score || 0));
+  allResults.sort((a, b) => {
+    // Learned tokens always first
+    if (a.source === "learned" && b.source !== "learned") return -1;
+    if (b.source === "learned" && a.source !== "learned") return 1;
+
+    // Then by score
+    return (b.score || 0) - (a.score || 0);
+  });
 
   return {
     local: localResults,
     remote: remoteResults,
-    learned: [], // Empty for compatibility with return type
+    learned: learnedResults,
     all: allResults,
   };
 }

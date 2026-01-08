@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
-import { Search, Loader2, Coins, Image as ImageIcon, Clock } from "lucide-react";
+import { Search, Loader2, Coins, Image as ImageIcon, Clock, TrendingUp } from "lucide-react";
 import { AssetType, SearchResult, TokenSearchInputProps } from "../types";
 import {
   searchTokensHybrid,
@@ -21,6 +21,7 @@ import { getNicknameExpansions } from "../services/tokenNicknameRegistry";
 import { getCachedSearchResults, cacheSearchResults } from "../utils/searchCacheManager";
 import { trackSearchPerformance } from "../utils/performanceMonitor";
 import SearchWorkerInstance from "../services/searchWorker.ts?worker";
+import { logTokenInteraction } from "../services/learnedTokensService";
 
 // Worker pool management
 let searchWorker: Worker | null = null;
@@ -485,6 +486,15 @@ export function TokenSearchInput({
       ).catch((error) => {
         console.warn("[Token Search] Click tracking failed:", error);
       });
+
+      // Log to learned tokens database (async, non-blocking)
+      logTokenInteraction(
+        result.address,
+        "click",
+        sessionIdRef.current,
+        currentQueryRef.current,
+        resultRank
+      );
     }
 
     // Log search to global trending service (fire-and-forget)
@@ -751,7 +761,13 @@ export function TokenSearchInput({
                   <span className="font-semibold text-white truncate">
                     {highlightMatch(result.symbol, query)}
                   </span>
-                  {result.source === "remote" && (
+                  {result.source === "learned" && (
+                    <span className="flex items-center gap-1 text-xs px-1.5 py-0.5 rounded bg-green-600/20 text-green-400">
+                      <TrendingUp size={10} />
+                      Popular
+                    </span>
+                  )}
+                  {result.source === "remote" && !result.source.includes("learned") && (
                     <span className="text-xs px-1.5 py-0.5 rounded bg-blue-600/20 text-blue-400">
                       New
                     </span>

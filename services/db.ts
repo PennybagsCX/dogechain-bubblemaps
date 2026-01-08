@@ -461,6 +461,18 @@ class DogeDatabase extends Dexie {
         console.log("[DB] Upgrading to version 15: Token popularity scoring enabled");
         // tokenPopularity store created automatically with schema above
       });
+
+      // Version 16: Learned tokens cache for offline fallback
+      this.version(16)
+        .stores({
+          learnedTokensCache:
+            "&address, name, symbol, type, popularityScore, scanFrequency, holderCount, cachedAt, expiresAt",
+        })
+        .upgrade(async () => {
+          console.log("[DB] Upgrading to version 16: Learned tokens cache enabled");
+          // learnedTokensCache store created automatically with schema above
+          // No data migration needed - this is for offline caching of Vercel Postgres data
+        });
     } catch (error) {
       console.error("[DB] Database schema error:", error);
       console.error("[DB] Please clear IndexedDB and reload the page.");

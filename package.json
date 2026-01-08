@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
+    "@neondatabase/serverless": "^1.0.2",
     "@sentry/react": "^10.32.1",
     "@types/html2canvas": "^0.5.35",
     "@vercel/analytics": "^1.6.1",

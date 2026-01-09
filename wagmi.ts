@@ -1,5 +1,13 @@
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
-import { rabbyWallet } from "@rainbow-me/rainbowkit/wallets";
+import {
+  rabbyWallet,
+  metaMaskWallet,
+  walletConnectWallet,
+  coinbaseWallet,
+  rainbowWallet,
+  trustWallet,
+  ledgerWallet,
+} from "@rainbow-me/rainbowkit/wallets";
 
 // Dogechain chain configuration
 export const dogechain = {
@@ -29,7 +37,11 @@ export const config = getDefaultConfig({
   wallets: [
     {
       groupName: "Popular",
-      wallets: [rabbyWallet],
+      wallets: [rabbyWallet, metaMaskWallet, rainbowWallet, coinbaseWallet],
+    },
+    {
+      groupName: "Other",
+      wallets: [walletConnectWallet, trustWallet, ledgerWallet],
     },
   ],
 });

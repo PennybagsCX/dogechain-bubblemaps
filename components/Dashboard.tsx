@@ -72,6 +72,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const [inAppNotifications, setInAppNotifications] = useState<InAppNotification[]>([]);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [editingAlertId, setEditingAlertId] = useState<string | null>(null);
+  const [expandedEvents, setExpandedEvents] = useState<Set<string>>(new Set());
 
   const [formData, setFormData] = useState({
     name: "",
@@ -434,6 +435,19 @@ export const Dashboard: React.FC<DashboardProps> = ({
     }
   };
 
+  // Toggle event expansion
+  const toggleEventExpansion = (eventId: string) => {
+    setExpandedEvents((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(eventId)) {
+        newSet.delete(eventId);
+      } else {
+        newSet.add(eventId);
+      }
+      return newSet;
+    });
+  };
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
@@ -595,69 +609,96 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </button>
           </div>
           <div className="space-y-3">
-            {triggeredEvents.slice(0, 10).map((event) => (
-              <div key={event.id} className="bg-space-800 rounded-xl border border-space-700 p-6">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <h3 className="font-bold text-white">{event.alertName}</h3>
-                    <p className="text-xs text-slate-500 mt-1">
-                      {new Date(event.triggeredAt).toLocaleString()}
-                    </p>
+            {triggeredEvents.slice(0, 10).map((event) => {
+              const isExpanded = expandedEvents.has(event.id);
+              const displayedTransactions = isExpanded
+                ? event.transactions
+                : event.transactions.slice(0, 3);
+
+              return (
+                <div key={event.id} className="bg-space-800 rounded-xl border border-space-700 p-6">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h3 className="font-bold text-white">{event.alertName}</h3>
+                      <p className="text-xs text-slate-500 mt-1">
+                        {new Date(event.triggeredAt).toLocaleString()}
+                      </p>
+                    </div>
+                    <span className="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400">
+                      {event.transactions.length}{" "}
+                      {event.transactions.length === 1 ? "Transaction" : "Transactions"}
+                    </span>
                   </div>
-                  <span className="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400">
-                    {event.transactions.length}{" "}
-                    {event.transactions.length === 1 ? "Transaction" : "Transactions"}
-                  </span>
-                </div>
-                <div className="space-y-2">
-                  {event.transactions.slice(0, 3).map((tx, idx) => {
-                    const isIncoming = tx.to.toLowerCase() === event.walletAddress.toLowerCase();
-                    return (
-                      <div
-                        key={idx}
-                        className={`flex items-center gap-3 p-2 rounded-lg ${isIncoming ? "bg-green-500/10" : "bg-red-500/10"}`}
-                      >
-                        <div className="flex-none">
-                          {isIncoming ? (
-                            <ArrowDownLeft size={16} className="text-green-400" />
-                          ) : (
-                            <ArrowUpRight size={16} className="text-red-400" />
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <a
-                            href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm font-medium text-white hover:text-purple-400 transition-colors truncate block"
-                            title="View transaction on Dogechain Explorer"
-                          >
-                            {tx.value.toLocaleString()} {tx.tokenSymbol || "tokens"}
-                          </a>
-                          <p className="text-xs text-slate-500">
-                            {isIncoming ? "From" : "To"}:{" "}
+                  <div className="space-y-2">
+                    {displayedTransactions.map((tx, idx) => {
+                      const isIncoming = tx.to.toLowerCase() === event.walletAddress.toLowerCase();
+                      return (
+                        <div
+                          key={idx}
+                          className={`flex items-center gap-3 p-2 rounded-lg ${isIncoming ? "bg-green-500/10" : "bg-red-500/10"}`}
+                        >
+                          <div className="flex-none">
+                            {isIncoming ? (
+                              <ArrowDownLeft size={16} className="text-green-400" />
+                            ) : (
+                              <ArrowUpRight size={16} className="text-red-400" />
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
                             <a
-                              href={`https://explorer.dogechain.dog/address/${isIncoming ? tx.from : tx.to}`}
+                              href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="font-mono text-purple-400 hover:text-purple-300 transition-colors"
-                              title={`View ${isIncoming ? "sender" : "receiver"} on Dogechain Explorer`}
+                              className="text-sm font-medium text-white hover:text-purple-400 transition-colors truncate block"
+                              title="View transaction on Dogechain Explorer"
                             >
-                              {isIncoming ? tx.from.slice(0, 10) : tx.to.slice(0, 10)}...
+                              {tx.value.toLocaleString()} {tx.tokenSymbol || "tokens"}
                             </a>
-                          </p>
+                            <p className="text-xs text-slate-500">
+                              {isIncoming ? "From" : "To"}:{" "}
+                              <a
+                                href={`https://explorer.dogechain.dog/address/${isIncoming ? tx.from : tx.to}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-mono text-purple-400 hover:text-purple-300 transition-colors"
+                                title={`View ${isIncoming ? "sender" : "receiver"} on Dogechain Explorer`}
+                              >
+                                {isIncoming ? tx.from.slice(0, 10) : tx.to.slice(0, 10)}...
+                              </a>
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                  {event.transactions.length > 3 && (
-                    <p className="text-xs text-slate-500 text-center">
-                      +{event.transactions.length - 3} more transactions
-                    </p>
-                  )}
+                      );
+                    })}
+                    {event.transactions.length > 3 && (
+                      <button
+                        onClick={() => toggleEventExpansion(event.id)}
+                        className="w-full text-xs text-doge-500 hover:text-doge-400 font-medium text-center py-2 px-3 rounded-lg hover:bg-doge-500/10 transition-all cursor-pointer flex items-center justify-center gap-1 group"
+                        title={isExpanded ? "Show fewer transactions" : "Show all transactions"}
+                      >
+                        {isExpanded ? (
+                          <>
+                            <span>Show less</span>
+                            <ArrowUpRight
+                              size={14}
+                              className="group-hover:-translate-y-0.5 transition-transform"
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <span>+{event.transactions.length - 3} more transactions</span>
+                            <ArrowDownLeft
+                              size={14}
+                              className="group-hover:translate-y-0.5 transition-transform"
+                            />
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

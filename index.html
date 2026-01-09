@@ -54,5 +54,31 @@
   <body>
     <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
+
+  <!-- Prevent Arc Browser Little Arc from intercepting wallet popups -->
+  <script>
+    // Intercept window.open to prevent Little Arc interference
+    (function() {
+      const originalOpen = window.open;
+      window.open = function(url, target, features) {
+        // Check if this is a wallet-related popup
+        if (url && (url.includes('chrome-extension://') || url.includes('extension://'))) {
+          console.log('[Arc Workaround] Intercepted extension popup, using original method');
+          // Force same-window behavior for extension popups
+          return originalOpen.call(window, url, '_top', features);
+        }
+        return originalOpen.call(window, url, target, features);
+      };
+    })();
+
+    // Prevent default link opening behavior that triggers Little Arc
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('a');
+      if (link && link.target === '_blank' && !link.href.includes('http')) {
+        e.preventDefault();
+        console.log('[Arc Workaround] Prevented Little Arc for non-http link');
+      }
+    }, true);
+  </script>
 </body>
 </html>

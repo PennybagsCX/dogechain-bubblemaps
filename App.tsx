@@ -179,6 +179,15 @@ const App: React.FC = () => {
   const [userAddress, setUserAddress] = useState<string | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
 
+  // FIX: Use ref to track manual connection attempts to prevent accountsChanged interference
+  const isManualConnectionRef = useRef(false);
+
+  // FIX: Track selected wallet provider to prevent multiple providers from responding
+  const selectedProviderRef = useRef<any>(null);
+
+  // FIX: Track event listener registration to prevent duplicates
+  const eventListenersRegisteredRef = useRef(false);
+
   // Hybrid scan state
   const [scanState, setScanState] = useState<{
     phase:
@@ -576,6 +585,33 @@ const App: React.FC = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedWallet, isMobileStatsOpen]);
 
+  // --- WINDOW FOCUS HANDLER FOR WALLET POPUP ---
+  // When user returns from wallet popup, refresh connection state
+  useEffect(() => {
+    const handleFocus = async () => {
+      // FIX: Use the selected provider instead of window.ethereum
+      const selectedProvider = selectedProviderRef.current;
+
+      // Only check if wallet exists but not connected
+      if (selectedProvider && !userAddress) {
+        try {
+          const accounts = await selectedProvider.request({ method: "eth_accounts" });
+
+          if (accounts && accounts[0]) {
+            console.log("[Wallet] Detected wallet on focus:", accounts[0]);
+            setUserAddress(accounts[0]);
+            addToast("Wallet connected", "success");
+          }
+        } catch (error) {
+          console.log("[Wallet] No wallet detected on focus");
+        }
+      }
+    };
+
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [userAddress]);
+
   // --- DYNAMIC TITLE ---
   useEffect(() => {
     if (view === ViewState.HOME) document.title = "Dogechain BubbleMaps - On-Chain Intelligence";
@@ -935,22 +971,236 @@ const App: React.FC = () => {
     }
   };
 
+  // --- WALLET PROVIDER DETECTION ---
+  // Comprehensive wallet provider detection to prevent multiple providers from fighting
+  const detectWalletProviders = () => {
+    const providers: any[] = [];
+
+    // Check for window.ethereum
+    if (typeof (window as any).ethereum !== "undefined") {
+      const ethereum = (window as any).ethereum;
+
+      // Check if it's a multi-provider array (e.g., Rabby Wallet)
+      if (Array.isArray(ethereum)) {
+        console.log("[Wallet Provider] Multiple providers detected (array):", ethereum.length);
+        ethereum.forEach((provider, index) => {
+          const providerInfo = {
+            index,
+            isMetaMask: provider.isMetaMask || false,
+            isRabby: provider.isRabby || false,
+            isTrust: provider.isTrust || false,
+            isCoinbaseWallet: provider.isCoinbaseWallet || false,
+            isBraveWallet: provider.isBraveWallet || false,
+            requestId: provider.requestId || null,
+          };
+          console.log(`[Wallet Provider] Provider ${index}:`, providerInfo);
+          providers.push(provider);
+        });
+      } else {
+        // FIX: Rabby uses a proxy object that looks like a single provider but actually wraps multiple providers
+        // Try multiple ways to detect the providers array
+        let foundProviders = false;
+
+        // Method 1: Check ethereum.providers property
+        if (ethereum.providers && Array.isArray(ethereum.providers)) {
+          console.log(
+            "[Wallet Provider] Rabby-style multi-provider detected (via .providers):",
+            ethereum.providers.length
+          );
+          ethereum.providers.forEach((provider: any, index: number) => {
+            const providerInfo = {
+              index,
+              isMetaMask: provider.isMetaMask || false,
+              isRabby: provider.isRabby || false,
+              isTrust: provider.isTrust || false,
+              isCoinbaseWallet: provider.isCoinbaseWallet || false,
+              isBraveWallet: provider.isBraveWallet || false,
+              requestId: provider.requestId || null,
+            };
+            console.log(`[Wallet Provider] Provider ${index}:`, providerInfo);
+            providers.push(provider);
+          });
+          foundProviders = true;
+        }
+
+        // Method 2: Try to detect by checking common provider flags
+        if (!foundProviders && (ethereum.isMetaMask || ethereum.isRabby)) {
+          // It's a single provider, not a proxy
+          const providerInfo = {
+            index: 0,
+            isMetaMask: ethereum.isMetaMask || false,
+            isRabby: ethereum.isRabby || false,
+            isTrust: ethereum.isTrust || false,
+            isCoinbaseWallet: ethereum.isCoinbaseWallet || false,
+            isBraveWallet: ethereum.isBraveWallet || false,
+            requestId: ethereum.requestId || null,
+          };
+          console.log("[Wallet Provider] Single provider detected:", providerInfo);
+          providers.push(ethereum);
+          foundProviders = true;
+        }
+
+        // Method 3: If it's a proxy with no clear provider flags, try to detect it by calling a test method
+        if (!foundProviders) {
+          console.log("[Wallet Provider] Unknown provider structure, attempting to detect...");
+          console.log("[Wallet Provider] Provider type:", typeof ethereum);
+          console.log("[Wallet Provider] Provider constructor:", ethereum.constructor?.name);
+
+          // Check if it's likely a Rabby proxy by checking known characteristics
+          const isRabbyProxy =
+            !ethereum.isMetaMask &&
+            !ethereum.isRabby &&
+            typeof ethereum.request === "function" &&
+            typeof ethereum.on === "function";
+
+          if (isRabbyProxy) {
+            console.error(
+              "[Wallet Provider] ⚠️ PROBLEM DETECTED: Rabby proxy with multiple wallets"
+            );
+            console.error("[Wallet Provider] You have BOTH MetaMask and Rabby Wallet installed");
+            console.error("[Wallet Provider] This is causing connection conflicts");
+            console.error("[Wallet Provider]");
+            console.error("[Wallet Provider] SOLUTION: Please disable ONE wallet extension:");
+            console.error("[Wallet Provider] 1. Go to browser extensions");
+            console.error(
+              "[Wallet Provider] 2. EITHER disable MetaMask (if you want to use Rabby)"
+            );
+            console.error(
+              "[Wallet Provider] 3. OR disable Rabby Wallet (if you want to use MetaMask)"
+            );
+            console.error("[Wallet Provider] 4. Refresh the page and try again");
+
+            // Store a flag to show a user-friendly message
+            (window as any).__WALLET_CONFLICT_DETECTED = true;
+
+            // Use it anyway, but it will likely fail
+            const providerInfo = {
+              index: 0,
+              isMetaMask: false,
+              isRabby: false, // We can't detect it properly
+              isTrust: false,
+              isCoinbaseWallet: false,
+              isBraveWallet: false,
+              requestId: null,
+              _isProxy: true, // Mark as proxy
+              _willFail: true, // Mark as likely to fail
+            };
+            console.log("[Wallet Provider] Using proxy provider (EXPECTED TO FAIL):", providerInfo);
+            providers.push(ethereum);
+            foundProviders = true;
+          }
+        }
+      }
+    }
+
+    // Check for other wallet extensions
+    if (typeof (window as any).web3 !== "undefined") {
+      console.log("[Wallet Provider] Legacy web3.js provider detected");
+    }
+    if (typeof (window as any).BinanceChain !== "undefined") {
+      console.log("[Wallet Provider] Binance Chain Wallet detected");
+    }
+    if (typeof (window as any).phantom !== "undefined") {
+      console.log("[Wallet Provider] Phantom Wallet detected");
+    }
+
+    console.log(`[Wallet Provider] Total providers detected: ${providers.length}`);
+
+    return providers;
+  };
+
+  // Select the best wallet provider (prefer Rabby, then MetaMask, then first available)
+  const selectBestProvider = (providers: any[]) => {
+    if (providers.length === 0) {
+      console.warn("[Wallet Provider] No providers available");
+      return null;
+    }
+
+    if (providers.length === 1) {
+      console.log("[Wallet Provider] Using single provider");
+      return providers[0];
+    }
+
+    // Multi-provider scenario: prefer Rabby, then MetaMask
+    console.log("[Wallet Provider] Multiple providers available, selecting best one");
+
+    // Try to find Rabby first
+    const rabbyProvider = providers.find((p) => p.isRabby === true);
+    if (rabbyProvider) {
+      console.log("[Wallet Provider] ✓ Selected Rabby Wallet");
+      return rabbyProvider;
+    }
+
+    // Try to find MetaMask
+    const metaMaskProvider = providers.find((p) => p.isMetaMask === true);
+    if (metaMaskProvider) {
+      console.log("[Wallet Provider] ✓ Selected MetaMask");
+      return metaMaskProvider;
+    }
+
+    // Default to first provider
+    console.log("[Wallet Provider] ✓ Using first available provider");
+    return providers[0];
+  };
+
   // --- WALLET & INIT LOGIC ---
   useEffect(() => {
     const initWallet = async () => {
-      if (typeof (window as any).ethereum !== "undefined") {
-        try {
-          const accounts = await (window as any).ethereum.request({ method: "eth_accounts" });
-          if (accounts.length > 0) {
-            setUserAddress(accounts[0]);
-          }
+      // FIX: Detect all wallet providers first
+      console.log("[Wallet] === INITIALIZING WALLET CONNECTION ===");
+      const allProviders = detectWalletProviders();
 
-          (window as any).ethereum.on("accountsChanged", async (accounts: string[]) => {
+      if (allProviders.length === 0) {
+        console.log("[Wallet] No wallet providers detected");
+        return;
+      }
+
+      // FIX: Select the best provider and store it in ref
+      const selectedProvider = selectBestProvider(allProviders);
+      if (!selectedProvider) {
+        console.warn("[Wallet] No suitable provider found");
+        return;
+      }
+
+      // Store the selected provider globally
+      selectedProviderRef.current = selectedProvider;
+      console.log("[Wallet] ✓ Selected provider stored in ref");
+
+      try {
+        // FIX: Check if user intentionally disconnected
+        const intentionallyDisconnected =
+          sessionStorage.getItem("wallet-intentionally-disconnected") === "true";
+
+        // FIX: Use the selected provider instead of window.ethereum directly
+        const accounts = await selectedProvider.request({ method: "eth_accounts" });
+
+        // Only auto-connect if user didn't intentionally disconnect
+        if (accounts.length > 0 && !intentionallyDisconnected) {
+          setUserAddress(accounts[0]);
+          console.log("[Wallet] Auto-connected:", accounts[0]);
+        } else if (intentionallyDisconnected) {
+          console.log("[Wallet] Skipping auto-connect due to intentional disconnect");
+        }
+
+        // FIX: Only register event listeners once to prevent duplicates
+        if (!eventListenersRegisteredRef.current) {
+          console.log("[Wallet] Registering event listeners...");
+
+          selectedProvider.on("accountsChanged", async (accounts: string[]) => {
+            // FIX: Skip handling during manual connection to prevent double popups
+            if (isManualConnectionRef.current) {
+              console.log("[Wallet] Skipping accountsChanged during manual connection");
+              return;
+            }
+
             const newAddress = accounts.length > 0 && accounts[0] ? accounts[0] : null;
             setUserAddress(newAddress);
 
+            // Clear disconnect flag if user connects their wallet
             if (newAddress) {
+              sessionStorage.removeItem("wallet-intentionally-disconnected");
               addToast("Wallet connected", "success");
+              console.log("[Wallet] Connected via accountsChanged:", newAddress);
               // Re-inject user if we are currently viewing a map
               if (token && wallets.length > 0) {
                 const updatedWallets = await injectUserWallet(wallets, token, newAddress);
@@ -964,12 +1214,18 @@ const App: React.FC = () => {
             }
           });
 
-          (window as any).ethereum.on("chainChanged", () => {
+          selectedProvider.on("chainChanged", () => {
             window.location.reload();
           });
-        } catch (err) {
-          console.error("Wallet check error:", err);
+
+          // Mark that event listeners are registered
+          eventListenersRegisteredRef.current = true;
+          console.log("[Wallet] ✓ Event listeners registered");
+        } else {
+          console.log("[Wallet] Event listeners already registered, skipping");
         }
+      } catch (err) {
+        console.error("Wallet check error:", err);
       }
     };
 
@@ -1007,76 +1263,208 @@ const App: React.FC = () => {
 
     return () => {
       window.removeEventListener("popstate", onPopState);
-      const eth = (window as any).ethereum;
-      if (eth && eth.removeListener) {
-        eth.removeListener("accountsChanged", () => {});
-        eth.removeListener("chainChanged", () => {});
+
+      // FIX: Use the selected provider to remove event listeners
+      const selectedProvider = selectedProviderRef.current;
+      if (selectedProvider && selectedProvider.removeListener) {
+        selectedProvider.removeListener("accountsChanged", () => {});
+        selectedProvider.removeListener("chainChanged", () => {});
+        console.log("[Wallet] Event listeners removed");
       }
+
+      // Reset the event listeners flag
+      eventListenersRegisteredRef.current = false;
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps -- Intentional: only run on mount
 
   const handleConnectWallet = async () => {
-    if (typeof (window as any).ethereum === "undefined") {
+    // FIX: Check for wallet conflict flag first
+    if ((window as any).__WALLET_CONFLICT_DETECTED) {
+      console.error("[Wallet] Cannot connect - wallet extension conflict detected");
       addToast(
-        "Please install MetaMask or your preferred EVM compatible wallet to connect.",
+        "⚠️ Wallet Conflict: Please disable either MetaMask or Rabby Wallet extension, then refresh",
+        "error"
+      );
+
+      // Show console instructions again
+      console.error("═══════════════════════════════════════════════════════════════");
+      console.error("⚠️  WALLET CONNECTION CONFLICT DETECTED");
+      console.error("═══════════════════════════════════════════════════════════════");
+      console.error("You have BOTH MetaMask and Rabby Wallet installed simultaneously.");
+      console.error("This causes both wallets to respond, creating connection conflicts.");
+      console.error("");
+      console.error("🔧 SOLUTION: Disable ONE wallet extension");
+      console.error("");
+      console.error("Option A - Use Rabby Wallet:");
+      console.error("  1. Open browser extensions (Cmd+Shift+X on Mac, Ctrl+Shift+X on Windows)");
+      console.error("  2. Find MetaMask");
+      console.error("  3. Disable it");
+      console.error("  4. Refresh this page");
+      console.error("  5. Click Connect Wallet");
+      console.error("");
+      console.error("Option B - Use MetaMask:");
+      console.error("  1. Open browser extensions");
+      console.error("  2. Find Rabby Wallet");
+      console.error("  3. Disable it");
+      console.error("  4. Refresh this page");
+      console.error("  5. Click Connect Wallet");
+      console.error("═══════════════════════════════════════════════════════════════");
+
+      return;
+    }
+
+    // FIX: Check for selected provider first
+    const selectedProvider = selectedProviderRef.current;
+
+    console.log("[Wallet] Connect button clicked");
+    console.log("[Wallet] Selected provider from ref:", selectedProvider);
+
+    if (!selectedProvider) {
+      console.error("[Wallet] No selected provider found in ref!");
+      addToast(
+        "Please install Rabby Wallet, MetaMask, or your preferred EVM compatible wallet to connect.",
         "warning"
       );
       return;
     }
 
+    // Prevent multiple simultaneous connection attempts
+    if (isConnecting) {
+      console.log("[Wallet] Connection already in progress, ignoring duplicate click");
+      return;
+    }
+
     setIsConnecting(true);
+    isManualConnectionRef.current = true; // FIX: Mark as manual connection
+    console.log("[Wallet] Starting connection process with selected provider...");
+    console.log("[Wallet] Provider details:", {
+      isMetaMask: selectedProvider.isMetaMask,
+      isRabby: selectedProvider.isRabby,
+      isTrust: selectedProvider.isTrust,
+      request: typeof selectedProvider.request,
+      on: typeof selectedProvider.on,
+    });
+
+    // FIX: Add timeout to reset connecting state if it hangs
+    const connectionTimeout = setTimeout(() => {
+      if (isConnecting) {
+        console.error("[Wallet] Connection TIMEOUT after 15 seconds - resetting state");
+        setIsConnecting(false);
+        isManualConnectionRef.current = false; // Reset flag
+        addToast("Connection timed out. Please try again.", "error");
+      }
+    }, 15000); // 15 second timeout
 
     try {
-      const ethereum = (window as any).ethereum;
-      const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-
-      const chainId = await ethereum.request({ method: "eth_chainId" });
       const DOGECHAIN_ID = "0x7d0"; // 2000
 
-      if (chainId !== DOGECHAIN_ID) {
-        try {
-          await ethereum.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: DOGECHAIN_ID }],
-          });
-        } catch (switchError: any) {
-          // 4902: Chain not added
-          if (switchError.code === 4902) {
-            await ethereum.request({
-              method: "wallet_addEthereumChain",
-              params: [
-                {
-                  chainId: DOGECHAIN_ID,
-                  chainName: "Dogechain Mainnet",
-                  nativeCurrency: {
-                    name: "Dogecoin",
-                    symbol: "DOGE",
-                    decimals: 18,
-                  },
-                  rpcUrls: ["https://rpc.dogechain.dog"],
-                  blockExplorerUrls: ["https://explorer.dogechain.dog"],
-                },
-              ],
-            });
-          } else {
-            throw switchError;
-          }
-        }
+      console.log("[Wallet] Requesting accounts...");
+      // FIX: Use the selected provider instead of window.ethereum
+      // This ensures only ONE wallet responds to the connection request
+      const accounts = await selectedProvider.request({ method: "eth_requestAccounts" });
+      console.log("[Wallet] ✓ Accounts received:", accounts.length, accounts);
+
+      if (!accounts || accounts.length === 0) {
+        throw new Error("No accounts returned from wallet");
       }
 
-      if (accounts[0]) {
-        setUserAddress(accounts[0]);
-        addToast("Wallet connected successfully", "success");
+      console.log("[Wallet] Requesting chain ID...");
+      // Check chain ID AFTER connection (just to warn user, not to switch)
+      const chainId = await selectedProvider.request({ method: "eth_chainId" });
+      console.log("[Wallet] ✓ Chain ID received:", chainId);
+
+      if (chainId !== DOGECHAIN_ID) {
+        addToast(
+          "Please switch to Dogechain network in your wallet for full functionality",
+          "warning"
+        );
+        console.log("[Wallet] Wrong chain:", chainId, "Expected:", DOGECHAIN_ID);
       }
-    } catch (error) {
-      console.error("Connection error:", error);
-      addToast("Failed to connect wallet", "error");
+
+      // COMPREHENSIVE FIX: Verify connection with polling mechanism
+      // This addresses race conditions with Rabby Wallet and other wallets
+      // where the accountsChanged event might not fire immediately or at all
+      const connectedAddress = accounts[0];
+
+      // Poll for connection state to ensure wallet is properly connected
+      let pollCount = 0;
+      const maxPolls = 10;
+      const pollInterval = 100;
+
+      console.log("[Wallet] Starting connection verification polling...");
+      while (pollCount < maxPolls) {
+        await new Promise((resolve) => setTimeout(resolve, pollInterval));
+
+        const currentAccounts = await selectedProvider.request({ method: "eth_accounts" });
+
+        if (currentAccounts && currentAccounts[0]) {
+          const verifiedAddress = currentAccounts[0];
+          console.log(
+            "[Wallet] ✓ Verified connection at poll",
+            pollCount + 1,
+            ":",
+            verifiedAddress
+          );
+
+          // FIX: Clear disconnect flag on successful manual connection
+          sessionStorage.removeItem("wallet-intentionally-disconnected");
+          console.log("[Wallet] Cleared disconnect flag");
+
+          setUserAddress(verifiedAddress);
+          addToast("Wallet connected successfully", "success");
+          console.log("[Wallet] ✓ Connection complete:", verifiedAddress, "Chain:", chainId);
+          break;
+        }
+
+        pollCount++;
+        console.log("[Wallet] Polling for connection...", pollCount, "/", maxPolls);
+      }
+
+      // If polling completed but no connection found, use original result
+      if (pollCount >= maxPolls) {
+        console.warn("[Wallet] Polling completed, using original address");
+
+        // FIX: Clear disconnect flag on successful manual connection
+        sessionStorage.removeItem("wallet-intentionally-disconnected");
+        console.log("[Wallet] Cleared disconnect flag");
+
+        setUserAddress(connectedAddress);
+        addToast("Wallet connected successfully", "success");
+        console.log("[Wallet] ✓ Connected (original):", connectedAddress, "Chain:", chainId);
+      }
+
+      // Clear the timeout since connection succeeded
+      clearTimeout(connectionTimeout);
+    } catch (error: any) {
+      console.error("[Wallet] ✗ Connection error:", error);
+      console.error("[Wallet] Error details:", {
+        code: error.code,
+        message: error.message,
+        stack: error.stack,
+      });
+
+      // Clear the timeout on error
+      clearTimeout(connectionTimeout);
+
+      // User rejected the connection
+      if (error.code === 4001) {
+        addToast("Connection rejected by user", "info");
+        console.log("[Wallet] User rejected connection");
+      } else {
+        addToast("Failed to connect wallet: " + (error.message || "Unknown error"), "error");
+      }
     } finally {
+      console.log("[Wallet] Connection attempt finished, resetting state");
       setIsConnecting(false);
+      isManualConnectionRef.current = false; // FIX: Reset manual connection flag
     }
   };
 
   const handleDisconnectWallet = () => {
+    // FIX: Set flag to prevent auto-reconnect on page refresh
+    sessionStorage.setItem("wallet-intentionally-disconnected", "true");
+    console.log("[Wallet] Disconnected, preventing auto-reconnect");
+
     setUserAddress(null);
     setWalletAssets({ tokens: [], nfts: [] });
     addToast("Wallet disconnected", "info");

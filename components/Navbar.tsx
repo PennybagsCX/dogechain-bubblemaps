@@ -63,12 +63,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   const handleMobileNav = (view: ViewState) => {
-    // Check if user is trying to access Dashboard without wallet connection
-    if (view === ViewState.DASHBOARD && !userAddress) {
-      // Prompt user to connect wallet
-      onConnectWallet();
-      return;
-    }
+    // FIX: Don't auto-connect wallet when clicking Dashboard
+    // Just navigate to dashboard - let the dashboard component show connect prompt
     onChangeView(view);
     setIsMobileMenuOpen(false);
   };

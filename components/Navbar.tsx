@@ -2,34 +2,18 @@ import React, { useState, useRef } from "react";
 import { ViewState } from "../types";
 import { useClickOutside } from "../hooks/useClickOutside";
 import { handleTouchStopPropagation } from "../utils/touchHandlers";
-import {
-  LayoutDashboard,
-  Map,
-  Search,
-  Wallet as WalletIcon,
-  LogOut,
-  Loader2,
-  Menu,
-  X,
-} from "lucide-react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { LayoutDashboard, Map, Search, Menu, X } from "lucide-react";
 
 interface NavbarProps {
   currentView: ViewState;
   onChangeView: (view: ViewState) => void;
-  userAddress: string | null;
-  onConnectWallet: () => void;
-  onDisconnectWallet: () => void;
-  isConnecting?: boolean;
   hasAnalysisData?: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   currentView,
   onChangeView,
-  userAddress,
-  onConnectWallet,
-  onDisconnectWallet,
-  isConnecting = false,
   hasAnalysisData = false,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -58,13 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           : "text-slate-400 hover:text-white hover:bg-space-700"
     }`;
 
-  const formatAddress = (addr: string) => {
-    return `${addr.substring(0, 6)}...${addr.slice(-4)}`;
-  };
-
   const handleMobileNav = (view: ViewState) => {
-    // FIX: Don't auto-connect wallet when clicking Dashboard
-    // Just navigate to dashboard - let the dashboard component show connect prompt
     onChangeView(view);
     setIsMobileMenuOpen(false);
   };
@@ -101,7 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="hidden md:flex items-center gap-2">
             <button
               onTouchStart={handleTouchStopPropagation}
-              onClick={() => onChangeView(ViewState.HOME)}
+              onClick={() => handleMobileNav(ViewState.HOME)}
               className={navClass(ViewState.HOME)}
             >
               <Search size={18} />
@@ -109,20 +87,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
             <button
               onTouchStart={handleTouchStopPropagation}
-              onClick={() => onChangeView(ViewState.ANALYSIS)}
-              className={navClass(ViewState.ANALYSIS)}
+              onClick={() => handleMobileNav(ViewState.ANALYSIS)}
+              className={navClass(ViewState.ANALYSIS, !hasAnalysisData)}
+              disabled={!hasAnalysisData}
+              title={!hasAnalysisData ? "Search for an asset first" : undefined}
             >
               <Map size={18} />
-              <span>Analysis</span>
-              {!hasAnalysisData && currentView !== ViewState.ANALYSIS && (
-                <span className="w-1.5 h-1.5 rounded-full bg-slate-600 ml-1"></span>
-              )}
+              <span>Map Analysis</span>
             </button>
             <button
               onTouchStart={handleTouchStopPropagation}
               onClick={() => handleMobileNav(ViewState.DASHBOARD)}
               className={navClass(ViewState.DASHBOARD)}
-              title={!userAddress ? "Connect wallet to access Dashboard" : undefined}
             >
               <LayoutDashboard size={18} />
               <span>Dashboard</span>
@@ -130,44 +106,83 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Right Side Actions */}
-          <div className="flex items-center gap-4">
-            {userAddress ? (
-              <div className="flex items-center gap-2">
-                <div className="hidden sm:flex items-center gap-3 px-4 py-2 bg-space-800 border border-space-700 rounded-md text-sm text-white shadow-sm">
-                  <WalletIcon size={14} className="text-purple-500" />
-                  {formatAddress(userAddress)}
-                  <div className="flex items-center gap-1.5 text-xs text-slate-400 border-l border-space-600 pl-3">
-                    <span className="h-1.5 w-1.5 rounded-full bg-green-500"></span>
-                    <span>Dogechain</span>
+          <div className="flex items-center gap-3">
+            {/* RainbowKit Connect Button - Custom styled to match original design */}
+            <ConnectButton.Custom>
+              {({
+                account,
+                chain,
+                openAccountModal,
+                openChainModal,
+                openConnectModal,
+                authenticationStatus,
+                mounted,
+              }) => {
+                // Check if all data is ready
+                const ready = mounted && authenticationStatus !== "loading";
+                const connected =
+                  ready &&
+                  account &&
+                  chain &&
+                  (!authenticationStatus || authenticationStatus === "authenticated");
+
+                return (
+                  <div
+                    {...(!ready && {
+                      "aria-hidden": true,
+                      style: {
+                        opacity: 0,
+                        pointerEvents: "none",
+                        userSelect: "none",
+                      },
+                    })}
+                  >
+                    {(() => {
+                      if (!connected) {
+                        return (
+                          <button
+                            onClick={openConnectModal}
+                            onTouchStart={handleTouchStopPropagation}
+                            className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-lg transition-all duration-200 bg-purple-600 text-white shadow-lg shadow-purple-600/20 hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm md:text-base font-medium whitespace-nowrap"
+                            type="button"
+                          >
+                            <span className="hidden sm:inline">Connect Wallet</span>
+                            <span className="sm:hidden">Connect</span>
+                          </button>
+                        );
+                      }
+
+                      if (chain.unsupported) {
+                        return (
+                          <button
+                            onClick={openChainModal}
+                            onTouchStart={handleTouchStopPropagation}
+                            className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-lg transition-all duration-200 bg-red-600 text-white shadow-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:outline-none text-sm md:text-base font-medium whitespace-nowrap"
+                            type="button"
+                          >
+                            <span className="hidden sm:inline">Wrong network</span>
+                            <span className="sm:hidden">Wrong net</span>
+                          </button>
+                        );
+                      }
+
+                      return (
+                        <button
+                          onClick={openAccountModal}
+                          onTouchStart={handleTouchStopPropagation}
+                          className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-lg transition-all duration-200 bg-purple-600 text-white shadow-lg shadow-purple-600/20 hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm md:text-base font-medium"
+                          type="button"
+                        >
+                          <span className="max-w-[120px] md:max-w-[200px] truncate">
+                            {account.displayName}
+                          </span>
+                        </button>
+                      );
+                    })()}
                   </div>
-                </div>
-                <button
-                  onTouchStart={handleTouchStopPropagation}
-                  onClick={onDisconnectWallet}
-                  className="p-2 text-slate-400 hover:text-red-400 hover:bg-space-800 rounded-md transition-colors"
-                  title="Disconnect"
-                >
-                  <LogOut size={18} />
-                </button>
-              </div>
-            ) : (
-              <button
-                onTouchStart={handleTouchStopPropagation}
-                onClick={onConnectWallet}
-                disabled={isConnecting}
-                className="flex items-center gap-2 rounded-md bg-space-700 px-3 sm:px-4 py-2 text-sm font-medium text-white hover:bg-space-600 hover:text-purple-500 border border-space-600 hover:border-purple-500 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed focus:ring-2 focus:ring-purple-500 focus:outline-none"
-              >
-                {isConnecting ? (
-                  <Loader2 size={16} className="animate-spin" />
-                ) : (
-                  <WalletIcon size={16} />
-                )}
-                <span className="hidden sm:inline">
-                  {isConnecting ? "Connecting..." : "Connect Wallet"}
-                </span>
-                <span className="sm:hidden">{isConnecting ? "..." : "Connect"}</span>
-              </button>
-            )}
+                );
+              }}
+            </ConnectButton.Custom>
 
             {/* Mobile Menu Toggle */}
             <button
@@ -197,7 +212,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onTouchStart={handleTouchStopPropagation}
               onClick={() => handleMobileNav(ViewState.ANALYSIS)}
-              className={mobileNavClass(ViewState.ANALYSIS)}
+              className={mobileNavClass(ViewState.ANALYSIS, !hasAnalysisData)}
+              disabled={!hasAnalysisData}
             >
               <Map size={20} /> Map Analysis
             </button>
@@ -208,20 +224,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <LayoutDashboard size={20} /> Dashboard
             </button>
-            {userAddress && (
-              <div className="mt-2 pt-3 border-t border-space-700">
-                <div className="flex items-center justify-between px-4 py-2">
-                  <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
-                    <WalletIcon size={14} className="text-purple-500" />
-                    {formatAddress(userAddress)}
-                  </div>
-                  <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                    <span className="h-1.5 w-1.5 rounded-full bg-green-500"></span>
-                    <span>Dogechain</span>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         )}
       </nav>

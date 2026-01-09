@@ -1,4 +1,5 @@
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
+import { rabbyWallet } from "@rainbow-me/rainbowkit/wallets";
 
 // Dogechain chain configuration
 export const dogechain = {
@@ -25,4 +26,10 @@ export const config = getDefaultConfig({
   projectId: "YOUR_WALLETCONNECT_PROJECT_ID", // TODO: Replace with actual project ID from cloud.walletconnect.com
   chains: [dogechain],
   ssr: true, // Enable for better compatibility
+  wallets: [
+    {
+      groupName: "Popular",
+      wallets: [rabbyWallet],
+    },
+  ],
 });

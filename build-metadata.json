@@ -1,17 +1,7 @@
 {
-  "buildNumber": 121,
-  "lastUpdated": "2026-01-09T03:38:51.701Z",
+  "buildNumber": 123,
+  "lastUpdated": "2026-01-09T03:40:27.547Z",
   "commits": [
-    {
-      "build": 22,
-      "commit": "f751139",
-      "timestamp": "2026-01-05T12:54:27.211Z"
-    },
-    {
-      "build": 23,
-      "commit": "ca2347a",
-      "timestamp": "2026-01-05T15:56:00.984Z"
-    },
     {
       "build": 24,
       "commit": "6e90a7c",
@@ -501,6 +491,16 @@
       "build": 121,
       "commit": "dec0935",
       "timestamp": "2026-01-09T03:38:51.701Z"
+    },
+    {
+      "build": 122,
+      "commit": "567c060",
+      "timestamp": "2026-01-09T03:39:00.008Z"
+    },
+    {
+      "build": 123,
+      "commit": "567c060",
+      "timestamp": "2026-01-09T03:40:27.547Z"
     }
   ]
 }

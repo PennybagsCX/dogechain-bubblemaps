@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Analytics } from "@vercel/analytics/react";
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Navbar } from "./components/Navbar";
 import { BubbleMap } from "./components/BubbleMap";
@@ -177,7 +177,6 @@ const generateAlertId = () => {
 const App: React.FC = () => {
   // Wagmi hooks for wallet connection
   const { address: userAddress, isConnected } = useAccount();
-  const { disconnect } = useDisconnect();
 
   const [view, setView] = useState<ViewState>(ViewState.HOME);
   const [searchQuery, setSearchQuery] = useState("");
@@ -940,24 +939,8 @@ const App: React.FC = () => {
   };
 
   // --- WALLET EVENT HANDLERS ---
-  // Simplified wallet connection handlers using RainbowKit/wagmi
-  // Note: RainbowKit handles the actual connection UI via ConnectButton component
-  const handleConnectWallet = async () => {
-    // RainbowKit ConnectButton handles the connection flow
-    // This is a no-op but kept for compatibility with existing components
-    console.log("[Wallet] Connect button clicked - RainbowKit will handle the connection");
-  };
-
-  const handleDisconnectWallet = async () => {
-    try {
-      await disconnect();
-      sessionStorage.setItem("wallet-intentionally-disconnected", "true");
-      addToast("Wallet disconnected", "info");
-    } catch (error) {
-      console.error("[Wallet] Disconnect error:", error);
-      addToast("Failed to disconnect wallet", "error");
-    }
-  };
+  // Note: RainbowKit handles the connection/disconnection flow via ConnectButton component
+  // wagmi hooks (useAccount) provide the wallet state
 
   // Listen for account changes from wagmi
   useEffect(() => {

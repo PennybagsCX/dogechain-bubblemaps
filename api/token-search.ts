@@ -31,12 +31,14 @@ export async function GET(req: Request): Promise<Response> {
     const targetUrl = `${BLOCKSCOUT_API_BASE}/tokens?type=JSON&query=${encodeURIComponent(query)}`;
     console.log(`[Token Search Proxy] Fetching: ${targetUrl}`);
 
-    // Forward request to Blockscout API
+    // Forward request to Blockscout API with browser-like headers
     const response = await fetch(targetUrl, {
       method: "GET",
       headers: {
-        "User-Agent": "DogechainBubblemaps/1.0",
-        Accept: "application/json",
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        Accept: "*/*",
+        "Accept-Language": "en-US,en;q=0.9",
       },
     });
 

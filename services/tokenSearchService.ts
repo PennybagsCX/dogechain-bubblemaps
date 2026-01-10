@@ -483,15 +483,38 @@ export async function searchTokensBlockscout(
   if (!query || query.length < 2) return [];
 
   try {
-    // Use the working endpoint: /tokens?type=JSON&query=SEARCH_TERM
-    const apiUrl = `https://explorer.dogechain.dog/tokens?type=JSON&query=${encodeURIComponent(query)}`;
+    // Try proxy first (bypasses CORS for Arc mobile and other strict browsers)
+    const proxyUrl = `/api/token-search?q=${encodeURIComponent(query)}`;
+    const directUrl = `https://explorer.dogechain.dog/tokens?type=JSON&query=${encodeURIComponent(query)}`;
 
-    const response = await fetch(apiUrl);
+    let response: Response;
+    let usedProxy = true;
+
+    try {
+      console.log(`[Token Search] Using proxy for query: ${query}`);
+      response = await fetch(proxyUrl);
+
+      // If proxy fails, fall back to direct API
+      if (!response.ok) {
+        console.warn(
+          `[Token Search] Proxy failed with status ${response.status}, falling back to direct API`
+        );
+        usedProxy = false;
+        response = await fetch(directUrl);
+      }
+    } catch (proxyError) {
+      // Network error with proxy, fall back to direct API
+      console.warn(`[Token Search] Proxy error: ${proxyError}, falling back to direct API`);
+      usedProxy = false;
+      response = await fetch(directUrl);
+    }
+
     if (!response.ok) {
       console.warn("[Token Search] Blockscout API request failed:", response.status);
       return [];
     }
 
+    console.log(`[Token Search] Successfully fetched using ${usedProxy ? "proxy" : "direct API"}`);
     const data = await response.json();
 
     if (!data.items || !Array.isArray(data.items)) {

@@ -861,9 +861,38 @@ const App: React.FC = () => {
     setIsMobileStatsOpen(false);
 
     try {
+      const userAgent = navigator.userAgent;
+      const isArcMobile = /Arc\/.*Mobile/.test(userAgent);
+      const isArc = /Arc\//.test(userAgent);
+      const isMobile = /Mobile|Android|iPhone|iPad|iPod/.test(userAgent);
+
+      console.log(`[App] 🔍 Fetching token data for query: "${cleanQuery}", type: ${typeToUse}`);
+      console.log(`[App] 📱 Browser Info:`, {
+        userAgent: userAgent.substring(0, 100) + "...",
+        isArcMobile,
+        isArc,
+        isMobile,
+        platform: navigator.platform,
+        vendor: navigator.vendor,
+      });
       const tokenData = await fetchTokenData(cleanQuery, typeToUse);
 
+      console.log(
+        `[App] 📦 Token data response:`,
+        tokenData
+          ? {
+              address: tokenData.address,
+              symbol: tokenData.symbol,
+              name: tokenData.name,
+              type: tokenData.type,
+              decimals: tokenData.decimals,
+              totalSupply: tokenData.totalSupply,
+            }
+          : "NULL"
+      );
+
       if (!tokenData) {
+        console.error(`[App] ❌ Token data is NULL for query: "${cleanQuery}"`);
         addToast("Token not found. Please verify the address.", "error");
         setLoading(false);
         return;
@@ -872,6 +901,7 @@ const App: React.FC = () => {
       // Enforce type match; if mismatch, prompt user
       if (tokenData.type !== typeToUse) {
         const targetLabel = tokenData.type === AssetType.NFT ? "NFT" : "Token";
+        console.warn(`[App] ⚠️ Type mismatch: expected ${typeToUse}, got ${tokenData.type}`);
         addToast(
           `This address appears to be an ${targetLabel} contract. Switch to ${targetLabel}s and search again.`,
           "error"
@@ -891,7 +921,20 @@ const App: React.FC = () => {
       );
 
       // Fetch Data (Live)
+      console.log(
+        `[App] 🔄 Fetching token holders for ${tokenData.symbol || tokenData.address}...`
+      );
       const result = await fetchTokenHolders(tokenData);
+
+      console.log(`[App] 📊 Token holders result:`, {
+        walletsCount: result.wallets.length,
+        linksCount: result.links.length,
+        wallets: result.wallets.slice(0, 3).map((w) => ({
+          address: w.address,
+          balance: w.balance,
+          label: w.label,
+        })),
+      });
 
       let finalWallets = result.wallets;
 
@@ -901,7 +944,23 @@ const App: React.FC = () => {
       }
 
       if (finalWallets.length === 0) {
-        addToast("No active holders found or API limit reached.", "warning");
+        console.error(`[App] ❌ No wallets found. Token holders API returned empty result.`);
+        console.error(`[App] 📋 Debug info:`, {
+          tokenAddress: tokenData.address,
+          tokenSymbol: tokenData.symbol,
+          isArcMobile,
+          originalWalletsCount: result.wallets.length,
+          finalWalletsCount: finalWallets.length,
+        });
+
+        if (isArcMobile) {
+          addToast(
+            "No active holders found. If you're on Arc mobile, please clear your browser cache and refresh (Arc menu → Clear Browsing Data).",
+            "warning"
+          );
+        } else {
+          addToast("No active holders found or API limit reached.", "warning");
+        }
         setLoading(false);
         return;
       }

@@ -392,18 +392,15 @@ const App: React.FC = () => {
 
     // Send initial diagnostic data
     logger.sendLogs().catch((err) => {
-      // eslint-disable-next-line no-console
       console.warn("[App] Failed to send initial diagnostics:", err);
     });
 
     return () => {
       // Send final logs before unmount
       logger.sendLogs().catch((err) => {
-        // eslint-disable-next-line no-console
         console.warn("[App] Failed to send final diagnostics:", err);
       });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Fetch server-side trending on mount and refresh periodically

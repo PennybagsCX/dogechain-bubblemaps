@@ -17,10 +17,23 @@ const LOG_INDEX = "diagnostic_log_index";
 
 export async function GET(req: Request): Promise<Response> {
   try {
-    const url = new URL(req.url);
-    const sessionId = url.searchParams.get("sessionId");
-    const limit = parseInt(url.searchParams.get("limit") || "50");
-    const offset = parseInt(url.searchParams.get("offset") || "0");
+    // Parse query parameters from request URL
+    let sessionId: string | null = null;
+    let limit = 50;
+    let offset = 0;
+
+    // Try to get URL from request or construct from headers
+    const requestUrl = req.url;
+    if (requestUrl) {
+      try {
+        const url = new URL(requestUrl);
+        sessionId = url.searchParams.get("sessionId");
+        limit = parseInt(url.searchParams.get("limit") || "50");
+        offset = parseInt(url.searchParams.get("offset") || "0");
+      } catch {
+        // URL parsing failed, use defaults
+      }
+    }
 
     const logs: any[] = [];
 

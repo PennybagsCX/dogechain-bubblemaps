@@ -5,15 +5,9 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { createClient } from "@vercel/kv";
+import { neon } from "@neondatabase/serverless";
 
-const kv = createClient({
-  url: process.env.KV_URL || "",
-  token: process.env.KV_REST_API_URL || "",
-});
-
-const LOG_PREFIX = "diagnostic_log:";
-const LOG_INDEX = "diagnostic_log_index";
+const sql = neon(process.env.DATABASE_URL!);
 
 export async function GET(req: Request): Promise<Response> {
   try {
@@ -38,26 +32,27 @@ export async function GET(req: Request): Promise<Response> {
     const logs: any[] = [];
 
     if (sessionId) {
-      // Get specific session
-      const keys = await kv.keys(`${LOG_PREFIX}${sessionId}*`);
+      // Get specific session logs
+      const sessionLogs = await sql`
+        SELECT * FROM diagnostic_logs
+        WHERE session_id = ${sessionId}
+        ORDER BY timestamp DESC
+      `;
 
-      for (const key of keys) {
-        const data = await kv.get(key);
-        if (data) {
-          logs.push(JSON.parse(data as string));
-        }
+      for (const log of sessionLogs) {
+        logs.push(formatLog(log));
       }
     } else {
-      // Get recent logs
-      const keys = await kv.zrange(LOG_INDEX, -limit - offset, -offset - 1, {
-        rev: true,
-      });
+      // Get recent logs with pagination
+      const recentLogs = await sql`
+        SELECT * FROM diagnostic_logs
+        ORDER BY timestamp DESC
+        LIMIT ${limit}
+        OFFSET ${offset}
+      `;
 
-      for (const key of keys) {
-        const data = await kv.get(key as string);
-        if (data) {
-          logs.push(JSON.parse(data as string));
-        }
+      for (const log of recentLogs) {
+        logs.push(formatLog(log));
       }
     }
 
@@ -78,6 +73,31 @@ export async function GET(req: Request): Promise<Response> {
       { status: 500 }
     );
   }
+}
+
+function formatLog(log: any): any {
+  return {
+    id: log.id,
+    sessionId: log.session_id,
+    timestamp: log.timestamp,
+    userAgent: log.user_agent,
+    platform: log.platform,
+    vendor: log.vendor,
+    isArcMobile: log.is_arc_mobile,
+    isArc: log.is_arc,
+    isMobile: log.is_mobile,
+    consoleLogs: log.console_logs,
+    tokenSearches: log.token_searches,
+    tokenHolderFetches: log.token_holder_fetches,
+    errors: log.errors,
+    screenResolution: log.screen_resolution,
+    viewport: log.viewport,
+    networkStatus: log.network_status,
+    language: log.language,
+    url: log.url,
+    receivedAt: log.received_at,
+    createdAt: log.created_at,
+  };
 }
 
 // Handle OPTIONS preflight requests for CORS

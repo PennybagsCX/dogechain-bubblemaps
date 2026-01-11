@@ -5,6 +5,8 @@ const sql = neon(process.env.DATABASE_URL!);
 // GET /api/trending?type=TOKEN&limit=20
 export async function GET(req: Request): Promise<Response> {
   try {
+    console.log("[API /trending] 📥 Fetching trending assets");
+
     // Handle Edge runtime where req.url might be empty
     const url = new URL(
       req.url ||
@@ -12,6 +14,8 @@ export async function GET(req: Request): Promise<Response> {
     );
     const type = url.searchParams.get("type") || "ALL";
     const limit = Math.min(parseInt(url.searchParams.get("limit") || "20"), 100);
+
+    console.log("[API /trending] 🔍 Query params:", { type, limit });
 
     let assets;
 
@@ -46,6 +50,13 @@ export async function GET(req: Request): Promise<Response> {
       `;
     }
 
+    console.log("[API /trending] ✅ Query result:", {
+      count: Array.isArray(assets) ? assets.length : 0,
+      sample: Array.isArray(assets)
+        ? assets.slice(0, 3).map((a: any) => ({ symbol: a.symbol, score: a.velocity_score }))
+        : [],
+    });
+
     return Response.json(
       {
         success: true,
@@ -60,7 +71,7 @@ export async function GET(req: Request): Promise<Response> {
       }
     );
   } catch (error) {
-    console.error("[API] Failed to fetch trending:", error);
+    console.error("[API /trending] ❌ Failed to fetch trending:", error);
 
     // Return empty results instead of error
     return Response.json({

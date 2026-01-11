@@ -74,7 +74,8 @@ export function TokenSearchInput({
   autoFocus = false,
   value: externalValue,
   onChange: externalOnChange,
-}: TokenSearchInputProps) {
+  inputRef: externalInputRef,
+}: TokenSearchInputProps & { inputRef?: React.RefObject<HTMLInputElement | null> }) {
   // Determine if controlled mode
   const isControlled = externalValue !== undefined;
 
@@ -120,7 +121,8 @@ export function TokenSearchInput({
     return unique;
   }, [popularQueries, trendingQueries]);
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const internalInputRef = useRef<HTMLInputElement>(null);
+  const inputRef = externalInputRef || internalInputRef;
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchAbortRef = useRef<AbortController | null>(null);
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);

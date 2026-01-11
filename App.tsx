@@ -212,6 +212,7 @@ const App: React.FC = () => {
   // Use ref to track start time without causing re-renders
   const scanStartTimeRef = useRef<number>(0);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   const [token, setToken] = useState<Token | null>(null);
   const [wallets, setWallets] = useState<Wallet[]>([]);
@@ -410,7 +411,13 @@ const App: React.FC = () => {
 
     const fetchServerTrending = async () => {
       try {
+        console.log("[App] 🔄 Fetching server-side trending assets...");
         const serverTrending = await getTrendingAssets("ALL", 20);
+
+        console.log("[App] 📊 Server trending response:", {
+          count: serverTrending.length,
+          assets: serverTrending.slice(0, 3).map((a) => ({ symbol: a.symbol, address: a.address })),
+        });
 
         if (serverTrending.length > 0) {
           // Convert server format to local TrendingAsset format
@@ -422,9 +429,13 @@ const App: React.FC = () => {
             hits: Math.round(asset.velocityScore),
           }));
 
+          console.log("[App] ✅ Converted trending assets:", converted.length);
           setTrendingAssets(converted);
+        } else {
+          console.warn("[App] ⚠️ Server returned empty trending array, using local fallback");
         }
-      } catch {
+      } catch (error) {
+        console.error("[App] ❌ Failed to fetch server trending:", error);
         // Server fetch failed, keeping local trending
       }
     };
@@ -1834,6 +1845,7 @@ const App: React.FC = () => {
                   disabled={loading}
                   value={searchQuery}
                   onChange={setSearchQuery}
+                  inputRef={searchInputRef}
                 />
 
                 {/* Recent Searches - Wrapped (moved above scanner) */}
@@ -1850,7 +1862,18 @@ const App: React.FC = () => {
                       {recentSearches.map((item, index) => (
                         <button
                           key={`${item.query}-${index}`}
-                          onClick={(e) => handleSearch(e, item.query, item.type)}
+                          onClick={(e) => {
+                            // Scroll to search input and focus it for visual feedback
+                            searchInputRef.current?.scrollIntoView({
+                              behavior: "smooth",
+                              block: "center",
+                            });
+                            setTimeout(() => {
+                              searchInputRef.current?.focus();
+                            }, 300);
+
+                            handleSearch(e, item.query, item.type);
+                          }}
                           className="flex items-center gap-1 px-2 py-1 rounded bg-space-800 border border-space-700 text-xs text-slate-300 hover:text-white transition-all"
                         >
                           <span
@@ -2084,6 +2107,16 @@ const App: React.FC = () => {
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
+
+                          // Scroll to search input and focus it for visual feedback
+                          searchInputRef.current?.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                          });
+                          setTimeout(() => {
+                            searchInputRef.current?.focus();
+                          }, 300);
+
                           handleSearch(e, asset.address, asset.type);
                         }}
                         className="relative p-3 bg-space-800 hover:bg-space-700 rounded-lg border border-space-700 transition-all text-center flex flex-col items-center gap-1 cursor-pointer"

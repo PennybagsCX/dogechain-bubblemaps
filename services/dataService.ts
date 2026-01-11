@@ -27,10 +27,10 @@ import {
 } from "./db";
 import { submitWalletScanResults } from "./learnedTokensService";
 
-// Using proxy to avoid SSL certificate issues with Arc Browser for iOS
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "";
-const EXPLORER_API_V1 = `${API_BASE}/api/dogechain-proxy`;
-const EXPLORER_API_V2 = `${API_BASE}/api/dogechain-proxy`;
+// Proxy to Dogechain Explorer to avoid CORS issues
+// Using relative URL since the proxy endpoint is in the same app
+const EXPLORER_API_V1 = "/api/dogechain-proxy";
+const EXPLORER_API_V2 = "/api/dogechain-proxy";
 const METADATA_CACHE_KEY = "doge_token_metadata_cache_v2";
 // Note: DISABLE_WALLET_ENDPOINTS removed - using fetchWalletAssetsHybrid instead
 

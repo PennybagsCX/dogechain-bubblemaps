@@ -96,8 +96,8 @@ export async function getTrendingAssets(
   }
 
   try {
-    const apiBase = getApiBaseUrl();
-    const response = await fetch(`${apiBase}/api/trending?type=${type}&limit=${limit}&cache=true`);
+    // Use relative URL since /api/trending is in the same app, not on the API server
+    const response = await fetch(`/api/trending?type=${type}&limit=${limit}&cache=true`);
 
     // Handle 404 gracefully - API endpoint doesn't exist
     if (response.status === 404) {

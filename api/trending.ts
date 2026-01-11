@@ -5,7 +5,11 @@ const sql = neon(process.env.DATABASE_URL!);
 // GET /api/trending?type=TOKEN&limit=20
 export async function GET(req: Request): Promise<Response> {
   try {
-    const url = new URL(req.url);
+    // Handle Edge runtime where req.url might be empty
+    const url = new URL(
+      req.url ||
+        `https://${req.headers.get("host") || "localhost"}${req.headers.get("x-url") || "/api/trending"}`
+    );
     const type = url.searchParams.get("type") || "ALL";
     const limit = Math.min(parseInt(url.searchParams.get("limit") || "20"), 100);
 

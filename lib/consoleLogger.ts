@@ -44,7 +44,7 @@ class DiagnosticLogger {
     return `session_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
   }
 
-  private getBrowserInfo() {
+  public getBrowserInfo() {
     const userAgent = navigator.userAgent;
     return {
       userAgent,
@@ -259,10 +259,6 @@ class DiagnosticLogger {
 
   public getSessionId(): string {
     return this.sessionId;
-  }
-
-  public getBrowserInfo() {
-    return this.getBrowserInfo();
   }
 
   public destroy(): void {

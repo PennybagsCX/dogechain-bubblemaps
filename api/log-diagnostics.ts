@@ -53,19 +53,19 @@ export async function POST(req: Request): Promise<Response> {
       await kv.set(key, JSON.stringify(logEntry), { px: ttl });
 
       // Add to index for retrieval
-      await kv.zadd(
-        LOG_INDEX,
-        {
-          score: Date.now(),
-          member: key,
-        },
-        { nx: true } // Only add if doesn't exist
-      );
+      await kv.zadd(LOG_INDEX, {
+        score: Date.now(),
+        member: key,
+      });
 
       // Clean up old entries from index (keep last 1000)
       const oldEntries = await kv.zrange(LOG_INDEX, 0, -1000);
       if (oldEntries.length > 1000) {
-        await kv.zpopmin(LOG_INDEX, oldEntries.length - 1000);
+        // Remove oldest entries beyond 1000
+        const toRemove = oldEntries.slice(0, oldEntries.length - 1000);
+        for (const entry of toRemove) {
+          await kv.zrem(LOG_INDEX, entry);
+        }
       }
 
       console.log(`[Diagnostics] Logged session: ${data.sessionId}`);

@@ -19,7 +19,6 @@ export async function GET(req: Request): Promise<Response> {
     const address = url.searchParams.get("address");
     const page = url.searchParams.get("page");
     const offset = url.searchParams.get("offset");
-    const limit = url.searchParams.get("limit");
     const sort = url.searchParams.get("sort");
 
     // Build target URL based on parameters

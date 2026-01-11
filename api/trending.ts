@@ -17,15 +17,31 @@ export async function GET(req: Request): Promise<Response> {
 
     if (type === "ALL") {
       assets = await sql`
-        SELECT * FROM trending_tokens
-        ORDER BY popularity_score DESC
+        SELECT
+          address,
+          symbol,
+          name,
+          type,
+          COALESCE(popularity_score, 0) as velocity_score,
+          holder_count,
+          source
+        FROM learned_tokens
+        ORDER BY popularity_score DESC NULLS LAST, last_seen_at DESC
         LIMIT ${limit.toString()}
       `;
     } else {
       assets = await sql`
-        SELECT * FROM trending_tokens
+        SELECT
+          address,
+          symbol,
+          name,
+          type,
+          COALESCE(popularity_score, 0) as velocity_score,
+          holder_count,
+          source
+        FROM learned_tokens
         WHERE type = ${type}
-        ORDER BY popularity_score DESC
+        ORDER BY popularity_score DESC NULLS LAST, last_seen_at DESC
         LIMIT ${limit.toString()}
       `;
     }

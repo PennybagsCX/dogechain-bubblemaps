@@ -4,7 +4,6 @@
  */
 
 /* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { neon } from "@neondatabase/serverless";
 

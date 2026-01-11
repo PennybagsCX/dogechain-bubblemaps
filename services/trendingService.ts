@@ -3,9 +3,6 @@
  * Handles communication with trending aggregation API
  */
 
-// Get API base URL from environment variable
-const getApiBaseUrl = () => import.meta.env.VITE_API_BASE_URL || "";
-
 // Detect local/dev to avoid CORS against production endpoints
 const isLocalDev = typeof window !== "undefined" && window.location.hostname === "localhost";
 
@@ -48,8 +45,8 @@ export async function logSearchQuery(
   if (isLocalDev) return false;
 
   try {
-    const apiBase = getApiBaseUrl();
-    const response = await fetch(`${apiBase}/api/trending/log`, {
+    // Use relative URL since /api/trending/log is in the same app
+    const response = await fetch("/api/trending/log", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ address, assetType, symbol, name }),

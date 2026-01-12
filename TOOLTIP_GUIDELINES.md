@@ -220,6 +220,86 @@ Use the `position` prop to suggest optimal placement:
 
 The Tooltip component has **auto-positioning enabled by default**, so it will automatically adjust if the suggested position would cause viewport overflow.
 
+## Position Guidelines
+
+### Portal Rendering (Default)
+
+**All tooltips use React Portal rendering by default** (`portal={true}`). This means:
+
+- Tooltips render at document root level
+- Escape parent container boundaries completely
+- Never get clipped by drawers, tables, or other containers
+- Float above all UI elements with proper z-index
+
+**Benefits**:
+
+- ✅ No clipping issues (WalletSidebar drawer, Dashboard tables, BubbleMap)
+- ✅ Consistent z-index hierarchy (z-[130] above everything)
+- ✅ Works with any container (overflow hidden, transform, etc.)
+- ✅ Automatic positioning calculation
+
+**When to Override** (rare):
+
+- Tooltips in scrollable lists with many items
+- Tooltips with complex interactive state
+- Tooltips already inside a portal/iframe
+
+```tsx
+// Standard usage (recommended)
+<Tooltip content="Help text">
+  <button>Action</button>
+</Tooltip>
+
+// Disable portal rendering (edge cases only)
+<Tooltip portal={false} content="Simple tooltip">
+  <button>Action</button>
+</Tooltip>
+```
+
+### Position Suggestion
+
+Use the `position` prop to suggest optimal placement:
+
+```tsx
+// Above buttons (default, works well most of the time)
+<Tooltip content="Help text">
+  <button>Action</button>
+</Tooltip>
+
+// Left side for left-aligned controls
+<Tooltip content="Zoom in" position="left">
+  <button><ZoomIn /></button>
+</Tooltip>
+
+// Right side for right-aligned controls
+<Tooltip content="View details" position="right">
+  <button><Info /></button>
+</Tooltip>
+
+// Below for elements at top of viewport
+<Tooltip content="Helpful info" position="bottom">
+  <button>Top Button</button>
+</Tooltip>
+```
+
+The Tooltip component has **auto-positioning enabled by default**, so it will automatically adjust if the suggested position would cause viewport overflow. This works perfectly with portal rendering.
+
+### Custom Z-Index
+
+For most tooltips, the default z-index of 130 is perfect. However, you can customize if needed:
+
+```tsx
+// Higher z-index for critical tooltips
+<Tooltip content="Critical warning" zIndex={200}>
+  <Alert />
+</Tooltip>
+
+// Lower z-index for decorative tooltips
+<Tooltip content="Info hint" zIndex={100}>
+  <Info />
+</Tooltip>
+```
+
 ## Styling
 
 All tooltips automatically use:
@@ -229,7 +309,7 @@ All tooltips automatically use:
 - **Text**: `text-slate-300` (light gray)
 - **Animation**: 200ms fade (smooth transitions)
 - **Arrow**: Styled indicator pointing to trigger
-- **Z-index**: 50 (above most content)
+- **Z-index**: 130 (above all UI elements, including WalletSidebar and modals)
 
 No additional styling needed!
 
@@ -371,5 +451,6 @@ grep -r 'title="' components/ --include='*.tsx'
 - **Implementation**: See `/components/Tooltip.tsx` for source code
 - **Examples**: Check App.tsx:1848-1867 for homepage tooltip usage
 - **Documentation**: See `TOOLTIP_COMPONENT_IMPLEMENTATION.md` for technical details
+- **Positioning Fix**: See `TOOLTIP_POSITIONING_FIX.md` for portal rendering implementation
 
 **Last Updated**: January 12, 2026

@@ -16,6 +16,16 @@ import { config } from "./wagmi";
 // Initialize Sentry error tracking
 initSentry();
 
+// Create portal root for tooltips to escape container clipping
+const tooltipPortalRoot = document.createElement("div");
+tooltipPortalRoot.id = "tooltip-portal-root";
+tooltipPortalRoot.style.position = "fixed";
+tooltipPortalRoot.style.top = "0";
+tooltipPortalRoot.style.left = "0";
+tooltipPortalRoot.style.pointerEvents = "none";
+tooltipPortalRoot.style.zIndex = "130";
+document.body.appendChild(tooltipPortalRoot);
+
 // Register Service Worker for offline search caching
 if (import.meta.env.DEV || import.meta.env.PROD) {
   registerSW({

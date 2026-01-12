@@ -26,6 +26,18 @@ tooltipPortalRoot.style.pointerEvents = "none";
 tooltipPortalRoot.style.zIndex = "130";
 document.body.appendChild(tooltipPortalRoot);
 
+// Create portal root for modals (onboarding, etc.)
+const modalPortalRoot = document.createElement("div");
+modalPortalRoot.id = "modal-portal-root";
+modalPortalRoot.style.position = "fixed";
+modalPortalRoot.style.top = "0";
+modalPortalRoot.style.left = "0";
+modalPortalRoot.style.width = "0";
+modalPortalRoot.style.height = "0";
+modalPortalRoot.style.overflow = "visible";
+modalPortalRoot.style.zIndex = "60";
+document.body.appendChild(modalPortalRoot);
+
 // Register Service Worker for offline search caching
 if (import.meta.env.DEV || import.meta.env.PROD) {
   registerSW({

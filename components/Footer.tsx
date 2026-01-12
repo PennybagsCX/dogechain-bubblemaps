@@ -1,5 +1,5 @@
 import React from "react";
-import { Github, Search, AlertTriangle } from "lucide-react";
+import { Github, Search, AlertTriangle, HelpCircle } from "lucide-react";
 import { Tooltip } from "./Tooltip";
 import { useStatsCounters } from "../hooks/useStatsCounters";
 
@@ -10,7 +10,11 @@ function formatNumber(num: number): string {
   return num.toLocaleString("en-US");
 }
 
-export const Footer: React.FC = () => {
+export interface FooterProps {
+  onOpenGuide?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenGuide }) => {
   const { totalSearches, totalAlerts, isLoading } = useStatsCounters();
   return (
     <footer className="border-t border-space-700 bg-space-900 py-12 mt-auto">
@@ -27,6 +31,18 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-6">
+            {/* Guide Button */}
+            {onOpenGuide && (
+              <button
+                onClick={onOpenGuide}
+                className="text-slate-400 hover:text-purple-400 transition-colors"
+                aria-label="Open user guide"
+                title="View User Guide"
+              >
+                <HelpCircle size={20} />
+              </button>
+            )}
+
             <a
               href="https://github.com/PennybagsCX/dogechain-bubblemaps"
               target="_blank"

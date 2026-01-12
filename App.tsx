@@ -14,7 +14,9 @@ import { ToastContainer, ToastMessage, ToastType } from "./components/Toast";
 import { BlockchainBackground } from "./components/BlockchainBackground";
 import { TokenSearchInput } from "./components/TokenSearchInput";
 import { TrendingSection } from "./components/TrendingSection";
+import { OnboardingModal } from "./components/OnboardingModal";
 import { useStatsCounters } from "./hooks/useStatsCounters";
+import { useOnboarding } from "./hooks/useOnboarding";
 import {
   Token,
   Wallet,
@@ -188,6 +190,19 @@ const App: React.FC = () => {
 
   // Stats counters hook
   const { totalSearches, totalAlerts, isLoading: isLoadingStats } = useStatsCounters();
+
+  // Onboarding hook
+  const {
+    isOpen: isOnboardingOpen,
+    currentStep: onboardingStep,
+    totalSteps: onboardingTotalSteps,
+    progress: onboardingProgress,
+    openOnboarding,
+    closeOnboarding,
+    nextStep: nextOnboardingStep,
+    prevStep: prevOnboardingStep,
+    skipOnboarding,
+  } = useOnboarding();
 
   const [view, setView] = useState<ViewState>(ViewState.HOME);
   const [searchQuery, setSearchQuery] = useState("");
@@ -2219,7 +2234,7 @@ const App: React.FC = () => {
 
             {/* Footer */}
             <div className="w-full mt-auto">
-              <Footer />
+              <Footer onOpenGuide={openOnboarding} />
             </div>
           </div>
         )}
@@ -2577,11 +2592,23 @@ const App: React.FC = () => {
               />
             )}
             <div className="mt-auto">
-              <Footer />
+              <Footer onOpenGuide={openOnboarding} />
             </div>
           </div>
         )}
       </div>
+
+      {/* Onboarding Modal */}
+      <OnboardingModal
+        isOpen={isOnboardingOpen}
+        currentStep={onboardingStep}
+        totalSteps={onboardingTotalSteps}
+        progress={onboardingProgress}
+        onNext={nextOnboardingStep}
+        onPrevious={prevOnboardingStep}
+        onClose={closeOnboarding}
+        onSkip={skipOnboarding}
+      />
     </div>
   );
 };

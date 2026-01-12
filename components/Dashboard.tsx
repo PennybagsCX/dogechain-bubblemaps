@@ -281,6 +281,20 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
         // Add to triggered events history (keep last 100)
         onTriggeredEventsChange([triggeredEvent, ...triggeredEvents].slice(0, 100));
+
+        // Log triggered alert to server (non-blocking, fire-and-forget)
+        fetch("/api/alerts/trigger", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            alertId: triggeredEvent.alertId,
+            alertName: triggeredEvent.alertName,
+            walletAddress: triggeredEvent.walletAddress,
+            tokenAddress: triggeredEvent.tokenAddress,
+            tokenSymbol: triggeredEvent.tokenSymbol,
+            transactionCount: triggeredEvent.transactions.length,
+          }),
+        }).catch((err) => console.error("[API] Failed to log triggered alert:", err));
       }
 
       status.newTransactions.forEach((tx) => {

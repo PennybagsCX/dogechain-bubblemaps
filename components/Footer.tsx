@@ -1,7 +1,16 @@
 import React from "react";
-import { Github } from "lucide-react";
+import { Github, Search, AlertTriangle } from "lucide-react";
+import { useStatsCounters } from "../hooks/useStatsCounters";
+
+/**
+ * Format number with commas (e.g., 1,234,567)
+ */
+function formatNumber(num: number): string {
+  return num.toLocaleString("en-US");
+}
 
 export const Footer: React.FC = () => {
+  const { totalSearches, totalAlerts, isLoading } = useStatsCounters();
   return (
     <footer className="border-t border-space-700 bg-space-900 py-12 mt-auto">
       <div className="w-full px-4">
@@ -43,6 +52,27 @@ export const Footer: React.FC = () => {
         <div className="mt-12 pt-8 border-t border-space-700 flex flex-col items-center justify-center text-xs text-slate-600 gap-4 text-center">
           <p>&copy; 2026 Dogechain BubbleMaps. All rights reserved.</p>
           <p>Beta Build #{__BETA_BUILD_NUMBER__}</p>
+
+          {/* Stats Counters */}
+          <div className="mt-4 pt-4 border-t border-space-700/50 flex flex-col sm:flex-row items-center justify-center gap-4 text-xs">
+            {/* Search Counter */}
+            <div className="flex items-center gap-2 text-slate-400">
+              <Search size={14} className="text-purple-500" />
+              <span className="text-slate-500">Total Searches:</span>
+              <span className="font-mono font-semibold text-purple-400">
+                {isLoading ? "..." : formatNumber(totalSearches)}
+              </span>
+            </div>
+
+            {/* Alert Counter */}
+            <div className="flex items-center gap-2 text-slate-400">
+              <AlertTriangle size={14} className="text-amber-500" />
+              <span className="text-slate-500">Alerts Fired:</span>
+              <span className="font-mono font-semibold text-amber-400">
+                {isLoading ? "..." : formatNumber(totalAlerts)}
+              </span>
+            </div>
+          </div>
         </div>
 
         <div className="mt-6 p-4 rounded-lg bg-space-800/50 border border-space-800 text-[10px] text-slate-500 text-center">

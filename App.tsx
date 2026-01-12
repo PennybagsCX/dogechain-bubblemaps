@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { useAccount } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Search } from "lucide-react";
 import { Navbar } from "./components/Navbar";
 import { BubbleMap } from "./components/BubbleMap";
 import { WalletSidebar } from "./components/WalletSidebar";
@@ -11,6 +12,7 @@ import { Footer } from "./components/Footer";
 import { ToastContainer, ToastMessage, ToastType } from "./components/Toast";
 import { BlockchainBackground } from "./components/BlockchainBackground";
 import { TokenSearchInput } from "./components/TokenSearchInput";
+import { useStatsCounters } from "./hooks/useStatsCounters";
 import {
   Token,
   Wallet,
@@ -37,6 +39,13 @@ import {
 import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 import { fetchConnectionDetails } from "./services/connectionService";
 import { initializeDiagnosticLogger, getDiagnosticLogger } from "./lib/consoleLogger";
+
+/**
+ * Format number with commas (e.g., 1,234,567)
+ */
+function formatNumber(num: number): string {
+  return num.toLocaleString("en-US");
+}
 
 // Helper functions from dataService (accessed via global scope or re-export)
 const getCachedMetadata = (address: string) => {
@@ -178,6 +187,9 @@ const generateAlertId = () => {
 const App: React.FC = () => {
   // Wagmi hooks for wallet connection
   const { address: userAddress, isConnected } = useAccount();
+
+  // Stats counters hook
+  const { totalSearches, totalAlerts, isLoading: isLoadingStats } = useStatsCounters();
 
   const [view, setView] = useState<ViewState>(ViewState.HOME);
   const [searchQuery, setSearchQuery] = useState("");
@@ -1802,6 +1814,27 @@ const App: React.FC = () => {
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
                     Beta Build #{__BETA_BUILD_NUMBER__}
                   </span>
+                </div>
+
+                {/* Stats Counters */}
+                <div className="mt-6 flex justify-center items-center gap-6 text-xs">
+                  {/* Search Counter */}
+                  <div className="flex items-center gap-2 text-slate-400">
+                    <Search size={14} className="text-purple-500" />
+                    <span className="text-slate-500">Total Searches:</span>
+                    <span className="font-mono font-semibold text-purple-400">
+                      {isLoadingStats ? "..." : formatNumber(totalSearches)}
+                    </span>
+                  </div>
+
+                  {/* Alert Counter */}
+                  <div className="flex items-center gap-2 text-slate-400">
+                    <AlertTriangle size={14} className="text-amber-500" />
+                    <span className="text-slate-500">Alerts Fired:</span>
+                    <span className="font-mono font-semibold text-amber-400">
+                      {isLoadingStats ? "..." : formatNumber(totalAlerts)}
+                    </span>
+                  </div>
                 </div>
               </div>
 

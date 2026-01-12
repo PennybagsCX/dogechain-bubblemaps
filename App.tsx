@@ -98,18 +98,14 @@ import {
   Share2,
   Download,
   RefreshCw,
-  TrendingUp,
   ArrowLeft,
   AlertCircle,
   Sparkles,
-  Box,
   Trash2,
   ShieldCheck,
   AlertTriangle,
   Wallet as WalletIcon,
   ScanLine,
-  CircleDollarSign,
-  Shield,
   ExternalLink,
 } from "lucide-react";
 
@@ -251,7 +247,6 @@ const App: React.FC = () => {
   // State with IndexedDB persistence
   const [trendingTokens, setTrendingTokens] = useState<TrendingAsset[]>([]);
   const [trendingNfts, setTrendingNfts] = useState<TrendingAsset[]>([]);
-  const [trendingLoading, setTrendingLoading] = useState(true);
   const [alertStatuses, setAlertStatuses] = useState<Record<string, AlertStatus>>({});
   const [triggeredEvents, setTriggeredEvents] = useState<TriggeredEvent[]>([]);
   const [alerts, setAlerts] = useState<AlertConfig[]>([]);
@@ -439,7 +434,6 @@ const App: React.FC = () => {
 
     const fetchServerTrending = async () => {
       try {
-        setTrendingLoading(true);
         console.log("[App] 🔄 Fetching server-side trending assets...");
 
         // Fetch tokens and NFTs in parallel
@@ -480,8 +474,6 @@ const App: React.FC = () => {
       } catch (error) {
         console.error("[App] ❌ Failed to fetch server trending:", error);
         // Server fetch failed, keeping local trending
-      } finally {
-        setTrendingLoading(false);
       }
     };
 

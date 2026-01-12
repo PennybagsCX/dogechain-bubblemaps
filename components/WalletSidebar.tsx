@@ -70,7 +70,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
     onTraceConnections,
   } = props;
   const [_transactions, setTransactions] = useState<Transaction[]>([]);
-  const [activeTab, setActiveTab] = useState<"details" | "txs">("details");
+  const [activeTab, setActiveTab] = useState<"details" | "txs">("txs");
   const [copied, setCopied] = useState<boolean>(false);
   const [sourceCopied, setSourceCopied] = useState<boolean>(false);
   const [targetCopied, setTargetCopied] = useState<boolean>(false);
@@ -142,7 +142,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
         ]);
       });
 
-      setActiveTab("details");
+      setActiveTab("txs");
     }
   }, [wallet, tokenAddress, assetType, tokenDecimals, tokenName, tokenSymbol]);
 
@@ -611,17 +611,17 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
               <div className="flex border-b border-space-700">
                 <button
                   onTouchStart={handleTouchStopPropagation}
-                  className={`flex-1 pb-2 text-sm font-medium transition-colors ${activeTab === "details" ? "text-doge-500" : "text-slate-400 hover:text-slate-200"}`}
-                  onClick={() => setActiveTab("details")}
-                >
-                  AI Analyst
-                </button>
-                <button
-                  onTouchStart={handleTouchStopPropagation}
                   className={`flex-1 pb-2 text-sm font-medium transition-colors ${activeTab === "txs" ? "text-doge-500" : "text-slate-400 hover:text-slate-200"}`}
                   onClick={() => setActiveTab("txs")}
                 >
                   Recent Txs
+                </button>
+                <button
+                  onTouchStart={handleTouchStopPropagation}
+                  className={`flex-1 pb-2 text-sm font-medium transition-colors ${activeTab === "details" ? "text-doge-500" : "text-slate-400 hover:text-slate-200"}`}
+                  onClick={() => setActiveTab("details")}
+                >
+                  AI Analyst
                 </button>
               </div>
 

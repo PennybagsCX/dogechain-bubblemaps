@@ -1,6 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Search, Loader2, Coins, Image as ImageIcon, Clock, TrendingUp } from "lucide-react";
+import { Tooltip } from "./Tooltip";
+
 import { AssetType, SearchResult, TokenSearchInputProps } from "../types";
 import {
   searchTokensHybrid,
@@ -671,18 +673,19 @@ export function TokenSearchInput({
               <Clock size={16} className="text-purple-500" />
               <span>Recent Searches</span>
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setRecentSearches([]);
-                setShowHistory(false);
-              }}
-              className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
-              title="Clear history"
-              aria-label="Clear search history"
-            >
-              Clear
-            </button>
+            <Tooltip content="Clear all search history permanently">
+              <button
+                type="button"
+                onClick={() => {
+                  setRecentSearches([]);
+                  setShowHistory(false);
+                }}
+                className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+                aria-label="Clear search history"
+              >
+                Clear
+              </button>
+            </Tooltip>
           </div>
           {recentSearches.map((historyQuery, index) => (
             <button

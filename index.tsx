@@ -65,6 +65,10 @@ root.render(
             fontStack: "system",
             overlayBlur: "large",
           })}
+          modalOptions={{
+            closeAfterConnect: true, // Ensure modal closes after successful connection
+            showBalance: true, // Show balance in connected state
+          }}
         >
           <ErrorBoundary>
             <App />

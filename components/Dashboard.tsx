@@ -20,6 +20,8 @@ import {
   Download,
   Edit,
 } from "lucide-react";
+import { Tooltip } from "./Tooltip";
+
 import {
   fetchTokenBalance,
   fetchWalletTransactions,
@@ -481,20 +483,22 @@ export const Dashboard: React.FC<DashboardProps> = ({
           >
             <Plus size={18} /> New Alert
           </button>
-          <button
-            onClick={() => setSoundEnabled(!soundEnabled)}
-            className="flex items-center justify-center gap-2 px-3 py-2 bg-space-800 text-slate-300 rounded-lg hover:bg-space-700 hover:text-white transition-colors"
-            title={soundEnabled ? "Mute notifications" : "Enable notification sound"}
-          >
-            {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
-          </button>
-          <button
-            onClick={handleExport}
-            className="flex items-center justify-center gap-2 px-3 py-2 bg-space-800 text-slate-300 rounded-lg hover:bg-space-700 hover:text-white transition-colors"
-            title="Export all data as CSV"
-          >
-            <Download size={18} />
-          </button>
+          <Tooltip content={soundEnabled ? "Mute notifications" : "Enable notification sound"}>
+            <button
+              onClick={() => setSoundEnabled(!soundEnabled)}
+              className="flex items-center justify-center gap-2 px-3 py-2 bg-space-800 text-slate-300 rounded-lg hover:bg-space-700 hover:text-white transition-colors"
+            >
+              {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
+            </button>
+          </Tooltip>
+          <Tooltip content="Export all data as CSV file">
+            <button
+              onClick={handleExport}
+              className="flex items-center justify-center gap-2 px-3 py-2 bg-space-800 text-slate-300 rounded-lg hover:bg-space-700 hover:text-white transition-colors"
+            >
+              <Download size={18} />
+            </button>
+          </Tooltip>
         </div>
       </div>
 
@@ -659,26 +663,30 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <a
-                              href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-sm font-medium text-white hover:text-purple-400 transition-colors truncate block"
-                              title="View transaction on Dogechain Explorer"
-                            >
-                              {tx.value.toLocaleString()} {tx.tokenSymbol || "tokens"}
-                            </a>
-                            <p className="text-xs text-slate-500">
-                              {isIncoming ? "From" : "To"}:{" "}
+                            <Tooltip content="View transaction on Dogechain Explorer">
                               <a
-                                href={`https://explorer.dogechain.dog/address/${isIncoming ? tx.from : tx.to}`}
+                                href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="font-mono text-purple-400 hover:text-purple-300 transition-colors"
-                                title={`View ${isIncoming ? "sender" : "receiver"} on Dogechain Explorer`}
+                                className="text-sm font-medium text-white hover:text-purple-400 transition-colors truncate block"
                               >
-                                {isIncoming ? tx.from.slice(0, 10) : tx.to.slice(0, 10)}...
+                                {tx.value.toLocaleString()} {tx.tokenSymbol || "tokens"}
                               </a>
+                            </Tooltip>
+                            <p className="text-xs text-slate-500">
+                              {isIncoming ? "From" : "To"}:{" "}
+                              <Tooltip
+                                content={`View ${isIncoming ? "sender" : "receiver"} on Dogechain Explorer`}
+                              >
+                                <a
+                                  href={`https://explorer.dogechain.dog/address/${isIncoming ? tx.from : tx.to}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="font-mono text-purple-400 hover:text-purple-300 transition-colors"
+                                >
+                                  {isIncoming ? tx.from.slice(0, 10) : tx.to.slice(0, 10)}...
+                                </a>
+                              </Tooltip>
                             </p>
                           </div>
                         </div>
@@ -774,29 +782,31 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <a
-                          href={`https://explorer.dogechain.dog/address/${alert.walletAddress}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm font-mono text-purple-400 hover:text-purple-300 transition-colors inline-flex items-center gap-1"
-                          title="View on Dogechain Explorer"
-                        >
-                          {alert.walletAddress.slice(0, 8)}...{alert.walletAddress.slice(-6)}
-                        </a>
+                        <Tooltip content="View wallet on Dogechain Explorer">
+                          <a
+                            href={`https://explorer.dogechain.dog/address/${alert.walletAddress}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm font-mono text-purple-400 hover:text-purple-300 transition-colors inline-flex items-center gap-1"
+                          >
+                            {alert.walletAddress.slice(0, 8)}...{alert.walletAddress.slice(-6)}
+                          </a>
+                        </Tooltip>
                         {alert.tokenAddress && (
                           <div className="text-xs text-slate-400 mt-1">
                             Token:{" "}
-                            <a
-                              href={`https://explorer.dogechain.dog/address/${alert.tokenAddress}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-purple-400 hover:text-purple-300 transition-colors"
-                              title="View token on explorer"
-                            >
-                              {alert.tokenSymbol ||
-                                alert.tokenName ||
-                                alert.tokenAddress.slice(0, 8)}
-                            </a>
+                            <Tooltip content="View token on Dogechain Explorer">
+                              <a
+                                href={`https://explorer.dogechain.dog/address/${alert.tokenAddress}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-purple-400 hover:text-purple-300 transition-colors"
+                              >
+                                {alert.tokenSymbol ||
+                                  alert.tokenName ||
+                                  alert.tokenAddress.slice(0, 8)}
+                              </a>
+                            </Tooltip>
                           </div>
                         )}
                       </td>
@@ -819,13 +829,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
                                 : "events"}
                             </span>
                             {status.triggered && (
-                              <button
-                                onClick={() => handleDismissTrigger(alert.id)}
-                                className="text-xs text-slate-400 hover:text-green-400 transition-colors underline"
-                                title="Dismiss triggered status"
-                              >
-                                Dismiss
-                              </button>
+                              <Tooltip content="Reset triggered status to normal">
+                                <button
+                                  onClick={() => handleDismissTrigger(alert.id)}
+                                  className="text-xs text-slate-400 hover:text-green-400 transition-colors underline"
+                                >
+                                  Dismiss
+                                </button>
+                              </Tooltip>
                             )}
                           </div>
                         ) : (
@@ -835,20 +846,22 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         )}
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <button
-                          onClick={() => openEditModal(alert)}
-                          className="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg transition-colors mr-1"
-                          title="Edit alert"
-                        >
-                          <Edit size={16} />
-                        </button>
-                        <button
-                          onClick={() => onRemoveAlert(alert.id)}
-                          className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
-                          title="Remove alert"
-                        >
-                          <Trash2 size={16} />
-                        </button>
+                        <Tooltip content="Edit alert configuration">
+                          <button
+                            onClick={() => openEditModal(alert)}
+                            className="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg transition-colors mr-1"
+                          >
+                            <Edit size={16} />
+                          </button>
+                        </Tooltip>
+                        <Tooltip content="Remove this alert">
+                          <button
+                            onClick={() => onRemoveAlert(alert.id)}
+                            className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </Tooltip>
                       </td>
                     </tr>
                   );

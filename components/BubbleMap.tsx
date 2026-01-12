@@ -26,6 +26,7 @@ import {
   Sliders,
   X,
 } from "lucide-react";
+import { Tooltip } from "./Tooltip";
 
 interface BubbleMapProps {
   wallets: Wallet[];
@@ -1292,25 +1293,27 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
       {/* --- TOP LEFT: CONTROLS --- */}
       <div className="absolute top-16 md:top-16 left-3 md:left-4 z-20 flex flex-col gap-3 md:gap-3">
-        <button
-          onTouchStart={handleTouchStopPropagation}
-          onClick={() => setIsHelpOpen(true)}
-          className="p-2 bg-space-800 border border-space-700 text-slate-400 hover:text-white hover:border-space-600 rounded-full shadow-lg transition-colors"
-          title="Visualization Guide"
-        >
-          <HelpCircle size={20} />
-        </button>
+        <Tooltip content="Open visualization guide">
+          <button
+            onTouchStart={handleTouchStopPropagation}
+            onClick={() => setIsHelpOpen(true)}
+            className="p-2 bg-space-800 border border-space-700 text-slate-400 hover:text-white hover:border-space-600 rounded-full shadow-lg transition-colors"
+          >
+            <HelpCircle size={20} />
+          </button>
+        </Tooltip>
 
         {/* Settings button and popup container for click-outside detection */}
         <div className="relative" ref={settingsRef}>
-          <button
-            onTouchStart={handleTouchStopPropagation}
-            onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-            className={`p-2 rounded-full border shadow-lg transition-colors ${isSettingsOpen ? "bg-purple-600 border-purple-500 text-white" : "bg-space-800 border border-space-700 text-slate-400 hover:text-white hover:border-space-600"}`}
-            title="Map Settings"
-          >
-            <Settings size={20} />
-          </button>
+          <Tooltip content="Open map settings">
+            <button
+              onTouchStart={handleTouchStopPropagation}
+              onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+              className={`p-2 rounded-full border shadow-lg transition-colors ${isSettingsOpen ? "bg-purple-600 border-purple-500 text-white" : "bg-space-800 border border-space-700 text-slate-400 hover:text-white hover:border-space-600"}`}
+            >
+              <Settings size={20} />
+            </button>
+          </Tooltip>
 
           {/* --- SETTINGS POPUP --- */}
           {isSettingsOpen && (
@@ -1482,56 +1485,62 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           >
             <div className="flex flex-col gap-2">
               {userNodeFound && (
-                <button
-                  onTouchStart={handleTouchStopPropagation}
-                  onClick={handleLocateUser}
-                  className="p-2 bg-purple-600 border border-purple-500 text-white rounded-lg shadow-lg transition-all hover:bg-purple-500 hover:border-purple-400"
-                  title="Locate My Wallet"
-                >
-                  <Crosshair size={20} />
-                </button>
+                <Tooltip content="Center view on your wallet">
+                  <button
+                    onTouchStart={handleTouchStopPropagation}
+                    onClick={handleLocateUser}
+                    className="p-2 bg-purple-600 border border-purple-500 text-white rounded-lg shadow-lg transition-all hover:bg-purple-500 hover:border-purple-400"
+                  >
+                    <Crosshair size={20} />
+                  </button>
+                </Tooltip>
               )}
               <div className="h-px bg-space-700 w-full my-1"></div>
-              <button
-                onTouchStart={handleTouchStopPropagation}
-                onClick={handleSnapshot}
-                className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-                title="Download Image Snapshot"
-              >
-                <Camera size={20} className={isSnapshotting ? "text-purple-500" : ""} />
-              </button>
-              <button
-                onTouchStart={handleTouchStopPropagation}
-                onClick={togglePause}
-                className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-                title={isPaused ? "Resume Simulation" : "Pause Simulation"}
-              >
-                {isPaused ? <Play size={20} /> : <Pause size={20} />}
-              </button>
-              <button
-                onTouchStart={handleTouchStopPropagation}
-                onClick={handleZoomIn}
-                className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-                title="Zoom In"
-              >
-                <ZoomIn size={20} />
-              </button>
-              <button
-                onTouchStart={handleTouchStopPropagation}
-                onClick={handleZoomOut}
-                className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-                title="Zoom Out"
-              >
-                <ZoomOut size={20} />
-              </button>
-              <button
-                onTouchStart={handleTouchStopPropagation}
-                onClick={handleReset}
-                className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-                title="Reset View"
-              >
-                <RotateCcw size={20} />
-              </button>
+              <Tooltip content="Download map as PNG image">
+                <button
+                  onTouchStart={handleTouchStopPropagation}
+                  onClick={handleSnapshot}
+                  className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+                >
+                  <Camera size={20} className={isSnapshotting ? "text-purple-500" : ""} />
+                </button>
+              </Tooltip>
+              <Tooltip content={isPaused ? "Resume animation" : "Pause animation"}>
+                <button
+                  onTouchStart={handleTouchStopPropagation}
+                  onClick={togglePause}
+                  className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+                >
+                  {isPaused ? <Play size={20} /> : <Pause size={20} />}
+                </button>
+              </Tooltip>
+              <Tooltip content="Zoom in" position="left">
+                <button
+                  onTouchStart={handleTouchStopPropagation}
+                  onClick={handleZoomIn}
+                  className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+                >
+                  <ZoomIn size={20} />
+                </button>
+              </Tooltip>
+              <Tooltip content="Zoom out" position="left">
+                <button
+                  onTouchStart={handleTouchStopPropagation}
+                  onClick={handleZoomOut}
+                  className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+                >
+                  <ZoomOut size={20} />
+                </button>
+              </Tooltip>
+              <Tooltip content="Reset to default view">
+                <button
+                  onTouchStart={handleTouchStopPropagation}
+                  onClick={handleReset}
+                  className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+                >
+                  <RotateCcw size={20} />
+                </button>
+              </Tooltip>
             </div>
           </div>
         </div>
@@ -1606,56 +1615,62 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         </div>
         <div className="flex flex-col gap-2">
           {userNodeFound && (
-            <button
-              onTouchStart={handleTouchStopPropagation}
-              onClick={handleLocateUser}
-              className="p-2 bg-purple-600 border border-purple-500 text-white rounded-lg shadow-lg transition-all hover:bg-purple-500 hover:border-purple-400"
-              title="Locate My Wallet"
-            >
-              <Crosshair size={20} />
-            </button>
+            <Tooltip content="Center view on your wallet">
+              <button
+                onTouchStart={handleTouchStopPropagation}
+                onClick={handleLocateUser}
+                className="p-2 bg-purple-600 border border-purple-500 text-white rounded-lg shadow-lg transition-all hover:bg-purple-500 hover:border-purple-400"
+              >
+                <Crosshair size={20} />
+              </button>
+            </Tooltip>
           )}
           <div className="h-px bg-space-700 w-full my-1"></div>
-          <button
-            onTouchStart={handleTouchStopPropagation}
-            onClick={handleSnapshot}
-            className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-            title="Download Image Snapshot"
-          >
-            <Camera size={20} className={isSnapshotting ? "text-purple-500" : ""} />
-          </button>
-          <button
-            onTouchStart={handleTouchStopPropagation}
-            onClick={togglePause}
-            className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-            title={isPaused ? "Resume Simulation" : "Pause Simulation"}
-          >
-            {isPaused ? <Play size={20} /> : <Pause size={20} />}
-          </button>
-          <button
-            onTouchStart={handleTouchStopPropagation}
-            onClick={handleZoomIn}
-            className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-            title="Zoom In"
-          >
-            <ZoomIn size={20} />
-          </button>
-          <button
-            onTouchStart={handleTouchStopPropagation}
-            onClick={handleZoomOut}
-            className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-            title="Zoom Out"
-          >
-            <ZoomOut size={20} />
-          </button>
-          <button
-            onTouchStart={handleTouchStopPropagation}
-            onClick={handleReset}
-            className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-            title="Reset View"
-          >
-            <RotateCcw size={20} />
-          </button>
+          <Tooltip content="Download map as PNG image">
+            <button
+              onTouchStart={handleTouchStopPropagation}
+              onClick={handleSnapshot}
+              className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+            >
+              <Camera size={20} className={isSnapshotting ? "text-purple-500" : ""} />
+            </button>
+          </Tooltip>
+          <Tooltip content={isPaused ? "Resume animation" : "Pause animation"}>
+            <button
+              onTouchStart={handleTouchStopPropagation}
+              onClick={togglePause}
+              className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+            >
+              {isPaused ? <Play size={20} /> : <Pause size={20} />}
+            </button>
+          </Tooltip>
+          <Tooltip content="Zoom in" position="left">
+            <button
+              onTouchStart={handleTouchStopPropagation}
+              onClick={handleZoomIn}
+              className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+            >
+              <ZoomIn size={20} />
+            </button>
+          </Tooltip>
+          <Tooltip content="Zoom out" position="left">
+            <button
+              onTouchStart={handleTouchStopPropagation}
+              onClick={handleZoomOut}
+              className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+            >
+              <ZoomOut size={20} />
+            </button>
+          </Tooltip>
+          <Tooltip content="Reset to default view">
+            <button
+              onTouchStart={handleTouchStopPropagation}
+              onClick={handleReset}
+              className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+            >
+              <RotateCcw size={20} />
+            </button>
+          </Tooltip>
         </div>
       </div>
 

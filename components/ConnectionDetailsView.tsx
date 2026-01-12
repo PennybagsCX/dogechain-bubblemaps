@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback } from "react";
 import { Connection, Wallet, ConnectionStats } from "../types";
 import { ExternalLink } from "lucide-react";
+import { Tooltip } from "./Tooltip";
 
 type DirectionFilter = "ALL" | "IN" | "OUT";
 
@@ -246,15 +247,16 @@ export function ConnectionDetailsView({
                         {formatValue(tx.value)} {tokenSymbol}
                       </p>
                     </div>
-                    <a
-                      href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-shrink-0 text-purple-400 hover:text-purple-300 transition-colors p-2 rounded hover:bg-space-700 min-w-[44px] min-h-[44px] inline-flex items-center justify-center"
-                      title="View on Blockscout"
-                    >
-                      <ExternalLink size={14} />
-                    </a>
+                    <Tooltip content="View transaction on Dogechain Explorer">
+                      <a
+                        href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-shrink-0 text-purple-400 hover:text-purple-300 transition-colors p-2 rounded hover:bg-space-700 min-w-[44px] min-h-[44px] inline-flex items-center justify-center"
+                      >
+                        <ExternalLink size={14} />
+                      </a>
+                    </Tooltip>
                   </div>
 
                   {/* Addresses */}

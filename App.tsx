@@ -1149,6 +1149,29 @@ const App: React.FC = () => {
     }
   }, [userAddress, isConnected]);
 
+  // Monitor RainbowKit/wagmi connection state for modal management
+  useEffect(() => {
+    // Log connection state changes for debugging
+    if (process.env.NODE_ENV === "development") {
+      console.log("[App] Connection state changed:", {
+        isConnected,
+        address: userAddress,
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // Force close any open RainbowKit modals if we're connected
+    if (isConnected && userAddress) {
+      const rainbowKitModal = document.querySelector("[data-rk]");
+      if (rainbowKitModal) {
+        console.log("[App] Forcing RainbowKit modal close");
+        // Trigger escape key to close modal
+        const escapeEvent = new KeyboardEvent("keydown", { key: "Escape" });
+        document.dispatchEvent(escapeEvent);
+      }
+    }
+  }, [isConnected, userAddress]);
+
   // --- INITIAL ROUTING & URL STATE ---
   useEffect(() => {
     // INITIAL ROUTING: Restore state from URL
@@ -1947,37 +1970,40 @@ const App: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex flex-wrap justify-center gap-2 w-full">
-                      <button
-                        onClick={handleManualScan}
-                        className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-purple-600 hover:bg-purple-700 text-white disabled:opacity-50 transition-colors"
-                        disabled={isScanningWallet || !userAddress}
-                        title="Fresh scan (bypasses cache)"
-                      >
-                        {isScanningWallet ? (
-                          <Loader2 size={14} className="animate-spin" />
-                        ) : (
-                          <WalletIcon size={14} />
-                        )}
-                        <span>{isScanningWallet ? "Scanning" : "Scan"}</span>
-                      </button>
-                      <button
-                        onClick={handleRefreshScan}
-                        className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-space-700 hover:bg-space-600 text-white disabled:opacity-50 transition-colors border border-space-600"
-                        disabled={isScanningWallet || !userAddress}
-                        title="Quick reload (uses cache if available)"
-                      >
-                        <RefreshCw size={14} className={isScanningWallet ? "animate-spin" : ""} />
-                        <span className="hidden sm:inline">Refresh</span>
-                      </button>
-                      {isScanningWallet && (
+                      <Tooltip content="Fresh scan (bypasses cache)">
                         <button
-                          onClick={handleCancelScan}
-                          className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-red-600 hover:bg-red-700 text-white transition-colors"
-                          title="Stop scan"
+                          onClick={handleManualScan}
+                          className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-purple-600 hover:bg-purple-700 text-white disabled:opacity-50 transition-colors"
+                          disabled={isScanningWallet || !userAddress}
                         >
-                          <X size={14} />
-                          <span className="hidden sm:inline">Stop</span>
+                          {isScanningWallet ? (
+                            <Loader2 size={14} className="animate-spin" />
+                          ) : (
+                            <WalletIcon size={14} />
+                          )}
+                          <span>{isScanningWallet ? "Scanning" : "Scan"}</span>
                         </button>
+                      </Tooltip>
+                      <Tooltip content="Quick reload (uses cache if available)">
+                        <button
+                          onClick={handleRefreshScan}
+                          className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-space-700 hover:bg-space-600 text-white disabled:opacity-50 transition-colors border border-space-600"
+                          disabled={isScanningWallet || !userAddress}
+                        >
+                          <RefreshCw size={14} className={isScanningWallet ? "animate-spin" : ""} />
+                          <span className="hidden sm:inline">Refresh</span>
+                        </button>
+                      </Tooltip>
+                      {isScanningWallet && (
+                        <Tooltip content="Stop scan">
+                          <button
+                            onClick={handleCancelScan}
+                            className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-red-600 hover:bg-red-700 text-white transition-colors"
+                          >
+                            <X size={14} />
+                            <span className="hidden sm:inline">Stop</span>
+                          </button>
+                        </Tooltip>
                       )}
                     </div>
                   </div>
@@ -2232,13 +2258,17 @@ const App: React.FC = () => {
                         </span>
                       )}
                       {token.isVerified ? (
-                        <span className="text-green-500" title="Verified Source">
-                          <ShieldCheck size={16} />
-                        </span>
+                        <Tooltip content="Verified Source">
+                          <span className="text-green-500">
+                            <ShieldCheck size={16} />
+                          </span>
+                        </Tooltip>
                       ) : (
-                        <span className="text-slate-500" title="Unverified Source">
-                          <AlertTriangle size={16} />
-                        </span>
+                        <Tooltip content="Unverified Source">
+                          <span className="text-slate-500">
+                            <AlertTriangle size={16} />
+                          </span>
+                        </Tooltip>
                       )}
                     </div>
                     <p className="text-sm text-slate-400 font-mono truncate">
@@ -2340,27 +2370,28 @@ const App: React.FC = () => {
                               >
                                 {w.percentage.toFixed(1)}%
                               </span>
-                              <a
-                                href={`https://explorer.dogechain.dog/address/${w.address}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-slate-500 hover:text-white transition-colors p-2 rounded hover:bg-space-600 min-w-[44px] min-h-[44px] inline-flex items-center justify-center [touch-action:manipulation]"
-                                title="View on Blockscout"
-                                onClick={(e) => e.stopPropagation()}
-                                onKeyDown={(e) => {
-                                  if (e.key === "Enter" || e.key === " ") {
-                                    e.stopPropagation();
-                                    e.preventDefault();
-                                    window.open(
-                                      `https://explorer.dogechain.dog/address/${w.address}`,
-                                      "_blank",
-                                      "noopener,noreferrer"
-                                    );
-                                  }
-                                }}
-                              >
-                                <ExternalLink size={12} />
-                              </a>
+                              <Tooltip content="View wallet on Dogechain Explorer">
+                                <a
+                                  href={`https://explorer.dogechain.dog/address/${w.address}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-slate-500 hover:text-white transition-colors p-2 rounded hover:bg-space-600 min-w-[44px] min-h-[44px] inline-flex items-center justify-center [touch-action:manipulation]"
+                                  onClick={(e) => e.stopPropagation()}
+                                  onKeyDown={(e) => {
+                                    if (e.key === "Enter" || e.key === " ") {
+                                      e.stopPropagation();
+                                      e.preventDefault();
+                                      window.open(
+                                        `https://explorer.dogechain.dog/address/${w.address}`,
+                                        "_blank",
+                                        "noopener,noreferrer"
+                                      );
+                                    }
+                                  }}
+                                >
+                                  <ExternalLink size={12} />
+                                </a>
+                              </Tooltip>
                             </div>
                           </div>
                         );
@@ -2425,13 +2456,14 @@ const App: React.FC = () => {
 
                   {/* Desktop Controls Top Right */}
                   <div className="absolute top-4 right-4 z-30 flex gap-2 flex-wrap justify-end">
-                    <button
-                      onClick={handleExportCSV}
-                      className="bg-space-800 border border-space-700 text-slate-200 px-3 sm:px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg hover:bg-space-700 transition-colors"
-                      title="Download CSV"
-                    >
-                      <Download size={14} /> <span className="hidden sm:inline">CSV</span>
-                    </button>
+                    <Tooltip content="Export all data as CSV file">
+                      <button
+                        onClick={handleExportCSV}
+                        className="bg-space-800 border border-space-700 text-slate-200 px-3 sm:px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg hover:bg-space-700 transition-colors"
+                      >
+                        <Download size={14} /> <span className="hidden sm:inline">CSV</span>
+                      </button>
+                    </Tooltip>
 
                     <button
                       onClick={handleShare}

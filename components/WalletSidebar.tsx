@@ -16,6 +16,8 @@ import {
   ExternalLink,
   ArrowUpDown,
 } from "lucide-react";
+import { Tooltip } from "./Tooltip";
+
 import { Wallet, Transaction, AssetType, Connection } from "../types";
 import { createWalletChatSystemInstruction, sendChatToAI } from "../services/geminiService";
 import { fetchWalletTransactions, fetchTokenBalance } from "../services/dataService";
@@ -391,27 +393,31 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
             <div className="flex items-center gap-2 mt-1">
               {!isConnectionView && (
                 <>
-                  <p className="text-xs text-slate-400 font-mono" title={wallet?.address}>
-                    {wallet?.address.slice(0, 6)}...{wallet?.address.slice(-4)}
-                  </p>
-                  <button
-                    onTouchStart={handleTouchStopPropagation}
-                    onClick={handleCopyAddress}
-                    className="text-slate-500 hover:text-white transition-colors"
-                    title="Copy Address"
-                  >
-                    {copied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
-                  </button>
-                  <a
-                    href={`https://explorer.dogechain.dog/address/${wallet?.address}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onTouchStart={handleTouchStopPropagation}
-                    className="text-slate-500 hover:text-white transition-colors p-2 rounded hover:bg-space-600 min-w-[44px] min-h-[44px] inline-flex items-center justify-center [touch-action:manipulation]"
-                    title="View on Blockscout"
-                  >
-                    <ExternalLink size={14} />
-                  </a>
+                  <Tooltip content={wallet?.address || ""}>
+                    <p className="text-xs text-slate-400 font-mono">
+                      {wallet?.address.slice(0, 6)}...{wallet?.address.slice(-4)}
+                    </p>
+                  </Tooltip>
+                  <Tooltip content={copied ? "Address copied!" : "Copy full address to clipboard"}>
+                    <button
+                      onTouchStart={handleTouchStopPropagation}
+                      onClick={handleCopyAddress}
+                      className="text-slate-500 hover:text-white transition-colors"
+                    >
+                      {copied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+                    </button>
+                  </Tooltip>
+                  <Tooltip content="View wallet on Dogechain Explorer">
+                    <a
+                      href={`https://explorer.dogechain.dog/address/${wallet?.address}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onTouchStart={handleTouchStopPropagation}
+                      className="text-slate-500 hover:text-white transition-colors p-2 rounded hover:bg-space-600 min-w-[44px] min-h-[44px] inline-flex items-center justify-center [touch-action:manipulation]"
+                    >
+                      <ExternalLink size={14} />
+                    </a>
+                  </Tooltip>
                 </>
               )}
             </div>
@@ -590,20 +596,21 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   </span>
                 )}
                 {onTraceConnections && (
-                  <button
-                    onTouchStart={handleTouchStopPropagation}
-                    onClick={handleTrace}
-                    disabled={isTracing}
-                    className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-purple-300 hover:text-white bg-purple-500/20 hover:bg-purple-500/40 rounded transition-colors disabled:opacity-50"
-                    title="Find interactions with other wallets on the map"
-                  >
-                    {isTracing ? (
-                      <Loader2 size={10} className="animate-spin" />
-                    ) : (
-                      <Network size={10} />
-                    )}
-                    {isTracing ? "Tracing..." : "Trace Connections"}
-                  </button>
+                  <Tooltip content="Find interactions with other wallets on the map">
+                    <button
+                      onTouchStart={handleTouchStopPropagation}
+                      onClick={handleTrace}
+                      disabled={isTracing}
+                      className="flex items-center gap-1 px-2 py-1 text-xs font-medium text-purple-300 hover:text-white bg-purple-500/20 hover:bg-purple-500/40 rounded transition-colors disabled:opacity-50"
+                    >
+                      {isTracing ? (
+                        <Loader2 size={10} className="animate-spin" />
+                      ) : (
+                        <Network size={10} />
+                      )}
+                      {isTracing ? "Tracing..." : "Trace Connections"}
+                    </button>
+                  </Tooltip>
                 )}
               </div>
 
@@ -749,42 +756,42 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                       </div>
                     ) : (
                       paginatedTransactions.map((tx) => (
-                        <a
-                          key={tx.hash}
-                          href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onTouchStart={handleTouchStopPropagation}
-                          className="block p-4 rounded-lg bg-space-900 border border-space-700 flex justify-between items-center gap-2 min-w-0 hover:border-space-600 hover:border-blue-500/50 transition-colors group [touch-action:manipulation]"
-                          title="View transaction on Blockscout"
-                        >
-                          <div>
-                            <div
-                              className={`text-xs font-bold ${tx.from === wallet?.address ? "text-red-400" : "text-green-400"}`}
-                            >
-                              {tx.from === wallet?.address ? "OUT" : "IN"}
-                            </div>
-                            <div className="text-xs text-slate-500">
-                              {new Date(tx.timestamp).toLocaleDateString()}
-                            </div>
-                          </div>
-                          <div className="text-right flex items-center gap-2">
+                        <Tooltip key={tx.hash} content="View transaction on Dogechain Explorer">
+                          <a
+                            href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onTouchStart={handleTouchStopPropagation}
+                            className="block p-4 rounded-lg bg-space-900 border border-space-700 flex justify-between items-center gap-2 min-w-0 hover:border-space-600 hover:border-blue-500/50 transition-colors group [touch-action:manipulation]"
+                          >
                             <div>
-                              <div className="text-sm font-mono text-white truncate">
-                                {tx.value.toLocaleString(undefined, {
-                                  maximumFractionDigits: isNFT ? 0 : 4,
-                                })}
+                              <div
+                                className={`text-xs font-bold ${tx.from === wallet?.address ? "text-red-400" : "text-green-400"}`}
+                              >
+                                {tx.from === wallet?.address ? "OUT" : "IN"}
                               </div>
-                              <div className="text-[10px] text-slate-500">
-                                {isNFT ? "NFTs" : tx.tokenSymbol || tokenSymbol}
+                              <div className="text-xs text-slate-500">
+                                {new Date(tx.timestamp).toLocaleDateString()}
                               </div>
                             </div>
-                            <ExternalLink
-                              size={14}
-                              className="text-slate-500 group-hover:text-blue-400 transition-colors flex-shrink-0"
-                            />
-                          </div>
-                        </a>
+                            <div className="text-right flex items-center gap-2">
+                              <div>
+                                <div className="text-sm font-mono text-white truncate">
+                                  {tx.value.toLocaleString(undefined, {
+                                    maximumFractionDigits: isNFT ? 0 : 4,
+                                  })}
+                                </div>
+                                <div className="text-[10px] text-slate-500">
+                                  {isNFT ? "NFTs" : tx.tokenSymbol || tokenSymbol}
+                                </div>
+                              </div>
+                              <ExternalLink
+                                size={14}
+                                className="text-slate-500 group-hover:text-blue-400 transition-colors flex-shrink-0"
+                              />
+                            </div>
+                          </a>
+                        </Tooltip>
                       ))
                     )}
                   </div>

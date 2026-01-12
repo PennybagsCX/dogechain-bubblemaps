@@ -5,3 +5,88 @@
 
 _No recent activity_
 </claude-mem-context>
+
+# Components Documentation
+
+## TrendingSection.tsx
+
+**Added**: January 12, 2026
+**Purpose**: Reusable component for displaying trending assets (tokens or NFTs)
+
+### Overview
+
+The TrendingSection component displays a section of trending assets in a responsive grid. It's used to show separate trending sections for tokens and NFTs on the homepage.
+
+### Interface
+
+```typescript
+interface TrendingAsset {
+  symbol: string;
+  name: string;
+  address: string;
+  type: AssetType;
+  hits: number;
+}
+
+interface TrendingSectionProps {
+  title: string;
+  icon: React.ReactNode;
+  assets: TrendingAsset[];
+  onAssetClick: (e: React.MouseEvent, asset: TrendingAsset) => void;
+}
+```
+
+### Key Features
+
+1. **Conditional Rendering**: Returns null if no assets available
+2. **Responsive Grid**: `grid-cols-2 sm:grid-cols-3 md:grid-cols-4`
+3. **Asset Icons**: Custom icons based on asset type and symbol
+4. **Clickable Tiles**: Each tile triggers the `onAssetClick` callback
+
+### Asset Icon Logic
+
+The `getAssetIcon` function provides custom icons based on asset type:
+
+- **NFTs**: Purple ImageIcon (lucide-react)
+- **USDT**: Emerald CircleDollarSign (lucide-react)
+- **DC (Dogechain)**: Amber Shield (lucide-react)
+- **wDOGE**: Doge-colored Coins (lucide-react)
+- **Other tokens**: Alternating blue/pink Box icons (based on index)
+
+### Usage Example
+
+```typescript
+<TrendingSection
+  title="Trending Tokens"
+  icon={<Coins size={14} />}
+  assets={trendingTokens}
+  onAssetClick={(e, asset) => {
+    e.preventDefault();
+    e.stopPropagation();
+    searchInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(() => { searchInputRef.current?.focus(); }, 300);
+    handleSearch(e, asset.address, asset.type);
+  }}
+/>
+```
+
+### Design Decisions
+
+1. **Local TrendingAsset Interface**: Defined locally to avoid type conflicts with `services/trendingService.ts`
+2. **Reusable Architecture**: Same component used for both tokens and NFTs
+3. **Vertical Stack Layout**: Sections stack vertically for better mobile UX
+4. **Auto-scroll Integration**: Clicking tiles scrolls to search input and focuses it
+
+### File Location
+
+`/Volumes/DEV Projects/Dogechain Bubblemaps/components/TrendingSection.tsx`
+
+### Related Files
+
+- `App.tsx` - Uses TrendingSection for homepage trending sections
+- `services/trendingService.ts` - Provides trending asset data
+- `api/trending.ts` - Trending API endpoint
+
+### Implementation Details
+
+See full implementation documentation: `TRENDING_TILES_IMPLEMENTATION.md`

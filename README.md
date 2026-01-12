@@ -37,6 +37,7 @@
 - **💼 Wallet Connection** - MetaMask and Web3 wallet support
 - **📱 Responsive Design** - Desktop, tablet, and mobile optimized
 - **💾 Offline Support** - IndexedDB caching for offline access
+- **🔥 Trending Assets** - Separate trending sections for tokens and NFTs with auto-scroll search
 
 ### Production Features
 
@@ -159,6 +160,7 @@ curl -X POST https://dogechain-bubblemaps-api.vercel.app/api/trending/log \
 - **[Deployment Guide](docs/DEPLOYMENT.md)** - Complete Vercel deployment instructions
 - **[Security Guide](docs/SECURITY_GUIDE.md)** - Production security best practices
 - **[AI Integration](docs/AI_INTEGRATION.md)** - Secure AI feature implementation
+- **[Trending Tiles Implementation](TRENDING_TILES_IMPLEMENTATION.md)** - Trending sections feature documentation
 - **[Changelog](docs/CHANGELOG.md)** - Version history and updates
 
 ---

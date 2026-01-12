@@ -56,7 +56,7 @@ export const Footer: React.FC = () => {
           {/* Stats Counters */}
           <div className="mt-4 pt-4 border-t border-space-700/50 flex flex-col sm:flex-row items-center justify-center gap-4 text-xs">
             {/* Search Counter */}
-            <div className="flex items-center gap-2 text-slate-400">
+            <div className="flex items-center gap-2 text-slate-400" title="Since January 12, 2026">
               <Search size={14} className="text-purple-500" />
               <span className="text-slate-500">Total Searches:</span>
               <span className="font-mono font-semibold text-purple-400">
@@ -65,7 +65,7 @@ export const Footer: React.FC = () => {
             </div>
 
             {/* Alert Counter */}
-            <div className="flex items-center gap-2 text-slate-400">
+            <div className="flex items-center gap-2 text-slate-400" title="Since January 12, 2026">
               <AlertTriangle size={14} className="text-amber-500" />
               <span className="text-slate-500">Alerts Fired:</span>
               <span className="font-mono font-semibold text-amber-400">

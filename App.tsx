@@ -1498,12 +1498,6 @@ const App: React.FC = () => {
     }
   };
 
-  const handleSelectWalletAsset = (asset: Token) => {
-    setSearchQuery(asset.address);
-    setSearchType(asset.type);
-    addToast(`${asset.symbol} ready to search`, "info");
-  };
-
   // Enhanced Alert Handler from Sidebar
   const handleAddAlertFromSidebar = async (
     wallet: Wallet,
@@ -2092,7 +2086,21 @@ const App: React.FC = () => {
                                 {allTokens.map((asset) => (
                                   <button
                                     key={asset.address}
-                                    onClick={() => handleSelectWalletAsset(asset)}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+
+                                      // Scroll to search input and focus it for visual feedback
+                                      searchInputRef.current?.scrollIntoView({
+                                        behavior: "smooth",
+                                        block: "center",
+                                      });
+                                      setTimeout(() => {
+                                        searchInputRef.current?.focus();
+                                      }, 300);
+
+                                      handleSearch(e, asset.address, asset.type);
+                                    }}
                                     className="px-2 py-1 rounded bg-space-900 border border-space-700 text-xs text-slate-200 hover:border-purple-500 hover:text-white transition-colors font-mono truncate max-w-[140px]"
                                     title={`${asset.symbol} • ${asset.address}`}
                                   >
@@ -2112,7 +2120,21 @@ const App: React.FC = () => {
                                 {allNfts.map((asset) => (
                                   <button
                                     key={asset.address}
-                                    onClick={() => handleSelectWalletAsset(asset)}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+
+                                      // Scroll to search input and focus it for visual feedback
+                                      searchInputRef.current?.scrollIntoView({
+                                        behavior: "smooth",
+                                        block: "center",
+                                      });
+                                      setTimeout(() => {
+                                        searchInputRef.current?.focus();
+                                      }, 300);
+
+                                      handleSearch(e, asset.address, asset.type);
+                                    }}
                                     className="px-2 py-1 rounded bg-space-900 border border-space-700 text-xs text-slate-200 hover:border-blue-500 hover:text-white transition-colors font-mono truncate max-w-[140px]"
                                     title={`${asset.name} • ${asset.address}`}
                                   >

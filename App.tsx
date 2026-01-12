@@ -13,6 +13,7 @@ import { Tooltip } from "./components/Tooltip";
 import { ToastContainer, ToastMessage, ToastType } from "./components/Toast";
 import { BlockchainBackground } from "./components/BlockchainBackground";
 import { TokenSearchInput } from "./components/TokenSearchInput";
+import { TrendingSection } from "./components/TrendingSection";
 import { useStatsCounters } from "./hooks/useStatsCounters";
 import {
   Token,
@@ -248,7 +249,9 @@ const App: React.FC = () => {
   const isLocalDev = typeof window !== "undefined" && window.location.hostname === "localhost";
 
   // State with IndexedDB persistence
-  const [trendingAssets, setTrendingAssets] = useState<TrendingAsset[]>(INITIAL_TRENDING);
+  const [trendingTokens, setTrendingTokens] = useState<TrendingAsset[]>([]);
+  const [trendingNfts, setTrendingNfts] = useState<TrendingAsset[]>([]);
+  const [trendingLoading, setTrendingLoading] = useState(true);
   const [alertStatuses, setAlertStatuses] = useState<Record<string, AlertStatus>>({});
   const [triggeredEvents, setTriggeredEvents] = useState<TriggeredEvent[]>([]);
   const [alerts, setAlerts] = useState<AlertConfig[]>([]);
@@ -329,7 +332,13 @@ const App: React.FC = () => {
           const deduplicated = deduplicateTrendingAssetsInMemory(
             dbTrending as unknown as TrendingAsset[]
           );
-          setTrendingAssets(deduplicated);
+
+          // Separate into tokens and NFTs
+          const tokens = deduplicated.filter((asset) => asset.type === AssetType.TOKEN).slice(0, 4);
+          const nfts = deduplicated.filter((asset) => asset.type === AssetType.NFT).slice(0, 4);
+
+          setTrendingTokens(tokens);
+          setTrendingNfts(nfts);
 
           // Also deduplicate in database to prevent future issues
           await deduplicateTrendingAssets();
@@ -385,7 +394,13 @@ const App: React.FC = () => {
       } catch (error) {
         console.error("Failed to load data from IndexedDB:", error);
         // If there's an error loading from database, just use defaults
-        setTrendingAssets(INITIAL_TRENDING);
+        const tokens = INITIAL_TRENDING.filter((asset) => asset.type === AssetType.TOKEN).slice(
+          0,
+          4
+        );
+        const nfts = INITIAL_TRENDING.filter((asset) => asset.type === AssetType.NFT).slice(0, 4);
+        setTrendingTokens(tokens);
+        setTrendingNfts(nfts);
         setDbLoaded(true);
       }
     };
@@ -424,32 +439,49 @@ const App: React.FC = () => {
 
     const fetchServerTrending = async () => {
       try {
+        setTrendingLoading(true);
         console.log("[App] 🔄 Fetching server-side trending assets...");
-        const serverTrending = await getTrendingAssets("ALL", 20);
 
-        console.log("[App] 📊 Server trending response:", {
-          count: serverTrending.length,
-          assets: serverTrending.slice(0, 3).map((a) => ({ symbol: a.symbol, address: a.address })),
-        });
+        // Fetch tokens and NFTs in parallel
+        const [tokensResult, nftsResult] = await Promise.allSettled([
+          getTrendingAssets("TOKEN", 4),
+          getTrendingAssets("NFT", 4),
+        ]);
 
-        if (serverTrending.length > 0) {
-          // Convert server format to local TrendingAsset format
-          const converted = serverTrending.map((asset) => ({
-            symbol: asset.symbol || (asset.type === "NFT" ? "NFT" : "TOKEN"),
-            name: asset.name || (asset.type === "NFT" ? "NFT Collection" : "Token"),
+        // Process tokens
+        if (tokensResult.status === "fulfilled" && tokensResult.value.length > 0) {
+          const convertedTokens = tokensResult.value.map((asset) => ({
+            symbol: asset.symbol || "TOKEN",
+            name: asset.name || "Token",
             address: asset.address,
             type: asset.type as AssetType,
             hits: Math.round(asset.velocityScore),
           }));
-
-          console.log("[App] ✅ Converted trending assets:", converted.length);
-          setTrendingAssets(converted);
+          console.log("[App] ✅ Converted trending tokens:", convertedTokens.length);
+          setTrendingTokens(convertedTokens);
         } else {
-          console.warn("[App] ⚠️ Server returned empty trending array, using local fallback");
+          console.warn("[App] ⚠️ Token trending fetch failed or empty");
+        }
+
+        // Process NFTs
+        if (nftsResult.status === "fulfilled" && nftsResult.value.length > 0) {
+          const convertedNfts = nftsResult.value.map((asset) => ({
+            symbol: asset.symbol || "NFT",
+            name: asset.name || "NFT Collection",
+            address: asset.address,
+            type: asset.type as AssetType,
+            hits: Math.round(asset.velocityScore),
+          }));
+          console.log("[App] ✅ Converted trending NFTs:", convertedNfts.length);
+          setTrendingNfts(convertedNfts);
+        } else {
+          console.warn("[App] ⚠️ NFT trending fetch failed or empty");
         }
       } catch (error) {
         console.error("[App] ❌ Failed to fetch server trending:", error);
         // Server fetch failed, keeping local trending
+      } finally {
+        setTrendingLoading(false);
       }
     };
 
@@ -576,8 +608,10 @@ const App: React.FC = () => {
     const saveTrending = async () => {
       try {
         await db.trendingAssets.clear();
+        // Combine both tokens and NFTs for storage
+        const allAssets = [...trendingTokens, ...trendingNfts];
         await db.trendingAssets.bulkAdd(
-          trendingAssets.map((asset) => ({
+          allAssets.map((asset) => ({
             symbol: asset.symbol,
             name: asset.name,
             address: asset.address,
@@ -591,7 +625,7 @@ const App: React.FC = () => {
     };
 
     saveTrending();
-  }, [trendingAssets, dbLoaded]);
+  }, [trendingTokens, trendingNfts, dbLoaded]);
 
   // Save recent searches to IndexedDB
   useEffect(() => {
@@ -845,7 +879,10 @@ const App: React.FC = () => {
 
   // --- UPDATE TRENDING ASSETS ---
   const updateTrending = useCallback((tokenData: Token) => {
-    setTrendingAssets((prev) => {
+    const isToken = tokenData.type === AssetType.TOKEN;
+    const setState = isToken ? setTrendingTokens : setTrendingNfts;
+
+    setState((prev) => {
       // First, deduplicate existing assets
       const cleanPrev = deduplicateTrendingAssetsInMemory(prev);
 
@@ -875,8 +912,8 @@ const App: React.FC = () => {
         ];
       }
 
-      // Sort by hits desc and keep top 8
-      const sorted = newAssets.sort((a, b) => b.hits - a.hits).slice(0, 8);
+      // Sort by hits desc and keep top 4 of each type
+      const sorted = newAssets.sort((a, b) => b.hits - a.hits).slice(0, 4);
 
       // Final deduplication to guarantee uniqueness
       return deduplicateTrendingAssetsInMemory(sorted);
@@ -1719,27 +1756,6 @@ const App: React.FC = () => {
     }
   };
 
-  const getAssetIcon = (asset: TrendingAsset, index: number) => {
-    const baseClass = "drop-shadow-[0_0_8px_rgba(255,255,255,0.12)]";
-    if (asset.type === AssetType.NFT)
-      return <ImageIcon className={`${baseClass} text-purple-300`} size={30} strokeWidth={1.5} />;
-    if (asset.symbol === "USDT")
-      return (
-        <CircleDollarSign className={`${baseClass} text-emerald-300`} size={30} strokeWidth={1.5} />
-      );
-    if (asset.symbol === "DC")
-      return <Shield className={`${baseClass} text-amber-300`} size={30} strokeWidth={1.5} />;
-    if (asset.symbol === "wDOGE")
-      return <Coins className={`${baseClass} text-doge-400`} size={30} strokeWidth={1.5} />;
-    return (
-      <Box
-        className={`${baseClass} ${index % 2 === 0 ? "text-blue-300" : "text-pink-300"}`}
-        size={30}
-        strokeWidth={1.5}
-      />
-    );
-  };
-
   return (
     <div className="min-h-screen bg-space-900 text-slate-100 font-sans selection:bg-purple-500 selection:text-white flex flex-col overflow-x-hidden">
       <Analytics />
@@ -2151,49 +2167,36 @@ const App: React.FC = () => {
                 </div>
               </div>
 
-              {/* Trending Section - Simplified Mobile */}
-              <div className="mt-12 px-3 sm:px-0">
-                <div className="flex items-center justify-center gap-2 text-slate-500 text-xs font-bold uppercase tracking-wider mb-4">
-                  <TrendingUp size={14} />
-                  <span>Trending</span>
-                </div>
+              {/* Trending Sections */}
+              <TrendingSection
+                title="Trending Tokens"
+                icon={<Coins size={14} />}
+                assets={trendingTokens}
+                onAssetClick={(e, asset) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  searchInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+                  setTimeout(() => {
+                    searchInputRef.current?.focus();
+                  }, 300);
+                  handleSearch(e, asset.address, asset.type);
+                }}
+              />
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-4">
-                  {trendingAssets.slice(0, 4).map((asset, idx) => {
-                    const uniqueKey = `${asset.address.toLowerCase()}-${idx}`;
-                    return (
-                      <button
-                        key={uniqueKey}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-
-                          // Scroll to search input and focus it for visual feedback
-                          searchInputRef.current?.scrollIntoView({
-                            behavior: "smooth",
-                            block: "center",
-                          });
-                          setTimeout(() => {
-                            searchInputRef.current?.focus();
-                          }, 300);
-
-                          handleSearch(e, asset.address, asset.type);
-                        }}
-                        className="relative p-3 bg-space-800 hover:bg-space-700 rounded-lg border border-space-700 transition-all text-center flex flex-col items-center gap-1 cursor-pointer"
-                        type="button"
-                      >
-                        <div className="text-xl sm:text-2xl">{getAssetIcon(asset, idx)}</div>
-                        <div className="font-bold text-white text-xs sm:text-sm truncate w-full">
-                          {asset.symbol}
-                        </div>
-                        <div className="text-[10px] sm:text-xs text-slate-400 truncate w-full">
-                          {asset.name}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+              <TrendingSection
+                title="Trending NFTs"
+                icon={<ImageIcon size={14} />}
+                assets={trendingNfts}
+                onAssetClick={(e, asset) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  searchInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+                  setTimeout(() => {
+                    searchInputRef.current?.focus();
+                  }, 300);
+                  handleSearch(e, asset.address, asset.type);
+                }}
+              />
             </div>
 
             {/* Footer */}

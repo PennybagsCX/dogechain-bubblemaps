@@ -5,9 +5,9 @@ export const Footer: React.FC = () => {
   return (
     <footer className="border-t border-space-700 bg-space-900 py-12 mt-auto">
       <div className="w-full px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-center md:text-left">
-            <h3 className="text-lg font-bold text-white flex items-center justify-center md:justify-start gap-2">
+        <div className="flex flex-col items-center justify-center gap-6 text-center">
+          <div className="text-center">
+            <h3 className="text-lg font-bold text-white flex items-center justify-center gap-2">
               <span className="text-purple-600">Ð</span> Dogechain BubbleMaps
             </h3>
             <p className="text-slate-500 text-sm mt-2 max-w-full sm:max-w-md">
@@ -40,12 +40,12 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-space-700 flex flex-col md:flex-row justify-between items-center text-xs text-slate-600 gap-4">
+        <div className="mt-12 pt-8 border-t border-space-700 flex flex-col items-center justify-center text-xs text-slate-600 gap-4 text-center">
           <p>&copy; 2026 Dogechain BubbleMaps. All rights reserved.</p>
           <p>Beta Build #{__BETA_BUILD_NUMBER__}</p>
         </div>
 
-        <div className="mt-6 p-4 rounded-lg bg-space-800/50 border border-space-800 text-[10px] text-slate-500 text-center md:text-left">
+        <div className="mt-6 p-4 rounded-lg bg-space-800/50 border border-space-800 text-[10px] text-slate-500 text-center">
           <strong>Disclaimer:</strong> This platform is for informational purposes only. Data is
           fetched in real-time from the Dogechain Explorer and may contain inaccuracies. Nothing on
           this site constitutes financial advice. Cryptocurrency investments carry high risk.

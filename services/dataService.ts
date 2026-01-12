@@ -222,6 +222,19 @@ const KNOWN_LABELS: Record<string, string> = {
   "0x0000000000000000000000000000000000000000": "Null Address",
   "0x000000000000000000000000000000000000dead": "Burn Address",
   "0x352569c5392c81d2442d66608f4755b967420729": "Dogechain Bridge",
+  // Dogechain Ecosystem Wallets
+  "0x73b56aa56b35a9eb062ebb0e187fe0f2603dbd25": "Dogechain Ecosystem Treasury",
+  "0x64c53d47d879eb3d1a311c7110a3964909a60bec": "Ecosystem DAO Fund",
+  "0x6c13d0978d4d1eb1208c93ad630c79d1728495c3": "Network Operations",
+  "0x5a3c2e0a005883c598430f1ab303411db1e0ba3a": "Early Shibes",
+  "0xbce77b0d91e98e4524e74fd378a3af5c9b94528e": "Loyal Shibes",
+  "0x07be55dcbea6ac1bb0a8d89c88485f483e0add80": "Foundation",
+  "0x85217a346f3fa64893bab3caea59effd0df8bc9": "Treasury",
+  "0xc1efe7aa280f7c63a4b1da26ae0f7e64ce7f2a8a": "Contributing Team",
+  "0x9f6a749acb49852ffe423408067938af7a36e15f": "Advisor & Marketing",
+  "0xf82e972e10fad1c8856832187adfc436edf38288": "Market Making",
+  "0x009d2bff6cade60d8bcce580424c72a67d3961b6": "Robinhood Reserve",
+  "0x1d4c74827e3a0b0cd13f76974f145295f7468d41": "Polygon Reserve",
 };
 
 // --- Helpers ---

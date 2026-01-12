@@ -5,3 +5,46 @@
 
 _No recent activity_
 </claude-mem-context>
+
+# Services Documentation
+
+## dataService.ts
+
+### Known Wallet Labels
+
+The `KNOWN_LABELS` constant (lines 221-238) defines hardcoded mappings between wallet addresses and their human-readable labels. These labels are automatically applied to bubbles in the visualization when the corresponding addresses appear as token holders.
+
+#### Infrastructure Labels
+
+- **Null Address** (0x0000...0000)
+- **Burn Address** (0x0000...dead)
+- **Dogechain Bridge** (0x3525...0729)
+
+#### Dogechain Ecosystem Wallets (Added Jan 12, 2026)
+
+- **Dogechain Ecosystem Treasury** (0x73b5...bd25)
+- **Ecosystem DAO Fund** (0x64C5...0bEc)
+- **Network Operations** (0x6C13...95C3)
+- **Early Shibes** (0x5a3C...bA3A)
+- **Loyal Shibes** (0xBce7...528e)
+- **Foundation** (0x07Be...dd80)
+- **Treasury** (0x8521...8BC9)
+- **Contributing Team** (0xc1eF...2A8A)
+- **Advisor & Marketing** (0x9F6A...E15F)
+- **Market Making** (0xF82E...38288)
+- **Robinhood Reserve** (0x009d...61b6)
+- **Polygon Reserve** (0x1d4C...8d41)
+
+#### Label Resolution Process
+
+The `resolveKnownLabel` function (lines 278-331) applies labels in this priority order:
+
+1. Hardcoded labels from `KNOWN_LABELS`
+2. Token contract identification
+3. LP pool detection (via `lpDetection.ts`)
+
+#### Display Behavior
+
+- Bubble labels are truncated to 8 characters (6 chars + "..") in the visualization
+- Full labels are visible in the WalletSidebar when clicking on a labeled wallet
+- User's own wallet always displays as "YOU" regardless of any label

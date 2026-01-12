@@ -9,6 +9,7 @@ import { BubbleMap } from "./components/BubbleMap";
 import { WalletSidebar } from "./components/WalletSidebar";
 import { Dashboard } from "./components/Dashboard";
 import { Footer } from "./components/Footer";
+import { Tooltip } from "./components/Tooltip";
 import { ToastContainer, ToastMessage, ToastType } from "./components/Toast";
 import { BlockchainBackground } from "./components/BlockchainBackground";
 import { TokenSearchInput } from "./components/TokenSearchInput";
@@ -1819,28 +1820,26 @@ const App: React.FC = () => {
                 {/* Stats Counters */}
                 <div className="mt-6 flex justify-center items-center gap-6 text-xs">
                   {/* Search Counter */}
-                  <div
-                    className="flex items-center gap-2 text-slate-400"
-                    title="Since January 12, 2026"
-                  >
-                    <Search size={14} className="text-purple-500" />
-                    <span className="text-slate-500">Total Searches:</span>
-                    <span className="font-mono font-semibold text-purple-400">
-                      {isLoadingStats ? "..." : formatNumber(totalSearches)}
-                    </span>
-                  </div>
+                  <Tooltip content="Since January 12, 2026">
+                    <div className="flex items-center gap-2 text-slate-400">
+                      <Search size={14} className="text-purple-500" />
+                      <span className="text-slate-500">Total Searches:</span>
+                      <span className="font-mono font-semibold text-purple-400">
+                        {isLoadingStats ? "..." : formatNumber(totalSearches)}
+                      </span>
+                    </div>
+                  </Tooltip>
 
                   {/* Alert Counter */}
-                  <div
-                    className="flex items-center gap-2 text-slate-400"
-                    title="Since January 12, 2026"
-                  >
-                    <AlertTriangle size={14} className="text-amber-500" />
-                    <span className="text-slate-500">Alerts Fired:</span>
-                    <span className="font-mono font-semibold text-amber-400">
-                      {isLoadingStats ? "..." : formatNumber(totalAlerts)}
-                    </span>
-                  </div>
+                  <Tooltip content="Since January 12, 2026">
+                    <div className="flex items-center gap-2 text-slate-400">
+                      <AlertTriangle size={14} className="text-amber-500" />
+                      <span className="text-slate-500">Alerts Fired:</span>
+                      <span className="font-mono font-semibold text-amber-400">
+                        {isLoadingStats ? "..." : formatNumber(totalAlerts)}
+                      </span>
+                    </div>
+                  </Tooltip>
                 </div>
               </div>
 

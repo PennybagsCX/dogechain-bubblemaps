@@ -21,10 +21,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   // Create ref for mobile menu click-outside detection
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
-  // Debouncing refs for connect button to prevent double-clicks
-  const connectButtonClickedRef = useRef(false);
-  const connectButtonTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
   // Apply click-outside hook
   useClickOutside(mobileMenuRef, () => setIsMobileMenuOpen(false), isMobileMenuOpen);
 

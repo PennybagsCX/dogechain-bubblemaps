@@ -1,7 +1,15 @@
 import React from "react";
 import { ImageIcon, Coins, Box, CircleDollarSign, Shield } from "lucide-react";
-import type { TrendingAsset } from "../services/trendingService";
 import { AssetType } from "../types";
+
+// Local TrendingAsset interface matching App.tsx
+interface TrendingAsset {
+  symbol: string;
+  name: string;
+  address: string;
+  type: AssetType;
+  hits: number;
+}
 
 interface TrendingSectionProps {
   title: string;

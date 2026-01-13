@@ -19,6 +19,7 @@ import {
   Clock,
   Download,
   Edit,
+  ExternalLink,
 } from "lucide-react";
 import { Tooltip } from "./Tooltip";
 
@@ -546,20 +547,90 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             {notif.transaction.tokenSymbol || "tokens"}
                           </p>
                           <div className="space-y-1 text-sm">
-                            <p className="text-slate-300">
-                              <span className="text-slate-400">From:</span>{" "}
-                              <code className="text-purple-400">
-                                {notif.transaction.from.slice(0, 8)}...
-                                {notif.transaction.from.slice(-6)}
-                              </code>
-                            </p>
-                            <p className="text-slate-300">
-                              <span className="text-slate-400">To:</span>{" "}
-                              <code className="text-purple-400">
-                                {notif.transaction.to.slice(0, 8)}...
-                                {notif.transaction.to.slice(-6)}
-                              </code>
-                            </p>
+                            {/* From Address with Tooltip and Link */}
+                            <div className="flex items-center gap-2">
+                              <span className="text-slate-400">From:</span>
+                              <div className="flex items-center gap-1">
+                                <Tooltip content={notif.transaction.from}>
+                                  <a
+                                    href={`https://explorer.dogechain.dog/address/${notif.transaction.from}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-purple-400 hover:text-purple-300 transition-colors font-mono text-xs"
+                                  >
+                                    {notif.transaction.from.slice(0, 8)}...
+                                    {notif.transaction.from.slice(-6)}
+                                  </a>
+                                </Tooltip>
+                                <Tooltip content="View sender on Dogechain Explorer">
+                                  <a
+                                    href={`https://explorer.dogechain.dog/address/${notif.transaction.from}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-slate-500 hover:text-white transition-colors p-1 rounded hover:bg-black/20"
+                                  >
+                                    <ExternalLink size={12} />
+                                  </a>
+                                </Tooltip>
+                              </div>
+                            </div>
+
+                            {/* To Address with Tooltip and Link */}
+                            <div className="flex items-center gap-2">
+                              <span className="text-slate-400">To:</span>
+                              <div className="flex items-center gap-1">
+                                <Tooltip content={notif.transaction.to}>
+                                  <a
+                                    href={`https://explorer.dogechain.dog/address/${notif.transaction.to}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-purple-400 hover:text-purple-300 transition-colors font-mono text-xs"
+                                  >
+                                    {notif.transaction.to.slice(0, 8)}...
+                                    {notif.transaction.to.slice(-6)}
+                                  </a>
+                                </Tooltip>
+                                <Tooltip content="View receiver on Dogechain Explorer">
+                                  <a
+                                    href={`https://explorer.dogechain.dog/address/${notif.transaction.to}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-slate-500 hover:text-white transition-colors p-1 rounded hover:bg-black/20"
+                                  >
+                                    <ExternalLink size={12} />
+                                  </a>
+                                </Tooltip>
+                              </div>
+                            </div>
+
+                            {/* Transaction Hash with Link */}
+                            <div className="flex items-center gap-2 pt-1">
+                              <span className="text-slate-400">Tx:</span>
+                              <div className="flex items-center gap-1">
+                                <Tooltip content={notif.transaction.hash}>
+                                  <a
+                                    href={`https://explorer.dogechain.dog/tx/${notif.transaction.hash}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-purple-400 hover:text-purple-300 transition-colors font-mono text-xs truncate max-w-[200px]"
+                                  >
+                                    {notif.transaction.hash.slice(0, 10)}...
+                                    {notif.transaction.hash.slice(-8)}
+                                  </a>
+                                </Tooltip>
+                                <Tooltip content="View transaction on Dogechain Explorer">
+                                  <a
+                                    href={`https://explorer.dogechain.dog/tx/${notif.transaction.hash}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-slate-500 hover:text-white transition-colors p-1 rounded hover:bg-black/20"
+                                  >
+                                    <ExternalLink size={12} />
+                                  </a>
+                                </Tooltip>
+                              </div>
+                            </div>
+
                             <p className="text-xs text-slate-500 mt-1">
                               {new Date(notif.transaction.timestamp).toLocaleString()}
                             </p>

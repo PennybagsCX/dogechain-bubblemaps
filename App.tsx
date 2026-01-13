@@ -15,8 +15,14 @@ import { BlockchainBackground } from "./components/BlockchainBackground";
 import { TokenSearchInput } from "./components/TokenSearchInput";
 import { TrendingSection } from "./components/TrendingSection";
 import { OnboardingModal } from "./components/OnboardingModal";
+import { BubbleVisualizationGuide } from "./components/BubbleVisualizationGuide";
+import { TokenInfoPanelGuide } from "./components/TokenInfoPanelGuide";
+import { WalletDetailsGuide } from "./components/WalletDetailsGuide";
 import { useStatsCounters } from "./hooks/useStatsCounters";
 import { useOnboarding } from "./hooks/useOnboarding";
+import { useBubbleVisualizationGuide } from "./hooks/useBubbleVisualizationGuide";
+import { useTokenInfoPanelGuide } from "./hooks/useTokenInfoPanelGuide";
+import { useWalletDetailsGuide } from "./hooks/useWalletDetailsGuide";
 import {
   Token,
   Wallet,
@@ -207,6 +213,18 @@ const App: React.FC = () => {
   const [view, setView] = useState<ViewState>(ViewState.HOME);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchType, setSearchType] = useState<AssetType>(AssetType.TOKEN);
+
+  // Map Analysis guide interaction tracking state
+  const [hasInteractedWithBubbles, setHasInteractedWithBubbles] = useState(false);
+  const [hasInteractedWithTokenPanel, setHasInteractedWithTokenPanel] = useState(false);
+  const [hasInteractedWithWalletDetails, setHasInteractedWithWalletDetails] = useState(false);
+
+  // Map Analysis Context-Aware Guides hooks
+  const bubbleGuide = useBubbleVisualizationGuide(
+    view === ViewState.ANALYSIS && hasInteractedWithBubbles
+  );
+  const tokenPanelGuide = useTokenInfoPanelGuide(hasInteractedWithTokenPanel);
+  const walletDetailsGuide = useWalletDetailsGuide(hasInteractedWithWalletDetails);
 
   // Hybrid scan state
   const [scanState, setScanState] = useState<{
@@ -676,6 +694,21 @@ const App: React.FC = () => {
     else if (view === ViewState.ANALYSIS && token)
       document.title = `Analysis: ${token.symbol} | Dogechain BubbleMaps`;
   }, [view, token]);
+
+  // --- MAP ANALYSIS GUIDE TRIGGERS ---
+  // Trigger bubble visualization guide when ANALYSIS view loads or first bubble interaction
+  useEffect(() => {
+    if (view === ViewState.ANALYSIS && token && !hasInteractedWithBubbles) {
+      setHasInteractedWithBubbles(true);
+    }
+  }, [view, token, hasInteractedWithBubbles]);
+
+  // Trigger wallet details guide when wallet sidebar opens
+  useEffect(() => {
+    if (selectedWallet && !hasInteractedWithWalletDetails) {
+      setHasInteractedWithWalletDetails(true);
+    }
+  }, [selectedWallet, hasInteractedWithWalletDetails]);
 
   // --- NAVIGATION HANDLER ---
   const handleViewChange = (newView: ViewState) => {
@@ -2417,7 +2450,10 @@ const App: React.FC = () => {
                     {wallets.length > 10 && (
                       <div className="flex items-center justify-center gap-2 mt-3">
                         <button
-                          onClick={() => setHoldersPage(Math.max(1, holdersPage - 1))}
+                          onClick={() => {
+                            setHoldersPage(Math.max(1, holdersPage - 1));
+                            if (!hasInteractedWithTokenPanel) setHasInteractedWithTokenPanel(true);
+                          }}
                           disabled={holdersPage === 1}
                           className="px-3 py-1 text-xs bg-space-800 border border-space-700 rounded hover:bg-space-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
@@ -2427,11 +2463,12 @@ const App: React.FC = () => {
                           Page {holdersPage} of {Math.ceil(wallets.length / 10)}
                         </span>
                         <button
-                          onClick={() =>
+                          onClick={() => {
                             setHoldersPage(
                               Math.min(Math.ceil(wallets.length / 10), holdersPage + 1)
-                            )
-                          }
+                            );
+                            if (!hasInteractedWithTokenPanel) setHasInteractedWithTokenPanel(true);
+                          }}
                           disabled={holdersPage >= Math.ceil(wallets.length / 10)}
                           className="px-3 py-1 text-xs bg-space-800 border border-space-700 rounded hover:bg-space-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
@@ -2608,6 +2645,40 @@ const App: React.FC = () => {
         onPrevious={prevOnboardingStep}
         onClose={closeOnboarding}
         onSkip={skipOnboarding}
+      />
+
+      {/* Map Analysis Context-Aware Guides */}
+      <BubbleVisualizationGuide
+        isOpen={bubbleGuide.isOpen}
+        currentStep={bubbleGuide.currentStep}
+        totalSteps={bubbleGuide.totalSteps}
+        progress={bubbleGuide.progress}
+        onNext={bubbleGuide.nextStep}
+        onPrevious={bubbleGuide.prevStep}
+        onClose={bubbleGuide.closeGuide}
+        onSkip={bubbleGuide.skipGuide}
+      />
+
+      <TokenInfoPanelGuide
+        isOpen={tokenPanelGuide.isOpen}
+        currentStep={tokenPanelGuide.currentStep}
+        totalSteps={tokenPanelGuide.totalSteps}
+        progress={tokenPanelGuide.progress}
+        onNext={tokenPanelGuide.nextStep}
+        onPrevious={tokenPanelGuide.prevStep}
+        onClose={tokenPanelGuide.closeGuide}
+        onSkip={tokenPanelGuide.skipGuide}
+      />
+
+      <WalletDetailsGuide
+        isOpen={walletDetailsGuide.isOpen}
+        currentStep={walletDetailsGuide.currentStep}
+        totalSteps={walletDetailsGuide.totalSteps}
+        progress={walletDetailsGuide.progress}
+        onNext={walletDetailsGuide.nextStep}
+        onPrevious={walletDetailsGuide.prevStep}
+        onClose={walletDetailsGuide.closeGuide}
+        onSkip={walletDetailsGuide.skipGuide}
       />
     </div>
   );

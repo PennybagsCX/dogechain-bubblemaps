@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef, useLayoutEffect, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
 
 type TooltipPosition = "top" | "bottom" | "left" | "right";
@@ -31,6 +31,9 @@ export const Tooltip: React.FC<TooltipProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const lastPositionRef = useRef<TooltipPosition>(position);
+  const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isRecalculatingRef = useRef(false);
 
   // Position classes (for absolute positioning fallback)
   const positionClasses: Record<TooltipPosition, string> = {
@@ -56,6 +59,8 @@ export const Tooltip: React.FC<TooltipProps> = ({
     if (!container) return;
 
     const rect = container.getBoundingClientRect();
+    const scrollX = window.scrollX || window.pageXOffset;
+    const scrollY = window.scrollY || window.pageYOffset;
 
     // Calculate tooltip position based on actualPosition
     let top = 0;
@@ -63,20 +68,20 @@ export const Tooltip: React.FC<TooltipProps> = ({
 
     switch (actualPosition) {
       case "top":
-        top = rect.top - 8; // Above with margin
-        left = rect.left + rect.width / 2;
+        top = rect.top + scrollY - 8; // Above with margin
+        left = rect.left + scrollX + rect.width / 2;
         break;
       case "bottom":
-        top = rect.bottom + 8; // Below with margin
-        left = rect.left + rect.width / 2;
+        top = rect.bottom + scrollY + 8; // Below with margin
+        left = rect.left + scrollX + rect.width / 2;
         break;
       case "left":
-        top = rect.top + rect.height / 2;
-        left = rect.left - 8;
+        top = rect.top + scrollY + rect.height / 2;
+        left = rect.left + scrollX - 8;
         break;
       case "right":
-        top = rect.top + rect.height / 2;
-        left = rect.right + 8;
+        top = rect.top + scrollY + rect.height / 2;
+        left = rect.right + scrollX + 8;
         break;
     }
 
@@ -176,6 +181,106 @@ export const Tooltip: React.FC<TooltipProps> = ({
       lastPositionRef.current = position;
     }
   }, [position, isVisible]);
+
+  // Recalculate position function for scroll/resize events
+  const recalculatePosition = useCallback(() => {
+    if (isRecalculatingRef.current || !isVisible || !tooltipRef.current || !containerRef.current) {
+      return;
+    }
+
+    isRecalculatingRef.current = true;
+
+    requestAnimationFrame(() => {
+      if (!containerRef.current || !tooltipRef.current) {
+        isRecalculatingRef.current = false;
+        return;
+      }
+
+      const container = containerRef.current;
+      const tooltip = tooltipRef.current;
+      const containerRect = container.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+
+      const scrollX = window.scrollX || window.pageXOffset;
+      const scrollY = window.scrollY || window.pageYOffset;
+
+      let newTop = 0;
+      let newLeft = 0;
+
+      switch (actualPosition) {
+        case "top":
+          newTop = containerRect.top + scrollY - tooltipRect.height - 8;
+          newLeft = containerRect.left + scrollX + containerRect.width / 2;
+          break;
+        case "bottom":
+          newTop = containerRect.bottom + scrollY + 8;
+          newLeft = containerRect.left + scrollX + containerRect.width / 2;
+          break;
+        case "left":
+          newTop = containerRect.top + scrollY + containerRect.height / 2;
+          newLeft = containerRect.left + scrollX - tooltipRect.width - 8;
+          break;
+        case "right":
+          newTop = containerRect.top + scrollY + containerRect.height / 2;
+          newLeft = containerRect.right + scrollX + 8;
+          break;
+      }
+
+      newLeft -= tooltipRect.width / 2;
+      newTop -= tooltipRect.height / 2;
+
+      setCoords({ top: newTop, left: newLeft });
+      isRecalculatingRef.current = false;
+    });
+  }, [isVisible, actualPosition]);
+
+  // Window resize handler
+  useEffect(() => {
+    if (!isVisible || !portal) return;
+
+    const handleResize = () => {
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+
+      resizeTimeoutRef.current = setTimeout(() => {
+        recalculatePosition();
+      }, 100);
+    };
+
+    window.addEventListener("resize", handleResize, { passive: true });
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+    };
+  }, [isVisible, portal, recalculatePosition]);
+
+  // Window scroll handler
+  useEffect(() => {
+    if (!isVisible || !portal) return;
+
+    const handleScroll = () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+
+      scrollTimeoutRef.current = setTimeout(() => {
+        recalculatePosition();
+      }, 100);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, [isVisible, portal, recalculatePosition]);
 
   const tooltipContent = (
     <div

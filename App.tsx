@@ -248,7 +248,13 @@ const App: React.FC = () => {
     nextStep: nextOnboardingStep,
     prevStep: prevOnboardingStep,
     skipOnboarding,
-  } = useOnboarding(shouldAutoOpen);
+  } = useOnboarding();
+
+  // Trigger onboarding when the auto-open condition is met
+  useEffect(() => {
+    if (!shouldAutoOpen) return;
+    openOnboarding();
+  }, [shouldAutoOpen, openOnboarding]);
 
   // Persist session flag when onboarding opens (prevents soft refresh repeats)
   useEffect(() => {

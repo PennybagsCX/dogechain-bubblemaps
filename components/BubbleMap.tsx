@@ -25,6 +25,8 @@ import {
   Settings,
   Sliders,
   X,
+  Layers,
+  RefreshCw,
 } from "lucide-react";
 import { Tooltip } from "./Tooltip";
 
@@ -59,6 +61,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const legendRef = useRef<HTMLDivElement>(null);
   const controlsRef = useRef<HTMLDivElement>(null);
   const mobileControlsRef = useRef<HTMLDivElement>(null);
+  const helpMenuRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({
     width: initialWidth || 800,
     height: initialHeight || 600,
@@ -80,6 +83,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const [isPaused, setIsPaused] = useState(false);
   const [isLegendOpen, setIsLegendOpen] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [isHelpMenuOpen, setIsHelpMenuOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [userNodeFound, setUserNodeFound] = useState(false);
   const [isSnapshotting, setIsSnapshotting] = useState(false);
@@ -94,10 +98,12 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const closeSettings = useCallback(() => setIsSettingsOpen(false), []);
   const closeLegend = useCallback(() => setIsLegendOpen(false), []);
   const closeControls = useCallback(() => setAreControlsOpen(false), []);
+  const closeHelpMenu = useCallback(() => setIsHelpMenuOpen(false), []);
 
   // Apply click-outside hooks for menus
   useClickOutside(settingsRef, closeSettings, isSettingsOpen);
   useClickOutside(legendRef, closeLegend, isLegendOpen);
+  useClickOutside(helpMenuRef, closeHelpMenu, isHelpMenuOpen);
 
   // Custom click-outside handler for controls (checks both desktop and mobile refs)
   useEffect(() => {
@@ -1293,15 +1299,60 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
       {/* --- TOP LEFT: CONTROLS --- */}
       <div className="absolute top-16 md:top-16 left-3 md:left-4 z-20 flex flex-col gap-3 md:gap-3">
-        <Tooltip content="Open visualization guide">
-          <button
-            onTouchStart={handleTouchStopPropagation}
-            onClick={() => setIsHelpOpen(true)}
-            className="p-2 bg-space-800 border border-space-700 text-slate-400 hover:text-white hover:border-space-600 rounded-full shadow-lg transition-colors"
-          >
-            <HelpCircle size={20} />
-          </button>
-        </Tooltip>
+        {/* Help menu container for click-outside detection */}
+        <div className="relative help-menu-container" ref={helpMenuRef}>
+          <Tooltip content={isHelpMenuOpen ? "" : "Open help menu"}>
+            <button
+              onTouchStart={handleTouchStopPropagation}
+              onClick={() => setIsHelpMenuOpen(!isHelpMenuOpen)}
+              className="p-2 bg-space-800 border border-space-700 text-slate-400 hover:text-white hover:border-space-600 rounded-full shadow-lg transition-colors"
+              aria-label="Open help menu"
+            >
+              <HelpCircle size={20} />
+            </button>
+          </Tooltip>
+
+          {/* Help menu dropdown */}
+          {isHelpMenuOpen && (
+            <div className="absolute left-0 top-full mt-2 w-56 bg-space-800 border border-space-700 rounded-lg shadow-xl z-50">
+              <div className="py-1">
+                <button
+                  onClick={() => {
+                    setIsHelpMenuOpen(false);
+                    // @ts-expect-error expose guide helper
+                    window.__DOGECCHAIN_GUIDES__?.openBubbleGuide();
+                  }}
+                  className="w-full text-left px-4 py-2 text-sm text-slate-200 hover:bg-space-700 transition-colors flex items-center gap-2"
+                >
+                  <Layers size={14} className="text-blue-500" />
+                  Bubble Map Guide
+                </button>
+                <button
+                  onClick={() => {
+                    setIsHelpMenuOpen(false);
+                    setIsHelpOpen(true);
+                  }}
+                  className="w-full text-left px-4 py-2 text-sm text-slate-200 hover:bg-space-700 transition-colors flex items-center gap-2"
+                >
+                  <HelpCircle size={14} className="text-green-500" />
+                  Quick Help
+                </button>
+                <div className="border-t border-space-700 my-1"></div>
+                <button
+                  onClick={() => {
+                    setIsHelpMenuOpen(false);
+                    // @ts-expect-error expose guide helper
+                    window.__DOGECCHAIN_GUIDES__?.resetAllGuides();
+                  }}
+                  className="w-full text-left px-4 py-2 text-sm text-slate-200 hover:bg-space-700 transition-colors flex items-center gap-2"
+                >
+                  <RefreshCw size={14} className="text-purple-500" />
+                  Reset Guides
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* Settings button and popup container for click-outside detection */}
         <div className="relative" ref={settingsRef}>

@@ -49,6 +49,8 @@ import {
 import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 import { fetchConnectionDetails } from "./services/connectionService";
 import { initializeDiagnosticLogger, getDiagnosticLogger } from "./lib/consoleLogger";
+import { resetAllGuides } from "./utils/guideStorage";
+import { shouldShowOnboarding } from "./utils/onboardingStorage";
 
 /**
  * Format number with commas (e.g., 1,234,567)
@@ -197,7 +199,45 @@ const App: React.FC = () => {
   // Stats counters hook
   const { totalSearches, totalAlerts, isLoading: isLoadingStats } = useStatsCounters();
 
-  // Onboarding hook
+  // View state (must be declared before onboarding hook since it depends on it)
+  const [view, setView] = useState<ViewState>(ViewState.HOME);
+
+  // Onboarding: show for new users and on hard reloads (network reload), but not on soft refreshes in the same tab
+  const sessionOnboardingKey = "dogechain_onboarding_session_shown";
+  const hasShownOnboardingRef = useRef<boolean>(false);
+  const navigationInfoRef = useRef<{ type?: string; transferSize?: number }>({});
+
+  useEffect(() => {
+    try {
+      hasShownOnboardingRef.current = sessionStorage.getItem(sessionOnboardingKey) === "true";
+    } catch {
+      hasShownOnboardingRef.current = false;
+    }
+    try {
+      const nav = performance.getEntriesByType("navigation")[0] as
+        | PerformanceNavigationTiming
+        | undefined;
+      if (nav) {
+        navigationInfoRef.current = {
+          type: nav.type,
+          transferSize: nav.transferSize,
+        };
+      }
+    } catch {
+      navigationInfoRef.current = {};
+    }
+  }, []);
+
+  const isHardReload =
+    navigationInfoRef.current.type === "reload" &&
+    typeof navigationInfoRef.current.transferSize === "number" &&
+    navigationInfoRef.current.transferSize > 0;
+
+  const shouldAutoOpen =
+    view === ViewState.HOME &&
+    shouldShowOnboarding() &&
+    (isHardReload || !hasShownOnboardingRef.current);
+
   const {
     isOpen: isOnboardingOpen,
     currentStep: onboardingStep,
@@ -208,9 +248,20 @@ const App: React.FC = () => {
     nextStep: nextOnboardingStep,
     prevStep: prevOnboardingStep,
     skipOnboarding,
-  } = useOnboarding();
+  } = useOnboarding(shouldAutoOpen);
 
-  const [view, setView] = useState<ViewState>(ViewState.HOME);
+  // Persist session flag when onboarding opens (prevents soft refresh repeats)
+  useEffect(() => {
+    if (!isOnboardingOpen) return;
+    if (hasShownOnboardingRef.current) return;
+    hasShownOnboardingRef.current = true;
+    try {
+      sessionStorage.setItem(sessionOnboardingKey, "true");
+    } catch {
+      /* ignore */
+    }
+  }, [isOnboardingOpen]);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [searchType, setSearchType] = useState<AssetType>(AssetType.TOKEN);
 
@@ -218,13 +269,6 @@ const App: React.FC = () => {
   const [hasInteractedWithBubbles, setHasInteractedWithBubbles] = useState(false);
   const [hasInteractedWithTokenPanel, setHasInteractedWithTokenPanel] = useState(false);
   const [hasInteractedWithWalletDetails, setHasInteractedWithWalletDetails] = useState(false);
-
-  // Map Analysis Context-Aware Guides hooks
-  const bubbleGuide = useBubbleVisualizationGuide(
-    view === ViewState.ANALYSIS && hasInteractedWithBubbles
-  );
-  const tokenPanelGuide = useTokenInfoPanelGuide(hasInteractedWithTokenPanel);
-  const walletDetailsGuide = useWalletDetailsGuide(hasInteractedWithWalletDetails);
 
   // Hybrid scan state
   const [scanState, setScanState] = useState<{
@@ -258,6 +302,59 @@ const App: React.FC = () => {
   const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   const [token, setToken] = useState<Token | null>(null);
+
+  // Map Analysis Context-Aware Guides hooks
+  // Trigger conditions: guides show when respective sections are active/interacted with
+  const bubbleGuide = useBubbleVisualizationGuide(view === ViewState.ANALYSIS && !!token);
+  const tokenPanelGuide = useTokenInfoPanelGuide(hasInteractedWithTokenPanel);
+  const walletDetailsGuide = useWalletDetailsGuide(hasInteractedWithWalletDetails);
+
+  // Expose guide testing helpers on window object for development
+  useEffect(() => {
+    // @ts-expect-error Exposing for testing
+    window.__DOGECCHAIN_GUIDES__ = {
+      resetAllGuides: () => {
+        resetAllGuides();
+        console.log("✅ All Map Analysis guides reset. Refresh to see them again.");
+        // Reset interaction tracking
+        setHasInteractedWithBubbles(false);
+        setHasInteractedWithTokenPanel(false);
+        setHasInteractedWithWalletDetails(false);
+      },
+      openBubbleGuide: () => {
+        resetAllGuides();
+        setHasInteractedWithBubbles(true);
+        bubbleGuide.openGuide();
+      },
+      openTokenPanelGuide: () => {
+        resetAllGuides();
+        setHasInteractedWithTokenPanel(true);
+        tokenPanelGuide.openGuide();
+      },
+      openWalletDetailsGuide: () => {
+        resetAllGuides();
+        setHasInteractedWithWalletDetails(true);
+        walletDetailsGuide.openGuide();
+      },
+      getGuideStatus: () => {
+        return {
+          bubble: { isOpen: bubbleGuide.isOpen, step: bubbleGuide.currentStep },
+          tokenPanel: { isOpen: tokenPanelGuide.isOpen, step: tokenPanelGuide.currentStep },
+          walletDetails: {
+            isOpen: walletDetailsGuide.isOpen,
+            step: walletDetailsGuide.currentStep,
+          },
+        };
+      },
+    };
+    console.log("🔧 Guide testing helpers available on window.__DOGECCHAIN_GUIDES__");
+    console.log("   - resetAllGuides(): Reset all guides to show again");
+    console.log("   - openBubbleGuide(): Manually open bubble guide");
+    console.log("   - openTokenPanelGuide(): Manually open token panel guide");
+    console.log("   - openWalletDetailsGuide(): Manually open wallet details guide");
+    console.log("   - getGuideStatus(): Get current guide states");
+  }, [bubbleGuide, tokenPanelGuide, walletDetailsGuide]);
+
   const [wallets, setWallets] = useState<Wallet[]>([]);
   const [links, setLinks] = useState<Link[]>([]);
   const [selectedWallet, setSelectedWallet] = useState<Wallet | null>(null);
@@ -381,6 +478,15 @@ const App: React.FC = () => {
               hits: asset.hits,
             }))
           );
+
+          // Set state with initial trending assets
+          const tokens = INITIAL_TRENDING.filter((asset) => asset.type === AssetType.TOKEN).slice(
+            0,
+            4
+          );
+          const nfts = INITIAL_TRENDING.filter((asset) => asset.type === AssetType.NFT).slice(0, 4);
+          setTrendingTokens(tokens);
+          setTrendingNfts(nfts);
         }
 
         // Load recent searches and deduplicate
@@ -686,7 +792,6 @@ const App: React.FC = () => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedWallet, isMobileStatsOpen]);
-
   // --- DYNAMIC TITLE ---
   useEffect(() => {
     if (view === ViewState.HOME) document.title = "Dogechain BubbleMaps - On-Chain Intelligence";
@@ -696,12 +801,28 @@ const App: React.FC = () => {
   }, [view, token]);
 
   // --- MAP ANALYSIS GUIDE TRIGGERS ---
+
   // Trigger bubble visualization guide when ANALYSIS view loads or first bubble interaction
   useEffect(() => {
     if (view === ViewState.ANALYSIS && token && !hasInteractedWithBubbles) {
       setHasInteractedWithBubbles(true);
     }
   }, [view, token, hasInteractedWithBubbles]);
+
+  // Trigger token panel guide when ANALYSIS view loads with holders data
+  useEffect(() => {
+    if (
+      view === ViewState.ANALYSIS &&
+      token &&
+      wallets.length > 0 &&
+      !hasInteractedWithTokenPanel
+    ) {
+      // Small delay to let panel render and holders display
+      setTimeout(() => {
+        setHasInteractedWithTokenPanel(true);
+      }, 1000);
+    }
+  }, [view, token, wallets.length, hasInteractedWithTokenPanel]);
 
   // Trigger wallet details guide when wallet sidebar opens
   useEffect(() => {

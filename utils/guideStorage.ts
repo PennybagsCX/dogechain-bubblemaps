@@ -51,7 +51,7 @@ export interface GuideState {
 function safeGetItem(key: string): string | null {
   try {
     return localStorage.getItem(key);
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return null;
@@ -65,7 +65,7 @@ function safeSetItem(key: string, value: string): boolean {
   try {
     localStorage.setItem(key, value);
     return true;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return false;
@@ -79,7 +79,7 @@ function safeRemoveItem(key: string): boolean {
   try {
     localStorage.removeItem(key);
     return true;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return false;
@@ -110,7 +110,7 @@ export function getBubbleGuideState(): GuideState | null {
       lastStep: lastStep ? parseInt(lastStep, 10) : undefined,
       dismissedCount: dismissedCount ? parseInt(dismissedCount, 10) : 0,
     };
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return null;
@@ -215,7 +215,7 @@ export function getTokenPanelGuideState(): GuideState | null {
       lastStep: lastStep ? parseInt(lastStep, 10) : undefined,
       dismissedCount: dismissedCount ? parseInt(dismissedCount, 10) : 0,
     };
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return null;
@@ -323,7 +323,7 @@ export function getWalletDetailsGuideState(): GuideState | null {
       lastStep: lastStep ? parseInt(lastStep, 10) : undefined,
       dismissedCount: dismissedCount ? parseInt(dismissedCount, 10) : 0,
     };
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return null;

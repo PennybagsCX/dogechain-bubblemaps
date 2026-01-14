@@ -184,7 +184,7 @@ export async function applyPopularityBoosts(
       const boost = boosts.get(result.address.toLowerCase()) || 0;
       result.score = Math.min(100, result.score + boost);
     }
-  } catch (error) {
+  } catch {
     // Error handled silently
     // Continue without popularity boosts
   }
@@ -226,7 +226,7 @@ async function preloadAbbreviations(type: AssetType, maxTokens: number = 100): P
         addToSyncCache(token.address, abbrs);
       }
     }
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -285,7 +285,7 @@ export async function initializeTokenSearchIndex(): Promise<void> {
     // 3. Bulk save to search index
     const { bulkSaveTokensToSearchIndex } = await import("./db");
     await bulkSaveTokensToSearchIndex([...lpTokens, ...discoveredTokens]);
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -458,7 +458,7 @@ export async function searchTokensLocally(
     setCachedSearchResults(query, type, sortedResults);
 
     return sortedResults;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -482,7 +482,6 @@ export async function searchTokensBlockscout(
     const directUrl = `https://explorer.dogechain.dog/tokens?type=JSON&query=${encodeURIComponent(query)}`;
 
     let response: Response;
-    let usedProxy = true;
 
     try {
       response = await fetch(proxyUrl);
@@ -492,13 +491,11 @@ export async function searchTokensBlockscout(
         console.warn(
           `[Token Search] Proxy failed with status ${response.status}, falling back to direct API`
         );
-        usedProxy = false;
         response = await fetch(directUrl);
       }
-    } catch (proxyError) {
+    } catch {
       // Network error with proxy, fall back to direct API
 
-      usedProxy = false;
       response = await fetch(directUrl);
     }
 
@@ -583,7 +580,7 @@ export async function searchTokensBlockscout(
 
         // Stop if we've reached the limit
         if (results.length >= limit) break;
-      } catch (parseError) {
+      } catch {
         // Skip rows that fail to parse
 
         continue;
@@ -598,7 +595,7 @@ export async function searchTokensBlockscout(
     });
 
     return results;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -782,7 +779,7 @@ export async function generatePhoneticSuggestions(
       .sort((a, b) => b.score - a.score)
       .slice(0, limit)
       .map(({ score: _score, ...rest }) => rest);
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -858,7 +855,7 @@ export async function* searchProgressive(
     ].slice(0, limit);
 
     yield finalResults;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     yield [];
@@ -969,7 +966,7 @@ async function searchExactMatches(
     }
 
     return results.map(({ score: _score, ...rest }) => rest);
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -996,7 +993,7 @@ async function searchPrefixMatches(
         return score >= 60;
       })
       .slice(0, limit);
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -1023,7 +1020,7 @@ async function searchSubstringMatches(
         return score >= 25 && score < 60;
       })
       .slice(0, limit);
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -1045,7 +1042,7 @@ async function searchPhoneticMatches(
 
   try {
     return await generatePhoneticSuggestions(query, type, limit);
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];

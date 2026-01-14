@@ -68,7 +68,7 @@ class AbbreviationCache {
           return dbEntry.abbreviations;
         }
       }
-    } catch (error) {
+    } catch {
       // Error handled silently - database fetch failed
     }
 
@@ -103,7 +103,7 @@ class AbbreviationCache {
       if (abbreviationCacheTable) {
         await abbreviationCacheTable.put(entry);
       }
-    } catch (error) {
+    } catch {
       // Error handled silently - database write failed
     }
   }
@@ -179,7 +179,7 @@ class AbbreviationCache {
       }
 
       return expiredEntries.length;
-    } catch (error) {
+    } catch {
       // Error handled silently
 
       return 0;
@@ -200,7 +200,7 @@ class AbbreviationCache {
       if (abbreviationCacheTable) {
         await abbreviationCacheTable.clear();
       }
-    } catch (error) {
+    } catch {
       // Error handled silently - database clear failed
     }
   }
@@ -277,8 +277,8 @@ export async function getCachedAbbreviations(
 export async function initializeAbbreviationCache(): Promise<void> {
   try {
     await abbreviationCache.clearExpired();
-    const stats = abbreviationCache.getStats();
-  } catch (error) {
+    abbreviationCache.getStats();
+  } catch {
     // Error handled silently - cache initialization failed
   }
 }

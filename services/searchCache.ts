@@ -236,8 +236,8 @@ export function setCachedSearchResults(query: string, type: string, results: Sea
 export async function initializeSearchCache(): Promise<void> {
   try {
     searchCache.clearExpired();
-    const stats = searchCache.getStats();
-  } catch (error) {
+    searchCache.getStats();
+  } catch {
     // Error handled silently
   }
 }

@@ -26,7 +26,7 @@ router.get("/hello", (_req: Request, res: Response<HelloResponse | ErrorResponse
       status: "success",
     };
     res.json(response);
-  } catch (error) {
+  } catch {
     const errorResponse: ErrorResponse = {
       message: "Internal server error",
       timestamp: new Date().toISOString(),

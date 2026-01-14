@@ -1,9 +1,9 @@
 import { neon } from "@neondatabase/serverless";
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = neon(process.env.DATABASE_URL ?? "");
 
 // Helper to parse JSON body
-async function parseBody(req: Request): Promise<any> {
+async function parseBody(req: Request): Promise<unknown> {
   const text = await req.text();
   return text ? JSON.parse(text) : {};
 }
@@ -75,7 +75,7 @@ export async function GET(req: Request): Promise<Response> {
         },
       }
     );
-  } catch (error) {
+  } catch {
     return Response.json(
       { success: false, error: "Failed to fetch learned tokens" },
       { status: 500 }
@@ -143,7 +143,7 @@ export async function POST(req: Request): Promise<Response> {
       added: addedCount,
       updated: updatedCount,
     });
-  } catch (error) {
+  } catch {
     return Response.json({ success: false, error: "Failed to add tokens" }, { status: 400 });
   }
 }

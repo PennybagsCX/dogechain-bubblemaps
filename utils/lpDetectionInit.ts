@@ -33,23 +33,13 @@ export async function initializeLPDetectionFromConsole(): Promise<void> {
   try {
     await initializeLPDetection(
       false, // Don't force rescan if data already exists
-      (message, progress) => {
+      (_message, _progress) => {
         // Progress callback
       }
     );
 
-    const pairs = await loadAllLPPairs();
-
-    // Show breakdown by DEX
-    const byDEX: Record<string, number> = {};
-    for (const pair of pairs) {
-      byDEX[pair.dexName] = (byDEX[pair.dexName] || 0) + 1;
-    }
-
-    for (const [dex, count] of Object.entries(byDEX)) {
-      // DEX statistics calculated above
-    }
-  } catch (error) {
+    await loadAllLPPairs();
+  } catch {
     // Error handled silently
   }
 }
@@ -71,11 +61,11 @@ export async function forceRescanFactories(): Promise<void> {
   try {
     await initializeLPDetection(
       true, // Force rescan
-      (message, progress) => {}
+      (_message, _progress) => {}
     );
 
-    const pairs = await loadAllLPPairs();
-  } catch (error) {
+    await loadAllLPPairs();
+  } catch {
     // Error handled silently
   }
 }
@@ -99,12 +89,12 @@ export async function showLPStatistics(): Promise<void> {
     byDEX[pair.dexName] = (byDEX[pair.dexName] || 0) + 1;
   }
 
-  for (const [dex, count] of Object.entries(byDEX)) {
+  for (const [_dex, _count] of Object.entries(byDEX)) {
     // DEX statistics calculated above
   }
 
   // Valid vs Invalid
-  const valid = pairs.filter((p) => p.isValid).length;
+  void pairs.filter((p) => p.isValid).length;
 
   // Age of data could be calculated here if needed
 }
@@ -125,7 +115,7 @@ export async function cleanupOldLPPairs(): Promise<void> {
 
   try {
     await clearOldLPPairs();
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }

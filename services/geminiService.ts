@@ -97,7 +97,7 @@ export const sendChatToAI = async (
 
     const result = await chat.sendMessage({ message: newMessage });
     return result.text || "No response generated.";
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return "Sorry, I couldn't process that request right now.";
@@ -150,7 +150,7 @@ export const analyzeWhaleBehavior = async (
       },
     });
     return response.text || "Analysis unavailable.";
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return "Analysis unavailable.";
@@ -212,7 +212,7 @@ export const generateTokenSummary = async (
       },
     });
     return response.text || "Summary unavailable.";
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return "Summary unavailable.";

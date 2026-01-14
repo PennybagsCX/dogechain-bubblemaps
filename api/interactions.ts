@@ -1,9 +1,9 @@
 import { neon } from "@neondatabase/serverless";
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = neon(process.env.DATABASE_URL ?? "");
 
 // Helper to parse JSON body
-async function parseBody(req: Request): Promise<any> {
+async function parseBody(req: Request): Promise<unknown> {
   const text = await req.text();
   return text ? JSON.parse(text) : {};
 }
@@ -12,14 +12,20 @@ async function parseBody(req: Request): Promise<any> {
 export async function POST(req: Request): Promise<Response> {
   try {
     const body = await parseBody(req);
-    const { tokenAddress, interactionType, sessionId, queryText, resultPosition } = body;
+    const { tokenAddress, interactionType, sessionId, queryText, resultPosition } = body as {
+      tokenAddress?: unknown;
+      interactionType?: unknown;
+      sessionId?: unknown;
+      queryText?: unknown;
+      resultPosition?: unknown;
+    };
 
     if (!tokenAddress || !interactionType) {
       return Response.json({ success: false, error: "Missing required fields" }, { status: 400 });
     }
 
     // Validate interaction type
-    if (!["search", "click", "select"].includes(interactionType)) {
+    if (!["search", "click", "select"].includes(String(interactionType))) {
       return Response.json({ success: false, error: "Invalid interaction type" }, { status: 400 });
     }
 
@@ -48,7 +54,7 @@ export async function POST(req: Request): Promise<Response> {
     `;
 
     return Response.json({ success: true });
-  } catch (error) {
+  } catch {
     // Don't fail the request - analytics shouldn't block the UI
     return Response.json({ success: true });
   }

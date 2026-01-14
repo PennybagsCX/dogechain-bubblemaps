@@ -53,7 +53,7 @@ export async function fetchLearnedTokens(
       score: token.popularity_score, // Use popularity as initial score
       popularityScore: token.popularity_score, // Additional metadata
     }));
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -94,10 +94,10 @@ export async function submitWalletScanResults(
       return false;
     }
 
-    const data = await response.json();
+    await response.json();
 
     return true;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return false;
@@ -127,7 +127,7 @@ export async function logTokenInteraction(
         resultPosition,
       }),
     });
-  } catch (error) {
+  } catch {
     // Silent fail - don't block UI for analytics
   }
 }
@@ -159,17 +159,20 @@ export async function getTrendingLearnedTokens(
       return [];
     }
 
-    return data.assets.map((asset: any) => ({
-      address: asset.address,
-      name: asset.name || "Unknown",
-      symbol: asset.symbol || "???",
-      type: type,
-      source: "learned" as const,
-      decimals: 18, // Default
-      score: asset.popularity_score,
-      popularityScore: asset.popularity_score,
-    }));
-  } catch (error) {
+    return data.assets.map((asset: unknown) => {
+      const a = asset as { address: string; name?: string; symbol?: string };
+      return {
+        address: a.address,
+        name: a.name || "Unknown",
+        symbol: a.symbol || "???",
+        type: type,
+        source: "learned" as const,
+        decimals: 18, // Default
+        score: (asset as { popularity_score?: number }).popularity_score,
+        popularityScore: (asset as { popularity_score?: number }).popularity_score,
+      };
+    });
+  } catch {
     // Error handled silently
 
     return [];

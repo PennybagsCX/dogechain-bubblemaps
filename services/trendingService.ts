@@ -59,7 +59,7 @@ export async function logSearchQuery(
       }
       // Try to parse error message, but don't fail if it's not JSON
       try {
-        const error = await response.json();
+        await response.json();
       } catch {
         // Error response is not JSON, handled silently
       }
@@ -67,7 +67,7 @@ export async function logSearchQuery(
     }
 
     return true;
-  } catch (error) {
+  } catch {
     // Silent fail - don't block UI if logging fails
 
     return false;

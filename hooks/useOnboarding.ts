@@ -138,7 +138,7 @@ export function useOnboarding(triggerCondition?: boolean): UseOnboardingReturn {
     }
 
     return undefined;
-  }, [triggerCondition]);
+  }, [triggerCondition, hasInitialized, isOpen]);
 
   /**
    * Keyboard navigation

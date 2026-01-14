@@ -54,7 +54,7 @@ export async function discoverNewFactories(_limit: number = 10): Promise<Discove
     );
 
     return knownFactories.slice(0, _limit);
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -111,7 +111,7 @@ export async function verifyFactory(address: string): Promise<{
       name: hasPool ? "Uniswap V3" : "Uniswap V2",
       version: hasPool ? "V3" : "V2",
     };
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return { isFactory: false };
@@ -172,7 +172,7 @@ export async function discoverFactoryPairs(
     }
 
     return pairs;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -197,7 +197,7 @@ export async function scanForNewFactories(): Promise<number> {
     // For now, just log
 
     return discoveredCount;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return 0;

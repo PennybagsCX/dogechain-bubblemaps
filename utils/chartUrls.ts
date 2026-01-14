@@ -80,8 +80,8 @@ export function parseChartUrl(
       const parts = urlObj.pathname.split("/").filter(Boolean);
       if (parts.length >= 2) {
         return {
-          chainId: parts[0]!,
-          tokenAddress: parts[1]!,
+          chainId: parts[0] ?? "",
+          tokenAddress: parts[1] ?? "",
           source: "dexscreener",
         };
       }
@@ -92,8 +92,8 @@ export function parseChartUrl(
       const parts = urlObj.pathname.split("/").filter(Boolean);
       if (parts.length >= 3 && parts[1] === "pools") {
         return {
-          chainId: parts[0]!,
-          tokenAddress: parts[2]!,
+          chainId: parts[0] ?? "",
+          tokenAddress: parts[2] ?? "",
           source: "geckoterminal",
         };
       }

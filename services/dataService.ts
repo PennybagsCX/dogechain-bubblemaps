@@ -181,7 +181,7 @@ const saveMetadataToCache = (
     const cache = cacheRaw ? JSON.parse(cacheRaw) : {};
     cache[address.toLowerCase()] = { ...data, timestamp: Date.now() };
     localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(cache));
-  } catch (e) {
+  } catch {
     // Error handled silently - localStorage write failed
   }
 };
@@ -333,7 +333,7 @@ const resolveKnownLabel = async (
     } else {
       // Not an LP pool
     }
-  } catch (e) {
+  } catch {
     // Silently fail - don't break existing functionality
   }
 
@@ -376,7 +376,7 @@ export const fetchMetadataFromTransfers = async (
       }
     }
     return null;
-  } catch (e) {
+  } catch {
     // Error fetching data
     return null;
   }
@@ -405,7 +405,7 @@ const fetchMetadataFromTokenList = async (
       }
     }
     return null;
-  } catch (e) {
+  } catch {
     // Error fetching data
     return null;
   }
@@ -421,7 +421,7 @@ export const fetchTokenData = async (
   let cleanAddress: string;
   try {
     cleanAddress = validateTokenAddress(address);
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return null;
@@ -447,7 +447,7 @@ export const fetchTokenData = async (
         localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(cache));
         cached = null;
       }
-    } catch (e) {
+    } catch {
       // Error in operation
     }
   }
@@ -516,7 +516,7 @@ export const fetchTokenData = async (
       priceUsd: 0,
       isVerified,
     };
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return null;
@@ -626,12 +626,12 @@ export const fetchTokenHolders = async (
                 }
               }
             }
-          } catch (error) {
+          } catch {
             // Error in processing
           }
         }
       }
-    } catch (error) {
+    } catch {
       // Error in wallet processing
     }
 
@@ -886,7 +886,7 @@ export const fetchWalletTransactions = async (
 
     // No transactions found at any offset
     return [];
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -962,7 +962,7 @@ export const scanWhaleContracts = async (
           }
         }
       }
-    } catch (e) {
+    } catch {
       // Error in operation
     }
   }
@@ -992,7 +992,7 @@ export const checkTokenBalance = async (
     }
 
     return { balance: "0", hasBalance: false };
-  } catch (e) {
+  } catch {
     // Error handled silently
 
     return { balance: "0", hasBalance: false };
@@ -1156,7 +1156,7 @@ export const fetchWalletAssets = async (
       tokens: sortByHits(tokensMap),
       nfts: sortByHits(nftsMap),
     };
-  } catch (e) {
+  } catch {
     // Error handled silently
 
     return { tokens: [], nfts: [] };
@@ -1194,7 +1194,7 @@ export const fetchWalletAssetsHybrid = async (
           metadata: cached.scanMetadata,
         };
       }
-    } catch (e) {
+    } catch {
       // Error in operation
     }
   }
@@ -1274,7 +1274,7 @@ export const fetchWalletAssetsHybrid = async (
           if (json.status === "1" && Array.isArray(json.result)) {
             results.push(...json.result);
           }
-        } catch (e) {
+        } catch {
           // Error handled silently
 
           continue;
@@ -1309,7 +1309,7 @@ export const fetchWalletAssetsHybrid = async (
           });
         }
       }
-    } catch (e) {
+    } catch {
       // Error loading cache
     }
 
@@ -1375,7 +1375,7 @@ export const fetchWalletAssetsHybrid = async (
               };
               saveMetadataToCache(contract, meta);
             }
-          } catch (e: any) {
+          } catch {
             // Continue with other contracts even if one fails
           }
         }
@@ -1387,7 +1387,7 @@ export const fetchWalletAssetsHybrid = async (
           `Detecting contract types... ${Math.floor(((i + batch.length) / contractsArray.length) * 100)}%`
         );
       }
-    } catch (e: any) {
+    } catch {
       // Continue anyway - transfers will be categorized as TOKEN by default
     }
 
@@ -1460,7 +1460,7 @@ export const fetchWalletAssetsHybrid = async (
                   lastSeenAt: Date.now(),
                 });
               }
-            } catch (e) {
+            } catch {
               // Error in discovered contracts
             }
           }
@@ -1516,7 +1516,7 @@ export const fetchWalletAssetsHybrid = async (
             }
 
             checkedContracts.add(contract);
-          } catch (e) {
+          } catch {
             // Error checking contract
           }
         }
@@ -1528,7 +1528,7 @@ export const fetchWalletAssetsHybrid = async (
           `Checking discovered contracts... ${Math.floor(((i + batch.length) / discoveredContracts.length) * 100)}%`
         );
       }
-    } catch (e: any) {
+    } catch {
       // Continue anyway - this is an optional phase
     }
 
@@ -1583,7 +1583,7 @@ export const fetchWalletAssetsHybrid = async (
                     );
                   }
                 }
-              } catch (e) {
+              } catch {
                 // Continue on error - individual LP check failures shouldn't break the scan
               }
             }
@@ -1609,7 +1609,7 @@ export const fetchWalletAssetsHybrid = async (
       } else {
         // No transactions to scan
       }
-    } catch (e) {
+    } catch {
       // Error handled silently
       // Non-critical phase - continue anyway
     }
@@ -1637,7 +1637,7 @@ export const fetchWalletAssetsHybrid = async (
     await saveScanCache(walletAddress, finalTokens, finalNfts, metadata);
 
     // Submit scan results to learning database (non-blocking, fire-and-forget)
-    submitWalletScanResults(walletAddress, finalTokens, finalNfts).catch((err) => {});
+    submitWalletScanResults(walletAddress, finalTokens, finalNfts).catch((_err) => {});
 
     triggerProgress(
       "complete",
@@ -1650,12 +1650,12 @@ export const fetchWalletAssetsHybrid = async (
       nfts: finalNfts,
       metadata,
     };
-  } catch (e) {
-    if (e instanceof Error && e.message === "Scan cancelled") {
-      throw e;
+  } catch (err) {
+    if (err instanceof Error && err.message === "Scan cancelled") {
+      throw err;
     }
 
-    throw e;
+    throw err;
   }
 };
 

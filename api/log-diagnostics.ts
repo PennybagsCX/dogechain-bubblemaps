@@ -5,7 +5,7 @@
 
 import { neon } from "@neondatabase/serverless";
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = neon(process.env.DATABASE_URL ?? "");
 
 export async function POST(req: Request): Promise<Response> {
   try {
@@ -74,7 +74,7 @@ export async function POST(req: Request): Promise<Response> {
       message: "Logs received successfully",
       sessionId: data.sessionId,
     });
-  } catch (error) {
+  } catch {
     return Response.json(
       {
         success: false,

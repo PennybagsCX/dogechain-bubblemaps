@@ -331,7 +331,10 @@ export const Tooltip: React.FC<TooltipProps> = ({
     >
       {children}
       {isVisible && portal
-        ? ReactDOM.createPortal(tooltipContent, document.getElementById("tooltip-portal-root")!)
+        ? ReactDOM.createPortal(
+            tooltipContent,
+            document.getElementById("tooltip-portal-root") ?? document.body
+          )
         : tooltipContent}
     </div>
   );

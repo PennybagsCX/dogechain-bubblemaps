@@ -251,7 +251,7 @@ export async function searchPhoneticIndexDB(
         similarity: matches.find((m) => m.address === t.address.toLowerCase())?.similarity || 0,
       }))
       .sort((a: any, b: any) => b.similarity - a.similarity);
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -280,7 +280,7 @@ export async function updateSimilarityCache(
       similarityCache: JSON.stringify(cache),
       updatedAt: Date.now(),
     });
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }

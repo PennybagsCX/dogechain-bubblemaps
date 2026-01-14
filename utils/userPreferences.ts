@@ -29,7 +29,7 @@ export function getChartHeight(): ChartHeight {
     if (saved && (saved === "sm" || saved === "md" || saved === "lg")) {
       return saved;
     }
-  } catch (e) {
+  } catch {
     // Error reading preference
   }
 
@@ -44,7 +44,7 @@ export function setChartHeight(height: ChartHeight): void {
 
   try {
     localStorage.setItem(CHART_HEIGHT_KEY, height);
-  } catch (e) {
+  } catch {
     // Error reading preference
   }
 }

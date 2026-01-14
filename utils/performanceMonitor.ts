@@ -74,7 +74,7 @@ function observeLCP(): void {
   try {
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
-      const lastEntry = entries[entries.length - 1] as any;
+      const lastEntry = entries[entries.length - 1] as PerformanceEntry & { startTime: number };
 
       const metric: Metric = {
         name: "LCP",
@@ -87,7 +87,7 @@ function observeLCP(): void {
     });
 
     observer.observe({ type: "largest-contentful-paint", buffered: true });
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -102,7 +102,7 @@ function observeFID(): void {
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       for (const entry of entries) {
-        const fidEntry = entry as any;
+        const fidEntry = entry as PerformanceEntry & { processingStart: number; startTime: number };
         const metric: Metric = {
           name: "FID",
           value: fidEntry.processingStart - fidEntry.startTime,
@@ -115,7 +115,7 @@ function observeFID(): void {
     });
 
     observer.observe({ type: "first-input", buffered: true });
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -132,8 +132,9 @@ function observeCLS(): void {
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       for (const entry of entries) {
-        if (!(entry as any).hadRecentInput) {
-          clsValue += (entry as any).value;
+        const clsEntry = entry as PerformanceEntry & { hadRecentInput: boolean; value: number };
+        if (!clsEntry.hadRecentInput) {
+          clsValue += clsEntry.value;
         }
       }
 
@@ -148,7 +149,7 @@ function observeCLS(): void {
     });
 
     observer.observe({ type: "layout-shift", buffered: true });
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -162,7 +163,7 @@ function observeINP(): void {
   try {
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
-      const lastEntry = entries[entries.length - 1] as any;
+      const lastEntry = entries[entries.length - 1] as PerformanceEntry & { duration: number };
 
       const metric: Metric = {
         name: "INP",
@@ -175,7 +176,7 @@ function observeINP(): void {
     });
 
     observer.observe({ type: "event", buffered: true });
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -205,7 +206,7 @@ function observeFCP(): void {
       type: "paint",
       buffered: true,
     });
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -233,7 +234,7 @@ function observeTTFB(): void {
     });
 
     observer.observe({ type: "navigation", buffered: true });
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -262,7 +263,7 @@ function observeResourceTimings(): void {
     });
 
     observer.observe({ type: "resource", buffered: true });
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -271,7 +272,7 @@ function observeResourceTimings(): void {
  * Get performance rating based on thresholds
  */
 function getRating(metricName: string, value: number): "good" | "needs-improvement" | "poor" {
-  const threshold = (VITAL_THRESHOLDS as any)[metricName];
+  const threshold = VITAL_THRESHOLDS[metricName as keyof typeof VITAL_THRESHOLDS];
   if (!threshold) return "good";
 
   if (value <= threshold.good) return "good";

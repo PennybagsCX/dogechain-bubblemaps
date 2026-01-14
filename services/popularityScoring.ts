@@ -192,7 +192,7 @@ export async function updateTokenPopularity(
 
     // Update IndexedDB
     await updatePopularityInDB(normalized, appearedInResults, wasClicked);
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }

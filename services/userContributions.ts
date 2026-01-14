@@ -66,7 +66,7 @@ export async function submitToken(submission: TokenSubmission): Promise<boolean>
     }
 
     return true;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return false;
@@ -105,7 +105,7 @@ export async function submitMetadataCorrection(
     }
 
     return true;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return false;
@@ -139,7 +139,7 @@ export async function voteOnCorrection(
     }
 
     return true;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return false;
@@ -165,7 +165,7 @@ async function verifyContract(contractAddress: string): Promise<boolean> {
 
     const data = await response.json();
     return !!(data && data.address);
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return false;

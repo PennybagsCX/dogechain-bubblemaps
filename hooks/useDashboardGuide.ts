@@ -132,7 +132,7 @@ export function useDashboardGuide(triggerCondition: boolean): UseDashboardGuideR
     }
 
     return undefined;
-  }, [triggerCondition]);
+  }, [triggerCondition, hasInitialized, isOpen]);
 
   /**
    * Keyboard navigation

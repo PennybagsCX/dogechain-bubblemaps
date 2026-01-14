@@ -298,8 +298,8 @@ export async function runComprehensiveScan(
     }
 
     throw new Error(`Unknown phase: ${checkpoint.phase}`);
-  } catch (error) {
-    config.onLog?.(`❌ Scan failed: ${error instanceof Error ? error.message : String(error)}`);
+  } catch (err) {
+    config.onLog?.(`❌ Scan failed: ${err instanceof Error ? err.message : String(err)}`);
 
     return {
       success: false,

@@ -1,9 +1,12 @@
 import { neon } from "@neondatabase/serverless";
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = neon(process.env.DATABASE_URL ?? "");
+
+// Type for assets with type field
+type AssetWithType = Record<string, unknown> & { type: "TOKEN" | "NFT" };
 
 // Helper to parse JSON body
-async function parseBody(req: Request): Promise<any> {
+async function parseBody(req: Request): Promise<unknown> {
   const text = await req.text();
   return text ? JSON.parse(text) : {};
 }
@@ -12,7 +15,11 @@ async function parseBody(req: Request): Promise<any> {
 export async function POST(req: Request): Promise<Response> {
   try {
     const body = await parseBody(req);
-    const { walletAddress, tokens, nfts } = body;
+    const { walletAddress, tokens, nfts } = body as {
+      walletAddress?: unknown;
+      tokens?: unknown;
+      nfts?: unknown;
+    };
 
     if (!walletAddress || (!tokens && !nfts)) {
       return Response.json({ success: false, error: "Missing required fields" }, { status: 400 });
@@ -25,9 +32,15 @@ export async function POST(req: Request): Promise<Response> {
     }
 
     // Combine tokens and NFTs
-    const allAssets = [
-      ...(tokens || []).map((t: any) => ({ ...t, type: "TOKEN" })),
-      ...(nfts || []).map((n: any) => ({ ...n, type: "NFT" })),
+    const allAssets: AssetWithType[] = [
+      ...(Array.isArray(tokens) ? tokens : []).map((t: Record<string, unknown>) => ({
+        ...t,
+        type: "TOKEN" as const,
+      })),
+      ...(Array.isArray(nfts) ? nfts : []).map((n: Record<string, unknown>) => ({
+        ...n,
+        type: "NFT" as const,
+      })),
     ];
 
     if (allAssets.length === 0) {
@@ -40,7 +53,7 @@ export async function POST(req: Request): Promise<Response> {
     let processedCount = 0;
 
     for (const asset of allAssets) {
-      const address = asset.address?.toLowerCase();
+      const address = (asset.address as string)?.toLowerCase();
       if (!address) continue;
 
       // Skip if address is invalid
@@ -50,7 +63,7 @@ export async function POST(req: Request): Promise<Response> {
 
       const name = asset.name ? String(asset.name).slice(0, 255) : null;
       const symbol = asset.symbol ? String(asset.symbol).slice(0, 50) : null;
-      const decimals = asset.decimals ? parseInt(asset.decimals) : 18;
+      const decimals = asset.decimals ? parseInt(String(asset.decimals)) : 18;
       const type = asset.type === "NFT" ? "NFT" : "TOKEN";
 
       // Check if token exists
@@ -87,7 +100,7 @@ export async function POST(req: Request): Promise<Response> {
           VALUES (${wallet}, ${address})
           ON CONFLICT (wallet_address, token_address) DO NOTHING
         `;
-      } catch (error) {
+      } catch {
         // Foreign key or unique constraint error - ignore
       }
 
@@ -99,7 +112,7 @@ export async function POST(req: Request): Promise<Response> {
       processed: processedCount,
       wallet: wallet,
     });
-  } catch (error) {
+  } catch {
     return Response.json({ success: false, error: "Failed to submit scan" }, { status: 500 });
   }
 }

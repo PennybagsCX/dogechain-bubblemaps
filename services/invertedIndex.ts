@@ -267,7 +267,7 @@ export async function searchInvertedIndexDB(
       .toArray();
 
     return tokens.map((t: any) => t.address);
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];

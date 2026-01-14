@@ -598,7 +598,7 @@ const App: React.FC = () => {
           }));
           setTrendingNfts(convertedNfts);
         }
-      } catch (error) {
+      } catch {
         // Server fetch failed, keeping local trending
       }
     };
@@ -1029,7 +1029,7 @@ const App: React.FC = () => {
 
             return [...currentWallets, userWallet];
           }
-        } catch (e) {
+        } catch {
           // Failed to inject user wallet
         }
       }
@@ -1110,8 +1110,6 @@ const App: React.FC = () => {
     try {
       const userAgent = navigator.userAgent;
       const isArcMobile = /Arc\/.*Mobile/.test(userAgent);
-      const isArc = /Arc\//.test(userAgent);
-      const isMobile = /Mobile|Android|iPhone|iPad|iPod/.test(userAgent);
 
       const tokenData = await fetchTokenData(cleanQuery, typeToUse);
 
@@ -1251,7 +1249,7 @@ const App: React.FC = () => {
       //      .then(setSummary)
       //      .catch(() => setSummary("AI Analysis unavailable"));
       // }
-    } catch (err) {
+    } catch {
       addToast("An unexpected error occurred while fetching live data.", "error");
     } finally {
       setLoading(false);

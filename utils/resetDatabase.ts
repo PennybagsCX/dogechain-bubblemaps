@@ -34,7 +34,7 @@ export async function resetDatabaseFromConsole(): Promise<void> {
     setTimeout(() => {
       window.location.reload();
     }, 1000);
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }

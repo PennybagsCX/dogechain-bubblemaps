@@ -86,22 +86,25 @@ export async function fuzzySearch(query: string, limit: number = 10): Promise<Se
 
   try {
     // Perform fuzzy search
-    const results = miniSearch!.search(query);
+    const results = miniSearch?.search(query) ?? [];
 
     // Limit results
     const limitedResults = results.slice(0, limit);
 
     // Convert MiniSearch results to SearchResult format
-    return limitedResults.map((r: any) => ({
-      address: r.address,
-      name: r.name,
-      symbol: r.symbol,
-      type: r.type as AssetType,
-      source: "local" as const,
-      decimals: r.decimals,
-      score: r.score || 0,
-    }));
-  } catch (error) {
+    return limitedResults.map((r: unknown) => {
+      const result = r as { address: string; name: string; symbol: string; type: AssetType };
+      return {
+        address: result.address,
+        name: result.name,
+        symbol: result.symbol,
+        type: result.type,
+        source: "local" as const,
+        decimals: (r as { decimals?: number }).decimals,
+        score: (r as { score?: number }).score || 0,
+      };
+    });
+  } catch {
     // Error handled silently
 
     return [];

@@ -340,7 +340,7 @@ class DogeDatabase extends Dexie {
 
           // Build and save inverted index
           await saveInvertedIndex(tx, allTokens);
-        } catch (error) {
+        } catch {
           // Error handled silently
           // Don't throw - allow upgrade to complete even if index build fails
           // Index will be built on next search
@@ -384,7 +384,7 @@ class DogeDatabase extends Dexie {
           console.log(
             `[DB] Version 12 upgrade complete: Phonetic index for ${allTokens.length} tokens`
           );
-        } catch (error) {
+        } catch {
           // Error handled silently
           // Don't throw - allow upgrade to complete even if index build fails
         }
@@ -433,7 +433,7 @@ class DogeDatabase extends Dexie {
           console.log(
             `[DB] Version 13 upgrade complete: Trigram index for ${allTokens.length} tokens`
           );
-        } catch (error) {
+        } catch {
           // Error handled silently
           // Don't throw - allow upgrade to complete even if index build fails
         }
@@ -459,7 +459,7 @@ class DogeDatabase extends Dexie {
           // learnedTokensCache store created automatically with schema above
           // No data migration needed - this is for offline caching of Vercel Postgres data
         });
-    } catch (error) {
+    } catch {
       // Error handled silently
 
       // Store error for UI to display
@@ -482,13 +482,13 @@ export async function ensureLPDetectionInitialized(): Promise<void> {
     const existingPairs = await loadAllLPPairs();
 
     if (existingPairs.length === 0) {
-      await initializeLPDetection(false, (msg, progress) => {
+      await initializeLPDetection(false, (_msg, _progress) => {
         // Progress callback
       });
     } else {
       // No existing tokens
     }
-  } catch (error) {
+  } catch {
     // Error loading tokens
   }
 }
@@ -741,10 +741,10 @@ export async function testDatabaseHealth(): Promise<boolean> {
   try {
     // Try to open the database and read from a table
     await db.open();
-    const count = await db.alerts.count();
+    await db.alerts.count();
 
     return true;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     localStorage.setItem("doge_db_error", "health_check_failed");
@@ -783,7 +783,7 @@ export async function saveScanCache(
     };
 
     await db.walletScanCache.put(cacheEntry);
-  } catch (error) {
+  } catch {
     // Error in operation
   }
 }
@@ -808,7 +808,7 @@ export async function loadScanCache(walletAddress: string): Promise<DbWalletScan
     }
 
     return cacheEntry;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return null;
@@ -851,7 +851,7 @@ export async function clearExpiredCache(): Promise<number> {
     }
 
     return toDelete.length;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return 0;
@@ -911,7 +911,7 @@ export async function saveWalletForcedContracts(
     };
 
     await db.walletForcedContracts.put(entry);
-  } catch (error) {
+  } catch {
     // Error in operation
   }
 }
@@ -928,7 +928,7 @@ export async function loadWalletForcedContracts(walletAddress: string): Promise<
     }
 
     return entry.contracts;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -971,7 +971,7 @@ export async function saveDiscoveredContracts(contracts: DbDiscoveredContracts[]
         });
       }
     }
-  } catch (error) {
+  } catch {
     // Error in operation
   }
 }
@@ -982,7 +982,7 @@ export async function saveDiscoveredContracts(contracts: DbDiscoveredContracts[]
 export async function loadDiscoveredContracts(): Promise<DbDiscoveredContracts[]> {
   try {
     return await db.discoveredContracts.toArray();
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -995,7 +995,7 @@ export async function loadDiscoveredContracts(): Promise<DbDiscoveredContracts[]
 export async function getDiscoveredContractsByType(type: string): Promise<DbDiscoveredContracts[]> {
   try {
     return await db.discoveredContracts.where("type").equals(type).toArray();
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -1020,7 +1020,7 @@ export async function clearOldDiscoveredContracts(): Promise<number> {
     }
 
     return oldContracts.length;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return 0;
@@ -1073,7 +1073,7 @@ export async function saveLPPairs(pairs: DbLPPair[]): Promise<void> {
     console.log(
       `[DB] Saved ${uniquePairs.length} LP pairs to database (${pairs.length - uniquePairs.length} duplicates skipped)`
     );
-  } catch (error) {
+  } catch {
     // Error in operation
   }
 }
@@ -1084,7 +1084,7 @@ export async function saveLPPairs(pairs: DbLPPair[]): Promise<void> {
 export async function loadAllLPPairs(): Promise<DbLPPair[]> {
   try {
     return await db.lpPairs.toArray();
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -1100,7 +1100,7 @@ export async function isAddressLPPair(address: string): Promise<DbLPPair | null>
     const pair = await db.lpPairs.where("pairAddress").equals(address.toLowerCase()).first();
 
     return pair || null;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return null;
@@ -1131,7 +1131,7 @@ export async function clearOldLPPairs(): Promise<number> {
     }
 
     return oldPairs.length;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return 0;
@@ -1144,7 +1144,7 @@ export async function clearOldLPPairs(): Promise<number> {
 export async function getLPPairsByDEX(dexName: string): Promise<DbLPPair[]> {
   try {
     return await db.lpPairs.where("dexName").equals(dexName).toArray();
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -1164,7 +1164,7 @@ export async function getLPPairsByToken(tokenAddress: string): Promise<DbLPPair[
         pair.token0Address.toLowerCase() === lowerAddress ||
         pair.token1Address.toLowerCase() === lowerAddress
     );
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -1231,7 +1231,7 @@ export async function saveDiscoveredFactories(
         });
       }
     }
-  } catch (error) {
+  } catch {
     // Error in operation
   }
 }
@@ -1242,7 +1242,7 @@ export async function saveDiscoveredFactories(
 export async function loadDiscoveredFactories(): Promise<DbDiscoveredFactory[]> {
   try {
     return await db.discoveredFactories.toArray();
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -1259,7 +1259,7 @@ export async function getDiscoveredFactory(address: string): Promise<DbDiscovere
       .equals(address.toLowerCase())
       .first();
     return factory || null;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return null;
@@ -1272,7 +1272,7 @@ export async function getDiscoveredFactory(address: string): Promise<DbDiscovere
 export async function getActiveDiscoveredFactories(): Promise<DbDiscoveredFactory[]> {
   try {
     return await db.discoveredFactories.where("status").equals("ACTIVE").toArray();
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -1311,7 +1311,7 @@ export async function saveTokenToSearchIndex(token: DbTokenSearchIndex): Promise
         indexedAt: Date.now(),
       });
     }
-  } catch (error) {
+  } catch {
     // Error in operation
   }
 }
@@ -1337,7 +1337,7 @@ export async function bulkSaveTokensToSearchIndex(tokens: DbTokenSearchIndex[]):
 
     // Bulk put (will add new or update existing)
     await db.tokenSearchIndex.bulkPut(Array.from(uniqueTokens.values()));
-  } catch (error) {
+  } catch {
     // Error in operation
   }
 }
@@ -1379,7 +1379,7 @@ export async function searchTokensLocally(
       .slice(0, 20); // Limit to top 20
 
     return scoredResults;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -1392,7 +1392,7 @@ export async function searchTokensLocally(
 export async function getAllTokenSearchIndex(): Promise<DbTokenSearchIndex[]> {
   try {
     return await db.tokenSearchIndex.toArray();
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -1418,7 +1418,7 @@ export async function clearOldTokenSearchIndex(): Promise<number> {
     }
 
     return oldTokens.length;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return 0;

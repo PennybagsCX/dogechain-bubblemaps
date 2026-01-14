@@ -87,7 +87,7 @@ export async function discoverAllFactories(
             }
           }
         }
-      } catch (e) {
+      } catch {
         // Error handled silently
       }
     }
@@ -109,7 +109,7 @@ export async function discoverAllFactories(
     );
 
     return factories;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -162,11 +162,8 @@ async function fetchPairCreatedEvents(fromBlock: number, toBlock: number | strin
         // No more results
         shouldContinue = false;
       }
-    } catch (error) {
-      console.error(
-        `[Factory Discovery] Failed to fetch blocks ${currentBlock}-${endBlock}:`,
-        error
-      );
+    } catch (err) {
+      console.error(`[Factory Discovery] Failed to fetch blocks ${currentBlock}-${endBlock}:`, err);
       shouldContinue = false;
     }
   }
@@ -306,14 +303,14 @@ export async function runFactoryDiscovery(
 
   // Display results
 
-  factories.forEach((factory, index) => {
+  factories.forEach((factory) => {
     if (factory.samplePairs.length > 0) {
       // Factory has sample pairs
     }
   });
 
   // Generate code to copy
-  const code = generateFactoryCode(factories);
+  generateFactoryCode(factories);
 }
 
 /**
@@ -384,7 +381,7 @@ export async function discoverAllFactoriesWithCheckpoint(
 
       // Rate limiting
       await new Promise((resolve) => setTimeout(resolve, 1000));
-    } catch (error) {
+    } catch (err) {
       // Error handled silently
 
       const scanError: ScanError = {
@@ -392,7 +389,7 @@ export async function discoverAllFactoriesWithCheckpoint(
         phase: "factory_discovery",
         block: factory.deployBlock,
         factory: factory.address,
-        message: error instanceof Error ? error.message : String(error),
+        message: err instanceof Error ? err.message : String(err),
         severity: "warning",
       };
       errors.push(scanError);
@@ -457,7 +454,7 @@ export async function autoAddDiscoveredFactories(factories: DiscoveredFactory[])
     }));
 
     await saveDiscoveredFactories(factoryRecords);
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }

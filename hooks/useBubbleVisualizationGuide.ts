@@ -133,7 +133,7 @@ export function useBubbleVisualizationGuide(
     }
 
     return undefined;
-  }, [triggerCondition]);
+  }, [triggerCondition, hasInitialized, isOpen]);
 
   /**
    * Keyboard navigation

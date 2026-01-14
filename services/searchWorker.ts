@@ -286,11 +286,11 @@ self.onmessage = async (event: MessageEvent<WorkerMessage>) => {
       stage: 3,
       results: allResults,
     } as WorkerResponse);
-  } catch (error) {
+  } catch (err) {
     postMessage({
       type: "error",
       stage: 1,
-      error: error instanceof Error ? error.message : "Unknown error",
+      error: err instanceof Error ? err.message : "Unknown error",
     } as WorkerResponse);
   }
 };

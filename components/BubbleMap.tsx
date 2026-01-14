@@ -1261,7 +1261,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
       // Clean up
       URL.revokeObjectURL(url);
-    } catch (error) {
+    } catch {
       // Error handled silently - snapshot capture failed
     } finally {
       setIsSnapshotting(false);

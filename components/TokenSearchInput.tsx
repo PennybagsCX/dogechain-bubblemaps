@@ -47,7 +47,7 @@ async function initializeSearchWorker(): Promise<boolean> {
       searchWorker = new SearchWorkerInstance({ type: "module" });
 
       return true;
-    } catch (error) {
+    } catch {
       searchWorker = null;
       return false;
     }
@@ -148,7 +148,7 @@ export function TokenSearchInput({
       .then((history) => {
         setRecentSearches(history);
       })
-      .catch((error) => {});
+      .catch((_error) => {});
 
     // Load popular queries (local, last 7 days)
     getTopQueries(20)
@@ -158,7 +158,7 @@ export function TokenSearchInput({
           .filter((q): q is string => !!q);
         setPopularQueries(filtered);
       })
-      .catch((error) => {});
+      .catch((_error) => {});
 
     // Load global trending assets (server with local fallback)
     getTrendingAssetsWithFallback<{
@@ -171,11 +171,14 @@ export function TokenSearchInput({
       .then((assets) => {
         const symbols = assets
           // assets may be TrendingAsset or minimal shape from fallback
-          .map((a: any) => sanitizeSuggestion(a.symbol || a.name || ""))
+          .map((a: unknown) => {
+            const asset = a as { symbol?: string; name?: string };
+            return sanitizeSuggestion(asset.symbol || asset.name || "");
+          })
           .filter((s): s is string => !!s);
         setTrendingQueries(symbols);
       })
-      .catch((error) => {});
+      .catch((_error) => {});
 
     // Cleanup on unmount
     return () => {
@@ -188,7 +191,7 @@ export function TokenSearchInput({
         searchAbort.abort();
       }
     };
-  }, []);
+  }, [sanitizeSuggestion, searchType]);
 
   // Search with Web Worker (background processing, no UI blocking)
   const searchWithWorker = async (
@@ -210,7 +213,7 @@ export function TokenSearchInput({
               const expandedQueries = [queryLower, ...getNicknameExpansions(queryLower)];
 
               // Send search request to worker
-              searchWorker!.postMessage({
+              searchWorker?.postMessage({
                 messageType: "search",
                 query: searchQuery,
                 queryLower,
@@ -222,19 +225,19 @@ export function TokenSearchInput({
               // Set up one-time listener for response
               const handler = (e: MessageEvent) => {
                 if (e.data.type === "complete") {
-                  searchWorker!.removeEventListener("message", handler);
+                  searchWorker?.removeEventListener("message", handler);
                   resolve(e.data.results);
                 } else if (e.data.type === "error") {
-                  searchWorker!.removeEventListener("message", handler);
+                  searchWorker?.removeEventListener("message", handler);
                   reject(new Error(e.data.error));
                 }
               };
 
-              searchWorker!.addEventListener("message", handler);
+              searchWorker?.addEventListener("message", handler);
 
               // Timeout after 5 seconds
               setTimeout(() => {
-                searchWorker!.removeEventListener("message", handler);
+                searchWorker?.removeEventListener("message", handler);
                 reject(new Error("Worker search timeout"));
               }, 5000);
             })
@@ -277,7 +280,7 @@ export function TokenSearchInput({
       const cachedResults = await getCachedSearchResults(searchQuery, searchType);
 
       if (cachedResults && cachedResults.length > 0) {
-        searchResults = cachedResults;
+        searchResults = cachedResults as SearchResult[];
         cacheHit = true;
       } else {
         // MINISEARCH FUZZY SEARCH: Fast, typo-tolerant search (3KB library vs 15KB custom)
@@ -291,7 +294,7 @@ export function TokenSearchInput({
             } else {
               searchResults = await searchProgressiveAll(searchQuery, searchType, 10);
             }
-          } catch (miniSearchError) {
+          } catch {
             // MiniSearch failed, using progressive search
             searchResults = await searchProgressiveAll(searchQuery, searchType, 10);
           }
@@ -304,7 +307,7 @@ export function TokenSearchInput({
         else if (workerReadyRef.current && searchWorker && searchQuery.startsWith("0x")) {
           try {
             searchResults = await searchWithWorker(searchQuery, searchType);
-          } catch (workerError) {
+          } catch {
             // Worker search failed, falling back to main thread
             const { all } = await searchTokensHybrid(searchQuery, searchType, {
               limit: 10,
@@ -324,7 +327,7 @@ export function TokenSearchInput({
 
         // CACHE RESULTS: Store in cache for future use (non-blocking)
         if (searchResults.length > 0) {
-          cacheSearchResults(searchQuery, searchType, searchResults).catch((error) => {});
+          cacheSearchResults(searchQuery, searchType, searchResults).catch((_error) => {});
         }
       }
 
@@ -352,7 +355,7 @@ export function TokenSearchInput({
         }
 
         // Track search analytics (async, non-blocking)
-        trackSearch(searchQuery, searchResults, sessionIdRef.current).catch((error) => {});
+        trackSearch(searchQuery, searchResults, sessionIdRef.current).catch((_error) => {});
 
         // If no results, fetch phonetic suggestions
         if (searchResults.length === 0 && searchQuery.length >= 3) {
@@ -464,7 +467,7 @@ export function TokenSearchInput({
         result.score || 0,
         timeToClickMs,
         sessionIdRef.current
-      ).catch((error) => {});
+      ).catch((_error) => {});
 
       // Log to learned tokens database (async, non-blocking)
       logTokenInteraction(
@@ -482,7 +485,7 @@ export function TokenSearchInput({
       result.type === AssetType.NFT ? "NFT" : "TOKEN",
       result.symbol,
       result.name
-    ).catch((error) => {});
+    ).catch((_error) => {});
 
     if (isControlled) {
       externalOnChange?.(result.address);
@@ -542,14 +545,14 @@ export function TokenSearchInput({
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [inputRef]);
 
   // Auto-focus on mount
   useEffect(() => {
     if (autoFocus) {
       inputRef.current?.focus();
     }
-  }, [autoFocus]);
+  }, [autoFocus, inputRef]);
 
   return (
     <div className="relative">

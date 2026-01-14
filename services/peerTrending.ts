@@ -40,7 +40,7 @@ export async function getPeerRecommendations(
 
     const data = await response.json();
     return data.recommendations || [];
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -91,7 +91,7 @@ export async function enhanceWithPeerRecommendations(
       enhanced: [...currentResults, ...peerResults],
       peerOnly: peerResults,
     };
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return {

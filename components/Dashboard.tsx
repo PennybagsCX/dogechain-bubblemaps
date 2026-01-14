@@ -104,6 +104,57 @@ export const Dashboard: React.FC<DashboardProps> = ({
   // Dashboard guide integration
   const dashboardGuide = useDashboardGuide(true);
 
+  // Helper: Extract primary token from transactions (declared before use)
+  const extractPrimaryToken = useCallback(
+    (
+      transactions: Transaction[],
+      alert?: AlertConfig
+    ): { address: string; symbol: string } | null => {
+      if (!transactions || transactions.length === 0) {
+        return null;
+      }
+
+      // Count token occurrences
+      const tokenCounts = new Map<string, { count: number; address: string; symbol: string }>();
+
+      for (const tx of transactions) {
+        if (tx.tokenAddress) {
+          const existing = tokenCounts.get(tx.tokenAddress);
+          if (existing) {
+            existing.count++;
+          } else {
+            tokenCounts.set(tx.tokenAddress, {
+              count: 1,
+              address: tx.tokenAddress,
+              symbol: tx.tokenSymbol || "Token",
+            });
+          }
+        }
+      }
+
+      if (tokenCounts.size === 0) {
+        // No token address found in transactions
+        return alert?.tokenAddress
+          ? { address: alert.tokenAddress, symbol: alert.tokenSymbol || "Token" }
+          : null;
+      }
+
+      // Find most common token
+      let mostCommon = null;
+      let maxCount = 0;
+
+      for (const tokenData of tokenCounts.values()) {
+        if (tokenData.count > maxCount) {
+          maxCount = tokenData.count;
+          mostCommon = tokenData;
+        }
+      }
+
+      return mostCommon;
+    },
+    []
+  );
+
   // Find the most recent scan time
   const lastScanTime =
     Object.values(statuses).length > 0
@@ -131,7 +182,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.5);
-    } catch (e) {
+    } catch {
       // Error handled silently - audio playback failed
     }
   }, [soundEnabled]);
@@ -150,7 +201,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           try {
             validateWalletAddress(alert.walletAddress);
             if (alert.tokenAddress) validateTokenAddress(alert.tokenAddress);
-          } catch (e) {
+          } catch {
             return;
           }
 
@@ -211,7 +262,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             lastSeenTransactions: allSeenTxs,
             newTransactions: hasNewActivity ? newTransactions : undefined,
           };
-        } catch (e) {
+        } catch {
           newStatuses[alert.id] = {
             currentValue: 0,
             triggered: false,
@@ -317,7 +368,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             tokenSymbol: triggeredEvent.tokenSymbol,
             transactionCount: triggeredEvent.transactions.length,
           }),
-        }).catch((err) => {
+        }).catch((_err) => {
           // Error handled silently
         });
       }
@@ -390,6 +441,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     onTriggeredEventsChange,
     playAlertSound,
     onUpdateStatuses,
+    extractPrimaryToken,
   ]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -426,7 +478,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         threshold: "",
         alertType: "WALLET",
       });
-    } catch (error) {
+    } catch {
       // Error handled silently - alert creation failed
     } finally {
       setIsSubmitting(false);
@@ -483,7 +535,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-    } catch (error) {
+    } catch {
       alert("Failed to export data. Please try again.");
     }
   };
@@ -511,54 +563,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
       }
       return newSet;
     });
-  };
-
-  // Helper: Extract primary token from transactions
-  const extractPrimaryToken = (
-    transactions: Transaction[],
-    alert?: AlertConfig
-  ): { address: string; symbol: string } | null => {
-    if (!transactions || transactions.length === 0) {
-      return null;
-    }
-
-    // Count token occurrences
-    const tokenCounts = new Map<string, { count: number; address: string; symbol: string }>();
-
-    for (const tx of transactions) {
-      if (tx.tokenAddress) {
-        const existing = tokenCounts.get(tx.tokenAddress);
-        if (existing) {
-          existing.count++;
-        } else {
-          tokenCounts.set(tx.tokenAddress, {
-            count: 1,
-            address: tx.tokenAddress,
-            symbol: tx.tokenSymbol || "Token",
-          });
-        }
-      }
-    }
-
-    if (tokenCounts.size === 0) {
-      // No token address found in transactions
-      return alert?.tokenAddress
-        ? { address: alert.tokenAddress, symbol: alert.tokenSymbol || "Token" }
-        : null;
-    }
-
-    // Find most common token
-    let mostCommon = null;
-    let maxCount = 0;
-
-    for (const tokenData of tokenCounts.values()) {
-      if (tokenData.count > maxCount) {
-        maxCount = tokenData.count;
-        mostCommon = tokenData;
-      }
-    }
-
-    return mostCommon;
   };
 
   // Migration: Update triggered events with actual transaction token data
@@ -609,9 +613,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       if (hasChanges) {
         onTriggeredEventsChange(updatedEvents);
-        console.log(
-          "[Dashboard] Updated triggered events with correct token data from transactions"
-        );
       }
     };
 

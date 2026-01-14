@@ -73,7 +73,7 @@ async function ensureCheckpointTable(): Promise<void> {
         scanCheckpoints: "++id, phase, lastUpdated",
       });
     }
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -97,7 +97,7 @@ export async function saveCheckpoint(checkpoint: ScanCheckpoint): Promise<void> 
     console.log(
       `[Scan Progress] Checkpoint saved: Phase ${checkpoint.phase}, Block ${checkpoint.currentBlock}/${checkpoint.totalBlocks}`
     );
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -134,7 +134,7 @@ export async function loadCheckpoint(): Promise<ScanCheckpoint | null> {
       `[Scan Progress] Loaded checkpoint from ${new Date(latest.lastUpdated).toLocaleString()}`
     );
     return latest;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return null;
@@ -150,7 +150,7 @@ export async function clearCheckpoints(): Promise<void> {
 
     const table = (db as any)[SCAN_CHECKPOINTS_TABLE];
     await table.clear();
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -221,7 +221,7 @@ export async function logScanError(error: ScanError): Promise<void> {
       checkpoint.errors.push(error);
       await saveCheckpoint(checkpoint);
     }
-  } catch (e) {
+  } catch {
     // Error handled silently
   }
 }
@@ -256,7 +256,7 @@ export async function getAllCheckpoints(): Promise<ScanCheckpoint[]> {
 
     const table = (db as any)[SCAN_CHECKPOINTS_TABLE];
     return await table.toArray();
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -285,7 +285,7 @@ export async function cleanupOldCheckpoints(keepCount: number = 5): Promise<void
     for (const checkpoint of toDelete) {
       await table.delete(checkpoint.id!);
     }
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }

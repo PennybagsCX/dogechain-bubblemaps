@@ -1,6 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = neon(process.env.DATABASE_URL ?? "");
 
 // GET /api/stats
 // Returns aggregated statistics about searches and alerts
@@ -30,7 +30,7 @@ export async function GET(_req: Request): Promise<Response> {
         },
       }
     );
-  } catch (error) {
+  } catch {
     // Return zeros on error (graceful degradation)
     return Response.json(
       { searches: 0, alerts: 0 },

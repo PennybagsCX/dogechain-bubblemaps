@@ -58,7 +58,7 @@ if (import.meta.env.DEV || import.meta.env.PROD) {
         );
       }
     },
-    onRegisterError(error) {
+    onRegisterError(_error) {
       // Service worker registration error
     },
   });

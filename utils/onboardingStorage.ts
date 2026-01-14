@@ -29,7 +29,7 @@ export interface OnboardingState {
 function safeGetItem(key: string): string | null {
   try {
     return localStorage.getItem(key);
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return null;
@@ -43,7 +43,7 @@ function safeSetItem(key: string, value: string): boolean {
   try {
     localStorage.setItem(key, value);
     return true;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return false;
@@ -57,7 +57,7 @@ function safeRemoveItem(key: string): boolean {
   try {
     localStorage.removeItem(key);
     return true;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return false;
@@ -86,7 +86,7 @@ export function getOnboardingState(): OnboardingState | null {
       dismissedCount: dismissedCount ? parseInt(dismissedCount, 10) : 0,
       completedAt: completedAt ? parseInt(completedAt, 10) : undefined,
     };
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return null;

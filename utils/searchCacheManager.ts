@@ -11,7 +11,7 @@
 interface CachedSearchResult {
   query: string;
   type: string;
-  results: any[];
+  results: unknown[];
   timestamp: number;
   hitCount: number;
 }
@@ -65,7 +65,7 @@ function getCacheKey(query: string, type: string): string {
 export async function cacheSearchResults(
   query: string,
   type: string,
-  results: any[]
+  results: unknown[]
 ): Promise<void> {
   try {
     const database = await initDB();
@@ -98,7 +98,7 @@ export async function cacheSearchResults(
         results,
       });
     }
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -106,7 +106,10 @@ export async function cacheSearchResults(
 /**
  * Retrieve search results from cache
  */
-export async function getCachedSearchResults(query: string, type: string): Promise<any[] | null> {
+export async function getCachedSearchResults(
+  query: string,
+  type: string
+): Promise<unknown[] | null> {
   try {
     const database = await initDB();
     const transaction = database.transaction([SEARCH_CACHE_STORE], "readonly");
@@ -140,7 +143,7 @@ export async function getCachedSearchResults(query: string, type: string): Promi
     updateStore.put({ ...cachedResult, key });
 
     return cachedResult.results;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return null;
@@ -164,7 +167,7 @@ export async function removeCachedSearchResults(query: string, type: string): Pr
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -184,7 +187,7 @@ export async function clearAllCachedSearchResults(): Promise<void> {
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -222,7 +225,7 @@ export async function cleanupOldCacheEntries(): Promise<void> {
         store.delete(key);
       }
     }
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -261,7 +264,7 @@ export async function getCacheStats(): Promise<{
       oldestEntry,
       newestEntry,
     };
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return {

@@ -33,7 +33,7 @@ export async function fetchPairCreatedEvents(
     }
 
     return [];
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -110,7 +110,7 @@ export function parsePairCreatedEvents(
         lastVerifiedAt: Date.now(),
         isValid: true,
       });
-    } catch (error) {
+    } catch {
       // Error handled silently
     }
   }
@@ -150,7 +150,7 @@ export async function scanAllFactories(
       const pairs = parsePairCreatedEvents(events, factory.address, factory.name);
 
       totalPairs.push(...pairs);
-    } catch (error) {
+    } catch {
       // Error handled silently
     }
   }
@@ -204,8 +204,8 @@ export async function initializeLPDetection(
 
     // Scan factories to populate database
     onProgress?.("Initializing LP detection...", 0);
-    const count = await scanAllFactories(onProgress);
-  } catch (error) {
+    await scanAllFactories(onProgress);
+  } catch {
     // Error handled silently
   }
 }

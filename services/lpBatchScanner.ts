@@ -82,15 +82,15 @@ async function fetchEventsBatch(
       // API error
 
       return [];
-    } catch (error) {
+    } catch (err) {
       console.error(
         `[Batch Scanner] Fetch attempt ${attempt + 1} failed for blocks ${fromBlock}-${toBlock}:`,
-        error
+        err
       );
 
       if (attempt === retries - 1) {
         // Final attempt failed
-        throw error;
+        throw err;
       }
 
       // Exponential backoff
@@ -146,19 +146,19 @@ async function scanBatch(
       try {
         const pair = parsePairEvent(event, config.factoryAddress, config.factoryName);
         pairs.push(pair);
-      } catch (parseError) {
+      } catch {
         // Skip invalid pair events
       }
     }
 
     return { pairs };
-  } catch (error) {
+  } catch (err) {
     const scanError: ScanError = {
       timestamp: Date.now(),
       phase: "lp_scanning",
       block: startBlock,
       factory: config.factoryAddress,
-      message: error instanceof Error ? error.message : String(error),
+      message: err instanceof Error ? err.message : String(err),
       severity: "error",
     };
 

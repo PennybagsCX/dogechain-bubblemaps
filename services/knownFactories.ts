@@ -164,7 +164,7 @@ export async function getAllFactories(): Promise<DEXFactory[]> {
     const uniqueDynamic = converted.filter((f) => !staticAddresses.has(f.address.toLowerCase()));
 
     return [...KNOWN_FACTORIES, ...uniqueDynamic];
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return KNOWN_FACTORIES;

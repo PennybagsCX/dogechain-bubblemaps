@@ -108,11 +108,11 @@ export const sanitizeHTML = (html: string): string => {
 export const validateTokenAddress = (address: string): string => {
   try {
     return addressSchema.parse(address);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      throw new Error(error.issues[0]?.message || "Invalid token address");
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      throw new Error(err.issues[0]?.message || "Invalid token address");
     }
-    throw error;
+    throw err;
   }
 };
 
@@ -122,11 +122,11 @@ export const validateTokenAddress = (address: string): string => {
 export const validateWalletAddress = (address: string): string => {
   try {
     return walletAddressInputSchema.parse(address);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      throw new Error(error.issues[0]?.message || "Invalid wallet address");
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      throw new Error(err.issues[0]?.message || "Invalid wallet address");
     }
-    throw error;
+    throw err;
   }
 };
 
@@ -136,11 +136,11 @@ export const validateWalletAddress = (address: string): string => {
 export const validateSearchQuery = (query: string): string => {
   try {
     return searchQuerySchema.parse(query);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      throw new Error(error.issues[0]?.message || "Invalid search query");
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      throw new Error(err.issues[0]?.message || "Invalid search query");
     }
-    throw error;
+    throw err;
   }
 };
 
@@ -150,10 +150,10 @@ export const validateSearchQuery = (query: string): string => {
 export const validateAlertConfig = (config: unknown) => {
   try {
     return alertConfigSchema.parse(config);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      throw new Error(error.issues[0]?.message || "Invalid alert configuration");
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      throw new Error(err.issues[0]?.message || "Invalid alert configuration");
     }
-    throw error;
+    throw err;
   }
 };

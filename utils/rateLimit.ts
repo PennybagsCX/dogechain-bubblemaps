@@ -246,14 +246,14 @@ export const fetchWithRetry = async (
 
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
-    } catch (error) {
+    } catch (err) {
       // Network error - retry
       if (attempt < maxRetries) {
         const delay = baseDelay * Math.pow(2, attempt);
 
         await new Promise((resolve) => setTimeout(resolve, delay));
       } else {
-        throw error;
+        throw err;
       }
     }
   }
@@ -376,8 +376,8 @@ export class PriorityRequestQueue {
         try {
           const result = await fn();
           resolve(result);
-        } catch (error) {
-          reject(error);
+        } catch (err) {
+          reject(err);
         }
       };
 
@@ -404,7 +404,7 @@ export class PriorityRequestQueue {
 
         try {
           await request();
-        } catch (error) {
+        } catch {
           // Error handled silently
         }
       }

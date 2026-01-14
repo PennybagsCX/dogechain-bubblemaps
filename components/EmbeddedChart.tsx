@@ -102,7 +102,7 @@ export const EmbeddedChart: React.FC<EmbeddedChartProps> = ({
           button.classList.remove("text-green-400");
         }, 2000);
       }
-    } catch (error) {
+    } catch {
       // Silently handle clipboard errors
     }
   }, [tokenAddress]);

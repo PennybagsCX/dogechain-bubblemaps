@@ -141,13 +141,13 @@ export async function fetchConnectionDetails(
     );
 
     return connection;
-  } catch (error) {
+  } catch (err) {
     // Error handled silently
 
     return {
       ...link,
       loading: false,
-      error: error instanceof Error ? error.message : "Failed to fetch connection details",
+      error: err instanceof Error ? err.message : "Failed to fetch connection details",
     };
   }
 }

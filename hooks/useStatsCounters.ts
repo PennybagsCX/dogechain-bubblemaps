@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 const CACHE_KEY = "doge_stats_cache";
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
@@ -31,7 +31,7 @@ export function useStatsCounters(): StatsCounters {
   /**
    * Fetch stats from API
    */
-  const fetchStats = async (showLoading = false): Promise<void> => {
+  const fetchStats = useCallback(async (showLoading = false): Promise<void> => {
     try {
       if (showLoading) {
         setIsLoading(true);
@@ -66,7 +66,7 @@ export function useStatsCounters(): StatsCounters {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   /**
    * Get cached stats from localStorage
@@ -118,7 +118,7 @@ export function useStatsCounters(): StatsCounters {
         clearInterval(refreshIntervalRef.current);
       }
     };
-  }, []);
+  }, [fetchStats]);
 
   return {
     totalSearches: stats.searches,

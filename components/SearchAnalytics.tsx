@@ -70,7 +70,7 @@ export function SearchAnalytics({ onClose }: { onClose: () => void }) {
       });
 
       setSessionStats(session);
-    } catch (error) {
+    } catch {
       // Error handled silently - analytics fetch failed
     } finally {
       setLoading(false);

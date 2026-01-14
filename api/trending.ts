@@ -1,6 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = neon(process.env.DATABASE_URL ?? "");
 
 // GET /api/trending?type=TOKEN&limit=20
 export async function GET(req: Request): Promise<Response> {
@@ -59,7 +59,7 @@ export async function GET(req: Request): Promise<Response> {
         },
       }
     );
-  } catch (error) {
+  } catch {
     // Return empty results instead of error
     return Response.json({
       success: true,

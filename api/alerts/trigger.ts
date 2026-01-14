@@ -1,9 +1,9 @@
 import { neon } from "@neondatabase/serverless";
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = neon(process.env.DATABASE_URL ?? "");
 
 // Helper to parse JSON body
-async function parseBody(req: Request): Promise<any> {
+async function parseBody(req: Request): Promise<unknown> {
   const text = await req.text();
   return text ? JSON.parse(text) : {};
 }
@@ -13,7 +13,15 @@ async function parseBody(req: Request): Promise<any> {
 export async function POST(req: Request): Promise<Response> {
   try {
     const body = await parseBody(req);
-    const { alertId, alertName, walletAddress, tokenAddress, tokenSymbol, transactionCount } = body;
+    const { alertId, alertName, walletAddress, tokenAddress, tokenSymbol, transactionCount } =
+      body as {
+        alertId?: unknown;
+        alertName?: unknown;
+        walletAddress?: unknown;
+        tokenAddress?: unknown;
+        tokenSymbol?: unknown;
+        transactionCount?: unknown;
+      };
 
     // Validate required fields
     if (!alertId || !alertName || !walletAddress) {
@@ -67,7 +75,7 @@ export async function POST(req: Request): Promise<Response> {
     `;
 
     return Response.json({ success: true });
-  } catch (error) {
+  } catch {
     // Don't fail the request - analytics shouldn't block the UI
     return Response.json({ success: true });
   }

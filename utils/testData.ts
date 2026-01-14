@@ -105,7 +105,9 @@ export async function clearTestAlerts(): Promise<void> {
 
     // Delete test alerts
     for (const alert of testAlerts) {
-      await db.alerts.delete(alert.id!);
+      if (alert.id) {
+        await db.alerts.delete(alert.id);
+      }
       await db.alertStatuses.delete(alert.alertId);
     }
 
@@ -114,13 +116,11 @@ export async function clearTestAlerts(): Promise<void> {
     const testEvents = allEvents.filter((event) => event.eventId.startsWith("event-test-"));
 
     for (const event of testEvents) {
-      await db.triggeredEvents.delete(event.id!);
+      if (event.id) {
+        await db.triggeredEvents.delete(event.id);
+      }
     }
-
-    console.log(
-      `[TestData] Cleared ${testAlerts.length} test alerts and ${testEvents.length} test events`
-    );
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -155,7 +155,7 @@ export async function generateMockTestAlerts(): Promise<void> {
       const dbEvent = toDbTriggeredEvent(event);
       await db.triggeredEvents.put(dbEvent);
     }
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -270,7 +270,7 @@ export const BROWSER_CONSOLE_SCRIPT = `
 
 
 
-  } catch (error) {
+  } catch {
       // Error handled silently
 
   }

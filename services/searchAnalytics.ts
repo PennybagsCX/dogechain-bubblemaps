@@ -99,7 +99,7 @@ export async function trackSearch(
     sendSearchEventToServer(event).catch((_err) => {
       // Silently fail if server is unavailable
     });
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -146,7 +146,7 @@ export async function trackResultClick(
     sendClickEventToServer(event).catch((_err) => {
       // Silently fail if server is unavailable
     });
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -166,7 +166,7 @@ export async function trackSearchAbandonment(
   try {
     // Abandonment is implied by lack of clicks
     // Tracking is implicit - no action needed
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -194,7 +194,7 @@ async function saveSearchEventLocally(event: SearchAnalyticsEvent): Promise<void
         timestamp: event.timestamp,
       });
     }
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -218,7 +218,7 @@ async function saveClickEventLocally(event: ClickAnalyticsEvent): Promise<void> 
         type: "click", // Distinguish from search events
       });
     }
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -313,7 +313,7 @@ export async function getRecentSearches(limit: number = 100): Promise<SearchAnal
         resultCount: e.resultCount || 0,
         timestamp: e.timestamp,
       }));
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -339,7 +339,7 @@ export async function getTopQueries(
       .map(([query, count]) => ({ query, count }))
       .sort((a, b) => b.count - a.count)
       .slice(0, limit);
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -380,7 +380,7 @@ export async function getRecentSearchHistory(limit: number = 10): Promise<string
     }
 
     return history;
-  } catch (error) {
+  } catch {
     // Error handled silently
 
     return [];
@@ -398,7 +398,7 @@ export async function clearSearchAnalytics(): Promise<void> {
     if ("searchAnalytics" in db) {
       await db.searchAnalytics.clear();
     }
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -421,7 +421,7 @@ export function initializeAnalytics(): void {
   try {
     // Generate session ID
     getSessionId();
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }
@@ -432,7 +432,7 @@ export function initializeAnalytics(): void {
 export function cleanupAnalytics(): void {
   try {
     // Session data is automatically cleaned up
-  } catch (error) {
+  } catch {
     // Error handled silently
   }
 }

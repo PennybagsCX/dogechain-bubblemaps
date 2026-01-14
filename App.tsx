@@ -2525,10 +2525,15 @@ const App: React.FC = () => {
                     <div className="space-y-2">
                       {wallets.slice((holdersPage - 1) * 10, holdersPage * 10).map((w, i) => {
                         const globalIndex = (holdersPage - 1) * 10 + i;
+                        const isSelected = selectedWallet?.id === w.id || targetWalletId === w.id;
                         return (
                           <div
                             key={w.id}
-                            className="flex items-center justify-between text-sm p-2 hover:bg-space-700 rounded cursor-pointer transition-colors"
+                            className={`flex items-center justify-between text-sm p-2 rounded cursor-pointer transition-colors ${
+                              isSelected
+                                ? "bg-purple-500/30 border border-purple-500/50"
+                                : "hover:bg-space-700"
+                            }`}
                             onClick={() => handleSelectWalletOnMap(w)}
                             onKeyDown={(e) => {
                               if (e.key === "Enter" || e.key === " ") {
@@ -2540,14 +2545,27 @@ const App: React.FC = () => {
                             tabIndex={0}
                           >
                             <div className="flex items-center gap-2 overflow-hidden">
-                              <span className="text-slate-500 w-4 shrink-0">{globalIndex + 1}</span>
-                              <span className="font-mono text-slate-300 text-xs" title={w.address}>
+                              <span
+                                className={`w-4 shrink-0 ${isSelected ? "text-purple-300" : "text-slate-500"}`}
+                              >
+                                {globalIndex + 1}
+                              </span>
+                              <span
+                                className={`font-mono text-xs ${isSelected ? "text-purple-400" : "text-slate-300"}`}
+                                title={w.address}
+                              >
                                 {w.address.slice(0, 6)}...{w.address.slice(-4)}
                               </span>
                             </div>
                             <div className="flex items-center gap-2">
                               <span
-                                className={`${token.type === AssetType.NFT ? "text-purple-400" : "text-doge-500"} font-bold text-xs`}
+                                className={`font-bold text-xs ${
+                                  isSelected
+                                    ? "text-purple-400"
+                                    : token.type === AssetType.NFT
+                                      ? "text-purple-400"
+                                      : "text-doge-500"
+                                }`}
                               >
                                 {w.percentage.toFixed(1)}%
                               </span>
@@ -2556,7 +2574,11 @@ const App: React.FC = () => {
                                   href={`https://explorer.dogechain.dog/address/${w.address}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="text-slate-500 hover:text-white transition-colors p-2 rounded hover:bg-space-600 min-w-[44px] min-h-[44px] inline-flex items-center justify-center [touch-action:manipulation]"
+                                  className={`transition-colors p-2 rounded min-w-[44px] min-h-[44px] inline-flex items-center justify-center [touch-action:manipulation] ${
+                                    isSelected
+                                      ? "text-purple-300 hover:text-white bg-purple-900/30 hover:bg-purple-900/50"
+                                      : "text-slate-500 hover:text-white hover:bg-space-600"
+                                  }`}
                                   onClick={(e) => e.stopPropagation()}
                                   onKeyDown={(e) => {
                                     if (e.key === "Enter" || e.key === " ") {

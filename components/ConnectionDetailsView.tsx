@@ -212,7 +212,7 @@ export function ConnectionDetailsView({
       </div>
 
       {/* Transaction List */}
-      <div className="space-y-2">
+      <div className="space-y-2 pr-1">
         {paginatedTransactions.length === 0 ? (
           <p className="text-sm text-slate-400 text-center py-8">
             No transactions match the current filter
@@ -227,10 +227,10 @@ export function ConnectionDetailsView({
               return (
                 <div
                   key={tx.hash}
-                  className="bg-space-900 rounded-lg p-3 sm:p-4 border border-space-700 hover:border-purple-700/50 transition-colors"
+                  className="w-full bg-space-900 rounded-lg p-3 sm:p-4 border border-space-700 hover:border-purple-700/50 transition-colors"
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
-                    <div className="flex-1 min-w-0">
+                    <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <span
                           className={`px-2 py-0.5 rounded text-[10px] font-medium ${

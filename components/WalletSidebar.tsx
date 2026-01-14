@@ -719,7 +719,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
               {activeTab === "txs" && (
                 <div className="flex flex-col h-full animate-fade-in">
                   {/* Filter Bar */}
-                  <div className="flex items-center justify-between mb-3 shrink-0">
+                  <div className="flex items-center justify-between px-5 mb-3 shrink-0">
                     <div className="flex gap-2">
                       {(["ALL", "IN", "OUT"] as const).map((filter) => (
                         <button
@@ -745,7 +745,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   </div>
 
                   {/* Transactions List */}
-                  <div className="flex-1 overflow-y-auto space-y-3 min-h-0">
+                  <div className="flex-1 overflow-y-auto space-y-3 min-h-0 px-5">
                     {isTransactionsLoading ? (
                       <div className="flex flex-col items-center justify-center py-8 space-y-3">
                         <Loader2 size={24} className="text-doge-500 animate-spin" />
@@ -759,15 +759,19 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                       </div>
                     ) : (
                       paginatedTransactions.map((tx) => (
-                        <Tooltip key={tx.hash} content="View transaction on Dogechain Explorer">
+                        <Tooltip
+                          key={tx.hash}
+                          content="View transaction on Dogechain Explorer"
+                          className="block w-full"
+                        >
                           <a
                             href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onTouchStart={handleTouchStopPropagation}
-                            className="block p-4 rounded-lg bg-space-900 border border-space-700 flex justify-between items-center gap-2 min-w-0 hover:border-space-600 hover:border-blue-500/50 transition-colors group [touch-action:manipulation]"
+                            className="w-full p-4 rounded-lg bg-space-900 border border-space-700 flex justify-between items-center gap-2 hover:border-space-600 hover:border-blue-500/50 transition-colors group [touch-action:manipulation]"
                           >
-                            <div>
+                            <div className="min-w-0 flex-1">
                               <div
                                 className={`text-xs font-bold ${tx.from === wallet?.address ? "text-red-400" : "text-green-400"}`}
                               >
@@ -777,8 +781,8 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                                 {new Date(tx.timestamp).toLocaleDateString()}
                               </div>
                             </div>
-                            <div className="text-right flex items-center gap-2">
-                              <div>
+                            <div className="text-right flex items-center gap-2 min-w-0 flex-shrink-0">
+                              <div className="min-w-0">
                                 <div className="text-sm font-mono text-white truncate">
                                   {tx.value.toLocaleString(undefined, {
                                     maximumFractionDigits: isNFT ? 0 : 4,

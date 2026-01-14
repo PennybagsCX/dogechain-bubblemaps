@@ -108,13 +108,13 @@ export function useBubbleVisualizationGuide(
    * Initialize: Check if guide should be shown on first interaction
    */
   useEffect(() => {
-    if (hasInitialized || isInitializingRef.current) return undefined;
-
-    // Mark as initializing to prevent duplicate runs
-    isInitializingRef.current = true;
+    // Don't re-trigger if already shown and completed
+    if (hasInitialized && !isOpen) return undefined;
 
     const shouldShow = shouldShowBubbleGuide();
-    if (shouldShow && triggerCondition) {
+    // Trigger when condition becomes true AND guide should show
+    if (shouldShow && triggerCondition && !isInitializingRef.current) {
+      isInitializingRef.current = true;
       // Auto-show with delay for smooth UX (2.5s delay for bubble visualization load)
       const timer = setTimeout(() => {
         setIsOpen(true);
@@ -123,16 +123,17 @@ export function useBubbleVisualizationGuide(
       }, 2500);
 
       return () => clearTimeout(timer);
-    } else {
-      // Use setTimeout to avoid synchronous setState in effect
+    }
+
+    // Mark as initialized even if not showing (user has entered view)
+    if (triggerCondition && !hasInitialized && !isInitializingRef.current) {
       setTimeout(() => {
         setHasInitialized(true);
-        isInitializingRef.current = false;
       }, 0);
     }
 
     return undefined;
-  }, [hasInitialized, triggerCondition]);
+  }, [triggerCondition]);
 
   /**
    * Keyboard navigation

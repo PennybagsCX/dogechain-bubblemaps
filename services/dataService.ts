@@ -856,12 +856,16 @@ export const fetchWalletTransactions = async (
 
         const value = parsedValue / Math.pow(10, decimals);
 
+        // Extract token contract address from transaction data (not request parameter)
+        const txContractAddress = (tx.contractAddress || tx.contract)?.toLowerCase();
+
         return {
           hash: tx.hash,
           from: tx.from,
           to: tx.to,
           value: value,
           timestamp: parseInt(tx.timeStamp) * 1000,
+          tokenAddress: txContractAddress || cleanToken, // From transaction, fallback to request parameter
           tokenSymbol: tx.tokenSymbol,
         };
       });

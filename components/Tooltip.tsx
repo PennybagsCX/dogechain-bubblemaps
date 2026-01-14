@@ -18,7 +18,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   children,
   content,
   position = "top",
-  className = "",
+  className = "inline-block",
   autoPosition = true,
   portal = true, // Default to true for all tooltips
   strategy = "fixed", // Fixed positioning for portals
@@ -323,7 +323,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`relative inline-block ${className}`}
+      className={`relative ${className}`}
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
       onFocus={() => setIsVisible(true)}

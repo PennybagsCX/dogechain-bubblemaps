@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DexScreener Chart URL Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a2e;
+            color: #fff;
+        }
+        .test-section {
+            margin: 40px 0;
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #9333ea;
+        }
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #444;
+            border-radius: 8px;
+        }
+        .url {
+            background: #0f0f23;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            margin-bottom: 10px;
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <h1>DexScreener Chart URL Format Tests</h1>
+
+    <!-- Test 1: Direct pair address (without /multicharts) -->
+    <div class="test-section">
+        <div class="test-title">Test 1: wDOGE pair address (current working version)</div>
+        <div class="url">https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark</div>
+        <iframe src="https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+    </div>
+
+    <!-- Test 2: With /multicharts path -->
+    <div class="test-section">
+        <div class="test-title">Test 2: wDOGE with /multicharts path</div>
+        <div class="url">https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154/multicharts?embed=1&theme=dark</div>
+        <iframe src="https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154/multicharts?embed=1&theme=dark" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+    </div>
+
+    <!-- Test 3: Test with hash (alternative approach) -->
+    <div class="test-section">
+        <div class="test-title">Test 3: wDOGE with #multichart hash</div>
+        <div class="url">https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark#multichart</div>
+        <iframe src="https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark#multichart" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+    </div>
+
+    <script>
+        // Log when iframes load
+        document.querySelectorAll('iframe').forEach((iframe, index) => {
+            iframe.onload = function() {
+                console.log(`Test ${index + 1} iframe loaded`);
+            };
+            iframe.onerror = function() {
+                console.error(`Test ${index + 1} iframe failed to load`);
+            };
+        });
+    </script>
+</body>
+</html>

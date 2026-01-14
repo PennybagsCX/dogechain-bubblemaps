@@ -32,13 +32,16 @@ export interface UseOnboardingReturn {
  * Custom hook for onboarding state management
  *
  * Handles:
- * - Auto-show logic for first-time users
+ * - Auto-show logic when entering HOME view (shows every time unless completed)
  * - Step navigation
  * - localStorage persistence
  * - Keyboard navigation (ESC, arrows)
  * - Manual open/close
+ * - Focus restoration
+ *
+ * @param triggerCondition - When true, triggers onboarding to show (e.g., when entering HOME view)
  */
-export function useOnboarding(): UseOnboardingReturn {
+export function useOnboarding(triggerCondition?: boolean): UseOnboardingReturn {
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [hasInitialized, setHasInitialized] = useState(false);
@@ -101,25 +104,33 @@ export function useOnboarding(): UseOnboardingReturn {
 
   /**
    * Initialize: Check if onboarding should be shown
+   * Auto-triggers when entering HOME view (every time unless explicitly completed)
    */
   useEffect(() => {
-    if (hasInitialized || isInitializingRef.current) return undefined;
-
-    // Mark as initializing to prevent duplicate runs
-    isInitializingRef.current = true;
+    // Don't re-trigger if already shown and completed this session
+    if (hasInitialized && !isOpen) return undefined;
 
     const shouldShow = shouldShowOnboarding();
-    if (shouldShow) {
-      // Auto-show with delay for smooth UX
+    // Trigger when condition becomes true AND onboarding should show
+    if (shouldShow && triggerCondition && !isInitializingRef.current) {
+      isInitializingRef.current = true;
+      // Auto-show with delay for smooth UX (1.5s delay for onboarding)
       const timer = setTimeout(() => {
         setIsOpen(true);
         setHasInitialized(true);
         isInitializingRef.current = false;
       }, 1500);
 
-      return () => clearTimeout(timer);
-    } else {
-      // Use setTimeout to avoid synchronous setState in effect
+      return () => {
+        clearTimeout(timer);
+        // In StrictMode, effects run twice; ensure flag is cleared if timer never fires
+        isInitializingRef.current = false;
+      };
+    }
+
+    // Mark as initialized even if not showing (user has entered view)
+    if (triggerCondition && !hasInitialized && !isInitializingRef.current) {
+      isInitializingRef.current = true;
       setTimeout(() => {
         setHasInitialized(true);
         isInitializingRef.current = false;
@@ -127,7 +138,7 @@ export function useOnboarding(): UseOnboardingReturn {
     }
 
     return undefined;
-  }, [hasInitialized]);
+  }, [triggerCondition]);
 
   /**
    * Keyboard navigation

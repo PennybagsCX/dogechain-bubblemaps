@@ -5,6 +5,8 @@ import { Tooltip } from "./Tooltip";
 
 type DirectionFilter = "ALL" | "IN" | "OUT";
 
+const BLOCKSCOUT_BASE_URL = "https://explorer.dogechain.dog";
+
 interface ConnectionDetailsViewProps {
   connection: Connection;
   sourceWallet: Wallet | undefined;
@@ -263,15 +265,29 @@ export function ConnectionDetailsView({
                   <div className="space-y-1 text-[10px] sm:text-xs">
                     <div className="flex items-center gap-1">
                       <span className="text-slate-500">From:</span>
-                      <span className="font-mono text-slate-300 break-all">
+                      <a
+                        href={`${BLOCKSCOUT_BASE_URL}/address/${tx.from}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono text-blue-300 hover:text-blue-200 break-all inline-flex items-center gap-1"
+                        title={tx.from}
+                      >
                         {tx.from.slice(0, 10)}...{tx.from.slice(-8)}
-                      </span>
+                        <ExternalLink size={10} />
+                      </a>
                     </div>
                     <div className="flex items-center gap-1">
                       <span className="text-slate-500">To:</span>
-                      <span className="font-mono text-slate-300 break-all">
+                      <a
+                        href={`${BLOCKSCOUT_BASE_URL}/address/${tx.to}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono text-green-300 hover:text-green-200 break-all inline-flex items-center gap-1"
+                        title={tx.to}
+                      >
                         {tx.to.slice(0, 10)}...{tx.to.slice(-8)}
-                      </span>
+                        <ExternalLink size={10} />
+                      </a>
                     </div>
                   </div>
                 </div>

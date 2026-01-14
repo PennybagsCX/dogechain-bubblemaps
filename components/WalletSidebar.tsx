@@ -85,6 +85,9 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
   const [directionFilter, setDirectionFilter] = useState<"ALL" | "IN" | "OUT">("ALL");
   const [paginationMode, setPaginationMode] = useState<"load-more" | "numbered">("load-more");
 
+  // Alert creation state
+  const [alertType, setAlertType] = useState<"WALLET" | "TOKEN" | "WHALE">("WALLET");
+
   // Cache all transactions for filtering
   const [allTransactionsCache, setAllTransactionsCache] = useState<Transaction[]>([]);
 
@@ -879,10 +882,29 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
 
         {/* Action Buttons Footer - Only for Wallet Details */}
         {!isConnectionView && (
-          <div className="p-5 bg-space-800 border-t border-space-700 shrink-0">
+          <div className="p-5 bg-space-800 border-t border-space-700 shrink-0 space-y-3">
+            <div>
+              <label
+                htmlFor="alert-type-select"
+                className="block text-xs font-medium text-slate-400 mb-1.5"
+              >
+                Alert Type
+              </label>
+              <select
+                id="alert-type-select"
+                value={alertType}
+                onChange={(e) => setAlertType(e.target.value as "WALLET" | "TOKEN" | "WHALE")}
+                className="w-full px-3 py-2 bg-space-700 border border-space-600 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              >
+                <option value="WALLET">Wallet Watch - Monitor all wallet activity</option>
+                <option value="TOKEN">Token Movement - Track specific token transfers</option>
+                <option value="WHALE">Whale Watch - Large holder monitoring</option>
+              </select>
+            </div>
+
             <button
               onTouchStart={handleTouchStopPropagation}
-              onClick={() => onCreateAlert({ type: "WALLET" })}
+              onClick={() => onCreateAlert({ type: alertType })}
               className="w-full py-3 flex items-center justify-center gap-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white border border-purple-500 transition-colors font-semibold shadow-lg shadow-purple-500/20"
             >
               <ShieldAlert size={18} /> Create Alert

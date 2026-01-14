@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DexScreener Tab Testing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a2e;
+            color: #fff;
+        }
+        .test-section {
+            margin: 60px 0;
+            border: 2px solid #444;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #9333ea;
+        }
+        .test-url {
+            background: #0f0f23;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 11px;
+            word-break: break-all;
+            margin-bottom: 10px;
+            color: #00ff00;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #555;
+            border-radius: 8px;
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .status.testing {
+            background: #ff9800;
+            color: #000;
+        }
+        .status.success {
+            background: #4caf50;
+            color: #fff;
+        }
+        .status.failed {
+            background: #f44336;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Comprehensive DexScreener Tab Testing</h1>
+    <p>Testing various URL parameters to find which one loads the chart/transactions tab by default.</p>
+
+    <!-- Test 1: Original approach with defaultPane=trades -->
+    <div class="test-section">
+        <div class="test-title">Test 1: defaultPane=trades + trades=1 (Current Implementation)</div>
+        <div class="test-url">https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&trades=1&defaultPane=trades</div>
+        <iframe src="https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&trades=1&defaultPane=trades" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+        <div class="status testing" id="status1">Testing... Check if chart+transactions tab is selected by default</div>
+    </div>
+
+    <!-- Test 2: defaultPane=multichart -->
+    <div class="test-section">
+        <div class="test-title">Test 2: defaultPane=multichart</div>
+        <div class="test-url">https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&defaultPane=multichart</div>
+        <iframe src="https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&defaultPane=multichart" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+        <div class="status testing" id="status2">Testing... Check if multichart tab is selected by default</div>
+    </div>
+
+    <!-- Test 3: tabs=trades -->
+    <div class="test-section">
+        <div class="test-title">Test 3: tabs=trades (Alternative parameter name)</div>
+        <div class="test-url">https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&tabs=trades</div>
+        <iframe src="https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&tabs=trades" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+        <div class="status testing" id="status3">Testing... Check if this parameter name works</div>
+    </div>
+
+    <!-- Test 4: tab=trades -->
+    <div class="test-section">
+        <div class="test-title">Test 4: tab=trades (Singular form)</div>
+        <div class="test-url">https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&tab=trades</div>
+        <iframe src="https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&tab=trades" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+        <div class="status testing" id="status4">Testing... Check if singular parameter works</div>
+    </div>
+
+    <!-- Test 5: view=trades -->
+    <div class="test-section">
+        <div class="test-title">Test 5: view=trades (Different parameter name)</div>
+        <div class="test-url">https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&view=trades</div>
+        <iframe src="https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&view=trades" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+        <div class="status testing" id="status5">Testing... Check if view parameter works</div>
+    </div>
+
+    <!-- Test 6: Using hash #trades -->
+    <div class="test-section">
+        <div class="test-title">Test 6: Hash fragment #trades</div>
+        <div class="test-url">https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark#trades</div>
+        <iframe src="https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark#trades" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+        <div class="status testing" id="status6">Testing... Check if hash fragment controls default tab</div>
+    </div>
+
+    <!-- Test 7: Using hash #multichart -->
+    <div class="test-section">
+        <div class="test-title">Test 7: Hash fragment #multichart</div>
+        <div class="test-url">https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark#multichart</div>
+        <iframe src="https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark#multichart" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+        <div class="status testing" id="status7">Testing... Check if multichart hash works</div>
+    </div>
+
+    <!-- Test 8: showTrades=true -->
+    <div class="test-section">
+        <div class="test-title">Test 8: showTrades=true (Boolean parameter)</div>
+        <div class="test-url">https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&showTrades=true</div>
+        <iframe src="https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&showTrades=true" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+        <div class="status testing" id="status8">Testing... Check if boolean parameter works</div>
+    </div>
+
+    <!-- Test 9: pane=trades -->
+    <div class="test-section">
+        <div class="test-title">Test 9: pane=trades (Without default prefix)</div>
+        <div class="test-url">https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&pane=trades</div>
+        <iframe src="https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&pane=trades" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+        <div class="status testing" id="status9">Testing... Check if pane parameter works without default prefix</div>
+    </div>
+
+    <!-- Test 10: Combination with embed-params -->
+    <div class="test-section">
+        <div class="test-title">Test 10: embed-params object format</div>
+        <div class="test-url">https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&embed-params=%7B%22defaultTab%22%3A%22trades%22%7D</div>
+        <iframe src="https://dexscreener.com/dogechain/0xb6fa8012a6763e2cb4647e22c5c5fd7562912154?embed=1&theme=dark&embed-params=%7B%22defaultTab%22%3A%22trades%22%7D" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+        <div class="status testing" id="status10">Testing... Check if JSON-encoded embed-params works</div>
+    </div>
+
+    <script>
+        // Monitor iframe loads and check which tab is active
+        document.querySelectorAll('iframe').forEach((iframe, index) => {
+            iframe.onload = function() {
+                console.log(`Test ${index + 1} iframe loaded`);
+                try {
+                    // Try to access iframe content to check which tab is active
+                    setTimeout(() => {
+                        const statusEl = document.getElementById(`status${index + 1}`);
+                        // Can't access cross-origin iframe content, but we can note it loaded
+                        statusEl.textContent = `✓ Iframe loaded successfully. Please visually verify which tab is active.`;
+                        statusEl.className = 'status success';
+                    }, 2000);
+                } catch (e) {
+                    console.error(`Error checking test ${index + 1}:`, e);
+                }
+            };
+
+            iframe.onerror = function() {
+                console.error(`Test ${index + 1} failed to load`);
+                const statusEl = document.getElementById(`status${index + 1}`);
+                statusEl.textContent = '✗ Failed to load';
+                statusEl.className = 'status failed';
+            };
+        });
+
+        // Log for manual verification
+        console.log('Testing DexScreener embed parameters...');
+        console.log('Please manually verify which test shows the chart/transactions tab by default.');
+    </script>
+</body>
+</html>

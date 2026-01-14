@@ -1534,19 +1534,17 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               areControlsOpen ? "max-h-[420px] opacity-100 mt-1" : "max-h-0 opacity-0"
             }`}
           >
-            <div className="flex flex-col gap-2">
-              {userNodeFound && (
-                <Tooltip content="Center view on your wallet">
-                  <button
-                    onTouchStart={handleTouchStopPropagation}
-                    onClick={handleLocateUser}
-                    className="p-2 bg-purple-600 border border-purple-500 text-white rounded-lg shadow-lg transition-all hover:bg-purple-500 hover:border-purple-400"
-                  >
-                    <Crosshair size={20} />
-                  </button>
-                </Tooltip>
-              )}
-              <div className="h-px bg-space-700 w-full my-1"></div>
+            <div className="grid grid-cols-3 gap-2 justify-items-center bg-space-900/70 rounded-xl p-2 shadow-xl">
+              <Tooltip content="Center view on your wallet">
+                <button
+                  onTouchStart={handleTouchStopPropagation}
+                  onClick={handleLocateUser}
+                  disabled={!userNodeFound}
+                  className="p-2 bg-purple-600 border border-purple-500 text-white rounded-lg shadow-lg transition-all hover:bg-purple-500 hover:border-purple-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Crosshair size={20} />
+                </button>
+              </Tooltip>
               <Tooltip content="Download map as PNG image">
                 <button
                   onTouchStart={handleTouchStopPropagation}
@@ -1656,7 +1654,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       {/* Controls (desktop) */}
       <div
         ref={controlsRef}
-        className="hidden md:flex absolute bottom-6 right-6 flex-col gap-2 z-20"
+        className="hidden md:flex absolute bottom-6 right-6 flex-col items-end gap-3 z-20"
       >
         <div className="flex items-center gap-2">
           <div className="pointer-events-none bg-space-900 border border-space-700 px-3 py-1 rounded-full text-[10px] text-slate-300 flex items-center gap-2 justify-center shadow-lg">
@@ -1664,64 +1662,64 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
             {isPaused ? "Physics Paused" : "Live Physics Engine"}
           </div>
         </div>
-        <div className="flex flex-col gap-2">
-          {userNodeFound && (
+        <div className="flex flex-col items-end gap-2">
+          <div className="grid grid-cols-3 gap-2 justify-items-center bg-space-900/70 rounded-xl p-2 shadow-xl">
             <Tooltip content="Center view on your wallet">
               <button
                 onTouchStart={handleTouchStopPropagation}
                 onClick={handleLocateUser}
-                className="p-2 bg-purple-600 border border-purple-500 text-white rounded-lg shadow-lg transition-all hover:bg-purple-500 hover:border-purple-400"
+                disabled={!userNodeFound}
+                className="p-2 bg-purple-600 border border-purple-500 text-white rounded-lg shadow-lg transition-all hover:bg-purple-500 hover:border-purple-400 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Crosshair size={20} />
               </button>
             </Tooltip>
-          )}
-          <div className="h-px bg-space-700 w-full my-1"></div>
-          <Tooltip content="Download map as PNG image">
-            <button
-              onTouchStart={handleTouchStopPropagation}
-              onClick={handleSnapshot}
-              className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-            >
-              <Camera size={20} className={isSnapshotting ? "text-purple-500" : ""} />
-            </button>
-          </Tooltip>
-          <Tooltip content={isPaused ? "Resume animation" : "Pause animation"}>
-            <button
-              onTouchStart={handleTouchStopPropagation}
-              onClick={togglePause}
-              className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-            >
-              {isPaused ? <Play size={20} /> : <Pause size={20} />}
-            </button>
-          </Tooltip>
-          <Tooltip content="Zoom in" position="left">
-            <button
-              onTouchStart={handleTouchStopPropagation}
-              onClick={handleZoomIn}
-              className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-            >
-              <ZoomIn size={20} />
-            </button>
-          </Tooltip>
-          <Tooltip content="Zoom out" position="left">
-            <button
-              onTouchStart={handleTouchStopPropagation}
-              onClick={handleZoomOut}
-              className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-            >
-              <ZoomOut size={20} />
-            </button>
-          </Tooltip>
-          <Tooltip content="Reset to default view">
-            <button
-              onTouchStart={handleTouchStopPropagation}
-              onClick={handleReset}
-              className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
-            >
-              <RotateCcw size={20} />
-            </button>
-          </Tooltip>
+            <Tooltip content="Download map as PNG image">
+              <button
+                onTouchStart={handleTouchStopPropagation}
+                onClick={handleSnapshot}
+                className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg transition-all"
+              >
+                <Camera size={20} className={isSnapshotting ? "text-purple-500" : ""} />
+              </button>
+            </Tooltip>
+            <Tooltip content={isPaused ? "Resume animation" : "Pause animation"}>
+              <button
+                onTouchStart={handleTouchStopPropagation}
+                onClick={togglePause}
+                className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+              >
+                {isPaused ? <Play size={20} /> : <Pause size={20} />}
+              </button>
+            </Tooltip>
+            <Tooltip content="Zoom in" position="left">
+              <button
+                onTouchStart={handleTouchStopPropagation}
+                onClick={handleZoomIn}
+                className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+              >
+                <ZoomIn size={20} />
+              </button>
+            </Tooltip>
+            <Tooltip content="Zoom out" position="left">
+              <button
+                onTouchStart={handleTouchStopPropagation}
+                onClick={handleZoomOut}
+                className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+              >
+                <ZoomOut size={20} />
+              </button>
+            </Tooltip>
+            <Tooltip content="Reset to default view">
+              <button
+                onTouchStart={handleTouchStopPropagation}
+                onClick={handleReset}
+                className="p-2 bg-space-800 border border-space-700 text-slate-300 hover:text-white hover:bg-space-700 hover:border-space-600 rounded-lg shadow-lg transition-all"
+              >
+                <RotateCcw size={20} />
+              </button>
+            </Tooltip>
+          </div>
         </div>
       </div>
 

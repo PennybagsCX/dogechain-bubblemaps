@@ -9,7 +9,7 @@
 import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { X } from "lucide-react";
-import { Map, Circle, Network, MousePointer2, Crosshair, Activity } from "lucide-react";
+import { Map, Circle, Network, MousePointer2, Activity, AlertTriangle } from "lucide-react";
 
 /**
  * Interface for BubbleVisualizationGuide props
@@ -66,11 +66,11 @@ const bubbleGuideSteps = [
     secondaryAction: "Skip",
   },
   {
-    id: "target-mode",
-    title: "Target Mode",
-    icon: <Crosshair size={48} className="text-amber-500" />,
+    id: "smart-alerts",
+    title: "Smart Whale Alerts",
+    icon: <AlertTriangle size={48} className="text-amber-500" />,
     content:
-      "Click the target button (top right) to enter target mode. Search for a specific wallet to highlight it and its connections.",
+      "Click any wallet bubble to open its details, then create alerts to monitor activity. Get instant notifications when whales make moves or specific wallets show new transactions.",
     primaryAction: "Next",
     secondaryAction: "Skip",
   },

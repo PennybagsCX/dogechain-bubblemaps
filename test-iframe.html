@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dexscreener Iframe Test - Dogechain Bubblemaps</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #0a0a0f;
+      color: #ffffff;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #c084fc;
+    }
+
+    .subtitle {
+      color: #94a3b8;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .test-section {
+      margin-bottom: 40px;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .test-header {
+      background: #1e293b;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .test-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    .status {
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status.testing {
+      background: #f59e0b;
+      color: #000;
+    }
+
+    .status.success {
+      background: #22c55e;
+      color: #fff;
+    }
+
+    .status.error {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .test-content {
+      padding: 20px;
+    }
+
+    .iframe-container {
+      width: 100%;
+      height: 600px;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .info-box {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .info-box h3 {
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: #c084fc;
+    }
+
+    .info-box p {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .info-box code {
+      background: #0a0a0f;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 12px;
+      color: #22d3ee;
+    }
+
+    .console-output {
+      background: #0a0a0f;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 20px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .console-output h3 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: #c084fc;
+    }
+
+    .log-entry {
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 12px;
+      padding: 4px 0;
+      color: #94a3b8;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .log-entry.error {
+      color: #ef4444;
+    }
+
+    .log-entry.success {
+      color: #22c55e;
+    }
+
+    .log-entry.warning {
+      color: #f59e0b;
+    }
+
+    .log-entry:last-child {
+      border-bottom: none;
+    }
+
+    .timestamp {
+      color: #64748b;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔬 Dexscreener Iframe Test</h1>
+    <p class="subtitle">Testing X-Frame-Options restrictions and GeckoTerminal fallback for Dogechain Bubblemaps</p>
+
+    <div class="info-box">
+      <h3>📋 Test Instructions</h3>
+      <p>
+        1. Open browser DevTools (F12 or Cmd+Opt+I)<br>
+        2. Check the Console tab for any X-Frame-Options errors<br>
+        3. Look for errors like: <code>Refused to display 'https://dexscreener.com/...' in a frame because it set 'X-Frame-Options' to 'sameorigin'</code><br>
+        4. If errors occur, we'll use GeckoTerminal as a fallback
+      </p>
+    </div>
+
+    <!-- Dexscreener Test -->
+    <div class="test-section" id="dexscreener-test">
+      <div class="test-header">
+        <span class="test-title">Test 1: Dexscreener Iframe (Dogechain)</span>
+        <span class="status testing" id="dexscreener-status">Testing...</span>
+      </div>
+      <div class="test-content">
+        <div class="iframe-container">
+          <iframe
+            id="dexscreener-iframe"
+            src="https://dexscreener.com/dogechain/0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            referrerpolicy="no-referrer"
+            onload="checkDexscreenerLoad()"
+            onerror="checkDexscreenerError()"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- GeckoTerminal Test -->
+    <div class="test-section" id="geckoterminal-test">
+      <div class="test-header">
+        <span class="test-title">Test 2: GeckoTerminal Iframe (Dogechain)</span>
+        <span class="status testing" id="geckoterminal-status">Testing...</span>
+      </div>
+      <div class="test-content">
+        <div class="iframe-container">
+          <iframe
+            id="geckoterminal-iframe"
+            src="https://www.geckoterminal.com/dogechain/pools/0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            referrerpolicy="no-referrer"
+            onload="checkGeckoTerminalLoad()"
+            onerror="checkGeckoTerminalError()"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- Console Output -->
+    <div class="console-output">
+      <h3>🖥️ Test Log</h3>
+      <div id="log-output"></div>
+    </div>
+  </div>
+
+  <script>
+    // Utility to add log entries
+    function addLog(message, type = 'info') {
+      const logOutput = document.getElementById('log-output');
+      const timestamp = new Date().toLocaleTimeString();
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${type}`;
+      entry.innerHTML = `<span class="timestamp">[${timestamp}]</span>${message}`;
+      logOutput.appendChild(entry);
+      console.log(`[${type.toUpperCase()}] ${message}`);
+    }
+
+    // Dexscreener iframe handlers
+    function checkDexscreenerLoad() {
+      const statusEl = document.getElementById('dexscreener-status');
+      statusEl.className = 'status success';
+      statusEl.textContent = '✓ Loaded Successfully';
+      addLog('Dexscreener iframe loaded successfully!', 'success');
+      addLog('URL: https://dexscreener.com/dogechain/0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101', 'info');
+    }
+
+    function checkDexscreenerError() {
+      const statusEl = document.getElementById('dexscreener-status');
+      statusEl.className = 'status error';
+      statusEl.textContent = '✗ Failed to Load';
+      addLog('Dexscreener iframe failed to load. X-Frame-Options may be blocking.', 'error');
+      addLog('ACTION REQUIRED: Switch to GeckoTerminal fallback', 'warning');
+    }
+
+    // GeckoTerminal iframe handlers
+    function checkGeckoTerminalLoad() {
+      const statusEl = document.getElementById('geckoterminal-status');
+      statusEl.className = 'status success';
+      statusEl.textContent = '✓ Loaded Successfully';
+      addLog('GeckoTerminal iframe loaded successfully!', 'success');
+      addLog('URL: https://www.geckoterminal.com/dogechain/pools/0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101', 'info');
+    }
+
+    function checkGeckoTerminalError() {
+      const statusEl = document.getElementById('geckoterminal-status');
+      statusEl.className = 'status error';
+      statusEl.textContent = '✗ Failed to Load';
+      addLog('GeckoTerminal iframe failed to load.', 'error');
+    }
+
+    // Listen for console errors (X-Frame-Options)
+    window.addEventListener('error', (event) => {
+      if (event.message && event.message.includes('X-Frame-Options')) {
+        addLog(`X-Frame-Options detected: ${event.message}`, 'error');
+        addLog('ACTION: This iframe will be blocked. Use fallback solution.', 'warning');
+      }
+    });
+
+    // Initial logs
+    addLog('Starting iframe tests...', 'info');
+    addLog('Testing pair: wDOGE (0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101) on Dogechain', 'info');
+    addLog('If X-Frame-Options errors appear in browser console, the iframe is blocked.', 'warning');
+
+    // Set timeout to check if iframes loaded
+    setTimeout(() => {
+      const dexIframe = document.getElementById('dexscreener-iframe');
+      const geoIframe = document.getElementById('geckoterminal-iframe');
+
+      // Check if iframes are actually loading content
+      try {
+        const dexContent = dexIframe.contentDocument || dexIframe.contentWindow.document;
+        if (dexContent) {
+          addLog('Dexscreener iframe content is accessible', 'success');
+        }
+      } catch (e) {
+        addLog(`Dexscreener iframe blocked by same-origin policy: ${e.message}`, 'error');
+        addLog('RESULT: Dexscreener cannot be embedded. Use GeckoTerminal fallback.', 'warning');
+      }
+
+      try {
+        const geoContent = geoIframe.contentDocument || geoIframe.contentWindow.document;
+        if (geoContent) {
+          addLog('GeckoTerminal iframe content is accessible', 'success');
+        }
+      } catch (e) {
+        addLog(`GeckoTerminal iframe blocked: ${e.message}`, 'error');
+      }
+    }, 3000);
+
+    addLog('Test complete! Check browser console for additional details.', 'info');
+  </script>
+</body>
+</html>

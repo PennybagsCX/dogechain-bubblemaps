@@ -65,6 +65,7 @@ export interface Transaction {
   value: number;
   timestamp: number;
   tokenSymbol?: string; // New: Capture symbol directly from TX logs
+  tokenAddress?: string; // Token contract address from transaction data
 }
 
 export enum ViewState {
@@ -82,6 +83,7 @@ export interface AlertConfig {
   threshold: number;
   initialValue?: number; // New: For delta tracking
   name: string;
+  type?: "WALLET" | "TOKEN" | "WHALE"; // Alert type for different monitoring strategies
 }
 
 export interface TriggeredEvent {

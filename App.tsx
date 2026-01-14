@@ -202,17 +202,12 @@ const App: React.FC = () => {
   // View state (must be declared before onboarding hook since it depends on it)
   const [view, setView] = useState<ViewState>(ViewState.HOME);
 
-  // Onboarding: show for new users and on hard reloads (network reload), but not on soft refreshes in the same tab
+  // Onboarding: show for new users and on hard reloads
   const sessionOnboardingKey = "dogechain_onboarding_session_shown";
-  const hasShownOnboardingRef = useRef<boolean>(false);
   const navigationInfoRef = useRef<{ type?: string; transferSize?: number }>({});
 
+  // Detect page navigation type on mount
   useEffect(() => {
-    try {
-      hasShownOnboardingRef.current = sessionStorage.getItem(sessionOnboardingKey) === "true";
-    } catch {
-      hasShownOnboardingRef.current = false;
-    }
     try {
       const nav = performance.getEntriesByType("navigation")[0] as
         | PerformanceNavigationTiming
@@ -228,6 +223,17 @@ const App: React.FC = () => {
     }
   }, []);
 
+  // Initialize ref synchronously from sessionStorage (before first render)
+  const getInitialSessionFlag = () => {
+    try {
+      return sessionStorage.getItem(sessionOnboardingKey) === "true";
+    } catch {
+      return false;
+    }
+  };
+  const hasShownOnboardingRef = useRef<boolean>(getInitialSessionFlag());
+
+  // Detect hard reload (reload with network transfer, not back/forward cache)
   const isHardReload =
     navigationInfoRef.current.type === "reload" &&
     typeof navigationInfoRef.current.transferSize === "number" &&
@@ -253,20 +259,11 @@ const App: React.FC = () => {
   // Trigger onboarding when the auto-open condition is met
   useEffect(() => {
     if (!shouldAutoOpen) return;
+
+    // Note: Don't set session flag here, allow re-show on hard reload
+    // Session flag is only set when user completes onboarding
     openOnboarding();
   }, [shouldAutoOpen, openOnboarding]);
-
-  // Persist session flag when onboarding opens (prevents soft refresh repeats)
-  useEffect(() => {
-    if (!isOnboardingOpen) return;
-    if (hasShownOnboardingRef.current) return;
-    hasShownOnboardingRef.current = true;
-    try {
-      sessionStorage.setItem(sessionOnboardingKey, "true");
-    } catch {
-      /* ignore */
-    }
-  }, [isOnboardingOpen]);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchType, setSearchType] = useState<AssetType>(AssetType.TOKEN);
@@ -1791,6 +1788,7 @@ const App: React.FC = () => {
     walletAddress: string;
     tokenAddress?: string;
     threshold: number;
+    alertType?: "WALLET" | "TOKEN" | "WHALE";
   }) => {
     let tokenInfo = {
       symbol: undefined as string | undefined,
@@ -1834,6 +1832,7 @@ const App: React.FC = () => {
       tokenSymbol: tokenInfo.symbol,
       tokenName: tokenInfo.name,
       initialValue: initialVal,
+      type: data.alertType || "WALLET",
     };
 
     // Initialize alert status with transaction history FIRST
@@ -1861,7 +1860,13 @@ const App: React.FC = () => {
 
   const handleUpdateAlert = async (
     id: string,
-    data: { name: string; walletAddress: string; tokenAddress?: string; threshold: number }
+    data: {
+      name: string;
+      walletAddress: string;
+      tokenAddress?: string;
+      threshold: number;
+      alertType?: "WALLET" | "TOKEN" | "WHALE";
+    }
   ) => {
     try {
       addToast("Updating alert...", "info");
@@ -1923,6 +1928,7 @@ const App: React.FC = () => {
         tokenSymbol: tokenInfo.symbol,
         tokenName: tokenInfo.name,
         initialValue: existingAlert.initialValue,
+        type: data.alertType || existingAlert.type || "WALLET",
       };
 
       // Update alert status with new transaction history

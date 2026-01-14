@@ -20,8 +20,10 @@ import {
   Download,
   Edit,
   ExternalLink,
+  LineChart,
 } from "lucide-react";
 import { Tooltip } from "./Tooltip";
+import { EmbeddedChart } from "./EmbeddedChart";
 
 import {
   fetchTokenBalance,
@@ -50,10 +52,17 @@ interface DashboardProps {
     walletAddress: string;
     tokenAddress?: string;
     threshold: number;
+    alertType?: "WALLET" | "TOKEN" | "WHALE";
   }) => Promise<void>;
   onUpdateAlert: (
     id: string,
-    alert: { name: string; walletAddress: string; tokenAddress?: string; threshold: number }
+    alert: {
+      name: string;
+      walletAddress: string;
+      tokenAddress?: string;
+      threshold: number;
+      alertType?: "WALLET" | "TOKEN" | "WHALE";
+    }
   ) => Promise<void>;
   triggeredEvents: TriggeredEvent[];
   onTriggeredEventsChange: (events: TriggeredEvent[]) => void;
@@ -76,12 +85,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [editingAlertId, setEditingAlertId] = useState<string | null>(null);
   const [expandedEvents, setExpandedEvents] = useState<Set<string>>(new Set());
+  const [expandedChartEvents, setExpandedChartEvents] = useState<Set<string>>(new Set());
 
   const [formData, setFormData] = useState({
     name: "",
     walletAddress: "",
     tokenAddress: "",
     threshold: "",
+    alertType: "WALLET" as "WALLET" | "TOKEN" | "WHALE",
   });
 
   const trackedWalletsCount = new Set(alerts.map((a) => a.walletAddress)).size;
@@ -270,13 +281,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
       );
 
       if (!alreadyRecorded) {
+        // Extract primary token from actual transactions
+        const primaryToken = extractPrimaryToken(status.newTransactions, alert);
+
         const triggeredEvent: TriggeredEvent = {
           id: eventId,
           alertId: alert.id,
           alertName: alert.name,
           walletAddress: alert.walletAddress,
-          tokenAddress: alert.tokenAddress,
-          tokenSymbol: alert.tokenSymbol,
+          tokenAddress: primaryToken?.address,
+          tokenSymbol: primaryToken?.symbol,
           transactions: status.newTransactions,
           triggeredAt: Date.now(),
           notified: true,
@@ -383,6 +397,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           walletAddress: formData.walletAddress,
           tokenAddress: formData.tokenAddress || undefined,
           threshold: parseFloat(formData.threshold),
+          alertType: formData.alertType,
         });
       } else {
         // Create new alert
@@ -391,11 +406,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
           walletAddress: formData.walletAddress,
           tokenAddress: formData.tokenAddress || undefined,
           threshold: parseFloat(formData.threshold),
+          alertType: formData.alertType,
         });
       }
       setIsModalOpen(false);
       setEditingAlertId(null);
-      setFormData({ name: "", walletAddress: "", tokenAddress: "", threshold: "" });
+      setFormData({
+        name: "",
+        walletAddress: "",
+        tokenAddress: "",
+        threshold: "",
+        alertType: "WALLET",
+      });
     } catch (error) {
       console.error("Failed to save alert", error);
     } finally {
@@ -410,6 +432,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       walletAddress: alert.walletAddress,
       tokenAddress: alert.tokenAddress || "",
       threshold: alert.threshold.toString(),
+      alertType: alert.type || "WALLET",
     });
     setIsModalOpen(true);
   };
@@ -417,7 +440,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const closeModal = () => {
     setIsModalOpen(false);
     setEditingAlertId(null);
-    setFormData({ name: "", walletAddress: "", tokenAddress: "", threshold: "" });
+    setFormData({
+      name: "",
+      walletAddress: "",
+      tokenAddress: "",
+      threshold: "",
+      alertType: "WALLET",
+    });
   };
 
   const handleDismissTrigger = (alertId: string) => {
@@ -464,6 +493,124 @@ export const Dashboard: React.FC<DashboardProps> = ({
       return newSet;
     });
   };
+
+  const toggleEventChart = (eventId: string) => {
+    setExpandedChartEvents((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(eventId)) {
+        newSet.delete(eventId);
+      } else {
+        newSet.add(eventId);
+      }
+      return newSet;
+    });
+  };
+
+  // Helper: Extract primary token from transactions
+  const extractPrimaryToken = (
+    transactions: Transaction[],
+    alert?: AlertConfig
+  ): { address: string; symbol: string } | null => {
+    if (!transactions || transactions.length === 0) {
+      return null;
+    }
+
+    // Count token occurrences
+    const tokenCounts = new Map<string, { count: number; address: string; symbol: string }>();
+
+    for (const tx of transactions) {
+      if (tx.tokenAddress) {
+        const existing = tokenCounts.get(tx.tokenAddress);
+        if (existing) {
+          existing.count++;
+        } else {
+          tokenCounts.set(tx.tokenAddress, {
+            count: 1,
+            address: tx.tokenAddress,
+            symbol: tx.tokenSymbol || "Token",
+          });
+        }
+      }
+    }
+
+    if (tokenCounts.size === 0) {
+      // No token address found in transactions
+      return alert?.tokenAddress
+        ? { address: alert.tokenAddress, symbol: alert.tokenSymbol || "Token" }
+        : null;
+    }
+
+    // Find most common token
+    let mostCommon = null;
+    let maxCount = 0;
+
+    for (const tokenData of tokenCounts.values()) {
+      if (tokenData.count > maxCount) {
+        maxCount = tokenData.count;
+        mostCommon = tokenData;
+      }
+    }
+
+    return mostCommon;
+  };
+
+  // Migration: Update triggered events with actual transaction token data
+  useEffect(() => {
+    const updateEventTokens = () => {
+      const updatedEvents = triggeredEvents.map((event: TriggeredEvent) => {
+        // Skip if no transactions
+        if (!event.transactions || event.transactions.length === 0) {
+          return event;
+        }
+
+        // Find the alert config for this event (if available)
+        const alert = alerts.find((a: AlertConfig) => a.id === event.alertId);
+
+        // Use extractPrimaryToken to get the correct token from transactions
+        const primaryToken = extractPrimaryToken(event.transactions, alert);
+
+        // Only update if we found a token and it's different from current
+        if (!primaryToken) {
+          return event;
+        }
+
+        // Check if token address is different from current
+        const currentTokenAddress = event.tokenAddress?.toLowerCase();
+        const newTokenAddress = primaryToken.address?.toLowerCase();
+
+        if (currentTokenAddress === newTokenAddress) {
+          return event; // Already correct, no update needed
+        }
+
+        // Update with correct token data from transactions
+        return {
+          ...event,
+          tokenAddress: primaryToken.address,
+          tokenSymbol: primaryToken.symbol,
+        };
+      });
+
+      // Only trigger update if something changed
+      const hasChanges = updatedEvents.some((updatedEvent, index) => {
+        const originalEvent = triggeredEvents[index];
+        if (!originalEvent) return false;
+        return (
+          updatedEvent.tokenAddress !== originalEvent.tokenAddress ||
+          updatedEvent.tokenSymbol !== originalEvent.tokenSymbol
+        );
+      });
+
+      if (hasChanges) {
+        onTriggeredEventsChange(updatedEvents);
+        console.log(
+          "[Dashboard] Updated triggered events with correct token data from transactions"
+        );
+      }
+    };
+
+    // Run when triggeredEvents or alerts change
+    updateEventTokens();
+  }, [triggeredEvents, alerts, extractPrimaryToken, onTriggeredEventsChange]);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
@@ -718,6 +865,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       {event.transactions.length === 1 ? "Transaction" : "Transactions"}
                     </span>
                   </div>
+
                   <div className="space-y-2">
                     {displayedTransactions.map((tx, idx) => {
                       const isIncoming = tx.to.toLowerCase() === event.walletAddress.toLowerCase();
@@ -789,6 +937,43 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       </button>
                     )}
                   </div>
+
+                  {/* Prominent Chart Toggle Button - Below transactions */}
+                  <button
+                    onClick={() => toggleEventChart(event.id)}
+                    disabled={!event.tokenAddress}
+                    className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-colors font-medium shadow-lg mt-4 ${
+                      event.tokenAddress
+                        ? "bg-purple-600 hover:bg-purple-700 text-white"
+                        : "bg-space-700 text-slate-500 cursor-not-allowed"
+                    }`}
+                    title={
+                      !event.tokenAddress
+                        ? "Price chart not available for this event"
+                        : "View price chart"
+                    }
+                  >
+                    <LineChart size={18} />
+                    {event.tokenAddress
+                      ? expandedChartEvents.has(event.id)
+                        ? "Hide Price Chart"
+                        : "View Price Chart"
+                      : "Price Chart Unavailable"}
+                  </button>
+
+                  {/* Inline Chart Container - Expands on button click */}
+                  {expandedChartEvents.has(event.id) && event.tokenAddress && (
+                    <div className="mt-4 animate-in slide-in-from-top-2 duration-200">
+                      <EmbeddedChart
+                        tokenAddress={event.tokenAddress}
+                        tokenSymbol={event.tokenSymbol || "Token"}
+                        className="w-full"
+                        theme="dark"
+                        expanded={true}
+                        showToggle={false}
+                      />
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -984,6 +1169,36 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
               <div>
                 <label
+                  htmlFor="alert-type"
+                  className="block text-sm font-medium text-slate-300 mb-2"
+                >
+                  Alert Type
+                </label>
+                <select
+                  id="alert-type"
+                  value={formData.alertType}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      alertType: e.target.value as "WALLET" | "TOKEN" | "WHALE",
+                    })
+                  }
+                  className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white focus:outline-none focus:border-space-600"
+                >
+                  <option value="WALLET">Wallet Watch - Monitor all activity</option>
+                  <option value="TOKEN">Token Movement - Track specific token transfers</option>
+                  <option value="WHALE">Whale Watch - Large holder monitoring</option>
+                </select>
+                <p className="text-xs text-slate-500 mt-1">
+                  {formData.alertType === "WALLET" && "Get notified of any activity in this wallet"}
+                  {formData.alertType === "TOKEN" &&
+                    "Get notified when this wallet transfers the specific token"}
+                  {formData.alertType === "WHALE" && "Monitor large holder movements"}
+                </p>
+              </div>
+
+              <div>
+                <label
                   htmlFor="wallet-address"
                   className="block text-sm font-medium text-slate-300 mb-2"
                 >
@@ -1000,22 +1215,31 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 />
               </div>
 
-              <div>
-                <label
-                  htmlFor="token-address"
-                  className="block text-sm font-medium text-slate-300 mb-2"
-                >
-                  Token Address (Optional)
-                </label>
-                <input
-                  id="token-address"
-                  type="text"
-                  value={formData.tokenAddress}
-                  onChange={(e) => setFormData({ ...formData, tokenAddress: e.target.value })}
-                  className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white font-mono placeholder-slate-500 focus:outline-none focus:border-space-600"
-                  placeholder="0x... (leave blank for general monitoring)"
-                />
-              </div>
+              {(formData.alertType === "TOKEN" || formData.alertType === "WHALE") && (
+                <div>
+                  <label
+                    htmlFor="token-address"
+                    className="block text-sm font-medium text-slate-300 mb-2"
+                  >
+                    Token Address{" "}
+                    {formData.alertType === "TOKEN" && "(required for token-specific alerts)"}
+                  </label>
+                  <input
+                    id="token-address"
+                    type="text"
+                    value={formData.tokenAddress}
+                    onChange={(e) => setFormData({ ...formData, tokenAddress: e.target.value })}
+                    className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white font-mono placeholder-slate-500 focus:outline-none focus:border-space-600"
+                    placeholder="0x..."
+                    required={formData.alertType === "TOKEN"}
+                  />
+                  <p className="text-xs text-slate-500 mt-1">
+                    {formData.alertType === "TOKEN" && "Enter the token contract address to track"}
+                    {formData.alertType === "WHALE" &&
+                      "Optional: Specify token for whale monitoring (leave blank for all tokens)"}
+                  </p>
+                </div>
+              )}
 
               <div>
                 <label

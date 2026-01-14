@@ -882,11 +882,12 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           setFocusedIndex(wallets.indexOf(d));
         }
       })
-      .on("mouseover", function (this: any, _event: any, d: NodeDatum) {
+      .on("mouseover", (_event: any, d: NodeDatum) => {
+        const wrapper = d3.select(_event.currentTarget);
         const hoveredId = d.id;
 
         // Mark that this node wrapper is being hovered
-        d3.select(this).classed("hovering", true);
+        wrapper.classed("hovering", true);
 
         // Logic to dim everyone but connected
         nodeSelection
@@ -968,9 +969,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
         // NOTE: Labels are NOT filtered - all labels stay visible during hover
       })
-      .on("mouseout", function (this: any) {
+      .on("mouseout", (_event: any) => {
         // Remove hover state from wrapper
-        d3.select(this).classed("hovering", false);
+        d3.select(_event.currentTarget).classed("hovering", false);
 
         // Reset all nodes to normal appearance
         nodeSelection

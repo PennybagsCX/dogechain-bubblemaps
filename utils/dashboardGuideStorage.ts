@@ -32,7 +32,8 @@ function safeGetItem(key: string): string | null {
   try {
     return localStorage.getItem(key);
   } catch (error) {
-    console.warn("[DashboardGuideStorage] localStorage access failed:", error);
+    // Error handled silently
+
     return null;
   }
 }
@@ -45,7 +46,8 @@ function safeSetItem(key: string, value: string): boolean {
     localStorage.setItem(key, value);
     return true;
   } catch (error) {
-    console.warn("[DashboardGuideStorage] localStorage write failed:", error);
+    // Error handled silently
+
     return false;
   }
 }
@@ -58,7 +60,8 @@ function safeRemoveItem(key: string): boolean {
     localStorage.removeItem(key);
     return true;
   } catch (error) {
-    console.warn("[DashboardGuideStorage] localStorage remove failed:", error);
+    // Error handled silently
+
     return false;
   }
 }
@@ -84,7 +87,8 @@ export function getDashboardGuideState(): DashboardGuideState | null {
       dismissedCount: dismissedCount ? parseInt(dismissedCount, 10) : 0,
     };
   } catch (error) {
-    console.error("[DashboardGuide] Failed to parse state:", error);
+    // Error handled silently
+
     return null;
   }
 }
@@ -102,7 +106,6 @@ export function shouldShowDashboardGuide(): boolean {
 
   // Version mismatch - re-show guide
   if (state.version !== DASHBOARD_GUIDE_VERSION) {
-    console.log("[DashboardGuide] Version mismatch, re-showing guide");
     return true;
   }
 
@@ -127,7 +130,6 @@ export function setDashboardGuideSeen(): boolean {
   const success = safeSetItem(DASHBOARD_GUIDE_STORAGE_KEYS.SEEN, "true");
   if (success) {
     safeSetItem(DASHBOARD_GUIDE_STORAGE_KEYS.VERSION, DASHBOARD_GUIDE_VERSION);
-    console.log("[DashboardGuide] Marked as seen");
   }
   return success;
 }
@@ -145,7 +147,7 @@ export function setDashboardGuideSkipped(): boolean {
   );
 
   if (success) {
-    console.log(`[DashboardGuide] Skipped (dismissal count: ${currentCount + 1}/3)`);
+    // Dismissal count updated successfully
   }
 
   return success;
@@ -162,7 +164,6 @@ export function updateDashboardGuideProgress(step: number): boolean {
  * Reset Dashboard guide state (for testing/development)
  */
 export function resetDashboardGuide(): void {
-  console.log("[DashboardGuide] Resetting guide state");
   safeRemoveItem(DASHBOARD_GUIDE_STORAGE_KEYS.SEEN);
   safeRemoveItem(DASHBOARD_GUIDE_STORAGE_KEYS.VERSION);
   safeRemoveItem(DASHBOARD_GUIDE_STORAGE_KEYS.LAST_STEP);

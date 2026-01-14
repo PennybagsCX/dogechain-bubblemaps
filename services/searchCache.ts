@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Search Result Cache
  *
@@ -236,11 +235,9 @@ export function setCachedSearchResults(query: string, type: string, results: Sea
  */
 export async function initializeSearchCache(): Promise<void> {
   try {
-    console.log("[Search Cache] Initializing...");
     searchCache.clearExpired();
     const stats = searchCache.getStats();
-    console.log(`[Search Cache] Initialized with ${stats.size} entries, ${stats.hits} total hits`);
   } catch (error) {
-    console.error("[Search Cache] Failed to initialize:", error);
+    // Error handled silently
   }
 }

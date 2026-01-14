@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Whale Wallet Registry
  *
@@ -62,8 +61,6 @@ export function initializeWhaleRegistry(): void {
       transactionCount: 0,
     });
   }
-
-  console.log(`[Whale Registry] Initialized with ${WHALE_WALLETS.length} whale wallets`);
 }
 
 /**

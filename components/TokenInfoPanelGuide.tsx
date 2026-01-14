@@ -167,7 +167,6 @@ export const TokenInfoPanelGuide: React.FC<TokenInfoPanelGuideProps> = ({
 
   const portalRoot = document.getElementById("modal-portal-root");
   if (!portalRoot) {
-    console.error("[TokenInfoPanelGuide] Portal root not found");
     return null;
   }
 

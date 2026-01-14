@@ -27,7 +27,6 @@ router.get("/hello", (_req: Request, res: Response<HelloResponse | ErrorResponse
     };
     res.json(response);
   } catch (error) {
-    console.error("Error in /hello endpoint:", error);
     const errorResponse: ErrorResponse = {
       message: "Internal server error",
       timestamp: new Date().toISOString(),

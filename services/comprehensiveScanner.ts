@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-console */
 /**
  * Comprehensive DEX and LP Pool Scanner
  *
@@ -319,7 +318,6 @@ export async function runComprehensiveScan(
  */
 export async function resetComprehensiveScan(): Promise<void> {
   await clearCheckpoints();
-  console.log("[Comprehensive Scanner] Scan reset complete");
 }
 
 /**

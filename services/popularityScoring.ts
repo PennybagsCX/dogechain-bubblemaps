@@ -193,7 +193,7 @@ export async function updateTokenPopularity(
     // Update IndexedDB
     await updatePopularityInDB(normalized, appearedInResults, wasClicked);
   } catch (error) {
-    console.error("[Popularity] Failed to update popularity:", error);
+    // Error handled silently
   }
 }
 

@@ -101,7 +101,6 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
   const portalRoot = document.getElementById("modal-portal-root");
   if (!portalRoot) {
-    console.error("[OnboardingModal] Portal root not found");
     return null;
   }
 

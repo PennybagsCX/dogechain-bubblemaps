@@ -182,7 +182,7 @@ const saveMetadataToCache = (
     cache[address.toLowerCase()] = { ...data, timestamp: Date.now() };
     localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(cache));
   } catch (e) {
-    console.warn("Failed to save token metadata", e);
+    // Error handled silently - localStorage write failed
   }
 };
 
@@ -327,17 +327,14 @@ const resolveKnownLabel = async (
       }
     }
 
-    console.log(`[LP Detection] Checking holder: ${lowerAddr}`);
     const lpPair = await isAddressLPPair(lowerAddr);
     if (lpPair && lpPair.isValid) {
-      console.log(`[LP Detection] ✓ Found LP pair: ${lowerAddr} (${lpPair.dexName})`);
       return "LP Pool";
     } else {
-      console.log(`[LP Detection] ✗ Not an LP pair: ${lowerAddr}`);
+      // Not an LP pool
     }
   } catch (e) {
     // Silently fail - don't break existing functionality
-    console.error(`[LP Detection] Error checking ${lowerAddr}:`, e);
   }
 
   return undefined;
@@ -380,7 +377,7 @@ export const fetchMetadataFromTransfers = async (
     }
     return null;
   } catch (e) {
-    console.warn("fetchMetadataFromTransfers failed:", e);
+    // Error fetching data
     return null;
   }
 };
@@ -409,7 +406,7 @@ const fetchMetadataFromTokenList = async (
     }
     return null;
   } catch (e) {
-    console.warn("fetchMetadataFromTokenList failed:", e);
+    // Error fetching data
     return null;
   }
 };
@@ -425,7 +422,8 @@ export const fetchTokenData = async (
   try {
     cleanAddress = validateTokenAddress(address);
   } catch (error) {
-    console.error("Invalid address format:", error);
+    // Error handled silently
+
     return null;
   }
 
@@ -450,7 +448,7 @@ export const fetchTokenData = async (
         cached = null;
       }
     } catch (e) {
-      console.warn("Failed to clear stale cache", e);
+      // Error in operation
     }
   }
 
@@ -519,7 +517,8 @@ export const fetchTokenData = async (
       isVerified,
     };
   } catch (error) {
-    console.error("Error fetching token:", error);
+    // Error handled silently
+
     return null;
   }
 };
@@ -579,9 +578,6 @@ export const fetchTokenHolders = async (
       const { loadAllLPPairs } = await import("./lpDetection");
       const allLPPairs = await loadAllLPPairs();
 
-      console.log(`[LP Detection] Loaded ${allLPPairs.length} LP pairs from database`);
-      console.log(`[LP Detection] Looking for pairs with token: ${cleanAddress.toLowerCase()}`);
-
       // Filter LP pairs that involve this token
       const tokenLPPairs = allLPPairs.filter(
         (lp) =>
@@ -589,13 +585,7 @@ export const fetchTokenHolders = async (
           lp.token1Address.toLowerCase() === cleanAddress.toLowerCase()
       );
 
-      console.log(`[LP Detection] Found ${tokenLPPairs.length} LP pairs for this token`);
-
       if (tokenLPPairs.length > 0) {
-        console.log(
-          `[LP Detection] Adding ${tokenLPPairs.length} LP pairs to visualization for ${token.symbol || token.address}`
-        );
-
         // For each LP pair, query its token balance
         for (const lpPair of tokenLPPairs) {
           try {
@@ -634,36 +624,20 @@ export const fetchTokenHolders = async (
                   // Add new LP pair to the list
                   processedWallets.push(lpWallet);
                 }
-
-                console.log(
-                  `[LP Detection] ✓ Added LP pair: ${lpPair.pairAddress} with balance ${lpBalance.toFixed(2)} ${token.symbol || "tokens"}`
-                );
-
-                // DIAGNOSTIC: Check wallet immediately after addition
-                console.log(
-                  `[LP Detection] After add/update - Total wallets: ${processedWallets.length}, This wallet label: "${lpWallet.label}", isContract: ${lpWallet.isContract}`
-                );
               }
             }
           } catch (error) {
-            console.error(
-              `[LP Detection] Failed to get balance for LP pair ${lpPair.pairAddress}:`,
-              error
-            );
+            // Error in processing
           }
         }
       }
     } catch (error) {
-      console.error("[LP Detection] Failed to add LP pairs to visualization:", error);
+      // Error in wallet processing
     }
 
-    // DIAGNOSTIC: Check labeled wallets before whale recalculation
     const labeledBeforeRecalc = processedWallets.filter((w) => w.label);
-    console.log(
-      `[LP Detection] Before recalc - Total: ${processedWallets.length}, Labeled: ${labeledBeforeRecalc.length}`
-    );
     if (labeledBeforeRecalc.length > 0) {
-      labeledBeforeRecalc.forEach((w) => console.log(`  Labeled: ${w.address} - "${w.label}"`));
+      labeledBeforeRecalc.forEach((w) => w.label);
     }
 
     const totalWalletBalance = processedWallets.reduce((acc, w) => acc + w.balance, 0);
@@ -680,7 +654,7 @@ export const fetchTokenHolders = async (
       `[LP Detection] After recalc - Total: ${processedWallets.length}, Labeled: ${labeledAfterRecalc.length}`
     );
     if (labeledAfterRecalc.length > 0) {
-      labeledAfterRecalc.forEach((w) => console.log(`  Labeled: ${w.address} - "${w.label}"`));
+      labeledAfterRecalc.forEach((w) => w.label);
     }
 
     const links: Link[] = [];
@@ -753,7 +727,6 @@ export const fetchTokenHolders = async (
 
     return { wallets: walletsToShow, links };
   } catch {
-    console.warn("V1 holder endpoint failed for", cleanAddress);
     return { wallets: [], links: [] };
   }
 };
@@ -814,7 +787,7 @@ export const fetchWalletTransactions = async (
             }
           } catch {
             // On detection failure, include transaction to avoid false negatives
-            console.warn(`Failed to detect type for ${contract}, including transaction`);
+
             nftContracts.add(contract);
           }
         }
@@ -914,7 +887,8 @@ export const fetchWalletTransactions = async (
     // No transactions found at any offset
     return [];
   } catch (error) {
-    console.error("Error fetching wallet transactions:", error);
+    // Error handled silently
+
     return [];
   }
 };
@@ -989,7 +963,7 @@ export const scanWhaleContracts = async (
         }
       }
     } catch (e) {
-      console.warn(`[Whale Scan] Failed to scan whale ${whale}:`, e);
+      // Error in operation
     }
   }
   onProgress?.(`Discovered ${discoveredContracts.size} contracts from whale wallets`);
@@ -1019,7 +993,8 @@ export const checkTokenBalance = async (
 
     return { balance: "0", hasBalance: false };
   } catch (e) {
-    console.warn(`Failed to check balance for ${contractAddress}:`, e);
+    // Error handled silently
+
     return { balance: "0", hasBalance: false };
   }
 };
@@ -1182,7 +1157,8 @@ export const fetchWalletAssets = async (
       nfts: sortByHits(nftsMap),
     };
   } catch (e) {
-    console.warn("fetchWalletAssets error", e);
+    // Error handled silently
+
     return { tokens: [], nfts: [] };
   }
 };
@@ -1219,7 +1195,7 @@ export const fetchWalletAssetsHybrid = async (
         };
       }
     } catch (e) {
-      console.warn("Failed to load cache, proceeding with scan", e);
+      // Error in operation
     }
   }
 
@@ -1299,7 +1275,8 @@ export const fetchWalletAssetsHybrid = async (
             results.push(...json.result);
           }
         } catch (e) {
-          console.warn(`V1 offset ${offset} failed:`, e);
+          // Error handled silently
+
           continue;
         }
       }
@@ -1333,7 +1310,7 @@ export const fetchWalletAssetsHybrid = async (
         }
       }
     } catch (e) {
-      console.warn("V1 NFT probe failed:", e);
+      // Error loading cache
     }
 
     phasesCompleted.push("quick");
@@ -1399,7 +1376,6 @@ export const fetchWalletAssetsHybrid = async (
               saveMetadataToCache(contract, meta);
             }
           } catch (e: any) {
-            console.warn(`Failed to detect type for ${contract}:`, e?.message || e);
             // Continue with other contracts even if one fails
           }
         }
@@ -1412,7 +1388,6 @@ export const fetchWalletAssetsHybrid = async (
         );
       }
     } catch (e: any) {
-      console.error("[Phase 3] Error during contract type detection:", e);
       // Continue anyway - transfers will be categorized as TOKEN by default
     }
 
@@ -1486,7 +1461,7 @@ export const fetchWalletAssetsHybrid = async (
                 });
               }
             } catch (e) {
-              console.warn(`Failed to detect type for whale contract ${contract}:`, e);
+              // Error in discovered contracts
             }
           }
 
@@ -1542,7 +1517,7 @@ export const fetchWalletAssetsHybrid = async (
 
             checkedContracts.add(contract);
           } catch (e) {
-            console.warn(`Failed to check contract ${dbContract.contractAddress}:`, e);
+            // Error checking contract
           }
         }
 
@@ -1554,12 +1529,11 @@ export const fetchWalletAssetsHybrid = async (
         );
       }
     } catch (e: any) {
-      console.error("[Phase 5] Whale enumeration failed:", e?.message || e);
       // Continue anyway - this is an optional phase
     }
 
     if (newAssetsFound > 0) {
-      console.log(`[Phase 5] Found ${newAssetsFound} new assets from whale wallets`);
+      // New assets were found
     }
 
     phasesCompleted.push("whale-scan");
@@ -1577,8 +1551,6 @@ export const fetchWalletAssetsHybrid = async (
         const allLPPairs = await loadAllLPPairs();
 
         if (allLPPairs.length > 0) {
-          console.log(`[LP Detection] Checking ${allLPPairs.length} cached LP pairs for wallet...`);
-
           let foundLPPairs = 0;
 
           // Check balances for LP pairs in batches
@@ -1613,7 +1585,6 @@ export const fetchWalletAssetsHybrid = async (
                 }
               } catch (e) {
                 // Continue on error - individual LP check failures shouldn't break the scan
-                console.error(`[LP Detection] Failed to check LP pair ${lpPair.pairAddress}:`, e);
               }
             }
 
@@ -1633,13 +1604,13 @@ export const fetchWalletAssetsHybrid = async (
             );
           }
         } else {
-          console.log("[LP Detection] No LP pairs cached. Run factory scan to populate database.");
+          // No LP pairs found
         }
       } else {
-        console.log("[LP Detection] LP detection is disabled via feature flag");
+        // No transactions to scan
       }
     } catch (e) {
-      console.error("[LP Detection] LP detection phase failed:", e);
+      // Error handled silently
       // Non-critical phase - continue anyway
     }
 
@@ -1666,9 +1637,7 @@ export const fetchWalletAssetsHybrid = async (
     await saveScanCache(walletAddress, finalTokens, finalNfts, metadata);
 
     // Submit scan results to learning database (non-blocking, fire-and-forget)
-    submitWalletScanResults(walletAddress, finalTokens, finalNfts).catch((err) =>
-      console.warn("[Data Service] Failed to submit scan results to learning database:", err)
-    );
+    submitWalletScanResults(walletAddress, finalTokens, finalNfts).catch((err) => {});
 
     triggerProgress(
       "complete",
@@ -1685,7 +1654,7 @@ export const fetchWalletAssetsHybrid = async (
     if (e instanceof Error && e.message === "Scan cancelled") {
       throw e;
     }
-    console.error("Hybrid scan failed:", e);
+
     throw e;
   }
 };

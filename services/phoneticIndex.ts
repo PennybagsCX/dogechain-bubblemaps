@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-console */
 /**
  * Phonetic Index for Token Search
  *
@@ -188,23 +187,14 @@ export function searchPhoneticIndex(
  * This should be called from db.ts with the actual database instance
  */
 export async function savePhoneticIndex(db: any, tokens: TokenData[]): Promise<void> {
-  try {
-    console.log("[Phonetic Index] Building index...");
+  // Build index
+  const entries = buildPhoneticIndexEntries(tokens);
 
-    // Build index
-    const entries = buildPhoneticIndexEntries(tokens);
+  // Clear existing index
+  await db.phoneticIndex.clear();
 
-    // Clear existing index
-    await db.phoneticIndex.clear();
-
-    // Bulk insert
-    await db.phoneticIndex.bulkAdd(entries);
-
-    console.log(`[Phonetic Index] Built with ${entries.length} entries`);
-  } catch (error) {
-    console.error("[Phonetic Index] Failed to save:", error);
-    throw error;
-  }
+  // Bulk insert
+  await db.phoneticIndex.bulkAdd(entries);
 }
 
 /**
@@ -262,7 +252,8 @@ export async function searchPhoneticIndexDB(
       }))
       .sort((a: any, b: any) => b.similarity - a.similarity);
   } catch (error) {
-    console.error("[Phonetic Index] Search failed:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -290,7 +281,7 @@ export async function updateSimilarityCache(
       updatedAt: Date.now(),
     });
   } catch (error) {
-    console.error("[Phonetic Index] Failed to update cache:", error);
+    // Error handled silently
   }
 }
 

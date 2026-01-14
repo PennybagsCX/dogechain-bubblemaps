@@ -121,7 +121,7 @@ export async function clearTestAlerts(): Promise<void> {
       `[TestData] Cleared ${testAlerts.length} test alerts and ${testEvents.length} test events`
     );
   } catch (error) {
-    console.error("[TestData] Failed to clear test alerts:", error);
+    // Error handled silently
   }
 }
 
@@ -131,8 +131,6 @@ export async function clearTestAlerts(): Promise<void> {
  */
 export async function generateMockTestAlerts(): Promise<void> {
   try {
-    console.log("[TestData] Generating mock test alerts...");
-
     // Clear existing test data first
     await clearTestAlerts();
 
@@ -150,21 +148,15 @@ export async function generateMockTestAlerts(): Promise<void> {
         notified: false,
         lastSeenTransactions: [],
       });
-
-      console.log(`[TestData] Added test alert: ${alertConfig.name} (${alertConfig.tokenSymbol})`);
     }
 
     // Add triggered events
     for (const event of MOCK_TRIGGERED_EVENTS) {
       const dbEvent = toDbTriggeredEvent(event);
       await db.triggeredEvents.put(dbEvent);
-      console.log(`[TestData] Added triggered event: ${event.alertName}`);
     }
-
-    console.log(`[TestData] Successfully added ${MOCK_TEST_ALERTS.length} test alerts`);
-    console.log("[TestData] Refresh the Dashboard to see charts");
   } catch (error) {
-    console.error("[TestData] Failed to generate mock test alerts:", error);
+    // Error handled silently
   }
 }
 
@@ -221,7 +213,7 @@ export const BROWSER_CONSOLE_SCRIPT = `
     const db = await new Promise((resolve, reject) => {
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.error);
-      request.onblocked = () => console.warn('[Test] Database open blocked - close other tabs');
+      request.onblocked = () => reject(new Error("Database open request was blocked"));
     });
 
     // Create transaction
@@ -266,7 +258,6 @@ export const BROWSER_CONSOLE_SCRIPT = `
         request.onerror = () => reject(request.error);
       });
 
-      console.log(\`[Test] Added: \${alert.name} (\${alert.tokenSymbol})\`);
     }
 
     await new Promise((resolve, reject) => {
@@ -276,11 +267,12 @@ export const BROWSER_CONSOLE_SCRIPT = `
 
     db.close();
 
-    console.log('[Test] ✓ Successfully added ' + testAlerts.length + ' test alerts!');
-    console.log('[Test] Refresh the Dashboard to see charts.');
+
+
 
   } catch (error) {
-    console.error('[Test] ✗ Failed to add test alerts:', error);
+      // Error handled silently
+
   }
 })();
 `;
@@ -288,10 +280,4 @@ export const BROWSER_CONSOLE_SCRIPT = `
 /**
  * Print the browser console script to stdout for easy copying
  */
-export function printBrowserConsoleScript(): void {
-  console.log("\n" + "=".repeat(80));
-  console.log("BROWSER CONSOLE SCRIPT - Copy and paste into browser DevTools console:");
-  console.log("=".repeat(80));
-  console.log(BROWSER_CONSOLE_SCRIPT);
-  console.log("=".repeat(80) + "\n");
-}
+export function printBrowserConsoleScript(): void {}

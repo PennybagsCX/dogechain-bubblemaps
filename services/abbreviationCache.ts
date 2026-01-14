@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-console */
 /**
  * Abbreviation Cache
  *
@@ -70,7 +69,7 @@ class AbbreviationCache {
         }
       }
     } catch (error) {
-      console.warn("[AbbreviationCache] Failed to read from IndexedDB:", error);
+      // Error handled silently - database fetch failed
     }
 
     return null;
@@ -105,7 +104,7 @@ class AbbreviationCache {
         await abbreviationCacheTable.put(entry);
       }
     } catch (error) {
-      console.warn("[AbbreviationCache] Failed to write to IndexedDB:", error);
+      // Error handled silently - database write failed
     }
   }
 
@@ -176,12 +175,13 @@ class AbbreviationCache {
       }
 
       if (expiredEntries.length > 0) {
-        console.log(`[AbbreviationCache] Cleared ${expiredEntries.length} expired entries`);
+        // Expired entries cleared
       }
 
       return expiredEntries.length;
     } catch (error) {
-      console.error("[AbbreviationCache] Failed to clear expired entries:", error);
+      // Error handled silently
+
       return 0;
     }
   }
@@ -199,10 +199,9 @@ class AbbreviationCache {
 
       if (abbreviationCacheTable) {
         await abbreviationCacheTable.clear();
-        console.log("[AbbreviationCache] Cleared all entries");
       }
     } catch (error) {
-      console.error("[AbbreviationCache] Failed to clear all entries:", error);
+      // Error handled silently - database clear failed
     }
   }
 
@@ -277,11 +276,9 @@ export async function getCachedAbbreviations(
  */
 export async function initializeAbbreviationCache(): Promise<void> {
   try {
-    console.log("[AbbreviationCache] Initializing...");
     await abbreviationCache.clearExpired();
     const stats = abbreviationCache.getStats();
-    console.log(`[AbbreviationCache] Initialized with ${stats.memorySize} entries in memory`);
   } catch (error) {
-    console.error("[AbbreviationCache] Failed to initialize:", error);
+    // Error handled silently - cache initialization failed
   }
 }

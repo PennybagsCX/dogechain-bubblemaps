@@ -8,9 +8,6 @@
 
 /* eslint-disable no-console */
 export async function resetDatabaseFromConsole(): Promise<void> {
-  console.log("=== Database Reset ===");
-  console.log("This will delete all local data and recreate the database.");
-
   const confirmed = confirm(
     "⚠️ WARNING: This will delete all cached data including:\n" +
       "- Alert configurations\n" +
@@ -22,7 +19,6 @@ export async function resetDatabaseFromConsole(): Promise<void> {
   );
 
   if (!confirmed) {
-    console.log("Reset cancelled.");
     return;
   }
 
@@ -31,25 +27,15 @@ export async function resetDatabaseFromConsole(): Promise<void> {
     const { db } = await import("../services/db");
     await db.delete();
 
-    console.log("✅ Database deleted successfully");
-
     // Clear error flag
     localStorage.removeItem("doge_db_error");
-
-    console.log("🔄 Reloading page...");
 
     // Reload the page
     setTimeout(() => {
       window.location.reload();
     }, 1000);
   } catch (error) {
-    console.error("❌ Reset failed:", error);
-    console.log("Please manually clear IndexedDB:");
-    console.log("1. Open DevTools (F12)");
-    console.log("2. Go to Application tab");
-    console.log("3. Expand IndexedDB");
-    console.log("4. Right-click 'DogechainBubbleMapsDB'");
-    console.log("5. Select 'Delete database'");
+    // Error handled silently
   }
 }
 

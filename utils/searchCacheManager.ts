@@ -89,8 +89,6 @@ export async function cacheSearchResults(
       request.onerror = () => reject(request.error);
     });
 
-    console.log(`[Search Cache Manager] Cached results for "${query}" (${type})`);
-
     // Trigger service worker cache update
     if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
       navigator.serviceWorker.controller.postMessage({
@@ -101,7 +99,7 @@ export async function cacheSearchResults(
       });
     }
   } catch (error) {
-    console.error("[Search Cache Manager] Failed to cache results:", error);
+    // Error handled silently
   }
 }
 
@@ -141,13 +139,10 @@ export async function getCachedSearchResults(query: string, type: string): Promi
     cachedResult.hitCount++;
     updateStore.put({ ...cachedResult, key });
 
-    console.log(
-      `[Search Cache Manager] Cache hit for "${query}" (${type}) - Hit #${cachedResult.hitCount}`
-    );
-
     return cachedResult.results;
   } catch (error) {
-    console.error("[Search Cache Manager] Failed to retrieve cached results:", error);
+    // Error handled silently
+
     return null;
   }
 }
@@ -169,10 +164,8 @@ export async function removeCachedSearchResults(query: string, type: string): Pr
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
-
-    console.log(`[Search Cache Manager] Removed cached results for "${query}" (${type})`);
   } catch (error) {
-    console.error("[Search Cache Manager] Failed to remove cached results:", error);
+    // Error handled silently
   }
 }
 
@@ -191,10 +184,8 @@ export async function clearAllCachedSearchResults(): Promise<void> {
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
-
-    console.log("[Search Cache Manager] Cleared all cached search results");
   } catch (error) {
-    console.error("[Search Cache Manager] Failed to clear cache:", error);
+    // Error handled silently
   }
 }
 
@@ -230,13 +221,9 @@ export async function cleanupOldCacheEntries(): Promise<void> {
         const key = getCacheKey(entry.query, entry.type);
         store.delete(key);
       }
-
-      console.log(
-        `[Search Cache Manager] Removed ${entriesToRemove.length} old cache entries (LRU eviction)`
-      );
     }
   } catch (error) {
-    console.error("[Search Cache Manager] Failed to cleanup old entries:", error);
+    // Error handled silently
   }
 }
 
@@ -275,7 +262,8 @@ export async function getCacheStats(): Promise<{
       newestEntry,
     };
   } catch (error) {
-    console.error("[Search Cache Manager] Failed to get cache stats:", error);
+    // Error handled silently
+
     return {
       totalEntries: 0,
       totalHits: 0,

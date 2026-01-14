@@ -58,7 +58,6 @@ async function ensureCheckpointTable(): Promise<void> {
     const tables = await db.tables.map((t) => t.name);
 
     if (!tables.includes(SCAN_CHECKPOINTS_TABLE)) {
-      console.log("[Scan Progress] Creating scan checkpoints table...");
       // Use version 7 to add the new table
       db.version(7).stores({
         alerts: "++id, alertId, walletAddress, name, createdAt",
@@ -75,7 +74,7 @@ async function ensureCheckpointTable(): Promise<void> {
       });
     }
   } catch (error) {
-    console.error("[Scan Progress] Failed to ensure checkpoint table:", error);
+    // Error handled silently
   }
 }
 
@@ -99,7 +98,7 @@ export async function saveCheckpoint(checkpoint: ScanCheckpoint): Promise<void> 
       `[Scan Progress] Checkpoint saved: Phase ${checkpoint.phase}, Block ${checkpoint.currentBlock}/${checkpoint.totalBlocks}`
     );
   } catch (error) {
-    console.error("[Scan Progress] Failed to save checkpoint:", error);
+    // Error handled silently
   }
 }
 
@@ -136,7 +135,8 @@ export async function loadCheckpoint(): Promise<ScanCheckpoint | null> {
     );
     return latest;
   } catch (error) {
-    console.error("[Scan Progress] Failed to load checkpoint:", error);
+    // Error handled silently
+
     return null;
   }
 }
@@ -150,9 +150,8 @@ export async function clearCheckpoints(): Promise<void> {
 
     const table = (db as any)[SCAN_CHECKPOINTS_TABLE];
     await table.clear();
-    console.log("[Scan Progress] All checkpoints cleared");
   } catch (error) {
-    console.error("[Scan Progress] Failed to clear checkpoints:", error);
+    // Error handled silently
   }
 }
 
@@ -223,7 +222,7 @@ export async function logScanError(error: ScanError): Promise<void> {
       await saveCheckpoint(checkpoint);
     }
   } catch (e) {
-    console.error("[Scan Progress] Failed to log error:", e);
+    // Error handled silently
   }
 }
 
@@ -258,7 +257,8 @@ export async function getAllCheckpoints(): Promise<ScanCheckpoint[]> {
     const table = (db as any)[SCAN_CHECKPOINTS_TABLE];
     return await table.toArray();
   } catch (error) {
-    console.error("[Scan Progress] Failed to get checkpoints:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -285,10 +285,8 @@ export async function cleanupOldCheckpoints(keepCount: number = 5): Promise<void
     for (const checkpoint of toDelete) {
       await table.delete(checkpoint.id!);
     }
-
-    console.log(`[Scan Progress] Cleaned up ${toDelete.length} old checkpoints`);
   } catch (error) {
-    console.error("[Scan Progress] Failed to cleanup checkpoints:", error);
+    // Error handled silently
   }
 }
 
@@ -304,23 +302,19 @@ export function validateCheckpoint(checkpoint: ScanCheckpoint): boolean {
     typeof checkpoint.discoveredFactories !== "number" ||
     typeof checkpoint.scannedLPPairs !== "number"
   ) {
-    console.error("[Scan Progress] Checkpoint validation failed: missing or invalid fields");
     return false;
   }
 
   // Check logical constraints
   if (checkpoint.currentBlock < 0 || checkpoint.currentBlock > checkpoint.totalBlocks) {
-    console.error("[Scan Progress] Checkpoint validation failed: invalid block range");
     return false;
   }
 
   if (checkpoint.discoveredFactories < 0 || checkpoint.scannedLPPairs < 0) {
-    console.error("[Scan Progress] Checkpoint validation failed: negative counts");
     return false;
   }
 
   if (checkpoint.lastUpdated <= 0) {
-    console.error("[Scan Progress] Checkpoint validation failed: invalid timestamp");
     return false;
   }
 
@@ -344,17 +338,11 @@ export async function exportCheckpoint(): Promise<string> {
  * Import checkpoint data from JSON
  */
 export async function importCheckpoint(jsonData: string): Promise<void> {
-  try {
-    const checkpoint = JSON.parse(jsonData) as ScanCheckpoint;
+  const checkpoint = JSON.parse(jsonData) as ScanCheckpoint;
 
-    if (!validateCheckpoint(checkpoint)) {
-      throw new Error("Invalid checkpoint data");
-    }
-
-    await saveCheckpoint(checkpoint);
-    console.log("[Scan Progress] Checkpoint imported successfully");
-  } catch (error) {
-    console.error("[Scan Progress] Failed to import checkpoint:", error);
-    throw error;
+  if (!validateCheckpoint(checkpoint)) {
+    throw new Error("Invalid checkpoint data");
   }
+
+  await saveCheckpoint(checkpoint);
 }

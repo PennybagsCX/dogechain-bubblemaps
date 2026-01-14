@@ -201,7 +201,6 @@ export const fetchWithRateLimit = async (
       const retryAfter = response.headers.get("Retry-After");
       const waitTime = retryAfter ? parseInt(retryAfter) * 1000 : 5000;
 
-      console.warn(`Rate limited. Waiting ${waitTime}ms before retry...`);
       await new Promise((resolve) => setTimeout(resolve, waitTime));
 
       // Retry once after waiting
@@ -244,14 +243,14 @@ export const fetchWithRetry = async (
       // Server error - retry
       if (attempt < maxRetries) {
         const delay = baseDelay * Math.pow(2, attempt);
-        console.warn(`Attempt ${attempt + 1} failed. Retrying after ${delay}ms...`);
+
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     } catch (error) {
       // Network error - retry
       if (attempt < maxRetries) {
         const delay = baseDelay * Math.pow(2, attempt);
-        console.warn(`Network error on attempt ${attempt + 1}. Retrying after ${delay}ms...`);
+
         await new Promise((resolve) => setTimeout(resolve, delay));
       } else {
         throw error;
@@ -328,7 +327,7 @@ export class AdaptiveRequestScheduler {
       } catch (error: any) {
         if (error.status === 429) {
           // Wait 60 seconds and retry
-          console.warn(`Rate limit hit. Waiting 60s before retry...`);
+
           await new Promise((resolve) => setTimeout(resolve, 60000));
 
           // Re-queue the failed request
@@ -406,7 +405,7 @@ export class PriorityRequestQueue {
         try {
           await request();
         } catch (error) {
-          console.error(`Request failed in priority ${priority}:`, error);
+          // Error handled silently
         }
       }
     }

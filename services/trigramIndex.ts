@@ -157,29 +157,22 @@ export function searchTrigramIndex(query: string, index: Map<string, Set<string>
  * This should be called from db.ts with the actual database instance
  */
 export async function saveTrigramIndex(db: any, tokens: TokenData[]): Promise<void> {
-  try {
-    console.log("[Trigram Index] Building index...");
+  // Build index
+  const indexMap = buildTrigramIndexMap(tokens);
+  const entries = trigramIndexToEntries(indexMap);
 
-    // Build index
-    const indexMap = buildTrigramIndexMap(tokens);
-    const entries = trigramIndexToEntries(indexMap);
+  // Clear existing index
+  await db.trigramIndex.clear();
 
-    // Clear existing index
-    await db.trigramIndex.clear();
+  // Bulk insert
+  await db.trigramIndex.bulkAdd(entries);
 
-    // Bulk insert
-    await db.trigramIndex.bulkAdd(entries);
-
-    const stats = getTrigramIndexStats(indexMap);
-    console.log(
-      `[Trigram Index] Built with ${stats.totalTrigrams} trigrams, ` +
-        `${stats.totalMappings} address mappings, ` +
-        `avg frequency ${stats.avgFrequency.toFixed(2)}`
-    );
-  } catch (error) {
-    console.error("[Trigram Index] Failed to save:", error);
-    throw error;
-  }
+  const stats = getTrigramIndexStats(indexMap);
+  console.log(
+    `[Trigram Index] Built with ${stats.totalTrigrams} trigrams, ` +
+      `${stats.totalMappings} address mappings, ` +
+      `avg frequency ${stats.avgFrequency.toFixed(2)}`
+  );
 }
 
 /**
@@ -249,7 +242,8 @@ export async function searchTrigramIndexDB(
 
     return tokens.map((t: any) => t.address);
   } catch (error) {
-    console.error("[Trigram Index] Search failed:", error);
+    // Error handled silently
+
     return [];
   }
 }

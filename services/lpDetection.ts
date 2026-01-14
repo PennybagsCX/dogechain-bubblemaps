@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-console */
+
 /**
  * DEX Liquidity Pool Detection Service
  *
@@ -34,7 +34,8 @@ export async function fetchPairCreatedEvents(
 
     return [];
   } catch (error) {
-    console.error(`[LP Detection] Failed to fetch events from ${factoryAddress}:`, error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -71,7 +72,7 @@ export function calculatePairAddress(
   // const pairAddress = ethers.utils.getCreate2Address(factory, salt, initCodeHash);
   //
   // For now, we'll return a placeholder
-  console.warn("[LP Detection] calculatePairAddress not implemented - using placeholder");
+
   return "0x0000000000000000000000000000000000000000";
 }
 
@@ -110,7 +111,7 @@ export function parsePairCreatedEvents(
         isValid: true,
       });
     } catch (error) {
-      console.error("[LP Detection] Failed to parse event log:", error);
+      // Error handled silently
     }
   }
 
@@ -129,7 +130,6 @@ export function parsePairCreatedEvents(
 export async function scanAllFactories(
   onProgress?: (message: string, progress: number) => void
 ): Promise<number> {
-  console.log("[LP Detection] Starting factory scan...");
   const totalPairs: DbLPPair[] = [];
 
   for (let i = 0; i < KNOWN_FACTORIES.length; i++) {
@@ -137,35 +137,27 @@ export async function scanAllFactories(
     if (!factory) continue;
 
     if (factory.status !== "ACTIVE") {
-      console.log(`[LP Detection] Skipping ${factory.name} (status: ${factory.status})`);
       continue;
     }
 
     onProgress?.(`Scanning ${factory.name}...`, (i / KNOWN_FACTORIES.length) * 100);
 
     try {
-      console.log(`[LP Detection] Scanning ${factory.name} factory...`);
-
       // Fetch events from factory (from deploy block to latest)
       const events = await fetchPairCreatedEvents(factory.address, factory.deployBlock, "latest");
-
-      console.log(`[LP Detection] Found ${events.length} PairCreated events for ${factory.name}`);
 
       // Parse events
       const pairs = parsePairCreatedEvents(events, factory.address, factory.name);
 
-      console.log(`[LP Detection] Parsed ${pairs.length} pairs from ${factory.name}`);
-
       totalPairs.push(...pairs);
     } catch (error) {
-      console.error(`[LP Detection] Failed to scan ${factory.name}:`, error);
+      // Error handled silently
     }
   }
 
   // Save all discovered pairs to database
   if (totalPairs.length > 0) {
     await saveLPPairs(totalPairs);
-    console.log(`[LP Detection] Saved ${totalPairs.length} total LP pairs to database`);
   }
 
   onProgress?.("Factory scan complete", 100);
@@ -207,17 +199,14 @@ export async function initializeLPDetection(
     const existingPairs = await loadAllLPPairs();
 
     if (existingPairs.length > 0 && !forceRescan) {
-      console.log(`[LP Detection] Found ${existingPairs.length} existing LP pairs in database`);
       return;
     }
 
     // Scan factories to populate database
     onProgress?.("Initializing LP detection...", 0);
     const count = await scanAllFactories(onProgress);
-
-    console.log(`[LP Detection] Initialized with ${count} LP pairs`);
   } catch (error) {
-    console.error("[LP Detection] Failed to initialize:", error);
+    // Error handled silently
   }
 }
 

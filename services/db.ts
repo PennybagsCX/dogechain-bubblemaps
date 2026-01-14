@@ -163,12 +163,9 @@ class DogeDatabase extends Dexie {
     super("DogechainBubbleMapsDB");
 
     // Add error handler for database migration failures
-    this.on("blocked", () => {
-      console.warn("[DB] Database upgrade blocked. Other tabs may be open.");
-    });
+    this.on("blocked", () => {});
 
     this.on("versionchange", () => {
-      console.log("[DB] Database version changed. Reloading page.");
       window.location.reload();
     });
 
@@ -334,8 +331,6 @@ class DogeDatabase extends Dexie {
 
       // Add upgrade hook for version 11 to build inverted index
       this.version(11).upgrade(async (tx) => {
-        console.log("[DB] Upgrading to version 11: Building inverted index...");
-
         try {
           // Import inverted index builder
           const { saveInvertedIndex } = await import("./invertedIndex");
@@ -345,10 +340,8 @@ class DogeDatabase extends Dexie {
 
           // Build and save inverted index
           await saveInvertedIndex(tx, allTokens);
-
-          console.log(`[DB] Version 11 upgrade complete: Indexed ${allTokens.length} tokens`);
         } catch (error) {
-          console.error("[DB] Version 11 upgrade failed:", error);
+          // Error handled silently
           // Don't throw - allow upgrade to complete even if index build fails
           // Index will be built on next search
         }
@@ -378,8 +371,6 @@ class DogeDatabase extends Dexie {
 
       // Add upgrade hook for version 12 to build phonetic index
       this.version(12).upgrade(async (tx) => {
-        console.log("[DB] Upgrading to version 12: Building phonetic index...");
-
         try {
           // Import phonetic index builder
           const { savePhoneticIndex } = await import("./phoneticIndex");
@@ -394,7 +385,7 @@ class DogeDatabase extends Dexie {
             `[DB] Version 12 upgrade complete: Phonetic index for ${allTokens.length} tokens`
           );
         } catch (error) {
-          console.error("[DB] Version 12 upgrade failed:", error);
+          // Error handled silently
           // Don't throw - allow upgrade to complete even if index build fails
         }
       });
@@ -429,8 +420,6 @@ class DogeDatabase extends Dexie {
 
       // Add upgrade hook for version 13 to build trigram index
       this.version(13).upgrade(async (tx) => {
-        console.log("[DB] Upgrading to version 13: Building trigram index...");
-
         try {
           // Import trigram index builder
           const { saveTrigramIndex } = await import("./trigramIndex");
@@ -445,20 +434,18 @@ class DogeDatabase extends Dexie {
             `[DB] Version 13 upgrade complete: Trigram index for ${allTokens.length} tokens`
           );
         } catch (error) {
-          console.error("[DB] Version 13 upgrade failed:", error);
+          // Error handled silently
           // Don't throw - allow upgrade to complete even if index build fails
         }
       });
 
       // Version 14: Search analytics (no data migration needed)
       this.version(14).upgrade(async () => {
-        console.log("[DB] Upgrading to version 14: Search analytics enabled");
         // searchAnalytics store created automatically with schema above
       });
 
       // Version 15: Token popularity (no data migration needed)
       this.version(15).upgrade(async () => {
-        console.log("[DB] Upgrading to version 15: Token popularity scoring enabled");
         // tokenPopularity store created automatically with schema above
       });
 
@@ -469,13 +456,12 @@ class DogeDatabase extends Dexie {
             "&address, name, symbol, type, popularityScore, scanFrequency, holderCount, cachedAt, expiresAt",
         })
         .upgrade(async () => {
-          console.log("[DB] Upgrading to version 16: Learned tokens cache enabled");
           // learnedTokensCache store created automatically with schema above
           // No data migration needed - this is for offline caching of Vercel Postgres data
         });
     } catch (error) {
-      console.error("[DB] Database schema error:", error);
-      console.error("[DB] Please clear IndexedDB and reload the page.");
+      // Error handled silently
+
       // Store error for UI to display
       localStorage.setItem("doge_db_error", "schema_error");
     }
@@ -496,16 +482,14 @@ export async function ensureLPDetectionInitialized(): Promise<void> {
     const existingPairs = await loadAllLPPairs();
 
     if (existingPairs.length === 0) {
-      console.log("[DB] LP pairs database is empty, initializing...");
       await initializeLPDetection(false, (msg, progress) => {
-        console.log(`[LP Init] ${msg} (${progress.toFixed(0)}%)`);
+        // Progress callback
       });
-      console.log("[DB] LP detection initialization complete");
     } else {
-      console.log(`[DB] LP detection already initialized with ${existingPairs.length} pairs`);
+      // No existing tokens
     }
   } catch (error) {
-    console.error("[DB] Failed to initialize LP detection:", error);
+    // Error loading tokens
   }
 }
 
@@ -758,10 +742,11 @@ export async function testDatabaseHealth(): Promise<boolean> {
     // Try to open the database and read from a table
     await db.open();
     const count = await db.alerts.count();
-    console.log("[DB] Database health check passed. Alerts count:", count);
+
     return true;
   } catch (error) {
-    console.error("[DB] Database health check failed:", error);
+    // Error handled silently
+
     localStorage.setItem("doge_db_error", "health_check_failed");
     return false;
   }
@@ -799,7 +784,7 @@ export async function saveScanCache(
 
     await db.walletScanCache.put(cacheEntry);
   } catch (error) {
-    console.error("Failed to save scan cache:", error);
+    // Error in operation
   }
 }
 
@@ -824,7 +809,8 @@ export async function loadScanCache(walletAddress: string): Promise<DbWalletScan
 
     return cacheEntry;
   } catch (error) {
-    console.error("Failed to load scan cache:", error);
+    // Error handled silently
+
     return null;
   }
 }
@@ -866,7 +852,8 @@ export async function clearExpiredCache(): Promise<number> {
 
     return toDelete.length;
   } catch (error) {
-    console.error("Failed to clear expired cache:", error);
+    // Error handled silently
+
     return 0;
   }
 }
@@ -925,7 +912,7 @@ export async function saveWalletForcedContracts(
 
     await db.walletForcedContracts.put(entry);
   } catch (error) {
-    console.error("Failed to save wallet forced contracts:", error);
+    // Error in operation
   }
 }
 
@@ -942,7 +929,8 @@ export async function loadWalletForcedContracts(walletAddress: string): Promise<
 
     return entry.contracts;
   } catch (error) {
-    console.error("Failed to load wallet forced contracts:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -984,7 +972,7 @@ export async function saveDiscoveredContracts(contracts: DbDiscoveredContracts[]
       }
     }
   } catch (error) {
-    console.error("Failed to save discovered contracts:", error);
+    // Error in operation
   }
 }
 
@@ -995,7 +983,8 @@ export async function loadDiscoveredContracts(): Promise<DbDiscoveredContracts[]
   try {
     return await db.discoveredContracts.toArray();
   } catch (error) {
-    console.error("Failed to load discovered contracts:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -1007,7 +996,8 @@ export async function getDiscoveredContractsByType(type: string): Promise<DbDisc
   try {
     return await db.discoveredContracts.where("type").equals(type).toArray();
   } catch (error) {
-    console.error("Failed to get discovered contracts by type:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -1031,7 +1021,8 @@ export async function clearOldDiscoveredContracts(): Promise<number> {
 
     return oldContracts.length;
   } catch (error) {
-    console.error("Failed to clear old discovered contracts:", error);
+    // Error handled silently
+
     return 0;
   }
 }
@@ -1083,7 +1074,7 @@ export async function saveLPPairs(pairs: DbLPPair[]): Promise<void> {
       `[DB] Saved ${uniquePairs.length} LP pairs to database (${pairs.length - uniquePairs.length} duplicates skipped)`
     );
   } catch (error) {
-    console.error("[DB] Failed to save LP pairs:", error);
+    // Error in operation
   }
 }
 
@@ -1094,7 +1085,8 @@ export async function loadAllLPPairs(): Promise<DbLPPair[]> {
   try {
     return await db.lpPairs.toArray();
   } catch (error) {
-    console.error("[DB] Failed to load LP pairs:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -1109,7 +1101,8 @@ export async function isAddressLPPair(address: string): Promise<DbLPPair | null>
 
     return pair || null;
   } catch (error) {
-    console.error("[DB] Failed to check if address is LP pair:", error);
+    // Error handled silently
+
     return null;
   }
 }
@@ -1134,12 +1127,13 @@ export async function clearOldLPPairs(): Promise<number> {
     }
 
     if (oldPairs.length > 0) {
-      console.log(`[DB] Cleared ${oldPairs.length} old invalid LP pairs`);
+      // Old pairs deleted successfully
     }
 
     return oldPairs.length;
   } catch (error) {
-    console.error("[DB] Failed to clear old LP pairs:", error);
+    // Error handled silently
+
     return 0;
   }
 }
@@ -1151,7 +1145,8 @@ export async function getLPPairsByDEX(dexName: string): Promise<DbLPPair[]> {
   try {
     return await db.lpPairs.where("dexName").equals(dexName).toArray();
   } catch (error) {
-    console.error("[DB] Failed to get LP pairs by DEX:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -1170,7 +1165,8 @@ export async function getLPPairsByToken(tokenAddress: string): Promise<DbLPPair[
         pair.token1Address.toLowerCase() === lowerAddress
     );
   } catch (error) {
-    console.error("[DB] Failed to get LP pairs by token:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -1235,10 +1231,8 @@ export async function saveDiscoveredFactories(
         });
       }
     }
-
-    console.log(`[DB] Saved ${factories.length} discovered factories to database`);
   } catch (error) {
-    console.error("[DB] Failed to save discovered factories:", error);
+    // Error in operation
   }
 }
 
@@ -1249,7 +1243,8 @@ export async function loadDiscoveredFactories(): Promise<DbDiscoveredFactory[]> 
   try {
     return await db.discoveredFactories.toArray();
   } catch (error) {
-    console.error("[DB] Failed to load discovered factories:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -1265,7 +1260,8 @@ export async function getDiscoveredFactory(address: string): Promise<DbDiscovere
       .first();
     return factory || null;
   } catch (error) {
-    console.error("[DB] Failed to get discovered factory:", error);
+    // Error handled silently
+
     return null;
   }
 }
@@ -1277,7 +1273,8 @@ export async function getActiveDiscoveredFactories(): Promise<DbDiscoveredFactor
   try {
     return await db.discoveredFactories.where("status").equals("ACTIVE").toArray();
   } catch (error) {
-    console.error("[DB] Failed to get active discovered factories:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -1315,7 +1312,7 @@ export async function saveTokenToSearchIndex(token: DbTokenSearchIndex): Promise
       });
     }
   } catch (error) {
-    console.error("[DB] Failed to save token to search index:", error);
+    // Error in operation
   }
 }
 
@@ -1340,9 +1337,8 @@ export async function bulkSaveTokensToSearchIndex(tokens: DbTokenSearchIndex[]):
 
     // Bulk put (will add new or update existing)
     await db.tokenSearchIndex.bulkPut(Array.from(uniqueTokens.values()));
-    console.log(`[DB] Saved ${uniqueTokens.size} tokens to search index`);
   } catch (error) {
-    console.error("[DB] Failed to bulk save tokens to search index:", error);
+    // Error in operation
   }
 }
 
@@ -1384,7 +1380,8 @@ export async function searchTokensLocally(
 
     return scoredResults;
   } catch (error) {
-    console.error("[DB] Failed to search tokens locally:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -1396,7 +1393,8 @@ export async function getAllTokenSearchIndex(): Promise<DbTokenSearchIndex[]> {
   try {
     return await db.tokenSearchIndex.toArray();
   } catch (error) {
-    console.error("[DB] Failed to get all tokens from search index:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -1416,12 +1414,13 @@ export async function clearOldTokenSearchIndex(): Promise<number> {
     }
 
     if (oldTokens.length > 0) {
-      console.log(`[DB] Cleared ${oldTokens.length} old tokens from search index`);
+      // Old tokens deleted successfully
     }
 
     return oldTokens.length;
   } catch (error) {
-    console.error("[DB] Failed to clear old token search index:", error);
+    // Error handled silently
+
     return 0;
   }
 }

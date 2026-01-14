@@ -162,7 +162,6 @@ export const DashboardGuide: React.FC<DashboardGuideProps> = ({
 
   const portalRoot = document.getElementById("modal-portal-root");
   if (!portalRoot) {
-    console.error("[DashboardGuide] Portal root not found");
     return null;
   }
 

@@ -45,7 +45,6 @@ export async function POST(req: Request): Promise<Response> {
 
       // Skip if address is invalid
       if (!/^0x[a-f0-9]{40}$/.test(address)) {
-        console.warn("[API] Invalid token address:", address);
         continue;
       }
 
@@ -90,15 +89,10 @@ export async function POST(req: Request): Promise<Response> {
         `;
       } catch (error) {
         // Foreign key or unique constraint error - ignore
-        console.warn("[API] Failed to record wallet contribution:", error);
       }
 
       processedCount++;
     }
-
-    console.log(
-      `[API] Wallet scan submitted: ${processedCount} assets from wallet ${wallet.slice(0, 8)}...`
-    );
 
     return Response.json({
       success: true,
@@ -106,7 +100,6 @@ export async function POST(req: Request): Promise<Response> {
       wallet: wallet,
     });
   } catch (error) {
-    console.error("[API] Failed to submit wallet scan:", error);
     return Response.json({ success: false, error: "Failed to submit scan" }, { status: 500 });
   }
 }

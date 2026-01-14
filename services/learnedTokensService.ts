@@ -33,7 +33,6 @@ export async function fetchLearnedTokens(
     });
 
     if (!response.ok) {
-      console.warn("[Learned Tokens] API fetch failed:", response.status);
       return [];
     }
 
@@ -55,7 +54,8 @@ export async function fetchLearnedTokens(
       popularityScore: token.popularity_score, // Additional metadata
     }));
   } catch (error) {
-    console.warn("[Learned Tokens] Failed to fetch:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -91,15 +91,15 @@ export async function submitWalletScanResults(
     });
 
     if (!response.ok) {
-      console.warn("[Learned Tokens] Failed to submit scan:", response.status);
       return false;
     }
 
     const data = await response.json();
-    console.log(`[Learned Tokens] Submitted ${data.processed} assets from wallet scan`);
+
     return true;
   } catch (error) {
-    console.warn("[Learned Tokens] Failed to submit scan results:", error);
+    // Error handled silently
+
     return false;
   }
 }
@@ -129,7 +129,6 @@ export async function logTokenInteraction(
     });
   } catch (error) {
     // Silent fail - don't block UI for analytics
-    console.warn("[Learned Tokens] Failed to log interaction:", error);
   }
 }
 
@@ -171,7 +170,8 @@ export async function getTrendingLearnedTokens(
       popularityScore: asset.popularity_score,
     }));
   } catch (error) {
-    console.warn("[Learned Tokens] Failed to fetch trending:", error);
+    // Error handled silently
+
     return [];
   }
 }

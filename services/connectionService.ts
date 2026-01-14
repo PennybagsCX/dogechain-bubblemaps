@@ -86,11 +86,8 @@ export async function fetchConnectionDetails(
   const cacheKey = getCacheKey(sourceId, targetId);
   const cached = connectionCache.get(cacheKey);
   if (cached && cached.transactions && Date.now() - cached.cachedAt < CACHE_DURATION) {
-    console.log(`[ConnectionService] Using cached data for ${cacheKey}`);
     return cached;
   }
-
-  console.log(`[ConnectionService] Fetching connection details for ${cacheKey}`);
 
   try {
     // Fetch transactions from both wallets in parallel
@@ -145,7 +142,8 @@ export async function fetchConnectionDetails(
 
     return connection;
   } catch (error) {
-    console.error(`[ConnectionService] Error fetching connection details:`, error);
+    // Error handled silently
+
     return {
       ...link,
       loading: false,
@@ -159,5 +157,4 @@ export async function fetchConnectionDetails(
  */
 export function clearConnectionCache(): void {
   connectionCache.clear();
-  console.log("[ConnectionService] Cache cleared");
 }

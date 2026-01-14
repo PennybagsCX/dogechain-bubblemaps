@@ -29,7 +29,6 @@ export async function GET(req: Request): Promise<Response> {
 
     // Construct Blockscout API URL
     const targetUrl = `${BLOCKSCOUT_API_BASE}/tokens?type=JSON&query=${encodeURIComponent(query)}`;
-    console.log(`[Token Search Proxy] Fetching: ${targetUrl}`);
 
     // Forward request to Blockscout API with browser-like headers
     const response = await fetch(targetUrl, {
@@ -43,7 +42,6 @@ export async function GET(req: Request): Promise<Response> {
     });
 
     if (!response.ok) {
-      console.error(`[Token Search Proxy] Blockscout returned ${response.status}`);
       return Response.json(
         {
           success: false,
@@ -76,7 +74,6 @@ export async function GET(req: Request): Promise<Response> {
       },
     });
   } catch (error) {
-    console.error("[Token Search Proxy] Error:", error);
     return Response.json(
       {
         success: false,

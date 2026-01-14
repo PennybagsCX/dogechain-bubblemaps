@@ -49,7 +49,6 @@ export async function POST(req: Request): Promise<Response> {
 
     return Response.json({ success: true });
   } catch (error) {
-    console.error("[API] Failed to log interaction:", error);
     // Don't fail the request - analytics shouldn't block the UI
     return Response.json({ success: true });
   }

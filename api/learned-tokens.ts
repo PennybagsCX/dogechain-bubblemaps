@@ -76,7 +76,6 @@ export async function GET(req: Request): Promise<Response> {
       }
     );
   } catch (error) {
-    console.error("[API] Failed to fetch learned tokens:", error);
     return Response.json(
       { success: false, error: "Failed to fetch learned tokens" },
       { status: 500 }
@@ -99,7 +98,6 @@ export async function POST(req: Request): Promise<Response> {
 
     for (const token of tokens) {
       if (!token.address || !token.type) {
-        console.warn("[API] Skipping invalid token:", token);
         continue;
       }
 
@@ -146,7 +144,6 @@ export async function POST(req: Request): Promise<Response> {
       updated: updatedCount,
     });
   } catch (error) {
-    console.error("[API] Failed to add learned tokens:", error);
     return Response.json({ success: false, error: "Failed to add tokens" }, { status: 400 });
   }
 }

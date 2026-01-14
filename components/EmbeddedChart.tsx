@@ -40,9 +40,6 @@ export const EmbeddedChart: React.FC<EmbeddedChartProps> = ({
 
     const url = `https://dexscreener.com/${chainId}/${tokenAddress}?${params.toString()}`;
 
-    // Log URL for debugging
-    console.log(`[EmbeddedChart] Dexscreener URL:`, url);
-
     return url;
   }, [chainId, tokenAddress, theme]);
 
@@ -51,38 +48,19 @@ export const EmbeddedChart: React.FC<EmbeddedChartProps> = ({
     setIsLoading(false);
     setIframeError(false);
     onLoad?.();
-
-    // Log success
-    console.log(`[EmbeddedChart] Dexscreener loaded successfully for ${tokenSymbol}`, {
-      tokenAddress,
-      source: "dexscreener",
-      url: getChartUrl(),
-    });
-  }, [tokenSymbol, tokenAddress, onLoad, getChartUrl]);
+  }, [onLoad]);
 
   // Handle iframe error
   const handleIframeError = useCallback(() => {
-    console.warn(`[EmbeddedChart] Dexscreener failed to load for ${tokenSymbol}`, {
-      tokenAddress,
-    });
-
     setIframeError(true);
     setIsLoading(false);
     onError?.();
-  }, [tokenSymbol, tokenAddress, onError]);
+  }, [onError]);
 
   // Toggle expansion
   const toggleExpansion = useCallback(() => {
     setIsExpanded((prev) => !prev);
-
-    // Log expansion for analytics
-    if (!isExpanded) {
-      console.log(`[EmbeddedChart] Expanding chart for ${tokenSymbol}`, {
-        tokenAddress,
-        source: "dexscreener",
-      });
-    }
-  }, [isExpanded, tokenSymbol, tokenAddress]);
+  }, []);
 
   // Reload iframe
   const reloadIframe = useCallback(() => {
@@ -104,13 +82,7 @@ export const EmbeddedChart: React.FC<EmbeddedChartProps> = ({
   const openExternalLink = useCallback(() => {
     const url = getChartUrl();
     window.open(url, "_blank", "noopener,noreferrer");
-
-    // Log external link click for analytics
-    console.log("[EmbeddedChart] Opening external link to Dexscreener", {
-      tokenSymbol,
-      url,
-    });
-  }, [tokenSymbol, getChartUrl]);
+  }, [getChartUrl]);
 
   // Copy pair address
   const copyAddress = useCallback(async () => {
@@ -130,12 +102,10 @@ export const EmbeddedChart: React.FC<EmbeddedChartProps> = ({
           button.classList.remove("text-green-400");
         }, 2000);
       }
-
-      console.log(`[EmbeddedChart] Copied address for ${tokenSymbol}:`, tokenAddress);
     } catch (error) {
-      console.error("[EmbeddedChart] Failed to copy address:", error);
+      // Silently handle clipboard errors
     }
-  }, [tokenAddress, tokenSymbol]);
+  }, [tokenAddress]);
 
   // Keyboard shortcuts
   useEffect(() => {

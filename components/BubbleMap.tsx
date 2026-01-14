@@ -610,7 +610,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     const getLinkId = (d: LinkDatum | any) => {
       // Check if this is an event object (not actual data)
       if (!d || typeof d !== "object" || !("source" in d) || !("target" in d)) {
-        console.warn("[BubbleMap] Invalid link data received:", d);
         return null;
       }
 
@@ -622,7 +621,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       const targetId = typeof target === "string" ? target : (target as any)?.id;
 
       if (!sourceId || !targetId) {
-        console.warn("[BubbleMap] Invalid link data (missing IDs):", d);
         return null;
       }
 
@@ -714,9 +712,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           onConnectionClick(link);
         }
       })
-      .on("mouseover", function (this: any, _d: LinkDatum) {
+      .on("mouseover", (_event: any, _d: LinkDatum) => {
         // Turn connection purple to indicate details available
-        const wrapper = d3.select(this);
+        const wrapper = d3.select(_event.currentTarget);
         wrapper.select(".link-hitbox").style("cursor", "pointer");
 
         wrapper
@@ -730,7 +728,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           .attr("opacity", 1)
           .style("filter", "drop-shadow(0 0 8px rgba(168, 85, 247, 0.8))"); // Purple glow
       })
-      .on("mouseout", function (this: any, _event: any, d: LinkDatum) {
+      .on("mouseout", (_event: any, d: LinkDatum) => {
         // Don't reset if this link is highlighted on mobile
         const linkId = getLinkId(d);
         if (!linkId) return; // Guard against invalid link data
@@ -745,7 +743,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         }
 
         // Restore gradient appearance
-        d3.select(this as any)
+        d3.select(_event.currentTarget)
           .select(".neural-vein")
           .transition()
           .duration(150)
@@ -1069,8 +1067,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     return () => {
       if (simulationRef.current) simulationRef.current.stop();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- applyConnectionHighlight is stable and doesn't need to be in deps
-    // Note: onConnectionClick is stored in a ref; excluding from deps prevents unnecessary rebuilds
   }, [
     wallets,
     links,
@@ -1081,6 +1077,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     showLabels,
     showLinks,
     hasMeasured,
+    applyConnectionHighlight,
+    onConnectionClick,
   ]);
 
   // Re-apply connection selection after re-renders (resize, etc)
@@ -1264,7 +1262,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       // Clean up
       URL.revokeObjectURL(url);
     } catch (error) {
-      console.error("Screenshot failed:", error);
+      // Error handled silently - snapshot capture failed
     } finally {
       setIsSnapshotting(false);
     }

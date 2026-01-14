@@ -22,8 +22,6 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo);
-
     // Send error to Sentry if initialized
     Sentry.captureException(error, {
       contexts: {

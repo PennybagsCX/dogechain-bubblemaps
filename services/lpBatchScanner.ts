@@ -80,7 +80,7 @@ async function fetchEventsBatch(
       }
 
       // API error
-      console.warn(`[Batch Scanner] API returned status ${data.status}: ${data.message}`);
+
       return [];
     } catch (error) {
       console.error(
@@ -105,28 +105,23 @@ async function fetchEventsBatch(
  * Parse PairCreated event log into DbLPPair
  */
 function parsePairEvent(log: any, factoryAddress: string, factoryName: string): DbLPPair {
-  try {
-    // Extract addresses from topics (indexed parameters)
-    const token0 = log.topics[1] ? "0x" + log.topics[1].slice(26) : "0x0";
-    const token1 = log.topics[2] ? "0x" + log.topics[2].slice(26) : "0x0";
+  // Extract addresses from topics (indexed parameters)
+  const token0 = log.topics[1] ? "0x" + log.topics[1].slice(26) : "0x0";
+  const token1 = log.topics[2] ? "0x" + log.topics[2].slice(26) : "0x0";
 
-    // Pair address is in the data field (first 32 bytes)
-    const pairAddress = "0x" + log.data.slice(26, 66);
+  // Pair address is in the data field (first 32 bytes)
+  const pairAddress = "0x" + log.data.slice(26, 66);
 
-    return {
-      pairAddress,
-      factoryAddress,
-      token0Address: token0,
-      token1Address: token1,
-      dexName: factoryName,
-      discoveredAt: Date.now(),
-      lastVerifiedAt: Date.now(),
-      isValid: true,
-    };
-  } catch (error) {
-    console.error("[Batch Scanner] Failed to parse event log:", error);
-    throw error;
-  }
+  return {
+    pairAddress,
+    factoryAddress,
+    token0Address: token0,
+    token1Address: token1,
+    dexName: factoryName,
+    discoveredAt: Date.now(),
+    lastVerifiedAt: Date.now(),
+    isValid: true,
+  };
 }
 
 /**
@@ -152,11 +147,9 @@ async function scanBatch(
         const pair = parsePairEvent(event, config.factoryAddress, config.factoryName);
         pairs.push(pair);
       } catch (parseError) {
-        console.error("[Batch Scanner] Failed to parse event:", parseError);
+        // Skip invalid pair events
       }
     }
-
-    console.log(`[Batch Scanner] Found ${pairs.length} pairs in blocks ${startBlock}-${endBlock}`);
 
     return { pairs };
   } catch (error) {
@@ -187,11 +180,6 @@ export async function scanFactoryInBatches(config: BatchScanConfig): Promise<Bat
   const totalBlocks = calculateTotalBlocks(config.startBlock, config.endBlock);
   const totalBatches = Math.ceil(totalBlocks / config.batchSize);
   let batchNumber = 0;
-
-  console.log(`[Batch Scanner] Starting batch scan for ${config.factoryName}`);
-  console.log(`[Batch Scanner] Range: ${config.startBlock} → ${config.endBlock}`);
-  console.log(`[Batch Scanner] Batch size: ${config.batchSize} blocks`);
-  console.log(`[Batch Scanner] Estimated batches: ${totalBatches}`);
 
   // eslint-disable-next-line no-constant-condition -- Intentional infinite loop with break conditions inside
   while (true) {
@@ -253,12 +241,6 @@ export async function scanFactoryInBatches(config: BatchScanConfig): Promise<Bat
 
   const duration = Date.now() - startTime;
 
-  console.log(`[Batch Scanner] Scan complete for ${config.factoryName}`);
-  console.log(`[Batch Scanner] Total pairs: ${totalPairs}`);
-  console.log(`[Batch Scanner] Blocks scanned: ${blocksScanned}`);
-  console.log(`[Batch Scanner] Errors: ${errors.length}`);
-  console.log(`[Batch Scanner] Duration: ${Math.round(duration / 1000)}s`);
-
   return {
     factoryAddress: config.factoryAddress,
     factoryName: config.factoryName,
@@ -278,20 +260,12 @@ export async function scanMultipleFactories(
 ): Promise<BatchScanResult[]> {
   const results: BatchScanResult[] = [];
 
-  console.log(
-    `[Batch Scanner] Scanning ${configs.length} factories with concurrency ${concurrency}`
-  );
-
   // Process in batches
   for (let i = 0; i < configs.length; i += concurrency) {
     const batch = configs.slice(i, i + concurrency);
     const batchResults = await Promise.all(batch.map((config) => scanFactoryInBatches(config)));
 
     results.push(...batchResults);
-
-    console.log(
-      `[Batch Scanner] Completed ${Math.min(i + concurrency, configs.length)}/${configs.length} factories`
-    );
   }
 
   return results;
@@ -323,13 +297,11 @@ export function validateLPPairs(pairs: DbLPPair[]): { valid: DbLPPair[]; invalid
     const addressRegex = /^0x[a-fA-F0-9]{40}$/;
 
     if (!addressRegex.test(pair.pairAddress)) {
-      console.warn(`[Batch Scanner] Invalid pair address: ${pair.pairAddress}`);
       invalid.push(pair);
       continue;
     }
 
     if (!addressRegex.test(pair.token0Address) || !addressRegex.test(pair.token1Address)) {
-      console.warn(`[Batch Scanner] Invalid token address in pair: ${pair.pairAddress}`);
       invalid.push(pair);
       continue;
     }
@@ -337,7 +309,6 @@ export function validateLPPairs(pairs: DbLPPair[]): { valid: DbLPPair[]; invalid
     // Check for duplicates (same pair address)
     const key = `${pair.pairAddress.toLowerCase()}`;
     if (seen.has(key)) {
-      console.warn(`[Batch Scanner] Duplicate pair address: ${pair.pairAddress}`);
       invalid.push(pair);
       continue;
     }
@@ -345,8 +316,6 @@ export function validateLPPairs(pairs: DbLPPair[]): { valid: DbLPPair[]; invalid
     seen.add(key);
     valid.push(pair);
   }
-
-  console.log(`[Batch Scanner] Validation: ${valid.length} valid, ${invalid.length} invalid`);
 
   return { valid, invalid };
 }
@@ -361,8 +330,6 @@ export async function saveLPPairsInBatches(
 ): Promise<void> {
   const { saveLPPairs } = await import("./db");
 
-  console.log(`[Batch Scanner] Saving ${pairs.length} LP pairs in batches of ${batchSize}`);
-
   for (let i = 0; i < pairs.length; i += batchSize) {
     const batch = pairs.slice(i, i + batchSize);
     await saveLPPairs(batch);
@@ -372,6 +339,4 @@ export async function saveLPPairsInBatches(
     // Small delay to avoid blocking the main thread
     await new Promise((resolve) => setTimeout(resolve, 10));
   }
-
-  console.log(`[Batch Scanner] Finished saving ${pairs.length} LP pairs`);
 }

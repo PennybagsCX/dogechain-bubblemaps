@@ -53,8 +53,6 @@ export async function GET(req: Request): Promise<Response> {
       );
     }
 
-    console.log("[Dogechain Proxy] Fetching:", targetUrl.replace(/\/api\?/, "/api?..."));
-
     // Forward request to Blockscout API with browser-like headers
     const response = await fetch(targetUrl, {
       method: "GET",
@@ -67,7 +65,6 @@ export async function GET(req: Request): Promise<Response> {
     });
 
     if (!response.ok) {
-      console.error("[Dogechain Proxy] Blockscout returned:", response.status, response.statusText);
       return Response.json(
         { error: `Upstream API error: ${response.status} ${response.statusText}` },
         { status: response.status }
@@ -86,7 +83,6 @@ export async function GET(req: Request): Promise<Response> {
       },
     });
   } catch (error) {
-    console.error("[Dogechain Proxy] Error:", error);
     return Response.json(
       { error: error instanceof Error ? error.message : "Unknown error" },
       { status: 500 }

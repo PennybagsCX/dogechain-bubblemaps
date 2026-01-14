@@ -60,9 +60,8 @@ export async function logSearchQuery(
       // Try to parse error message, but don't fail if it's not JSON
       try {
         const error = await response.json();
-        console.warn("[Trending] Failed to log search:", error.error || response.statusText);
       } catch {
-        console.warn("[Trending] Failed to log search:", response.statusText);
+        // Error response is not JSON, handled silently
       }
       return false;
     }
@@ -70,7 +69,7 @@ export async function logSearchQuery(
     return true;
   } catch (error) {
     // Silent fail - don't block UI if logging fails
-    console.warn("[Trending] Error logging search:", error);
+
     return false;
   }
 }

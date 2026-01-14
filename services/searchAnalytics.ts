@@ -100,7 +100,7 @@ export async function trackSearch(
       // Silently fail if server is unavailable
     });
   } catch (error) {
-    console.error("[Analytics] Failed to track search:", error);
+    // Error handled silently
   }
 }
 
@@ -147,7 +147,7 @@ export async function trackResultClick(
       // Silently fail if server is unavailable
     });
   } catch (error) {
-    console.error("[Analytics] Failed to track click:", error);
+    // Error handled silently
   }
 }
 
@@ -167,7 +167,7 @@ export async function trackSearchAbandonment(
     // Abandonment is implied by lack of clicks
     // Tracking is implicit - no action needed
   } catch (error) {
-    console.error("[Analytics] Failed to track abandonment:", error);
+    // Error handled silently
   }
 }
 
@@ -195,7 +195,7 @@ async function saveSearchEventLocally(event: SearchAnalyticsEvent): Promise<void
       });
     }
   } catch (error) {
-    console.warn("[Analytics] Failed to save search event locally:", error);
+    // Error handled silently
   }
 }
 
@@ -219,7 +219,7 @@ async function saveClickEventLocally(event: ClickAnalyticsEvent): Promise<void> 
       });
     }
   } catch (error) {
-    console.warn("[Analytics] Failed to save click event locally:", error);
+    // Error handled silently
   }
 }
 
@@ -314,7 +314,8 @@ export async function getRecentSearches(limit: number = 100): Promise<SearchAnal
         timestamp: e.timestamp,
       }));
   } catch (error) {
-    console.error("[Analytics] Failed to get recent searches:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -339,7 +340,8 @@ export async function getTopQueries(
       .sort((a, b) => b.count - a.count)
       .slice(0, limit);
   } catch (error) {
-    console.error("[Analytics] Failed to get top queries:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -379,7 +381,8 @@ export async function getRecentSearchHistory(limit: number = 10): Promise<string
 
     return history;
   } catch (error) {
-    console.error("[Analytics] Failed to get search history:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -394,10 +397,9 @@ export async function clearSearchAnalytics(): Promise<void> {
 
     if ("searchAnalytics" in db) {
       await db.searchAnalytics.clear();
-      console.log("[Analytics] Search analytics cleared");
     }
   } catch (error) {
-    console.error("[Analytics] Failed to clear search analytics:", error);
+    // Error handled silently
   }
 }
 
@@ -420,7 +422,7 @@ export function initializeAnalytics(): void {
     // Generate session ID
     getSessionId();
   } catch (error) {
-    console.error("[Analytics] Failed to initialize:", error);
+    // Error handled silently
   }
 }
 
@@ -431,7 +433,7 @@ export function cleanupAnalytics(): void {
   try {
     // Session data is automatically cleaned up
   } catch (error) {
-    console.error("[Analytics] Failed to cleanup:", error);
+    // Error handled silently
   }
 }
 

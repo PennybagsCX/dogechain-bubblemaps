@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Known DEX Factory Contracts on Dogechain
  *
@@ -166,7 +165,8 @@ export async function getAllFactories(): Promise<DEXFactory[]> {
 
     return [...KNOWN_FACTORIES, ...uniqueDynamic];
   } catch (error) {
-    console.error("[Known Factories] Failed to load dynamic factories:", error);
+    // Error handled silently
+
     return KNOWN_FACTORIES;
   }
 }
@@ -185,7 +185,6 @@ export async function getAllActiveFactories(): Promise<DEXFactory[]> {
  */
 export function addRuntimeFactory(factory: DEXFactory): void {
   KNOWN_FACTORIES.push(factory);
-  console.log(`[Known Factories] Added factory to runtime registry: ${factory.name}`);
 }
 
 /**

@@ -62,8 +62,6 @@ export async function GET(req: Request): Promise<Response> {
       logs,
     });
   } catch (error) {
-    console.error("[Diagnostics] Error retrieving logs:", error);
-
     return Response.json(
       {
         success: false,

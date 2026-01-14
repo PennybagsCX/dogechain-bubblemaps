@@ -207,29 +207,22 @@ export function getIndexStats(index: Map<string, Set<string>>): {
  * This should be called from db.ts with the actual database instance
  */
 export async function saveInvertedIndex(db: any, tokens: TokenData[]): Promise<void> {
-  try {
-    console.log("[Inverted Index] Building index...");
+  // Build index
+  const indexMap = buildInvertedIndexMap(tokens);
+  const entries = invertedIndexToEntries(indexMap);
 
-    // Build index
-    const indexMap = buildInvertedIndexMap(tokens);
-    const entries = invertedIndexToEntries(indexMap);
+  // Clear existing index
+  await db.invertedIndex.clear();
 
-    // Clear existing index
-    await db.invertedIndex.clear();
+  // Bulk insert
+  await db.invertedIndex.bulkAdd(entries);
 
-    // Bulk insert
-    await db.invertedIndex.bulkAdd(entries);
-
-    const stats = getIndexStats(indexMap);
-    console.log(
-      `[Inverted Index] Built with ${stats.totalTerms} terms, ` +
-        `${stats.totalAddresses} address mappings, ` +
-        `avg frequency ${stats.avgFrequency.toFixed(2)}`
-    );
-  } catch (error) {
-    console.error("[Inverted Index] Failed to save:", error);
-    throw error;
-  }
+  const stats = getIndexStats(indexMap);
+  console.log(
+    `[Inverted Index] Built with ${stats.totalTerms} terms, ` +
+      `${stats.totalAddresses} address mappings, ` +
+      `avg frequency ${stats.avgFrequency.toFixed(2)}`
+  );
 }
 
 /**
@@ -275,7 +268,8 @@ export async function searchInvertedIndexDB(
 
     return tokens.map((t: any) => t.address);
   } catch (error) {
-    console.error("[Inverted Index] Search failed:", error);
+    // Error handled silently
+
     return [];
   }
 }

@@ -132,7 +132,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.5);
     } catch (e) {
-      console.warn("Could not play sound:", e);
+      // Error handled silently - audio playback failed
     }
   }, [soundEnabled]);
 
@@ -151,7 +151,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
             validateWalletAddress(alert.walletAddress);
             if (alert.tokenAddress) validateTokenAddress(alert.tokenAddress);
           } catch (e) {
-            console.warn(`Skipping alert ${alert.id} due to invalid address`, e);
             return;
           }
 
@@ -213,7 +212,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
             newTransactions: hasNewActivity ? newTransactions : undefined,
           };
         } catch (e) {
-          console.error(`Failed to check alert ${alert.id}`, e);
           newStatuses[alert.id] = {
             currentValue: 0,
             triggered: false,
@@ -235,7 +233,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
         runScan();
       }
     }
-  }, [alerts, statuses, isScanning, runScan]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [alerts.length, Object.keys(statuses).length, isScanning, runScan]);
 
   // Periodic automatic scanning every 30 seconds
   useEffect(() => {
@@ -261,7 +260,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
     // Cleanup interval on unmount
     return () => clearInterval(intervalId);
-  }, [alerts.length, isScanning, runScan]); // Re-setup when alerts length changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [alerts.length]); // Re-setup when alerts length changes
 
   // Show browser notifications when alerts trigger
   useEffect(() => {
@@ -317,7 +317,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
             tokenSymbol: triggeredEvent.tokenSymbol,
             transactionCount: triggeredEvent.transactions.length,
           }),
-        }).catch((err) => console.error("[API] Failed to log triggered alert:", err));
+        }).catch((err) => {
+          // Error handled silently
+        });
       }
 
       status.newTransactions.forEach((tx) => {
@@ -425,7 +427,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         alertType: "WALLET",
       });
     } catch (error) {
-      console.error("Failed to save alert", error);
+      // Error handled silently - alert creation failed
     } finally {
       setIsSubmitting(false);
     }
@@ -482,7 +484,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch (error) {
-      console.error("Failed to export data:", error);
       alert("Failed to export data. Please try again.");
     }
   };

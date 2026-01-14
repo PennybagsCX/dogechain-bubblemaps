@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * User Contributions Service
  *
@@ -66,10 +65,10 @@ export async function submitToken(submission: TokenSubmission): Promise<boolean>
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
 
-    console.log("[Contributions] Token submitted:", submission.contractAddress);
     return true;
   } catch (error) {
-    console.error("[Contributions] Failed to submit token:", error);
+    // Error handled silently
+
     return false;
   }
 }
@@ -105,10 +104,10 @@ export async function submitMetadataCorrection(
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
 
-    console.log("[Contributions] Metadata correction submitted:", contractAddress);
     return true;
   } catch (error) {
-    console.error("[Contributions] Failed to submit correction:", error);
+    // Error handled silently
+
     return false;
   }
 }
@@ -141,7 +140,8 @@ export async function voteOnCorrection(
 
     return true;
   } catch (error) {
-    console.error("[Contributions] Failed to vote:", error);
+    // Error handled silently
+
     return false;
   }
 }
@@ -166,7 +166,8 @@ async function verifyContract(contractAddress: string): Promise<boolean> {
     const data = await response.json();
     return !!(data && data.address);
   } catch (error) {
-    console.warn("[Contributions] Contract verification failed:", error);
+    // Error handled silently
+
     return false;
   }
 }

@@ -41,7 +41,8 @@ export async function getPeerRecommendations(
     const data = await response.json();
     return data.recommendations || [];
   } catch (error) {
-    console.warn("[Peer Trending] Failed to fetch recommendations:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -91,7 +92,8 @@ export async function enhanceWithPeerRecommendations(
       peerOnly: peerResults,
     };
   } catch (error) {
-    console.warn("[Peer Trending] Failed to enhance results:", error);
+    // Error handled silently
+
     return {
       enhanced: currentResults,
       peerOnly: [],

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * DEX Factory Discovery Service
@@ -48,18 +47,16 @@ const factoryRegistry = new Map<string, DiscoveredFactory>();
  */
 export async function discoverNewFactories(_limit: number = 10): Promise<DiscoveredFactory[]> {
   try {
-    console.log("[Factory Discovery] Scanning for new factories...");
-
     // Scan recent contract deployments (would use explorer API in production)
     // For now, return known factories from registry
     const knownFactories = Array.from(factoryRegistry.values()).filter(
       (f) => f.status === "active"
     );
 
-    console.log(`[Factory Discovery] Found ${knownFactories.length} active factories`);
     return knownFactories.slice(0, _limit);
   } catch (error) {
-    console.error("[Factory Discovery] Failed to discover factories:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -115,7 +112,8 @@ export async function verifyFactory(address: string): Promise<{
       version: hasPool ? "V3" : "V2",
     };
   } catch (error) {
-    console.warn("[Factory Discovery] Factory verification failed:", error);
+    // Error handled silently
+
     return { isFactory: false };
   }
 }
@@ -138,8 +136,6 @@ export function registerFactory(address: string, name: string, dexName: string):
     lastVerified: Date.now(),
     status: "active",
   });
-
-  console.log(`[Factory Discovery] Registered factory: ${dexName} (${name})`);
 }
 
 /**
@@ -164,8 +160,6 @@ export async function discoverFactoryPairs(
   _limit: number = 100
 ): Promise<string[]> {
   try {
-    console.log(`[Factory Discovery] Discovering pairs for factory: ${factoryAddress}`);
-
     // Query PairCreated events (would use logs API in production)
     // For now, return empty array
     const pairs: string[] = [];
@@ -179,7 +173,8 @@ export async function discoverFactoryPairs(
 
     return pairs;
   } catch (error) {
-    console.error("[Factory Discovery] Failed to discover pairs:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -191,8 +186,6 @@ export async function discoverFactoryPairs(
  */
 export async function scanForNewFactories(): Promise<number> {
   try {
-    console.log("[Factory Discovery] Starting full scan for new DEX factories...");
-
     const discoveredCount = 0;
 
     // In production, would:
@@ -202,11 +195,11 @@ export async function scanForNewFactories(): Promise<number> {
     // 4. Discover pairs from new factories
 
     // For now, just log
-    console.log(`[Factory Discovery] Scan complete: ${discoveredCount} new factories`);
 
     return discoveredCount;
   } catch (error) {
-    console.error("[Factory Discovery] Scan failed:", error);
+    // Error handled silently
+
     return 0;
   }
 }
@@ -217,8 +210,6 @@ export function initializeFactoryRegistry(): void {
   registerFactory("0xA10207210e5C87684Ecc26585A87eb21C4dC746", "Uniswap V2 Factory", "QuickSwap");
 
   registerFactory("0x4e6391e41262c3014964b4c6af2f2b6b2b28B9d8", "PancakeSwap Factory", "ChewySwap");
-
-  console.log(`[Factory Discovery] Initialized with ${factoryRegistry.size} factories`);
 }
 
 // Auto-initialize

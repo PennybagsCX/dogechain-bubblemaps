@@ -63,8 +63,6 @@ export function initPerformanceMonitoring(): void {
 
   // Observe resource timings
   observeResourceTimings();
-
-  console.log("[Performance Monitor] Initialized");
 }
 
 /**
@@ -90,7 +88,7 @@ function observeLCP(): void {
 
     observer.observe({ type: "largest-contentful-paint", buffered: true });
   } catch (error) {
-    console.warn("[Performance Monitor] Failed to observe LCP:", error);
+    // Error handled silently
   }
 }
 
@@ -118,7 +116,7 @@ function observeFID(): void {
 
     observer.observe({ type: "first-input", buffered: true });
   } catch (error) {
-    console.warn("[Performance Monitor] Failed to observe FID:", error);
+    // Error handled silently
   }
 }
 
@@ -151,7 +149,7 @@ function observeCLS(): void {
 
     observer.observe({ type: "layout-shift", buffered: true });
   } catch (error) {
-    console.warn("[Performance Monitor] Failed to observe CLS:", error);
+    // Error handled silently
   }
 }
 
@@ -178,7 +176,7 @@ function observeINP(): void {
 
     observer.observe({ type: "event", buffered: true });
   } catch (error) {
-    console.warn("[Performance Monitor] Failed to observe INP:", error);
+    // Error handled silently
   }
 }
 
@@ -208,7 +206,7 @@ function observeFCP(): void {
       buffered: true,
     });
   } catch (error) {
-    console.warn("[Performance Monitor] Failed to observe FCP:", error);
+    // Error handled silently
   }
 }
 
@@ -236,7 +234,7 @@ function observeTTFB(): void {
 
     observer.observe({ type: "navigation", buffered: true });
   } catch (error) {
-    console.warn("[Performance Monitor] Failed to observe TTFB:", error);
+    // Error handled silently
   }
 }
 
@@ -265,7 +263,7 @@ function observeResourceTimings(): void {
 
     observer.observe({ type: "resource", buffered: true });
   } catch (error) {
-    console.warn("[Performance Monitor] Failed to observe resources:", error);
+    // Error handled silently
   }
 }
 
@@ -286,9 +284,6 @@ function getRating(metricName: string, value: number): "good" | "needs-improveme
  */
 function recordMetric(metric: Metric): void {
   metrics.push(metric);
-  console.log(
-    `[Performance Monitor] ${metric.name}: ${metric.value.toFixed(2)}ms (${metric.rating})`
-  );
 }
 
 /**
@@ -311,10 +306,6 @@ export function trackSearchPerformance(
   };
 
   searchMetrics.push(metric);
-
-  console.log(
-    `[Performance Monitor] Search: "${query}" - ${responseTime.toFixed(2)}ms (cache: ${cacheHit})`
-  );
 }
 
 /**
@@ -407,7 +398,6 @@ export function clearMetrics(): void {
   metrics = [];
   searchMetrics = [];
   resourceMetrics = [];
-  console.log("[Performance Monitor] Metrics cleared");
 }
 
 /**

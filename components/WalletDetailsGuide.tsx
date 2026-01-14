@@ -162,7 +162,6 @@ export const WalletDetailsGuide: React.FC<WalletDetailsGuideProps> = ({
 
   const portalRoot = document.getElementById("modal-portal-root");
   if (!portalRoot) {
-    console.error("[WalletDetailsGuide] Portal root not found");
     return null;
   }
 

@@ -79,13 +79,9 @@ export const initSentry = () => {
         return event;
       },
     });
-
-    console.log("Sentry initialized successfully");
   } else {
     if (import.meta.env.DEV) {
-      console.log("Sentry not initialized: Development mode");
     } else if (!SENTRY_DSN) {
-      console.warn("Sentry not initialized: SENTRY_DSN not configured");
     }
   }
 };

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-console */
 import { AssetType, SearchResult } from "../types";
 import {
   loadAllLPPairs,
@@ -186,7 +185,7 @@ export async function applyPopularityBoosts(
       result.score = Math.min(100, result.score + boost);
     }
   } catch (error) {
-    console.warn("[Search] Failed to apply popularity boosts:", error);
+    // Error handled silently
     // Continue without popularity boosts
   }
 }
@@ -228,7 +227,7 @@ async function preloadAbbreviations(type: AssetType, maxTokens: number = 100): P
       }
     }
   } catch (error) {
-    console.warn("[Token Search] Failed to preload abbreviations:", error);
+    // Error handled silently
   }
 }
 
@@ -238,14 +237,11 @@ async function preloadAbbreviations(type: AssetType, maxTokens: number = 100): P
  */
 export async function initializeTokenSearchIndex(): Promise<void> {
   try {
-    console.log("[Token Search] Initializing search index...");
-
     // Check if index is already populated
     const { getAllTokenSearchIndex } = await import("./db");
     const existingIndex = await getAllTokenSearchIndex();
 
     if (existingIndex.length > 0) {
-      console.log(`[Token Search] Index already populated with ${existingIndex.length} tokens`);
       return;
     }
 
@@ -289,10 +285,8 @@ export async function initializeTokenSearchIndex(): Promise<void> {
     // 3. Bulk save to search index
     const { bulkSaveTokensToSearchIndex } = await import("./db");
     await bulkSaveTokensToSearchIndex([...lpTokens, ...discoveredTokens]);
-
-    console.log(`[Token Search] Indexed ${lpTokens.length + discoveredTokens.length} tokens`);
   } catch (error) {
-    console.error("[Token Search] Failed to initialize search index:", error);
+    // Error handled silently
   }
 }
 
@@ -310,7 +304,6 @@ export async function searchTokensLocally(
     // Check cache first (90%+ speedup for repeated queries)
     const cachedResults = getCachedSearchResults(query, type);
     if (cachedResults) {
-      console.log(`[Token Search] Cache hit for "${query}"`);
       return cachedResults.slice(0, limit);
     }
 
@@ -466,7 +459,8 @@ export async function searchTokensLocally(
 
     return sortedResults;
   } catch (error) {
-    console.error("[Token Search] Local search failed:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -491,7 +485,6 @@ export async function searchTokensBlockscout(
     let usedProxy = true;
 
     try {
-      console.log(`[Token Search] Using proxy for query: ${query}`);
       response = await fetch(proxyUrl);
 
       // If proxy fails, fall back to direct API
@@ -504,17 +497,15 @@ export async function searchTokensBlockscout(
       }
     } catch (proxyError) {
       // Network error with proxy, fall back to direct API
-      console.warn(`[Token Search] Proxy error: ${proxyError}, falling back to direct API`);
+
       usedProxy = false;
       response = await fetch(directUrl);
     }
 
     if (!response.ok) {
-      console.warn("[Token Search] Blockscout API request failed:", response.status);
       return [];
     }
 
-    console.log(`[Token Search] Successfully fetched using ${usedProxy ? "proxy" : "direct API"}`);
     const data = await response.json();
 
     if (!data.items || !Array.isArray(data.items)) {
@@ -594,7 +585,7 @@ export async function searchTokensBlockscout(
         if (results.length >= limit) break;
       } catch (parseError) {
         // Skip rows that fail to parse
-        console.warn("[Token Search] Failed to parse token row:", parseError);
+
         continue;
       }
     }
@@ -608,7 +599,8 @@ export async function searchTokensBlockscout(
 
     return results;
   } catch (error) {
-    console.error("[Token Search] Blockscout search failed:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -791,7 +783,8 @@ export async function generatePhoneticSuggestions(
       .slice(0, limit)
       .map(({ score: _score, ...rest }) => rest);
   } catch (error) {
-    console.error("[Token Search] Failed to generate phonetic suggestions:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -825,13 +818,13 @@ export async function* searchProgressive(
 
   try {
     // Stage 1: Exact matches (<50ms)
-    console.log(`[Progressive Search] Stage 1: Exact matches for "${query}"`);
+
     const exactResults = await searchExactMatches(query, queryLower, type, limit);
     exactResults.forEach((r) => seenAddresses.add(r.address.toLowerCase()));
     yield exactResults;
 
     // Stage 2: Prefix matches (50-100ms)
-    console.log(`[Progressive Search] Stage 2: Prefix matches for "${query}"`);
+
     const prefixResults = await searchPrefixMatches(query, queryLower, type, limit);
     const newPrefixResults = prefixResults.filter(
       (r) => !seenAddresses.has(r.address.toLowerCase())
@@ -840,7 +833,7 @@ export async function* searchProgressive(
     yield [...exactResults, ...newPrefixResults].slice(0, limit);
 
     // Stage 3: Substring matches (100-150ms)
-    console.log(`[Progressive Search] Stage 3: Substring matches for "${query}"`);
+
     const substringResults = await searchSubstringMatches(query, queryLower, type, limit);
     const newSubstringResults = substringResults.filter(
       (r) => !seenAddresses.has(r.address.toLowerCase())
@@ -849,7 +842,7 @@ export async function* searchProgressive(
     yield [...exactResults, ...newPrefixResults, ...newSubstringResults].slice(0, limit);
 
     // Stage 4: Phonetic matches (150-200ms)
-    console.log(`[Progressive Search] Stage 4: Phonetic matches for "${query}"`);
+
     const phoneticResults = await searchPhoneticMatches(query, queryLower, type, limit);
     const newPhoneticResults = phoneticResults.filter(
       (r) => !seenAddresses.has(r.address.toLowerCase())
@@ -866,7 +859,8 @@ export async function* searchProgressive(
 
     yield finalResults;
   } catch (error) {
-    console.error("[Progressive Search] Error:", error);
+    // Error handled silently
+
     yield [];
   }
 }
@@ -976,7 +970,8 @@ async function searchExactMatches(
 
     return results.map(({ score: _score, ...rest }) => rest);
   } catch (error) {
-    console.error("[Progressive Search] Stage 1 failed:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -1002,7 +997,8 @@ async function searchPrefixMatches(
       })
       .slice(0, limit);
   } catch (error) {
-    console.error("[Progressive Search] Stage 2 failed:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -1028,7 +1024,8 @@ async function searchSubstringMatches(
       })
       .slice(0, limit);
   } catch (error) {
-    console.error("[Progressive Search] Stage 3 failed:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -1049,7 +1046,8 @@ async function searchPhoneticMatches(
   try {
     return await generatePhoneticSuggestions(query, type, limit);
   } catch (error) {
-    console.error("[Progressive Search] Stage 4 failed:", error);
+    // Error handled silently
+
     return [];
   }
 }

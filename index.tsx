@@ -42,14 +42,12 @@ document.body.appendChild(modalPortalRoot);
 if (import.meta.env.DEV || import.meta.env.PROD) {
   registerSW({
     onNeedRefresh() {
-      console.log("[SW] New content available, please refresh");
+      // New content available
     },
     onOfflineReady() {
-      console.log("[SW] Application ready to work offline");
+      // Application ready to work offline
     },
     onRegistered(registration) {
-      console.log("[SW] Service worker registered:", registration);
-
       // Check for updates every hour
       if (registration) {
         setInterval(
@@ -61,7 +59,7 @@ if (import.meta.env.DEV || import.meta.env.PROD) {
       }
     },
     onRegisterError(error) {
-      console.error("[SW] Service worker registration error:", error);
+      // Service worker registration error
     },
   });
 }

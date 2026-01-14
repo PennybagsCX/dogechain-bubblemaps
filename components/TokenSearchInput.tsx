@@ -48,7 +48,6 @@ async function initializeSearchWorker(): Promise<boolean> {
 
       return true;
     } catch (error) {
-      console.warn("[Token Search] Worker initialization failed:", error);
       searchWorker = null;
       return false;
     }
@@ -149,9 +148,7 @@ export function TokenSearchInput({
       .then((history) => {
         setRecentSearches(history);
       })
-      .catch((error) => {
-        console.warn("[Token Search] Failed to load search history:", error);
-      });
+      .catch((error) => {});
 
     // Load popular queries (local, last 7 days)
     getTopQueries(20)
@@ -161,9 +158,7 @@ export function TokenSearchInput({
           .filter((q): q is string => !!q);
         setPopularQueries(filtered);
       })
-      .catch((error) => {
-        console.warn("[Token Search] Failed to load popular queries:", error);
-      });
+      .catch((error) => {});
 
     // Load global trending assets (server with local fallback)
     getTrendingAssetsWithFallback<{
@@ -180,17 +175,17 @@ export function TokenSearchInput({
           .filter((s): s is string => !!s);
         setTrendingQueries(symbols);
       })
-      .catch((error) => {
-        console.warn("[Token Search] Failed to load trending assets:", error);
-      });
+      .catch((error) => {});
 
     // Cleanup on unmount
     return () => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
+      const debounceTimer = debounceTimerRef.current;
+      const searchAbort = searchAbortRef.current;
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
       }
-      if (searchAbortRef.current) {
-        searchAbortRef.current.abort();
+      if (searchAbort) {
+        searchAbort.abort();
       }
     };
   }, []);
@@ -278,52 +273,39 @@ export function TokenSearchInput({
       let cacheHit = false;
 
       // SERVICE WORKER CACHE: Check cache first for instant results
-      console.log("[Token Search] Checking search cache...");
+
       const cachedResults = await getCachedSearchResults(searchQuery, searchType);
 
       if (cachedResults && cachedResults.length > 0) {
-        console.log(`[Token Search] Cache HIT! Found ${cachedResults.length} cached results`);
         searchResults = cachedResults;
         cacheHit = true;
       } else {
-        console.log("[Token Search] Cache miss - performing search...");
-
         // MINISEARCH FUZZY SEARCH: Fast, typo-tolerant search (3KB library vs 15KB custom)
         if (useMiniSearch && !searchQuery.startsWith("0x")) {
-          console.log("[Token Search] Using MiniSearch fuzzy matching (fast + typo tolerant)");
           try {
             searchResults = await fuzzySearchMini(searchQuery, 10);
 
             // If MiniSearch found results, use them; otherwise fallback to progressive search
             if (searchResults.length > 0) {
-              console.log(`[Token Search] MiniSearch found ${searchResults.length} results`);
+              // Use MiniSearch results
             } else {
-              console.log("[Token Search] MiniSearch found no results, using progressive search");
               searchResults = await searchProgressiveAll(searchQuery, searchType, 10);
             }
           } catch (miniSearchError) {
-            console.warn(
-              "[Token Search] MiniSearch failed, using progressive search:",
-              miniSearchError
-            );
+            // MiniSearch failed, using progressive search
             searchResults = await searchProgressiveAll(searchQuery, searchType, 10);
           }
         }
         // PROGRESSIVE SEARCH: Stream results in stages for instant feedback (<50ms to first result)
         else if (useProgressiveSearch && !searchQuery.startsWith("0x")) {
-          console.log("[Token Search] Using Progressive Search (staged results)");
           searchResults = await searchProgressiveAll(searchQuery, searchType, 10);
         }
         // Try Web Worker for addresses (background processing, no UI blocking)
         else if (workerReadyRef.current && searchWorker && searchQuery.startsWith("0x")) {
-          console.log("[Token Search] Using Web Worker for address search (background)");
           try {
             searchResults = await searchWithWorker(searchQuery, searchType);
           } catch (workerError) {
-            console.warn(
-              "[Token Search] Worker search failed, falling back to main thread:",
-              workerError
-            );
+            // Worker search failed, falling back to main thread
             const { all } = await searchTokensHybrid(searchQuery, searchType, {
               limit: 10,
               includeRemote: true,
@@ -333,7 +315,6 @@ export function TokenSearchInput({
         }
         // Fallback to main thread search
         else {
-          console.log("[Token Search] Using main thread search");
           const { all } = await searchTokensHybrid(searchQuery, searchType, {
             limit: 10,
             includeRemote: true,
@@ -343,9 +324,7 @@ export function TokenSearchInput({
 
         // CACHE RESULTS: Store in cache for future use (non-blocking)
         if (searchResults.length > 0) {
-          cacheSearchResults(searchQuery, searchType, searchResults).catch((error) => {
-            console.warn("[Token Search] Failed to cache results:", error);
-          });
+          cacheSearchResults(searchQuery, searchType, searchResults).catch((error) => {});
         }
       }
 
@@ -373,9 +352,7 @@ export function TokenSearchInput({
         }
 
         // Track search analytics (async, non-blocking)
-        trackSearch(searchQuery, searchResults, sessionIdRef.current).catch((error) => {
-          console.warn("[Token Search] Analytics tracking failed:", error);
-        });
+        trackSearch(searchQuery, searchResults, sessionIdRef.current).catch((error) => {});
 
         // If no results, fetch phonetic suggestions
         if (searchResults.length === 0 && searchQuery.length >= 3) {
@@ -390,7 +367,7 @@ export function TokenSearchInput({
       }
     } catch (error) {
       if ((error as Error).name !== "AbortError") {
-        console.error("[Token Search] Search failed:", error);
+        // Non-abort errors handled silently
       }
     } finally {
       setIsSearching(false);
@@ -487,9 +464,7 @@ export function TokenSearchInput({
         result.score || 0,
         timeToClickMs,
         sessionIdRef.current
-      ).catch((error) => {
-        console.warn("[Token Search] Click tracking failed:", error);
-      });
+      ).catch((error) => {});
 
       // Log to learned tokens database (async, non-blocking)
       logTokenInteraction(
@@ -507,9 +482,7 @@ export function TokenSearchInput({
       result.type === AssetType.NFT ? "NFT" : "TOKEN",
       result.symbol,
       result.name
-    ).catch((error) => {
-      console.warn("[Trending] Failed to log search query:", error);
-    });
+    ).catch((error) => {});
 
     if (isControlled) {
       externalOnChange?.(result.address);

@@ -1,0 +1,277 @@
+/**
+ * Search Cache Manager
+ *
+ * Integrates with Service Worker for advanced caching strategies:
+ * - Store search results in both IndexedDB and HTTP Cache
+ * - Provide offline search capability
+ * - Manage cache size and expiration
+ * - Sync with service worker cache
+ */
+
+interface CachedSearchResult {
+  query: string;
+  type: string;
+  results: any[];
+  timestamp: number;
+  hitCount: number;
+}
+
+const SEARCH_CACHE_DB_NAME = "search-cache-db";
+const SEARCH_CACHE_STORE = "results";
+const MAX_CACHE_SIZE = 100;
+const MAX_CACHE_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+let db: IDBDatabase | null = null;
+
+/**
+ * Initialize search cache database
+ */
+async function initDB(): Promise<IDBDatabase> {
+  if (db) return db;
+
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(SEARCH_CACHE_DB_NAME, 1);
+
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => {
+      db = request.result;
+      resolve(db);
+    };
+
+    request.onupgradeneeded = (event) => {
+      const database = (event.target as IDBOpenDBRequest).result;
+
+      if (!database.objectStoreNames.contains(SEARCH_CACHE_STORE)) {
+        const store = database.createObjectStore(SEARCH_CACHE_STORE, {
+          keyPath: "key",
+        });
+        store.createIndex("timestamp", "timestamp", { unique: false });
+        store.createIndex("hitCount", "hitCount", { unique: false });
+      }
+    };
+  });
+}
+
+/**
+ * Generate cache key for search query
+ */
+function getCacheKey(query: string, type: string): string {
+  return `${query.toLowerCase()}:${type}`;
+}
+
+/**
+ * Store search results in cache
+ */
+export async function cacheSearchResults(
+  query: string,
+  type: string,
+  results: any[]
+): Promise<void> {
+  try {
+    const database = await initDB();
+    const transaction = database.transaction([SEARCH_CACHE_STORE], "readwrite");
+    const store = transaction.objectStore(SEARCH_CACHE_STORE);
+
+    const key = getCacheKey(query, type);
+
+    const cacheEntry: CachedSearchResult = {
+      query,
+      type,
+      results,
+      timestamp: Date.now(),
+      hitCount: 0,
+    };
+
+    await new Promise<void>((resolve, reject) => {
+      const request = store.put({ ...cacheEntry, key });
+
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+
+`);
+
+    // Trigger service worker cache update
+    if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        messageType: "CACHE_SEARCH_RESULTS",
+        query,
+        searchType: type,
+        results,
+      });
+    }
+  } catch (error) {
+
+  }
+}
+
+/**
+ * Retrieve search results from cache
+ */
+export async function getCachedSearchResults(query: string, type: string): Promise<any[] | null> {
+  try {
+    const database = await initDB();
+    const transaction = database.transaction([SEARCH_CACHE_STORE], "readonly");
+    const store = transaction.objectStore(SEARCH_CACHE_STORE);
+
+    const key = getCacheKey(query, type);
+
+    const cachedResult = await new Promise<CachedSearchResult | null>((resolve, reject) => {
+      const request = store.get(key);
+
+      request.onsuccess = () => resolve(request.result || null);
+      request.onerror = () => reject(request.error);
+    });
+
+    if (!cachedResult) {
+      return null;
+    }
+
+    // Check if cache entry is expired
+    const age = Date.now() - cachedResult.timestamp;
+    if (age > MAX_CACHE_AGE) {
+      // Remove expired entry
+      await removeCachedSearchResults(query, type);
+      return null;
+    }
+
+    // Increment hit count
+    const updateTransaction = database.transaction([SEARCH_CACHE_STORE], "readwrite");
+    const updateStore = updateTransaction.objectStore(SEARCH_CACHE_STORE);
+    cachedResult.hitCount++;
+    updateStore.put({ ...cachedResult, key });
+
+    return cachedResult.results;
+  } catch (error) {
+
+    return null;
+  }
+}
+
+/**
+ * Remove cached search results
+ */
+export async function removeCachedSearchResults(query: string, type: string): Promise<void> {
+  try {
+    const database = await initDB();
+    const transaction = database.transaction([SEARCH_CACHE_STORE], "readwrite");
+    const store = transaction.objectStore(SEARCH_CACHE_STORE);
+
+    const key = getCacheKey(query, type);
+
+    await new Promise<void>((resolve, reject) => {
+      const request = store.delete(key);
+
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+
+  } catch (error) {
+
+  }
+}
+
+/**
+ * Clear all cached search results
+ */
+export async function clearAllCachedSearchResults(): Promise<void> {
+  try {
+    const database = await initDB();
+    const transaction = database.transaction([SEARCH_CACHE_STORE], "readwrite");
+    const store = transaction.objectStore(SEARCH_CACHE_STORE);
+
+    await new Promise<void>((resolve, reject) => {
+      const request = store.clear();
+
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+
+
+  } catch (error) {
+
+  }
+}
+
+/**
+ * Clean up old cache entries (LRU eviction)
+ */
+export async function cleanupOldCacheEntries(): Promise<void> {
+  try {
+    const database = await initDB();
+    const transaction = database.transaction([SEARCH_CACHE_STORE], "readwrite");
+    const store = transaction.objectStore(SEARCH_CACHE_STORE);
+
+    const allEntries = await new Promise<CachedSearchResult[]>((resolve, reject) => {
+      const request = store.getAll();
+
+      request.onsuccess = () => resolve(request.result || []);
+      request.onerror = () => reject(request.error);
+    });
+
+    // Sort by hit count (ascending) and then by timestamp (ascending)
+    const sortedEntries = allEntries.sort((a, b) => {
+      if (a.hitCount !== b.hitCount) {
+        return a.hitCount - b.hitCount;
+      }
+      return a.timestamp - b.timestamp;
+    });
+
+    // Remove entries exceeding max cache size
+    if (sortedEntries.length > MAX_CACHE_SIZE) {
+      const entriesToRemove = sortedEntries.slice(0, sortedEntries.length - MAX_CACHE_SIZE);
+
+      for (const entry of entriesToRemove) {
+        const key = getCacheKey(entry.query, entry.type);
+        store.delete(key);
+      }
+    }
+  } catch (error) {
+
+  }
+}
+
+/**
+ * Get cache statistics
+ */
+export async function getCacheStats(): Promise<{
+  totalEntries: number;
+  totalHits: number;
+  oldestEntry: number | null;
+  newestEntry: number | null;
+}> {
+  try {
+    const database = await initDB();
+    const transaction = database.transaction([SEARCH_CACHE_STORE], "readonly");
+    const store = transaction.objectStore(SEARCH_CACHE_STORE);
+
+    const allEntries = await new Promise<CachedSearchResult[]>((resolve, reject) => {
+      const request = store.getAll();
+
+      request.onsuccess = () => resolve(request.result || []);
+      request.onerror = () => reject(request.error);
+    });
+
+    const totalEntries = allEntries.length;
+    const totalHits = allEntries.reduce((sum, entry) => sum + entry.hitCount, 0);
+
+    const timestamps = allEntries.map((entry) => entry.timestamp);
+    const oldestEntry = timestamps.length > 0 ? Math.min(...timestamps) : null;
+    const newestEntry = timestamps.length > 0 ? Math.max(...timestamps) : null;
+
+    return {
+      totalEntries,
+      totalHits,
+      oldestEntry,
+      newestEntry,
+    };
+  } catch (error) {
+
+    return {
+      totalEntries: 0,
+      totalHits: 0,
+      oldestEntry: null,
+      newestEntry: null,
+    };
+  }
+}

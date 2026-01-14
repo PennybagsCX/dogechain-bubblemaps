@@ -30,7 +30,8 @@ function safeGetItem(key: string): string | null {
   try {
     return localStorage.getItem(key);
   } catch (error) {
-    console.warn("[Onboarding] localStorage access failed:", error);
+    // Error handled silently
+
     return null;
   }
 }
@@ -43,7 +44,8 @@ function safeSetItem(key: string, value: string): boolean {
     localStorage.setItem(key, value);
     return true;
   } catch (error) {
-    console.warn("[Onboarding] localStorage write failed:", error);
+    // Error handled silently
+
     return false;
   }
 }
@@ -56,7 +58,8 @@ function safeRemoveItem(key: string): boolean {
     localStorage.removeItem(key);
     return true;
   } catch (error) {
-    console.warn("[Onboarding] localStorage remove failed:", error);
+    // Error handled silently
+
     return false;
   }
 }
@@ -84,7 +87,8 @@ export function getOnboardingState(): OnboardingState | null {
       completedAt: completedAt ? parseInt(completedAt, 10) : undefined,
     };
   } catch (error) {
-    console.error("[Onboarding] Failed to parse state:", error);
+    // Error handled silently
+
     return null;
   }
 }
@@ -102,7 +106,6 @@ export function shouldShowOnboarding(): boolean {
 
   // Version mismatch - re-show onboarding
   if (state.version !== ONBOARDING_VERSION) {
-    console.log("[Onboarding] Version mismatch, re-showing onboarding");
     return true;
   }
 
@@ -128,7 +131,6 @@ export function setOnboardingSeen(): boolean {
   if (success) {
     safeSetItem(STORAGE_KEYS.ONBOARDING_VERSION, ONBOARDING_VERSION);
     safeSetItem(STORAGE_KEYS.COMPLETED_AT, Date.now().toString());
-    console.log("[Onboarding] Marked as seen");
   }
   return success;
 }
@@ -143,7 +145,7 @@ export function setOnboardingSkipped(): boolean {
   const success = safeSetItem(STORAGE_KEYS.DISMISSED_COUNT, (currentCount + 1).toString());
 
   if (success) {
-    console.log(`[Onboarding] Skipped (dismissal count: ${currentCount + 1}/3)`);
+    // Onboarding dismissed successfully
   }
 
   return success;
@@ -160,7 +162,6 @@ export function updateOnboardingProgress(step: number): boolean {
  * Reset onboarding state (for testing/development)
  */
 export function resetOnboarding(): void {
-  console.log("[Onboarding] Resetting onboarding state");
   safeRemoveItem(STORAGE_KEYS.HAS_SEEN_ONBOARDING);
   safeRemoveItem(STORAGE_KEYS.ONBOARDING_VERSION);
   safeRemoveItem(STORAGE_KEYS.LAST_STEP);

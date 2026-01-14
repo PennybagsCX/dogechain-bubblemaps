@@ -162,7 +162,6 @@ export const BubbleVisualizationGuide: React.FC<BubbleVisualizationGuideProps> =
 
   const portalRoot = document.getElementById("modal-portal-root");
   if (!portalRoot) {
-    console.error("[BubbleVisualizationGuide] Portal root not found");
     return null;
   }
 

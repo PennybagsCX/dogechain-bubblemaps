@@ -71,7 +71,7 @@ export function SearchAnalytics({ onClose }: { onClose: () => void }) {
 
       setSessionStats(session);
     } catch (error) {
-      console.error("[Analytics Dashboard] Failed to load stats:", error);
+      // Error handled silently - analytics fetch failed
     } finally {
       setLoading(false);
     }

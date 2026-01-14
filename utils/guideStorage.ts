@@ -52,7 +52,8 @@ function safeGetItem(key: string): string | null {
   try {
     return localStorage.getItem(key);
   } catch (error) {
-    console.warn("[GuideStorage] localStorage access failed:", error);
+    // Error handled silently
+
     return null;
   }
 }
@@ -65,7 +66,8 @@ function safeSetItem(key: string, value: string): boolean {
     localStorage.setItem(key, value);
     return true;
   } catch (error) {
-    console.warn("[GuideStorage] localStorage write failed:", error);
+    // Error handled silently
+
     return false;
   }
 }
@@ -78,7 +80,8 @@ function safeRemoveItem(key: string): boolean {
     localStorage.removeItem(key);
     return true;
   } catch (error) {
-    console.warn("[GuideStorage] localStorage remove failed:", error);
+    // Error handled silently
+
     return false;
   }
 }
@@ -108,7 +111,8 @@ export function getBubbleGuideState(): GuideState | null {
       dismissedCount: dismissedCount ? parseInt(dismissedCount, 10) : 0,
     };
   } catch (error) {
-    console.error("[BubbleGuide] Failed to parse state:", error);
+    // Error handled silently
+
     return null;
   }
 }
@@ -126,7 +130,6 @@ export function shouldShowBubbleGuide(): boolean {
 
   // Version mismatch - re-show guide
   if (state.version !== BUBBLE_GUIDE_VERSION) {
-    console.log("[BubbleGuide] Version mismatch, re-showing guide");
     return true;
   }
 
@@ -151,7 +154,6 @@ export function setBubbleGuideSeen(): boolean {
   const success = safeSetItem(GUIDE_STORAGE_KEYS.BUBBLE_SEEN, "true");
   if (success) {
     safeSetItem(GUIDE_STORAGE_KEYS.BUBBLE_VERSION, BUBBLE_GUIDE_VERSION);
-    console.log("[BubbleGuide] Marked as seen");
   }
   return success;
 }
@@ -166,7 +168,7 @@ export function setBubbleGuideSkipped(): boolean {
   const success = safeSetItem(GUIDE_STORAGE_KEYS.BUBBLE_DISMISSED, (currentCount + 1).toString());
 
   if (success) {
-    console.log(`[BubbleGuide] Skipped (dismissal count: ${currentCount + 1}/3)`);
+    // Bubble guide dismissed successfully
   }
 
   return success;
@@ -183,7 +185,6 @@ export function updateBubbleGuideProgress(step: number): boolean {
  * Reset bubble visualization guide state (for testing/development)
  */
 export function resetBubbleGuide(): void {
-  console.log("[BubbleGuide] Resetting guide state");
   safeRemoveItem(GUIDE_STORAGE_KEYS.BUBBLE_SEEN);
   safeRemoveItem(GUIDE_STORAGE_KEYS.BUBBLE_VERSION);
   safeRemoveItem(GUIDE_STORAGE_KEYS.BUBBLE_LAST_STEP);
@@ -215,7 +216,8 @@ export function getTokenPanelGuideState(): GuideState | null {
       dismissedCount: dismissedCount ? parseInt(dismissedCount, 10) : 0,
     };
   } catch (error) {
-    console.error("[TokenPanelGuide] Failed to parse state:", error);
+    // Error handled silently
+
     return null;
   }
 }
@@ -233,7 +235,6 @@ export function shouldShowTokenPanelGuide(): boolean {
 
   // Version mismatch - re-show guide
   if (state.version !== TOKEN_PANEL_GUIDE_VERSION) {
-    console.log("[TokenPanelGuide] Version mismatch, re-showing guide");
     return true;
   }
 
@@ -258,7 +259,6 @@ export function setTokenPanelGuideSeen(): boolean {
   const success = safeSetItem(GUIDE_STORAGE_KEYS.TOKEN_PANEL_SEEN, "true");
   if (success) {
     safeSetItem(GUIDE_STORAGE_KEYS.TOKEN_PANEL_VERSION, TOKEN_PANEL_GUIDE_VERSION);
-    console.log("[TokenPanelGuide] Marked as seen");
   }
   return success;
 }
@@ -276,7 +276,7 @@ export function setTokenPanelGuideSkipped(): boolean {
   );
 
   if (success) {
-    console.log(`[TokenPanelGuide] Skipped (dismissal count: ${currentCount + 1}/3)`);
+    // Storage update succeeded
   }
 
   return success;
@@ -293,7 +293,6 @@ export function updateTokenPanelGuideProgress(step: number): boolean {
  * Reset token info panel guide state (for testing/development)
  */
 export function resetTokenPanelGuide(): void {
-  console.log("[TokenPanelGuide] Resetting guide state");
   safeRemoveItem(GUIDE_STORAGE_KEYS.TOKEN_PANEL_SEEN);
   safeRemoveItem(GUIDE_STORAGE_KEYS.TOKEN_PANEL_VERSION);
   safeRemoveItem(GUIDE_STORAGE_KEYS.TOKEN_PANEL_LAST_STEP);
@@ -325,7 +324,8 @@ export function getWalletDetailsGuideState(): GuideState | null {
       dismissedCount: dismissedCount ? parseInt(dismissedCount, 10) : 0,
     };
   } catch (error) {
-    console.error("[WalletDetailsGuide] Failed to parse state:", error);
+    // Error handled silently
+
     return null;
   }
 }
@@ -343,7 +343,6 @@ export function shouldShowWalletDetailsGuide(): boolean {
 
   // Version mismatch - re-show guide
   if (state.version !== WALLET_DETAILS_GUIDE_VERSION) {
-    console.log("[WalletDetailsGuide] Version mismatch, re-showing guide");
     return true;
   }
 
@@ -368,7 +367,6 @@ export function setWalletDetailsGuideSeen(): boolean {
   const success = safeSetItem(GUIDE_STORAGE_KEYS.WALLET_DETAILS_SEEN, "true");
   if (success) {
     safeSetItem(GUIDE_STORAGE_KEYS.WALLET_DETAILS_VERSION, WALLET_DETAILS_GUIDE_VERSION);
-    console.log("[WalletDetailsGuide] Marked as seen");
   }
   return success;
 }
@@ -386,7 +384,7 @@ export function setWalletDetailsGuideSkipped(): boolean {
   );
 
   if (success) {
-    console.log(`[WalletDetailsGuide] Skipped (dismissal count: ${currentCount + 1}/3)`);
+    // Wallet details guide dismissed successfully
   }
 
   return success;
@@ -403,7 +401,6 @@ export function updateWalletDetailsGuideProgress(step: number): boolean {
  * Reset wallet details guide state (for testing/development)
  */
 export function resetWalletDetailsGuide(): void {
-  console.log("[WalletDetailsGuide] Resetting guide state");
   safeRemoveItem(GUIDE_STORAGE_KEYS.WALLET_DETAILS_SEEN);
   safeRemoveItem(GUIDE_STORAGE_KEYS.WALLET_DETAILS_VERSION);
   safeRemoveItem(GUIDE_STORAGE_KEYS.WALLET_DETAILS_LAST_STEP);
@@ -418,7 +415,6 @@ export function resetWalletDetailsGuide(): void {
  * Reset all Map Analysis guide states (for testing/development)
  */
 export function resetAllGuides(): void {
-  console.log("[GuideStorage] Resetting all Map Analysis guide states");
   resetBubbleGuide();
   resetTokenPanelGuide();
   resetWalletDetailsGuide();

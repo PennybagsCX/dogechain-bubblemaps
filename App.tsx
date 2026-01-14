@@ -318,7 +318,6 @@ const App: React.FC = () => {
     window.__DOGECCHAIN_GUIDES__ = {
       resetAllGuides: () => {
         resetAllGuides();
-        console.log("✅ All Map Analysis guides reset. Refresh to see them again.");
         // Reset interaction tracking
         setHasInteractedWithBubbles(false);
         setHasInteractedWithTokenPanel(false);
@@ -350,12 +349,6 @@ const App: React.FC = () => {
         };
       },
     };
-    console.log("🔧 Guide testing helpers available on window.__DOGECCHAIN_GUIDES__");
-    console.log("   - resetAllGuides(): Reset all guides to show again");
-    console.log("   - openBubbleGuide(): Manually open bubble guide");
-    console.log("   - openTokenPanelGuide(): Manually open token panel guide");
-    console.log("   - openWalletDetailsGuide(): Manually open wallet details guide");
-    console.log("   - getGuideStatus(): Get current guide states");
   }, [bubbleGuide, tokenPanelGuide, walletDetailsGuide]);
 
   const [wallets, setWallets] = useState<Wallet[]>([]);
@@ -576,8 +569,6 @@ const App: React.FC = () => {
 
     const fetchServerTrending = async () => {
       try {
-        console.log("[App] 🔄 Fetching server-side trending assets...");
-
         // Fetch tokens and NFTs in parallel
         const [tokensResult, nftsResult] = await Promise.allSettled([
           getTrendingAssets("TOKEN", 4),
@@ -593,10 +584,7 @@ const App: React.FC = () => {
             type: asset.type as AssetType,
             hits: Math.round(asset.velocityScore),
           }));
-          console.log("[App] ✅ Converted trending tokens:", convertedTokens.length);
           setTrendingTokens(convertedTokens);
-        } else {
-          console.warn("[App] ⚠️ Token trending fetch failed or empty");
         }
 
         // Process NFTs
@@ -608,13 +596,9 @@ const App: React.FC = () => {
             type: asset.type as AssetType,
             hits: Math.round(asset.velocityScore),
           }));
-          console.log("[App] ✅ Converted trending NFTs:", convertedNfts.length);
           setTrendingNfts(convertedNfts);
-        } else {
-          console.warn("[App] ⚠️ NFT trending fetch failed or empty");
         }
       } catch (error) {
-        console.error("[App] ❌ Failed to fetch server trending:", error);
         // Server fetch failed, keeping local trending
       }
     };
@@ -1046,7 +1030,7 @@ const App: React.FC = () => {
             return [...currentWallets, userWallet];
           }
         } catch (e) {
-          console.warn("Failed to inject user wallet", e);
+          // Failed to inject user wallet
         }
       }
       return currentWallets;
@@ -1129,33 +1113,9 @@ const App: React.FC = () => {
       const isArc = /Arc\//.test(userAgent);
       const isMobile = /Mobile|Android|iPhone|iPad|iPod/.test(userAgent);
 
-      console.log(`[App] 🔍 Fetching token data for query: "${cleanQuery}", type: ${typeToUse}`);
-      console.log(`[App] 📱 Browser Info:`, {
-        userAgent: userAgent.substring(0, 100) + "...",
-        isArcMobile,
-        isArc,
-        isMobile,
-        platform: navigator.platform,
-        vendor: navigator.vendor,
-      });
       const tokenData = await fetchTokenData(cleanQuery, typeToUse);
 
-      console.log(
-        `[App] 📦 Token data response:`,
-        tokenData
-          ? {
-              address: tokenData.address,
-              symbol: tokenData.symbol,
-              name: tokenData.name,
-              type: tokenData.type,
-              decimals: tokenData.decimals,
-              totalSupply: tokenData.totalSupply,
-            }
-          : "NULL"
-      );
-
       if (!tokenData) {
-        console.error(`[App] ❌ Token data is NULL for query: "${cleanQuery}"`);
         // Log to diagnostic system
         try {
           const logger = getDiagnosticLogger();
@@ -1198,24 +1158,13 @@ const App: React.FC = () => {
 
       // Log to server-side trending (fire-and-forget, don't block UI)
       logSearchQuery(tokenData.address, tokenData.type, tokenData.symbol, tokenData.name).catch(
-        (err) => console.warn("Failed to log search to server:", err)
+        () => {
+          // Silently handle logging errors
+        }
       );
 
       // Fetch Data (Live)
-      console.log(
-        `[App] 🔄 Fetching token holders for ${tokenData.symbol || tokenData.address}...`
-      );
       const result = await fetchTokenHolders(tokenData);
-
-      console.log(`[App] 📊 Token holders result:`, {
-        walletsCount: result.wallets.length,
-        linksCount: result.links.length,
-        wallets: result.wallets.slice(0, 3).map((w) => ({
-          address: w.address,
-          balance: w.balance,
-          label: w.label,
-        })),
-      });
 
       // Log token holder fetch to diagnostic system
       try {
@@ -1303,7 +1252,6 @@ const App: React.FC = () => {
       //      .catch(() => setSummary("AI Analysis unavailable"));
       // }
     } catch (err) {
-      console.error(err);
       addToast("An unexpected error occurred while fetching live data.", "error");
     } finally {
       setLoading(false);
@@ -1332,24 +1280,14 @@ const App: React.FC = () => {
         injectUserWalletAsync();
       }
     }
-  }, [userAddress, isConnected]);
+  }, [userAddress, isConnected, token, wallets, injectUserWallet]);
 
   // Monitor RainbowKit/wagmi connection state for modal management
   useEffect(() => {
-    // Log connection state changes for debugging
-    if (process.env.NODE_ENV === "development") {
-      console.log("[App] Connection state changed:", {
-        isConnected,
-        address: userAddress,
-        timestamp: new Date().toISOString(),
-      });
-    }
-
     // Force close any open RainbowKit modals if we're connected
     if (isConnected && userAddress) {
       const rainbowKitModal = document.querySelector("[data-rk]");
       if (rainbowKitModal) {
-        console.log("[App] Forcing RainbowKit modal close");
         // Trigger escape key to close modal
         const escapeEvent = new KeyboardEvent("keydown", { key: "Escape" });
         document.dispatchEvent(escapeEvent);

@@ -30,7 +30,7 @@ export function getChartHeight(): ChartHeight {
       return saved;
     }
   } catch (e) {
-    console.warn("[chartHeight] Failed to read from localStorage:", e);
+    // Error reading preference
   }
 
   return "lg"; // Default
@@ -44,9 +44,8 @@ export function setChartHeight(height: ChartHeight): void {
 
   try {
     localStorage.setItem(CHART_HEIGHT_KEY, height);
-    console.log("[chartHeight] Saved preference:", height);
   } catch (e) {
-    console.warn("[chartHeight] Failed to write to localStorage:", e);
+    // Error reading preference
   }
 }
 

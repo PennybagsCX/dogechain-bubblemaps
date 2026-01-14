@@ -3,8 +3,6 @@
  * Receives and stores diagnostic logs from client applications
  */
 
-/* eslint-disable no-console */
-
 import { neon } from "@neondatabase/serverless";
 
 const sql = neon(process.env.DATABASE_URL!);
@@ -65,8 +63,6 @@ export async function POST(req: Request): Promise<Response> {
       )
     `;
 
-    console.log(`[Diagnostics] Logged session: ${data.sessionId}`);
-
     // Clean up old logs (keep last 7 days)
     await sql`
       DELETE FROM diagnostic_logs
@@ -79,8 +75,6 @@ export async function POST(req: Request): Promise<Response> {
       sessionId: data.sessionId,
     });
   } catch (error) {
-    console.error("[Diagnostics] Error processing logs:", error);
-
     return Response.json(
       {
         success: false,

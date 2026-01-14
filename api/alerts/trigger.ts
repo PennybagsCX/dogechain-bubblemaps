@@ -66,15 +66,8 @@ export async function POST(req: Request): Promise<Response> {
       )
     `;
 
-    console.log("[API /alerts/trigger] ✓ Logged triggered alert:", {
-      alertId: sanitizedAlertId,
-      alertName: sanitizedName,
-      walletAddress: normalizedWallet,
-    });
-
     return Response.json({ success: true });
   } catch (error) {
-    console.error("[API /alerts/trigger] Failed to log triggered alert:", error);
     // Don't fail the request - analytics shouldn't block the UI
     return Response.json({ success: true });
   }

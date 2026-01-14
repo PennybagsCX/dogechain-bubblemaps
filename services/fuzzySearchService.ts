@@ -49,8 +49,6 @@ export function initializeMiniSearch(tokens: TokenDocument[]): void {
 
   miniSearch.addAll(tokens);
   isInitialized = true;
-
-  console.log(`[MiniSearch] Initialized with ${tokens.length} tokens`);
 }
 
 /**
@@ -71,7 +69,6 @@ export async function fuzzySearch(query: string, limit: number = 10): Promise<Se
 
   // Auto-initialize if not already done
   if (!miniSearch || !isInitialized) {
-    console.log("[MiniSearch] Auto-initializing...");
     const { getAllTokenSearchIndex } = await import("../services/db");
     const tokens = await getAllTokenSearchIndex();
 
@@ -105,7 +102,8 @@ export async function fuzzySearch(query: string, limit: number = 10): Promise<Se
       score: r.score || 0,
     }));
   } catch (error) {
-    console.error("[MiniSearch] Search failed:", error);
+    // Error handled silently
+
     return [];
   }
 }
@@ -123,5 +121,4 @@ export function isMiniSearchReady(): boolean {
 export function resetMiniSearch(): void {
   miniSearch = null;
   isInitialized = false;
-  console.log("[MiniSearch] Reset");
 }

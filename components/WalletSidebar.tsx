@@ -268,10 +268,8 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
     setIsTracing(true);
     try {
       await onTraceConnections(wallet);
-      // On mobile, close the wallet panel after triggering trace to reveal the map
-      if (typeof window !== "undefined" && window.innerWidth < 768) {
-        onClose();
-      }
+      // Sidebar auto-close is now handled in App.tsx for all devices
+      // This ensures consistent behavior across desktop and mobile
     } catch {
       // Error handled by parent via toast usually
     } finally {

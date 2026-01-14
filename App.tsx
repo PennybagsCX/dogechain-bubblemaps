@@ -925,6 +925,12 @@ const App: React.FC = () => {
     }
   };
 
+  // --- MAP CLICK HANDLER (BUBBLE) ---
+  const handleWalletClickOnMap = useCallback((wallet: Wallet | null) => {
+    setSelectedWallet(wallet);
+    setTargetWalletId(wallet ? wallet.id : null);
+  }, []);
+
   // --- SHARE FUNCTIONALITY ---
   const handleShare = () => {
     const url = window.location.href;
@@ -965,6 +971,13 @@ const App: React.FC = () => {
       if (uniqueNewLinks.length > 0) {
         setLinks((prev) => [...prev, ...uniqueNewLinks]);
         addToast(`Found ${uniqueNewLinks.length} new connection(s)!`, "success");
+        // Auto-close sidebar and zoom to traced wallet to show new connections
+        setSelectedWallet(null);
+        setSelectedConnection(null);
+        setSelectedConnectionId(null);
+        // Force re-zoom even if tracing the same wallet consecutively
+        setTargetWalletId(null);
+        requestAnimationFrame(() => setTargetWalletId(wallet.id));
       } else {
         addToast("No new connections found among current holders.", "warning");
       }
@@ -2703,7 +2716,7 @@ const App: React.FC = () => {
                     links={links}
                     assetType={token.type}
                     userAddress={userAddress}
-                    onWalletClick={setSelectedWallet}
+                    onWalletClick={handleWalletClickOnMap}
                     targetWalletId={targetWalletId}
                     onConnectionClick={handleConnectionClick}
                     selectedConnectionId={selectedConnectionId}

@@ -66,12 +66,15 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     width: initialWidth || 800,
     height: initialHeight || 600,
   });
+  const [hasMeasured, setHasMeasured] = useState<boolean>(!!(initialWidth && initialHeight));
 
   const zoomTransformRef = useRef<d3.ZoomTransform>(d3.zoomIdentity);
   const zoomBehaviorRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
   const simulationRef = useRef<d3.Simulation<any, undefined> | null>(null);
   const previousLinksLengthRef = useRef<number>(0);
   const nodePositionsRef = useRef<Map<string, { x: number; y: number }>>(new Map());
+  const pendingZoomTargetRef = useRef<string | null>(null);
+  const pendingZoomHandledRef = useRef<boolean>(false);
 
   // Store function props in refs to prevent unnecessary rebuilds
   const onWalletClickRef = useRef(onWalletClick);
@@ -284,14 +287,23 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   }, [onWalletClick, onConnectionClick, getNodeColor, handleSelectNode]);
 
   // --- RESIZE OBSERVER ---
+  // Track container size; mark measured once we have a real measurement
   useEffect(() => {
     if (!containerRef.current) return;
+
+    // Initial measure on mount
+    const rect = containerRef.current.getBoundingClientRect();
+    if (rect.width > 0 && rect.height > 0) {
+      setDimensions({ width: rect.width, height: rect.height });
+      setHasMeasured(true);
+    }
 
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const { width, height } = entry.contentRect;
         if (width > 0 && height > 0) {
           setDimensions({ width, height });
+          setHasMeasured(true);
         }
       }
     });
@@ -383,7 +395,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   }, [showLinks, showLabels, minBalancePercent, wallets, userAddress]);
 
   useEffect(() => {
-    if (!svgRef.current || wallets.length === 0) return;
+    if (!svgRef.current || wallets.length === 0 || !hasMeasured) return;
     const { width, height } = dimensions;
 
     type NodeDatum = Wallet & {
@@ -483,15 +495,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       const targetId = typeof l.target === "string" ? l.target : l.target.id;
       return { source: sourceId, target: targetId, value: l.value };
     });
-
-    // --- DETECT TRACE CONNECTIONS EARLY ---
-    // Detect if this is a trace connections operation (links changed)
-    const isTraceConnections = links.length !== previousLinksLengthRef.current;
-
-    // Clear saved positions if this is trace connections (let bubbles reshuffle)
-    if (isTraceConnections) {
-      nodePositionsRef.current.clear();
-    }
 
     previousLinksLengthRef.current = links.length;
 
@@ -1016,6 +1019,33 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         .attr("x", (d: NodeDatum) => d.x)
         .attr("y", (d: NodeDatum) => d.y - Math.min(d.r * 0.4, 12));
       labelSelection.attr("x", (d: NodeDatum) => d.x).attr("y", (d: NodeDatum) => d.y);
+
+      // Apply deferred zoom once layout is reasonably stable
+      if (
+        pendingZoomTargetRef.current &&
+        !pendingZoomHandledRef.current &&
+        simulation.alpha() < 0.35 &&
+        svgRef.current &&
+        zoomBehaviorRef.current
+      ) {
+        const targetNode = nodes.find((n: any) => n.id === pendingZoomTargetRef.current);
+        if (targetNode) {
+          const { width, height } = dimensions;
+          const scale = 1.9;
+          const translateX = width / 2 - targetNode.x * scale;
+          const translateY = height / 2 - targetNode.y * scale;
+          const transform = d3.zoomIdentity.translate(translateX, translateY).scale(scale);
+
+          d3.select(svgRef.current)
+            .transition()
+            .duration(450)
+            .ease(d3.easeCubicOut)
+            .call(zoomBehaviorRef.current.transform, transform);
+
+          applySelectionHighlight(pendingZoomTargetRef.current, showLabels);
+          pendingZoomHandledRef.current = true;
+        }
+      }
     });
 
     // --- ZOOM ---
@@ -1040,6 +1070,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       if (simulationRef.current) simulationRef.current.stop();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- applyConnectionHighlight is stable and doesn't need to be in deps
+    // Note: onConnectionClick is stored in a ref; excluding from deps prevents unnecessary rebuilds
   }, [
     wallets,
     links,
@@ -1049,7 +1080,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     minBalancePercent,
     showLabels,
     showLinks,
-    onConnectionClick,
+    hasMeasured,
   ]);
 
   // Re-apply connection selection after re-renders (resize, etc)
@@ -1121,33 +1152,25 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     }
   };
 
-  // --- ZOOM TO TARGET WALLET ---
+  // --- ZOOM TO TARGET WALLET (deferred until layout settles) ---
   useEffect(() => {
-    if (!targetWalletId || !simulationRef.current || !svgRef.current || !zoomBehaviorRef.current)
-      return;
+    // Set pending target; handled in simulation tick when alpha is low/stable
+    pendingZoomTargetRef.current = targetWalletId ?? null;
+    pendingZoomHandledRef.current = false;
+  }, [targetWalletId]);
 
-    const nodes = simulationRef.current.nodes();
-    const targetNode = nodes.find((n: any) => n.id === targetWalletId);
+  // Ensure selection highlight matches target wallet even outside zoom timing
+  useEffect(() => {
+    if (!targetWalletId) return;
+    applySelectionHighlight(targetWalletId, showLabels);
+  }, [targetWalletId, showLabels]);
 
-    if (targetNode) {
-      const { width, height } = dimensions;
-
-      // Compute transform to center the target node
-      const scale = 1.8; // closer zoom when targeting specific node
-      const translateX = width / 2 - targetNode.x * scale;
-      const translateY = height / 2 - targetNode.y * scale;
-      const transform = d3.zoomIdentity.translate(translateX, translateY).scale(scale);
-
-      d3.select(svgRef.current)
-        .transition()
-        .duration(1000)
-        .ease(d3.easeCubicOut)
-        .call(zoomBehaviorRef.current.transform, transform);
-
-      // Apply highlight + labels via helper
-      applySelectionHighlight(targetWalletId, showLabels);
+  // Restore selection highlight after rebuilds (e.g., data/resize) so clicks persist
+  useEffect(() => {
+    if (lastSelectedIdRef.current) {
+      applySelectionHighlight(lastSelectedIdRef.current, showLabels);
     }
-  }, [targetWalletId, dimensions, showLabels]);
+  }, [wallets, links, dimensions, showLabels]);
 
   // Screenshot handler using SVG serialization
   const handleSnapshot = async () => {

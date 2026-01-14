@@ -83,6 +83,44 @@ export function ConnectionDetailsView({
     }
   };
 
+  const renderDirection = (stats: ConnectionStats) => {
+    if (stats.flowDirection === "balanced") return <span>Balanced flow</span>;
+
+    const fromAddress =
+      stats.flowDirection === "source_to_target"
+        ? sourceWallet?.address || "Source"
+        : targetWallet?.address || "Target";
+
+    const toAddress =
+      stats.flowDirection === "source_to_target"
+        ? targetWallet?.address || "Target"
+        : sourceWallet?.address || "Source";
+
+    return (
+      <span className="flex flex-col gap-0.5">
+        <span className="shrink-0">Mostly</span>
+        <a
+          className="font-mono text-purple-200 break-all leading-snug hover:text-purple-100 underline decoration-purple-400/60 underline-offset-2"
+          title={fromAddress}
+          href={`${BLOCKSCOUT_BASE_URL}/address/${fromAddress}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {fromAddress}
+        </a>
+        <a
+          className="font-mono text-purple-200 break-all leading-snug hover:text-purple-100 underline decoration-purple-400/60 underline-offset-2"
+          title={toAddress}
+          href={`${BLOCKSCOUT_BASE_URL}/address/${toAddress}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          → {toAddress}
+        </a>
+      </span>
+    );
+  };
+
   // Loading state
   if (connection.loading) {
     return (
@@ -147,9 +185,12 @@ export function ConnectionDetailsView({
 
             <div className="space-y-1">
               <p className="text-[10px] sm:text-xs text-slate-400">Flow Direction</p>
-              <p className="text-xs text-purple-300 break-all">
-                {formatDirection(connection.stats)}
-              </p>
+              <div
+                className="text-xs text-purple-300 flex flex-col gap-0.5 whitespace-normal break-words leading-snug w-full"
+                title={formatDirection(connection.stats)}
+              >
+                {renderDirection(connection.stats)}
+              </div>
             </div>
           </div>
 

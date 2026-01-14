@@ -234,6 +234,7 @@ Open your browser's Developer Console (F12 or Cmd+Option+I) and paste the follow
    - **Status**: Static chart still displays, live updates are iframe limitation
 
 3. **Cross-Origin Frame Access**
+
    ```
    Blocked a frame with origin "http://localhost:3000" from accessing a cross-origin frame
    ```

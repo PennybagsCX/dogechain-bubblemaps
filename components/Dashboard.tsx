@@ -21,9 +21,12 @@ import {
   Edit,
   ExternalLink,
   LineChart,
+  HelpCircle,
 } from "lucide-react";
 import { Tooltip } from "./Tooltip";
 import { EmbeddedChart } from "./EmbeddedChart";
+import { DashboardGuide } from "./DashboardGuide";
+import { useDashboardGuide } from "../hooks/useDashboardGuide";
 
 import {
   fetchTokenBalance,
@@ -97,6 +100,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   const trackedWalletsCount = new Set(alerts.map((a) => a.walletAddress)).size;
   const activeTriggers = Object.values(statuses).filter((s: AlertStatus) => s.triggered).length;
+
+  // Dashboard guide integration
+  const dashboardGuide = useDashboardGuide(true);
 
   // Find the most recent scan time
   const lastScanTime =
@@ -615,7 +621,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <h1 className="text-3xl font-bold text-white">My Dashboard</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-3xl font-bold text-white">My Dashboard</h1>
+          <Tooltip content="View dashboard guide">
+            <button
+              onClick={dashboardGuide.openGuide}
+              className="text-slate-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-space-700"
+              aria-label="View dashboard guide"
+            >
+              <HelpCircle size={20} />
+            </button>
+          </Tooltip>
+        </div>
         <div className="flex gap-3 w-full sm:w-auto flex-wrap">
           <button
             onClick={runScan}
@@ -1294,6 +1311,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
         </div>
       )}
+
+      {/* Dashboard Guide */}
+      <DashboardGuide
+        isOpen={dashboardGuide.isOpen}
+        currentStep={dashboardGuide.currentStep}
+        totalSteps={dashboardGuide.totalSteps}
+        progress={dashboardGuide.progress}
+        onNext={dashboardGuide.nextStep}
+        onPrevious={dashboardGuide.prevStep}
+        onClose={dashboardGuide.closeGuide}
+        onSkip={dashboardGuide.skipGuide}
+      />
     </div>
   );
 };

@@ -910,10 +910,23 @@ const App: React.FC = () => {
   };
 
   // --- MAP CLICK HANDLER (BUBBLE) ---
-  const handleWalletClickOnMap = useCallback((wallet: Wallet | null) => {
-    setSelectedWallet(wallet);
-    setTargetWalletId(wallet ? wallet.id : null);
-  }, []);
+  const handleWalletClickOnMap = useCallback(
+    (wallet: Wallet | null) => {
+      setSelectedWallet(wallet);
+      setTargetWalletId(wallet ? wallet.id : null);
+
+      // Desktop-only: sync token info panel page to the clicked wallet (even beyond top 10)
+      if (wallet && typeof window !== "undefined" && window.innerWidth >= 1024) {
+        const index = wallets.findIndex((w) => w.id === wallet.id);
+        if (index !== -1) {
+          const page = Math.floor(index / 10) + 1;
+          setHoldersPage(page);
+          if (!hasInteractedWithTokenPanel) setHasInteractedWithTokenPanel(true);
+        }
+      }
+    },
+    [wallets, hasInteractedWithTokenPanel]
+  );
 
   // --- SHARE FUNCTIONALITY ---
   const handleShare = () => {

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-console -- Console logging is critical for debugging sync and database operations */
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { useAccount } from "wagmi";
@@ -594,7 +595,6 @@ const App: React.FC = () => {
     const logger = initializeDiagnosticLogger();
     const browserInfo = logger.getBrowserInfo();
 
-    // eslint-disable-next-line no-console
     console.log("[App] 📊 Diagnostic logger initialized:", {
       sessionId: logger.getSessionId(),
       browser: browserInfo,

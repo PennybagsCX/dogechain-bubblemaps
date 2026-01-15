@@ -60,8 +60,8 @@ describe("Alert API Endpoints", () => {
       await request(app).get(`/api/alerts/user?wallet=${testWallet}`).expect(200);
 
       expect(mockSql).toHaveBeenCalled();
-      const callArgs = mockSql.mock.calls[0][0];
-      expect(callArgs.toLowerCase()).toContain(testWallet.toLowerCase());
+      const callArgs = mockSql.mock.calls[0]?.[0];
+      expect(callArgs?.toLowerCase()).toContain(testWallet.toLowerCase());
     });
 
     it("should return 400 if wallet parameter is missing", async () => {
@@ -145,7 +145,7 @@ describe("Alert API Endpoints", () => {
       const response = await request(app).post("/api/alerts/user").send(validAlertData).expect(200);
 
       expect(response.body).toHaveProperty("success", true);
-      const callArgs = mockSql.mock.calls[0][0];
+      const callArgs = mockSql.mock.calls[0]?.[0];
       expect(callArgs).toContain("ON CONFLICT");
       expect(callArgs).toContain("DO UPDATE SET");
     });
@@ -210,7 +210,6 @@ describe("Alert API Endpoints", () => {
       const response = await request(app).post("/api/alerts/user").send(invalidData).expect(200);
 
       // Type should be rejected or set to null
-      const callArgs = mockSql.mock.calls[0][0];
       expect(response.body.success).toBe(true);
     });
 
@@ -252,7 +251,7 @@ describe("Alert API Endpoints", () => {
 
       expect(response.body).toHaveProperty("success", true);
       expect(mockSql).toHaveBeenCalled();
-      const callArgs = mockSql.mock.calls[0][0];
+      const callArgs = mockSql.mock.calls[0]?.[0];
       expect(callArgs).toContain("UPDATE user_alerts");
       expect(callArgs).toContain("is_active = false");
     });

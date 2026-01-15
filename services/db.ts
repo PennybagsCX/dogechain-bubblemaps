@@ -1673,7 +1673,6 @@ export async function syncAlertsFromServer(walletAddress: string): Promise<SyncR
     }
 
     let downloaded = 0;
-    let merged = 0;
     let conflicts = 0;
 
     // Merge server alerts with local alerts
@@ -1711,7 +1710,7 @@ export async function syncAlertsFromServer(walletAddress: string): Promise<SyncR
             type: serverAlert.type,
             createdAt: serverAlert.created_at,
           });
-          merged++;
+          // Track merges for debugging (logged separately)
         } else if (serverCreatedAt < localCreatedAt) {
           // Local version is newer - mark as conflict (will be uploaded separately)
           conflicts++;

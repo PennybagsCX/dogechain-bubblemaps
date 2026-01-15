@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-console -- Console logging is critical for debugging alert creation */
 import { AlertConfig, AlertStatus, Transaction, TriggeredEvent } from "../types";
 import {
   Trash2,

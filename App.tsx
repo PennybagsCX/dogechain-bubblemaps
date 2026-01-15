@@ -53,6 +53,7 @@ import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 import { fetchConnectionDetails } from "./services/connectionService";
 import { initializeDiagnosticLogger, getDiagnosticLogger } from "./lib/consoleLogger";
 import { resetAllGuides } from "./utils/guideStorage";
+import { shouldShowOnboarding } from "./utils/onboardingStorage";
 
 /**
  * Format number with commas (e.g., 1,234,567)
@@ -241,13 +242,28 @@ const App: React.FC = () => {
     hasSeenOnboardingThisSession()
   );
 
+  // If persistent onboarding state says “don’t show”, respect it by marking session seen on mount
+  useEffect(() => {
+    if (!shouldShowOnboarding()) {
+      try {
+        sessionStorage.setItem(sessionOnboardingKey, "true");
+      } catch {
+        /* ignore */
+      }
+      setHasShownOnboardingSession(true);
+    }
+  }, []);
+
   // Detect hard reload (reload with network transfer, not back/forward cache)
   const isHardReload =
     navigationInfoRef.current.type === "reload" &&
     typeof navigationInfoRef.current.transferSize === "number" &&
     navigationInfoRef.current.transferSize > 0;
 
-  const shouldAutoOpen = view === ViewState.HOME && (isHardReload || !hasShownOnboardingSession);
+  const shouldAutoOpen =
+    view === ViewState.HOME &&
+    shouldShowOnboarding() &&
+    (isHardReload || !hasShownOnboardingSession);
 
   const {
     isOpen: isOnboardingOpen,

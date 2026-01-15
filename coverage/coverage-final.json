@@ -1,1 +1,248 @@
-{}
+{
+  "/Volumes/DEV Projects/Dogechain Bubblemaps/src/api/alerts.ts": {
+    "path": "/Volumes/DEV Projects/Dogechain Bubblemaps/src/api/alerts.ts",
+    "statementMap": {
+      "0": { "start": { "line": 15, "column": 2 }, "end": { "line": 41, "column": null } },
+      "1": { "start": { "line": 16, "column": 4 }, "end": { "line": 40, "column": null } },
+      "2": { "start": { "line": 18, "column": 18 }, "end": { "line": 18, "column": null } },
+      "3": { "start": { "line": 19, "column": 24 }, "end": { "line": 23, "column": null } },
+      "4": { "start": { "line": 26, "column": 24 }, "end": { "line": 26, "column": null } },
+      "5": { "start": { "line": 29, "column": 19 }, "end": { "line": 29, "column": null } },
+      "6": { "start": { "line": 30, "column": 26 }, "end": { "line": 30, "column": null } },
+      "7": { "start": { "line": 32, "column": 6 }, "end": { "line": 34, "column": null } },
+      "8": { "start": { "line": 33, "column": 8 }, "end": { "line": 33, "column": null } },
+      "9": { "start": { "line": 36, "column": 6 }, "end": { "line": 36, "column": null } },
+      "10": { "start": { "line": 38, "column": 6 }, "end": { "line": 38, "column": null } },
+      "11": { "start": { "line": 39, "column": 6 }, "end": { "line": 39, "column": null } },
+      "12": { "start": { "line": 44, "column": 6 }, "end": { "line": 44, "column": null } },
+      "13": { "start": { "line": 47, "column": 0 }, "end": { "line": 47, "column": null } },
+      "14": { "start": { "line": 50, "column": 0 }, "end": { "line": 50, "column": null } },
+      "15": { "start": { "line": 53, "column": 0 }, "end": { "line": 53, "column": null } },
+      "16": { "start": { "line": 56, "column": 0 }, "end": { "line": 56, "column": null } }
+    },
+    "fnMap": {
+      "0": {
+        "name": "wrapVercelHandler",
+        "decl": { "start": { "line": 12, "column": 9 }, "end": { "line": 12, "column": null } },
+        "loc": { "start": { "line": 14, "column": 50 }, "end": { "line": 42, "column": null } },
+        "line": 14
+      },
+      "1": {
+        "name": "(anonymous_1)",
+        "decl": { "start": { "line": 15, "column": 9 }, "end": { "line": 15, "column": 16 } },
+        "loc": { "start": { "line": 15, "column": 63 }, "end": { "line": 41, "column": null } },
+        "line": 15
+      }
+    },
+    "branchMap": {
+      "0": {
+        "loc": { "start": { "line": 18, "column": 26 }, "end": { "line": 18, "column": 54 } },
+        "type": "binary-expr",
+        "locations": [
+          { "start": { "line": 18, "column": 26 }, "end": { "line": 18, "column": 45 } },
+          { "start": { "line": 18, "column": 45 }, "end": { "line": 18, "column": 54 } }
+        ],
+        "line": 18
+      },
+      "1": {
+        "loc": { "start": { "line": 22, "column": 14 }, "end": { "line": 22, "column": null } },
+        "type": "cond-expr",
+        "locations": [
+          { "start": { "line": 22, "column": 25 }, "end": { "line": 22, "column": 52 } },
+          { "start": { "line": 22, "column": 52 }, "end": { "line": 22, "column": null } }
+        ],
+        "line": 22
+      },
+      "2": {
+        "loc": { "start": { "line": 32, "column": 6 }, "end": { "line": 34, "column": null } },
+        "type": "if",
+        "locations": [
+          { "start": { "line": 32, "column": 6 }, "end": { "line": 34, "column": null } },
+          { "start": {}, "end": {} }
+        ],
+        "line": 32
+      }
+    },
+    "s": {
+      "0": 8,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 2,
+      "13": 2,
+      "14": 2,
+      "15": 2,
+      "16": 2
+    },
+    "f": { "0": 8, "1": 0 },
+    "b": { "0": [0, 0], "1": [0, 0], "2": [0, 0] },
+    "meta": {
+      "lastBranch": 3,
+      "lastFunction": 2,
+      "lastStatement": 17,
+      "seen": {
+        "f:12:9:12:Infinity": 0,
+        "s:15:2:41:Infinity": 0,
+        "f:15:9:15:16": 1,
+        "s:16:4:40:Infinity": 1,
+        "s:18:18:18:Infinity": 2,
+        "b:18:26:18:45:18:45:18:54": 0,
+        "s:19:24:23:Infinity": 3,
+        "b:22:25:22:52:22:52:22:Infinity": 1,
+        "s:26:24:26:Infinity": 4,
+        "s:29:19:29:Infinity": 5,
+        "s:30:26:30:Infinity": 6,
+        "b:32:6:34:Infinity:undefined:undefined:undefined:undefined": 2,
+        "s:32:6:34:Infinity": 7,
+        "s:33:8:33:Infinity": 8,
+        "s:36:6:36:Infinity": 9,
+        "s:38:6:38:Infinity": 10,
+        "s:39:6:39:Infinity": 11,
+        "s:44:6:44:Infinity": 12,
+        "s:47:0:47:Infinity": 13,
+        "s:50:0:50:Infinity": 14,
+        "s:53:0:53:Infinity": 15,
+        "s:56:0:56:Infinity": 16
+      }
+    }
+  },
+  "/Volumes/DEV Projects/Dogechain Bubblemaps/src/api/hello.ts": {
+    "path": "/Volumes/DEV Projects/Dogechain Bubblemaps/src/api/hello.ts",
+    "statementMap": {
+      "0": { "start": { "line": 3, "column": 6 }, "end": { "line": 3, "column": null } },
+      "1": { "start": { "line": 21, "column": 0 }, "end": { "line": 37, "column": null } },
+      "2": { "start": { "line": 22, "column": 2 }, "end": { "line": 36, "column": null } },
+      "3": { "start": { "line": 23, "column": 36 }, "end": { "line": 27, "column": null } },
+      "4": { "start": { "line": 28, "column": 4 }, "end": { "line": 28, "column": null } },
+      "5": { "start": { "line": 30, "column": 41 }, "end": { "line": 34, "column": null } },
+      "6": { "start": { "line": 35, "column": 4 }, "end": { "line": 35, "column": null } }
+    },
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": { "start": { "line": 21, "column": 21 }, "end": { "line": 21, "column": 22 } },
+        "loc": { "start": { "line": 21, "column": 86 }, "end": { "line": 37, "column": 1 } },
+        "line": 21
+      }
+    },
+    "branchMap": {},
+    "s": { "0": 2, "1": 2, "2": 5, "3": 5, "4": 5, "5": 0, "6": 0 },
+    "f": { "0": 5 },
+    "b": {},
+    "meta": {
+      "lastBranch": 0,
+      "lastFunction": 1,
+      "lastStatement": 7,
+      "seen": {
+        "s:3:6:3:Infinity": 0,
+        "s:21:0:37:Infinity": 1,
+        "f:21:21:21:22": 0,
+        "s:22:2:36:Infinity": 2,
+        "s:23:36:27:Infinity": 3,
+        "s:28:4:28:Infinity": 4,
+        "s:30:41:34:Infinity": 5,
+        "s:35:4:35:Infinity": 6
+      }
+    }
+  },
+  "/Volumes/DEV Projects/Dogechain Bubblemaps/src/api/index.ts": {
+    "path": "/Volumes/DEV Projects/Dogechain Bubblemaps/src/api/index.ts",
+    "statementMap": {
+      "0": { "start": { "line": 9, "column": 8 }, "end": { "line": 9, "column": null } },
+      "1": { "start": { "line": 12, "column": 2 }, "end": { "line": 12, "column": null } },
+      "2": { "start": { "line": 13, "column": 2 }, "end": { "line": 13, "column": null } },
+      "3": { "start": { "line": 16, "column": 2 }, "end": { "line": 21, "column": null } },
+      "4": { "start": { "line": 17, "column": 4 }, "end": { "line": 17, "column": null } },
+      "5": { "start": { "line": 18, "column": 4 }, "end": { "line": 18, "column": null } },
+      "6": { "start": { "line": 19, "column": 4 }, "end": { "line": 19, "column": null } },
+      "7": { "start": { "line": 20, "column": 4 }, "end": { "line": 20, "column": null } },
+      "8": { "start": { "line": 24, "column": 2 }, "end": { "line": 24, "column": null } },
+      "9": { "start": { "line": 25, "column": 2 }, "end": { "line": 25, "column": null } },
+      "10": { "start": { "line": 28, "column": 2 }, "end": { "line": 30, "column": null } },
+      "11": { "start": { "line": 29, "column": 4 }, "end": { "line": 29, "column": null } },
+      "12": { "start": { "line": 33, "column": 2 }, "end": { "line": 39, "column": null } },
+      "13": { "start": { "line": 34, "column": 4 }, "end": { "line": 38, "column": null } },
+      "14": { "start": { "line": 41, "column": 2 }, "end": { "line": 41, "column": null } }
+    },
+    "fnMap": {
+      "0": {
+        "name": "createApiApp",
+        "decl": { "start": { "line": 8, "column": 16 }, "end": { "line": 8, "column": 40 } },
+        "loc": { "start": { "line": 8, "column": 40 }, "end": { "line": 42, "column": null } },
+        "line": 8
+      },
+      "1": {
+        "name": "(anonymous_1)",
+        "decl": { "start": { "line": 16, "column": 10 }, "end": { "line": 16, "column": 11 } },
+        "loc": { "start": { "line": 16, "column": 31 }, "end": { "line": 21, "column": 3 } },
+        "line": 16
+      },
+      "2": {
+        "name": "(anonymous_2)",
+        "decl": { "start": { "line": 28, "column": 21 }, "end": { "line": 28, "column": 22 } },
+        "loc": { "start": { "line": 28, "column": 36 }, "end": { "line": 30, "column": 3 } },
+        "line": 28
+      },
+      "3": {
+        "name": "(anonymous_3)",
+        "decl": { "start": { "line": 33, "column": 10 }, "end": { "line": 33, "column": 11 } },
+        "loc": { "start": { "line": 33, "column": 25 }, "end": { "line": 39, "column": 3 } },
+        "line": 33
+      }
+    },
+    "branchMap": {},
+    "s": {
+      "0": 2,
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 7,
+      "5": 7,
+      "6": 7,
+      "7": 7,
+      "8": 2,
+      "9": 2,
+      "10": 2,
+      "11": 1,
+      "12": 2,
+      "13": 1,
+      "14": 2
+    },
+    "f": { "0": 2, "1": 7, "2": 1, "3": 1 },
+    "b": {},
+    "meta": {
+      "lastBranch": 0,
+      "lastFunction": 4,
+      "lastStatement": 15,
+      "seen": {
+        "f:8:16:8:40": 0,
+        "s:9:8:9:Infinity": 0,
+        "s:12:2:12:Infinity": 1,
+        "s:13:2:13:Infinity": 2,
+        "s:16:2:21:Infinity": 3,
+        "f:16:10:16:11": 1,
+        "s:17:4:17:Infinity": 4,
+        "s:18:4:18:Infinity": 5,
+        "s:19:4:19:Infinity": 6,
+        "s:20:4:20:Infinity": 7,
+        "s:24:2:24:Infinity": 8,
+        "s:25:2:25:Infinity": 9,
+        "s:28:2:30:Infinity": 10,
+        "f:28:21:28:22": 2,
+        "s:29:4:29:Infinity": 11,
+        "s:33:2:39:Infinity": 12,
+        "f:33:10:33:11": 3,
+        "s:34:4:38:Infinity": 13,
+        "s:41:2:41:Infinity": 14
+      }
+    }
+  }
+}

@@ -96,6 +96,9 @@ import {
   loadWalletForcedContracts,
   loadScanCache,
   safeDbOperation,
+  syncAlerts,
+  syncAlertsToServer,
+  deleteAlertFromServer,
 } from "./services/db";
 import {
   Loader2,
@@ -555,6 +558,37 @@ const App: React.FC = () => {
     loadData();
   }, []);
 
+  // Sync alerts with server when wallet connects and db is loaded
+  useEffect(() => {
+    if (!dbLoaded || !userAddress || !isConnected) return;
+
+    const performSync = async () => {
+      try {
+        console.log("[SYNC] Syncing alerts with server...");
+        const result = await syncAlerts(userAddress);
+
+        if (result.success) {
+          console.log(
+            `[SYNC] ✅ Sync complete: ${result.downloaded} downloaded, ${result.uploaded} uploaded, ${result.conflicts} conflicts`
+          );
+
+          // If we downloaded new alerts, reload them from IndexedDB
+          if (result.downloaded > 0) {
+            const dbAlerts = await db.alerts.toArray();
+            const loadedAlerts = dbAlerts.map(fromDbAlert);
+            setAlerts(loadedAlerts);
+          }
+        } else {
+          console.warn("[SYNC] ⚠️ Sync failed:", result.error);
+        }
+      } catch (error) {
+        console.error("[SYNC] ❌ Error during sync:", error);
+      }
+    };
+
+    performSync();
+  }, [dbLoaded, userAddress, isConnected]);
+
   // Initialize diagnostic logger for remote debugging
   useEffect(() => {
     const logger = initializeDiagnosticLogger();
@@ -642,10 +676,21 @@ const App: React.FC = () => {
         const duration = (performance.now() - startTime).toFixed(2);
         console.log(`[DB SAVE] ✅ Alerts saved in ${duration}ms`);
       });
+
+      // Sync to server if wallet is connected
+      if (userAddress && isConnected) {
+        try {
+          await syncAlertsToServer(userAddress);
+          console.log("[SYNC] ✅ Alerts synced to server");
+        } catch (error) {
+          console.error("[SYNC] ⚠️ Failed to sync alerts to server:", error);
+          // Don't fail the save operation if sync fails
+        }
+      }
     };
 
     saveAlerts();
-  }, [alerts, dbLoaded]);
+  }, [alerts, dbLoaded, userAddress, isConnected]);
 
   // Save alert statuses to IndexedDB
   useEffect(() => {
@@ -1857,6 +1902,14 @@ const App: React.FC = () => {
   const handleRemoveAlert = (id: string) => {
     setAlerts((prev) => prev.filter((a) => a.id !== id));
     addToast("Alert removed", "info");
+
+    // Delete from server if wallet is connected
+    if (userAddress && isConnected) {
+      deleteAlertFromServer(userAddress, id).catch((error) => {
+        console.error("[SYNC] Failed to delete alert from server:", error);
+        // Don't show error toast - alert was already removed locally
+      });
+    }
   };
 
   const handleUpdateAlert = async (

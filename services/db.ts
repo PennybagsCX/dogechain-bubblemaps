@@ -1550,3 +1550,301 @@ export async function clearOldTokenSearchIndex(): Promise<number> {
     return 0;
   }
 }
+
+// --- Alert Synchronization Functions ---
+
+/**
+ * Sync result interface
+ */
+export interface SyncResult {
+  success: boolean;
+  uploaded: number;
+  downloaded: number;
+  conflicts: number;
+  timestamp: number;
+  error?: string;
+}
+
+/**
+ * Push local alerts to server for backup and sync
+ * @param walletAddress - User's wallet address for identification
+ * @returns SyncResult with upload statistics
+ */
+export async function syncAlertsToServer(walletAddress: string): Promise<SyncResult> {
+  try {
+    const localAlerts = await db.alerts.toArray();
+
+    if (localAlerts.length === 0) {
+      return {
+        success: true,
+        uploaded: 0,
+        downloaded: 0,
+        conflicts: 0,
+        timestamp: Date.now(),
+      };
+    }
+
+    const response = await fetch("/api/alerts/sync", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        walletAddress,
+        localAlerts,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const result = (await response.json()) as {
+      success: boolean;
+      uploaded?: number;
+      downloaded?: number;
+      conflicts?: number;
+      syncTimestamp?: number;
+    };
+
+    return {
+      success: result.success,
+      uploaded: result.uploaded ?? 0,
+      downloaded: result.downloaded ?? 0,
+      conflicts: result.conflicts ?? 0,
+      timestamp: result.syncTimestamp ?? Date.now(),
+    };
+  } catch (error) {
+    console.error("[SYNC] Failed to sync alerts to server:", error);
+    return {
+      success: false,
+      uploaded: 0,
+      downloaded: 0,
+      conflicts: 0,
+      timestamp: Date.now(),
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+/**
+ * Pull alerts from server and merge with local alerts
+ * @param walletAddress - User's wallet address for identification
+ * @returns SyncResult with download statistics
+ */
+export async function syncAlertsFromServer(walletAddress: string): Promise<SyncResult> {
+  try {
+    const response = await fetch(`/api/alerts/user?wallet=${walletAddress}`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const result = (await response.json()) as {
+      success: boolean;
+      data?: unknown[];
+      count?: number;
+    };
+
+    if (!result.success || !result.data) {
+      throw new Error("Failed to fetch alerts from server");
+    }
+
+    const serverAlerts = result.data as Array<{
+      alert_id: string;
+      name: string;
+      wallet_address: string;
+      token_address?: string;
+      token_name?: string;
+      token_symbol?: string;
+      initial_value?: number;
+      type?: string;
+      created_at: number;
+      is_active: boolean;
+    }>;
+
+    // Filter out inactive alerts
+    const activeAlerts = serverAlerts.filter((alert) => alert.is_active);
+
+    // Get local alerts
+    const localAlerts = await db.alerts.toArray();
+    const localAlertsMap = new Map<string, DbAlert>();
+
+    for (const alert of localAlerts) {
+      localAlertsMap.set(alert.alertId, alert);
+    }
+
+    let downloaded = 0;
+    let merged = 0;
+    let conflicts = 0;
+
+    // Merge server alerts with local alerts
+    for (const serverAlert of activeAlerts) {
+      const localAlert = localAlertsMap.get(serverAlert.alert_id);
+
+      if (!localAlert) {
+        // Alert doesn't exist locally - add it
+        await db.alerts.add({
+          alertId: serverAlert.alert_id,
+          name: serverAlert.name,
+          walletAddress: serverAlert.wallet_address,
+          tokenAddress: serverAlert.token_address,
+          tokenName: serverAlert.token_name,
+          tokenSymbol: serverAlert.token_symbol,
+          initialValue: serverAlert.initial_value,
+          type: serverAlert.type,
+          createdAt: serverAlert.created_at,
+        });
+        downloaded++;
+      } else {
+        // Alert exists locally - check for conflicts
+        const localCreatedAt = localAlert.createdAt;
+        const serverCreatedAt = serverAlert.created_at;
+
+        if (serverCreatedAt > localCreatedAt) {
+          // Server version is newer - update local
+          await db.alerts.update(localAlert.id!, {
+            name: serverAlert.name,
+            walletAddress: serverAlert.wallet_address,
+            tokenAddress: serverAlert.token_address,
+            tokenName: serverAlert.token_name,
+            tokenSymbol: serverAlert.token_symbol,
+            initialValue: serverAlert.initial_value,
+            type: serverAlert.type,
+            createdAt: serverAlert.created_at,
+          });
+          merged++;
+        } else if (serverCreatedAt < localCreatedAt) {
+          // Local version is newer - mark as conflict (will be uploaded separately)
+          conflicts++;
+        }
+        // If timestamps are equal, assume no changes needed
+      }
+    }
+
+    return {
+      success: true,
+      uploaded: 0,
+      downloaded,
+      conflicts,
+      timestamp: Date.now(),
+    };
+  } catch (error) {
+    console.error("[SYNC] Failed to sync alerts from server:", error);
+    return {
+      success: false,
+      uploaded: 0,
+      downloaded: 0,
+      conflicts: 0,
+      timestamp: Date.now(),
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+/**
+ * Perform bidirectional sync with the server
+ * This will:
+ * 1. Fetch server alerts and merge with local (server wins for conflicts)
+ * 2. Push local alerts to server (for new local changes)
+ * @param walletAddress - User's wallet address for identification
+ * @returns SyncResult with combined statistics
+ */
+export async function syncAlerts(walletAddress: string): Promise<SyncResult> {
+  try {
+    // First, pull from server to get latest data
+    const pullResult = await syncAlertsFromServer(walletAddress);
+
+    if (!pullResult.success) {
+      return pullResult;
+    }
+
+    // Then, push local changes to server
+    const pushResult = await syncAlertsToServer(walletAddress);
+
+    return {
+      success: pushResult.success,
+      uploaded: pushResult.uploaded,
+      downloaded: pullResult.downloaded,
+      conflicts: pullResult.conflicts + pushResult.conflicts,
+      timestamp: Math.max(pullResult.timestamp, pushResult.timestamp),
+      error: pushResult.error,
+    };
+  } catch (error) {
+    console.error("[SYNC] Failed to perform bidirectional sync:", error);
+    return {
+      success: false,
+      uploaded: 0,
+      downloaded: 0,
+      conflicts: 0,
+      timestamp: Date.now(),
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+/**
+ * Delete an alert from the server
+ * @param walletAddress - User's wallet address
+ * @param alertId - Alert ID to delete
+ * @returns true if successful, false otherwise
+ */
+export async function deleteAlertFromServer(
+  walletAddress: string,
+  alertId: string
+): Promise<boolean> {
+  try {
+    const response = await fetch(
+      `/api/alerts/user?wallet=${walletAddress}&alertId=${encodeURIComponent(alertId)}`,
+      { method: "DELETE" }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const result = (await response.json()) as { success: boolean };
+    return result.success;
+  } catch (error) {
+    console.error("[SYNC] Failed to delete alert from server:", error);
+    return false;
+  }
+}
+
+/**
+ * Save a single alert to the server
+ * @param walletAddress - User's wallet address
+ * @param alert - Alert configuration to save
+ * @returns true if successful, false otherwise
+ */
+export async function saveAlertToServer(
+  walletAddress: string,
+  alert: AlertConfig
+): Promise<boolean> {
+  try {
+    const response = await fetch("/api/alerts/user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        walletAddress,
+        alertId: alert.id,
+        name: alert.name,
+        monitoredWallet: alert.walletAddress,
+        tokenAddress: alert.tokenAddress,
+        tokenName: alert.tokenName,
+        tokenSymbol: alert.tokenSymbol,
+        initialValue: alert.initialValue,
+        type: alert.type,
+        createdAt: alert.createdAt,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const result = (await response.json()) as { success: boolean };
+    return result.success;
+  } catch (error) {
+    console.error("[SYNC] Failed to save alert to server:", error);
+    return false;
+  }
+}

@@ -12,6 +12,18 @@ const BUBBLE_GUIDE_VERSION = "1.0.0";
 const TOKEN_PANEL_GUIDE_VERSION = "1.0.0";
 const WALLET_DETAILS_GUIDE_VERSION = "1.0.0";
 
+export const isHardReload = (): boolean => {
+  try {
+    const nav = performance.getEntriesByType("navigation")[0] as
+      | PerformanceNavigationTiming
+      | undefined;
+    if (!nav) return false;
+    return nav.type === "reload" && typeof nav.transferSize === "number" && nav.transferSize > 0;
+  } catch {
+    return false;
+  }
+};
+
 /**
  * Storage keys for all three guides
  */

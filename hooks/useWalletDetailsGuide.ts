@@ -31,6 +31,24 @@ export interface UseWalletDetailsGuideReturn {
  */
 const TOTAL_STEPS = 6;
 
+const SESSION_KEY = "dogechain_wallet_details_guide_session_shown";
+
+const getSessionSeen = () => {
+  try {
+    return sessionStorage.getItem(SESSION_KEY) === "true";
+  } catch {
+    return false;
+  }
+};
+
+const setSessionSeen = () => {
+  try {
+    sessionStorage.setItem(SESSION_KEY, "true");
+  } catch {
+    /* ignore */
+  }
+};
+
 /**
  * Custom hook for wallet details guide state management
  *
@@ -46,6 +64,8 @@ export function useWalletDetailsGuide(triggerCondition: boolean): UseWalletDetai
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [hasInitialized, setHasInitialized] = useState(false);
+
+  const hasShownThisSessionRef = useRef<boolean>(getSessionSeen());
 
   // Track trigger element for focus restoration
   const triggerElementRef = useRef<HTMLElement | null>(null);
@@ -108,17 +128,22 @@ export function useWalletDetailsGuide(triggerCondition: boolean): UseWalletDetai
   useEffect(() => {
     if (hasInitialized || isInitializingRef.current) return undefined;
 
-    // Mark as initializing to prevent duplicate runs
-    isInitializingRef.current = true;
-
     const shouldShow = shouldShowWalletDetailsGuide();
-    if (shouldShow && triggerCondition) {
-      // Auto-show with very short delay (0.5s delay to let sidebar slide in)
+    const alreadySeenSession = hasShownThisSessionRef.current;
+    const alreadySeen = hasInitialized;
+    const alreadyInitializing = isInitializingRef.current;
+
+    // Trigger when condition becomes true AND guide should show AND not already shown this session
+    if (shouldShow && triggerCondition && !alreadySeenSession && !alreadySeen && !alreadyInitializing) {
+      isInitializingRef.current = true;
+      // Auto-show with delay for smooth UX (0.8s delay to let sidebar render)
       const timer = setTimeout(() => {
         setIsOpen(true);
         setHasInitialized(true);
+        setSessionSeen();
+        hasShownThisSessionRef.current = true;
         isInitializingRef.current = false;
-      }, 500);
+      }, 800);
 
       return () => clearTimeout(timer);
     } else {
@@ -170,6 +195,8 @@ export function useWalletDetailsGuide(triggerCondition: boolean): UseWalletDetai
     setCurrentStep(0);
     setIsOpen(true);
     setHasInitialized(true);
+    setSessionSeen();
+    hasShownThisSessionRef.current = true;
   }, []);
 
   /**

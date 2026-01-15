@@ -31,6 +31,24 @@ export interface UseTokenInfoPanelGuideReturn {
  */
 const TOTAL_STEPS = 6;
 
+const SESSION_KEY = "dogechain_token_panel_guide_session_shown";
+
+const getSessionSeen = () => {
+  try {
+    return sessionStorage.getItem(SESSION_KEY) === "true";
+  } catch {
+    return false;
+  }
+};
+
+const setSessionSeen = () => {
+  try {
+    sessionStorage.setItem(SESSION_KEY, "true");
+  } catch {
+    /* ignore */
+  }
+};
+
 /**
  * Custom hook for token info panel guide state management
  *
@@ -46,6 +64,8 @@ export function useTokenInfoPanelGuide(triggerCondition: boolean): UseTokenInfoP
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [hasInitialized, setHasInitialized] = useState(false);
+
+  const hasShownThisSessionRef = useRef<boolean>(getSessionSeen());
 
   // Track trigger element for focus restoration
   const triggerElementRef = useRef<HTMLElement | null>(null);
@@ -112,11 +132,17 @@ export function useTokenInfoPanelGuide(triggerCondition: boolean): UseTokenInfoP
     isInitializingRef.current = true;
 
     const shouldShow = shouldShowTokenPanelGuide();
-    if (shouldShow && triggerCondition) {
-      // Auto-show with short delay (1s delay since user has already clicked)
+    const alreadySeenSession = hasShownThisSessionRef.current;
+
+    // Trigger when condition becomes true AND guide should show AND not already shown this session
+    if (shouldShow && triggerCondition && !alreadySeenSession && !isInitializingRef.current) {
+      isInitializingRef.current = true;
+      // Auto-show with delay for smooth UX (1s delay to let panel render)
       const timer = setTimeout(() => {
         setIsOpen(true);
         setHasInitialized(true);
+        setSessionSeen();
+        hasShownThisSessionRef.current = true;
         isInitializingRef.current = false;
       }, 1000);
 
@@ -170,6 +196,8 @@ export function useTokenInfoPanelGuide(triggerCondition: boolean): UseTokenInfoP
     setCurrentStep(0);
     setIsOpen(true);
     setHasInitialized(true);
+    setSessionSeen();
+    hasShownThisSessionRef.current = true;
   }, []);
 
   /**

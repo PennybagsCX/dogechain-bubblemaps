@@ -267,6 +267,13 @@ const App: React.FC = () => {
 
     // Note: Don't set session flag here, allow re-show on hard reload
     // Session flag is only set when user completes onboarding
+    try {
+      sessionStorage.setItem(sessionOnboardingKey, "true");
+      hasShownOnboardingRef.current = true;
+    } catch {
+      /* ignore */
+    }
+
     openOnboarding();
   }, [shouldAutoOpen, openOnboarding]);
 

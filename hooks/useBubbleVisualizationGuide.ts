@@ -31,6 +31,24 @@ export interface UseBubbleVisualizationGuideReturn {
  */
 const TOTAL_STEPS = 6;
 
+const SESSION_KEY = "dogechain_bubble_guide_session_shown";
+
+const getSessionSeen = () => {
+  try {
+    return sessionStorage.getItem(SESSION_KEY) === "true";
+  } catch {
+    return false;
+  }
+};
+
+const setSessionSeen = () => {
+  try {
+    sessionStorage.setItem(SESSION_KEY, "true");
+  } catch {
+    /* ignore */
+  }
+};
+
 /**
  * Custom hook for bubble visualization guide state management
  *
@@ -48,6 +66,8 @@ export function useBubbleVisualizationGuide(
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [hasInitialized, setHasInitialized] = useState(false);
+
+  const hasShownThisSessionRef = useRef<boolean>(getSessionSeen());
 
   // Track trigger element for focus restoration
   const triggerElementRef = useRef<HTMLElement | null>(null);
@@ -112,14 +132,18 @@ export function useBubbleVisualizationGuide(
     if (hasInitialized && !isOpen) return undefined;
 
     const shouldShow = shouldShowBubbleGuide();
-    // Trigger when condition becomes true AND guide should show
-    if (shouldShow && triggerCondition && !isInitializingRef.current) {
+    const alreadySeenSession = hasShownThisSessionRef.current;
+
+    // Trigger when condition becomes true AND guide should show AND not already shown this session
+    if (shouldShow && triggerCondition && !alreadySeenSession && !isInitializingRef.current) {
       isInitializingRef.current = true;
       // Auto-show with delay for smooth UX (2.5s delay for bubble visualization load)
       const timer = setTimeout(() => {
         setIsOpen(true);
         setHasInitialized(true);
         isInitializingRef.current = false;
+        setSessionSeen();
+        hasShownThisSessionRef.current = true;
       }, 2500);
 
       return () => clearTimeout(timer);
@@ -173,6 +197,8 @@ export function useBubbleVisualizationGuide(
     setCurrentStep(0);
     setIsOpen(true);
     setHasInitialized(true);
+    setSessionSeen();
+    hasShownThisSessionRef.current = true;
   }, []);
 
   /**

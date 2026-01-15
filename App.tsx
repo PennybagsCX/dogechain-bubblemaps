@@ -311,14 +311,34 @@ const App: React.FC = () => {
 
   const [token, setToken] = useState<Token | null>(null);
 
+  const [wallets, setWallets] = useState<Wallet[]>([]);
+  const [links, setLinks] = useState<Link[]>([]);
+  const [selectedWallet, setSelectedWallet] = useState<Wallet | null>(null);
+  const [selectedConnection, setSelectedConnection] = useState<Connection | null>(null);
+  const [selectedConnectionId, setSelectedConnectionId] = useState<string | null>(null);
+  const [holdersPage, setHoldersPage] = useState(1);
+  const [targetWalletId, setTargetWalletId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [summary, setSummary] = useState<string | null>(null);
+
   // Map Analysis Context-Aware Guides hooks
   // Trigger conditions: guides show when respective sections are active/interacted with
   const bubbleGuide = useBubbleVisualizationGuide(view === ViewState.ANALYSIS && !!token);
-  const tokenPanelGuide = useTokenInfoPanelGuide(hasInteractedWithTokenPanel);
-  const walletDetailsGuide = useWalletDetailsGuide(hasInteractedWithWalletDetails);
+  const tokenPanelGuide = useTokenInfoPanelGuide(
+    view === ViewState.ANALYSIS && !!token && wallets.length > 0
+  );
+  const walletDetailsGuide = useWalletDetailsGuide(!!selectedWallet);
 
-  // Expose guide testing helpers on window object for development
+  // When overlays/wizards are open (or loading overlay), freeze map layout updates to avoid churn
+  const isMapLayoutFrozen =
+    loading ||
+    isOnboardingOpen ||
+    bubbleGuide.isOpen ||
+    tokenPanelGuide.isOpen ||
+    walletDetailsGuide.isOpen;
+
   useEffect(() => {
+    // Expose guide testing helpers on window object for development
     // @ts-expect-error Exposing for testing
     window.__DOGECCHAIN_GUIDES__ = {
       resetAllGuides: () => {
@@ -326,7 +346,6 @@ const App: React.FC = () => {
         // Reset interaction tracking
         setHasInteractedWithBubbles(false);
         setHasInteractedWithTokenPanel(false);
-        setHasInteractedWithWalletDetails(false);
       },
       openBubbleGuide: () => {
         resetAllGuides();
@@ -355,17 +374,6 @@ const App: React.FC = () => {
       },
     };
   }, [bubbleGuide, tokenPanelGuide, walletDetailsGuide]);
-
-  const [wallets, setWallets] = useState<Wallet[]>([]);
-  const [links, setLinks] = useState<Link[]>([]);
-  const [selectedWallet, setSelectedWallet] = useState<Wallet | null>(null);
-  const [selectedConnection, setSelectedConnection] = useState<Connection | null>(null);
-  const [selectedConnectionId, setSelectedConnectionId] = useState<string | null>(null);
-  const [holdersPage, setHoldersPage] = useState(1);
-  const [targetWalletId, setTargetWalletId] = useState<string | null>(null);
-
-  const [loading, setLoading] = useState(false);
-  const [summary, setSummary] = useState<string | null>(null);
 
   // Mobile UI State
   const [isMobileStatsOpen, setIsMobileStatsOpen] = useState(false);
@@ -1060,36 +1068,39 @@ const App: React.FC = () => {
   };
 
   // --- CONNECTION DETAILS ---
-  const handleConnectionClick = async (link: Link) => {
-    if (!token) return;
+  const handleConnectionClick = useCallback(
+    async (link: Link) => {
+      if (!token) return;
 
-    try {
-      // Generate link ID
-      const sourceId = typeof link.source === "string" ? link.source : link.source.id;
-      const targetId = typeof link.target === "string" ? link.target : link.target.id;
-      const linkId = `${sourceId}-${targetId}`;
+      try {
+        // Generate link ID
+        const sourceId = typeof link.source === "string" ? link.source : link.source.id;
+        const targetId = typeof link.target === "string" ? link.target : link.target.id;
+        const linkId = `${sourceId}-${targetId}`;
 
-      // Set selected connection ID
-      setSelectedConnectionId(linkId);
+        // Set selected connection ID
+        setSelectedConnectionId(linkId);
 
-      // Create connection object with loading state
-      const loadingConnection: Connection = {
-        ...link,
-        loading: true,
-      };
+        // Create connection object with loading state
+        const loadingConnection: Connection = {
+          ...link,
+          loading: true,
+        };
 
-      setSelectedConnection(loadingConnection);
-      setSelectedWallet(null); // Clear wallet selection
+        setSelectedConnection(loadingConnection);
+        setSelectedWallet(null); // Clear wallet selection
 
-      // Fetch connection details with transactions
-      const connectionWithDetails = await fetchConnectionDetails(link, token.address, token.type);
+        // Fetch connection details with transactions
+        const connectionWithDetails = await fetchConnectionDetails(link, token.address, token.type);
 
-      setSelectedConnection(connectionWithDetails);
-    } catch (error) {
-      console.error("[App] Failed to load connection details:", error);
-      addToast("Failed to load connection details", "error");
-    }
-  };
+        setSelectedConnection(connectionWithDetails);
+      } catch (error) {
+        console.error("[App] Failed to load connection details:", error);
+        addToast("Failed to load connection details", "error");
+      }
+    },
+    [token]
+  );
 
   // --- USER INJECTION LOGIC ---
   const injectUserWallet = useCallback(
@@ -2759,6 +2770,7 @@ const App: React.FC = () => {
                     targetWalletId={targetWalletId}
                     onConnectionClick={handleConnectionClick}
                     selectedConnectionId={selectedConnectionId}
+                    freezeLayout={isMapLayoutFrozen}
                   />
                 </div>
 

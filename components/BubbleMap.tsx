@@ -41,6 +41,7 @@ interface BubbleMapProps {
   targetWalletId?: string | null; // New: ID of wallet to zoom to
   onConnectionClick?: (link: Link) => void; // Handler for clicking connections (view details)
   selectedConnectionId?: string | null; // ID of selected connection for persistent highlight
+  freezeLayout?: boolean; // When true, defer resize-driven rebuilds (e.g., while modals open)
 }
 
 export const BubbleMap: React.FC<BubbleMapProps> = ({
@@ -54,6 +55,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   targetWalletId,
   onConnectionClick,
   selectedConnectionId,
+  freezeLayout = false,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -62,11 +64,82 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const controlsRef = useRef<HTMLDivElement>(null);
   const mobileControlsRef = useRef<HTMLDivElement>(null);
   const helpMenuRef = useRef<HTMLDivElement>(null);
+  const resizeRafRef = useRef<number | null>(null);
+  const resizeDebounceRef = useRef<number | null>(null);
+  const pendingSizeRef = useRef<{ width: number; height: number } | null>(null);
+  const lastAppliedSizeRef = useRef<{ width: number; height: number } | null>(null);
+  const pendingWhileFrozenRef = useRef<{ width: number; height: number } | null>(null);
+  const freezeLayoutRef = useRef<boolean>(freezeLayout);
   const [dimensions, setDimensions] = useState({
     width: initialWidth || 800,
     height: initialHeight || 600,
   });
   const [hasMeasured, setHasMeasured] = useState<boolean>(!!(initialWidth && initialHeight));
+
+  // Prevent redundant dimension updates that can cause double renders/reflows
+  const updateDimensions = useCallback((width: number, height: number) => {
+    // If layout is frozen (e.g., overlay open), just record the pending size and exit
+    if (freezeLayoutRef.current) {
+      pendingWhileFrozenRef.current = { width, height };
+      return;
+    }
+
+    // Normalize sizes to integers to avoid sub-pixel churn
+    const nextWidth = Math.round(width);
+    const nextHeight = Math.round(height);
+
+    // Cancel any in-flight frame to avoid back-to-back updates in the same frame burst
+    if (resizeRafRef.current !== null) {
+      cancelAnimationFrame(resizeRafRef.current);
+    }
+
+    // Debounce to coalesce rapid overlay/scrollbar/layout changes into a single update
+    pendingSizeRef.current = { width: nextWidth, height: nextHeight };
+
+    resizeRafRef.current = requestAnimationFrame(() => {
+      if (resizeDebounceRef.current !== null) {
+        clearTimeout(resizeDebounceRef.current);
+      }
+
+      resizeDebounceRef.current = window.setTimeout(() => {
+        resizeDebounceRef.current = null;
+
+        const pending = pendingSizeRef.current;
+        if (!pending) return;
+
+        const tolerance = 3; // px: ignore negligible jitter (e.g., scrollbars toggling)
+        const lastApplied = lastAppliedSizeRef.current;
+        const widthUnchanged = lastApplied
+          ? Math.abs(lastApplied.width - pending.width) <= tolerance
+          : false;
+        const heightUnchanged = lastApplied
+          ? Math.abs(lastApplied.height - pending.height) <= tolerance
+          : false;
+
+        if (widthUnchanged && heightUnchanged) {
+          pendingSizeRef.current = null;
+          return;
+        }
+
+        setDimensions({ width: pending.width, height: pending.height });
+        lastAppliedSizeRef.current = pending;
+        setHasMeasured(true);
+        pendingSizeRef.current = null;
+      }, 200);
+
+      resizeRafRef.current = null;
+    });
+  }, []);
+
+  // Apply any pending size once freeze is lifted
+  useEffect(() => {
+    freezeLayoutRef.current = freezeLayout;
+    if (!freezeLayout && pendingWhileFrozenRef.current) {
+      const { width, height } = pendingWhileFrozenRef.current;
+      pendingWhileFrozenRef.current = null;
+      updateDimensions(width, height);
+    }
+  }, [freezeLayout, updateDimensions]);
 
   const zoomTransformRef = useRef<d3.ZoomTransform>(d3.zoomIdentity);
   const zoomBehaviorRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
@@ -294,23 +367,29 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     // Initial measure on mount
     const rect = containerRef.current.getBoundingClientRect();
     if (rect.width > 0 && rect.height > 0) {
-      setDimensions({ width: rect.width, height: rect.height });
-      setHasMeasured(true);
+      updateDimensions(rect.width, rect.height);
     }
 
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const { width, height } = entry.contentRect;
         if (width > 0 && height > 0) {
-          setDimensions({ width, height });
-          setHasMeasured(true);
+          updateDimensions(width, height);
         }
       }
     });
 
     resizeObserver.observe(containerRef.current);
-    return () => resizeObserver.disconnect();
-  }, []);
+    return () => {
+      resizeObserver.disconnect();
+      if (resizeRafRef.current !== null) {
+        cancelAnimationFrame(resizeRafRef.current);
+      }
+      if (resizeDebounceRef.current !== null) {
+        clearTimeout(resizeDebounceRef.current);
+      }
+    };
+  }, [updateDimensions]);
 
   // --- KEYBOARD NAVIGATION HANDLER ---
   useEffect(() => {
@@ -997,8 +1076,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     // --- TICK ---
     simulation.on("tick", () => {
-      // Save node positions only when simulation is ending (alpha < 0.1)
-      if (simulation.alpha() < 0.1) {
+      // Save node positions once simulation has made meaningful progress (alpha < 0.6)
+      if (simulation.alpha() < 0.6) {
         nodes.forEach((node) => {
           if (node.x !== undefined && node.y !== undefined) {
             nodePositionsRef.current.set(node.id, { x: node.x, y: node.y });

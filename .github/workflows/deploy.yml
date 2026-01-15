@@ -6,16 +6,16 @@ on:
       - main
   workflow_dispatch:
 
-# Cancel previous runs to prevent queue buildup
+# Prevent multiple runs from queueing
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
     name: Deploy to Vercel
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - name: Checkout code

@@ -10,6 +10,9 @@ export default defineConfig({
     setupFiles: ["./tests/setup.ts"],
     css: true,
     passWithNoTests: true,
+    env: {
+      DATABASE_URL: "postgresql://test:test@localhost/test",
+    },
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html", "lcov"],

@@ -6,10 +6,10 @@ on:
   pull_request:
     branches: [main, develop]
 
-# Cancel previous runs for the same branch to prevent queue buildup
+# Prevent multiple runs from queueing (but don't cancel in-progress runs)
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   lint-and-type-check:
@@ -41,7 +41,7 @@ jobs:
   test:
     name: Tests
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - name: Checkout code

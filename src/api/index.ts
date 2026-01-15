@@ -1,5 +1,6 @@
 import express, { Express } from "express";
 import helloRouter from "./hello";
+import alertsRouter from "./alerts";
 
 /**
  * Create and configure Express API application
@@ -21,6 +22,7 @@ export function createApiApp(): Express {
 
   // Routes
   app.use("/api", helloRouter);
+  app.use("/api/alerts", alertsRouter);
 
   // Health check endpoint
   app.get("/health", (_req, res) => {

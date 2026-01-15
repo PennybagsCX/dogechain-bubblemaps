@@ -3,12 +3,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import {
-  shouldShowBubbleGuide,
-  setBubbleGuideSeen,
-  setBubbleGuideSkipped,
-  updateBubbleGuideProgress,
-} from "../utils/guideStorage";
+import { setBubbleGuideSeen, setBubbleGuideSkipped, updateBubbleGuideProgress } from "../utils/guideStorage";
 
 /**
  * Return type for useBubbleVisualizationGuide hook
@@ -131,11 +126,10 @@ export function useBubbleVisualizationGuide(
     // Don't re-trigger if already shown and completed
     if (hasInitialized && !isOpen) return undefined;
 
-    const shouldShow = shouldShowBubbleGuide();
     const alreadySeenSession = hasShownThisSessionRef.current;
 
-    // Trigger when condition becomes true AND guide should show AND not already shown this session
-    if (shouldShow && triggerCondition && !alreadySeenSession && !isInitializingRef.current) {
+    // Trigger when condition becomes true AND not already shown this session
+    if (triggerCondition && !alreadySeenSession && !isInitializingRef.current) {
       isInitializingRef.current = true;
       // Auto-show with delay for smooth UX (2.5s delay for bubble visualization load)
       const timer = setTimeout(() => {

@@ -627,7 +627,8 @@ export function toDbAlert(alert: AlertConfig): DbAlert {
     threshold: alert.threshold,
     initialValue: alert.initialValue,
     type: alert.type,
-    createdAt: Date.now(),
+    // Preserve existing createdAt, or set to now for new alerts
+    createdAt: alert.createdAt ?? Date.now(),
   };
 }
 
@@ -642,6 +643,7 @@ export function fromDbAlert(dbAlert: DbAlert): AlertConfig {
     threshold: dbAlert.threshold,
     initialValue: dbAlert.initialValue,
     type: dbAlert.type as "WALLET" | "TOKEN" | "WHALE" | undefined,
+    createdAt: dbAlert.createdAt,
   };
 }
 

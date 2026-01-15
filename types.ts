@@ -84,6 +84,7 @@ export interface AlertConfig {
   initialValue?: number; // For delta tracking
   name: string;
   type?: "WALLET" | "TOKEN" | "WHALE"; // Alert type for different monitoring strategies
+  createdAt?: number; // Timestamp when alert was created
 }
 
 export interface TriggeredEvent {

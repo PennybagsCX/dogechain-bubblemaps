@@ -748,6 +748,40 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </div>
 
+      {/* Notifications Button */}
+      <button
+        onClick={() => {
+          const notificationsSection = document.querySelector(
+            '[role="status"][aria-live="polite"]'
+          );
+          notificationsSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }}
+        className="flex items-center gap-3 px-5 py-3 bg-space-800 hover:bg-space-700 rounded-xl transition-all border border-space-700 hover:border-purple-500/50 mb-6 w-full sm:w-auto shadow-lg hover:shadow-purple-500/10 group"
+        aria-label={`View ${inAppNotifications.length} notification${inAppNotifications.length === 1 ? "" : "s"}`}
+      >
+        <div className="relative">
+          <Bell
+            size={20}
+            className="text-purple-400 group-hover:text-purple-300 transition-colors"
+          />
+          {inAppNotifications.length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center">
+              {inAppNotifications.length > 99 ? "99+" : inAppNotifications.length}
+            </span>
+          )}
+        </div>
+        <div className="flex-1 text-left">
+          <div className="text-white font-medium">
+            {inAppNotifications.length === 0
+              ? "No new notifications"
+              : `${inAppNotifications.length} notification${inAppNotifications.length === 1 ? "" : "s"}`}
+          </div>
+          {inAppNotifications.length > 0 && (
+            <div className="text-xs text-slate-400">Click to view</div>
+          )}
+        </div>
+      </button>
+
       {/* In-App Notifications */}
       {inAppNotifications.length > 0 && (
         <div

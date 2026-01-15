@@ -1802,6 +1802,7 @@ const App: React.FC = () => {
         tokenName: tokenInfo.name,
         initialValue: initialVal,
         type: data.alertType || "WALLET",
+        createdAt: Date.now(), // Set creation timestamp
       };
       console.log("[ALERT CREATE] ✅ Alert object created:", newAlert);
 

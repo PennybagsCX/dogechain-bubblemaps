@@ -19,11 +19,13 @@ import { OnboardingModal } from "./components/OnboardingModal";
 import { BubbleVisualizationGuide } from "./components/BubbleVisualizationGuide";
 import { TokenInfoPanelGuide } from "./components/TokenInfoPanelGuide";
 import { WalletDetailsGuide } from "./components/WalletDetailsGuide";
+import { DashboardGuide } from "./components/DashboardGuide";
 import { useStatsCounters } from "./hooks/useStatsCounters";
 import { useOnboarding } from "./hooks/useOnboarding";
 import { useBubbleVisualizationGuide } from "./hooks/useBubbleVisualizationGuide";
 import { useTokenInfoPanelGuide } from "./hooks/useTokenInfoPanelGuide";
 import { useWalletDetailsGuide } from "./hooks/useWalletDetailsGuide";
+import { useDashboardGuide } from "./hooks/useDashboardGuide";
 import {
   Token,
   Wallet,
@@ -51,7 +53,7 @@ import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 import { fetchConnectionDetails } from "./services/connectionService";
 import { initializeDiagnosticLogger, getDiagnosticLogger } from "./lib/consoleLogger";
 import { resetAllGuides } from "./utils/guideStorage";
-import { shouldShowOnboarding } from "./utils/onboardingStorage";
+import { shouldShowOnboarding, setOnboardingSeen } from "./utils/onboardingStorage";
 
 /**
  * Format number with commas (e.g., 1,234,567)
@@ -228,15 +230,17 @@ const App: React.FC = () => {
     }
   }, []);
 
-  // Initialize ref synchronously from sessionStorage (before first render)
-  const getInitialSessionFlag = () => {
+  const hasSeenOnboardingThisSession = () => {
     try {
       return sessionStorage.getItem(sessionOnboardingKey) === "true";
     } catch {
       return false;
     }
   };
-  const hasShownOnboardingRef = useRef<boolean>(getInitialSessionFlag());
+
+  const [hasShownOnboardingSession, setHasShownOnboardingSession] = useState<boolean>(
+    hasSeenOnboardingThisSession()
+  );
 
   // Detect hard reload (reload with network transfer, not back/forward cache)
   const isHardReload =
@@ -247,7 +251,7 @@ const App: React.FC = () => {
   const shouldAutoOpen =
     view === ViewState.HOME &&
     shouldShowOnboarding() &&
-    (isHardReload || !hasShownOnboardingRef.current);
+    (isHardReload || !hasShownOnboardingSession);
 
   const {
     isOpen: isOnboardingOpen,
@@ -261,18 +265,17 @@ const App: React.FC = () => {
     skipOnboarding,
   } = useOnboarding();
 
-  // Trigger onboarding when the auto-open condition is met
+  // Trigger onboarding when the auto-open condition is met (once per session unless hard reload)
   useEffect(() => {
     if (!shouldAutoOpen) return;
 
-    // Note: Don't set session flag here, allow re-show on hard reload
-    // Session flag is only set when user completes onboarding
     try {
       sessionStorage.setItem(sessionOnboardingKey, "true");
-      hasShownOnboardingRef.current = true;
     } catch {
       /* ignore */
     }
+
+    setHasShownOnboardingSession(true);
 
     openOnboarding();
   }, [shouldAutoOpen, openOnboarding]);
@@ -335,6 +338,7 @@ const App: React.FC = () => {
     view === ViewState.ANALYSIS && !!token && wallets.length > 0
   );
   const walletDetailsGuide = useWalletDetailsGuide(!!selectedWallet);
+  const dashboardGuide = useDashboardGuide(view === ViewState.DASHBOARD);
 
   // When overlays/wizards are open (or loading overlay), freeze map layout updates to avoid churn
   const isMapLayoutFrozen =
@@ -343,6 +347,29 @@ const App: React.FC = () => {
     bubbleGuide.isOpen ||
     tokenPanelGuide.isOpen ||
     walletDetailsGuide.isOpen;
+
+  // Onboarding close/skip should mark session as shown to prevent re-opening
+  const handleOnboardingClose = useCallback(() => {
+    try {
+      sessionStorage.setItem(sessionOnboardingKey, "true");
+    } catch {
+      /* ignore */
+    }
+    setHasShownOnboardingSession(true);
+    setOnboardingSeen();
+    closeOnboarding();
+  }, [closeOnboarding]);
+
+  const handleOnboardingSkip = useCallback(() => {
+    try {
+      sessionStorage.setItem(sessionOnboardingKey, "true");
+    } catch {
+      /* ignore */
+    }
+    setHasShownOnboardingSession(true);
+    setOnboardingSeen();
+    skipOnboarding();
+  }, [skipOnboarding]);
 
   useEffect(() => {
     // Expose guide testing helpers on window object for development
@@ -2880,8 +2907,8 @@ const App: React.FC = () => {
         progress={onboardingProgress}
         onNext={nextOnboardingStep}
         onPrevious={prevOnboardingStep}
-        onClose={closeOnboarding}
-        onSkip={skipOnboarding}
+        onClose={handleOnboardingClose}
+        onSkip={handleOnboardingSkip}
       />
 
       {/* Map Analysis Context-Aware Guides */}
@@ -2916,6 +2943,18 @@ const App: React.FC = () => {
         onPrevious={walletDetailsGuide.prevStep}
         onClose={walletDetailsGuide.closeGuide}
         onSkip={walletDetailsGuide.skipGuide}
+      />
+
+      {/* Dashboard Guide */}
+      <DashboardGuide
+        isOpen={dashboardGuide.isOpen}
+        currentStep={dashboardGuide.currentStep}
+        totalSteps={dashboardGuide.totalSteps}
+        progress={dashboardGuide.progress}
+        onNext={dashboardGuide.nextStep}
+        onPrevious={dashboardGuide.prevStep}
+        onClose={dashboardGuide.closeGuide}
+        onSkip={dashboardGuide.skipGuide}
       />
     </div>
   );

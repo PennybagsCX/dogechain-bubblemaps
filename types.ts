@@ -80,8 +80,8 @@ export interface AlertConfig {
   tokenAddress?: string;
   tokenName?: string;
   tokenSymbol?: string;
-  threshold: number;
-  initialValue?: number; // New: For delta tracking
+  threshold?: number; // Deprecated: Alerts monitor transactions, not balance changes
+  initialValue?: number; // For delta tracking
   name: string;
   type?: "WALLET" | "TOKEN" | "WHALE"; // Alert type for different monitoring strategies
 }

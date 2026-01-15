@@ -731,166 +731,277 @@ export const fetchTokenHolders = async (
   }
 };
 
+// Track pending fetches to prevent infinite loops and duplicate requests
+const pendingFetches = new Map<string, Promise<Transaction[]>>();
+
+// Simple in-memory cache with 5-minute TTL to avoid repeated slow API calls
+const txCache = new Map<string, { data: Transaction[]; timestamp: number }>();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
 export const fetchWalletTransactions = async (
   walletAddress: string,
   tokenAddress?: string,
-  type: AssetType = AssetType.TOKEN
+  type: AssetType = AssetType.TOKEN,
+  onProgress?: (message: string) => void
 ): Promise<Transaction[]> => {
-  try {
-    // Sanitize inputs to avoid 400s for malformed addresses
-    const cleanWallet = validateWalletAddress(walletAddress);
-    const cleanToken = tokenAddress ? validateTokenAddress(tokenAddress) : undefined;
+  // Create unique key for this request
+  const cacheKey = `${walletAddress}-${tokenAddress || "none"}-${type}`;
 
-    // Helper function to process raw transaction data
-    const processTransactions = async (rawTxs: any[]): Promise<Transaction[]> => {
-      let filteredTransactions = rawTxs;
+  // Check cache first
+  const cached = txCache.get(cacheKey);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    console.log(`[fetchWalletTransactions] 🎯 Cache hit for ${cacheKey.substring(0, 16)}...`);
+    onProgress?.("Using cached transaction data...");
+    return cached.data;
+  }
 
-      // For NFTs with specific contract address, filter client-side
-      if (type === AssetType.NFT && cleanToken) {
-        filteredTransactions = rawTxs.filter((tx: any) => {
-          const contract = (tx.contractAddress || tx.contract || "")?.toLowerCase();
-          return contract === cleanToken.toLowerCase();
-        });
-      }
+  // If already fetching, return existing promise (prevents infinite loops)
+  if (pendingFetches.has(cacheKey)) {
+    console.log(`[fetchWalletTransactions] 🔄 Request already in progress, waiting...`);
+    return pendingFetches.get(cacheKey)!;
+  }
 
-      // For NFTs without specific contract, detect and filter by contract type
-      if (type === AssetType.NFT && !cleanToken) {
-        // Extract unique contract addresses
-        const uniqueContracts = new Set<string>();
-        filteredTransactions.forEach((tx: any) => {
-          const contract = tx.contractAddress || tx.contract;
-          if (contract) uniqueContracts.add(contract.toLowerCase());
-        });
+  // Create new fetch promise
+  const fetchPromise = (async () => {
+    try {
+      // Sanitize inputs to avoid 400s for malformed addresses
+      const cleanWallet = validateWalletAddress(walletAddress);
+      const cleanToken = tokenAddress ? validateTokenAddress(tokenAddress) : undefined;
 
-        // Detect contract types with caching
-        const nftContracts = new Set<string>();
-        const contractsArray = Array.from(uniqueContracts);
+      // Helper function to process raw transaction data
+      const processTransactions = async (rawTxs: any[]): Promise<Transaction[]> => {
+        let filteredTransactions = rawTxs;
 
-        // Batch detect types (limit to 10 contracts to avoid rate limits)
-        for (let i = 0; i < Math.min(contractsArray.length, 10); i++) {
-          const contract = contractsArray[i];
+        // For NFTs with specific contract address, filter client-side
+        if (type === AssetType.NFT && cleanToken) {
+          filteredTransactions = rawTxs.filter((tx: any) => {
+            const contract = (tx.contractAddress || tx.contract || "")?.toLowerCase();
+            return contract === cleanToken.toLowerCase();
+          });
+        }
 
-          if (!contract) continue; // Guard against undefined
+        // For NFTs without specific contract, detect and filter by contract type
+        if (type === AssetType.NFT && !cleanToken) {
+          // Extract unique contract addresses
+          const uniqueContracts = new Set<string>();
+          filteredTransactions.forEach((tx: any) => {
+            const contract = tx.contractAddress || tx.contract;
+            if (contract) uniqueContracts.add(contract.toLowerCase());
+          });
 
-          // Check cache first
-          const cached = getCachedMetadata(contract);
-          if (cached?.type === AssetType.NFT) {
-            nftContracts.add(contract);
-            continue;
-          }
+          // Detect contract types with caching
+          const nftContracts = new Set<string>();
+          const contractsArray = Array.from(uniqueContracts);
 
-          // Detect type (this will cache the result)
-          try {
-            const detectedType = await detectContractType(contract);
-            if (detectedType === AssetType.NFT) {
+          // Batch detect types (limit to 10 contracts to avoid rate limits)
+          for (let i = 0; i < Math.min(contractsArray.length, 10); i++) {
+            const contract = contractsArray[i];
+
+            if (!contract) continue; // Guard against undefined
+
+            // Check cache first
+            const cached = getCachedMetadata(contract);
+            if (cached?.type === AssetType.NFT) {
+              nftContracts.add(contract);
+              continue;
+            }
+
+            // Detect type (this will cache the result)
+            try {
+              const detectedType = await detectContractType(contract);
+              if (detectedType === AssetType.NFT) {
+                nftContracts.add(contract);
+              }
+            } catch {
+              // On detection failure, include transaction to avoid false negatives
+
               nftContracts.add(contract);
             }
-          } catch {
-            // On detection failure, include transaction to avoid false negatives
-
-            nftContracts.add(contract);
           }
+
+          // Filter to only NFT transactions
+          filteredTransactions = filteredTransactions.filter((tx: any) => {
+            const contract = (tx.contractAddress || tx.contract)?.toLowerCase();
+            return nftContracts.has(contract);
+          });
         }
 
-        // Filter to only NFT transactions
-        filteredTransactions = filteredTransactions.filter((tx: any) => {
-          const contract = (tx.contractAddress || tx.contract)?.toLowerCase();
-          return nftContracts.has(contract);
+        // Deduplicate transactions by hash (same transaction can appear multiple times)
+        const uniqueTransactions = new Map<string, any>();
+        filteredTransactions.forEach((tx: any) => {
+          if (!uniqueTransactions.has(tx.hash)) {
+            uniqueTransactions.set(tx.hash, tx);
+          }
         });
+
+        // Map to Transaction format
+        return Array.from(uniqueTransactions.values()).map((tx: any) => {
+          // Use tokenDecimal from API if available, otherwise use defaults
+          let decimals = 18;
+          if (type === AssetType.NFT) {
+            decimals = 0;
+          } else if (tx.tokenDecimal) {
+            decimals = parseInt(tx.tokenDecimal);
+          }
+
+          // Parse value safely, default to 1 for NFTs if value is invalid
+          const rawValue = tx.value;
+          let parsedValue = parseFloat(rawValue);
+
+          if (
+            isNaN(parsedValue) ||
+            rawValue === undefined ||
+            rawValue === null ||
+            rawValue === ""
+          ) {
+            // For NFTs, default to 1 (representing 1 NFT transferred)
+            // For tokens, default to 0
+            parsedValue = type === AssetType.NFT ? 1 : 0;
+          }
+
+          const value = parsedValue / Math.pow(10, decimals);
+
+          // Extract token contract address from transaction data (not request parameter)
+          const txContractAddress = (tx.contractAddress || tx.contract)?.toLowerCase();
+
+          return {
+            hash: tx.hash,
+            from: tx.from,
+            to: tx.to,
+            value: value,
+            timestamp: parseInt(tx.timeStamp) * 1000,
+            tokenAddress: txContractAddress || cleanToken, // From transaction, fallback to request parameter
+            tokenSymbol: tx.tokenSymbol,
+          };
+        });
+      };
+
+      // Helper function to fetch transactions with a specific offset and timeout
+      const fetchWithOffset = async (offset: number): Promise<Transaction[]> => {
+        // RELIABILITY FIX: Always use tokentx endpoint (works for both tokens and NFTs)
+        // The tokennfttx endpoint returns 400 errors, so we avoid it completely
+        let url = `${EXPLORER_API_V1}?module=account&action=tokentx&address=${cleanWallet}&page=1&offset=${offset}&sort=desc`;
+
+        // For tokens, we can filter by contract address server-side
+        if (cleanToken && type === AssetType.TOKEN) {
+          url += `&contractaddress=${cleanToken}`;
+        }
+
+        // Add timing and timeout to prevent indefinite hanging (30s for slow APIs)
+        const fetchStartTime = performance.now();
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => {
+          const elapsedNumber = performance.now() - fetchStartTime;
+          const elapsed = elapsedNumber.toFixed(0);
+          console.warn(`[fetchWithOffset] ⏱️ Timeout after ${elapsed}ms (limit: 30000ms)`);
+          onProgress?.(`Request timeout after ${Math.floor(elapsedNumber / 1000)}s...`);
+          controller.abort();
+        }, 30000); // Increased from 10s to 30s
+
+        try {
+          const response = await fetchSafe(url, { signal: controller.signal as any });
+          const fetchTime = (performance.now() - fetchStartTime).toFixed(0);
+          clearTimeout(timeoutId);
+
+          console.log(`[fetchWithOffset] ✅ Fetch completed in ${fetchTime}ms, parsing JSON...`);
+
+          // Add timeout for JSON parsing (5 seconds) to prevent hanging on large responses
+          const data = await Promise.race([
+            response.json(),
+            new Promise<any>((_, reject) =>
+              setTimeout(() => reject(new Error("JSON parse timeout")), 5000)
+            ),
+          ]);
+
+          const parseTime = (performance.now() - fetchStartTime).toFixed(0);
+          console.log(`[fetchWithOffset] ✅ JSON parsed in ${parseTime}ms total`);
+
+          if (data.status === "1" && Array.isArray(data.result)) {
+            return processTransactions(data.result);
+          }
+          return [];
+        } catch (error) {
+          clearTimeout(timeoutId);
+          if (error instanceof Error && error.name === "AbortError") {
+            console.warn(`[fetchWithOffset] ❌ Request aborted (offset ${offset})`);
+            return [];
+          }
+          if (error instanceof Error && error.message === "JSON parse timeout") {
+            console.error(`[fetchWithOffset] ❌ JSON parsing timed out (offset ${offset})`);
+            return [];
+          }
+          console.error(
+            `[fetchWithOffset] ❌ Error fetching transactions (offset ${offset}):`,
+            error
+          );
+          return [];
+        }
+      };
+
+      // SMART AUTO-INCREASING OFFSET STRATEGY
+      // Try progressively larger offsets for inactive wallets
+      const offsets = [100, 500, 1000, 2500];
+
+      console.log(
+        `[fetchWalletTransactions] Starting transaction fetch with offsets: ${offsets.join(", ")}`
+      );
+      onProgress?.("Fetching transactions...");
+
+      for (let i = 0; i < offsets.length; i++) {
+        const offset = offsets[i]!;
+        console.log(
+          `[fetchWalletTransactions] Attempt ${i + 1}/${offsets.length} with offset ${offset}...`
+        );
+        onProgress?.(`Fetching transactions (attempt ${i + 1}/${offsets.length})...`);
+        const transactions = await fetchWithOffset(offset);
+
+        // If we found transactions, return them immediately
+        if (transactions.length > 0) {
+          console.log(
+            `[fetchWalletTransactions] ✅ Found ${transactions.length} transactions at offset ${offset}`
+          );
+          onProgress?.(`Found ${transactions.length} transactions`);
+          return transactions;
+        }
+
+        console.log(`[fetchWalletTransactions] No transactions at offset ${offset}`);
+
+        // If this isn't the last attempt, wait before trying the next offset
+        // to respect rate limits
+        if (i < offsets.length - 1) {
+          console.log(`[fetchWalletTransactions] Waiting 500ms before next attempt...`);
+          await sleep(500);
+        }
       }
 
-      // Deduplicate transactions by hash (same transaction can appear multiple times)
-      const uniqueTransactions = new Map<string, any>();
-      filteredTransactions.forEach((tx: any) => {
-        if (!uniqueTransactions.has(tx.hash)) {
-          uniqueTransactions.set(tx.hash, tx);
-        }
-      });
-
-      // Map to Transaction format
-      return Array.from(uniqueTransactions.values()).map((tx: any) => {
-        // Use tokenDecimal from API if available, otherwise use defaults
-        let decimals = 18;
-        if (type === AssetType.NFT) {
-          decimals = 0;
-        } else if (tx.tokenDecimal) {
-          decimals = parseInt(tx.tokenDecimal);
-        }
-
-        // Parse value safely, default to 1 for NFTs if value is invalid
-        const rawValue = tx.value;
-        let parsedValue = parseFloat(rawValue);
-
-        if (isNaN(parsedValue) || rawValue === undefined || rawValue === null || rawValue === "") {
-          // For NFTs, default to 1 (representing 1 NFT transferred)
-          // For tokens, default to 0
-          parsedValue = type === AssetType.NFT ? 1 : 0;
-        }
-
-        const value = parsedValue / Math.pow(10, decimals);
-
-        // Extract token contract address from transaction data (not request parameter)
-        const txContractAddress = (tx.contractAddress || tx.contract)?.toLowerCase();
-
-        return {
-          hash: tx.hash,
-          from: tx.from,
-          to: tx.to,
-          value: value,
-          timestamp: parseInt(tx.timeStamp) * 1000,
-          tokenAddress: txContractAddress || cleanToken, // From transaction, fallback to request parameter
-          tokenSymbol: tx.tokenSymbol,
-        };
-      });
-    };
-
-    // Helper function to fetch transactions with a specific offset
-    const fetchWithOffset = async (offset: number): Promise<Transaction[]> => {
-      // RELIABILITY FIX: Always use tokentx endpoint (works for both tokens and NFTs)
-      // The tokennfttx endpoint returns 400 errors, so we avoid it completely
-      let url = `${EXPLORER_API_V1}?module=account&action=tokentx&address=${cleanWallet}&page=1&offset=${offset}&sort=desc`;
-
-      // For tokens, we can filter by contract address server-side
-      if (cleanToken && type === AssetType.TOKEN) {
-        url += `&contractaddress=${cleanToken}`;
-      }
-
-      const response = await fetchSafe(url);
-      const data = await response.json();
-
-      if (data.status === "1" && Array.isArray(data.result)) {
-        return processTransactions(data.result);
-      }
+      // No transactions found at any offset
+      console.log(`[fetchWalletTransactions] ❌ No transactions found at any offset`);
+      onProgress?.("No transactions found");
       return [];
-    };
-
-    // SMART AUTO-INCREASING OFFSET STRATEGY
-    // Try progressively larger offsets for inactive wallets
-    const offsets = [100, 500, 1000, 2500];
-
-    for (let i = 0; i < offsets.length; i++) {
-      const offset = offsets[i]!;
-      const transactions = await fetchWithOffset(offset);
-
-      // If we found transactions, return them immediately
-      if (transactions.length > 0) {
-        return transactions;
-      }
-
-      // If this isn't the last attempt, wait before trying the next offset
-      // to respect rate limits
-      if (i < offsets.length - 1) {
-        await sleep(500);
-      }
+    } catch (error) {
+      // Error handled silently
+      console.error(`[fetchWalletTransactions] ❌ Error during fetch:`, error);
+      onProgress?.("Error fetching transactions");
+      return [];
+    } finally {
+      // Remove from pending cache when done (prevents memory leaks)
+      pendingFetches.delete(cacheKey);
     }
+  })();
 
-    // No transactions found at any offset
-    return [];
-  } catch {
-    // Error handled silently
+  // Store and return the promise
+  pendingFetches.set(cacheKey, fetchPromise);
 
-    return [];
-  }
+  // Cache the result when fetch completes
+  fetchPromise.then((result) => {
+    txCache.set(cacheKey, { data: result, timestamp: Date.now() });
+    console.log(
+      `[fetchWalletTransactions] 💾 Cached ${result.length} transactions for ${cacheKey.substring(0, 16)}...`
+    );
+    return result;
+  });
+
+  return fetchPromise;
 };
 
 // Updated: Accepts knownDecimals to force correct parsing

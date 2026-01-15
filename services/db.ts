@@ -14,8 +14,9 @@ export interface DbAlert {
   tokenAddress?: string;
   tokenName?: string;
   tokenSymbol?: string;
-  threshold: number;
+  threshold?: number; // Deprecated: Now optional for backward compatibility
   initialValue?: number;
+  type?: string; // Alert type: WALLET, TOKEN, or WHALE
   createdAt: number;
 }
 
@@ -459,6 +460,100 @@ class DogeDatabase extends Dexie {
           // learnedTokensCache store created automatically with schema above
           // No data migration needed - this is for offline caching of Vercel Postgres data
         });
+
+      // Version 17: Add type field to alerts table for WALLET/TOKEN/WHALE classification
+      this.version(17).stores({
+        alerts: "++id, alertId, walletAddress, name, type, createdAt",
+        alertStatuses: "alertId, &alertId",
+        triggeredEvents: "++id, eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits",
+        walletScanCache: "walletAddress, scannedAt, expiresAt",
+        assetMetadataCache: "address, cachedAt, expiresAt",
+        walletForcedContracts: "walletAddress, updatedAt",
+        discoveredContracts: "++id, contractAddress, type, discoveredAt, lastSeenAt",
+        lpPairs: "++id, &pairAddress, factoryAddress, dexName, discoveredAt, lastVerifiedAt",
+        scanCheckpoints: "++id, phase, lastUpdated",
+        discoveredFactories: "++id, &address, name, status, discoveredAt",
+        tokenSearchIndex: "++id, &address, [type+symbol], [type+name], source, indexedAt",
+        abbreviationCache: "tokenAddress, &tokenAddress, generatedAt, expiresAt",
+        invertedIndex: "++id, &term, [termType+term], frequency",
+        searchCache: "++id, &queryKey, timestamp, hits",
+        phoneticIndex: "++id, &tokenAddress, phoneticKey, similarityCache, updatedAt",
+        trigramIndex: "++id, &tokenAddress, ngram, tokenSet",
+        searchAnalytics: "++id, &sessionId, timestamp, query, clickedAddress",
+        tokenPopularity:
+          "&tokenAddress, searchCount, clickCount, ctr, lastSearched, lastClicked, cachedAt, expiresAt, updatedAt",
+        learnedTokensCache:
+          "&address, name, symbol, type, popularityScore, scanFrequency, holderCount, cachedAt, expiresAt",
+      });
+
+      // Version 18: Deduplicate triggered events and add unique constraint on eventId
+      this.version(18)
+        .stores({
+          alerts: "++id, alertId, walletAddress, name, type, createdAt",
+          alertStatuses: "alertId, &alertId",
+          triggeredEvents: "++id, &eventId, alertId, triggeredAt", // Added &eventId for unique constraint
+          recentSearches: "++id, timestamp",
+          trendingAssets: "++id, symbol, address, hits",
+          walletScanCache: "walletAddress, scannedAt, expiresAt",
+          assetMetadataCache: "address, cachedAt, expiresAt",
+          walletForcedContracts: "walletAddress, updatedAt",
+          discoveredContracts: "++id, contractAddress, type, discoveredAt, lastSeenAt",
+          lpPairs: "++id, &pairAddress, factoryAddress, dexName, discoveredAt, lastVerifiedAt",
+          scanCheckpoints: "++id, phase, lastUpdated",
+          discoveredFactories: "++id, &address, name, status, discoveredAt",
+          tokenSearchIndex: "++id, &address, [type+symbol], [type+name], source, indexedAt",
+          abbreviationCache: "tokenAddress, &tokenAddress, generatedAt, expiresAt",
+          invertedIndex: "++id, &term, [termType+term], frequency",
+          searchCache: "++id, &queryKey, timestamp, hits",
+          phoneticIndex: "++id, &tokenAddress, phoneticKey, similarityCache, updatedAt",
+          trigramIndex: "++id, &tokenAddress, ngram, tokenSet",
+          searchAnalytics: "++id, &sessionId, timestamp, query, clickedAddress",
+          tokenPopularity:
+            "&tokenAddress, searchCount, clickCount, ctr, lastSearched, lastClicked, cachedAt, expiresAt, updatedAt",
+          learnedTokensCache:
+            "&address, name, symbol, type, popularityScore, scanFrequency, holderCount, cachedAt, expiresAt",
+        })
+        .upgrade(async (tx) => {
+          try {
+            console.log("[DB MIGRATION v18] Starting triggered events deduplication...");
+
+            // Deduplicate triggered events - keep only first occurrence of each eventId
+            const allEvents = await tx.table("triggeredEvents").toArray();
+
+            if (allEvents.length === 0) {
+              console.log("[DB MIGRATION v18] ✅ No events to process (table is empty)");
+              return;
+            }
+
+            const eventMap = new Map<string, any>();
+
+            // Keep first occurrence of each eventId
+            allEvents.forEach((event) => {
+              if (!eventMap.has(event.eventId)) {
+                eventMap.set(event.eventId, event);
+              }
+            });
+
+            const duplicates = allEvents.length - eventMap.size;
+
+            if (duplicates > 0) {
+              // Clear table and add deduplicated events
+              await tx.table("triggeredEvents").clear();
+              await tx.table("triggeredEvents").bulkAdd(Array.from(eventMap.values()));
+              console.log(
+                `[DB MIGRATION v18] ✅ Cleaned up ${duplicates} duplicate triggered events`
+              );
+            } else {
+              console.log("[DB MIGRATION v18] ✅ No duplicate events found");
+            }
+          } catch (error) {
+            console.error("[DB MIGRATION v18] ❌ Error during deduplication:", error);
+            // Don't throw - allow migration to complete even if deduplication fails
+            // The unique constraint will prevent future duplicates
+          }
+        });
     } catch {
       // Error handled silently
 
@@ -470,6 +565,33 @@ class DogeDatabase extends Dexie {
 
 // Export single instance
 export const db = new DogeDatabase();
+
+/**
+ * Wrapper function to handle DatabaseClosedError and retry operations
+ * This ensures database operations don't fail silently if the DB is closed during migration
+ */
+export async function safeDbOperation<T>(
+  operation: string,
+  fn: () => Promise<T>
+): Promise<T | null> {
+  try {
+    return await fn();
+  } catch (error: any) {
+    if (error?.name === "DatabaseClosedError" || error?.message?.includes("Backend aborted")) {
+      console.warn(`[DB] ${operation} failed - database was closed, retrying...`);
+      // Wait a bit for database to reopen, then retry
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      try {
+        return await fn();
+      } catch (retryError) {
+        console.error(`[DB] ${operation} failed after retry:`, retryError);
+        return null;
+      }
+    }
+    console.error(`[DB] ${operation} failed:`, error);
+    return null;
+  }
+}
 
 /**
  * Ensure LP detection is initialized by checking if the LP pairs database is empty
@@ -504,6 +626,7 @@ export function toDbAlert(alert: AlertConfig): DbAlert {
     tokenSymbol: alert.tokenSymbol,
     threshold: alert.threshold,
     initialValue: alert.initialValue,
+    type: alert.type,
     createdAt: Date.now(),
   };
 }
@@ -518,6 +641,7 @@ export function fromDbAlert(dbAlert: DbAlert): AlertConfig {
     tokenSymbol: dbAlert.tokenSymbol,
     threshold: dbAlert.threshold,
     initialValue: dbAlert.initialValue,
+    type: dbAlert.type as "WALLET" | "TOKEN" | "WHALE" | undefined,
   };
 }
 

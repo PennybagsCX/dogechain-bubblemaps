@@ -95,6 +95,7 @@ import {
   saveWalletForcedContracts,
   loadWalletForcedContracts,
   loadScanCache,
+  safeDbOperation,
 } from "./services/db";
 import {
   Loader2,
@@ -377,7 +378,23 @@ const App: React.FC = () => {
   const [triggeredEvents, setTriggeredEvents] = useState<TriggeredEvent[]>([]);
   const [alerts, setAlerts] = useState<AlertConfig[]>([]);
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>([]);
+
+  // Refs to prevent duplicate toast messages
+  const lastAddedToken = useRef<string | null>(null);
+  const lastAddedAddress = useRef<string | null>(null);
+
+  // Alert modal state for unified creation flow
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
+  const [alertModalPrefill, setAlertModalPrefill] = useState<{
+    walletAddress?: string;
+    tokenAddress?: string;
+    tokenSymbol?: string;
+    alertType?: "WALLET" | "TOKEN" | "WHALE";
+  } | null>(null);
   const [dbLoaded, setDbLoaded] = useState(false);
+
+  // Prevent duplicate alert creation calls (fixes infinite loop)
+  const isCreatingAlert = useRef(false);
   const [walletAssets, setWalletAssets] = useState<{ tokens: Token[]; nfts: Token[] }>({
     tokens: [],
     nfts: [],
@@ -616,13 +633,15 @@ const App: React.FC = () => {
     if (!dbLoaded) return;
 
     const saveAlerts = async () => {
-      try {
+      const startTime = performance.now();
+      await safeDbOperation("Save alerts", async () => {
+        console.log(`[DB SAVE] Saving ${alerts.length} alerts to IndexedDB...`);
         const dbAlerts = alerts.map(toDbAlert);
         await db.alerts.clear();
         await db.alerts.bulkAdd(dbAlerts);
-      } catch (error) {
-        console.error("Failed to save alerts to IndexedDB:", error);
-      }
+        const duration = (performance.now() - startTime).toFixed(2);
+        console.log(`[DB SAVE] ✅ Alerts saved in ${duration}ms`);
+      });
     };
 
     saveAlerts();
@@ -633,7 +652,7 @@ const App: React.FC = () => {
     if (!dbLoaded) return;
 
     const saveStatuses = async () => {
-      try {
+      await safeDbOperation("Save alert statuses", async () => {
         await db.alertStatuses.clear();
         const payload = Object.entries(alertStatuses).map(([alertId, status]) => ({
           alertId,
@@ -645,18 +664,25 @@ const App: React.FC = () => {
         }));
         // bulkPut avoids duplicate-key failures when the array contains the same alertId
         await db.alertStatuses.bulkPut(payload);
-      } catch (error) {
-        console.error("Failed to save alert statuses to IndexedDB:", error);
-      }
+      });
     };
 
     saveStatuses();
   }, [alertStatuses, dbLoaded]);
 
   // Normalize alerts in-memory to guarantee unique IDs and keep related state aligned
+  // Skip normalization during initial data load to avoid duplicate processing
+  const isInitialLoad = useRef(true);
   useEffect(() => {
     if (!dbLoaded || alerts.length === 0) return;
 
+    // Skip normalization on initial load to avoid processing the same data twice
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false;
+      return;
+    }
+
+    console.log("[ALERT NORMALIZE] Checking for duplicate alert IDs...");
     const seen = new Set<string>();
     const idRemap = new Map<string, string>(); // oldId -> newId
     let changed = false;
@@ -668,13 +694,19 @@ const App: React.FC = () => {
         idRemap.set(originalId, newId);
         seen.add(newId);
         changed = true;
+        console.warn(`[ALERT NORMALIZE] Found duplicate ID: ${originalId}, remapping to: ${newId}`);
         return { ...alert, id: newId };
       }
       seen.add(originalId);
       return alert;
     });
 
-    if (!changed) return;
+    if (!changed) {
+      console.log("[ALERT NORMALIZE] No duplicates found, skipping normalization");
+      return;
+    }
+
+    console.log(`[ALERT NORMALIZE] Remapping ${idRemap.size} duplicate alert IDs`);
 
     // Remap statuses to new IDs, drop any without a corresponding alert
     setAlertStatuses((prev) => {
@@ -700,6 +732,7 @@ const App: React.FC = () => {
     );
 
     setAlerts(normalizedAlerts);
+    console.log("[ALERT NORMALIZE] ✅ Normalization complete");
   }, [alerts, dbLoaded]);
 
   // Save triggered events to IndexedDB
@@ -707,13 +740,11 @@ const App: React.FC = () => {
     if (!dbLoaded) return;
 
     const saveEvents = async () => {
-      try {
+      await safeDbOperation("Save triggered events", async () => {
         const dbEvents = triggeredEvents.map(toDbTriggeredEvent);
         await db.triggeredEvents.clear();
         await db.triggeredEvents.bulkAdd(dbEvents);
-      } catch (error) {
-        console.error("Failed to save triggered events to IndexedDB:", error);
-      }
+      });
     };
 
     saveEvents();
@@ -1285,7 +1316,16 @@ const App: React.FC = () => {
           const updatedWallets = await injectUserWallet(wallets, token, userAddress);
           if (updatedWallets.length !== wallets.length) {
             setWallets(updatedWallets);
-            addToast("You have been added to the map!", "success");
+
+            // Check if we've already added this user for this token to prevent duplicate toasts
+            const alreadyAdded =
+              lastAddedToken.current === token.address && lastAddedAddress.current === userAddress;
+
+            if (!alreadyAdded) {
+              addToast("You have been added to the map!", "success");
+              lastAddedToken.current = token.address;
+              lastAddedAddress.current = userAddress;
+            }
           }
         };
         injectUserWalletAsync();
@@ -1684,135 +1724,133 @@ const App: React.FC = () => {
     }
   };
 
-  // Enhanced Alert Handler from Sidebar
-  const handleAddAlertFromSidebar = async (
-    wallet: Wallet,
-    config: { type: "WALLET" | "TOKEN" | "WHALE"; threshold?: number }
-  ) => {
-    let alertName = `Alert: ${wallet.address.substring(0, 6)}`;
-    let tAddr = undefined;
-    let tSym = undefined;
-    let tName = undefined;
-    let thresh = config.threshold || 0;
-
-    if (config.type === "TOKEN" || config.type === "WHALE") {
-      tAddr = token?.address;
-      tSym = token?.symbol;
-      tName = token?.name;
-      // More descriptive alert name with token symbol
-      if (config.type === "WHALE") {
-        alertName = `Whale Watch - ${token?.symbol || "Token"}`;
-      } else {
-        alertName = `${token?.symbol || "Token"} Movement Alert`;
-      }
-      if (config.type === "TOKEN" && !thresh) thresh = 1; // Minimal movement
-    } else {
-      // For wallet watch, include the token being monitored
-      alertName = token
-        ? `Wallet Watch - ${token.symbol} (${wallet.address.substring(0, 6)}...)`
-        : `Wallet Watch (${wallet.address.substring(0, 6)}...)`;
-      thresh = 1;
-    }
-
-    addToast("Initializing alert...", "info");
-
-    // Fetch initial balance for baseline tracking
-    let initialVal = 0;
-    try {
-      if (tAddr) {
-        initialVal = await fetchTokenBalance(wallet.address, tAddr);
-      } else {
-        const wDogeAddress = "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101";
-        initialVal = await fetchTokenBalance(wallet.address, wDogeAddress);
-      }
-    } catch {
-      console.warn("Failed to fetch initial alert balance");
-    }
-
-    const newAlert: AlertConfig = {
-      id: generateAlertId(),
-      walletAddress: wallet.address,
-      tokenAddress: tAddr,
-      tokenName: tName,
-      tokenSymbol: tSym,
-      threshold: thresh,
-      initialValue: initialVal,
-      name: alertName,
-    };
-    setAlerts((prev) => [...prev, newAlert]);
-    addToast("Alert created successfully", "success");
-    // Close wallet drawer after creating an alert
-    setSelectedWallet(null);
-  };
-
   const handleCreateAlert = async (data: {
     name: string;
     walletAddress: string;
     tokenAddress?: string;
-    threshold: number;
     alertType?: "WALLET" | "TOKEN" | "WHALE";
   }) => {
-    let tokenInfo = {
-      symbol: undefined as string | undefined,
-      name: undefined as string | undefined,
-    };
-
-    addToast("Initializing alert...", "info");
-    let initialVal = 0;
-
-    if (data.tokenAddress) {
-      try {
-        const fetchedToken = await fetchTokenData(data.tokenAddress);
-        if (fetchedToken) {
-          tokenInfo = { symbol: fetchedToken.symbol, name: fetchedToken.name };
-        }
-        initialVal = await fetchTokenBalance(data.walletAddress, data.tokenAddress);
-      } catch (e) {
-        console.warn("Could not fetch token info for alert", e);
-      }
-    } else {
-      // Fallback for general wallet monitoring (wDOGE)
-      const wDogeAddress = "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101";
-      initialVal = await fetchTokenBalance(data.walletAddress, wDogeAddress);
+    // Prevent duplicate calls (fixes infinite loop)
+    if (isCreatingAlert.current) {
+      console.warn("[ALERT CREATE] ⚠️ Already creating alert, skipping duplicate call");
+      return;
     }
 
-    // Fetch initial transactions to establish baseline
-    let initialTxs: string[] = [];
+    isCreatingAlert.current = true;
+    console.log("[ALERT CREATE] 🎯 handleCreateAlert called with:", data);
+
     try {
-      const transactions = await fetchWalletTransactions(data.walletAddress, data.tokenAddress);
-      initialTxs = transactions.map((tx) => tx.hash);
-    } catch (e) {
-      console.warn("Could not fetch initial transactions", e);
-    }
+      let tokenInfo = {
+        symbol: undefined as string | undefined,
+        name: undefined as string | undefined,
+      };
 
-    const newAlert: AlertConfig = {
-      id: generateAlertId(),
-      walletAddress: data.walletAddress,
-      tokenAddress: data.tokenAddress,
-      threshold: data.threshold,
-      name: data.name,
-      tokenSymbol: tokenInfo.symbol,
-      tokenName: tokenInfo.name,
-      initialValue: initialVal,
-      type: data.alertType || "WALLET",
-    };
+      addToast("Initializing alert...", "info");
+      let initialVal = 0;
 
-    // Initialize alert status with transaction history FIRST
-    setAlertStatuses((prev) => ({
-      ...prev,
-      [newAlert.id]: {
-        currentValue: initialVal,
-        triggered: false,
-        checkedAt: Date.now(),
-        lastSeenTransactions: initialTxs,
-      },
-    }));
+      if (data.tokenAddress) {
+        console.log("[ALERT CREATE] 💰 Token address provided, fetching token data");
+        try {
+          const fetchedToken = await fetchTokenData(data.tokenAddress);
+          if (fetchedToken) {
+            tokenInfo = { symbol: fetchedToken.symbol, name: fetchedToken.name };
+            console.log("[ALERT CREATE] ✅ Token data fetched:", tokenInfo);
+          }
+          initialVal = await fetchTokenBalance(data.walletAddress, data.tokenAddress);
+          console.log("[ALERT CREATE] 💵 Token balance fetched:", initialVal);
+        } catch (e) {
+          console.warn("[ALERT CREATE] ⚠️ Could not fetch token info for alert", e);
+        }
+      } else {
+        console.log("[ALERT CREATE] 💰 No token address, using wDOGE fallback");
+        // Fallback for general wallet monitoring (wDOGE)
+        const wDogeAddress = "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101";
+        initialVal = await fetchTokenBalance(data.walletAddress, wDogeAddress);
+        console.log("[ALERT CREATE] 💵 wDOGE balance fetched:", initialVal);
+      }
 
-    // Add alert to list AFTER status is set (use setTimeout to ensure state updates in order)
-    setTimeout(() => {
+      // Fetch initial transactions to establish baseline
+      console.log("[ALERT CREATE] 📊 Fetching initial transactions to establish baseline");
+      let initialTxs: string[] = [];
+      try {
+        const transactions = await fetchWalletTransactions(
+          data.walletAddress,
+          data.tokenAddress,
+          undefined,
+          (progress) => {
+            console.log("[ALERT CREATE] 📊 Progress:", progress);
+            addToast(progress, "info");
+          }
+        );
+        initialTxs = transactions.map((tx) => tx.hash);
+        console.log(
+          "[ALERT CREATE] ✅ Initial transactions fetched:",
+          initialTxs.length,
+          "transactions"
+        );
+      } catch (e) {
+        console.warn("[ALERT CREATE] ⚠️ Could not fetch initial transactions", e);
+      }
+
+      console.log("[ALERT CREATE] 🔨 Creating alert object");
+      const newAlert: AlertConfig = {
+        id: generateAlertId(),
+        walletAddress: data.walletAddress,
+        tokenAddress: data.tokenAddress,
+        name: data.name,
+        tokenSymbol: tokenInfo.symbol,
+        tokenName: tokenInfo.name,
+        initialValue: initialVal,
+        type: data.alertType || "WALLET",
+      };
+      console.log("[ALERT CREATE] ✅ Alert object created:", newAlert);
+
+      // Initialize alert status with transaction history
+      console.log("[ALERT CREATE] 📊 Updating alert status state");
+      setAlertStatuses((prev) => ({
+        ...prev,
+        [newAlert.id]: {
+          currentValue: initialVal,
+          triggered: false,
+          checkedAt: Date.now(),
+          lastSeenTransactions: initialTxs,
+        },
+      }));
+      console.log("[ALERT CREATE] ✅ Alert status state updated");
+
+      // Add alert to list immediately (React 18+ batches state updates automatically)
+      console.log("[ALERT CREATE] 📝 Adding alert to list");
       setAlerts((prev) => [...prev, newAlert]);
       addToast("New alert saved", "success");
-    }, 100);
+      console.log("[ALERT CREATE] ✅ Alert creation flow complete");
+    } finally {
+      // Reset flag after a short delay to prevent rapid duplicate calls
+      setTimeout(() => {
+        console.log("[ALERT CREATE] 🔓 Resetting creation guard flag");
+        isCreatingAlert.current = false;
+      }, 1000);
+    }
+  };
+
+  const handleOpenAlertModal = (prefill?: {
+    walletAddress?: string;
+    tokenAddress?: string;
+    tokenSymbol?: string;
+    alertType?: "WALLET" | "TOKEN" | "WHALE";
+  }) => {
+    // Switch to Dashboard view if not already there
+    if (view !== ViewState.DASHBOARD) {
+      setView(ViewState.DASHBOARD);
+    }
+    // Set pre-fill data and open modal
+    setAlertModalPrefill(prefill || null);
+    setIsAlertModalOpen(true);
+    // Close wallet sidebar if open
+    if (prefill?.walletAddress) {
+      setSelectedWallet(null);
+      setSelectedConnection(null);
+      setSelectedConnectionId(null);
+    }
   };
 
   const handleRemoveAlert = (id: string) => {
@@ -1826,7 +1864,6 @@ const App: React.FC = () => {
       name: string;
       walletAddress: string;
       tokenAddress?: string;
-      threshold: number;
       alertType?: "WALLET" | "TOKEN" | "WHALE";
     }
   ) => {
@@ -1885,7 +1922,6 @@ const App: React.FC = () => {
         id: id, // Keep the same ID
         walletAddress: data.walletAddress,
         tokenAddress: data.tokenAddress,
-        threshold: data.threshold,
         name: data.name,
         tokenSymbol: tokenInfo.symbol,
         tokenName: tokenInfo.name,
@@ -2688,8 +2724,13 @@ const App: React.FC = () => {
                     setSelectedConnection(null);
                     setSelectedConnectionId(null);
                   }}
-                  onCreateAlert={(config) =>
-                    selectedWallet && handleAddAlertFromSidebar(selectedWallet, config)
+                  onOpenAlertModal={() =>
+                    selectedWallet &&
+                    handleOpenAlertModal({
+                      walletAddress: selectedWallet.address,
+                      tokenAddress: token.address,
+                      tokenSymbol: token.symbol,
+                    })
                   }
                   onTraceConnections={handleTraceConnections}
                 />
@@ -2743,6 +2784,12 @@ const App: React.FC = () => {
                 onUpdateAlert={handleUpdateAlert}
                 triggeredEvents={triggeredEvents}
                 onTriggeredEventsChange={setTriggeredEvents}
+                isAlertModalOpen={isAlertModalOpen}
+                alertModalPrefill={alertModalPrefill}
+                onAlertModalClose={() => {
+                  setIsAlertModalOpen(false);
+                  setAlertModalPrefill(null);
+                }}
               />
             )}
             <div className="mt-auto">

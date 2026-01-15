@@ -27,6 +27,7 @@ import { Tooltip } from "./Tooltip";
 import { EmbeddedChart } from "./EmbeddedChart";
 import { DashboardGuide } from "./DashboardGuide";
 import { useDashboardGuide } from "../hooks/useDashboardGuide";
+import { CustomSelect } from "./CustomSelect";
 
 import {
   fetchTokenBalance,
@@ -54,7 +55,6 @@ interface DashboardProps {
     name: string;
     walletAddress: string;
     tokenAddress?: string;
-    threshold: number;
     alertType?: "WALLET" | "TOKEN" | "WHALE";
   }) => Promise<void>;
   onUpdateAlert: (
@@ -63,12 +63,19 @@ interface DashboardProps {
       name: string;
       walletAddress: string;
       tokenAddress?: string;
-      threshold: number;
       alertType?: "WALLET" | "TOKEN" | "WHALE";
     }
   ) => Promise<void>;
   triggeredEvents: TriggeredEvent[];
   onTriggeredEventsChange: (events: TriggeredEvent[]) => void;
+  isAlertModalOpen?: boolean;
+  alertModalPrefill?: {
+    walletAddress?: string;
+    tokenAddress?: string;
+    tokenSymbol?: string;
+    alertType?: "WALLET" | "TOKEN" | "WHALE";
+  } | null;
+  onAlertModalClose?: () => void;
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({
@@ -80,8 +87,41 @@ export const Dashboard: React.FC<DashboardProps> = ({
   onUpdateAlert,
   triggeredEvents,
   onTriggeredEventsChange,
+  isAlertModalOpen: externalIsModalOpen,
+  alertModalPrefill,
+  onAlertModalClose,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Alert type options for the dropdown
+  const alertTypeOptions = [
+    {
+      value: "WALLET",
+      label: "Wallet Watch",
+      description: "Monitor all activity - Get notified of all token transfers",
+    },
+    {
+      value: "TOKEN",
+      label: "Token Movement",
+      description: "Track specific token - Only monitor transfers of this token",
+    },
+    {
+      value: "WHALE",
+      label: "Whale Watch",
+      description: "Large transfers - Get alerted to significant movements only",
+    },
+  ];
+
+  // Safe unique ID generator for triggered events (fixes duplicate key error)
+  const generateEventId = () => {
+    if (typeof crypto !== "undefined" && crypto.randomUUID) {
+      return `event-${crypto.randomUUID()}`;
+    }
+    return `event-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+  };
+
+  const [internalIsModalOpen, setInternalIsModalOpen] = useState(false);
+
+  // Use external modal state if provided, otherwise use internal state
+  const isModalOpen = externalIsModalOpen !== undefined ? externalIsModalOpen : internalIsModalOpen;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
   const [inAppNotifications, setInAppNotifications] = useState<InAppNotification[]>([]);
@@ -94,7 +134,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
     name: "",
     walletAddress: "",
     tokenAddress: "",
-    threshold: "",
     alertType: "WALLET" as "WALLET" | "TOKEN" | "WHALE",
   });
 
@@ -208,27 +247,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           // Ensure we have a baseline for new alerts so we don't loop forever
           const existingStatus = statuses[alert.id];
 
-          // Fetch transactions for the wallet (needed both for init and comparisons)
-          const transactions = await fetchWalletTransactions(
-            alert.walletAddress,
-            alert.tokenAddress
-          );
-
-          // Get previously seen transactions or initialize baseline
-          const previousTxs =
-            existingStatus?.lastSeenTransactions || transactions.map((tx) => tx.hash);
-          const previousTxSet = new Set(previousTxs);
-
-          // Find new transactions (transactions we haven't seen before)
-          const newTransactions = transactions.filter((tx) => !previousTxSet.has(tx.hash));
-
-          // Create new set of all seen transactions
-          const allSeenTxs = [...new Set([...previousTxs, ...transactions.map((tx) => tx.hash)])];
-
-          // Trigger alert if we found new transactions (only after initial baseline)
-          const hasNewActivity = existingStatus ? newTransactions.length > 0 : false;
-
-          // Also fetch current balance for display
+          // Fetch current balance first (needed for WHALE type threshold calculation)
           let currentBalance = 0;
           if (alert.tokenAddress) {
             // Get token info first to ensure correct decimals
@@ -251,6 +270,39 @@ export const Dashboard: React.FC<DashboardProps> = ({
             currentBalance = await fetchTokenBalance(alert.walletAddress, wDogeAddress, 18);
           }
 
+          // Fetch transactions based on alert type
+          // WALLET: Monitor all token activity (no token filter)
+          // TOKEN: Monitor specific token only (filtered by tokenAddress)
+          // WHALE: Monitor large transfers (filter by value threshold)
+          const transactions = await fetchWalletTransactions(
+            alert.walletAddress,
+            alert.type === "WALLET" ? undefined : alert.tokenAddress // WALLET gets all tokens
+          );
+
+          // Get previously seen transactions or initialize baseline
+          const previousTxs =
+            existingStatus?.lastSeenTransactions || transactions.map((tx) => tx.hash);
+          const previousTxSet = new Set(previousTxs);
+
+          // Find new transactions (transactions we haven't seen before)
+          const newTransactions = transactions.filter((tx) => !previousTxSet.has(tx.hash));
+
+          // Apply type-specific filtering for new transactions
+          let filteredNewTransactions = newTransactions;
+
+          if (alert.type === "WHALE" && newTransactions.length > 0) {
+            // WHALE type: Only trigger on large transactions
+            // Define "large" as > 10,000 tokens or > 1% of current balance (whichever is larger)
+            const whaleThreshold = Math.max(10000, currentBalance * 0.01);
+            filteredNewTransactions = newTransactions.filter((tx) => tx.value > whaleThreshold);
+          }
+
+          // Create new set of all seen transactions
+          const allSeenTxs = [...new Set([...previousTxs, ...transactions.map((tx) => tx.hash)])];
+
+          // Trigger alert if we found new transactions (only after initial baseline)
+          const hasNewActivity = existingStatus ? filteredNewTransactions.length > 0 : false;
+
           // Keep triggered state persistent - once triggered, stay triggered until manually reset
           const wasTriggered = existingStatus?.triggered || false;
           const shouldTrigger = hasNewActivity || wasTriggered;
@@ -260,7 +312,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             triggered: shouldTrigger,
             checkedAt: Date.now(),
             lastSeenTransactions: allSeenTxs,
-            newTransactions: hasNewActivity ? newTransactions : undefined,
+            newTransactions: hasNewActivity ? filteredNewTransactions : undefined,
           };
         } catch {
           newStatuses[alert.id] = {
@@ -272,7 +324,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       })
     );
 
-    onUpdateStatuses({ ...statuses, ...newStatuses });
+    onUpdateStatuses?.({ ...statuses, ...newStatuses });
     setIsScanning(false);
   }, [alerts, statuses, onUpdateStatuses]);
 
@@ -330,7 +382,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       if (!status || !status.newTransactions) return;
 
       // Save triggered event to history (once per alert trigger)
-      const eventId = `event-${alert.id}-${Date.now()}`;
+      const eventId = generateEventId();
       const alreadyRecorded = triggeredEvents.some(
         (e) =>
           e.alertId === alert.id &&
@@ -354,7 +406,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         };
 
         // Add to triggered events history (keep last 100)
-        onTriggeredEventsChange([triggeredEvent, ...triggeredEvents].slice(0, 100));
+        onTriggeredEventsChange?.([triggeredEvent, ...triggeredEvents].slice(0, 100));
 
         // Log triggered alert to server (non-blocking, fire-and-forget)
         fetch("/api/alerts/trigger", {
@@ -428,7 +480,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       });
 
       // Mark transactions as notified by clearing newTransactions array
-      onUpdateStatuses({
+      onUpdateStatuses?.({
         ...statuses,
         [alert.id]: { ...status, newTransactions: undefined },
       });
@@ -446,41 +498,43 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.walletAddress || !formData.threshold) return;
+    if (!formData.name || !formData.walletAddress) return;
+
+    console.log("[ALERT CREATE] 🚀 Starting alert creation");
+    console.log("[ALERT CREATE] Form data:", formData);
 
     setIsSubmitting(true);
     try {
       if (editingAlertId) {
+        console.log("[ALERT CREATE] 📝 Editing existing alert:", editingAlertId);
         // Update existing alert
-        await onUpdateAlert(editingAlertId, {
+        await onUpdateAlert?.(editingAlertId, {
           name: formData.name,
           walletAddress: formData.walletAddress,
           tokenAddress: formData.tokenAddress || undefined,
-          threshold: parseFloat(formData.threshold),
           alertType: formData.alertType,
         });
+        console.log("[ALERT CREATE] ✅ Alert updated successfully");
       } else {
+        console.log("[ALERT CREATE] ➕ Creating new alert");
         // Create new alert
-        await onAddAlert({
+        await onAddAlert?.({
           name: formData.name,
           walletAddress: formData.walletAddress,
           tokenAddress: formData.tokenAddress || undefined,
-          threshold: parseFloat(formData.threshold),
           alertType: formData.alertType,
         });
+        console.log("[ALERT CREATE] ✅ Alert created successfully, calling closeModal");
       }
-      setIsModalOpen(false);
-      setEditingAlertId(null);
-      setFormData({
-        name: "",
-        walletAddress: "",
-        tokenAddress: "",
-        threshold: "",
-        alertType: "WALLET",
-      });
-    } catch {
-      // Error handled silently - alert creation failed
+      closeModal();
+    } catch (error) {
+      console.error("[ALERT CREATE] ❌ Error during alert creation:", error);
+      // Show user-friendly error message
+      alert(
+        `Failed to ${editingAlertId ? "update" : "create"} alert: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
     } finally {
+      console.log("[ALERT CREATE] 🔄 Resetting isSubmitting state");
       setIsSubmitting(false);
     }
   };
@@ -491,20 +545,26 @@ export const Dashboard: React.FC<DashboardProps> = ({
       name: alert.name,
       walletAddress: alert.walletAddress,
       tokenAddress: alert.tokenAddress || "",
-      threshold: alert.threshold.toString(),
       alertType: alert.type || "WALLET",
     });
-    setIsModalOpen(true);
+    // Only set internal state if external state is not being used
+    if (externalIsModalOpen === undefined) {
+      setInternalIsModalOpen(true);
+    }
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    // Use external close handler if provided, otherwise use internal state
+    if (onAlertModalClose) {
+      onAlertModalClose();
+    } else {
+      setInternalIsModalOpen(false);
+    }
     setEditingAlertId(null);
     setFormData({
       name: "",
       walletAddress: "",
       tokenAddress: "",
-      threshold: "",
       alertType: "WALLET",
     });
   };
@@ -513,7 +573,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     const existingStatus = statuses[alertId];
     if (!existingStatus) return;
 
-    onUpdateStatuses({
+    onUpdateStatuses?.({
       ...statuses,
       [alertId]: {
         ...existingStatus,
@@ -612,13 +672,26 @@ export const Dashboard: React.FC<DashboardProps> = ({
       });
 
       if (hasChanges) {
-        onTriggeredEventsChange(updatedEvents);
+        onTriggeredEventsChange?.(updatedEvents);
       }
     };
 
     // Run when triggeredEvents or alerts change
     updateEventTokens();
   }, [triggeredEvents, alerts, extractPrimaryToken, onTriggeredEventsChange]);
+
+  // Handle pre-fill data when opening modal from WalletSidebar
+  useEffect(() => {
+    if (alertModalPrefill && isModalOpen) {
+      setFormData({
+        name: "",
+        walletAddress: alertModalPrefill.walletAddress || "",
+        tokenAddress: alertModalPrefill.tokenAddress || "",
+        alertType: alertModalPrefill.alertType || "WALLET",
+      });
+      setEditingAlertId(null);
+    }
+  }, [alertModalPrefill, isModalOpen]);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
@@ -645,7 +718,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
             {isScanning ? "Scanning..." : "Scan Now"}
           </button>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+              if (externalIsModalOpen === undefined) {
+                setInternalIsModalOpen(true);
+              }
+              // Clear any pre-fill data when opening from Dashboard button
+              setEditingAlertId(null);
+            }}
             className="flex items-center justify-center gap-2 px-4 py-2 bg-doge-600 text-white rounded-lg hover:bg-doge-500 transition-colors shadow-lg shadow-doge-600/20"
           >
             <Plus size={18} /> New Alert
@@ -671,7 +750,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       {/* In-App Notifications */}
       {inAppNotifications.length > 0 && (
-        <div className="mb-6 space-y-3">
+        <div
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          className="mb-6 space-y-3"
+          aria-label={`New notifications: ${inAppNotifications.length} alert${inAppNotifications.length === 1 ? "" : "s"}`}
+        >
           {inAppNotifications.map((notif) => {
             const isIncoming =
               notif.transaction &&
@@ -688,7 +773,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
             return (
               <div
                 key={notif.id}
+                role="alert"
+                aria-live="assertive"
+                aria-atomic="true"
                 className={`bg-gradient-to-r ${txColor} rounded-xl p-4 animate-in slide-in-from-top-2 shadow-lg`}
+                aria-label={`${notif.alertName}: ${isIncoming ? "Received" : "Sent"} ${notif.transaction?.value.toLocaleString()} ${notif.transaction?.tokenSymbol || "tokens"}`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3 flex-1">
@@ -855,7 +944,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <button
               onClick={() => {
                 if (confirm("Clear all event history?")) {
-                  onTriggeredEventsChange([]);
+                  onTriggeredEventsChange?.([]);
                 }
               }}
               className="text-xs text-slate-500 hover:text-red-400 transition-colors"
@@ -1011,6 +1100,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
         )}
       </div>
 
+      {/* Screen reader announcement for triggered alerts */}
+      {activeTriggers > 0 && (
+        <div role="status" aria-live="polite" className="sr-only">
+          {activeTriggers} alert{activeTriggers === 1 ? "" : "s"} currently triggered
+        </div>
+      )}
+
       {alerts.length === 0 ? (
         <div className="bg-space-800 rounded-xl border border-space-700 p-12 text-center">
           <ShieldCheck size={48} className="text-slate-600 mx-auto mb-4" />
@@ -1019,7 +1115,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
             Create your first alert to start monitoring wallet activity.
           </p>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+              if (externalIsModalOpen === undefined) {
+                setInternalIsModalOpen(true);
+              }
+            }}
             className="inline-flex items-center gap-2 px-6 py-3 bg-doge-600 text-white rounded-lg hover:bg-doge-500 transition-colors shadow-lg shadow-doge-600/20"
           >
             <Plus size={18} /> Create Alert
@@ -1052,9 +1152,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     <tr key={alert.id} className="hover:bg-space-700/50 transition-colors">
                       <td className="px-6 py-4">
                         <div className="text-sm font-medium text-white">{alert.name}</div>
-                        <div className="text-xs text-slate-500 mt-1">
-                          Threshold: {alert.threshold.toLocaleString()}
-                        </div>
                       </td>
                       <td className="px-6 py-4">
                         <Tooltip content="View wallet on Dogechain Explorer">
@@ -1131,7 +1228,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         </Tooltip>
                         <Tooltip content="Remove this alert">
                           <button
-                            onClick={() => onRemoveAlert(alert.id)}
+                            onClick={() => onRemoveAlert?.(alert.id)}
                             className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
                           >
                             <Trash2 size={16} />
@@ -1149,15 +1246,21 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       {/* New Alert Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 animate-in fade-in duration-200">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="alert-modal-title"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 animate-in fade-in duration-200"
+        >
           <div className="bg-space-800 rounded-xl border border-space-700 shadow-2xl w-full max-w-md overflow-hidden">
             <div className="p-6 border-b border-space-700 flex justify-between items-center">
-              <h3 className="text-xl font-bold text-white">
+              <h3 id="alert-modal-title" className="text-xl font-bold text-white">
                 {editingAlertId ? "Edit Alert" : "Create New Alert"}
               </h3>
               <button
                 onClick={closeModal}
                 className="text-slate-400 hover:text-white transition-colors"
+                aria-label="Close modal"
               >
                 <X size={20} />
               </button>
@@ -1179,9 +1282,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   placeholder={
                     formData.tokenAddress ? "e.g., wDOGE Wallet Alert" : "e.g., My Wallet Monitor"
                   }
+                  aria-describedby="alert-name-description"
                   required
                 />
-                <p className="text-xs text-slate-500 mt-1">
+                <p id="alert-name-description" className="text-xs text-slate-500 mt-1">
                   Tip: Include token symbol for clarity, e.g., &quot;wDOGE Alert&quot;
                 </p>
               </div>
@@ -1193,22 +1297,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 >
                   Alert Type
                 </label>
-                <select
-                  id="alert-type"
+                <CustomSelect
                   value={formData.alertType}
-                  onChange={(e) =>
+                  onChange={(value) =>
                     setFormData({
                       ...formData,
-                      alertType: e.target.value as "WALLET" | "TOKEN" | "WHALE",
+                      alertType: value as "WALLET" | "TOKEN" | "WHALE",
                     })
                   }
-                  className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white focus:outline-none focus:border-space-600"
-                >
-                  <option value="WALLET">Wallet Watch - Monitor all activity</option>
-                  <option value="TOKEN">Token Movement - Track specific token transfers</option>
-                  <option value="WHALE">Whale Watch - Large holder monitoring</option>
-                </select>
-                <p className="text-xs text-slate-500 mt-1">
+                  options={alertTypeOptions}
+                  ariaDescribedBy="alert-type-description"
+                />
+                <p id="alert-type-description" className="text-xs text-slate-500 mt-1">
                   {formData.alertType === "WALLET" && "Get notified of any activity in this wallet"}
                   {formData.alertType === "TOKEN" &&
                     "Get notified when this wallet transfers the specific token"}
@@ -1260,32 +1360,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 </div>
               )}
 
-              <div>
-                <label
-                  htmlFor="threshold-amount"
-                  className="block text-sm font-medium text-slate-300 mb-2"
-                >
-                  Threshold Amount
-                </label>
-                <input
-                  id="threshold-amount"
-                  type="number"
-                  step="any"
-                  value={formData.threshold}
-                  onChange={(e) => setFormData({ ...formData, threshold: e.target.value })}
-                  className="w-full px-4 py-2 bg-space-900 border border-space-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-space-600"
-                  placeholder="1000"
-                  required
-                />
-                <p className="text-xs text-slate-500 mt-1">
-                  Alert when balance changes by this amount
-                </p>
-              </div>
-
               <div className="flex gap-3 pt-4">
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={closeModal}
                   className="flex-1 px-4 py-2 bg-space-700 text-slate-300 rounded-lg hover:bg-space-600 transition-colors"
                 >
                   Cancel

@@ -134,7 +134,13 @@ export function useWalletDetailsGuide(triggerCondition: boolean): UseWalletDetai
     const alreadyInitializing = isInitializingRef.current;
 
     // Trigger when condition becomes true AND guide should show AND not already shown this session
-    if (shouldShow && triggerCondition && !alreadySeenSession && !alreadySeen && !alreadyInitializing) {
+    if (
+      shouldShow &&
+      triggerCondition &&
+      !alreadySeenSession &&
+      !alreadySeen &&
+      !alreadyInitializing
+    ) {
       isInitializingRef.current = true;
       // Auto-show with delay for smooth UX (0.8s delay to let sidebar render)
       const timer = setTimeout(() => {

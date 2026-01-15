@@ -1,8 +1,8 @@
 # Alert System - Manual Test Checklist
 
-**Test Date**: ******\_******
-**Tester**: ******\_******
-**Browser**: ******\_******
+**Test Date**: **\*\***\_**\*\***
+**Tester**: **\*\***\_**\*\***
+**Browser**: **\*\***\_**\*\***
 
 ---
 
@@ -50,7 +50,7 @@ Console errors: _____
 - [ ] `[ALERT CREATE] ✅ Alert creation flow complete`
 - [ ] NO React key errors: "Encountered two children with the same key"
 
-**Notes**: ******\_******
+**Notes**: **\*\***\_**\*\***
 
 ---
 
@@ -80,7 +80,7 @@ Completion time: _____ seconds (should be <2s)
 Used cache: ⬜ Yes | ⬜ No
 ```
 
-**Notes**: ******\_******
+**Notes**: **\*\***\_**\*\***
 
 ---
 
@@ -109,7 +109,7 @@ React key errors found: ⬜ Yes | ⬜ No
 If yes, error message: _____
 ```
 
-**Notes**: ******\_******
+**Notes**: **\*\***\_**\*\***
 
 ---
 
@@ -143,7 +143,7 @@ If yes, count: _____
 - [ ] Look for: `[DB MIGRATION v18] ✅ Cleaned up X duplicate triggered events`
 - [ ] Note number of duplicates cleaned up: **\_**
 
-**Notes**: ******\_******
+**Notes**: **\*\***\_**\*\***
 
 ---
 
@@ -174,7 +174,7 @@ Completion time: _____ seconds
 Alert created: ⬜ Yes | ⬜ No
 ```
 
-**Notes**: ******\_******
+**Notes**: **\*\***\_**\*\***
 
 ---
 
@@ -197,7 +197,7 @@ Alert created: ⬜ Yes | ⬜ No
 - [ ] Alert NOT created
 - [ ] Clear error message
 
-**Actual Results**: ******\_******
+**Actual Results**: **\*\***\_**\*\***
 
 ---
 
@@ -243,7 +243,7 @@ Duplicate call warnings in console: ⬜ Yes | ⬜ No
 - [ ] NO database corruption
 - [ ] NO partial/incomplete alerts
 
-**Actual Results**: ******\_******
+**Actual Results**: **\*\***\_**\*\***
 
 ---
 
@@ -293,7 +293,7 @@ Types correct: ⬜ Yes | ⬜ No
 - [ ] Console: NO "Cache hit" message
 - [ ] New API call made
 
-**Actual Results**: ******\_******
+**Actual Results**: **\*\***\_**\*\***
 
 ---
 
@@ -344,7 +344,7 @@ Types correct: ⬜ Yes | ⬜ No
 
 **Overall Status**: ⬜ READY FOR PRODUCTION | ⬜ NEEDS FIXES
 
-**Recommendations**: ******\_******
+**Recommendations**: **\*\***\_**\*\***
 
 ---
 
@@ -354,6 +354,6 @@ Types correct: ⬜ Yes | ⬜ No
 
 ---
 
-**Test Completed By**: ******\_******
-**Date**: ******\_******
-**Signature**: ******\_******
+**Test Completed By**: **\*\***\_**\*\***
+**Date**: **\*\***\_**\*\***
+**Signature**: **\*\***\_**\*\***

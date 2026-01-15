@@ -53,7 +53,6 @@ import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 import { fetchConnectionDetails } from "./services/connectionService";
 import { initializeDiagnosticLogger, getDiagnosticLogger } from "./lib/consoleLogger";
 import { resetAllGuides } from "./utils/guideStorage";
-import { shouldShowOnboarding, setOnboardingSeen } from "./utils/onboardingStorage";
 
 /**
  * Format number with commas (e.g., 1,234,567)
@@ -248,10 +247,7 @@ const App: React.FC = () => {
     typeof navigationInfoRef.current.transferSize === "number" &&
     navigationInfoRef.current.transferSize > 0;
 
-  const shouldAutoOpen =
-    view === ViewState.HOME &&
-    shouldShowOnboarding() &&
-    (isHardReload || !hasShownOnboardingSession);
+  const shouldAutoOpen = view === ViewState.HOME && (isHardReload || !hasShownOnboardingSession);
 
   const {
     isOpen: isOnboardingOpen,
@@ -356,7 +352,6 @@ const App: React.FC = () => {
       /* ignore */
     }
     setHasShownOnboardingSession(true);
-    setOnboardingSeen();
     closeOnboarding();
   }, [closeOnboarding]);
 
@@ -367,7 +362,6 @@ const App: React.FC = () => {
       /* ignore */
     }
     setHasShownOnboardingSession(true);
-    setOnboardingSeen();
     skipOnboarding();
   }, [skipOnboarding]);
 

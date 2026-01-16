@@ -172,6 +172,7 @@ export const WalletDetailsGuide: React.FC<WalletDetailsGuideProps> = ({
       className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 animate-in fade-in duration-200"
       onClick={handleBackdropClick}
       role="presentation"
+      style={{ pointerEvents: "auto" }}
     >
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div

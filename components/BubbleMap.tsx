@@ -290,6 +290,10 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         .attr("opacity", 0.6)
         .style("filter", "none")
         .style("animation-play-state", "running");
+
+      // Reset pointer events to allow bubbles to be clicked
+      linkSelection.style("pointer-events", "none");
+      linkSelection.select(".link-hitbox").style("pointer-events", "all");
       return;
     }
 
@@ -329,7 +333,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   // Helper: map click selection to parent + highlight
   const handleSelectNode = useCallback(
     (wallet: Wallet | null) => {
-      handleSelectNodeRef.current(wallet);
+      onWalletClickRef.current(wallet);
       applySelectionHighlight(wallet ? wallet.id : null, showLabels);
     },
     [showLabels]
@@ -668,18 +672,18 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .enter()
       .append("g")
       .attr("class", "link-wrapper")
-      .style("pointer-events", "none"); // Don't capture clicks by default (fixes Arc browser issue)
+      .style("pointer-events", "none"); // Wrapper itself should be none to let events through to nodes below if not hovering hitbox
 
     // Invisible wide path for easier clicking (the "hitbox")
     linkSelection
       .append("path")
       .attr("class", "link-hitbox")
       .attr("stroke", "transparent")
-      .attr("stroke-width", 20) // Wide invisible hitbox
+      .attr("stroke-width", 8) // Reduced from 20 to prevent accidental node interception
       .attr("fill", "none")
       .attr("opacity", 0)
       .style("cursor", "pointer")
-      .style("pointer-events", "none") // Don't capture clicks by default (fixes Arc browser bubble click issue)
+      .style("pointer-events", "all") // ACTIVE point events on hitbox so it catches mouseover
       .attr("role", "button")
       .attr("aria-label", () => `Connection. Click to remove.`)
       .style("display", showLinks ? "block" : "none");
@@ -824,7 +828,12 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           .style("filter", "drop-shadow(0 0 8px rgba(168, 85, 247, 0.8))"); // Purple glow
       })
       .on("mouseout", (_event: any, d: LinkDatum) => {
-        // Don't reset if this link is highlighted on mobile
+        const wrapper = d3.select(_event.currentTarget);
+
+        // Always disable the group when not hovering to allow bubble clicks underneath
+        wrapper.style("pointer-events", "none");
+
+        // Don't reset appearance if this link is highlighted on mobile
         const linkId = getLinkId(d);
         if (!linkId) return; // Guard against invalid link data
 
@@ -837,26 +846,24 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           return;
         }
 
-        const wrapper = d3.select(_event.currentTarget);
-
-        // Disable the group when not hovering (allows bubble clicks)
-        wrapper.style("pointer-events", "none");
-
         // Restore gradient appearance
         wrapper
           .select(".neural-vein")
           .transition()
           .duration(150)
+          .style("animation-play-state", "running")
           .attr("stroke", "url(#veinGradient)")
           .attr("stroke-width", 3)
-          .attr("stroke-dasharray", "4, 4") // Restore dashed animation
+          .attr("stroke-dasharray", "4, 4")
           .attr("opacity", 0.6)
-          .style("filter", "none")
-          .style("animation-play-state", "running"); // Resume animation
+          .style("filter", "none");
       });
 
-    // --- RENDER: NODES WITH LABELS (each node has a wrapper group containing circle + labels) ---
+    // --- RENDER: WALLETS ---
     const nodeGroup = g.append("g").attr("class", "nodes");
+
+    // Ensure nodes are ALWAYS on top of links in the DOM initial order
+    nodeGroup.raise();
 
     // Create a wrapper group for each node (will contain circle + labels)
     const nodeWrapperSelection = nodeGroup
@@ -864,7 +871,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .data(nodes)
       .enter()
       .append("g")
-      .attr("class", "node-wrapper");
+      .attr("class", "node-wrapper")
+      .style("pointer-events", "all"); // Ensure the entire group captures events regardless of child settings
 
     // Render circle inside the wrapper
     const nodeSelection = nodeWrapperSelection
@@ -929,6 +937,11 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     // Raise labels to ensure they render on top of circles (prevents visual occlusion)
     rankSelection.raise();
     labelSelection.raise();
+
+    // CRITICAL: Raise the entire nodeGroup to ensure ALL bubble wrappers render ABOVE link hitboxes
+    // This fixes the bug where bubbles with connections couldn't be clicked because link hitboxes
+    // (8px wide invisible paths with pointer-events:all) were intercepting clicks
+    nodeGroup.raise();
 
     // --- INTERACTION HANDLERS ---
     const drag = d3

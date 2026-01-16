@@ -311,18 +311,11 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
         aria-hidden="true"
       />
 
-      {/* Desktop Backdrop - Click to close */}
-      <div
-        className="hidden md:block fixed inset-0 bg-black/30 z-[90] transition-opacity"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-
       {/* Sidebar Container - Bottom Sheet on Mobile, Side Panel on Desktop */}
       <div
         className={`fixed z-[100] bg-space-800 shadow-2xl flex flex-col transition-transform duration-300 ease-out will-change-transform
-       /50 rounded-t-2xl inset-x-0 bottom-0 h-[85vh]
-           md:inset-y-0 md:right-0 md:left-auto md:w-96 md:max-w-[90vw] md:h-auto md:rounded-none md:top-16`}
+                   inset-x-0 bottom-0 h-[85vh] rounded-t-2xl
+                   md:inset-y-0 md:right-0 md:left-auto md:w-96 md:max-w-[90vw] md:h-auto md:rounded-none md:top-16`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="wallet-details-title"

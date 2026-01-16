@@ -35,9 +35,10 @@ modalPortalRoot.style.left = "0";
 modalPortalRoot.style.width = "0";
 modalPortalRoot.style.height = "0";
 modalPortalRoot.style.overflow = "visible";
-// Allow modal content (onboarding/help) to receive clicks; when empty, it has no children
-// so it won't block interactions. Using pointerEvents "auto" prevents close buttons from being ignored.
-modalPortalRoot.style.pointerEvents = "auto";
+// CRITICAL FIX: Use pointer-events: none to prevent empty portal from blocking bubble map clicks
+// When modals are rendered inside, they will have their own pointer-events to receive clicks
+// This fixes the bug where bubble map was unclickable after closing modals
+modalPortalRoot.style.pointerEvents = "none";
 modalPortalRoot.style.zIndex = "60";
 document.body.appendChild(modalPortalRoot);
 

@@ -982,12 +982,12 @@ const App: React.FC = () => {
 
   // --- SELECT WALLET ON MAP ---
   const handleSelectWalletOnMap = (wallet: Wallet) => {
-    // When a wallet is selected from the list/drawer, we only center/zoom via targetWalletId.
-    // Actual drawer open happens on bubble click inside BubbleMap.
-    setSelectedWallet(null);
-    setTargetWalletId(wallet.id);
-    // Close the mobile stats drawer when selecting an address from the map
+    // Sync with the main selection handler
+    handleWalletClickOnMap(wallet);
+
+    // Close the mobile stats drawer when selecting an address
     setIsMobileStatsOpen(false);
+
     // Scroll to map on mobile
     if (window.innerWidth < 1024) {
       const mapElement = document.querySelector('[role="img"]');
@@ -998,14 +998,6 @@ const App: React.FC = () => {
   // --- MAP CLICK HANDLER (BUBBLE) ---
   const handleWalletClickOnMap = useCallback(
     (wallet: Wallet | null) => {
-      console.log(
-        "[App] handleWalletClickOnMap called with:",
-        wallet ? { id: wallet.id, address: wallet.address, balance: wallet.balance } : null
-      );
-      console.log(
-        "[App] Previous selectedWallet:",
-        selectedWallet ? { id: selectedWallet.id } : null
-      );
       setSelectedWallet(wallet);
       setTargetWalletId(wallet ? wallet.id : null);
 
@@ -1019,7 +1011,7 @@ const App: React.FC = () => {
         }
       }
     },
-    [wallets, hasInteractedWithTokenPanel, selectedWallet]
+    [wallets, hasInteractedWithTokenPanel]
   );
 
   // --- SHARE FUNCTIONALITY ---
@@ -1062,8 +1054,7 @@ const App: React.FC = () => {
       if (uniqueNewLinks.length > 0) {
         setLinks((prev) => [...prev, ...uniqueNewLinks]);
         addToast(`Found ${uniqueNewLinks.length} new connection(s)!`, "success");
-        // Auto-close sidebar and zoom to traced wallet to show new connections
-        setSelectedWallet(null);
+        // Keep sidebar open but clear connection state to focus on the wallet
         setSelectedConnection(null);
         setSelectedConnectionId(null);
         // Force re-zoom even if tracing the same wallet consecutively
@@ -1340,6 +1331,8 @@ const App: React.FC = () => {
       setHoldersPage(1);
       setTargetWalletId(null);
       setSelectedWallet(null);
+      setSelectedConnection(null);
+      setSelectedConnectionId(null);
       setView(ViewState.ANALYSIS);
 
       // URL State Persistence (Deep Linking)

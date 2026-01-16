@@ -35,6 +35,7 @@ modalPortalRoot.style.left = "0";
 modalPortalRoot.style.width = "0";
 modalPortalRoot.style.height = "0";
 modalPortalRoot.style.overflow = "visible";
+modalPortalRoot.style.pointerEvents = "none"; // Don't capture clicks when empty (fixes Arc Browser issue)
 modalPortalRoot.style.zIndex = "60";
 document.body.appendChild(modalPortalRoot);
 

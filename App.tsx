@@ -895,6 +895,10 @@ const App: React.FC = () => {
 
   // Trigger wallet details guide when wallet sidebar opens
   useEffect(() => {
+    console.log(
+      "[App] selectedWallet changed:",
+      selectedWallet ? { id: selectedWallet.id, address: selectedWallet.address } : null
+    );
     if (selectedWallet && !hasInteractedWithWalletDetails) {
       setHasInteractedWithWalletDetails(true);
     }
@@ -994,6 +998,14 @@ const App: React.FC = () => {
   // --- MAP CLICK HANDLER (BUBBLE) ---
   const handleWalletClickOnMap = useCallback(
     (wallet: Wallet | null) => {
+      console.log(
+        "[App] handleWalletClickOnMap called with:",
+        wallet ? { id: wallet.id, address: wallet.address, balance: wallet.balance } : null
+      );
+      console.log(
+        "[App] Previous selectedWallet:",
+        selectedWallet ? { id: selectedWallet.id } : null
+      );
       setSelectedWallet(wallet);
       setTargetWalletId(wallet ? wallet.id : null);
 
@@ -1007,7 +1019,7 @@ const App: React.FC = () => {
         }
       }
     },
-    [wallets, hasInteractedWithTokenPanel]
+    [wallets, hasInteractedWithTokenPanel, selectedWallet]
   );
 
   // --- SHARE FUNCTIONALITY ---

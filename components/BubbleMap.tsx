@@ -317,6 +317,10 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   // Helper: map click selection to parent + highlight
   const handleSelectNode = useCallback(
     (wallet: Wallet | null) => {
+      console.log(
+        "[BubbleMap] handleSelectNode called with:",
+        wallet ? { id: wallet.id, address: wallet.address, balance: wallet.balance } : null
+      );
       onWalletClickRef.current(wallet);
       applySelectionHighlight(wallet ? wallet.id : null, showLabels);
     },
@@ -655,7 +659,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .data(linksCopy)
       .enter()
       .append("g")
-      .attr("class", "link-wrapper");
+      .attr("class", "link-wrapper")
+      .style("pointer-events", "none"); // Don't capture clicks by default (fixes Arc browser issue)
 
     // Invisible wide path for easier clicking (the "hitbox")
     linkSelection
@@ -666,6 +671,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .attr("fill", "none")
       .attr("opacity", 0)
       .style("cursor", "pointer")
+      .style("pointer-events", "none") // Don't capture clicks by default (fixes Arc browser bubble click issue)
       .attr("role", "button")
       .attr("aria-label", () => `Connection. Click to remove.`)
       .style("display", showLinks ? "block" : "none");
@@ -794,7 +800,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .on("mouseover", (_event: any, _d: LinkDatum) => {
         // Turn connection purple to indicate details available
         const wrapper = d3.select(_event.currentTarget);
-        wrapper.select(".link-hitbox").style("cursor", "pointer");
+
+        // Enable the entire group to capture events (for connection removal)
+        wrapper.style("pointer-events", "auto").style("cursor", "pointer");
 
         wrapper
           .select(".neural-vein")
@@ -821,8 +829,13 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           return;
         }
 
+        const wrapper = d3.select(_event.currentTarget);
+
+        // Disable the group when not hovering (allows bubble clicks)
+        wrapper.style("pointer-events", "none");
+
         // Restore gradient appearance
-        d3.select(_event.currentTarget)
+        wrapper
           .select(".neural-vein")
           .transition()
           .duration(150)

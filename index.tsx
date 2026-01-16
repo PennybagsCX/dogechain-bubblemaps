@@ -35,7 +35,9 @@ modalPortalRoot.style.left = "0";
 modalPortalRoot.style.width = "0";
 modalPortalRoot.style.height = "0";
 modalPortalRoot.style.overflow = "visible";
-modalPortalRoot.style.pointerEvents = "none"; // Don't capture clicks when empty (fixes Arc Browser issue)
+// Allow modal content (onboarding/help) to receive clicks; when empty, it has no children
+// so it won't block interactions. Using pointerEvents "auto" prevents close buttons from being ignored.
+modalPortalRoot.style.pointerEvents = "auto";
 modalPortalRoot.style.zIndex = "60";
 document.body.appendChild(modalPortalRoot);
 

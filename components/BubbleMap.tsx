@@ -170,6 +170,18 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     return true;
   });
 
+  // Close quick-help modal with Escape
+  useEffect(() => {
+    if (!isHelpOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsHelpOpen(false);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isHelpOpen]);
+
   // Memoize close handlers for click-outside hook
   const closeSettings = useCallback(() => setIsSettingsOpen(false), []);
   const closeLegend = useCallback(() => setIsLegendOpen(false), []);
@@ -317,11 +329,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   // Helper: map click selection to parent + highlight
   const handleSelectNode = useCallback(
     (wallet: Wallet | null) => {
-      console.log(
-        "[BubbleMap] handleSelectNode called with:",
-        wallet ? { id: wallet.id, address: wallet.address, balance: wallet.balance } : null
-      );
-      onWalletClickRef.current(wallet);
+      handleSelectNodeRef.current(wallet);
       applySelectionHighlight(wallet ? wallet.id : null, showLabels);
     },
     [showLabels]
@@ -1550,8 +1558,24 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       </div>
       {/* --- HELP MODAL --- */}
       {isHelpOpen && (
-        <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/70 p-4 animate-in fade-in">
-          <div className="bg-space-800 rounded-xl border border-space-700 shadow-2xl max-w-sm w-full overflow-hidden">
+        <button
+          type="button"
+          className="absolute inset-0 z-30 flex items-center justify-center bg-black/70 p-4 animate-in fade-in"
+          onClick={() => setIsHelpOpen(false)}
+          aria-label="Close help overlay"
+        >
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+          <div
+            className="bg-space-800 rounded-xl border border-space-700 shadow-2xl max-w-sm w-full overflow-hidden"
+            role="dialog"
+            aria-modal="true"
+            tabIndex={-1}
+            onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => {
+              // prevent escape handling from parent when focusing inside content
+              e.stopPropagation();
+            }}
+          >
             <div className="p-4 border-b border-space-700 flex justify-between items-center">
               <h3 className="font-bold text-white flex items-center gap-2">
                 <HelpCircle size={18} /> Interactive Guide
@@ -1600,17 +1624,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               Click anywhere outside to close
             </div>
           </div>
-          <div
-            className="absolute inset-0 -z-10"
-            onClick={() => setIsHelpOpen(false)}
-            onKeyDown={(e) => {
-              if (e.key === "Escape") setIsHelpOpen(false);
-            }}
-            role="button"
-            tabIndex={-1}
-            aria-label="Close help"
-          ></div>
-        </div>
+        </button>
       )}
 
       {/* --- BOTTOM STACK (MOBILE) --- */}

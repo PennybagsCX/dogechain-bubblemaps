@@ -7,7 +7,6 @@ import {
   setBubbleGuideSeen,
   setBubbleGuideSkipped,
   updateBubbleGuideProgress,
-  isHardReload,
 } from "../utils/guideStorage";
 
 /**
@@ -132,10 +131,9 @@ export function useBubbleVisualizationGuide(
     if (hasInitialized && !isOpen) return undefined;
 
     const alreadySeenSession = hasShownThisSessionRef.current;
-    const allowDueToHardReload = isHardReload();
 
-    // Trigger when condition becomes true AND not already shown this session (unless hard reload)
-    if (triggerCondition && (!alreadySeenSession || allowDueToHardReload) && !isInitializingRef.current) {
+    // Trigger when condition becomes true AND not already shown this session
+    if (triggerCondition && !alreadySeenSession && !isInitializingRef.current) {
       isInitializingRef.current = true;
       // Auto-show with delay for smooth UX (2.5s delay for bubble visualization load)
       const timer = setTimeout(() => {

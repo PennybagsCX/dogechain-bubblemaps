@@ -53,7 +53,6 @@ import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 import { fetchConnectionDetails } from "./services/connectionService";
 import { initializeDiagnosticLogger, getDiagnosticLogger } from "./lib/consoleLogger";
 import { resetAllGuides } from "./utils/guideStorage";
-import { shouldShowOnboarding } from "./utils/onboardingStorage";
 
 /**
  * Format number with commas (e.g., 1,234,567)
@@ -209,26 +208,8 @@ const App: React.FC = () => {
   // View state (must be declared before onboarding hook since it depends on it)
   const [view, setView] = useState<ViewState>(ViewState.HOME);
 
-  // Onboarding: show for new users and on hard reloads
+  // Onboarding: show once per session (resets on hard refresh naturally via sessionStorage)
   const sessionOnboardingKey = "dogechain_onboarding_session_shown";
-  const navigationInfoRef = useRef<{ type?: string; transferSize?: number }>({});
-
-  // Detect page navigation type on mount
-  useEffect(() => {
-    try {
-      const nav = performance.getEntriesByType("navigation")[0] as
-        | PerformanceNavigationTiming
-        | undefined;
-      if (nav) {
-        navigationInfoRef.current = {
-          type: nav.type,
-          transferSize: nav.transferSize,
-        };
-      }
-    } catch {
-      navigationInfoRef.current = {};
-    }
-  }, []);
 
   const hasSeenOnboardingThisSession = () => {
     try {
@@ -242,28 +223,7 @@ const App: React.FC = () => {
     hasSeenOnboardingThisSession()
   );
 
-  // If persistent onboarding state says “don’t show”, respect it by marking session seen on mount
-  useEffect(() => {
-    if (!shouldShowOnboarding()) {
-      try {
-        sessionStorage.setItem(sessionOnboardingKey, "true");
-      } catch {
-        /* ignore */
-      }
-      setHasShownOnboardingSession(true);
-    }
-  }, []);
-
-  // Detect hard reload (reload with network transfer, not back/forward cache)
-  const isHardReload =
-    navigationInfoRef.current.type === "reload" &&
-    typeof navigationInfoRef.current.transferSize === "number" &&
-    navigationInfoRef.current.transferSize > 0;
-
-  const shouldAutoOpen =
-    view === ViewState.HOME &&
-    shouldShowOnboarding() &&
-    (isHardReload || !hasShownOnboardingSession);
+  const shouldAutoOpen = view === ViewState.HOME && !hasShownOnboardingSession;
 
   const {
     isOpen: isOnboardingOpen,
@@ -280,12 +240,6 @@ const App: React.FC = () => {
   // Trigger onboarding when the auto-open condition is met (once per session unless hard reload)
   useEffect(() => {
     if (!shouldAutoOpen) return;
-
-    try {
-      sessionStorage.setItem(sessionOnboardingKey, "true");
-    } catch {
-      /* ignore */
-    }
 
     setHasShownOnboardingSession(true);
 

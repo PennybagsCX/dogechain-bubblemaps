@@ -44,6 +44,21 @@ interface BubbleMapProps {
   freezeLayout?: boolean; // When true, defer resize-driven rebuilds (e.g., while modals open)
 }
 
+type NodeDatum = Wallet & {
+  r: number;
+  x: number;
+  y: number;
+  fx?: number | null;
+  fy?: number | null;
+  rank: number;
+};
+
+type LinkDatum = {
+  source: string | NodeDatum;
+  target: string | NodeDatum;
+  value: number;
+};
+
 export const BubbleMap: React.FC<BubbleMapProps> = ({
   wallets,
   links,
@@ -459,7 +474,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
   // --- UPDATE VISIBILITY ---
   useEffect(() => {
-    if (!svgRef.current) return;
+    if (!svgRef.current || wallets.length === 0 || !hasMeasured) return;
+
     const svg = d3.select(svgRef.current);
 
     // Update Links
@@ -481,32 +497,16 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       svg
         .selectAll(".nodes circle")
         .style("opacity", (d: any) => {
-          // Always show user
           if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return 1;
           return d.balance >= threshold ? 1 : 0.1;
         })
         .style("pointer-events", (d: any) => (d.balance >= threshold ? "all" : "none"));
     }
-  }, [showLinks, showLabels, minBalancePercent, wallets, userAddress]);
+  }, [showLinks, showLabels, minBalancePercent, wallets, userAddress, hasMeasured]);
 
   useEffect(() => {
     if (!svgRef.current || wallets.length === 0 || !hasMeasured) return;
     const { width, height } = dimensions;
-
-    type NodeDatum = Wallet & {
-      r: number;
-      x: number;
-      y: number;
-      fx?: number | null;
-      fy?: number | null;
-      rank: number;
-    };
-
-    type LinkDatum = {
-      source: string | NodeDatum;
-      target: string | NodeDatum;
-      value: number;
-    };
 
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove(); // Clear previous render
@@ -813,8 +813,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         // Turn connection purple to indicate details available
         const wrapper = d3.select(_event.currentTarget);
 
-        // Enable the entire group to capture events (for connection removal)
-        wrapper.style("pointer-events", "auto").style("cursor", "pointer");
+        // Set cursor to pointer
+        wrapper.style("cursor", "pointer");
 
         wrapper
           .select(".neural-vein")
@@ -829,9 +829,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       })
       .on("mouseout", (_event: any, d: LinkDatum) => {
         const wrapper = d3.select(_event.currentTarget);
-
-        // Always disable the group when not hovering to allow bubble clicks underneath
-        wrapper.style("pointer-events", "none");
 
         // Don't reset appearance if this link is highlighted on mobile
         const linkId = getLinkId(d);
@@ -851,12 +848,39 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           .select(".neural-vein")
           .transition()
           .duration(150)
-          .style("animation-play-state", "running")
-          .attr("stroke", "url(#veinGradient)")
-          .attr("stroke-width", 3)
-          .attr("stroke-dasharray", "4, 4")
-          .attr("opacity", 0.6)
-          .style("filter", "none");
+          .style("animation-play-state", "running");
+      });
+
+    // --- INTERACTION HANDLERS ---
+    // Use 'any' type for element to allow attaching to both Group and Circle
+    const drag = d3
+      .drag<any, NodeDatum>()
+      .on("start", (event: any, d: NodeDatum) => {
+        // Detect input type - touch events use pointerType property
+        const isTouch =
+          event.sourceEvent.pointerType === "touch" ||
+          ("ontouchstart" in window && event.sourceEvent.type.startsWith("touch"));
+
+        if (!event.active && simulationRef.current) {
+          // Use even lower alpha for desktop mouse to match mobile responsiveness
+          const targetAlpha = isTouch ? 0.005 : 0.003;
+          simulationRef.current.alphaTarget(targetAlpha).restart();
+        }
+        d.fx = d.x;
+        d.fy = d.y;
+        d3.select(event.sourceEvent.target).attr("cursor", "grabbing");
+      })
+      .on("drag", (event: any, d: NodeDatum) => {
+        d.fx = event.x;
+        d.fy = event.y;
+      })
+      .on("end", (event: any, d: NodeDatum) => {
+        if (!event.active && simulationRef.current) {
+          simulationRef.current.alphaTarget(0);
+        }
+        d.fx = null;
+        d.fy = null;
+        d3.select(event.sourceEvent.target).attr("cursor", "grab");
       });
 
     // --- RENDER: WALLETS ---
@@ -871,8 +895,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .data(nodes)
       .enter()
       .append("g")
-      .attr("class", "node-wrapper")
-      .style("pointer-events", "all"); // Ensure the entire group captures events regardless of child settings
+      .attr("class", "node-wrapper");
 
     // Render circle inside the wrapper
     const nodeSelection = nodeWrapperSelection
@@ -897,6 +920,145 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .attr("aria-label", (d: NodeDatum) => `Wallet ${d.address}, Balance ${d.balance}`)
       .attr("role", "button")
       .attr("tabindex", "0");
+
+    // Attach Drag, Click, and Keydown handlers to the circle (direct target)
+    nodeSelection
+      .call(drag)
+      .on("click", (event: any, d: NodeDatum) => {
+        event.stopPropagation();
+
+        // Clear connection selection
+        lastSelectedConnectionIdRef.current = null;
+        applyConnectionHighlight(null);
+
+        handleSelectNodeRef.current(d);
+        setFocusedIndex(wallets.indexOf(d));
+      })
+      .on("keydown", (event: any, d: NodeDatum) => {
+        if (event.key === "Enter" || event.key === " ") {
+          handleSelectNodeRef.current(d);
+          setFocusedIndex(wallets.indexOf(d));
+        }
+      });
+
+    // Attach hover handlers to the wrapper group
+    nodeWrapperSelection
+      .on("mouseover", (_event: any, d: NodeDatum) => {
+        const threshold = (maxBalance * minBalancePercent) / 100;
+
+        // Logic to dim everyone but connected
+        nodeSelection
+          .interrupt()
+          .transition()
+          .duration(200)
+          .attr("opacity", (n: NodeDatum) => {
+            // If node should be hidden by threshold, keep it hidden (0.1)
+            if (
+              n.balance < threshold &&
+              !(userAddress && n.address.toLowerCase() === userAddress.toLowerCase())
+            ) {
+              return 0.1;
+            }
+            return 0.15;
+          })
+          .style("filter", "none");
+
+        linkSelection
+          .select(".neural-vein")
+          .interrupt()
+          .transition()
+          .duration(200)
+          .attr("opacity", 0.05);
+
+        // NOTE: Labels are NO LONGER dimmed on hover - they stay fully visible
+
+        const connectedIds = new Set<string>();
+        connectedIds.add(d.id);
+
+        linkSelection
+          .filter(
+            (l: LinkDatum) =>
+              (l.source as NodeDatum).id === d.id || (l.target as NodeDatum).id === d.id
+          )
+          .select(".neural-vein") // Target the visible path inside wrapper
+          .interrupt()
+          .transition()
+          .duration(200)
+          .attr("opacity", 1)
+          .attr("stroke-width", 4)
+          .attr("stroke", "#ffffff")
+          .style("filter", "url(#glow)")
+          .style("display", "block") // Force show even if filtered hidden
+          .each((l: LinkDatum) => {
+            connectedIds.add((l.source as NodeDatum).id);
+            connectedIds.add((l.target as NodeDatum).id);
+          });
+
+        nodeSelection
+          .filter((n: NodeDatum) => connectedIds.has(n.id))
+          .interrupt()
+          .transition()
+          .duration(400)
+          .attr("opacity", 1)
+          .attr("stroke-width", (n: NodeDatum) => {
+            const isUser = userAddress && n.address.toLowerCase() === userAddress.toLowerCase();
+            return isUser ? 3 : 1;
+          })
+          .attr("stroke", (n: NodeDatum) => {
+            const isUser = userAddress && n.address.toLowerCase() === userAddress.toLowerCase();
+            if (isUser) return "#ffffff";
+            return d3.color(getNodeColorRef.current(n))?.brighter(0.8).formatHex() || "#fff";
+          })
+          .attr("fill", (n: NodeDatum) => getNodeColorRef.current(n))
+          .style("filter", "url(#glow)");
+
+        linkSelection
+          .filter(
+            (l: LinkDatum) =>
+              (l.source as NodeDatum).id === d.id || (l.target as NodeDatum).id === d.id
+          )
+          .select(".neural-vein") // Target the visible path inside wrapper
+          .interrupt()
+          .transition()
+          .duration(400)
+          .attr("opacity", 0.5)
+          .attr("stroke", "url(#veinGradient)")
+          .attr("stroke-width", 2)
+          .style("filter", "none")
+          .style("display", showLinks ? "block" : "none"); // Respect filter
+
+        // NOTE: Labels are NOT filtered - all labels stay visible during hover
+      })
+      .on("mouseout", (_event: any) => {
+        // Remove hover state from wrapper
+        d3.select(_event.currentTarget).classed("hovering", false);
+
+        const threshold = (maxBalance * minBalancePercent) / 100;
+
+        // Reset all nodes to normal appearance
+        nodeSelection
+          .interrupt()
+          .transition()
+          .duration(200)
+          .attr("opacity", (d: NodeDatum) => {
+            if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return 1;
+            return d.balance >= threshold ? 1 : 0.1;
+          })
+          .style("filter", "url(#glow)");
+        linkSelection
+          .select(".neural-vein")
+          .interrupt()
+          .transition()
+          .duration(200)
+          .attr("opacity", 0.6)
+          .attr("stroke", "url(#veinGradient)")
+          .attr("stroke-width", 3)
+          .attr("stroke-dasharray", "4, 4")
+          .style("filter", "none")
+          .style("animation-play-state", "running");
+
+        // NOTE: Labels are NOT reset - they stay visible throughout since we no longer dim them on hover
+      });
 
     // Render rank label inside the wrapper (after circle so circle receives events first)
     const rankSelection = nodeWrapperSelection
@@ -936,195 +1098,44 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     // Raise labels to ensure they render on top of circles (prevents visual occlusion)
     rankSelection.raise();
-    labelSelection.raise();
 
-    // CRITICAL: Raise the entire nodeGroup to ensure ALL bubble wrappers render ABOVE link hitboxes
-    // This fixes the bug where bubbles with connections couldn't be clicked because link hitboxes
-    // (8px wide invisible paths with pointer-events:all) were intercepting clicks
-    nodeGroup.raise();
+    // Helper to calculate link path with optional gap
+    const getLinkPath = (d: any, gap: number = 0) => {
+      const source = d.source as NodeDatum;
+      const target = d.target as NodeDatum;
 
-    // --- INTERACTION HANDLERS ---
-    const drag = d3
-      .drag<SVGGElement, NodeDatum>()
-      .on("start", (event: any, d: NodeDatum) => {
-        // Detect input type - touch events use pointerType property
-        const isTouch =
-          event.sourceEvent.pointerType === "touch" ||
-          ("ontouchstart" in window && event.sourceEvent.type.startsWith("touch"));
+      const dx = target.x - source.x;
+      const dy = target.y - source.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (!event.active && simulationRef.current) {
-          // Use even lower alpha for desktop mouse to match mobile responsiveness
-          const targetAlpha = isTouch ? 0.005 : 0.003;
-          simulationRef.current.alphaTarget(targetAlpha).restart();
-        }
-        d.fx = d.x;
-        d.fy = d.y;
-        d3.select(event.sourceEvent.target).attr("cursor", "grabbing");
-      })
-      .on("drag", (event: any, d: NodeDatum) => {
-        d.fx = event.x;
-        d.fy = event.y;
-      })
-      .on("end", (event: any, d: NodeDatum) => {
-        if (!event.active && simulationRef.current) {
-          simulationRef.current.alphaTarget(0);
-        }
-        d.fx = null;
-        d.fy = null;
-        d3.select(event.sourceEvent.target).attr("cursor", "grab");
-      });
-
-    nodeWrapperSelection.call(drag);
-
-    // Attach event handlers to the wrapper group (not the circle)
-    // This way, hovering over labels won't trigger mouseout on the node
-    nodeWrapperSelection
-      .on("click", (event: any, d: NodeDatum) => {
-        event.stopPropagation();
-
-        // Clear connection selection
-        lastSelectedConnectionIdRef.current = null;
-        applyConnectionHighlight(null);
-
-        handleSelectNodeRef.current(d);
-        setFocusedIndex(wallets.indexOf(d));
-      })
-      .on("keydown", (event: any, d: NodeDatum) => {
-        if (event.key === "Enter" || event.key === " ") {
-          handleSelectNodeRef.current(d);
-          setFocusedIndex(wallets.indexOf(d));
-        }
-      })
-      .on("mouseover", (_event: any, d: NodeDatum) => {
-        const wrapper = d3.select(_event.currentTarget);
-        const hoveredId = d.id;
-
-        // Mark that this node wrapper is being hovered
-        wrapper.classed("hovering", true);
-
-        // Logic to dim everyone but connected
-        nodeSelection
-          .interrupt()
-          .transition()
-          .duration(200)
-          .attr("opacity", 0.15)
-          .style("filter", "none");
-        linkSelection
-          .select(".neural-vein")
-          .interrupt()
-          .transition()
-          .duration(200)
-          .attr("opacity", 0.05);
-        // NOTE: Labels are NO LONGER dimmed on hover - they stay fully visible
-
-        const connectedIds = new Set<string>();
-        connectedIds.add(hoveredId);
-
-        linkSelection
-          .filter(
-            (l: LinkDatum) =>
-              (l.source as NodeDatum).id === hoveredId || (l.target as NodeDatum).id === hoveredId
-          )
-          .select(".neural-vein") // Target the visible path inside wrapper
-          .interrupt()
-          .transition()
-          .duration(200)
-          .attr("opacity", 1)
-          .attr("stroke-width", 4)
-          .attr("stroke", "#ffffff")
-          .style("filter", "url(#glow)")
-          .style("display", "block") // Force show even if filtered hidden
-          .each((l: LinkDatum) => {
-            connectedIds.add((l.source as NodeDatum).id);
-            connectedIds.add((l.target as NodeDatum).id);
-          });
-
-        nodeWrapperSelection
-          .filter((n: NodeDatum) => connectedIds.has(n.id))
-          .raise() // Bring connected nodes (and their labels) to front during hover
-          .interrupt()
-          .transition()
-          .duration(200);
-
-        const max = Math.max(...wallets.map((w) => w.balance));
-        const threshold = (max * minBalancePercent) / 100;
-
-        nodeSelection
-          .interrupt()
-          .transition()
-          .duration(400)
-          .attr("opacity", (d: NodeDatum) => {
-            if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return 1;
-            return d.balance >= threshold ? 1 : 0.1;
-          })
-          .attr("stroke-width", (d: NodeDatum) => {
-            const isUser = userAddress && d.address.toLowerCase() === userAddress.toLowerCase();
-            return isUser ? 3 : 1;
-          })
-          .attr("stroke", (d: NodeDatum) => {
-            const isUser = userAddress && d.address.toLowerCase() === userAddress.toLowerCase();
-            if (isUser) return "#ffffff";
-            return d3.color(getNodeColorRef.current(d))?.brighter(0.8).formatHex() || "#fff";
-          })
-          .attr("fill", (d: NodeDatum) => getNodeColorRef.current(d))
-          .style("filter", "url(#glow)");
-
-        linkSelection
-          .select(".neural-vein") // Target the visible path inside wrapper
-          .interrupt()
-          .transition()
-          .duration(400)
-          .attr("opacity", 0.5)
-          .attr("stroke", "url(#veinGradient)")
-          .attr("stroke-width", 2)
-          .style("filter", "none")
-          .style("display", showLinks ? "block" : "none"); // Respect filter
-
-        // NOTE: Labels are NOT filtered - all labels stay visible during hover
-      })
-      .on("mouseout", (_event: any) => {
-        // Remove hover state from wrapper
-        d3.select(_event.currentTarget).classed("hovering", false);
-
-        // Reset all nodes to normal appearance
-        nodeSelection
-          .interrupt()
-          .transition()
-          .duration(200)
-          .attr("opacity", 1)
-          .style("filter", "url(#glow)");
-        linkSelection
-          .select(".neural-vein")
-          .interrupt()
-          .transition()
-          .duration(200)
-          .attr("opacity", 0.6)
-          .attr("stroke", "url(#veinGradient)")
-          .attr("stroke-width", 3)
-          .attr("stroke-dasharray", "4, 4")
-          .style("filter", "none")
-          .style("animation-play-state", "running");
-
-        // NOTE: Labels are NOT reset - they stay visible throughout since we no longer dim them on hover
-      });
-
-    // --- TICK ---
-    simulation.on("tick", () => {
-      // Save node positions once simulation has made meaningful progress (alpha < 0.6)
-      if (simulation.alpha() < 0.6) {
-        nodes.forEach((node) => {
-          if (node.x !== undefined && node.y !== undefined) {
-            nodePositionsRef.current.set(node.id, { x: node.x, y: node.y });
-          }
-        });
+      // If nodes are too close or overlapping, hide the link
+      if (dist === 0 || dist <= source.r + target.r + gap * 2) {
+        return "M0,0L0,0";
       }
 
-      // Update both hitbox and visible paths
-      linkSelection.selectAll("path").attr("d", (d: any) => {
-        const source = d.source as NodeDatum;
-        const target = d.target as NodeDatum;
-        return `M${source.x},${source.y} L${target.x},${target.y}`;
-      });
+      // Calculate start and end points at the edge of the bubbles + gap
+      const sourceDist = source.r + gap;
+      const targetDist = target.r + gap;
+
+      const sourceRatio = sourceDist / dist;
+      const targetRatio = targetDist / dist;
+
+      const sourceX = source.x + dx * sourceRatio;
+      const sourceY = source.y + dy * sourceRatio;
+
+      const targetX = target.x - dx * targetRatio;
+      const targetY = target.y - dy * targetRatio;
+
+      return `M${sourceX},${sourceY} L${targetX},${targetY}`;
+    };
+
+    simulation.on("tick", () => {
+      // Update hitbox with gap to prevent click interception on bubbles
+      // Hitbox is 8px wide (4px each side), so 9px gap ensures 5px clearance from bubble
+      linkSelection.select(".link-hitbox").attr("d", (d: any) => getLinkPath(d, 9));
+
+      // Update visible vein starting exactly at bubble edge
+      linkSelection.select(".neural-vein").attr("d", (d: any) => getLinkPath(d, 0));
 
       nodeSelection.attr("cx", (d: NodeDatum) => d.x).attr("cy", (d: NodeDatum) => d.y);
       rankSelection

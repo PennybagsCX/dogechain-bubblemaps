@@ -1001,6 +1001,10 @@ const App: React.FC = () => {
       setSelectedWallet(wallet);
       setTargetWalletId(wallet ? wallet.id : null);
 
+      // Clear connection selection when clicking a wallet or background
+      setSelectedConnection(null);
+      setSelectedConnectionId(null);
+
       // Desktop-only: sync token info panel page to the clicked wallet (even beyond top 10)
       if (wallet && typeof window !== "undefined" && window.innerWidth >= 1024) {
         const index = wallets.findIndex((w) => w.id === wallet.id);

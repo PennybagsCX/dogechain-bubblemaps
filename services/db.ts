@@ -4,6 +4,7 @@
 import Dexie, { Table } from "dexie";
 import { AlertConfig, TriggeredEvent, Transaction, Token, ScanMetadata } from "../types";
 import { calculateSearchRelevance } from "./tokenSearchService";
+import { getApiUrl } from "../utils/api";
 
 // Database interface definitions
 export interface DbAlert {
@@ -1584,7 +1585,7 @@ export async function syncAlertsToServer(walletAddress: string): Promise<SyncRes
       };
     }
 
-    const response = await fetch("/api/alerts/sync", {
+    const response = await fetch(getApiUrl("/api/alerts/sync"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -1819,7 +1820,7 @@ export async function saveAlertToServer(
   alert: AlertConfig
 ): Promise<boolean> {
   try {
-    const response = await fetch("/api/alerts/user", {
+    const response = await fetch(getApiUrl("/api/alerts/user"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

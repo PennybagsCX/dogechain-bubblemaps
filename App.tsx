@@ -1425,9 +1425,15 @@ const App: React.FC = () => {
     }
 
     // Restore Data
-    if (tokenParam) {
+    if (tokenParam && viewParam !== "dashboard") {
+      // Only trigger search if NOT on dashboard (preserves dashboard view on refresh)
       const type = typeParam === "NFT" ? AssetType.NFT : AssetType.TOKEN;
       handleSearch(undefined, tokenParam, type);
+    } else if (tokenParam && viewParam === "dashboard") {
+      // On dashboard, load token data but don't switch view
+      const type = typeParam === "NFT" ? AssetType.NFT : AssetType.TOKEN;
+      setSearchQuery(tokenParam);
+      setSearchType(type);
     }
 
     // Handle Browser Back Button
@@ -1903,8 +1909,9 @@ const App: React.FC = () => {
     alertType?: "WALLET" | "TOKEN" | "WHALE";
   }) => {
     // Switch to Dashboard view if not already there
+    // IMPORTANT: Use handleViewChange to ensure browser history is properly updated
     if (view !== ViewState.DASHBOARD) {
-      setView(ViewState.DASHBOARD);
+      handleViewChange(ViewState.DASHBOARD);
     }
     // Set pre-fill data and open modal
     setAlertModalPrefill(prefill || null);

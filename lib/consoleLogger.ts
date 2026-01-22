@@ -14,6 +14,7 @@ import type {
   DiagnosticLog,
   LogDiagnosticsResponse,
 } from "../_types/diagnostics";
+import { getApiUrl } from "../utils/api";
 
 class DiagnosticLogger {
   private sessionId: string;
@@ -206,7 +207,7 @@ class DiagnosticLogger {
     try {
       const data = this.prepareLogData();
 
-      const response = await fetch("/api/log-diagnostics", {
+      const response = await fetch(getApiUrl("/api/log-diagnostics"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

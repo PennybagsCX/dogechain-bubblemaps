@@ -142,6 +142,42 @@ export const EmbeddedChart: React.FC<EmbeddedChartProps> = ({
 
   const chartUrl = getChartUrl();
 
+  // Validate token address and check if it exists on Dexscreener
+  useEffect(() => {
+    const validateChart = async () => {
+      // Validate address format
+      const isValidAddress = /^0x[a-fA-F0-9]{40}$/.test(tokenAddress);
+      if (!isValidAddress) {
+        console.error(`[EmbeddedChart] Invalid token address: ${tokenAddress}`);
+        setIframeError(true);
+        setIsLoading(false);
+        onError?.();
+        return;
+      }
+
+      // Validate token exists on Dexscreener
+      try {
+        const response = await fetch(
+          `https://api.dexscreener.com/latest/dex/tokens/${tokenAddress}`
+        );
+        if (!response.ok) throw new Error("Dexscreener API unreachable");
+
+        const data = await response.json();
+        if (!data.pairs || data.pairs.length === 0) {
+          console.warn(`[EmbeddedChart] No trading pairs for ${tokenAddress}`);
+          setIframeError(true);
+          onError?.();
+        }
+      } catch (error) {
+        console.error(`[EmbeddedChart] Validation failed:`, error);
+        setIframeError(true);
+        onError?.();
+      }
+    };
+
+    validateChart();
+  }, [tokenAddress, onError]);
+
   return (
     <div ref={containerRef} className={`w-full ${className}`}>
       {/* Toggle Button - Only show if showToggle is true */}
@@ -223,13 +259,29 @@ export const EmbeddedChart: React.FC<EmbeddedChartProps> = ({
             className={`w-full h-[300px] sm:h-[400px] lg:h-[500px] border border-space-700 rounded-lg bg-space-800 transition-all ${
               isLoading ? "opacity-0" : "opacity-100"
             }`}
-            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation"
             referrerPolicy="no-referrer"
             onLoad={handleIframeLoad}
             onError={handleIframeError}
             title={`${tokenSymbol} chart on Dexscreener`}
             aria-label={`Embedded ${tokenSymbol} price chart from Dexscreener`}
           />
+
+          {/* Fallback error UI */}
+          {iframeError && (
+            <div className="w-full h-[300px] border border-space-700 rounded-lg bg-space-800 flex items-center justify-center">
+              <div className="text-center">
+                <AlertCircle size={32} className="text-amber-500 mx-auto mb-2" />
+                <p className="text-slate-400 text-sm mb-3">Chart unavailable</p>
+                <button
+                  onClick={openExternalLink}
+                  className="text-doge-500 hover:text-doge-400 text-sm underline"
+                >
+                  View on Dexscreener
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

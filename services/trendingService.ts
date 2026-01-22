@@ -3,6 +3,8 @@
  * Handles communication with trending aggregation API
  */
 
+import { getApiUrl } from "../utils/api";
+
 // Detect local/dev to avoid CORS against production endpoints
 const isLocalDev = typeof window !== "undefined" && window.location.hostname === "localhost";
 
@@ -45,8 +47,8 @@ export async function logSearchQuery(
   if (isLocalDev) return false;
 
   try {
-    // Use relative URL since /api/trending/log is in the same app
-    const response = await fetch("/api/trending/log", {
+    // Use getApiUrl to handle dev vs production environments
+    const response = await fetch(getApiUrl("/api/trending/log"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ address, assetType, symbol, name }),

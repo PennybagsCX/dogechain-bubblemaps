@@ -107,6 +107,9 @@ export interface AlertStatus {
   // Transaction tracking
   lastSeenTransactions?: string[]; // Array of transaction hashes we've already seen
   newTransactions?: Transaction[]; // New transactions detected in latest scan
+  // Baseline tracking for historical transaction filtering
+  baselineEstablished?: boolean; // Track if initial baseline has been set
+  baselineTimestamp?: number; // When baseline was established
 }
 
 // Wallet Scanner Types

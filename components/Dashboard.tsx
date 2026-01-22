@@ -37,6 +37,7 @@ import {
 } from "../services/dataService";
 import { exportDatabaseAsCSV } from "../services/db";
 import { validateTokenAddress, validateWalletAddress } from "../utils/validation";
+import { getApiUrl } from "../utils/api";
 
 interface InAppNotification {
   id: string;
@@ -126,6 +127,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
   const [inAppNotifications, setInAppNotifications] = useState<InAppNotification[]>([]);
+  const [notificationsLimit, setNotificationsLimit] = useState(10);
+  const [hasMoreNotifications, setHasMoreNotifications] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [editingAlertId, setEditingAlertId] = useState<string | null>(null);
   const [expandedEvents, setExpandedEvents] = useState<Set<string>>(new Set());
@@ -280,9 +283,19 @@ export const Dashboard: React.FC<DashboardProps> = ({
             alert.type === "WALLET" ? undefined : alert.tokenAddress // WALLET gets all tokens
           );
 
+          // Check if baseline already established (prevents historical transaction spam)
+          const isBaselineEstablished = existingStatus?.baselineEstablished || false;
+          const alertCreatedAt = alert.createdAt || Date.now();
+
+          // For new alerts, filter to only transactions AFTER alert creation
+          let transactionsForBaseline = transactions;
+          if (!isBaselineEstablished) {
+            transactionsForBaseline = transactions.filter((tx) => tx.timestamp >= alertCreatedAt);
+          }
+
           // Get previously seen transactions or initialize baseline
           const previousTxs =
-            existingStatus?.lastSeenTransactions || transactions.map((tx) => tx.hash);
+            existingStatus?.lastSeenTransactions || transactionsForBaseline.map((tx) => tx.hash);
           const previousTxSet = new Set(previousTxs);
 
           // Find new transactions (transactions we haven't seen before)
@@ -302,7 +315,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           const allSeenTxs = [...new Set([...previousTxs, ...transactions.map((tx) => tx.hash)])];
 
           // Trigger alert if we found new transactions (only after initial baseline)
-          const hasNewActivity = existingStatus ? filteredNewTransactions.length > 0 : false;
+          const hasNewActivity = isBaselineEstablished ? filteredNewTransactions.length > 0 : false;
 
           // Keep triggered state persistent - once triggered, stay triggered until manually reset
           const wasTriggered = existingStatus?.triggered || false;
@@ -314,6 +327,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
             checkedAt: Date.now(),
             lastSeenTransactions: allSeenTxs,
             newTransactions: hasNewActivity ? filteredNewTransactions : undefined,
+            baselineEstablished: true, // Mark baseline as established
+            baselineTimestamp: isBaselineEstablished
+              ? existingStatus?.baselineTimestamp
+              : Date.now(),
           };
         } catch {
           newStatuses[alert.id] = {
@@ -339,6 +356,39 @@ export const Dashboard: React.FC<DashboardProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alerts.length, Object.keys(statuses).length, isScanning, runScan]);
+
+  // Migration: Add baseline tracking to existing alerts
+  useEffect(() => {
+    const migrateAlertStatuses = () => {
+      const migratedStatuses: Record<string, import("../types").AlertStatus> = {};
+      let hasMigrations = false;
+
+      Object.entries(statuses).forEach(([alertId, status]) => {
+        if (status.baselineEstablished === undefined) {
+          const alert = alerts.find((a) => a.id === alertId);
+          if (alert) {
+            migratedStatuses[alertId] = {
+              ...status,
+              baselineEstablished: true,
+              baselineTimestamp: alert.createdAt || Date.now(),
+            };
+            hasMigrations = true;
+          } else {
+            migratedStatuses[alertId] = status;
+          }
+        } else {
+          migratedStatuses[alertId] = status;
+        }
+      });
+
+      if (hasMigrations) {
+        onUpdateStatuses?.({ ...statuses, ...migratedStatuses });
+      }
+    };
+
+    migrateAlertStatuses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [alerts]); // Run when alerts load
 
   // Periodic automatic scanning every 30 seconds
   useEffect(() => {
@@ -410,7 +460,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         onTriggeredEventsChange?.([triggeredEvent, ...triggeredEvents].slice(0, 100));
 
         // Log triggered alert to server (non-blocking, fire-and-forget)
-        fetch("/api/alerts/trigger", {
+        fetch(getApiUrl("/api/alerts/trigger"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -464,7 +514,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
             timestamp: Date.now(),
           };
 
-          setInAppNotifications((prev) => [inAppNotif, ...prev].slice(0, 10));
+          setInAppNotifications((prev) => {
+            const MAX_NOTIFICATIONS = 200; // Prevent unbounded growth
+            const updated = [inAppNotif, ...prev].slice(0, MAX_NOTIFICATIONS);
+            setHasMoreNotifications(updated.length > notificationsLimit);
+            return updated.slice(0, notificationsLimit);
+          });
         } else {
           // Fallback to in-app notification only
           const inAppNotif: InAppNotification = {
@@ -476,7 +531,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
             timestamp: Date.now(),
           };
 
-          setInAppNotifications((prev) => [inAppNotif, ...prev].slice(0, 10));
+          setInAppNotifications((prev) => {
+            const MAX_NOTIFICATIONS = 200; // Prevent unbounded growth
+            const updated = [inAppNotif, ...prev].slice(0, MAX_NOTIFICATIONS);
+            setHasMoreNotifications(updated.length > notificationsLimit);
+            return updated.slice(0, notificationsLimit);
+          });
         }
       });
 
@@ -941,6 +1001,32 @@ export const Dashboard: React.FC<DashboardProps> = ({
               </div>
             );
           })}
+
+          {/* Load More button */}
+          {hasMoreNotifications && (
+            <button
+              onClick={() => setNotificationsLimit((prev) => Math.min(prev + 20, 200))}
+              className="w-full py-2 text-sm text-doge-500 hover:text-doge-400 transition-colors border border-doge-500/30 rounded-lg hover:bg-doge-500/10 mt-3"
+            >
+              Load More Notifications
+            </button>
+          )}
+
+          {/* Notification count */}
+          <div className="text-xs text-slate-500 text-center mt-2">
+            Showing {Math.min(notificationsLimit, inAppNotifications.length)} of{" "}
+            {inAppNotifications.length} notifications
+          </div>
+
+          {/* Clear All button */}
+          {inAppNotifications.length > 0 && (
+            <button
+              onClick={() => setInAppNotifications([])}
+              className="w-full py-2 text-xs text-red-400 hover:text-red-300 transition-colors mt-2"
+            >
+              Clear All Notifications
+            </button>
+          )}
         </div>
       )}
 

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { getApiUrl } from "../utils/api";
 
 const CACHE_KEY = "doge_stats_cache";
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
@@ -38,7 +39,7 @@ export function useStatsCounters(): StatsCounters {
       }
       setError(null);
 
-      const response = await fetch("/api/stats");
+      const response = await fetch(getApiUrl("/api/stats"));
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
       }

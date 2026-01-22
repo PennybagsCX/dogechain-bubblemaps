@@ -53,7 +53,8 @@ export function getApiBaseUrl(): string {
   if (typeof window !== "undefined") {
     console.debug("[API] Production mode - using default backend URL");
   }
-  return "https://dogechain-bubblemaps-api.vercel.app";
+  // The API routes are deployed on the same Vercel project as the frontend
+  return window.location.origin;
 }
 
 /**

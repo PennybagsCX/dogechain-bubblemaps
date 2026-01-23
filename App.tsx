@@ -2009,6 +2009,18 @@ const App: React.FC = () => {
 
       // Update alert in list
       setAlerts((prev) => prev.map((a) => (a.id === id ? updatedAlert : a)));
+
+      // Sync to server if wallet is connected
+      if (userAddress && isConnected) {
+        try {
+          await syncAlertsToServer(userAddress);
+          console.log("[UPDATE] ✅ Alert synced to server");
+        } catch (error) {
+          console.error("[UPDATE] ⚠️ Failed to sync updated alert to server:", error);
+          // Don't fail the update operation if sync fails
+        }
+      }
+
       addToast("Alert updated successfully", "success");
     } catch (error) {
       console.error("Failed to update alert", error);

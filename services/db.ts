@@ -1585,7 +1585,7 @@ export async function syncAlertsToServer(walletAddress: string): Promise<SyncRes
       };
     }
 
-    const response = await fetch(getApiUrl("/api/alerts/sync"), {
+    const response = await fetch(getApiUrl("/api/alerts?action=sync"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

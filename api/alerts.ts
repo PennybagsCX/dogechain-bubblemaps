@@ -12,8 +12,8 @@ async function parseBody(req: Request): Promise<unknown> {
 // Routes:
 // - GET/DELETE /api/alerts?wallet=xxx&alertId=xxx (fetch/delete user alerts)
 // - POST /api/alerts (create/update user alert)
-// - POST /api/alerts/trigger (log triggered alert event)
-// - POST /api/alerts/sync (bidirectional sync)
+// - POST /api/alerts?action=trigger (log triggered alert event)
+// - POST /api/alerts?action=sync (bidirectional sync)
 export async function GET(req: Request): Promise<Response> {
   const url = new URL(req.url);
 
@@ -34,12 +34,15 @@ export async function GET(req: Request): Promise<Response> {
 export async function POST(req: Request): Promise<Response> {
   const url = new URL(req.url);
 
-  // Route to appropriate handler based on URL path
-  if (url.pathname.endsWith("/trigger")) {
+  // Get action from query parameter for single-file routing
+  const action = url.searchParams.get("action");
+
+  // Route to appropriate handler based on URL path or action parameter
+  if (url.pathname.endsWith("/trigger") || action === "trigger") {
     return handleTriggerAlert(req);
   }
 
-  if (url.pathname.endsWith("/sync")) {
+  if (url.pathname.endsWith("/sync") || action === "sync") {
     return handleSyncAlerts(req);
   }
 

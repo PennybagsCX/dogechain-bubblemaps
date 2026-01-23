@@ -9,6 +9,67 @@ if (!databaseUrl) {
 
 const sql = neon(databaseUrl);
 
+// Schema creation SQL
+const createTablesSQL = `
+  -- Create user_alerts table if not exists
+  CREATE TABLE IF NOT EXISTS user_alerts (
+    id BIGSERIAL PRIMARY KEY,
+    user_wallet_address TEXT NOT NULL,
+    alert_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    wallet_address TEXT NOT NULL,
+    token_address TEXT,
+    token_name TEXT,
+    token_symbol TEXT,
+    initial_value NUMERIC,
+    type TEXT,
+    created_at BIGINT NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    is_active BOOLEAN DEFAULT true,
+    CONSTRAINT user_alerts_unique UNIQUE (user_wallet_address, alert_id)
+  );
+
+  -- Create indexes for faster lookups
+  CREATE INDEX IF NOT EXISTS idx_user_alerts_wallet ON user_alerts(user_wallet_address);
+  CREATE INDEX IF NOT EXISTS idx_user_alerts_active ON user_alerts(is_active);
+
+  -- Create triggered_alerts table for analytics
+  CREATE TABLE IF NOT EXISTS triggered_alerts (
+    id BIGSERIAL PRIMARY KEY,
+    alert_id TEXT NOT NULL,
+    alert_name TEXT NOT NULL,
+    wallet_address TEXT NOT NULL,
+    token_address TEXT,
+    token_symbol TEXT,
+    transaction_count INTEGER DEFAULT 1,
+    session_id TEXT,
+    triggered_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  );
+
+  -- Create indexes for triggered alerts
+  CREATE INDEX IF NOT EXISTS idx_triggered_alerts_alert_id ON triggered_alerts(alert_id);
+  CREATE INDEX IF NOT EXISTS idx_triggered_alerts_session_id ON triggered_alerts(session_id);
+  CREATE INDEX IF NOT EXISTS idx_triggered_alerts_triggered_at ON triggered_alerts(triggerd_at);
+`;
+
+// Initialize database schema
+let schemaInitialized = false;
+
+async function initializeSchema(): Promise<void> {
+  if (schemaInitialized) return;
+
+  try {
+    console.log("[API] 🔧 Initializing database schema...");
+    await sql(createTablesSQL);
+    schemaInitialized = true;
+    console.log("[API] ✅ Database schema initialized successfully");
+  } catch (error) {
+    console.error("[API] ❌ Failed to initialize database schema:", error);
+    throw error;
+  }
+}
+
 // Helper to parse JSON body
 async function parseBody(req: Request): Promise<unknown> {
   const text = await req.text();
@@ -73,6 +134,9 @@ export async function DELETE(req: Request): Promise<Response> {
 
 async function handleGetUserAlerts(_req: Request, url: URL): Promise<Response> {
   try {
+    // Ensure database schema exists
+    await initializeSchema();
+
     const walletAddress = url.searchParams.get("wallet");
 
     // Validate wallet address parameter
@@ -149,6 +213,9 @@ async function handleGetUserAlerts(_req: Request, url: URL): Promise<Response> {
 
 async function handlePostUserAlert(req: Request): Promise<Response> {
   try {
+    // Ensure database schema exists
+    await initializeSchema();
+
     const body = await parseBody(req);
     const {
       walletAddress,
@@ -282,6 +349,9 @@ async function handlePostUserAlert(req: Request): Promise<Response> {
 
 async function handleDeleteUserAlert(_req: Request, url: URL): Promise<Response> {
   try {
+    // Ensure database schema exists
+    await initializeSchema();
+
     const walletAddress = url.searchParams.get("wallet");
     const alertId = url.searchParams.get("alertId");
 
@@ -319,6 +389,9 @@ async function handleDeleteUserAlert(_req: Request, url: URL): Promise<Response>
 
 async function handleTriggerAlert(req: Request): Promise<Response> {
   try {
+    // Ensure database schema exists
+    await initializeSchema();
+
     const body = await parseBody(req);
     const { alertId, alertName, walletAddress, tokenAddress, tokenSymbol, transactionCount } =
       body as {
@@ -390,6 +463,9 @@ async function handleTriggerAlert(req: Request): Promise<Response> {
 
 async function handleSyncAlerts(req: Request): Promise<Response> {
   try {
+    // Ensure database schema exists
+    await initializeSchema();
+
     const body = await parseBody(req);
     const { walletAddress, localAlerts } = body as {
       walletAddress?: unknown;

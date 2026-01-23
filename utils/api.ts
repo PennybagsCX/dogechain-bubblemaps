@@ -44,10 +44,18 @@ export function getApiBaseUrl(): string {
   // Check for env var first, then fallback to hardcoded URL
   const envUrl = import.meta.env.VITE_API_BASE_URL;
   if (envUrl && envUrl.trim() !== "") {
-    if (typeof window !== "undefined") {
-      console.debug("[API] Production mode - using env var:", envUrl);
+    // IGNORE the env var if it's set to the old wrong URL
+    // The old separate backend URL no longer exists - API is on main domain now
+    if (envUrl.includes("dogechain-bubblemaps-api.vercel.app")) {
+      if (typeof window !== "undefined") {
+        console.warn("[API] Ignoring old backend URL from env var:", envUrl);
+      }
+    } else {
+      if (typeof window !== "undefined") {
+        console.debug("[API] Production mode - using env var:", envUrl);
+      }
+      return envUrl;
     }
-    return envUrl;
   }
 
   if (typeof window !== "undefined") {

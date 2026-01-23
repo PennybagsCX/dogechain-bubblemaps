@@ -1,6 +1,13 @@
 import { neon } from "@neondatabase/serverless";
 
-const sql = neon(process.env.DATABASE_URL ?? "");
+// Enhanced database connection with validation
+const databaseUrl = process.env.DATABASE_URL ?? "";
+
+if (!databaseUrl) {
+  console.error("[API] ❌ CRITICAL: DATABASE_URL environment variable is not set!");
+}
+
+const sql = neon(databaseUrl);
 
 // Helper to parse JSON body
 async function parseBody(req: Request): Promise<unknown> {
@@ -70,6 +77,7 @@ async function handleGetUserAlerts(_req: Request, url: URL): Promise<Response> {
 
     // Validate wallet address parameter
     if (!walletAddress) {
+      console.error("[API] ❌ GET /api/alerts - Missing wallet parameter");
       return Response.json(
         { success: false, error: "Missing required parameter: wallet" },
         { status: 400 }
@@ -79,8 +87,11 @@ async function handleGetUserAlerts(_req: Request, url: URL): Promise<Response> {
     // Validate and sanitize wallet address
     const normalizedWallet = walletAddress.toLowerCase();
     if (!/^0x[a-f0-9]{40}$/.test(normalizedWallet)) {
+      console.error("[API] ❌ GET /api/alerts - Invalid wallet address format:", walletAddress);
       return Response.json({ success: false, error: "Invalid wallet address" }, { status: 400 });
     }
+
+    console.log("[API] ℹ️ Fetching alerts for wallet:", normalizedWallet);
 
     // Fetch all active alerts for this user
     const alerts = await sql`
@@ -104,15 +115,33 @@ async function handleGetUserAlerts(_req: Request, url: URL): Promise<Response> {
       ORDER BY created_at DESC
     `;
 
+    console.log("[API] ✅ Successfully fetched", alerts.length, "alerts for", normalizedWallet);
+
     return Response.json({
       success: true,
       data: alerts,
       count: alerts.length,
     });
   } catch (error) {
-    console.error("[API] Error fetching user alerts:", error);
+    // Enhanced error logging with detailed diagnostics
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    const errorCode = (error as any)?.code;
+
+    console.error("[API] ❌ Error fetching user alerts:", {
+      message: errorMessage,
+      code: errorCode,
+      stack: errorStack,
+      timestamp: new Date().toISOString(),
+    });
+
     return Response.json(
-      { success: false, error: "Failed to fetch alerts", data: [] },
+      {
+        success: false,
+        error: "Failed to fetch alerts",
+        details: errorMessage,
+        data: [],
+      },
       { status: 500 }
     );
   }
@@ -369,6 +398,7 @@ async function handleSyncAlerts(req: Request): Promise<Response> {
 
     // Validate required fields
     if (!walletAddress) {
+      console.error("[API] ❌ POST /api/alerts?action=sync - Missing walletAddress");
       return Response.json(
         { success: false, error: "Missing required field: walletAddress" },
         { status: 400 }
@@ -378,13 +408,21 @@ async function handleSyncAlerts(req: Request): Promise<Response> {
     // Validate and sanitize wallet address
     const normalizedWallet = String(walletAddress).toLowerCase();
     if (!/^0x[a-f0-9]{40}$/.test(normalizedWallet)) {
+      console.error(
+        "[API] ❌ POST /api/alerts?action=sync - Invalid wallet address format:",
+        walletAddress
+      );
       return Response.json({ success: false, error: "Invalid wallet address" }, { status: 400 });
     }
 
+    console.log("[API] ℹ️ Syncing alerts for wallet:", normalizedWallet);
+
     // Parse local alerts if provided
     const alerts = Array.isArray(localAlerts) ? localAlerts : [];
+    console.log("[API] ℹ️ Local alerts provided:", alerts.length);
 
     // Fetch server alerts for this user
+    console.log("[API] ℹ️ Fetching server alerts...");
     const serverAlerts = await sql`
       SELECT
         id,
@@ -405,6 +443,7 @@ async function handleSyncAlerts(req: Request): Promise<Response> {
         AND is_active = true
       ORDER BY created_at DESC
     `;
+    console.log("[API] ✅ Server alerts fetched:", serverAlerts.length);
 
     // Convert server alerts to a map for easy lookup
     const serverAlertsMap = new Map<string, (typeof serverAlerts)[0]>();
@@ -460,6 +499,13 @@ async function handleSyncAlerts(req: Request): Promise<Response> {
       }
     }
 
+    console.log(
+      "[API] ℹ️ Sync result - toUpload:",
+      toUpload.length,
+      "toDownload:",
+      toDownload.length
+    );
+
     // Upload new/updated local alerts to server
     for (const alert of toUpload) {
       const a = alert as {
@@ -474,6 +520,7 @@ async function handleSyncAlerts(req: Request): Promise<Response> {
         createdAt: number;
       };
 
+      console.log("[API] ℹ️ Uploading alert:", a.alertId);
       await sql`
         INSERT INTO user_alerts (
           user_wallet_address,
@@ -517,6 +564,8 @@ async function handleSyncAlerts(req: Request): Promise<Response> {
       `;
     }
 
+    console.log("[API] ✅ Sync completed successfully for", normalizedWallet);
+
     return Response.json({
       success: true,
       syncTimestamp: Date.now(),
@@ -526,11 +575,23 @@ async function handleSyncAlerts(req: Request): Promise<Response> {
       data: toDownload,
     });
   } catch (error) {
-    console.error("[API] Error during sync:", error);
+    // Enhanced error logging with detailed diagnostics
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    const errorCode = (error as any)?.code;
+
+    console.error("[API] ❌ Error during sync:", {
+      message: errorMessage,
+      code: errorCode,
+      stack: errorStack,
+      timestamp: new Date().toISOString(),
+    });
+
     return Response.json(
       {
         success: false,
         error: "Sync failed",
+        details: errorMessage,
         data: [],
         uploaded: 0,
         downloaded: 0,

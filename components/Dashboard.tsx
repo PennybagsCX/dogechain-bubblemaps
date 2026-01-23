@@ -236,9 +236,19 @@ export const Dashboard: React.FC<DashboardProps> = ({
     setIsScanning(true);
     const newStatuses: Record<string, AlertStatus> = {};
 
-    // Parallel processing for speed
+    // Only process alerts that don't have statuses yet (newly added alerts)
+    // This prevents cascading scans of all existing alerts
+    const alertsWithoutStatus = alerts.filter((a) => !statuses[a.id]);
+
+    // If all alerts already have statuses, skip scanning entirely
+    if (alertsWithoutStatus.length === 0) {
+      setIsScanning(false);
+      return;
+    }
+
+    // Parallel processing for speed - ONLY for new alerts
     await Promise.all(
-      alerts.map(async (alert) => {
+      alertsWithoutStatus.map(async (alert) => {
         try {
           // Validate addresses; skip invalid to avoid repeated bad requests
           try {

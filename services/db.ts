@@ -1633,7 +1633,8 @@ export async function syncAlertsToServer(walletAddress: string): Promise<SyncRes
  */
 export async function syncAlertsFromServer(walletAddress: string): Promise<SyncResult> {
   try {
-    const response = await fetch(`/api/alerts/user?wallet=${walletAddress}`);
+    // Use correct API path: /api/alerts (not /api/alerts/user)
+    const response = await fetch(`/api/alerts?wallet=${walletAddress}`);
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -1792,8 +1793,9 @@ export async function deleteAlertFromServer(
   alertId: string
 ): Promise<boolean> {
   try {
+    // Use correct API path: /api/alerts (not /api/alerts/user)
     const response = await fetch(
-      `/api/alerts/user?wallet=${walletAddress}&alertId=${encodeURIComponent(alertId)}`,
+      `/api/alerts?wallet=${walletAddress}&alertId=${encodeURIComponent(alertId)}`,
       { method: "DELETE" }
     );
 
@@ -1820,7 +1822,8 @@ export async function saveAlertToServer(
   alert: AlertConfig
 ): Promise<boolean> {
   try {
-    const response = await fetch(getApiUrl("/api/alerts/user"), {
+    // Use correct API path: /api/alerts (not /api/alerts/user)
+    const response = await fetch(getApiUrl("/api/alerts"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

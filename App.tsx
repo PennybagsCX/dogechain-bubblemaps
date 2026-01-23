@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console -- Console logging is critical for debugging sync and database operations */
 import React, { useState, useEffect, useCallback, useRef } from "react";
+import ReactDOM from "react-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { useAccount } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -1857,20 +1858,24 @@ const App: React.FC = () => {
       };
       console.log("[ALERT CREATE] ✅ Alert object created:", newAlert);
 
-      // Initialize alert status with transaction history
-      console.log("[ALERT CREATE] 📊 Updating alert status state");
-      setAlertStatuses((prev) => ({
-        ...prev,
-        [newAlert.id]: {
-          currentValue: initialVal,
-          triggered: false,
-          checkedAt: Date.now(),
-          lastSeenTransactions: initialTxs,
-        },
-      }));
-      console.log("[ALERT CREATE] ✅ Alert status state updated");
+      // CRITICAL: Initialize alert status BEFORE adding alert to the list
+      // Using flushSync ensures status is set synchronously, preventing Dashboard's
+      // useEffect from treating the new alert as "pending" and triggering a full scan
+      console.log("[ALERT CREATE] 📊 Updating alert status state (synchronous)");
+      ReactDOM.flushSync(() => {
+        setAlertStatuses((prev) => ({
+          ...prev,
+          [newAlert.id]: {
+            currentValue: initialVal,
+            triggered: false,
+            checkedAt: Date.now(),
+            lastSeenTransactions: initialTxs,
+          },
+        }));
+      });
+      console.log("[ALERT CREATE] ✅ Alert status state updated (synchronous)");
 
-      // Add alert to list immediately (React 18+ batches state updates automatically)
+      // Add alert to list AFTER status is set (prevents cascading scan of all alerts)
       console.log("[ALERT CREATE] 📝 Adding alert to list");
       setAlerts((prev) => [...prev, newAlert]);
       addToast("New alert saved", "success");

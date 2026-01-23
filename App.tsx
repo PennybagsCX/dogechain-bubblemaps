@@ -397,6 +397,8 @@ const App: React.FC = () => {
   // Alert modal state for unified creation flow
   const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
   const [alertModalPrefill, setAlertModalPrefill] = useState<{
+    editingAlertId?: string;
+    name?: string;
     walletAddress?: string;
     tokenAddress?: string;
     tokenSymbol?: string;
@@ -2865,6 +2867,10 @@ const App: React.FC = () => {
                 onTriggeredEventsChange={setTriggeredEvents}
                 isAlertModalOpen={isAlertModalOpen}
                 alertModalPrefill={alertModalPrefill}
+                onAlertModalOpen={(prefill) => {
+                  setAlertModalPrefill(prefill);
+                  setIsAlertModalOpen(true);
+                }}
                 onAlertModalClose={() => {
                   setIsAlertModalOpen(false);
                   setAlertModalPrefill(null);

@@ -72,12 +72,21 @@ interface DashboardProps {
   onTriggeredEventsChange: (events: TriggeredEvent[]) => void;
   isAlertModalOpen?: boolean;
   alertModalPrefill?: {
+    editingAlertId?: string;
+    name?: string;
     walletAddress?: string;
     tokenAddress?: string;
     tokenSymbol?: string;
     alertType?: "WALLET" | "TOKEN" | "WHALE";
   } | null;
   onAlertModalClose?: () => void;
+  onAlertModalOpen?: (prefill: {
+    editingAlertId: string;
+    name: string;
+    walletAddress: string;
+    tokenAddress: string;
+    alertType: "WALLET" | "TOKEN" | "WHALE";
+  }) => void;
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({
@@ -92,6 +101,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   isAlertModalOpen: externalIsModalOpen,
   alertModalPrefill,
   onAlertModalClose,
+  onAlertModalOpen,
 }) => {
   // Alert type options for the dropdown
   const alertTypeOptions = [
@@ -666,15 +676,21 @@ export const Dashboard: React.FC<DashboardProps> = ({
   };
 
   const openEditModal = (alert: AlertConfig) => {
-    setEditingAlertId(alert.id);
-    setFormData({
+    const prefillData = {
+      editingAlertId: alert.id,
       name: alert.name,
       walletAddress: alert.walletAddress,
       tokenAddress: alert.tokenAddress || "",
       alertType: alert.type || "WALLET",
-    });
-    // Only set internal state if external state is not being used
-    if (externalIsModalOpen === undefined) {
+    };
+
+    // If external modal control is being used, notify parent to open modal
+    if (externalIsModalOpen !== undefined && onAlertModalOpen) {
+      onAlertModalOpen(prefillData);
+    } else {
+      // Otherwise, use internal state management
+      setEditingAlertId(alert.id);
+      setFormData(prefillData);
       setInternalIsModalOpen(true);
     }
   };
@@ -806,16 +822,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
     updateEventTokens();
   }, [triggeredEvents, alerts, extractPrimaryToken, onTriggeredEventsChange]);
 
-  // Handle pre-fill data when opening modal from WalletSidebar
+  // Handle pre-fill data when opening modal from WalletSidebar or edit button
   useEffect(() => {
     if (alertModalPrefill && isModalOpen) {
       setFormData({
-        name: "",
+        name: alertModalPrefill.name || "",
         walletAddress: alertModalPrefill.walletAddress || "",
         tokenAddress: alertModalPrefill.tokenAddress || "",
         alertType: alertModalPrefill.alertType || "WALLET",
       });
-      setEditingAlertId(null);
+      // Set editingAlertId if provided (for editing existing alerts)
+      setEditingAlertId(alertModalPrefill.editingAlertId || null);
     }
   }, [alertModalPrefill, isModalOpen]);
 

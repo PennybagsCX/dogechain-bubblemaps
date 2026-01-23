@@ -287,6 +287,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
           const isBaselineEstablished = existingStatus?.baselineEstablished || false;
           const alertCreatedAt = alert.createdAt || Date.now();
 
+          // Debug: Log transaction timestamps
+          if (transactions.length > 0) {
+            const oldestTx = transactions[transactions.length - 1];
+            const newestTx = transactions[0];
+            console.log(`[Alert ${alert.id}] Fetched ${transactions.length} transactions`, {
+              oldest: new Date(oldestTx?.timestamp || 0).toISOString(),
+              newest: new Date(newestTx?.timestamp || 0).toISOString(),
+              alertCreatedAt: new Date(alertCreatedAt).toISOString(),
+            });
+          }
+
           // For new alerts, filter to only transactions AFTER alert creation
           let transactionsForBaseline = transactions;
           if (!isBaselineEstablished) {
@@ -370,7 +381,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             migratedStatuses[alertId] = {
               ...status,
               baselineEstablished: true,
-              baselineTimestamp: alert.createdAt || Date.now(),
+              baselineTimestamp: Date.now(), // Use migration time, not alert creation time
             };
             hasMigrations = true;
           } else {
@@ -389,6 +400,47 @@ export const Dashboard: React.FC<DashboardProps> = ({
     migrateAlertStatuses();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alerts]); // Run when alerts load
+
+  // ONE-TIME CLEANUP: Reset all alert statuses to clear old transaction data
+  // This prevents old transactions from appearing in new alerts
+  useEffect(() => {
+    const cleanupOldStatuses = () => {
+      const CLEANUP_KEY = "dogechain_bubblemaps_cleanup_v1";
+      const alreadyCleaned = localStorage.getItem(CLEANUP_KEY);
+
+      if (alreadyCleaned) {
+        console.log("[Cleanup] Already completed, skipping");
+        return;
+      }
+
+      console.log("[Cleanup] Starting one-time cleanup of alert statuses...");
+      const cleanedStatuses: Record<string, import("../types").AlertStatus> = {};
+      let hasChanges = false;
+
+      Object.entries(statuses).forEach(([alertId, status]) => {
+        // Reset all statuses to clear old transaction data
+        cleanedStatuses[alertId] = {
+          currentValue: status.currentValue || 0,
+          triggered: false, // Reset triggered state
+          checkedAt: Date.now(),
+          lastSeenTransactions: [], // Clear old transactions
+          baselineEstablished: true,
+          baselineTimestamp: Date.now(), // Set baseline to NOW
+          newTransactions: undefined, // Clear any pending new transactions
+        };
+        hasChanges = true;
+      });
+
+      if (hasChanges) {
+        onUpdateStatuses?.({ ...statuses, ...cleanedStatuses });
+        localStorage.setItem(CLEANUP_KEY, "true");
+        console.log("[Cleanup] ✅ Cleanup complete");
+      }
+    };
+
+    cleanupOldStatuses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run once on mount
 
   // Periodic automatic scanning every 30 seconds
   useEffect(() => {
@@ -555,6 +607,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     playAlertSound,
     onUpdateStatuses,
     extractPrimaryToken,
+    notificationsLimit,
   ]);
 
   const handleSubmit = async (e: React.FormEvent) => {

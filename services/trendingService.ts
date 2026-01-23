@@ -47,6 +47,8 @@ export async function logSearchQuery(
   if (isLocalDev) return false;
 
   try {
+    // eslint-disable-next-line no-console -- Intentional debug logging for search tracking
+    console.log("[Search] Logging search for", address, assetType);
     // Use getApiUrl to handle dev vs production environments
     const response = await fetch(getApiUrl("/api/trending/log"), {
       method: "POST",

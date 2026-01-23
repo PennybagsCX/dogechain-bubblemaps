@@ -9,50 +9,6 @@ if (!databaseUrl) {
 
 const sql = neon(databaseUrl);
 
-// Schema creation SQL
-const createTablesSQL = `
-  -- Create user_alerts table if not exists
-  CREATE TABLE IF NOT EXISTS user_alerts (
-    id BIGSERIAL PRIMARY KEY,
-    user_wallet_address TEXT NOT NULL,
-    alert_id TEXT NOT NULL,
-    name TEXT NOT NULL,
-    wallet_address TEXT NOT NULL,
-    token_address TEXT,
-    token_name TEXT,
-    token_symbol TEXT,
-    initial_value NUMERIC,
-    type TEXT,
-    created_at BIGINT NOT NULL,
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    is_active BOOLEAN DEFAULT true,
-    CONSTRAINT user_alerts_unique UNIQUE (user_wallet_address, alert_id)
-  );
-
-  -- Create indexes for faster lookups
-  CREATE INDEX IF NOT EXISTS idx_user_alerts_wallet ON user_alerts(user_wallet_address);
-  CREATE INDEX IF NOT EXISTS idx_user_alerts_active ON user_alerts(is_active);
-
-  -- Create triggered_alerts table for analytics
-  CREATE TABLE IF NOT EXISTS triggered_alerts (
-    id BIGSERIAL PRIMARY KEY,
-    alert_id TEXT NOT NULL,
-    alert_name TEXT NOT NULL,
-    wallet_address TEXT NOT NULL,
-    token_address TEXT,
-    token_symbol TEXT,
-    transaction_count INTEGER DEFAULT 1,
-    session_id TEXT,
-    triggered_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-  );
-
-  -- Create indexes for triggered alerts
-  CREATE INDEX IF NOT EXISTS idx_triggered_alerts_alert_id ON triggered_alerts(alert_id);
-  CREATE INDEX IF NOT EXISTS idx_triggered_alerts_session_id ON triggered_alerts(session_id);
-  CREATE INDEX IF NOT EXISTS idx_triggered_alerts_triggered_at ON triggered_alerts(triggerd_at);
-`;
-
 // Initialize database schema
 let schemaInitialized = false;
 
@@ -61,7 +17,54 @@ async function initializeSchema(): Promise<void> {
 
   try {
     console.log("[API] 🔧 Initializing database schema...");
-    await sql(createTablesSQL);
+    // Execute each statement separately using template literals
+    await sql`
+      CREATE TABLE IF NOT EXISTS user_alerts (
+        id BIGSERIAL PRIMARY KEY,
+        user_wallet_address TEXT NOT NULL,
+        alert_id TEXT NOT NULL,
+        name TEXT NOT NULL,
+        wallet_address TEXT NOT NULL,
+        token_address TEXT,
+        token_name TEXT,
+        token_symbol TEXT,
+        initial_value NUMERIC,
+        type TEXT,
+        created_at BIGINT NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        is_active BOOLEAN DEFAULT true,
+        CONSTRAINT user_alerts_unique UNIQUE (user_wallet_address, alert_id)
+      )
+    `;
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_user_alerts_wallet ON user_alerts(user_wallet_address)
+    `;
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_user_alerts_active ON user_alerts(is_active)
+    `;
+    await sql`
+      CREATE TABLE IF NOT EXISTS triggered_alerts (
+        id BIGSERIAL PRIMARY KEY,
+        alert_id TEXT NOT NULL,
+        alert_name TEXT NOT NULL,
+        wallet_address TEXT NOT NULL,
+        token_address TEXT,
+        token_symbol TEXT,
+        transaction_count INTEGER DEFAULT 1,
+        session_id TEXT,
+        triggered_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      )
+    `;
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_triggered_alerts_alert_id ON triggered_alerts(alert_id)
+    `;
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_triggered_alerts_session_id ON triggered_alerts(session_id)
+    `;
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_triggered_alerts_triggered_at ON triggered_alerts(triggered_at)
+    `;
     schemaInitialized = true;
     console.log("[API] ✅ Database schema initialized successfully");
   } catch (error) {

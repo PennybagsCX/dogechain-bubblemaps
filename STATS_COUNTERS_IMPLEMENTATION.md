@@ -66,7 +66,9 @@ CREATE TABLE IF NOT EXISTS triggered_alerts (
 - Searches: `SELECT COUNT(*) FROM token_interactions WHERE interaction_type='search'`
 - Alerts: `SELECT COUNT(*) FROM triggered_alerts`
 
-**Caching**: 5-minute edge cache (Cache-Control: s-maxage=300)
+**Caching**: 10-second edge cache (Cache-Control: s-maxage=10)
+
+> **Note**: Originally set to 5 minutes (300s), reduced to 10 seconds on January 23, 2026 (Build #211) to provide near real-time counter updates
 
 #### `/api/alerts/trigger.ts`
 
@@ -225,8 +227,9 @@ A search is counted when a user looks up **any** token or NFT contract address:
 
 ### Caching Strategy
 
-1. **API Level**: Vercel Edge cache (5-minute TTL)
-   - Header: `Cache-Control: public, s-maxage=300, stale-while-revalidate=300`
+1. **API Level**: Vercel Edge cache (10-second TTL)
+   - Header: `Cache-Control: public, s-maxage=10, stale-while-revalidate=10`
+   - **Updated**: January 23, 2026 (Build #211) - Reduced from 300 seconds to 10 seconds for near real-time updates
 
 2. **Client Level**: localStorage backup (5-minute TTL)
    - Cache key: `doge_stats_cache`
@@ -439,6 +442,52 @@ No changes to `vercel.json` required. API routes auto-deploy.
 - Hard refresh page (Ctrl+Shift+R / Cmd+Shift+R)
 - Clear localStorage: `localStorage.removeItem('doge_stats_cache')`
 - Check Vercel Edge cache headers
+
+---
+
+### Issue: Counters not incrementing after searches (January 23, 2026)
+
+**Symptoms**: Search counter remains at same value despite performing new searches
+
+**Root Cause**: Vercel Edge cache serving stale responses for 5 minutes
+
+**Details**:
+
+- Search logging was working correctly (API returned 200)
+- Database was being updated properly
+- Frontend stats requests were hitting Vercel's edge cache
+- Cache TTL was 300 seconds (5 minutes), causing stale data to be served
+- Response showed `x-vercel-cache: HIT` with `age: 12+` seconds
+
+**Investigation Steps**:
+
+1. Verified search logging API call succeeded (`/api/trending/log` returned 200)
+2. Checked stats endpoint response headers - showed `x-vercel-cache: HIT`
+3. Confirmed cache-control was set to `s-maxage=300`
+4. Performed test search - counter only updated after cache expiry
+
+**Solution Applied** (Build #211):
+
+- Reduced cache time from 300 seconds to 10 seconds in `api/stats.ts`
+- Changed `Cache-Control: public, s-maxage=300, stale-while-revalidate=300`
+- To `Cache-Control: public, s-maxage=10, stale-while-revalidate=10`
+
+**Files Modified**:
+
+- `api/stats.ts` (lines 29-30, 41)
+
+**Verification**:
+
+- Counter now updates within ~10 seconds of new searches
+- Confirmed via production testing: 172 → 175 → 176
+
+**Trade-off Consideration**:
+
+- ✅ Search counters update quickly (near real-time)
+- ⚠️ Slightly more database queries (still very manageable)
+- Balance between real-time updates and database load
+
+**Git Commit**: `4f05367` - "Fix stats counter cache time from 5 minutes to 10 seconds"
 
 ### Issue: High API latency
 

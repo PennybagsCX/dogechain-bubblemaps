@@ -1838,28 +1838,10 @@ const App: React.FC = () => {
         console.log("[ALERT CREATE] 💵 wDOGE balance fetched:", initialVal);
       }
 
-      // Fetch initial transactions to establish baseline
-      console.log("[ALERT CREATE] 📊 Fetching initial transactions to establish baseline");
-      let initialTxs: string[] = [];
-      try {
-        const transactions = await fetchWalletTransactions(
-          data.walletAddress,
-          data.tokenAddress,
-          undefined,
-          (progress) => {
-            console.log("[ALERT CREATE] 📊 Progress:", progress);
-            addToast(progress, "info");
-          }
-        );
-        initialTxs = transactions.map((tx) => tx.hash);
-        console.log(
-          "[ALERT CREATE] ✅ Initial transactions fetched:",
-          initialTxs.length,
-          "transactions"
-        );
-      } catch (e) {
-        console.warn("[ALERT CREATE] ⚠️ Could not fetch initial transactions", e);
-      }
+      // NOTE: Baseline transactions will be established by Dashboard's runScan()
+      // This prevents duplicate fetches and improves alert creation performance
+      console.log("[ALERT CREATE] 📊 Baseline will be established by first scan");
+      const initialTxs: string[] = [];
 
       console.log("[ALERT CREATE] 🔨 Creating alert object");
       const newAlert: AlertConfig = {

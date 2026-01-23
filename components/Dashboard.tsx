@@ -357,11 +357,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
     setIsScanning(false);
   }, [alerts, statuses, onUpdateStatuses]);
 
-  // Auto-scan logic: Run if we have alerts that are missing statuses (pending)
+  // Auto-scan logic: Only run scan for alerts that don't have statuses yet (newly added alerts)
+  // This prevents re-scanning all existing alerts when a new alert is created
   useEffect(() => {
     if (alerts.length > 0) {
-      const hasPending = alerts.some((a) => !statuses[a.id]);
-      if (hasPending && !isScanning) {
+      // Find alerts without statuses (newly added alerts only)
+      const alertsWithoutStatus = alerts.filter((a) => !statuses[a.id]);
+      if (alertsWithoutStatus.length > 0 && !isScanning) {
         runScan();
       }
     }

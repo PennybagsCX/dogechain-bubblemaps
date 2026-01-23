@@ -887,16 +887,16 @@ export const fetchWalletTransactions = async (
           url += `&contractaddress=${cleanToken}`;
         }
 
-        // Add timing and timeout to prevent indefinite hanging (30s for slow APIs)
+        // Add timing and timeout to prevent indefinite hanging (15s for better UX)
         const fetchStartTime = performance.now();
         const controller = new AbortController();
         const timeoutId = setTimeout(() => {
           const elapsedNumber = performance.now() - fetchStartTime;
           const elapsed = elapsedNumber.toFixed(0);
-          console.warn(`[fetchWithOffset] ⏱️ Timeout after ${elapsed}ms (limit: 30000ms)`);
+          console.warn(`[fetchWithOffset] ⏱️ Timeout after ${elapsed}ms (limit: 15000ms)`);
           onProgress?.(`Request timeout after ${Math.floor(elapsedNumber / 1000)}s...`);
           controller.abort();
-        }, 30000); // Increased from 10s to 30s
+        }, 15000); // Reduced from 30s to 15s for faster feedback
 
         try {
           const response = await fetchSafe(url, { signal: controller.signal as any });

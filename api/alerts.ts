@@ -68,6 +68,15 @@ async function initializeSchema(): Promise<void> {
     schemaInitialized = true;
     console.log("[API] ✅ Database schema initialized successfully");
   } catch (error) {
+    const errorCode = (error as any)?.code;
+    // Ignore duplicate key errors (23505) - means another request already created the schema
+    // This is a race condition in serverless environments where multiple containers
+    // try to initialize the schema simultaneously
+    if (errorCode === "23505") {
+      console.log("[API] ℹ️ Schema already exists (race condition handled)");
+      schemaInitialized = true;
+      return;
+    }
     console.error("[API] ❌ Failed to initialize database schema:", error);
     throw error;
   }

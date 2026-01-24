@@ -388,7 +388,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [alerts.length, Object.keys(statuses).length, isScanning, runScan]);
+  }, [alerts.length, Object.keys(statuses).length, isScanning]); // Removed runScan to prevent circular dependency
 
   // Migration: Add baseline tracking to existing alerts
   useEffect(() => {
@@ -862,11 +862,26 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </button>
           <button
             onClick={() => {
-              if (externalIsModalOpen === undefined) {
+              // Clear any pre-fill data for new alert
+              setEditingAlertId(null);
+              setFormData({
+                name: "",
+                walletAddress: "",
+                tokenAddress: "",
+                alertType: "WALLET",
+              });
+              // Use external modal control if available
+              if (externalIsModalOpen !== undefined && onAlertModalOpen) {
+                onAlertModalOpen({
+                  editingAlertId: "",
+                  name: "",
+                  walletAddress: "",
+                  tokenAddress: "",
+                  alertType: "WALLET",
+                });
+              } else {
                 setInternalIsModalOpen(true);
               }
-              // Clear any pre-fill data when opening from Dashboard button
-              setEditingAlertId(null);
             }}
             className="flex items-center justify-center gap-2 px-4 py-2 bg-doge-600 text-white rounded-lg hover:bg-doge-500 transition-colors shadow-lg shadow-doge-600/20"
           >

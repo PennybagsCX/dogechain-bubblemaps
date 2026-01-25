@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console -- Console logging is critical for debugging alert creation */
-import { AlertConfig, AlertStatus, Transaction, TriggeredEvent } from "../types";
+import { AlertConfig, AlertStatus, AssetType, Transaction, TriggeredEvent } from "../types";
 import {
   Trash2,
   Bell,
@@ -87,6 +87,7 @@ interface DashboardProps {
     tokenAddress: string;
     alertType: "WALLET" | "TOKEN" | "WHALE";
   }) => void;
+  onAlertTriggered?: () => void; // Callback when alert triggers to refresh stats
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({
@@ -102,6 +103,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   alertModalPrefill,
   onAlertModalClose,
   onAlertModalOpen,
+  onAlertTriggered,
 }) => {
   // Alert type options for the dropdown
   const alertTypeOptions = [
@@ -601,9 +603,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
             tokenSymbol: triggeredEvent.tokenSymbol,
             transactionCount: triggeredEvent.transactions.length,
           }),
-        }).catch((_err) => {
-          // Error handled silently
-        });
+        })
+          .then(() => {
+            // Trigger stats refresh after successful API call
+            onAlertTriggered?.();
+          })
+          .catch((_err) => {
+            // Error handled silently - still call callback to attempt refresh
+            onAlertTriggered?.();
+          });
       }
 
       status.newTransactions.forEach((tx) => {

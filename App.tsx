@@ -205,7 +205,12 @@ const App: React.FC = () => {
   const { address: userAddress, isConnected } = useAccount();
 
   // Stats counters hook
-  const { totalSearches, totalAlerts, isLoading: isLoadingStats } = useStatsCounters();
+  const {
+    totalSearches,
+    totalAlerts,
+    isLoading: isLoadingStats,
+    refresh: refreshStats,
+  } = useStatsCounters();
 
   // View state (must be declared before onboarding hook since it depends on it)
   const [view, setView] = useState<ViewState>(ViewState.HOME);
@@ -2042,6 +2047,18 @@ const App: React.FC = () => {
     }
   };
 
+  // Callback to refresh stats when an alert triggers
+  const handleAlertTriggered = useCallback(() => {
+    // Invalidate local cache
+    try {
+      localStorage.removeItem("doge_stats_cache");
+    } catch {
+      // Ignore storage errors
+    }
+    // Refresh stats from server
+    refreshStats();
+  }, [refreshStats]);
+
   return (
     <div className="min-h-screen bg-space-900 text-slate-100 font-sans selection:bg-purple-500 selection:text-white flex flex-col overflow-x-hidden">
       <Analytics />
@@ -2887,6 +2904,7 @@ const App: React.FC = () => {
                   setIsAlertModalOpen(false);
                   setAlertModalPrefill(null);
                 }}
+                onAlertTriggered={handleAlertTriggered}
               />
             )}
             <div className="mt-auto">

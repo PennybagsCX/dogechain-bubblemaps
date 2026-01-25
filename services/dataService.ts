@@ -849,20 +849,29 @@ export const fetchTokenHolders = async (
 // Track pending fetches to prevent infinite loops and duplicate requests
 const pendingFetches = new Map<string, Promise<Transaction[]>>();
 
-// Simple in-memory cache with 5-minute TTL to avoid repeated slow API calls
+// Simple in-memory cache with 60-second TTL for fresh transaction detection
 const txCache = new Map<string, { data: Transaction[]; timestamp: number }>();
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const CACHE_TTL = 60 * 1000; // 60 seconds - balances freshness with API rate limits
 
 export const fetchWalletTransactions = async (
   walletAddress: string,
   tokenAddress?: string,
   type: AssetType = AssetType.TOKEN,
+  forceRefresh = false,
   onProgress?: (message: string) => void
 ): Promise<Transaction[]> => {
   // Create unique key for this request
   const cacheKey = `${walletAddress}-${tokenAddress || "none"}-${type}`;
 
-  // Check cache first
+  // If forceRefresh, delete existing cache entry to ensure fresh data
+  if (forceRefresh) {
+    txCache.delete(cacheKey);
+    console.log(
+      `[fetchWalletTransactions] 🔄 Force refresh - cache cleared for ${cacheKey.substring(0, 16)}...`
+    );
+  }
+
+  // Check cache first (only if not force refreshing)
   const cached = txCache.get(cacheKey);
   if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
     console.log(`[fetchWalletTransactions] 🎯 Cache hit for ${cacheKey.substring(0, 16)}...`);

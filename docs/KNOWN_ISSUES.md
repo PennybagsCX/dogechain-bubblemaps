@@ -1,8 +1,24 @@
 # Known Issues - Dexscreener Chart Integration
 
-**Last Updated:** January 12, 2026
+**Last Updated:** January 25, 2026
 **Feature:** Embedded Dexscreener Charts in Dashboard
-**Status:** Documented Limitations
+**Status:** Fixed - CSP Directives Added
+
+## CSP Fix (January 25, 2026)
+
+**Severity:** Fixed
+**Status:** Resolved
+
+The Content Security Policy (CSP) was updated in `vercel.json` to allow Dexscreener embedding:
+
+**Changes:**
+
+- Added `frame-src https://dexscreener.com;`
+- Added `child-src https://dexscreener.com;`
+- Added `https://dexscreener.com https://api.dexscreener.com` to `connect-src`
+
+**Build:** #232
+**Commit:** 9f39d23
 
 ## Critical Issues
 

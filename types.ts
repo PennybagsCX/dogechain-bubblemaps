@@ -215,7 +215,9 @@ export interface ApiError {
   url?: string;
 }
 
-export function isRateLimitError(error: any): boolean {
+export function isRateLimitError(
+  error: { status?: number; code?: string; isRateLimit?: boolean; message?: string } | undefined
+): boolean {
   return (
     error?.status === 429 ||
     error?.code === "RATE_LIMIT_EXCEEDED" ||

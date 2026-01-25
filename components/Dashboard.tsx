@@ -434,6 +434,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     }
     // FIX: Use full dependencies to prevent stale closures
     // runScan is excluded because it's memoized with useCallback and depends on these same values
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alerts, statuses, isScanning]);
 
   // Migration: Add baseline tracking to existing alerts

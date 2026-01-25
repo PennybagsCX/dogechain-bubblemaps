@@ -212,6 +212,26 @@ const App: React.FC = () => {
     refresh: refreshStats,
   } = useStatsCounters();
 
+  // Version check to detect new builds and force refresh
+  useEffect(() => {
+    const currentBuildNumber = __BETA_BUILD_NUMBER__;
+    const storedBuildNumber = localStorage.getItem("doge_build_number");
+
+    if (storedBuildNumber) {
+      const storedNum = parseInt(storedBuildNumber, 10);
+      if (!isNaN(storedNum) && currentBuildNumber !== storedNum) {
+        console.log(`[App] New build detected: ${storedNum} → ${currentBuildNumber}`);
+        // Force refresh to get latest code
+        console.log("[App] Forcing page refresh to load new version...");
+        window.location.reload();
+        return;
+      }
+    }
+
+    // Save current build number
+    localStorage.setItem("doge_build_number", currentBuildNumber.toString());
+  }, []);
+
   // View state (must be declared before onboarding hook since it depends on it)
   const [view, setView] = useState<ViewState>(ViewState.HOME);
 

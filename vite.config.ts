@@ -82,9 +82,23 @@ export default defineConfig(({ mode }) => {
                 },
               },
             },
-            // Cache static assets
+            // CRITICAL: JavaScript files use NetworkFirst to always serve fresh code
+            // This prevents stale cached JS from being served to users
             {
-              urlPattern: /\.(?:js|css|html|ico|png|svg|json)$/i,
+              urlPattern: /\.(?:js|css)$/i,
+              handler: "NetworkFirst",
+              options: {
+                cacheName: "js-css-assets",
+                expiration: {
+                  maxEntries: 50,
+                  maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days backup
+                },
+                networkTimeoutSeconds: 10, // Wait 10s for network before falling back to cache
+              },
+            },
+            // Other static assets use stale-while-revalidate for performance
+            {
+              urlPattern: /\.(?:html|ico|png|svg|json)$/i,
               handler: "StaleWhileRevalidate",
               options: {
                 cacheName: "static-assets",

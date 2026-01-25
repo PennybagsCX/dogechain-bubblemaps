@@ -101,6 +101,7 @@ import {
   safeDbOperation,
   syncAlerts,
   syncAlertsToServer,
+  saveAlertToServer, // FIX: Import for immediate server sync on alert creation
   deleteAlertFromServer,
 } from "./services/db";
 import {
@@ -1883,6 +1884,15 @@ const App: React.FC = () => {
       console.log("[ALERT CREATE] 📝 Adding alert to list");
       setAlerts((prev) => [...prev, newAlert]);
       addToast("New alert saved", "success");
+
+      // FIX: Immediate server sync (don't wait for useEffect to sync)
+      if (userAddress && isConnected) {
+        saveAlertToServer(userAddress, newAlert).catch((error) => {
+          console.error("[ALERT CREATE] ⚠️ Failed to sync new alert to server:", error);
+          addToast("Alert saved locally but not synced to server", "warning");
+        });
+      }
+
       console.log("[ALERT CREATE] ✅ Alert creation flow complete");
     } finally {
       // Reset flag after a short delay to prevent rapid duplicate calls

@@ -252,7 +252,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
     // Only process alerts that don't have statuses yet (newly added alerts)
     // This prevents cascading scans of all existing alerts
-    const alertsWithoutStatus = alerts.filter((a) => !statuses[a.id]);
+    // FIX: Also check for pendingInitialScan flag to re-scan alerts that need it
+    const alertsWithoutStatus = alerts.filter(
+      (a) => !statuses[a.id] || statuses[a.id]?.pendingInitialScan
+    );
 
     // If all alerts already have statuses, skip scanning entirely
     if (alertsWithoutStatus.length === 0) {
@@ -332,6 +335,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
             let transactionsForBaseline = transactions;
             if (!isBaselineEstablished) {
               transactionsForBaseline = transactions.filter((tx) => tx.timestamp >= alertCreatedAt);
+              // FIX: For WHALE alerts, also filter by value threshold in initial baseline
+              if (alert.type === "WHALE" && transactionsForBaseline.length > 0) {
+                const whaleThreshold = Math.max(10000, currentBalance * 0.01);
+                transactionsForBaseline = transactionsForBaseline.filter(
+                  (tx) => tx.value >= whaleThreshold
+                );
+              }
             }
 
             // Get previously seen transactions or initialize baseline
@@ -347,9 +357,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
             if (alert.type === "WHALE" && newTransactions.length > 0) {
               // WHALE type: Only trigger on large transactions
-              // Define "large" as > 10,000 tokens or > 1% of current balance (whichever is larger)
+              // Define "large" as >= 10,000 tokens or >= 1% of current balance (whichever is larger)
               const whaleThreshold = Math.max(10000, currentBalance * 0.01);
-              filteredNewTransactions = newTransactions.filter((tx) => tx.value > whaleThreshold);
+              // FIX: Use >= instead of > to include transactions at the threshold boundary
+              filteredNewTransactions = newTransactions.filter((tx) => tx.value >= whaleThreshold);
             }
 
             // Create new set of all seen transactions
@@ -363,8 +374,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
               : transactionsForBaseline.length > 0; // New alerts trigger on post-creation transactions
 
             // Keep triggered state persistent - once triggered, stay triggered until manually reset
+            // FIX: But don't persist if the alert was dismissed (dismissedAt > checkedAt)
             const wasTriggered = existingStatus?.triggered || false;
-            const shouldTrigger = hasNewActivity || wasTriggered;
+            const dismissedAt = existingStatus?.dismissedAt || 0;
+            const checkedAt = existingStatus?.checkedAt || 0;
+            const wasDismissedAfterLastTrigger = dismissedAt > checkedAt;
+            const shouldTrigger = hasNewActivity || (wasTriggered && !wasDismissedAfterLastTrigger);
 
             newStatuses[alert.id] = {
               currentValue: currentBalance,
@@ -382,11 +397,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 ? existingStatus?.baselineTimestamp
                 : Date.now(),
             };
-          } catch {
+          } catch (error) {
+            console.error(`[Alert ${alert.id}] Error during scan:`, error);
+            // FIX: Clear pendingInitialScan flag to prevent infinite rescans on error
             newStatuses[alert.id] = {
               currentValue: 0,
               triggered: false,
               checkedAt: Date.now(),
+              pendingInitialScan: false,
             };
           }
         })
@@ -414,8 +432,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
         runScan();
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [alerts.length, Object.keys(statuses).length, isScanning]); // Removed runScan to prevent circular dependency
+    // FIX: Use full dependencies to prevent stale closures
+    // runScan is excluded because it's memoized with useCallback and depends on these same values
+  }, [alerts, statuses, isScanning]);
 
   // Migration: Add baseline tracking to existing alerts
   useEffect(() => {
@@ -747,7 +766,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
       [alertId]: {
         ...existingStatus,
         triggered: false,
+        newTransactions: undefined, // FIX: Clear pending transactions to prevent re-notification
         checkedAt: Date.now(),
+        dismissedAt: Date.now(), // FIX: Track dismissal time to prevent re-triggering on old transactions
       },
     });
   };

@@ -111,6 +111,7 @@ export interface AlertStatus {
   baselineEstablished?: boolean; // Track if initial baseline has been set
   baselineTimestamp?: number; // When baseline was established
   pendingInitialScan?: boolean; // Flag to indicate alert needs its first scan
+  dismissedAt?: number; // When the alert was manually dismissed (to prevent re-triggering on old transactions)
 }
 
 // Wallet Scanner Types

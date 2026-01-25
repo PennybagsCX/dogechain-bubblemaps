@@ -250,25 +250,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
     setIsScanning(true);
     const newStatuses: Record<string, AlertStatus> = {};
 
-    // Only process alerts that don't have statuses yet (newly added alerts)
-    // This prevents cascading scans of all existing alerts
-    // FIX: Also check for pendingInitialScan flag to re-scan alerts that need it
-    const alertsWithoutStatus = alerts.filter(
-      (a) => !statuses[a.id] || statuses[a.id]?.pendingInitialScan
-    );
+    // CRITICAL FIX: Scan ALL alerts, not just new ones
+    // New alerts (without status) get initial baseline scan
+    // Existing alerts get scanned for new transactions since last check
+    const alertsToScan = alerts;
 
-    // If all alerts already have statuses, skip scanning entirely
-    if (alertsWithoutStatus.length === 0) {
-      setIsScanning(false);
-      return;
-    }
-
-    // Batch processing to prevent rate limiting - ONLY for new alerts
+    // Batch processing to prevent rate limiting
     const batchSize = 4;
     const delayBetweenBatches = 750; // milliseconds
 
-    for (let i = 0; i < alertsWithoutStatus.length; i += batchSize) {
-      const batch = alertsWithoutStatus.slice(i, i + batchSize);
+    for (let i = 0; i < alertsToScan.length; i += batchSize) {
+      const batch = alertsToScan.slice(i, i + batchSize);
 
       await Promise.all(
         batch.map(async (alert) => {
@@ -318,7 +310,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
             // Check if baseline already established (prevents historical transaction spam)
             const isBaselineEstablished = existingStatus?.baselineEstablished || false;
-            const alertCreatedAt = alert.createdAt || Date.now();
+            // For existing alerts, use baseline timestamp; for new alerts, use creation time
+            const alertCreatedAt = isBaselineEstablished
+              ? existingStatus?.baselineTimestamp || alert.createdAt || Date.now()
+              : alert.createdAt || Date.now();
 
             // Debug: Log transaction timestamps
             if (transactions.length > 0) {
@@ -396,6 +391,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               baselineTimestamp: isBaselineEstablished
                 ? existingStatus?.baselineTimestamp
                 : Date.now(),
+              dismissedAt: existingStatus?.dismissedAt, // Preserve dismissal timestamp
             };
           } catch (error) {
             console.error(`[Alert ${alert.id}] Error during scan:`, error);
@@ -411,7 +407,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       );
 
       // Add delay between batches to prevent rate limiting
-      if (i + batchSize < alertsWithoutStatus.length) {
+      if (i + batchSize < alertsToScan.length) {
         await new Promise((resolve) => setTimeout(resolve, delayBetweenBatches));
       }
     }

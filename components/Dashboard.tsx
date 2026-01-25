@@ -352,8 +352,20 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 transactionsForBaseline.map((tx) => tx.hash);
               const previousTxSet = new Set(previousTxs);
 
-              // Find new transactions (transactions we haven't seen before)
-              const newTransactions = transactions.filter((tx) => !previousTxSet.has(tx.hash));
+              // CRITICAL FIX: For established baselines, only consider transactions AFTER last check
+              // This ensures we re-trigger on transactions that happened since the last scan
+              let newTransactions = transactions.filter((tx) => !previousTxSet.has(tx.hash));
+
+              if (isBaselineEstablished && existingStatus?.checkedAt) {
+                // For established alerts, filter to only transactions AFTER last check
+                // This re-detects recent transactions instead of only truly unseen ones
+                const lastCheckTime = existingStatus.checkedAt;
+                newTransactions = transactions.filter((tx) => tx.timestamp > lastCheckTime);
+
+                console.log(
+                  `[Alert ${alert.id}] Filtered to ${newTransactions.length} transactions since last check (${new Date(lastCheckTime).toISOString()})`
+                );
+              }
 
               // Apply type-specific filtering for new transactions
               let filteredNewTransactions = newTransactions;

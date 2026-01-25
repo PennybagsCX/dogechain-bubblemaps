@@ -970,9 +970,17 @@ const App: React.FC = () => {
     });
   };
 
-  const clearHistory = (e: React.MouseEvent) => {
+  const clearHistory = async (e: React.MouseEvent) => {
     e.stopPropagation();
     setRecentSearches([]);
+
+    // Clear from IndexedDB as well
+    try {
+      await db.recentSearches.clear();
+    } catch (error) {
+      console.error("Failed to clear recent searches from IndexedDB:", error);
+    }
+
     addToast("Search history cleared", "info");
   };
 

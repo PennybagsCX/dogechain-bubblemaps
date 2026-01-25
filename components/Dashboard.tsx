@@ -48,6 +48,67 @@ interface InAppNotification {
   timestamp: number;
 }
 
+// localStorage key for notification persistence
+const NOTIFICATIONS_STORAGE_KEY = "doge_notifications";
+
+// Helper functions for notification persistence with error handling
+const loadNotificationsFromStorage = (): InAppNotification[] => {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const stored = localStorage.getItem(NOTIFICATIONS_STORAGE_KEY);
+    if (!stored) return [];
+
+    const parsed = JSON.parse(stored);
+
+    // Handle migration from old format if needed
+    if (!Array.isArray(parsed)) {
+      console.warn("[Notifications] Invalid format in storage, clearing");
+      localStorage.removeItem(NOTIFICATIONS_STORAGE_KEY);
+      return [];
+    }
+
+    // Validate and filter valid notifications
+    const valid: InAppNotification[] = parsed.filter((n) => {
+      return (
+        n &&
+        typeof n === "object" &&
+        typeof n.id === "string" &&
+        typeof n.alertId === "string" &&
+        typeof n.alertName === "string" &&
+        typeof n.walletAddress === "string" &&
+        typeof n.timestamp === "number"
+      );
+    });
+
+    // Sort by timestamp descending (newest first)
+    return valid.sort((a, b) => b.timestamp - a.timestamp);
+  } catch (error) {
+    console.error("[Notifications] Error loading from storage:", error);
+    return [];
+  }
+};
+
+const saveNotificationsToStorage = (notifications: InAppNotification[]): void => {
+  if (typeof window === "undefined") return;
+
+  try {
+    localStorage.setItem(NOTIFICATIONS_STORAGE_KEY, JSON.stringify(notifications));
+  } catch (error) {
+    console.error("[Notifications] Error saving to storage:", error);
+  }
+};
+
+const clearNotificationsFromStorage = (): void => {
+  if (typeof window === "undefined") return;
+
+  try {
+    localStorage.removeItem(NOTIFICATIONS_STORAGE_KEY);
+  } catch (error) {
+    console.error("[Notifications] Error clearing storage:", error);
+  }
+};
+
 interface DashboardProps {
   alerts: AlertConfig[];
   statuses: Record<string, AlertStatus>;
@@ -145,6 +206,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const [editingAlertId, setEditingAlertId] = useState<string | null>(null);
   const [expandedEvents, setExpandedEvents] = useState<Set<string>>(new Set());
   const [expandedChartEvents, setExpandedChartEvents] = useState<Set<string>>(new Set());
+  const [expandedNotificationCharts, setExpandedNotificationCharts] = useState<Set<string>>(
+    new Set()
+  );
 
   const [formData, setFormData] = useState({
     name: "",
@@ -546,6 +610,21 @@ export const Dashboard: React.FC<DashboardProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Run once on mount
 
+  // Load notifications from localStorage on mount
+  useEffect(() => {
+    const loaded = loadNotificationsFromStorage();
+    if (loaded.length > 0) {
+      setInAppNotifications(loaded);
+      setHasMoreNotifications(loaded.length > notificationsLimit);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run once on mount
+
+  // Persist notifications to localStorage when they change
+  useEffect(() => {
+    saveNotificationsToStorage(inAppNotifications);
+  }, [inAppNotifications]);
+
   // Periodic automatic scanning every 30 seconds
   useEffect(() => {
     // Don't start periodic scanning if there are no alerts
@@ -634,15 +713,30 @@ export const Dashboard: React.FC<DashboardProps> = ({
             transactionCount: triggeredEvent.transactions.length,
           }),
         })
-          .then((response) => {
-            console.log(`[ALERT TRIGGER] API response:`, response.status, "OK");
-            // Trigger stats refresh after successful API call
-            onAlertTriggered?.();
+          .then(async (response) => {
+            // Only trigger stats refresh on successful response (2xx status)
+            if (response.ok) {
+              console.log(`[ALERT TRIGGER] API response:`, response.status, "OK");
+              // Wait a moment for database to commit before refreshing stats
+              await new Promise((resolve) => setTimeout(resolve, 500));
+              onAlertTriggered?.();
+            } else {
+              console.error(
+                `[ALERT TRIGGER] API error response:`,
+                response.status,
+                response.statusText
+              );
+              // Try to parse error body for more details
+              try {
+                const errorBody = await response.json();
+                console.error(`[ALERT TRIGGER] Error details:`, errorBody);
+              } catch {
+                // Response body wasn't JSON
+              }
+            }
           })
-          .catch((_err) => {
-            console.error(`[ALERT TRIGGER] API error:`, _err);
-            // Error handled silently - still call callback to attempt refresh
-            onAlertTriggered?.();
+          .catch((err) => {
+            console.error(`[ALERT TRIGGER] API network error:`, err);
           });
       }
 
@@ -860,6 +954,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
         newSet.delete(eventId);
       } else {
         newSet.add(eventId);
+      }
+      return newSet;
+    });
+  };
+
+  const toggleNotificationChart = (notificationId: string) => {
+    setExpandedNotificationCharts((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(notificationId)) {
+        newSet.delete(notificationId);
+      } else {
+        newSet.add(notificationId);
       }
       return newSet;
     });
@@ -1180,6 +1286,38 @@ export const Dashboard: React.FC<DashboardProps> = ({
                               {new Date(notif.transaction.timestamp).toLocaleString()}
                             </p>
                           </div>
+
+                          {/* Dexscreener Chart Section - Only show if valid token address */}
+                          {notif.transaction.tokenAddress &&
+                            /^0x[a-fA-F0-9]{40}$/.test(notif.transaction.tokenAddress) && (
+                              <div className="mt-3 pt-3 border-t border-black/20">
+                                <button
+                                  onClick={() => toggleNotificationChart(notif.id)}
+                                  className="flex items-center gap-2 text-sm text-purple-400 hover:text-purple-300 transition-colors px-2 py-1 rounded hover:bg-purple-500/10 w-fit"
+                                  aria-expanded={expandedNotificationCharts.has(notif.id)}
+                                  aria-label={`Toggle ${notif.transaction.tokenSymbol || "token"} chart`}
+                                >
+                                  <LineChart size={14} />
+                                  {expandedNotificationCharts.has(notif.id)
+                                    ? `Hide ${notif.transaction.tokenSymbol || "Token"} Chart`
+                                    : `View ${notif.transaction.tokenSymbol || "Token"} Chart`}
+                                </button>
+
+                                {/* Inline Chart Container */}
+                                {expandedNotificationCharts.has(notif.id) && (
+                                  <div className="mt-3 animate-in slide-in-from-top-2 duration-200">
+                                    <EmbeddedChart
+                                      tokenAddress={notif.transaction.tokenAddress}
+                                      tokenSymbol={notif.transaction.tokenSymbol || "Token"}
+                                      className="w-full"
+                                      theme="dark"
+                                      expanded={true}
+                                      showToggle={false}
+                                    />
+                                  </div>
+                                )}
+                              </div>
+                            )}
                         </>
                       )}
                     </div>
@@ -1216,7 +1354,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
           {/* Clear All button */}
           {inAppNotifications.length > 0 && (
             <button
-              onClick={() => setInAppNotifications([])}
+              onClick={() => {
+                setInAppNotifications([]);
+                clearNotificationsFromStorage();
+              }}
               className="w-full py-2 text-xs text-red-400 hover:text-red-300 transition-colors mt-2"
             >
               Clear All Notifications

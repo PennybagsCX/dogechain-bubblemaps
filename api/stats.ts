@@ -21,24 +21,24 @@ export async function GET(_req: Request): Promise<Response> {
     `;
     const totalAlerts = parseInt(alertResult[0]?.count || "0");
 
-    // Return statistics with short cache time (10 seconds)
-    // This allows counters to update quickly while still providing caching benefit
+    // Return statistics with very short cache time (3 seconds)
+    // This allows counters to update quickly while still providing some caching benefit
     return Response.json(
       { searches: totalSearches, alerts: totalAlerts },
       {
         headers: {
-          "Cache-Control": "public, s-maxage=10, stale-while-revalidate=10",
+          "Cache-Control": "public, s-maxage=3, stale-while-revalidate=5",
         },
       }
     );
   } catch {
     // Return zeros on error (graceful degradation)
-    // Use shorter cache time for errors so retries can succeed quickly
+    // Use very short cache time for errors so retries can succeed quickly
     return Response.json(
       { searches: 0, alerts: 0 },
       {
         headers: {
-          "Cache-Control": "public, s-maxage=10, stale-while-revalidate=10",
+          "Cache-Control": "public, s-maxage=3, stale-while-revalidate=5",
         },
       }
     );

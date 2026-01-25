@@ -211,7 +211,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
   // Find the most recent scan time
   const lastScanTime =
     Object.values(statuses).length > 0
-      ? Math.max(...Object.values(statuses).map((s: AlertStatus) => s.checkedAt))
+      ? Math.max(
+          ...Object.values(statuses)
+            .map((s: AlertStatus) => s.checkedAt)
+            .filter((v): v is number => v !== undefined)
+        )
       : null;
 
   // --- SCAN LOGIC ---
@@ -367,6 +371,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               lastSeenTransactions: allSeenTxs,
               newTransactions: hasNewActivity ? filteredNewTransactions : undefined,
               baselineEstablished: true, // Mark baseline as established
+              pendingInitialScan: false, // Clear the pending flag - scan complete
               baselineTimestamp: isBaselineEstablished
                 ? existingStatus?.baselineTimestamp
                 : Date.now(),
@@ -395,8 +400,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
   // This prevents re-scanning all existing alerts when a new alert is created
   useEffect(() => {
     if (alerts.length > 0) {
-      // Find alerts without statuses (newly added alerts only)
-      const alertsWithoutStatus = alerts.filter((a) => !statuses[a.id]);
+      // Find alerts without statuses OR have pendingInitialScan flag
+      const alertsWithoutStatus = alerts.filter(
+        (a) => !statuses[a.id] || statuses[a.id]?.pendingInitialScan
+      );
       if (alertsWithoutStatus.length > 0 && !isScanning) {
         runScan();
       }

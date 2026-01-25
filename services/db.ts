@@ -25,9 +25,10 @@ export interface DbAlertStatus {
   alertId: string; // Primary key
   currentValue: number;
   triggered: boolean;
-  checkedAt: number;
+  checkedAt?: number; // Made optional - undefined means not yet scanned
   notified?: boolean;
   lastSeenTransactions?: string[];
+  pendingInitialScan?: boolean; // Flag to indicate alert needs its first scan
 }
 
 export interface DbTriggeredEvent {

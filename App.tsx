@@ -1863,6 +1863,7 @@ const App: React.FC = () => {
       // CRITICAL: Initialize alert status BEFORE adding alert to the list
       // Using flushSync ensures status is set synchronously, preventing Dashboard's
       // useEffect from treating the new alert as "pending" and triggering a full scan
+      // IMPORTANT: pendingInitialScan flag tells the auto-scan this alert needs its initial scan
       console.log("[ALERT CREATE] 📊 Updating alert status state (synchronous)");
       ReactDOM.flushSync(() => {
         setAlertStatuses((prev) => ({
@@ -1870,8 +1871,9 @@ const App: React.FC = () => {
           [newAlert.id]: {
             currentValue: initialVal,
             triggered: false,
-            checkedAt: Date.now(),
+            checkedAt: undefined, // Don't set checkedAt - scan will establish the baseline
             lastSeenTransactions: initialTxs,
+            pendingInitialScan: true, // Flag to indicate this alert needs its first scan
           },
         }));
       });

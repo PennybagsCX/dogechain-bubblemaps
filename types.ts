@@ -102,7 +102,7 @@ export interface TriggeredEvent {
 export interface AlertStatus {
   currentValue: number;
   triggered: boolean;
-  checkedAt: number;
+  checkedAt?: number; // Made optional - undefined means not yet scanned
   notified?: boolean; // Whether user has been notified about this trigger
   // Transaction tracking
   lastSeenTransactions?: string[]; // Array of transaction hashes we've already seen
@@ -110,6 +110,7 @@ export interface AlertStatus {
   // Baseline tracking for historical transaction filtering
   baselineEstablished?: boolean; // Track if initial baseline has been set
   baselineTimestamp?: number; // When baseline was established
+  pendingInitialScan?: boolean; // Flag to indicate alert needs its first scan
 }
 
 // Wallet Scanner Types

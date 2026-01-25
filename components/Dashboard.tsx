@@ -355,10 +355,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
             // Create new set of all seen transactions
             const allSeenTxs = [...new Set([...previousTxs, ...transactions.map((tx) => tx.hash)])];
 
-            // Trigger alert if we found new transactions (only after initial baseline)
+            // Trigger alert if we found new transactions
+            // For new alerts (no baseline): trigger on transactions AFTER alert creation
+            // For existing alerts: trigger on transactions since last scan
             const hasNewActivity = isBaselineEstablished
               ? filteredNewTransactions.length > 0
-              : false;
+              : transactionsForBaseline.length > 0; // New alerts trigger on post-creation transactions
 
             // Keep triggered state persistent - once triggered, stay triggered until manually reset
             const wasTriggered = existingStatus?.triggered || false;
@@ -369,7 +371,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
               triggered: shouldTrigger,
               checkedAt: Date.now(),
               lastSeenTransactions: allSeenTxs,
-              newTransactions: hasNewActivity ? filteredNewTransactions : undefined,
+              newTransactions: hasNewActivity
+                ? isBaselineEstablished
+                  ? filteredNewTransactions
+                  : transactionsForBaseline
+                : undefined,
               baselineEstablished: true, // Mark baseline as established
               pendingInitialScan: false, // Clear the pending flag - scan complete
               baselineTimestamp: isBaselineEstablished

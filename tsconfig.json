@@ -35,5 +35,5 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "exclude": ["node_modules", "dist", "dev-dist", "build"]
+  "exclude": ["node_modules", "dist", "dev-dist", "build", "tests"]
 }

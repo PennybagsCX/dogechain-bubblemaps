@@ -222,7 +222,7 @@ export function isRateLimitError(
     error?.status === 429 ||
     error?.code === "RATE_LIMIT_EXCEEDED" ||
     error?.isRateLimit === true ||
-    error?.message?.toLowerCase().includes("rate limit")
+    (error?.message !== undefined && error.message.toLowerCase().includes("rate limit"))
   );
 }
 

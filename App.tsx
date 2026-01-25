@@ -214,12 +214,12 @@ const App: React.FC = () => {
 
   // Version check to detect new builds and force refresh
   useEffect(() => {
-    const currentBuildNumber = __BETA_BUILD_NUMBER__;
+    const currentBuildNumber = parseInt(__BETA_BUILD_NUMBER__, 10);
     const storedBuildNumber = localStorage.getItem("doge_build_number");
 
     if (storedBuildNumber) {
       const storedNum = parseInt(storedBuildNumber, 10);
-      if (!isNaN(storedNum) && currentBuildNumber !== storedNum) {
+      if (!isNaN(storedNum) && !isNaN(currentBuildNumber) && currentBuildNumber !== storedNum) {
         console.log(`[App] New build detected: ${storedNum} → ${currentBuildNumber}`);
         // Force refresh to get latest code
         console.log("[App] Forcing page refresh to load new version...");

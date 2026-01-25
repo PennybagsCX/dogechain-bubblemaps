@@ -2049,14 +2049,22 @@ const App: React.FC = () => {
 
   // Callback to refresh stats when an alert triggers
   const handleAlertTriggered = useCallback(() => {
+    console.log("[App] handleAlertTriggered called - refreshing stats");
     // Invalidate local cache
     try {
       localStorage.removeItem("doge_stats_cache");
-    } catch {
-      // Ignore storage errors
+      console.log("[App] Stats cache cleared");
+    } catch (e) {
+      console.error("[App] Error clearing stats cache:", e);
     }
     // Refresh stats from server
-    refreshStats();
+    refreshStats()
+      .then(() => {
+        console.log("[App] Stats refresh completed");
+      })
+      .catch((e) => {
+        console.error("[App] Stats refresh failed:", e);
+      });
   }, [refreshStats]);
 
   return (

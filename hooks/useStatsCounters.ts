@@ -32,42 +32,52 @@ export function useStatsCounters(): StatsCounters {
   /**
    * Fetch stats from API
    */
-  const fetchStats = useCallback(async (showLoading = false): Promise<void> => {
-    try {
-      if (showLoading) {
-        setIsLoading(true);
+  const fetchStats = useCallback(
+    async (showLoading = false, bypassCache = false): Promise<void> => {
+      try {
+        if (showLoading) {
+          setIsLoading(true);
+        }
+        setError(null);
+
+        // Add cache-busting parameter when bypassing cache
+        const url = bypassCache
+          ? getApiUrl("/api/stats") + "?t=" + Date.now()
+          : getApiUrl("/api/stats");
+        console.log("[useStatsCounters] Fetching stats:", { bypassCache, url });
+
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+        const newStats: StatsData = {
+          searches: data.searches || 0,
+          alerts: data.alerts || 0,
+          timestamp: Date.now(),
+        };
+
+        console.log("[useStatsCounters] Stats received:", newStats);
+        setStats(newStats);
+
+        // Save to localStorage as backup
+        localStorage.setItem(CACHE_KEY, JSON.stringify(newStats));
+      } catch (err) {
+        console.error("[useStatsCounters] Failed to fetch stats:", err);
+        setError(err instanceof Error ? err.message : "Unknown error");
+
+        // Try to load from cache on error
+        const cached = getCachedStats();
+        if (cached) {
+          setStats(cached);
+        }
+      } finally {
+        setIsLoading(false);
       }
-      setError(null);
-
-      const response = await fetch(getApiUrl("/api/stats"));
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const data = await response.json();
-      const newStats: StatsData = {
-        searches: data.searches || 0,
-        alerts: data.alerts || 0,
-        timestamp: Date.now(),
-      };
-
-      setStats(newStats);
-
-      // Save to localStorage as backup
-      localStorage.setItem(CACHE_KEY, JSON.stringify(newStats));
-    } catch (err) {
-      console.error("[useStatsCounters] Failed to fetch stats:", err);
-      setError(err instanceof Error ? err.message : "Unknown error");
-
-      // Try to load from cache on error
-      const cached = getCachedStats();
-      if (cached) {
-        setStats(cached);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+    },
+    []
+  );
 
   /**
    * Get cached stats from localStorage
@@ -92,10 +102,11 @@ export function useStatsCounters(): StatsCounters {
   };
 
   /**
-   * Manual refresh function
+   * Manual refresh function (bypasses cache)
    */
   const refresh = async () => {
-    await fetchStats(true);
+    console.log("[useStatsCounters] Manual refresh - bypassing cache");
+    await fetchStats(true, true);
   };
 
   // Initial fetch with cache check

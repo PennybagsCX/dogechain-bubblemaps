@@ -365,6 +365,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 console.log(
                   `[Alert ${alert.id}] Filtered to ${newTransactions.length} transactions since last check (${new Date(lastCheckTime).toISOString()})`
                 );
+
+                // Log each new transaction for debugging
+                if (newTransactions.length > 0) {
+                  console.log(
+                    `[Alert ${alert.id}] New transactions:`,
+                    newTransactions.map((tx) => ({
+                      hash: tx.hash,
+                      timestamp: new Date(tx.timestamp).toISOString(),
+                      value: tx.value,
+                    }))
+                  );
+                }
               }
 
               // Apply type-specific filtering for new transactions
@@ -604,6 +616,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
         onTriggeredEventsChange?.([triggeredEvent, ...triggeredEvents].slice(0, 100));
 
         // Log triggered alert to server (non-blocking, fire-and-forget)
+        console.log(`[ALERT TRIGGER] Sending to API:`, {
+          alertId: triggeredEvent.alertId,
+          alertName: triggeredEvent.alertName,
+          transactionCount: triggeredEvent.transactions.length,
+        });
+
         fetch(getApiUrl("/api/alerts/trigger"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -616,11 +634,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
             transactionCount: triggeredEvent.transactions.length,
           }),
         })
-          .then(() => {
+          .then((response) => {
+            console.log(`[ALERT TRIGGER] API response:`, response.status, "OK");
             // Trigger stats refresh after successful API call
             onAlertTriggered?.();
           })
           .catch((_err) => {
+            console.error(`[ALERT TRIGGER] API error:`, _err);
             // Error handled silently - still call callback to attempt refresh
             onAlertTriggered?.();
           });

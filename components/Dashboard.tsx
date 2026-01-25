@@ -256,122 +256,136 @@ export const Dashboard: React.FC<DashboardProps> = ({
       return;
     }
 
-    // Parallel processing for speed - ONLY for new alerts
-    await Promise.all(
-      alertsWithoutStatus.map(async (alert) => {
-        try {
-          // Validate addresses; skip invalid to avoid repeated bad requests
+    // Batch processing to prevent rate limiting - ONLY for new alerts
+    const batchSize = 4;
+    const delayBetweenBatches = 750; // milliseconds
+
+    for (let i = 0; i < alertsWithoutStatus.length; i += batchSize) {
+      const batch = alertsWithoutStatus.slice(i, i + batchSize);
+
+      await Promise.all(
+        batch.map(async (alert) => {
           try {
-            validateWalletAddress(alert.walletAddress);
-            if (alert.tokenAddress) validateTokenAddress(alert.tokenAddress);
-          } catch {
-            return;
-          }
-
-          // Ensure we have a baseline for new alerts so we don't loop forever
-          const existingStatus = statuses[alert.id];
-
-          // Fetch current balance first (needed for WHALE type threshold calculation)
-          let currentBalance = 0;
-          if (alert.tokenAddress) {
-            // Get token info first to ensure correct decimals
+            // Validate addresses; skip invalid to avoid repeated bad requests
             try {
-              const tokenData = await fetchTokenData(alert.tokenAddress);
-              if (tokenData) {
-                currentBalance = await fetchTokenBalance(
-                  alert.walletAddress,
-                  alert.tokenAddress,
-                  tokenData.decimals
-                );
-              }
+              validateWalletAddress(alert.walletAddress);
+              if (alert.tokenAddress) validateTokenAddress(alert.tokenAddress);
             } catch {
-              // Fallback without decimals
-              currentBalance = await fetchTokenBalance(alert.walletAddress, alert.tokenAddress);
+              return;
             }
-          } else {
-            // Default to wDOGE if no token specified
-            const wDogeAddress = "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101";
-            currentBalance = await fetchTokenBalance(alert.walletAddress, wDogeAddress, 18);
+
+            // Ensure we have a baseline for new alerts so we don't loop forever
+            const existingStatus = statuses[alert.id];
+
+            // Fetch current balance first (needed for WHALE type threshold calculation)
+            let currentBalance = 0;
+            if (alert.tokenAddress) {
+              // Get token info first to ensure correct decimals
+              try {
+                const tokenData = await fetchTokenData(alert.tokenAddress);
+                if (tokenData) {
+                  currentBalance = await fetchTokenBalance(
+                    alert.walletAddress,
+                    alert.tokenAddress,
+                    tokenData.decimals
+                  );
+                }
+              } catch {
+                // Fallback without decimals
+                currentBalance = await fetchTokenBalance(alert.walletAddress, alert.tokenAddress);
+              }
+            } else {
+              // Default to wDOGE if no token specified
+              const wDogeAddress = "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101";
+              currentBalance = await fetchTokenBalance(alert.walletAddress, wDogeAddress, 18);
+            }
+
+            // Fetch transactions based on alert type
+            // WALLET: Monitor all token activity (no token filter)
+            // TOKEN: Monitor specific token only (filtered by tokenAddress)
+            // WHALE: Monitor large transfers (filter by value threshold)
+            const transactions = await fetchWalletTransactions(
+              alert.walletAddress,
+              alert.type === "WALLET" ? undefined : alert.tokenAddress // WALLET gets all tokens
+            );
+
+            // Check if baseline already established (prevents historical transaction spam)
+            const isBaselineEstablished = existingStatus?.baselineEstablished || false;
+            const alertCreatedAt = alert.createdAt || Date.now();
+
+            // Debug: Log transaction timestamps
+            if (transactions.length > 0) {
+              const oldestTx = transactions[transactions.length - 1];
+              const newestTx = transactions[0];
+              console.log(`[Alert ${alert.id}] Fetched ${transactions.length} transactions`, {
+                oldest: new Date(oldestTx?.timestamp || 0).toISOString(),
+                newest: new Date(newestTx?.timestamp || 0).toISOString(),
+                alertCreatedAt: new Date(alertCreatedAt).toISOString(),
+              });
+            }
+
+            // For new alerts, filter to only transactions AFTER alert creation
+            let transactionsForBaseline = transactions;
+            if (!isBaselineEstablished) {
+              transactionsForBaseline = transactions.filter((tx) => tx.timestamp >= alertCreatedAt);
+            }
+
+            // Get previously seen transactions or initialize baseline
+            const previousTxs =
+              existingStatus?.lastSeenTransactions || transactionsForBaseline.map((tx) => tx.hash);
+            const previousTxSet = new Set(previousTxs);
+
+            // Find new transactions (transactions we haven't seen before)
+            const newTransactions = transactions.filter((tx) => !previousTxSet.has(tx.hash));
+
+            // Apply type-specific filtering for new transactions
+            let filteredNewTransactions = newTransactions;
+
+            if (alert.type === "WHALE" && newTransactions.length > 0) {
+              // WHALE type: Only trigger on large transactions
+              // Define "large" as > 10,000 tokens or > 1% of current balance (whichever is larger)
+              const whaleThreshold = Math.max(10000, currentBalance * 0.01);
+              filteredNewTransactions = newTransactions.filter((tx) => tx.value > whaleThreshold);
+            }
+
+            // Create new set of all seen transactions
+            const allSeenTxs = [...new Set([...previousTxs, ...transactions.map((tx) => tx.hash)])];
+
+            // Trigger alert if we found new transactions (only after initial baseline)
+            const hasNewActivity = isBaselineEstablished
+              ? filteredNewTransactions.length > 0
+              : false;
+
+            // Keep triggered state persistent - once triggered, stay triggered until manually reset
+            const wasTriggered = existingStatus?.triggered || false;
+            const shouldTrigger = hasNewActivity || wasTriggered;
+
+            newStatuses[alert.id] = {
+              currentValue: currentBalance,
+              triggered: shouldTrigger,
+              checkedAt: Date.now(),
+              lastSeenTransactions: allSeenTxs,
+              newTransactions: hasNewActivity ? filteredNewTransactions : undefined,
+              baselineEstablished: true, // Mark baseline as established
+              baselineTimestamp: isBaselineEstablished
+                ? existingStatus?.baselineTimestamp
+                : Date.now(),
+            };
+          } catch {
+            newStatuses[alert.id] = {
+              currentValue: 0,
+              triggered: false,
+              checkedAt: Date.now(),
+            };
           }
+        })
+      );
 
-          // Fetch transactions based on alert type
-          // WALLET: Monitor all token activity (no token filter)
-          // TOKEN: Monitor specific token only (filtered by tokenAddress)
-          // WHALE: Monitor large transfers (filter by value threshold)
-          const transactions = await fetchWalletTransactions(
-            alert.walletAddress,
-            alert.type === "WALLET" ? undefined : alert.tokenAddress // WALLET gets all tokens
-          );
-
-          // Check if baseline already established (prevents historical transaction spam)
-          const isBaselineEstablished = existingStatus?.baselineEstablished || false;
-          const alertCreatedAt = alert.createdAt || Date.now();
-
-          // Debug: Log transaction timestamps
-          if (transactions.length > 0) {
-            const oldestTx = transactions[transactions.length - 1];
-            const newestTx = transactions[0];
-            console.log(`[Alert ${alert.id}] Fetched ${transactions.length} transactions`, {
-              oldest: new Date(oldestTx?.timestamp || 0).toISOString(),
-              newest: new Date(newestTx?.timestamp || 0).toISOString(),
-              alertCreatedAt: new Date(alertCreatedAt).toISOString(),
-            });
-          }
-
-          // For new alerts, filter to only transactions AFTER alert creation
-          let transactionsForBaseline = transactions;
-          if (!isBaselineEstablished) {
-            transactionsForBaseline = transactions.filter((tx) => tx.timestamp >= alertCreatedAt);
-          }
-
-          // Get previously seen transactions or initialize baseline
-          const previousTxs =
-            existingStatus?.lastSeenTransactions || transactionsForBaseline.map((tx) => tx.hash);
-          const previousTxSet = new Set(previousTxs);
-
-          // Find new transactions (transactions we haven't seen before)
-          const newTransactions = transactions.filter((tx) => !previousTxSet.has(tx.hash));
-
-          // Apply type-specific filtering for new transactions
-          let filteredNewTransactions = newTransactions;
-
-          if (alert.type === "WHALE" && newTransactions.length > 0) {
-            // WHALE type: Only trigger on large transactions
-            // Define "large" as > 10,000 tokens or > 1% of current balance (whichever is larger)
-            const whaleThreshold = Math.max(10000, currentBalance * 0.01);
-            filteredNewTransactions = newTransactions.filter((tx) => tx.value > whaleThreshold);
-          }
-
-          // Create new set of all seen transactions
-          const allSeenTxs = [...new Set([...previousTxs, ...transactions.map((tx) => tx.hash)])];
-
-          // Trigger alert if we found new transactions (only after initial baseline)
-          const hasNewActivity = isBaselineEstablished ? filteredNewTransactions.length > 0 : false;
-
-          // Keep triggered state persistent - once triggered, stay triggered until manually reset
-          const wasTriggered = existingStatus?.triggered || false;
-          const shouldTrigger = hasNewActivity || wasTriggered;
-
-          newStatuses[alert.id] = {
-            currentValue: currentBalance,
-            triggered: shouldTrigger,
-            checkedAt: Date.now(),
-            lastSeenTransactions: allSeenTxs,
-            newTransactions: hasNewActivity ? filteredNewTransactions : undefined,
-            baselineEstablished: true, // Mark baseline as established
-            baselineTimestamp: isBaselineEstablished
-              ? existingStatus?.baselineTimestamp
-              : Date.now(),
-          };
-        } catch {
-          newStatuses[alert.id] = {
-            currentValue: 0,
-            triggered: false,
-            checkedAt: Date.now(),
-          };
-        }
-      })
-    );
+      // Add delay between batches to prevent rate limiting
+      if (i + batchSize < alertsWithoutStatus.length) {
+        await new Promise((resolve) => setTimeout(resolve, delayBetweenBatches));
+      }
+    }
 
     onUpdateStatuses?.({ ...statuses, ...newStatuses });
     setIsScanning(false);

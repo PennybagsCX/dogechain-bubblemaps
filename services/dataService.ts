@@ -252,9 +252,31 @@ const parseBalance = (raw: string, decimals: number): number => {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// Wrapper around fetchWithRetry for compatibility
+// Wrapper around fetchWithRetry with enhanced error handling and logging
 const fetchSafe = async (url: string, options: any = {}, retries = 2): Promise<Response> => {
-  return fetchWithRetry(() => fetchWithRateLimit(url, options, dogechainApiLimiter), retries, 1000);
+  try {
+    return await fetchWithRetry(
+      () => fetchWithRateLimit(url, options, dogechainApiLimiter),
+      retries,
+      1000
+    );
+  } catch (error: any) {
+    // Enhanced error logging with context
+    const urlShort = url.length > 100 ? url.substring(0, 100) + "..." : url;
+    const isRateLimit = error?.isRateLimit || error?.status === 429;
+
+    if (isRateLimit) {
+      console.warn(
+        `[fetchSafe] ⚠️ Rate limit exceeded for ${urlShort}. The request will be retried with backoff.`
+      );
+    } else {
+      // Log other errors but don't crash - allow graceful degradation
+      console.error(`[fetchSafe] ❌ Request failed for ${urlShort}:`, error?.message || error);
+    }
+
+    // Re-throw the error so callers can handle it appropriately
+    throw error;
+  }
 };
 
 const getDecimals = (
@@ -413,7 +435,20 @@ const fetchMetadataFromTokenList = async (
 
 // --- Core Services ---
 
-export const fetchTokenData = async (
+/**
+ * Shared token info cache to prevent duplicate API calls when scanning multiple alerts.
+ * This cache stores:
+ * 1. In-flight promises: Ensures parallel requests for the same token share the same API call
+ * 2. Cached results: Reuses previously fetched token data
+ */
+const tokenCache = new Map<string, Promise<Token | null>>();
+const tokenResults = new Map<string, Token | null>();
+
+/**
+ * Internal implementation of fetchTokenData.
+ * This function performs the actual API calls and data fetching.
+ */
+const fetchTokenDataInternal = async (
   address: string,
   preferredType: AssetType = AssetType.TOKEN
 ): Promise<Token | null> => {
@@ -423,7 +458,6 @@ export const fetchTokenData = async (
     cleanAddress = validateTokenAddress(address);
   } catch {
     // Error handled silently
-
     return null;
   }
 
@@ -516,11 +550,92 @@ export const fetchTokenData = async (
       priceUsd: 0,
       isVerified,
     };
-  } catch {
-    // Error handled silently
+  } catch (error: any) {
+    // Enhanced error handling with graceful degradation
+    const isRateLimit = error?.isRateLimit || error?.status === 429;
 
+    if (isRateLimit) {
+      console.warn(
+        `[fetchTokenData] ⚠️ Rate limit hit while fetching token ${cleanAddress}. Using cached/bootstrap data if available.`
+      );
+
+      // Try to return cached or bootstrap data even on rate limit
+      const cachedData = cached || bootstrap;
+      if (cachedData) {
+        const type = cachedData.type || preferredType;
+        return {
+          address: cleanAddress,
+          name:
+            cachedData.name ||
+            (type === AssetType.NFT ? "Unverified Collection" : "Unverified Token"),
+          symbol: cachedData.symbol || (type === AssetType.NFT ? "NFT" : "TOKEN"),
+          totalSupply: 0,
+          decimals: cachedData.decimals ?? (type === AssetType.NFT ? 0 : 18),
+          type,
+          priceUsd: 0,
+          isVerified: false,
+        };
+      }
+    } else {
+      console.error(
+        `[fetchTokenData] ❌ Error fetching token data for ${cleanAddress}:`,
+        error?.message || error
+      );
+    }
+
+    // Return null as last resort - caller should handle this gracefully
     return null;
   }
+};
+
+/**
+ * Fetch token data with shared caching to prevent duplicate API calls.
+ * When multiple alerts scan in parallel and request the same token,
+ * they will share the same API call instead of making duplicate requests.
+ *
+ * @param address - Token contract address
+ * @param preferredType - Preferred asset type (TOKEN or NFT)
+ * @returns Token data or null if fetch fails
+ */
+export const fetchTokenData = async (
+  address: string,
+  preferredType: AssetType = AssetType.TOKEN
+): Promise<Token | null> => {
+  // Normalize address for consistent cache keys
+  const cacheKey = address.toLowerCase();
+
+  // Check if result is already cached
+  if (tokenResults.has(cacheKey)) {
+    return tokenResults.get(cacheKey)!;
+  }
+
+  // Check if request is already in-flight
+  if (tokenCache.has(cacheKey)) {
+    return tokenCache.get(cacheKey)!;
+  }
+
+  // Create new request and cache the promise
+  const promise = fetchTokenDataInternal(address, preferredType);
+  tokenCache.set(cacheKey, promise);
+
+  try {
+    const result = await promise;
+    // Cache the result for future requests
+    tokenResults.set(cacheKey, result);
+    return result;
+  } finally {
+    // Clean up the in-flight promise
+    tokenCache.delete(cacheKey);
+  }
+};
+
+/**
+ * Clear the token cache. Useful for testing or manual refresh scenarios.
+ * This clears both in-flight promises and cached results.
+ */
+export const clearTokenCache = (): void => {
+  tokenCache.clear();
+  tokenResults.clear();
 };
 
 export const fetchTokenHolders = async (

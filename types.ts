@@ -192,6 +192,74 @@ export interface TokenPopularity {
   lastClicked: number | null;
 }
 
+// =====================================================
+// API Error Types
+// =====================================================
+
+export type ApiErrorCode =
+  | "RATE_LIMIT_EXCEEDED"
+  | "NETWORK_ERROR"
+  | "INVALID_ADDRESS"
+  | "TOKEN_NOT_FOUND"
+  | "SERVER_ERROR"
+  | "UNKNOWN_ERROR";
+
+export interface ApiError {
+  code: ApiErrorCode;
+  message: string;
+  userFriendlyMessage: string;
+  retryable: boolean;
+  status?: number;
+  url?: string;
+}
+
+export function isRateLimitError(error: any): boolean {
+  return (
+    error?.status === 429 ||
+    error?.code === "RATE_LIMIT_EXCEEDED" ||
+    error?.isRateLimit === true ||
+    error?.message?.toLowerCase().includes("rate limit")
+  );
+}
+
+export function createApiError(
+  code: ApiErrorCode,
+  message: string,
+  userFriendlyMessage?: string,
+  status?: number,
+  url?: string
+): ApiError {
+  return {
+    code,
+    message,
+    userFriendlyMessage: userFriendlyMessage || getDefaultUserMessage(code),
+    retryable: isRetryableCode(code),
+    status,
+    url,
+  };
+}
+
+function getDefaultUserMessage(code: ApiErrorCode): string {
+  switch (code) {
+    case "RATE_LIMIT_EXCEEDED":
+      return "API rate limit exceeded. Please wait a moment and try again.";
+    case "NETWORK_ERROR":
+      return "Network error. Please check your connection and try again.";
+    case "INVALID_ADDRESS":
+      return "Invalid address provided. Please check and try again.";
+    case "TOKEN_NOT_FOUND":
+      return "Token not found. Please verify the address.";
+    case "SERVER_ERROR":
+      return "Server error. Please try again later.";
+    default:
+      return "An unexpected error occurred. Please try again.";
+  }
+}
+
+function isRetryableCode(code: ApiErrorCode): boolean {
+  return ["RATE_LIMIT_EXCEEDED", "NETWORK_ERROR", "SERVER_ERROR"].includes(code);
+}
+
 export interface AnalyticsSummary {
   date: string;
   totalSearches: number;

@@ -181,33 +181,97 @@ export const generalApiLimiter = new RateLimiter({
 
 /**
  * Fetch with rate limiting and retry logic
+ * Handles 429 errors with exponential backoff and jitter
  */
 export const fetchWithRateLimit = async (
   url: string,
   options?: RequestInit,
   limiter?: RateLimiter | TokenBucket
 ): Promise<Response> => {
+  const MAX_RETRIES = 3;
+  const BASE_DELAY = 1000; // 1 second base delay
+  const MAX_DELAY = 30000; // 30 second max delay
+
   const executeFetch = async (): Promise<Response> => {
-    const response = await fetch(url, {
-      ...options,
-      headers: {
-        Accept: "application/json",
-        ...options?.headers,
-      },
-    });
+    let lastError: Error | null = null;
 
-    // Handle rate limiting from server (429 Too Many Requests)
-    if (response.status === 429) {
-      const retryAfter = response.headers.get("Retry-After");
-      const waitTime = retryAfter ? parseInt(retryAfter) * 1000 : 5000;
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        const response = await fetch(url, {
+          ...options,
+          headers: {
+            Accept: "application/json",
+            ...options?.headers,
+          },
+        });
 
-      await new Promise((resolve) => setTimeout(resolve, waitTime));
+        // Success - return response
+        if (response.status !== 429) {
+          return response;
+        }
 
-      // Retry once after waiting
-      return fetch(url, options);
+        // Handle rate limiting from server (429 Too Many Requests)
+        const retryAfter = response.headers.get("Retry-After");
+        let waitTime: number;
+
+        if (retryAfter) {
+          // Use server-provided Retry-After header
+          waitTime = parseInt(retryAfter) * 1000;
+        } else {
+          // Use exponential backoff with jitter
+          const exponentialDelay = BASE_DELAY * Math.pow(2, attempt);
+          // Add jitter (±25% of delay) to avoid thundering herd
+          const jitter = Math.random() * 0.5 - 0.25; // ±25%
+          waitTime = exponentialDelay * (1 + jitter);
+        }
+
+        // Cap the delay
+        waitTime = Math.min(waitTime, MAX_DELAY);
+
+        // Log the retry attempt with context
+        const urlShort = url.length > 100 ? url.substring(0, 100) + "..." : url;
+        console.warn(
+          `[RateLimit] ⚠️ 429 Too Many Requests - Attempt ${attempt + 1}/${MAX_RETRIES + 1} for ${urlShort}. Retrying in ${Math.round(waitTime / 1000)}s...`
+        );
+
+        // If this was the last attempt, throw an error
+        if (attempt === MAX_RETRIES) {
+          const error = new Error(
+            `Rate limit exceeded after ${MAX_RETRIES} retries. Please try again later.`
+          );
+          (error as any).status = 429;
+          (error as any).url = url;
+          throw error;
+        }
+
+        // Wait before retrying
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
+
+        // Continue to next attempt
+        lastError = new Error(`Rate limit (429) on attempt ${attempt + 1}`);
+        (lastError as any).status = 429;
+        (lastError as any).url = url;
+      } catch (err) {
+        // Network error or other fetch error
+        if (attempt === MAX_RETRIES) {
+          throw err;
+        }
+
+        // Log network error and retry
+        const urlShort = url.length > 100 ? url.substring(0, 100) + "..." : url;
+        console.error(
+          `[RateLimit] ❌ Network error on attempt ${attempt + 1}/${MAX_RETRIES + 1} for ${urlShort}:`,
+          err
+        );
+
+        // Exponential backoff for network errors too
+        const delay = Math.min(BASE_DELAY * Math.pow(2, attempt), MAX_DELAY);
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      }
     }
 
-    return response;
+    // Should never reach here, but TypeScript needs it
+    throw lastError || new Error("Unknown error in fetchWithRateLimit");
   };
 
   // Use provided limiter or default
@@ -220,12 +284,15 @@ export const fetchWithRateLimit = async (
 
 /**
  * Retry logic with exponential backoff
+ * Handles 429 errors gracefully with proper retry strategy
  */
 export const fetchWithRetry = async (
   fn: () => Promise<Response>,
   maxRetries: number = 3,
   baseDelay: number = 1000
 ): Promise<Response> => {
+  const MAX_DELAY = 30000; // 30 second max delay
+
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
       const response = await fn();
@@ -240,19 +307,57 @@ export const fetchWithRetry = async (
         return response;
       }
 
-      // Server error - retry
+      // Server error (5xx) or 429 - retry with exponential backoff
       if (attempt < maxRetries) {
-        const delay = baseDelay * Math.pow(2, attempt);
+        const delay = Math.min(baseDelay * Math.pow(2, attempt), MAX_DELAY);
+        // Add jitter (±25%) to avoid thundering herd
+        const jitter = 1 + (Math.random() * 0.5 - 0.25);
+        const waitTime = delay * jitter;
 
-        await new Promise((resolve) => setTimeout(resolve, delay));
+        if (response.status === 429) {
+          console.warn(
+            `[Retry] ⚠️ 429 Rate limit - Retrying in ${Math.round(waitTime / 1000)}s (attempt ${attempt + 1}/${maxRetries})`
+          );
+        } else {
+          console.error(
+            `[Retry] ❌ Server error ${response.status} - Retrying in ${Math.round(waitTime / 1000)}s`
+          );
+        }
+
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
       }
-    } catch (err) {
-      // Network error - retry
-      if (attempt < maxRetries) {
-        const delay = baseDelay * Math.pow(2, attempt);
+    } catch (err: any) {
+      // Network error - check if it's a 429 error wrapped in an exception
+      const is429Error =
+        err?.status === 429 ||
+        err?.message?.includes("429") ||
+        err?.message?.includes("rate limit");
 
-        await new Promise((resolve) => setTimeout(resolve, delay));
+      // Network error - retry with exponential backoff
+      if (attempt < maxRetries) {
+        const delay = Math.min(baseDelay * Math.pow(2, attempt), MAX_DELAY);
+        // Add jitter for 429 errors to help distribute retries
+        const jitter = is429Error ? 1 + (Math.random() * 0.5 - 0.25) : 1;
+        const waitTime = delay * jitter;
+
+        if (is429Error) {
+          console.warn(
+            `[Retry] ⚠️ Rate limit error caught - Retrying in ${Math.round(waitTime / 1000)}s (attempt ${attempt + 1}/${maxRetries})`
+          );
+        }
+
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
       } else {
+        // Last attempt failed - throw the error
+        if (is429Error) {
+          // Provide a more user-friendly error for rate limits
+          const rateLimitError = new Error(
+            "API rate limit exceeded. Please wait a moment and try again."
+          );
+          (rateLimitError as any).originalError = err;
+          (rateLimitError as any).isRateLimit = true;
+          throw rateLimitError;
+        }
         throw err;
       }
     }

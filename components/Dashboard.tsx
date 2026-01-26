@@ -129,10 +129,10 @@ const clearNotificationsFromStorage = (
           notified: false, // Reset notified state
           lastSeenTransactions: [], // Clear seen transactions
           newTransactions: undefined, // Clear pending transactions
-          baselineEstablished: status.baselineEstablished,
-          baselineTimestamp: status.baselineTimestamp,
+          baselineEstablished: true, // Keep baseline established
+          baselineTimestamp: now, // CRITICAL FIX: Reset baseline to NOW to ignore old transactions
           pendingInitialScan: false, // Clear pending scan flag
-          dismissedAt: now + 1000, // FIX: Set dismissedAt 1 second AFTER checkedAt to ensure dismissal logic works
+          dismissedAt: now + 1000, // Set dismissedAt 1 second AFTER checkedAt
         };
       }
     });
@@ -1551,6 +1551,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         dismissedAt: now + 1000, // Set dismissedAt AFTER checkedAt to ensure dismissal logic works
                         checkedAt: now, // Move check point forward
                         triggered: false, // Reset triggered state
+                        baselineTimestamp: now, // CRITICAL FIX: Reset baseline to NOW to ignore old transactions
                       };
                     }
                   });

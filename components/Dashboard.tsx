@@ -640,12 +640,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
       runScan();
     }
 
-    // Set up interval for periodic scanning (every 30 seconds)
+    // Set up interval for periodic scanning (every 10 seconds for faster detection)
     const intervalId = setInterval(() => {
       if (!isScanning && alerts.length > 0) {
         runScan();
       }
-    }, 30000); // 30 seconds
+    }, 10000); // 10 seconds (reduced from 30s for faster alert detection)
 
     // Cleanup interval on unmount
     return () => clearInterval(intervalId);
@@ -1573,7 +1573,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </p>
           <button
             onClick={() => {
-              if (externalIsModalOpen === undefined) {
+              // Use external modal control if available, otherwise use internal state
+              if (onAlertModalOpen) {
+                onAlertModalOpen({
+                  editingAlertId: "",
+                  name: "",
+                  walletAddress: "",
+                  tokenAddress: "",
+                  alertType: "WALLET",
+                });
+              } else if (externalIsModalOpen === undefined) {
                 setInternalIsModalOpen(true);
               }
             }}

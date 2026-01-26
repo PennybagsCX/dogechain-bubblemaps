@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console -- Console logging is critical for debugging alert creation */
@@ -102,7 +102,8 @@ const saveNotificationsToStorage = (notifications: InAppNotification[]): void =>
 
 const clearNotificationsFromStorage = (
   statuses: Record<string, AlertStatus>,
-  onUpdateStatuses?: (newStatuses: Record<string, AlertStatus>) => void
+  onUpdateStatuses?: (newStatuses: Record<string, AlertStatus>) => void,
+  onEnterGracePeriod?: () => void
 ): void => {
   if (typeof window === "undefined") return;
 
@@ -116,6 +117,7 @@ const clearNotificationsFromStorage = (
 
     // Step 3: CRITICAL: Reset alert statuses to prevent re-triggering on old transactions
     // This follows the same pattern as the one-time cleanup
+    const now = Date.now();
     const newStatuses: Record<string, AlertStatus> = {};
     Object.keys(statuses).forEach((alertId) => {
       const status = statuses[alertId];
@@ -123,18 +125,21 @@ const clearNotificationsFromStorage = (
         newStatuses[alertId] = {
           currentValue: status.currentValue,
           triggered: false, // Reset triggered state
-          checkedAt: Date.now(), // Move check point forward to ignore old transactions
+          checkedAt: now, // Move check point forward to ignore old transactions
           notified: false, // Reset notified state
           lastSeenTransactions: [], // Clear seen transactions
           newTransactions: undefined, // Clear pending transactions
           baselineEstablished: status.baselineEstablished,
           baselineTimestamp: status.baselineTimestamp,
           pendingInitialScan: false, // Clear pending scan flag
-          dismissedAt: Date.now(), // Mark as dismissed to prevent re-trigger
+          dismissedAt: now + 1000, // FIX: Set dismissedAt 1 second AFTER checkedAt to ensure dismissal logic works
         };
       }
     });
     onUpdateStatuses?.(newStatuses);
+
+    // Step 4: Enter grace period to block automatic scans
+    onEnterGracePeriod?.();
 
     console.log("[Notifications] Cleared all notification storage and alert state");
   } catch (error) {
@@ -231,6 +236,40 @@ export const Dashboard: React.FC<DashboardProps> = ({
   onAlertModalOpen,
   onAlertTriggered,
 }) => {
+  // === GRACE PERIOD MECHANISM ===
+  // Prevent automatic scans for 30 seconds after manual clear operations
+  const gracePeriodEndRef = useRef<number>(0);
+  const GRACE_PERIOD_MS = 30000; // 30 seconds
+
+  const isInGracePeriod = useCallback(() => {
+    return Date.now() < gracePeriodEndRef.current;
+  }, []);
+
+  const enterGracePeriod = useCallback(() => {
+    const endTime = Date.now() + GRACE_PERIOD_MS;
+    gracePeriodEndRef.current = endTime;
+    console.log(`[GracePeriod] Entered grace period, ends at ${new Date(endTime).toISOString()}`);
+  }, []);
+
+  // === REF-BASED STATE ACCESS ===
+  // Use refs to avoid stale closures in periodic scan interval
+  const alertsRef = useRef(alerts);
+  const statusesRef = useRef(statuses);
+  const onUpdateStatusesRef = useRef(onUpdateStatuses);
+
+  // Update refs when props change
+  useEffect(() => {
+    alertsRef.current = alerts;
+  }, [alerts]);
+
+  useEffect(() => {
+    statusesRef.current = statuses;
+  }, [statuses]);
+
+  useEffect(() => {
+    onUpdateStatusesRef.current = onUpdateStatuses;
+  }, [onUpdateStatuses]);
+
   // Alert type options for the dropdown
   const alertTypeOptions = [
     {
@@ -376,7 +415,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   const runScan = useCallback(
     async (forceRefresh = false) => {
-      if (alerts.length === 0) return;
+      // Use ref values to avoid stale closure
+      const currentAlerts = alertsRef.current;
+      const currentStatuses = statusesRef.current;
+      const currentUpdateStatuses = onUpdateStatusesRef.current;
+
+      if (currentAlerts.length === 0) return;
+
+      // Check grace period for automatic scans (skip if in grace period, unless forced)
+      if (!forceRefresh && isInGracePeriod()) {
+        console.log("[Scan] Skipped due to grace period");
+        return;
+      }
 
       setIsScanning(true);
       const newStatuses: Record<string, AlertStatus> = {};
@@ -384,7 +434,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       // CRITICAL FIX: Scan ALL alerts, not just new ones
       // New alerts (without status) get initial baseline scan
       // Existing alerts get scanned for new transactions since last check
-      const alertsToScan = alerts;
+      const alertsToScan = currentAlerts;
 
       // Batch processing to prevent rate limiting
       const batchSize = 4;
@@ -405,7 +455,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               }
 
               // Ensure we have a baseline for new alerts so we don't loop forever
-              const existingStatus = statuses[alert.id];
+              const existingStatus = currentStatuses[alert.id];
 
               // Fetch current balance first (needed for WHALE type threshold calculation)
               let currentBalance = 0;
@@ -593,10 +643,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
         }
       }
 
-      onUpdateStatuses?.({ ...statuses, ...newStatuses });
+      currentUpdateStatuses?.({ ...currentStatuses, ...newStatuses });
       setIsScanning(false);
     },
-    [alerts, statuses, onUpdateStatuses]
+    [isInGracePeriod] // Only depends on isInGracePeriod since we use refs for everything else
   );
 
   // Auto-scan logic: Only run scan for alerts that don't have statuses yet (newly added alerts)
@@ -722,14 +772,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
     // Set up interval for periodic scanning (every 10 seconds for faster detection)
     const intervalId = setInterval(() => {
-      if (!isScanning && alerts.length > 0) {
+      // Use ref to check current alerts (avoids stale closure)
+      const currentAlerts = alertsRef.current;
+      if (!isScanning && currentAlerts.length > 0 && !isInGracePeriod()) {
         runScan();
       }
     }, 10000); // 10 seconds (reduced from 30s for faster alert detection)
 
     // Cleanup interval on unmount
     return () => clearInterval(intervalId);
-  }, [alerts.length]); // Re-setup when alerts length changes (runScan excluded to prevent rapid interval recreation)
+  }, [alerts.length, runScan, isInGracePeriod]); // Include runScan and isInGracePeriod as dependencies
 
   // Show browser notifications when alerts trigger
   useEffect(() => {
@@ -1436,7 +1488,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <button
               onClick={() => {
                 setInAppNotifications([]);
-                clearNotificationsFromStorage(statuses, onUpdateStatuses);
+                clearNotificationsFromStorage(statuses, onUpdateStatuses, enterGracePeriod);
               }}
               className="w-full py-2 text-xs text-red-400 hover:text-red-300 transition-colors mt-2"
             >
@@ -1489,19 +1541,23 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   localStorage.removeItem("doge_notified_transactions");
 
                   // Also reset alert dismissedAt state to prevent re-triggering on old transactions
+                  const now = Date.now();
                   const resetStatuses: Record<string, AlertStatus> = {};
                   Object.keys(statuses).forEach((alertId) => {
                     const status = statuses[alertId];
                     if (status) {
                       resetStatuses[alertId] = {
                         ...status,
-                        dismissedAt: Date.now(), // Set dismissedAt to now to prevent old transactions from re-triggering
-                        checkedAt: Date.now(), // Move check point forward
+                        dismissedAt: now + 1000, // Set dismissedAt AFTER checkedAt to ensure dismissal logic works
+                        checkedAt: now, // Move check point forward
                         triggered: false, // Reset triggered state
                       };
                     }
                   });
                   onUpdateStatuses?.(resetStatuses);
+
+                  // Enter grace period to prevent automatic scans from re-triggering
+                  enterGracePeriod();
                 }
               }}
               className="text-xs text-slate-500 hover:text-red-400 transition-colors"

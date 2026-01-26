@@ -727,8 +727,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
     // Cleanup interval on unmount
     return () => clearInterval(intervalId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [alerts.length]); // Re-setup when alerts length changes
+  }, [alerts.length, runScan]); // Re-setup when alerts length changes or runScan updates (fixes stale closure)
 
   // Show browser notifications when alerts trigger
   useEffect(() => {

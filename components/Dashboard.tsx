@@ -99,14 +99,29 @@ const saveNotificationsToStorage = (notifications: InAppNotification[]): void =>
   }
 };
 
-const clearNotificationsFromStorage = (): void => {
+const clearNotificationsFromStorage = (
+  onUpdateStatuses?: (newStatuses: Record<string, AlertStatus>) => void
+): void => {
   if (typeof window === "undefined") return;
 
   try {
     localStorage.removeItem(NOTIFICATIONS_STORAGE_KEY);
     // Also clear the notified transactions tracking to prevent duplicates
     localStorage.removeItem("doge_notified_transactions");
-    console.log("[Notifications] Cleared all notification storage");
+
+    // CRITICAL: Also clear newTransactions from alert statuses to prevent re-triggering
+    onUpdateStatuses?.((prevStatuses) => {
+      const newStatuses = { ...prevStatuses };
+      Object.keys(newStatuses).forEach((alertId) => {
+        newStatuses[alertId] = {
+          ...newStatuses[alertId],
+          newTransactions: undefined, // Clear pending transactions
+        };
+      });
+      return newStatuses;
+    });
+
+    console.log("[Notifications] Cleared all notification storage and alert state");
   } catch (error) {
     console.error("[Notifications] Error clearing storage:", error);
   }
@@ -1405,7 +1420,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <button
               onClick={() => {
                 setInAppNotifications([]);
-                clearNotificationsFromStorage();
+                clearNotificationsFromStorage(onUpdateStatuses);
               }}
               className="w-full py-2 text-xs text-red-400 hover:text-red-300 transition-colors mt-2"
             >
@@ -1451,6 +1466,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
               onClick={() => {
                 if (confirm("Clear all event history?")) {
                   onTriggeredEventsChange?.([]);
+                  // Also clear notification tracking to prevent re-creating events for old transactions
+                  localStorage.removeItem("doge_notified_transactions");
                 }
               }}
               className="text-xs text-slate-500 hover:text-red-400 transition-colors"

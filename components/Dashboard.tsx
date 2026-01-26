@@ -652,7 +652,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   // Auto-scan logic: Only run scan for alerts that don't have statuses yet (newly added alerts)
   // This prevents re-scanning all existing alerts when a new alert is created
   useEffect(() => {
-    if (alerts.length > 0) {
+    if (alerts.length > 0 && !isInGracePeriod()) {
       // Find alerts without statuses OR have pendingInitialScan flag
       const alertsWithoutStatus = alerts.filter(
         (a) => !statuses[a.id] || statuses[a.id]?.pendingInitialScan
@@ -664,7 +664,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     // FIX: Use full dependencies to prevent stale closures
     // runScan is excluded because it's memoized with useCallback and depends on these same values
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [alerts, statuses, isScanning]);
+  }, [alerts, statuses, isScanning, isInGracePeriod]);
 
   // Migration: Add baseline tracking to existing alerts
   useEffect(() => {
@@ -765,8 +765,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
       Notification.requestPermission();
     }
 
-    // Run initial scan
-    if (!isScanning) {
+    // Run initial scan ONLY if not in grace period (prevents re-triggering after clearing notifications)
+    if (!isScanning && !isInGracePeriod()) {
       runScan();
     }
 

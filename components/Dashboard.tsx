@@ -34,6 +34,7 @@ import {
   fetchTokenBalance,
   fetchWalletTransactions,
   fetchTokenData,
+  clearTransactionCache,
 } from "../services/dataService";
 import { exportDatabaseAsCSV } from "../services/db";
 import { validateTokenAddress, validateWalletAddress } from "../utils/validation";
@@ -106,11 +107,14 @@ const clearNotificationsFromStorage = (
   if (typeof window === "undefined") return;
 
   try {
+    // Step 1: Clear the transaction cache FIRST to prevent the scan from re-using old data
+    clearTransactionCache();
+
+    // Step 2: Clear localStorage
     localStorage.removeItem(NOTIFICATIONS_STORAGE_KEY);
-    // Also clear the notified transactions tracking to prevent duplicates
     localStorage.removeItem("doge_notified_transactions");
 
-    // CRITICAL: Reset alert statuses to prevent re-triggering on old transactions
+    // Step 3: CRITICAL: Reset alert statuses to prevent re-triggering on old transactions
     // This follows the same pattern as the one-time cleanup
     const newStatuses: Record<string, AlertStatus> = {};
     Object.keys(statuses).forEach((alertId) => {
@@ -1476,6 +1480,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <button
               onClick={() => {
                 if (confirm("Clear all event history?")) {
+                  // Clear transaction cache first to prevent re-triggering
+                  clearTransactionCache();
+                  // Clear the triggered events
                   onTriggeredEventsChange?.([]);
                   // Also clear notification tracking to prevent re-creating events for old transactions
                   localStorage.removeItem("doge_notified_transactions");

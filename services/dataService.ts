@@ -1147,6 +1147,17 @@ export const fetchWalletTransactions = async (
   return fetchPromise;
 };
 
+/**
+ * Clears the transaction cache for all wallets.
+ * This should be called when clearing notifications to prevent the scan
+ * from re-using cached old transaction data.
+ */
+export const clearTransactionCache = (): void => {
+  const size = txCache.size;
+  txCache.clear();
+  console.log(`[clearTransactionCache] Cleared ${size} cached transaction entries`);
+};
+
 // Updated: Accepts knownDecimals to force correct parsing
 export const fetchTokenBalance = async (
   walletAddress: string,

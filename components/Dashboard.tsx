@@ -544,7 +544,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
               if (isBaselineEstablished && existingStatus?.checkedAt) {
                 // For established alerts, filter to only transactions AFTER last check
                 // This re-detects recent transactions instead of only truly unseen ones
-                const lastCheckTime = existingStatus.checkedAt;
+                // FIX: If alert was dismissed, use dismissedAt instead of checkedAt to prevent re-triggering on old transactions
+                const dismissedAt = existingStatus.dismissedAt || 0;
+                const checkedAt = existingStatus.checkedAt;
+                // An alert is considered dismissed if dismissedAt >= checkedAt
+                const wasDismissed = dismissedAt > 0 && dismissedAt >= checkedAt;
+                const lastCheckTime = wasDismissed ? dismissedAt : checkedAt;
                 newTransactions = transactions.filter((tx) => tx.timestamp > lastCheckTime);
 
                 console.log(

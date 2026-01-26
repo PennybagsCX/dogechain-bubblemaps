@@ -100,6 +100,7 @@ const saveNotificationsToStorage = (notifications: InAppNotification[]): void =>
 };
 
 const clearNotificationsFromStorage = (
+  statuses: Record<string, AlertStatus>,
   onUpdateStatuses?: (newStatuses: Record<string, AlertStatus>) => void
 ): void => {
   if (typeof window === "undefined") return;
@@ -110,16 +111,25 @@ const clearNotificationsFromStorage = (
     localStorage.removeItem("doge_notified_transactions");
 
     // CRITICAL: Also clear newTransactions from alert statuses to prevent re-triggering
-    onUpdateStatuses?.((prevStatuses) => {
-      const newStatuses = { ...prevStatuses };
-      Object.keys(newStatuses).forEach((alertId) => {
+    const newStatuses: Record<string, AlertStatus> = {};
+    Object.keys(statuses).forEach((alertId) => {
+      const status = statuses[alertId];
+      if (status) {
         newStatuses[alertId] = {
-          ...newStatuses[alertId],
+          currentValue: status.currentValue,
+          triggered: status.triggered,
+          checkedAt: status.checkedAt,
+          notified: status.notified,
+          lastSeenTransactions: status.lastSeenTransactions,
           newTransactions: undefined, // Clear pending transactions
+          baselineEstablished: status.baselineEstablished,
+          baselineTimestamp: status.baselineTimestamp,
+          pendingInitialScan: status.pendingInitialScan,
+          dismissedAt: status.dismissedAt,
         };
-      });
-      return newStatuses;
+      }
     });
+    onUpdateStatuses?.(newStatuses);
 
     console.log("[Notifications] Cleared all notification storage and alert state");
   } catch (error) {
@@ -1420,7 +1430,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <button
               onClick={() => {
                 setInAppNotifications([]);
-                clearNotificationsFromStorage(onUpdateStatuses);
+                clearNotificationsFromStorage(statuses, onUpdateStatuses);
               }}
               className="w-full py-2 text-xs text-red-400 hover:text-red-300 transition-colors mt-2"
             >

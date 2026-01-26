@@ -110,22 +110,23 @@ const clearNotificationsFromStorage = (
     // Also clear the notified transactions tracking to prevent duplicates
     localStorage.removeItem("doge_notified_transactions");
 
-    // CRITICAL: Also clear newTransactions from alert statuses to prevent re-triggering
+    // CRITICAL: Reset alert statuses to prevent re-triggering on old transactions
+    // This follows the same pattern as the one-time cleanup
     const newStatuses: Record<string, AlertStatus> = {};
     Object.keys(statuses).forEach((alertId) => {
       const status = statuses[alertId];
       if (status) {
         newStatuses[alertId] = {
           currentValue: status.currentValue,
-          triggered: status.triggered,
-          checkedAt: status.checkedAt,
-          notified: status.notified,
-          lastSeenTransactions: status.lastSeenTransactions,
+          triggered: false, // Reset triggered state
+          checkedAt: Date.now(), // Move check point forward to ignore old transactions
+          notified: false, // Reset notified state
+          lastSeenTransactions: [], // Clear seen transactions
           newTransactions: undefined, // Clear pending transactions
           baselineEstablished: status.baselineEstablished,
           baselineTimestamp: status.baselineTimestamp,
-          pendingInitialScan: status.pendingInitialScan,
-          dismissedAt: status.dismissedAt,
+          pendingInitialScan: false, // Clear pending scan flag
+          dismissedAt: Date.now(), // Mark as dismissed to prevent re-trigger
         };
       }
     });

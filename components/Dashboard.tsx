@@ -624,8 +624,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   : undefined,
                 baselineEstablished: true, // Mark baseline as established
                 pendingInitialScan: false, // Clear the pending flag - scan complete
+                // CRITICAL FIX: If alert was dismissed, update baselineTimestamp to dismissal time
+                // This prevents old transactions from being treated as "new" after clear
                 baselineTimestamp: isBaselineEstablished
-                  ? existingStatus?.baselineTimestamp
+                  ? existingStatus?.dismissedAt &&
+                    existingStatus.dismissedAt >= (existingStatus.checkedAt || 0)
+                    ? existingStatus.dismissedAt
+                    : existingStatus?.baselineTimestamp
                   : Date.now(),
                 dismissedAt: existingStatus?.dismissedAt, // Preserve dismissal timestamp
               };

@@ -551,7 +551,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
               const wasTriggered = existingStatus?.triggered || false;
               const dismissedAt = existingStatus?.dismissedAt || 0;
               const checkedAt = existingStatus?.checkedAt || 0;
-              const wasDismissedAfterLastTrigger = dismissedAt > checkedAt;
+              // An alert is considered dismissed if dismissedAt is set (not 0) AND >= checkedAt
+              // Using >= ensures equal timestamps (from clearNotificationsFromStorage) are treated as dismissed
+              const wasDismissedAfterLastTrigger = dismissedAt > 0 && dismissedAt >= checkedAt;
               const shouldTrigger =
                 hasNewActivity || (wasTriggered && !wasDismissedAfterLastTrigger);
 
@@ -727,7 +729,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
     // Cleanup interval on unmount
     return () => clearInterval(intervalId);
-  }, [alerts.length, runScan]); // Re-setup when alerts length changes or runScan updates (fixes stale closure)
+  }, [alerts.length]); // Re-setup when alerts length changes (runScan excluded to prevent rapid interval recreation)
 
   // Show browser notifications when alerts trigger
   useEffect(() => {
@@ -1485,6 +1487,21 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   onTriggeredEventsChange?.([]);
                   // Also clear notification tracking to prevent re-creating events for old transactions
                   localStorage.removeItem("doge_notified_transactions");
+
+                  // Also reset alert dismissedAt state to prevent re-triggering on old transactions
+                  const resetStatuses: Record<string, AlertStatus> = {};
+                  Object.keys(statuses).forEach((alertId) => {
+                    const status = statuses[alertId];
+                    if (status) {
+                      resetStatuses[alertId] = {
+                        ...status,
+                        dismissedAt: Date.now(), // Set dismissedAt to now to prevent old transactions from re-triggering
+                        checkedAt: Date.now(), // Move check point forward
+                        triggered: false, // Reset triggered state
+                      };
+                    }
+                  });
+                  onUpdateStatuses?.(resetStatuses);
                 }
               }}
               className="text-xs text-slate-500 hover:text-red-400 transition-colors"

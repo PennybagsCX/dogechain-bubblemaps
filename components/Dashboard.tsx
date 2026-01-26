@@ -701,7 +701,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           transactionCount: triggeredEvent.transactions.length,
         });
 
-        fetch(getApiUrl("/api/alerts/trigger"), {
+        fetch(getApiUrl("/api/alerts?action=trigger"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

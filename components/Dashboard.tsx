@@ -104,9 +104,44 @@ const clearNotificationsFromStorage = (): void => {
 
   try {
     localStorage.removeItem(NOTIFICATIONS_STORAGE_KEY);
+    // Also clear the notified transactions tracking to prevent duplicates
+    localStorage.removeItem("doge_notified_transactions");
+    console.log("[Notifications] Cleared all notification storage");
   } catch (error) {
     console.error("[Notifications] Error clearing storage:", error);
   }
+};
+
+// Track notified transactions to prevent duplicates after page refresh
+const NOTIFIED_TXS_KEY = "doge_notified_transactions";
+
+const getNotifiedTransactions = (): Set<string> => {
+  try {
+    const stored = localStorage.getItem(NOTIFIED_TXS_KEY);
+    if (stored) {
+      const arr = JSON.parse(stored) as string[];
+      return new Set(arr);
+    }
+  } catch (e) {
+    console.error("[Notifications] Error loading notified transactions:", e);
+  }
+  return new Set();
+};
+
+const saveNotifiedTransaction = (txHash: string): void => {
+  try {
+    const notified = getNotifiedTransactions();
+    notified.add(txHash);
+    // Keep only last 1000 to prevent localStorage bloat
+    const arr = Array.from(notified).slice(-1000);
+    localStorage.setItem(NOTIFIED_TXS_KEY, JSON.stringify(arr));
+  } catch (e) {
+    console.error("[Notifications] Error saving notified transaction:", e);
+  }
+};
+
+const isTransactionNotified = (txHash: string): boolean => {
+  return getNotifiedTransactions().has(txHash);
 };
 
 interface DashboardProps {
@@ -205,7 +240,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [editingAlertId, setEditingAlertId] = useState<string | null>(null);
   const [expandedEvents, setExpandedEvents] = useState<Set<string>>(new Set());
-  const [expandedChartEvents, setExpandedChartEvents] = useState<Set<string>>(new Set());
   const [expandedNotificationCharts, setExpandedNotificationCharts] = useState<Set<string>>(
     new Set()
   );
@@ -754,12 +788,31 @@ export const Dashboard: React.FC<DashboardProps> = ({
           });
       }
 
-      status.newTransactions.forEach((tx) => {
+      // CRITICAL: Clear newTransactions immediately to prevent duplicate notifications
+      // This must happen BEFORE processing to prevent race conditions
+      const txsToProcess = status.newTransactions || [];
+      onUpdateStatuses?.({
+        ...statuses,
+        [alert.id]: { ...status, newTransactions: undefined },
+      });
+
+      txsToProcess.forEach((tx) => {
         const notifId = `notif-${alert.id}-${tx.hash}`;
 
-        // Check if we already created a notification for this transaction
-        const alreadyNotified = inAppNotifications.some((n) => n.id === notifId);
-        if (alreadyNotified) return;
+        // Check if this transaction was already notified (persists across page refreshes)
+        if (isTransactionNotified(tx.hash)) {
+          console.log(
+            `[Notifications] Skipping already notified transaction: ${tx.hash.slice(0, 10)}...`
+          );
+          return;
+        }
+
+        // Check if we already created a notification for this transaction in current session
+        const alreadyNotifiedInSession = inAppNotifications.some((n) => n.id === notifId);
+        if (alreadyNotifiedInSession) return;
+
+        // Mark this transaction as notified (persists across page refreshes)
+        saveNotifiedTransaction(tx.hash);
 
         // Play sound
         playAlertSound();
@@ -816,12 +869,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
             return updated.slice(0, notificationsLimit);
           });
         }
-      });
-
-      // Mark transactions as notified by clearing newTransactions array
-      onUpdateStatuses?.({
-        ...statuses,
-        [alert.id]: { ...status, newTransactions: undefined },
       });
     });
   }, [
@@ -951,18 +998,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
   // Toggle event expansion
   const toggleEventExpansion = (eventId: string) => {
     setExpandedEvents((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(eventId)) {
-        newSet.delete(eventId);
-      } else {
-        newSet.add(eventId);
-      }
-      return newSet;
-    });
-  };
-
-  const toggleEventChart = (eventId: string) => {
-    setExpandedChartEvents((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(eventId)) {
         newSet.delete(eventId);
@@ -1448,12 +1483,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   <div className="space-y-2">
                     {displayedTransactions.map((tx, idx) => {
                       const isIncoming = tx.to.toLowerCase() === event.walletAddress.toLowerCase();
+                      const txChartId = `tx-chart-${event.id}-${tx.hash}`;
+                      const hasValidToken =
+                        tx.tokenAddress && /^0x[a-fA-F0-9]{40}$/.test(tx.tokenAddress);
                       return (
                         <div
                           key={idx}
-                          className={`flex items-center gap-3 p-2 rounded-lg ${isIncoming ? "bg-green-500/10" : "bg-red-500/10"}`}
+                          className={`flex items-start gap-3 p-3 rounded-lg ${isIncoming ? "bg-green-500/10" : "bg-red-500/10"}`}
                         >
-                          <div className="flex-none">
+                          <div className="flex-none pt-1">
                             {isIncoming ? (
                               <ArrowDownLeft size={16} className="text-green-400" />
                             ) : (
@@ -1461,17 +1499,30 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <Tooltip content="View transaction on Dogechain Explorer">
-                              <a
-                                href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-sm font-medium text-white hover:text-purple-400 transition-colors truncate block"
-                              >
-                                {tx.value.toLocaleString()} {tx.tokenSymbol || "tokens"}
-                              </a>
-                            </Tooltip>
-                            <p className="text-xs text-slate-500">
+                            <div className="flex items-center justify-between gap-2">
+                              <Tooltip content="View transaction on Dogechain Explorer">
+                                <a
+                                  href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm font-medium text-white hover:text-purple-400 transition-colors truncate"
+                                >
+                                  {tx.value.toLocaleString()} {tx.tokenSymbol || "tokens"}
+                                </a>
+                              </Tooltip>
+                              {hasValidToken && (
+                                <button
+                                  onClick={() => toggleNotificationChart(txChartId)}
+                                  className="flex items-center gap-1 text-xs text-purple-400 hover:text-purple-300 transition-colors px-2 py-1 rounded hover:bg-purple-500/10"
+                                  aria-expanded={expandedNotificationCharts.has(txChartId)}
+                                  aria-label={`Toggle ${tx.tokenSymbol || "token"} chart`}
+                                >
+                                  <LineChart size={12} />
+                                  {expandedNotificationCharts.has(txChartId) ? "Hide" : "Chart"}
+                                </button>
+                              )}
+                            </div>
+                            <p className="text-xs text-slate-500 mt-1">
                               {isIncoming ? "From" : "To"}:{" "}
                               <Tooltip
                                 content={`View ${isIncoming ? "sender" : "receiver"} on Dogechain Explorer`}
@@ -1486,6 +1537,19 @@ export const Dashboard: React.FC<DashboardProps> = ({
                                 </a>
                               </Tooltip>
                             </p>
+                            {/* Inline Chart for this transaction */}
+                            {expandedNotificationCharts.has(txChartId) && hasValidToken && (
+                              <div className="mt-2 animate-in slide-in-from-top-2 duration-200">
+                                <EmbeddedChart
+                                  tokenAddress={tx.tokenAddress!}
+                                  tokenSymbol={tx.tokenSymbol || "Token"}
+                                  className="w-full"
+                                  theme="dark"
+                                  expanded={true}
+                                  showToggle={false}
+                                />
+                              </div>
+                            )}
                           </div>
                         </div>
                       );
@@ -1516,43 +1580,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       </button>
                     )}
                   </div>
-
-                  {/* Prominent Chart Toggle Button - Below transactions */}
-                  <button
-                    onClick={() => toggleEventChart(event.id)}
-                    disabled={!event.tokenAddress}
-                    className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-colors font-medium shadow-lg mt-4 ${
-                      event.tokenAddress
-                        ? "bg-purple-600 hover:bg-purple-700 text-white"
-                        : "bg-space-700 text-slate-500 cursor-not-allowed"
-                    }`}
-                    title={
-                      !event.tokenAddress
-                        ? "Price chart not available for this event"
-                        : "View price chart"
-                    }
-                  >
-                    <LineChart size={18} />
-                    {event.tokenAddress
-                      ? expandedChartEvents.has(event.id)
-                        ? "Hide Price Chart"
-                        : "View Price Chart"
-                      : "Price Chart Unavailable"}
-                  </button>
-
-                  {/* Inline Chart Container - Expands on button click */}
-                  {expandedChartEvents.has(event.id) && event.tokenAddress && (
-                    <div className="mt-4 animate-in slide-in-from-top-2 duration-200">
-                      <EmbeddedChart
-                        tokenAddress={event.tokenAddress}
-                        tokenSymbol={event.tokenSymbol || "Token"}
-                        className="w-full"
-                        theme="dark"
-                        expanded={true}
-                        showToggle={false}
-                      />
-                    </div>
-                  )}
                 </div>
               );
             })}

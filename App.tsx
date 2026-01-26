@@ -221,6 +221,8 @@ const App: React.FC = () => {
       const storedNum = parseInt(storedBuildNumber, 10);
       if (!isNaN(storedNum) && !isNaN(currentBuildNumber) && currentBuildNumber !== storedNum) {
         console.log(`[App] New build detected: ${storedNum} → ${currentBuildNumber}`);
+        // Save new build number BEFORE reloading to prevent infinite loop
+        localStorage.setItem("doge_build_number", currentBuildNumber.toString());
         // Force refresh to get latest code
         console.log("[App] Forcing page refresh to load new version...");
         window.location.reload();
@@ -228,8 +230,10 @@ const App: React.FC = () => {
       }
     }
 
-    // Save current build number
-    localStorage.setItem("doge_build_number", currentBuildNumber.toString());
+    // Save current build number on first load or when missing
+    if (!storedBuildNumber) {
+      localStorage.setItem("doge_build_number", currentBuildNumber.toString());
+    }
   }, []);
 
   // View state (must be declared before onboarding hook since it depends on it)

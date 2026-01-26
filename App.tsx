@@ -745,6 +745,10 @@ const App: React.FC = () => {
           checkedAt: status.checkedAt,
           notified: status.notified,
           lastSeenTransactions: status.lastSeenTransactions,
+          dismissedAt: status.dismissedAt,
+          baselineTimestamp: status.baselineTimestamp,
+          baselineEstablished: status.baselineEstablished,
+          pendingInitialScan: status.pendingInitialScan,
         }));
         // bulkPut avoids duplicate-key failures when the array contains the same alertId
         await db.alertStatuses.bulkPut(payload);

@@ -985,6 +985,25 @@ export const fetchWalletTransactions = async (
 
           const value = parsedValue / Math.pow(10, decimals);
 
+          // Parse timestamp safely - validate before parseInt to prevent NaN
+          // timeStamp from Dogechain API is unix timestamp in seconds
+          let parsedTimestamp = Date.now(); // Default to current time if invalid
+          const rawTimestamp = tx.timeStamp;
+
+          if (rawTimestamp !== undefined && rawTimestamp !== null && rawTimestamp !== "") {
+            const ts = parseInt(String(rawTimestamp), 10);
+            if (!isNaN(ts) && ts > 0) {
+              // Validate timestamp is reasonable (between year 2000 and 2030)
+              const year2000 = 946684800000; // Jan 1, 2000 in milliseconds
+              const year2030 = 1893456000000; // Jan 1, 2030 in milliseconds
+              const tsInMs = ts * 1000;
+
+              if (tsInMs >= year2000 && tsInMs <= year2030) {
+                parsedTimestamp = tsInMs;
+              }
+            }
+          }
+
           // Extract token contract address from transaction data (not request parameter)
           const txContractAddress = (tx.contractAddress || tx.contract)?.toLowerCase();
 
@@ -993,7 +1012,7 @@ export const fetchWalletTransactions = async (
             from: tx.from,
             to: tx.to,
             value: value,
-            timestamp: parseInt(tx.timeStamp) * 1000,
+            timestamp: parsedTimestamp,
             tokenAddress: txContractAddress || cleanToken, // From transaction, fallback to request parameter
             tokenSymbol: tx.tokenSymbol,
           };

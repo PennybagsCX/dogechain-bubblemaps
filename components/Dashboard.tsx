@@ -388,10 +388,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
               if (transactions.length > 0) {
                 const oldestTx = transactions[transactions.length - 1];
                 const newestTx = transactions[0];
+                // Safe ISO string conversion with validation
+                const toSafeISOString = (ts: number | undefined) => {
+                  if (!ts || isNaN(ts)) return new Date().toISOString();
+                  const d = new Date(ts);
+                  if (isNaN(d.getTime())) return new Date().toISOString();
+                  return d.toISOString();
+                };
                 console.log(`[Alert ${alert.id}] Fetched ${transactions.length} transactions`, {
-                  oldest: new Date(oldestTx?.timestamp || 0).toISOString(),
-                  newest: new Date(newestTx?.timestamp || 0).toISOString(),
-                  alertCreatedAt: new Date(alertCreatedAt).toISOString(),
+                  oldest: toSafeISOString(oldestTx?.timestamp),
+                  newest: toSafeISOString(newestTx?.timestamp),
+                  alertCreatedAt: toSafeISOString(alertCreatedAt),
                 });
               }
 
@@ -432,11 +439,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
                 // Log each new transaction for debugging
                 if (newTransactions.length > 0) {
+                  // Safe ISO string conversion for transaction timestamps
+                  const toSafeISOString = (ts: number) => {
+                    if (!ts || isNaN(ts)) return "Invalid timestamp";
+                    const d = new Date(ts);
+                    if (isNaN(d.getTime())) return "Invalid timestamp";
+                    return d.toISOString();
+                  };
                   console.log(
                     `[Alert ${alert.id}] New transactions:`,
                     newTransactions.map((tx) => ({
                       hash: tx.hash,
-                      timestamp: new Date(tx.timestamp).toISOString(),
+                      timestamp: toSafeISOString(tx.timestamp),
                       value: tx.value,
                     }))
                   );

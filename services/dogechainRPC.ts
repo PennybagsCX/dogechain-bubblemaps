@@ -145,7 +145,8 @@ interface DogechainRPCConfig {
 
 // Get configuration from environment variables or use optimized defaults
 const getRPCConfig = (): DogechainRPCConfig => {
-  const isProduction = process.env.NODE_ENV === "production";
+  // TEMPORARY: Disable console suppression to debug alert issues
+  // const isProduction = process.env.NODE_ENV === "production";
 
   return {
     // Read from env or default to 30 seconds (increased from 10s)
@@ -163,8 +164,8 @@ const getRPCConfig = (): DogechainRPCConfig => {
     // Read from env or default to 10 blocks per batch (reduced from 50)
     batchSize: BigInt(process.env.DOGECHAIN_RPC_BATCH_SIZE || "10"),
 
-    // Suppress console spam in production
-    suppressConsoleLogs: isProduction,
+    // TEMPORARY: Disabled to debug alert delay issues
+    suppressConsoleLogs: false,
   };
 };
 
@@ -754,6 +755,11 @@ export class DogechainRPCClient {
       const normalizedWallet = walletAddress.toLowerCase();
       const results: WalletTransaction[] = [];
 
+      // Debug: Always log the wallet and block range being fetched
+      console.error(
+        `[RPC] getWalletTransactions START: wallet=${walletAddress.slice(0, 10)}..., fromBlock=${actualFromBlock}, toBlock=${actualToBlock}, maxResults=${maxResults}`
+      );
+
       // Fetch blocks in range using config batch size (reduced from 50 to 10 for reliability)
       const batchSize = this.config.batchSize;
       let currentBlock = actualFromBlock;
@@ -914,8 +920,15 @@ export class DogechainRPCClient {
         currentBlock = endBlock + 1n;
       }
 
-      if (!this.config.suppressConsoleLogs) {
-        console.log(`[getWalletTransactions] Found ${results.length} transactions for wallet`);
+      // Debug: Always log the results
+      console.error(
+        `[RPC] getWalletTransactions END: wallet=${walletAddress.slice(0, 10)}..., found=${results.length} transactions`
+      );
+
+      if (results.length > 0) {
+        console.error(
+          `[RPC] Transactions: ${results.map((tx) => `${tx.hash.slice(0, 10)}... (${new Date(tx.timestamp).toISOString()})`).join(", ")}`
+        );
       }
 
       // Sort by timestamp (most recent first)

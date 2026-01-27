@@ -524,9 +524,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       console.log(`[HybridFetch] RPC returned ${walletTransactions.length} transactions`);
 
-      // Collect all unique token addresses for batch metadata fetch
+      // Collect all unique token addresses for batch metadata fetch (filter out undefined)
       const uniqueTokenAddresses = Array.from(
-        new Set(walletTransactions.map((tx) => tx.tokenAddress))
+        new Set(
+          walletTransactions.map((tx) => tx.tokenAddress).filter((addr): addr is string => !!addr)
+        )
       );
 
       // Fetch token metadata in batch for better performance
@@ -534,7 +536,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       // Convert WalletTransaction[] to Transaction[] format with metadata
       const transactions: Transaction[] = walletTransactions.map((tx) => {
-        const metadata = tokenMetadataMap.get(tx.tokenAddress.toLowerCase());
+        const metadata = tx.tokenAddress
+          ? tokenMetadataMap.get(tx.tokenAddress.toLowerCase())
+          : undefined;
         return {
           hash: tx.hash,
           timestamp: tx.timestamp, // Already in milliseconds

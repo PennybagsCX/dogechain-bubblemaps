@@ -102,7 +102,7 @@ export interface WalletTransaction {
   value: bigint;
   timestamp: number;
   blockNumber: bigint;
-  tokenAddress: string;
+  tokenAddress?: string;
   tokenSymbol?: string;
   tokenDecimals?: number;
 }

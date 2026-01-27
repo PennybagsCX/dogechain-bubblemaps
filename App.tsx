@@ -489,6 +489,11 @@ const App: React.FC = () => {
               checkedAt: s.checkedAt,
               notified: s.notified,
               lastSeenTransactions: s.lastSeenTransactions,
+              // CRITICAL: Load dismissal and baseline tracking fields
+              dismissedAt: s.dismissedAt,
+              baselineTimestamp: s.baselineTimestamp,
+              baselineEstablished: s.baselineEstablished,
+              pendingInitialScan: s.pendingInitialScan,
             };
           }
         });

@@ -18,12 +18,12 @@ moat.js:286 🔧 ConnectionManager: Initialized
 moat.js:3404 Moat: Setting up event listeners...
 moat.js:3791 Moat: Initializing, document.readyState: interactive
 moat.js:3801 Moat: Document already loaded, initializing moat immediately...
-index-WzcjUMfJ.js:1854 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
-index-WzcjUMfJ.js:1854 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
-index-WzcjUMfJ.js:1858 [DiagnosticLogger] Initialized with session: session_1769549677374_j4xrd69
-index-WzcjUMfJ.js:1858 [App] 📊 Diagnostic logger initialized: {sessionId: 'session_1769549677374_j4xrd69', browser: {…}}
-index-WzcjUMfJ.js:1858 [App] selectedWallet changed: null
-index-WzcjUMfJ.js:1858 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
+index-DcB1BofC.js:1854 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
+index-DcB1BofC.js:1854 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
+index-DcB1BofC.js:1858 [DiagnosticLogger] Initialized with session: session_1769553076396_5jr4hk6
+index-DcB1BofC.js:1858 [App] 📊 Diagnostic logger initialized: {sessionId: 'session_1769553076396_5jr4hk6', browser: {…}}
+index-DcB1BofC.js:1858 [App] selectedWallet changed: null
+index-DcB1BofC.js:1858 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
 persistence.js:32 ✅ Moat Persistence: IndexedDB initialized successfully
 persistence.js:111 ℹ️ Moat Persistence: No stored handle found for: project_https://www.dogechain-bubblemaps.xyz
 persistence.js:298 ℹ️ Moat Persistence: No stored connection found
@@ -31,8 +31,8 @@ content_script.js:691 ℹ️ Moat: Persistence restoration failed: No stored con
 content_script.js:706 🔄 Moat: Checking localStorage for legacy connections...
 content_script.js:741 🔧 Moat: No valid connections found - user must connect
 content_script.js:746 🔧 Moat: Dispatching not-connected event (no path)
-moat.js:3453 🔧 Moat: Received project-connected event: {status: 'not-connected', source: 'no-connection-found', eventSignature: 'not-connected-no-path-no-connection-found', timestamp: 1769549677423}
-moat.js:525 🔧 ConnectionManager: Processing connection event: {status: 'not-connected', source: 'no-connection-found', eventSignature: 'not-connected-no-path-no-connection-found', timestamp: 1769549677423}
+moat.js:3453 🔧 Moat: Received project-connected event: {status: 'not-connected', source: 'no-connection-found', eventSignature: 'not-connected-no-path-no-connection-found', timestamp: 1769553076464}
+moat.js:525 🔧 ConnectionManager: Processing connection event: {status: 'not-connected', source: 'no-connection-found', eventSignature: 'not-connected-no-path-no-connection-found', timestamp: 1769553076464}
 moat.js:391 🔧 ConnectionManager: Setting disconnected state
 moat.js:3477 🔧 Moat: Processing disconnection event...
 moat.js:2118 Moat: Initializing content visibility, connection state: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: false, isConnected: false, …}
@@ -66,96 +66,98 @@ moat.js:2631 Moat: Rendering empty sidebar
 moat.js:1272 Moat: Event listeners attached
 moat.js:2051 Moat: Logo updated for light theme
 moat.js:2142 🔧 Moat: Waiting for content script to restore connection...
+moat.js:2051 Moat: Logo updated for light theme
 persistence.js:111 ℹ️ Moat Persistence: No stored handle found for: project_https://www.dogechain-bubblemaps.xyz
 persistence.js:298 ℹ️ Moat Persistence: No stored connection found
 content_script.js:691 ℹ️ Moat: Persistence restoration failed: No stored connection
 content_script.js:706 🔄 Moat: Checking localStorage for legacy connections...
 content_script.js:741 🔧 Moat: No valid connections found - user must connect
 content_script.js:746 🔧 Moat: Dispatching not-connected event (no path)
-moat.js:2051 Moat: Logo updated for light theme
-index-WzcjUMfJ.js:1858 [Cleanup] Already completed, skipping
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:34:37.492Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+index-DcB1BofC.js:1858 [useStatsCounters] Stats received: {searches: 210, alerts: 83, timestamp: 1769553076531}
+index-DcB1BofC.js:1858 [useStatsCounters] Stats received: {searches: 210, alerts: 83, timestamp: 1769553076536}
+index-DcB1BofC.js:1858 [Cleanup] Already completed, skipping
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:31:16.555Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -190,119 +192,117 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [useStatsCounters] Stats received: {searches: 210, alerts: 83, timestamp: 1769549677527}
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [useStatsCounters] Stats received: {searches: 210, alerts: 83, timestamp: 1769549677571}
-index-WzcjUMfJ.js:1858 [DB SAVE] Saving 12 alerts to IndexedDB...
-index-WzcjUMfJ.js:1858 [DB SAVE] ✅ Alerts saved in 11.20ms
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [SYNC] Syncing alerts with server...
-index-WzcjUMfJ.js:1858 [DB SAVE] Saving 12 alerts to IndexedDB...
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [useStatsCounters] Stats received: {searches: 210, alerts: 83, timestamp: 1769553076598}
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [DB SAVE] Saving 12 alerts to IndexedDB...
+index-DcB1BofC.js:1858 [DB SAVE] ✅ Alerts saved in 14.30ms
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [SYNC] Syncing alerts with server...
+index-DcB1BofC.js:1858 [DB SAVE] Saving 12 alerts to IndexedDB...
 content_script.js:3944 Uncaught TypeError: e.target.matches is not a function
     at HTMLDocument.<anonymous> (content_script.js:3944:18)
 (anonymous) @ content_script.js:3944
-core-D4cCyKQ2.js:2  GET https://api.web3modal.org/appkit/v1/config?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8 403 (Forbidden)
-Zr @ core-D4cCyKQ2.js:2
-get @ core-D4cCyKQ2.js:2
-fetchProjectConfig @ core-D4cCyKQ2.js:4
-fetchRemoteFeatures @ core-D4cCyKQ2.js:908
-initialize @ core-D4cCyKQ2.js:908
+index-DcB1BofC.js:1858 [DB SAVE] ✅ Alerts saved in 6.10ms
+core-CDPfzGiV.js:2  POST https://pulse.walletconnect.org/e?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8 400 (Bad Request)
+Zr @ core-CDPfzGiV.js:2
+post @ core-CDPfzGiV.js:2
+_sendAnalyticsEvent @ core-CDPfzGiV.js:4
+sendEvent @ core-CDPfzGiV.js:4
+sendInitializeEvent @ core-CDPfzGiV.js:908
+initialize @ core-CDPfzGiV.js:908
 await in initialize
-r1 @ core-D4cCyKQ2.js:908
-xh @ core-D4cCyKQ2.js:908
-n1 @ core-D4cCyKQ2.js:908
-initialize @ index.es-BnVXYYne.js:39
+r1 @ core-CDPfzGiV.js:908
+xh @ core-CDPfzGiV.js:908
+n1 @ core-CDPfzGiV.js:908
+initialize @ index.es-BB0k-Csv.js:39
 await in initialize
-init @ index.es-BnVXYYne.js:39
-y @ index-WzcjUMfJ.js:1755
+init @ index.es-BB0k-Csv.js:39
+y @ index-DcB1BofC.js:1755
 await in y
-getProvider @ index-WzcjUMfJ.js:1755
-setup @ index-WzcjUMfJ.js:1755
-h @ index-WzcjUMfJ.js:77
-(anonymous) @ index-WzcjUMfJ.js:77
-sA @ index-WzcjUMfJ.js:77
-Mb @ index-WzcjUMfJ.js:77
-bP @ index-WzcjUMfJ.js:77
-vK @ index-WzcjUMfJ.js:1756
-(anonymous) @ index-WzcjUMfJ.js:1880
-index-WzcjUMfJ.js:1858 [Reown Config] Failed to fetch remote project configuration. Using local/default values. Error: HTTP status code: 403
-    at Zr (core-D4cCyKQ2.js:2:34968)
-    at async Li.get (core-D4cCyKQ2.js:2:35184)
-    at async Object.fetchProjectConfig (core-D4cCyKQ2.js:4:6414)
-    at async Object.fetchRemoteFeatures (core-D4cCyKQ2.js:908:14946)
-    at async xh.initialize (core-D4cCyKQ2.js:908:19812)
-console.warn @ index-WzcjUMfJ.js:1858
-fetchRemoteFeatures @ core-D4cCyKQ2.js:908
+getProvider @ index-DcB1BofC.js:1755
+setup @ index-DcB1BofC.js:1755
+h @ index-DcB1BofC.js:77
+(anonymous) @ index-DcB1BofC.js:77
+sA @ index-DcB1BofC.js:77
+Mb @ index-DcB1BofC.js:77
+bP @ index-DcB1BofC.js:77
+vK @ index-DcB1BofC.js:1756
+(anonymous) @ index-DcB1BofC.js:1880
+core-CDPfzGiV.js:2  GET https://api.web3modal.org/appkit/v1/config?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8 403 (Forbidden)
+Zr @ core-CDPfzGiV.js:2
+get @ core-CDPfzGiV.js:2
+fetchProjectConfig @ core-CDPfzGiV.js:4
+fetchRemoteFeatures @ core-CDPfzGiV.js:908
+initialize @ core-CDPfzGiV.js:908
+await in initialize
+r1 @ core-CDPfzGiV.js:908
+xh @ core-CDPfzGiV.js:908
+n1 @ core-CDPfzGiV.js:908
+initialize @ index.es-BB0k-Csv.js:39
+await in initialize
+init @ index.es-BB0k-Csv.js:39
+y @ index-DcB1BofC.js:1755
+await in y
+getProvider @ index-DcB1BofC.js:1755
+setup @ index-DcB1BofC.js:1755
+h @ index-DcB1BofC.js:77
+(anonymous) @ index-DcB1BofC.js:77
+sA @ index-DcB1BofC.js:77
+Mb @ index-DcB1BofC.js:77
+bP @ index-DcB1BofC.js:77
+vK @ index-DcB1BofC.js:1756
+(anonymous) @ index-DcB1BofC.js:1880
+index-DcB1BofC.js:1858 [Reown Config] Failed to fetch remote project configuration. Using local/default values. Error: HTTP status code: 403
+    at Zr (core-CDPfzGiV.js:2:34968)
+    at async Li.get (core-CDPfzGiV.js:2:35184)
+    at async Object.fetchProjectConfig (core-CDPfzGiV.js:4:6414)
+    at async Object.fetchRemoteFeatures (core-CDPfzGiV.js:908:14946)
+    at async xh.initialize (core-CDPfzGiV.js:908:19812)
+console.warn @ index-DcB1BofC.js:1858
+fetchRemoteFeatures @ core-CDPfzGiV.js:908
 await in fetchRemoteFeatures
-initialize @ core-D4cCyKQ2.js:908
+initialize @ core-CDPfzGiV.js:908
 await in initialize
-r1 @ core-D4cCyKQ2.js:908
-xh @ core-D4cCyKQ2.js:908
-n1 @ core-D4cCyKQ2.js:908
-initialize @ index.es-BnVXYYne.js:39
+r1 @ core-CDPfzGiV.js:908
+xh @ core-CDPfzGiV.js:908
+n1 @ core-CDPfzGiV.js:908
+initialize @ index.es-BB0k-Csv.js:39
 await in initialize
-init @ index.es-BnVXYYne.js:39
-y @ index-WzcjUMfJ.js:1755
+init @ index.es-BB0k-Csv.js:39
+y @ index-DcB1BofC.js:1755
 await in y
-getProvider @ index-WzcjUMfJ.js:1755
-setup @ index-WzcjUMfJ.js:1755
-h @ index-WzcjUMfJ.js:77
-(anonymous) @ index-WzcjUMfJ.js:77
-sA @ index-WzcjUMfJ.js:77
-Mb @ index-WzcjUMfJ.js:77
-bP @ index-WzcjUMfJ.js:77
-vK @ index-WzcjUMfJ.js:1756
-(anonymous) @ index-WzcjUMfJ.js:1880
-index-WzcjUMfJ.js:1858 [DB SAVE] ✅ Alerts saved in 12.70ms
-core-D4cCyKQ2.js:2  POST https://pulse.walletconnect.org/e?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8 400 (Bad Request)
-Zr @ core-D4cCyKQ2.js:2
-post @ core-D4cCyKQ2.js:2
-_sendAnalyticsEvent @ core-D4cCyKQ2.js:4
-sendEvent @ core-D4cCyKQ2.js:4
-sendInitializeEvent @ core-D4cCyKQ2.js:908
-initialize @ core-D4cCyKQ2.js:908
-await in initialize
-r1 @ core-D4cCyKQ2.js:908
-xh @ core-D4cCyKQ2.js:908
-n1 @ core-D4cCyKQ2.js:908
-initialize @ index.es-BnVXYYne.js:39
-await in initialize
-init @ index.es-BnVXYYne.js:39
-y @ index-WzcjUMfJ.js:1755
-await in y
-getProvider @ index-WzcjUMfJ.js:1755
-setup @ index-WzcjUMfJ.js:1755
-h @ index-WzcjUMfJ.js:77
-(anonymous) @ index-WzcjUMfJ.js:77
-sA @ index-WzcjUMfJ.js:77
-Mb @ index-WzcjUMfJ.js:77
-bP @ index-WzcjUMfJ.js:77
-vK @ index-WzcjUMfJ.js:1756
-(anonymous) @ index-WzcjUMfJ.js:1880
-index-WzcjUMfJ.js:1858 [SYNC] ✅ Alerts synced to server
-index-WzcjUMfJ.js:1858 [SYNC] ✅ Sync complete: 0 downloaded, 5 uploaded, 5 conflicts
+getProvider @ index-DcB1BofC.js:1755
+setup @ index-DcB1BofC.js:1755
+h @ index-DcB1BofC.js:77
+(anonymous) @ index-DcB1BofC.js:77
+sA @ index-DcB1BofC.js:77
+Mb @ index-DcB1BofC.js:77
+bP @ index-DcB1BofC.js:77
+vK @ index-DcB1BofC.js:1756
+(anonymous) @ index-DcB1BofC.js:1880
+index-DcB1BofC.js:1858 [SYNC] ✅ Alerts synced to server
 moat.js:2246 🔧 Moat: Updating UI with connection state: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: false, isConnected: false, …}
 moat.js:2254 🔧 Moat: Found DOM elements: {indicator: true, label: true, chevron: true, divider: true, button: true}
 moat.js:2270 🔧 Moat: Set label text to: Disconnected
@@ -338,693 +338,697 @@ moat.js:2105 Moat: Restoring visibility state from localStorage: null
 moat.js:2111 Moat: Moat will remain hidden based on saved state
 moat.js:2181 Moat: DOM monitoring started
 moat.js:2158 Moat: Moat initialization complete
-index-WzcjUMfJ.js:1858 [useStatsCounters] Stats received: {searches: 210, alerts: 83, timestamp: 1769549677983}
+index-DcB1BofC.js:1858 [SYNC] ✅ Sync complete: 0 downloaded, 5 uploaded, 5 conflicts
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54259989 to 54260989
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54259989, toBlock=54260989, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-DcB1BofC.js:77
+await in getChainId
+connect @ index-DcB1BofC.js:77
+await in connect
+Hz @ index-DcB1BofC.js:77
+await in Hz
+onMount @ index-DcB1BofC.js:77
+await in onMount
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259989 to 54259998
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54259989 to 54260989
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54259989, toBlock=54260989, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-DcB1BofC.js:77
+await in getChainId
+connect @ index-DcB1BofC.js:77
+await in connect
+Hz @ index-DcB1BofC.js:77
+await in Hz
+onMount @ index-DcB1BofC.js:77
+await in onMount
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259989 to 54259998
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54259989 to 54260989
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54259989, toBlock=54260989, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-DcB1BofC.js:77
+await in getChainId
+connect @ index-DcB1BofC.js:77
+await in connect
+Hz @ index-DcB1BofC.js:77
+await in Hz
+onMount @ index-DcB1BofC.js:77
+await in onMount
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259989 to 54259998
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54259989 to 54260989
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54259989, toBlock=54260989, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-DcB1BofC.js:77
+await in getChainId
+connect @ index-DcB1BofC.js:77
+await in connect
+Hz @ index-DcB1BofC.js:77
+await in Hz
+onMount @ index-DcB1BofC.js:77
+await in onMount
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259989 to 54259998
 moat.js:973 🔔 Notification request: Press C to make a comment info content-script
 moat.js:798 🔔 Header Notification: Press C to make a comment info content-script
 moat.js:858 🔔 Processing header notification: Press C to make a comment info content-script 
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254804 to 54259289
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254804, toBlock=54259289, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
-await in getChainId
-connect @ index-WzcjUMfJ.js:77
-await in connect
-Hz @ index-WzcjUMfJ.js:77
-await in Hz
-onMount @ index-WzcjUMfJ.js:77
-await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254804 to 54254813
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254804 to 54259289
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254804, toBlock=54259289, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
-await in getChainId
-connect @ index-WzcjUMfJ.js:77
-await in connect
-Hz @ index-WzcjUMfJ.js:77
-await in Hz
-onMount @ index-WzcjUMfJ.js:77
-await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254804 to 54254813
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254804 to 54259289
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254804, toBlock=54259289, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
-await in getChainId
-connect @ index-WzcjUMfJ.js:77
-await in connect
-Hz @ index-WzcjUMfJ.js:77
-await in Hz
-onMount @ index-WzcjUMfJ.js:77
-await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254804 to 54254813
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254804 to 54259289
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254804, toBlock=54259289, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
-await in getChainId
-connect @ index-WzcjUMfJ.js:77
-await in connect
-Hz @ index-WzcjUMfJ.js:77
-await in Hz
-onMount @ index-WzcjUMfJ.js:77
-await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254804 to 54254813
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259999 to 54260008
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259999 to 54260008
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259999 to 54260008
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259999 to 54260008
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260009 to 54260018
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260009 to 54260018
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260009 to 54260018
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260009 to 54260018
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260019 to 54260028
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260019 to 54260028
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260019 to 54260028
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260019 to 54260028
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260029 to 54260038
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260029 to 54260038
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260029 to 54260038
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260029 to 54260038
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -1059,110 +1063,110 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:34:47.497Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:31:26.950Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -1197,128 +1201,128 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254844 to 54254853
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254844 to 54254853
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254844 to 54254853
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254844 to 54254853
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254805 to 54259294
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254805, toBlock=54259294, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260039 to 54260048
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260039 to 54260048
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260039 to 54260048
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260039 to 54260048
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54259994 to 54260994
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54259994, toBlock=54260994, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -1353,121 +1357,121 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254805 to 54254814
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254805 to 54259294
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254805, toBlock=54259294, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259994 to 54260003
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54259994 to 54260994
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54259994, toBlock=54260994, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -1502,121 +1506,121 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254805 to 54254814
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254805 to 54259294
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254805, toBlock=54259294, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259994 to 54260003
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54259994 to 54260994
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54259994, toBlock=54260994, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -1651,121 +1655,121 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254805 to 54254814
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254805 to 54259294
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254805, toBlock=54259294, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259994 to 54260003
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54259994 to 54260994
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54259994, toBlock=54260994, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -1800,126 +1804,126 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254805 to 54254814
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254854 to 54254863
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254854 to 54254863
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254854 to 54254863
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254854 to 54254863
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254815 to 54254824
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254815 to 54254824
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254815 to 54254824
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254815 to 54254824
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254864 to 54254873
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254864 to 54254873
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254864 to 54254873
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254864 to 54254873
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254825 to 54254834
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254825 to 54254834
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254825 to 54254834
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254825 to 54254834
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259994 to 54260003
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260049 to 54260058
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260049 to 54260058
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260049 to 54260058
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260049 to 54260058
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260004 to 54260013
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260004 to 54260013
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260004 to 54260013
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260004 to 54260013
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260059 to 54260068
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260059 to 54260068
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260059 to 54260068
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260059 to 54260068
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260014 to 54260023
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260014 to 54260023
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260014 to 54260023
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260014 to 54260023
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -1954,110 +1958,110 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:34:57.927Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:31:36.949Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -2092,124 +2096,128 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254806 to 54259300
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254806, toBlock=54259300, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260069 to 54260078
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260069 to 54260078
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260069 to 54260078
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260069 to 54260078
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54259999 to 54260999
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54259999, toBlock=54260999, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -2244,121 +2252,121 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254806 to 54254815
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254806 to 54259300
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254806, toBlock=54259300, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259999 to 54260008
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54259999 to 54260999
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54259999, toBlock=54260999, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -2393,121 +2401,121 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254806 to 54254815
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254806 to 54259300
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254806, toBlock=54259300, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259999 to 54260008
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54259999 to 54260999
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54259999, toBlock=54260999, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -2542,121 +2550,121 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254806 to 54254815
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254806 to 54259300
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254806, toBlock=54259300, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259999 to 54260008
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54259999 to 54260999
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54259999, toBlock=54260999, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -2691,446 +2699,422 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254806 to 54254815
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254874 to 54254883
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254874 to 54254883
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254874 to 54254883
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254874 to 54254883
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254835 to 54254844
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254835 to 54254844
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254835 to 54254844
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254835 to 54254844
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254884 to 54254893
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254884 to 54254893
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254884 to 54254893
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254884 to 54254893
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254845 to 54254854
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254845 to 54254854
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254845 to 54254854
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254845 to 54254854
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254894 to 54254903
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254894 to 54254903
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254894 to 54254903
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254894 to 54254903
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254855 to 54254864
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254855 to 54254864
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254855 to 54254864
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254855 to 54254864
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254836 to 54254845
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254836 to 54254845
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254836 to 54254845
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254836 to 54254845
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254904 to 54254913
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254904 to 54254913
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254904 to 54254913
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254904 to 54254913
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54259999 to 54260008
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260024 to 54260033
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260024 to 54260033
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260024 to 54260033
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260024 to 54260033
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260079 to 54260088
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260079 to 54260088
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260079 to 54260088
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260079 to 54260088
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260009 to 54260018
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260009 to 54260018
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260009 to 54260018
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260009 to 54260018
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260034 to 54260043
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260034 to 54260043
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260034 to 54260043
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260034 to 54260043
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+setInterval
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-DcB1BofC.js:77
+await in getChainId
+connect @ index-DcB1BofC.js:77
+await in connect
+Hz @ index-DcB1BofC.js:77
+await in Hz
+onMount @ index-DcB1BofC.js:77
+await in onMount
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:31:46.952Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+setInterval
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-DcB1BofC.js:77
+await in getChainId
+connect @ index-DcB1BofC.js:77
+await in connect
+Hz @ index-DcB1BofC.js:77
+await in Hz
+onMount @ index-DcB1BofC.js:77
+await in onMount
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
 moat.js:3546 Moat: Page became visible, checking moat state...
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
-await in getChainId
-connect @ index-WzcjUMfJ.js:77
-await in connect
-Hz @ index-WzcjUMfJ.js:77
-await in Hz
-onMount @ index-WzcjUMfJ.js:77
-await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:35:24.300Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
-await in getChainId
-connect @ index-WzcjUMfJ.js:77
-await in connect
-Hz @ index-WzcjUMfJ.js:77
-await in Hz
-onMount @ index-WzcjUMfJ.js:77
-await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260089 to 54260098
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260089 to 54260098
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260089 to 54260098
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260089 to 54260098
 moat.js:3557 Moat: Window focused, checking moat state...
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254865 to 54254874
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254865 to 54254874
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254865 to 54254874
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254865 to 54254874
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254809 to 54259314
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254809, toBlock=54259314, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54260005 to 54261005
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54260005, toBlock=54261005, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -3165,121 +3149,121 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254809 to 54259314
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254809, toBlock=54259314, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260005 to 54260014
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260005 to 54261005
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260005, toBlock=54261005, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -3314,121 +3298,121 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254809 to 54259314
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254809, toBlock=54259314, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260005 to 54260014
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54260005 to 54261005
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54260005, toBlock=54261005, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -3463,121 +3447,121 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254809 to 54259314
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254809, toBlock=54259314, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260005 to 54260014
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260005 to 54261005
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260005, toBlock=54261005, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -3612,110 +3596,118 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260005 to 54260014
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260019 to 54260028
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260019 to 54260028
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260019 to 54260028
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260019 to 54260028
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260044 to 54260053
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260044 to 54260053
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260044 to 54260053
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260044 to 54260053
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -3750,110 +3742,110 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:35:27.496Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:31:56.560Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -3888,121 +3880,140 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254809 to 54259314
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254809, toBlock=54259314, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260099 to 54260108
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260099 to 54260108
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260099 to 54260108
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260099 to 54260108
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260015 to 54260024
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260015 to 54260024
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260015 to 54260024
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260015 to 54260024
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260029 to 54260038
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260029 to 54260038
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260029 to 54260038
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260029 to 54260038
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260054 to 54260063
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260054 to 54260063
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260054 to 54260063
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260054 to 54260063
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260010 to 54261010
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260010, toBlock=54261010, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -4037,122 +4048,121 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254809 to 54259314
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254809, toBlock=54259314, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260010 to 54260019
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54260010 to 54261010
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54260010, toBlock=54261010, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -4187,122 +4197,121 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254809 to 54259314
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254809, toBlock=54259314, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260010 to 54260019
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260010 to 54261010
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260010, toBlock=54261010, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -4337,122 +4346,121 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254809 to 54259314
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254809, toBlock=54259314, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260010 to 54260019
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54260010 to 54261010
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54260010, toBlock=54261010, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
 postMessage
 _postMessage @ content-script.js:2
 _write @ content-script.js:2
@@ -4487,1969 +4495,1865 @@ L._request @ pageProvider.js:2
 (anonymous) @ pageProvider.js:2
 call @ pageProvider.js:2
 L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
+getChainId @ index-DcB1BofC.js:77
 await in getChainId
-connect @ index-WzcjUMfJ.js:77
+connect @ index-DcB1BofC.js:77
 await in connect
-Hz @ index-WzcjUMfJ.js:77
+Hz @ index-DcB1BofC.js:77
 await in Hz
-onMount @ index-WzcjUMfJ.js:77
+onMount @ index-DcB1BofC.js:77
 await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254846 to 54254855
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254846 to 54254855
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254846 to 54254855
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254846 to 54254855
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254914 to 54254923
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254914 to 54254923
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254914 to 54254923
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254914 to 54254923
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260010 to 54260019
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260109 to 54260118
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260109 to 54260118
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260109 to 54260118
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260109 to 54260118
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+setInterval
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-DcB1BofC.js:77
+await in getChainId
+connect @ index-DcB1BofC.js:77
+await in connect
+Hz @ index-DcB1BofC.js:77
+await in Hz
+onMount @ index-DcB1BofC.js:77
+await in onMount
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:32:06.559Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+setInterval
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-DcB1BofC.js:77
+await in getChainId
+connect @ index-DcB1BofC.js:77
+await in connect
+Hz @ index-DcB1BofC.js:77
+await in Hz
+onMount @ index-DcB1BofC.js:77
+await in onMount
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260025 to 54260034
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260025 to 54260034
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260025 to 54260034
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260025 to 54260034
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260039 to 54260048
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260039 to 54260048
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260039 to 54260048
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260039 to 54260048
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260064 to 54260073
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260064 to 54260073
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260064 to 54260073
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260064 to 54260073
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260020 to 54260029
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260020 to 54260029
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260020 to 54260029
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260020 to 54260029
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260016 to 54261016
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260016, toBlock=54261016, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+setInterval
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-DcB1BofC.js:77
+await in getChainId
+connect @ index-DcB1BofC.js:77
+await in connect
+Hz @ index-DcB1BofC.js:77
+await in Hz
+onMount @ index-DcB1BofC.js:77
+await in onMount
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260016 to 54260025
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54260016 to 54261016
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54260016, toBlock=54261016, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+setInterval
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-DcB1BofC.js:77
+await in getChainId
+connect @ index-DcB1BofC.js:77
+await in connect
+Hz @ index-DcB1BofC.js:77
+await in Hz
+onMount @ index-DcB1BofC.js:77
+await in onMount
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260016 to 54260025
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54260016 to 54261016
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54260016, toBlock=54261016, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+setInterval
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-DcB1BofC.js:77
+await in getChainId
+connect @ index-DcB1BofC.js:77
+await in connect
+Hz @ index-DcB1BofC.js:77
+await in Hz
+onMount @ index-DcB1BofC.js:77
+await in onMount
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260016 to 54260025
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260016 to 54261016
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260016, toBlock=54261016, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+setInterval
+(anonymous) @ index-DcB1BofC.js:1852
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+lh @ index-DcB1BofC.js:33
+P2 @ index-DcB1BofC.js:33
+M2 @ index-DcB1BofC.js:33
+j2 @ index-DcB1BofC.js:33
+k2 @ index-DcB1BofC.js:33
+W2 @ index-DcB1BofC.js:33
+Iu @ index-DcB1BofC.js:33
+H2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-DcB1BofC.js:77
+await in getChainId
+connect @ index-DcB1BofC.js:77
+await in connect
+Hz @ index-DcB1BofC.js:77
+await in Hz
+onMount @ index-DcB1BofC.js:77
+await in onMount
+(anonymous) @ index-DcB1BofC.js:77
+Su @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+Ps @ index-DcB1BofC.js:33
+w2 @ index-DcB1BofC.js:33
+$2 @ index-DcB1BofC.js:33
+(anonymous) @ index-DcB1BofC.js:33
+F @ index-DcB1BofC.js:18
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260016 to 54260025
+index-DcB1BofC.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:32:16.559Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260119 to 54260128
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260119 to 54260128
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260119 to 54260128
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260119 to 54260128
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260035 to 54260044
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260035 to 54260044
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260035 to 54260044
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260035 to 54260044
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260049 to 54260058
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260049 to 54260058
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260049 to 54260058
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260049 to 54260058
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260074 to 54260083
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260074 to 54260083
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260074 to 54260083
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260074 to 54260083
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260030 to 54260039
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260030 to 54260039
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260030 to 54260039
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260030 to 54260039
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260021 to 54261021
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260021, toBlock=54261021, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260021 to 54260030
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260021 to 54261021
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260021, toBlock=54261021, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260021 to 54260030
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54260021 to 54261021
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54260021, toBlock=54261021, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260021 to 54260030
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54260021 to 54261021
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54260021, toBlock=54261021, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260021 to 54260030
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260026 to 54260035
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260026 to 54260035
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260026 to 54260035
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260026 to 54260035
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:32:26.559Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260129 to 54260138
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260129 to 54260138
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260129 to 54260138
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260129 to 54260138
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260045 to 54260054
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260045 to 54260054
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260045 to 54260054
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260045 to 54260054
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260059 to 54260068
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260059 to 54260068
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260059 to 54260068
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260059 to 54260068
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260084 to 54260093
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260084 to 54260093
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260084 to 54260093
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260084 to 54260093
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260026 to 54261026
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260026, toBlock=54261026, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260026 to 54260035
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260026 to 54261026
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260026, toBlock=54261026, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260026 to 54260035
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54260026 to 54261026
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54260026, toBlock=54261026, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260026 to 54260035
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54260026 to 54261026
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54260026, toBlock=54261026, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260026 to 54260035
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260040 to 54260049
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260040 to 54260049
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260040 to 54260049
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260040 to 54260049
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260031 to 54260040
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260031 to 54260040
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260031 to 54260040
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260031 to 54260040
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260036 to 54260045
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260036 to 54260045
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260036 to 54260045
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260036 to 54260045
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:32:36.560Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54260026 to 54261026
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54260026, toBlock=54261026, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260026 to 54260035
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260026 to 54261026
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260026, toBlock=54261026, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260026 to 54260035
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260026 to 54261026
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260026, toBlock=54261026, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260026 to 54260035
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54260026 to 54261026
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54260026, toBlock=54261026, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260026 to 54260035
+index-DcB1BofC.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260139 to 54260148
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260139 to 54260148
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260139 to 54260148
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260139 to 54260148
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260055 to 54260064
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260055 to 54260064
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260055 to 54260064
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260055 to 54260064
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260069 to 54260078
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260069 to 54260078
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260069 to 54260078
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260069 to 54260078
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260094 to 54260103
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260094 to 54260103
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260094 to 54260103
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260094 to 54260103
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260036 to 54260045
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260036 to 54260045
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260036 to 54260045
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260036 to 54260045
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:32:46.560Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260050 to 54260059
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260050 to 54260059
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260050 to 54260059
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260050 to 54260059
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260041 to 54260050
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260041 to 54260050
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260041 to 54260050
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260041 to 54260050
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260046 to 54260055
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260046 to 54260055
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260046 to 54260055
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260046 to 54260055
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260036 to 54260045
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260036 to 54260045
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260036 to 54260045
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260036 to 54260045
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260037 to 54261037
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260037, toBlock=54261037, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260037 to 54260046
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54260037 to 54261037
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54260037, toBlock=54261037, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260037 to 54260046
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260037 to 54261037
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260037, toBlock=54261037, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260037 to 54260046
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54260037 to 54261037
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54260037, toBlock=54261037, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260037 to 54260046
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260149 to 54260158
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260149 to 54260158
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260149 to 54260158
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260149 to 54260158
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:32:56.560Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54260037 to 54261037
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54260037, toBlock=54261037, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260037 to 54260046
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260037 to 54261037
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260037, toBlock=54261037, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260037 to 54260046
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54260037 to 54261037
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54260037, toBlock=54261037, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260037 to 54260046
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260037 to 54261037
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260037, toBlock=54261037, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
+await in un
+(anonymous) @ index-DcB1BofC.js:1852
+await in (anonymous)
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260037 to 54260046
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260065 to 54260074
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260065 to 54260074
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260065 to 54260074
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260065 to 54260074
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260079 to 54260088
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260079 to 54260088
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260079 to 54260088
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260079 to 54260088
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260104 to 54260113
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260104 to 54260113
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260104 to 54260113
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260104 to 54260113
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260046 to 54260055
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260046 to 54260055
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260046 to 54260055
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260046 to 54260055
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260060 to 54260069
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260060 to 54260069
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260060 to 54260069
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260060 to 54260069
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260051 to 54260060
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260051 to 54260060
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260051 to 54260060
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260051 to 54260060
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260056 to 54260065
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260056 to 54260065
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260056 to 54260065
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260056 to 54260065
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260046 to 54260055
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260046 to 54260055
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260046 to 54260055
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260046 to 54260055
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:33:06.949Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260159 to 54260168
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260159 to 54260168
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260159 to 54260168
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260159 to 54260168
 moat.js:3546 Moat: Page became visible, checking moat state...
 moat.js:3557 Moat: Window focused, checking moat state...
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254875 to 54254884
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254875 to 54254884
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254875 to 54254884
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254875 to 54254884
-index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-setTimeout
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
-await in getChainId
-connect @ index-WzcjUMfJ.js:77
-await in connect
-Hz @ index-WzcjUMfJ.js:77
-await in Hz
-onMount @ index-WzcjUMfJ.js:77
-await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
-await in getChainId
-connect @ index-WzcjUMfJ.js:77
-await in connect
-Hz @ index-WzcjUMfJ.js:77
-await in Hz
-onMount @ index-WzcjUMfJ.js:77
-await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:35:37.496Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
-await in getChainId
-connect @ index-WzcjUMfJ.js:77
-await in connect
-Hz @ index-WzcjUMfJ.js:77
-await in Hz
-onMount @ index-WzcjUMfJ.js:77
-await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254856 to 54254865
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254856 to 54254865
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254856 to 54254865
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254856 to 54254865
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254924 to 54254933
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254924 to 54254933
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254924 to 54254933
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254924 to 54254933
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254810 to 54259320
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254810, toBlock=54259320, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260075 to 54260084
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260075 to 54260084
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260075 to 54260084
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260075 to 54260084
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260089 to 54260098
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260089 to 54260098
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260089 to 54260098
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260089 to 54260098
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54260047 to 54261047
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54260047, toBlock=54261047, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
-await in getChainId
-connect @ index-WzcjUMfJ.js:77
-await in connect
-Hz @ index-WzcjUMfJ.js:77
-await in Hz
-onMount @ index-WzcjUMfJ.js:77
-await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254810 to 54254819
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254810 to 54259320
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254810, toBlock=54259320, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260047 to 54261047
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260047, toBlock=54261047, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
-await in getChainId
-connect @ index-WzcjUMfJ.js:77
-await in connect
-Hz @ index-WzcjUMfJ.js:77
-await in Hz
-onMount @ index-WzcjUMfJ.js:77
-await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254810 to 54254819
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254810 to 54259320
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254810, toBlock=54259320, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260047 to 54261047
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260047, toBlock=54261047, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
-await in getChainId
-connect @ index-WzcjUMfJ.js:77
-await in connect
-Hz @ index-WzcjUMfJ.js:77
-await in Hz
-onMount @ index-WzcjUMfJ.js:77
-await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254810 to 54254819
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254810 to 54259320
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254810, toBlock=54259320, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54260047 to 54261047
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54260047, toBlock=54261047, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-setInterval
-(anonymous) @ index-WzcjUMfJ.js:1852
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-lh @ index-WzcjUMfJ.js:33
-P2 @ index-WzcjUMfJ.js:33
-M2 @ index-WzcjUMfJ.js:33
-j2 @ index-WzcjUMfJ.js:33
-k2 @ index-WzcjUMfJ.js:33
-W2 @ index-WzcjUMfJ.js:33
-Iu @ index-WzcjUMfJ.js:33
-H2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-WzcjUMfJ.js:77
-await in getChainId
-connect @ index-WzcjUMfJ.js:77
-await in connect
-Hz @ index-WzcjUMfJ.js:77
-await in Hz
-onMount @ index-WzcjUMfJ.js:77
-await in onMount
-(anonymous) @ index-WzcjUMfJ.js:77
-Su @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-Ps @ index-WzcjUMfJ.js:33
-w2 @ index-WzcjUMfJ.js:33
-$2 @ index-WzcjUMfJ.js:33
-(anonymous) @ index-WzcjUMfJ.js:33
-F @ index-WzcjUMfJ.js:18
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254810 to 54254819
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254885 to 54254894
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254885 to 54254894
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254885 to 54254894
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254885 to 54254894
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:35:47.496Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254866 to 54254875
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254866 to 54254875
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254866 to 54254875
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254866 to 54254875
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254934 to 54254943
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254934 to 54254943
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254934 to 54254943
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254934 to 54254943
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254820 to 54254829
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254820 to 54254829
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254820 to 54254829
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254820 to 54254829
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254811 to 54259326
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254811, toBlock=54259326, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260114 to 54260123
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260114 to 54260123
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260114 to 54260123
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260114 to 54260123
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260056 to 54260065
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260056 to 54260065
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260056 to 54260065
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260056 to 54260065
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:33:16.560Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260047 to 54261047
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260047, toBlock=54261047, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254811 to 54259326
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254811, toBlock=54259326, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54260047 to 54261047
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54260047, toBlock=54261047, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254811 to 54259326
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254811, toBlock=54259326, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54260047 to 54261047
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54260047, toBlock=54261047, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254811 to 54259326
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254811, toBlock=54259326, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260047 to 54261047
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260047, toBlock=54261047, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254895 to 54254904
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254895 to 54254904
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254895 to 54254904
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254895 to 54254904
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:35:57.497Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254876 to 54254885
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254876 to 54254885
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254876 to 54254885
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254876 to 54254885
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254812 to 54259332
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254812, toBlock=54259332, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260047 to 54260056
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260070 to 54260079
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260070 to 54260079
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260070 to 54260079
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260070 to 54260079
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260061 to 54260070
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260061 to 54260070
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260061 to 54260070
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260061 to 54260070
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260066 to 54260075
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260066 to 54260075
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260066 to 54260075
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260066 to 54260075
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260056 to 54260065
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260056 to 54260065
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260056 to 54260065
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260056 to 54260065
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:33:26.560Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260169 to 54260178
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260169 to 54260178
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260169 to 54260178
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260169 to 54260178
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260085 to 54260094
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260085 to 54260094
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260085 to 54260094
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260085 to 54260094
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260099 to 54260108
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260099 to 54260108
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260099 to 54260108
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260099 to 54260108
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260124 to 54260133
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260124 to 54260133
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260124 to 54260133
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260124 to 54260133
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260066 to 54260075
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260066 to 54260075
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260066 to 54260075
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260066 to 54260075
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260080 to 54260089
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260080 to 54260089
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260080 to 54260089
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260080 to 54260089
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260071 to 54260080
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260071 to 54260080
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260071 to 54260080
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260071 to 54260080
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260057 to 54261057
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260057, toBlock=54261057, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254812 to 54254821
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254812 to 54259332
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254812, toBlock=54259332, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54260057 to 54261057
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54260057, toBlock=54261057, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254812 to 54254821
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254812 to 54259332
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254812, toBlock=54259332, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54260057 to 54261057
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54260057, toBlock=54261057, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254812 to 54254821
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254812 to 54259332
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254812, toBlock=54259332, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260057 to 54261057
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260057, toBlock=54261057, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254812 to 54254821
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254944 to 54254953
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254944 to 54254953
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254944 to 54254953
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254944 to 54254953
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254830 to 54254839
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254830 to 54254839
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254830 to 54254839
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254830 to 54254839
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:36:07.496Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254811 to 54259332
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254811, toBlock=54259332, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260076 to 54260085
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260076 to 54260085
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260076 to 54260085
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260076 to 54260085
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:33:36.560Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260057 to 54261057
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260057, toBlock=54261057, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254811 to 54259332
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254811, toBlock=54259332, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54260057 to 54261057
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54260057, toBlock=54261057, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254811 to 54259332
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254811, toBlock=54259332, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54260057 to 54261057
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54260057, toBlock=54261057, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254811 to 54259332
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254811, toBlock=54259332, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260057 to 54261057
+index-DcB1BofC.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-DcB1BofC.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260057, toBlock=54261057, maxResults=1000
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+executeWithRetry @ index-DcB1BofC.js:1852
+getWalletTransactions @ index-DcB1BofC.js:1852
+un @ index-DcB1BofC.js:1852
 await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
 await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254905 to 54254914
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254905 to 54254914
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254905 to 54254914
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254905 to 54254914
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:36:17.496Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254886 to 54254895
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254886 to 54254895
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254886 to 54254895
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254886 to 54254895
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254822 to 54254831
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254822 to 54254831
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254822 to 54254831
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254822 to 54254831
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254954 to 54254963
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254954 to 54254963
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254954 to 54254963
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254954 to 54254963
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254840 to 54254849
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254840 to 54254849
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254840 to 54254849
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254840 to 54254849
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
-index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254814 to 54259342
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254814, toBlock=54259342, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254814 to 54259342
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254814, toBlock=54259342, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254814 to 54259342
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254814, toBlock=54259342, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254814 to 54259342
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254814, toBlock=54259342, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254915 to 54254924
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254915 to 54254924
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254915 to 54254924
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254915 to 54254924
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:36:27.497Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254813 to 54259342
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254813, toBlock=54259342, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254813 to 54254822
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254813 to 54259342
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254813, toBlock=54259342, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254813 to 54254822
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254813 to 54259342
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254813, toBlock=54259342, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254813 to 54254822
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254813 to 54259342
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254813, toBlock=54259342, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254813 to 54254822
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254896 to 54254905
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254896 to 54254905
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254896 to 54254905
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254896 to 54254905
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254832 to 54254841
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254832 to 54254841
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254832 to 54254841
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254832 to 54254841
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254964 to 54254973
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254964 to 54254973
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254964 to 54254973
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254964 to 54254973
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:36:37.497Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254850 to 54254859
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254850 to 54254859
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254850 to 54254859
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254850 to 54254859
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254925 to 54254934
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254925 to 54254934
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254925 to 54254934
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254925 to 54254934
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254823 to 54254832
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254823 to 54254832
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254823 to 54254832
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254823 to 54254832
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254817 to 54259353
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254817, toBlock=54259353, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254817 to 54254826
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254817 to 54259353
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254817, toBlock=54259353, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254817 to 54254826
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254817 to 54259353
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254817, toBlock=54259353, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254817 to 54254826
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254817 to 54259353
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254817, toBlock=54259353, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254817 to 54254826
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:36:47.497Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-setTimeout
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254816 to 54259353
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254816, toBlock=54259353, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254816 to 54259353
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254816, toBlock=54259353, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254816 to 54259353
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254816, toBlock=54259353, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254816 to 54259353
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254816, toBlock=54259353, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254906 to 54254915
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254906 to 54254915
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254906 to 54254915
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254906 to 54254915
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254842 to 54254851
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254842 to 54254851
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254842 to 54254851
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254842 to 54254851
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254974 to 54254983
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254974 to 54254983
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254974 to 54254983
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254974 to 54254983
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254860 to 54254869
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254860 to 54254869
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254860 to 54254869
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254860 to 54254869
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:36:57.498Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254935 to 54254944
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254935 to 54254944
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254935 to 54254944
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254935 to 54254944
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254833 to 54254842
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254833 to 54254842
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254833 to 54254842
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254833 to 54254842
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254827 to 54254836
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254827 to 54254836
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254827 to 54254836
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254827 to 54254836
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254818 to 54259363
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254818, toBlock=54259363, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254818 to 54259363
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254818, toBlock=54259363, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254818 to 54259363
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254818, toBlock=54259363, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254818 to 54259363
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254818, toBlock=54259363, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:37:07.496Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254818 to 54259363
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254818, toBlock=54259363, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254818 to 54259363
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254818, toBlock=54259363, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254818 to 54259363
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254818, toBlock=54259363, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254818 to 54259363
-index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254818, toBlock=54259363, maxResults=1000
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-executeWithRetry @ index-WzcjUMfJ.js:1852
-getWalletTransactions @ index-WzcjUMfJ.js:1852
-un @ index-WzcjUMfJ.js:1852
-await in un
-(anonymous) @ index-WzcjUMfJ.js:1852
-await in (anonymous)
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254916 to 54254925
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254916 to 54254925
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254916 to 54254925
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254916 to 54254925
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254852 to 54254861
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254852 to 54254861
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254852 to 54254861
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254852 to 54254861
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254984 to 54254993
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254984 to 54254993
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254984 to 54254993
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254984 to 54254993
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254870 to 54254879
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254870 to 54254879
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254870 to 54254879
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254870 to 54254879
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254861 to 54254870
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254861 to 54254870
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254861 to 54254870
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254861 to 54254870
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
-index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
-index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:37:17.498Z
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
-console.error @ index-WzcjUMfJ.js:1858
-(anonymous) @ index-WzcjUMfJ.js:1852
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260057 to 54260066
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260066 to 54260075
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260066 to 54260075
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260066 to 54260075
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260066 to 54260075
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260179 to 54260188
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260179 to 54260188
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260179 to 54260188
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260179 to 54260188
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260095 to 54260104
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260095 to 54260104
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260095 to 54260104
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260095 to 54260104
+index-DcB1BofC.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:33:46.559Z
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-DcB1BofC.js:1858
+(anonymous) @ index-DcB1BofC.js:1852
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260109 to 54260118
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260109 to 54260118
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260109 to 54260118
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260109 to 54260118
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260134 to 54260143
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260134 to 54260143
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260134 to 54260143
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260134 to 54260143
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260076 to 54260085
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260076 to 54260085
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260076 to 54260085
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260076 to 54260085
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260067 to 54260076
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260090 to 54260099
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260090 to 54260099
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260090 to 54260099
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260090 to 54260099
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260081 to 54260090
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260081 to 54260090
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260081 to 54260090
+index-DcB1BofC.js:1858 [getWalletTransactions] Fetching blocks 54260081 to 54260090

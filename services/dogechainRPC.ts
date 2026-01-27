@@ -149,21 +149,20 @@ const getRPCConfig = (): DogechainRPCConfig => {
   // const isProduction = process.env.NODE_ENV === "production";
 
   return {
-    // CRITICAL FIX: Reduce timeout from 30s back to 10s to prevent hanging
-    // The 30s timeout was causing RPC to hang indefinitely, blocking all scans
-    timeout: parseInt(process.env.DOGECHAIN_RPC_TIMEOUT || "10000", 10),
+    // CRITICAL FIX: Reduce timeout to 5s for faster failure and retry
+    timeout: parseInt(process.env.DOGECHAIN_RPC_TIMEOUT || "5000", 10),
 
-    // Read from env or default to 5 retries per provider (increased from 2)
-    retryCount: parseInt(process.env.DOGECHAIN_RPC_RETRY_COUNT || "5", 10),
+    // Read from env or default to 3 retries per provider
+    retryCount: parseInt(process.env.DOGECHAIN_RPC_RETRY_COUNT || "3", 10),
 
-    // CRITICAL FIX: Reduce max retries from 5 to 2 to prevent long delays
-    maxRetries: parseInt(process.env.DOGECHAIN_RPC_MAX_RETRIES || "2", 10),
+    // CRITICAL FIX: Reduce max retries to 1 to prevent long delays
+    maxRetries: parseInt(process.env.DOGECHAIN_RPC_MAX_RETRIES || "1", 10),
 
-    // Read from env or default to 5 concurrent requests (reduced from 10)
-    concurrencyLimit: parseInt(process.env.DOGECHAIN_RPC_CONCURRENCY_LIMIT || "5", 10),
+    // CRITICAL FIX: Increase concurrent requests to 10 for faster scanning
+    concurrencyLimit: parseInt(process.env.DOGECHAIN_RPC_CONCURRENCY_LIMIT || "10", 10),
 
-    // Read from env or default to 10 blocks per batch (reduced from 50)
-    batchSize: BigInt(process.env.DOGECHAIN_RPC_BATCH_SIZE || "10"),
+    // CRITICAL FIX: Increase batch size to 50 blocks for faster scanning
+    batchSize: BigInt(process.env.DOGECHAIN_RPC_BATCH_SIZE || "50"),
 
     // TEMPORARY: Disabled to debug alert delay issues
     suppressConsoleLogs: false,
@@ -1105,7 +1104,7 @@ export class DogechainRPCClient {
    * Helps avoid RPC timeouts with large ranges
    */
   calculateOptimalBlockRange(fromBlock: bigint, toBlock: bigint): BlockRange[] {
-    const MAX_RANGE_SIZE = BigInt(1000); // Maximum 1000 blocks per request to avoid timeout
+    const MAX_RANGE_SIZE = BigInt(500); // Maximum 500 blocks per request to avoid timeout
     const ranges: BlockRange[] = [];
 
     let currentFrom = fromBlock;

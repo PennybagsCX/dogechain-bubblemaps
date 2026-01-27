@@ -442,8 +442,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
     // Estimate blocks for the timeframe
     const blocksToFetch = rpcClient.estimateBlocksForTimeframe(minutesSinceCheck);
 
-    // Cap at reasonable maximum (1000 blocks ≈ 40 minutes) to avoid timeout
-    const maxBlocks = BigInt(1000);
+    // Cap at reasonable maximum (500 blocks ≈ 20 minutes) to avoid timeout
+    const maxBlocks = BigInt(500);
     const actualBlocks = BigInt(blocksToFetch) > maxBlocks ? maxBlocks : BigInt(blocksToFetch);
 
     const fromBlock = latestBlock - actualBlocks;
@@ -617,9 +617,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
       // If RPC takes too long, we still want to complete the scan so isScanning gets reset
       const scanTimeout = new Promise<Record<string, AlertStatus>>((resolve) => {
         setTimeout(() => {
-          console.error(`[Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results`);
+          console.error(`[Scan] ⚠️ TIMEOUT after 45s, completing scan with partial results`);
           resolve(newStatuses); // Return whatever we have so far
-        }, 60000); // 60 second hard timeout for entire scan
+        }, 45000); // 45 second hard timeout for entire scan
       });
 
       const scanPromise = (async () => {
@@ -628,9 +628,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
         // Existing alerts get scanned for new transactions since last check
         const alertsToScan = currentAlerts;
 
-        // Batch processing to prevent rate limiting
-        const batchSize = 4;
-        const delayBetweenBatches = 750; // milliseconds
+        // Batch processing to prevent rate limiting - reduced from 4 to 2 for faster completion
+        const batchSize = 2;
+        const delayBetweenBatches = 500; // milliseconds
 
         for (let i = 0; i < alertsToScan.length; i += batchSize) {
           const batch = alertsToScan.slice(i, i + batchSize);

@@ -419,29 +419,48 @@ export const Dashboard: React.FC<DashboardProps> = ({
   }, [soundEnabled]);
 
   // === RPC HYBRID FETCH ===
-  // Helper function to get fromBlock based on alert status
-  const getFromBlock = (_alert: AlertConfig, existingStatus?: AlertStatus): bigint => {
-    // For new alerts without baseline, use a reasonable window (e.g., last 1000 blocks)
-    // For established alerts, use the last check time to find the block number
-    if (!existingStatus?.baselineEstablished) {
-      // Approximate: Dogechain block time is ~3 seconds, so 1000 blocks ≈ 50 minutes
-      // This gives a good initial window without being too heavy
-      return BigInt(0); // Start from genesis for new alerts
+  // Helper function to calculate fromBlock based on alert status
+  // Uses checkedAt timestamp to estimate block number for incremental scans
+  const calculateFromBlock = async (
+    _alert: AlertConfig,
+    existingStatus?: AlertStatus
+  ): Promise<bigint> => {
+    const latestBlock = await rpcClient.getLatestBlockNumber();
+
+    // For new alerts without baseline, use a reasonable window (last 1000 blocks)
+    if (!existingStatus?.baselineEstablished || !existingStatus?.checkedAt) {
+      // Dogechain block time is ~2.5 seconds, so 1000 blocks ≈ 40 minutes
+      const lookbackBlocks = BigInt(1000);
+      const fromBlock = latestBlock - lookbackBlocks;
+      return fromBlock < 0n ? 0n : fromBlock;
     }
-    // For established alerts, we'd need to find the block number at checkedAt time
-    // For simplicity, we'll use a fixed window and let the timestamp filtering handle the rest
-    return BigInt(0);
+
+    // For established alerts, calculate blocks based on time since last check
+    const timeSinceCheck = Date.now() - existingStatus.checkedAt;
+    const minutesSinceCheck = timeSinceCheck / (1000 * 60);
+
+    // Estimate blocks for the timeframe
+    const blocksToFetch = rpcClient.estimateBlocksForTimeframe(minutesSinceCheck);
+
+    // Cap at reasonable maximum (5000 blocks ≈ 3.3 hours)
+    const maxBlocks = BigInt(5000);
+    const actualBlocks = BigInt(blocksToFetch) > maxBlocks ? maxBlocks : BigInt(blocksToFetch);
+
+    const fromBlock = latestBlock - actualBlocks;
+    return fromBlock < 0n ? 0n : fromBlock;
   };
 
   // Hybrid fetch function that tries RPC first, falls back to Explorer API
+  // Supports both TOKEN and WALLET alert types via RPC
   const fetchTransactionsHybrid = async (
     alert: AlertConfig,
     existingStatus?: AlertStatus,
     forceRefresh: boolean = false
   ): Promise<Transaction[]> => {
-    // Only use RPC for TOKEN type alerts with a valid token address
-    // WALLET and WHALE types without specific token should use Explorer API
-    const shouldUseRPC = alert.type === "TOKEN" && alert.tokenAddress;
+    // Determine if we should use RPC based on alert type
+    const shouldUseRPC =
+      (alert.type === "TOKEN" && alert.tokenAddress) || // Existing: TOKEN alerts with token address
+      alert.type === "WALLET"; // NEW: Use RPC for WALLET alerts too
 
     if (!shouldUseRPC) {
       console.log(`[HybridFetch] Using Explorer API for ${alert.name} (type: ${alert.type})`);
@@ -453,59 +472,86 @@ export const Dashboard: React.FC<DashboardProps> = ({
       );
     }
 
-    // Try RPC first for TOKEN alerts
+    // Try RPC first for TOKEN and WALLET alerts
     try {
-      console.log(`[HybridFetch] Attempting RPC for ${alert.name} (${alert.tokenAddress})`);
-      const latestBlock = await rpcClient.getLatestBlock();
-      const fromBlock = getFromBlock(alert, existingStatus);
-
-      console.log(`[HybridFetch] RPC block range: ${fromBlock} to ${latestBlock.number}`);
-
-      const events = await rpcClient.getTransferEvents(
-        alert.tokenAddress || "",
-        fromBlock,
-        BigInt(latestBlock.number)
-      );
-
-      console.log(`[HybridFetch] RPC returned ${events.length} transfer events`);
-
-      // Convert TransferEvent[] to Transaction[] format
-      // Also filter by wallet address since getTransferEvents returns all transfers for the token
-      const filteredEvents = events.filter(
-        (e) =>
-          e.from.toLowerCase() === alert.walletAddress.toLowerCase() ||
-          e.to.toLowerCase() === alert.walletAddress.toLowerCase()
-      );
+      const fromBlock = await calculateFromBlock(alert, existingStatus);
+      const toBlock = await rpcClient.getLatestBlockNumber();
 
       console.log(
-        `[HybridFetch] Filtered to ${filteredEvents.length} events for wallet ${alert.walletAddress.slice(
-          0,
-          8
-        )}...`
+        `[HybridFetch] Attempting RPC for ${alert.name} (${alert.type}) - block range: ${fromBlock} to ${toBlock}`
       );
 
-      // Get token data for symbol
-      let tokenSymbol: string | undefined;
-      try {
-        const tokenData = await fetchTokenData(alert.tokenAddress!);
-        tokenSymbol = tokenData?.symbol;
-      } catch {
-        // Ignore token data fetch errors
+      let walletTransactions: import("../services/dogechainRPC").WalletTransaction[] = [];
+
+      if (alert.type === "WALLET") {
+        // WALLET alert: Get all token transfers for the wallet
+        console.log(
+          `[HybridFetch] Fetching wallet transactions for ${alert.walletAddress.slice(0, 8)}...`
+        );
+        walletTransactions = await rpcClient.getWalletTransactions(alert.walletAddress, {
+          fromBlock,
+          toBlock,
+          maxResults: 1000,
+        });
+      } else if (alert.type === "TOKEN" && alert.tokenAddress) {
+        // TOKEN alert: Get transfers for specific token
+        console.log(
+          `[HybridFetch] Fetching token transfers for ${alert.tokenAddress.slice(0, 8)}...`
+        );
+        const transferEvents = await rpcClient.getTransferEvents(
+          alert.tokenAddress,
+          fromBlock,
+          toBlock
+        );
+
+        // Convert TransferEvent[] to WalletTransaction[] format
+        walletTransactions = transferEvents
+          .filter(
+            (e) =>
+              e.from.toLowerCase() === alert.walletAddress.toLowerCase() ||
+              e.to.toLowerCase() === alert.walletAddress.toLowerCase()
+          )
+          .map((e) => ({
+            hash: e.transactionHash,
+            from: e.from,
+            to: e.to,
+            value: e.value,
+            timestamp: e.timestamp,
+            blockNumber: e.blockNumber,
+            tokenAddress: e.tokenAddress,
+          }));
       }
 
-      const transactions: Transaction[] = filteredEvents.map((e) => ({
-        hash: e.transactionHash,
-        timestamp: e.timestamp * 1000, // Convert seconds to milliseconds
-        from: e.from,
-        to: e.to,
-        value: Number(e.value),
-        tokenSymbol: tokenSymbol,
-        tokenAddress: e.tokenAddress,
-      }));
+      console.log(`[HybridFetch] RPC returned ${walletTransactions.length} transactions`);
+
+      // Collect all unique token addresses for batch metadata fetch
+      const uniqueTokenAddresses = Array.from(
+        new Set(walletTransactions.map((tx) => tx.tokenAddress))
+      );
+
+      // Fetch token metadata in batch for better performance
+      const tokenMetadataMap = await rpcClient.getBatchTokenMetadata(uniqueTokenAddresses);
+
+      // Convert WalletTransaction[] to Transaction[] format with metadata
+      const transactions: Transaction[] = walletTransactions.map((tx) => {
+        const metadata = tokenMetadataMap.get(tx.tokenAddress.toLowerCase());
+        return {
+          hash: tx.hash,
+          timestamp: tx.timestamp, // Already in milliseconds
+          from: tx.from,
+          to: tx.to,
+          value: formatTokenValue(tx.value, metadata?.decimals || 18),
+          tokenSymbol: metadata?.symbol,
+          tokenAddress: tx.tokenAddress,
+        };
+      });
 
       // Sort by timestamp descending (newest first) to match Explorer API behavior
       transactions.sort((a, b) => b.timestamp - a.timestamp);
 
+      console.log(
+        `[HybridFetch] ✅ Successfully processed ${transactions.length} transactions via RPC`
+      );
       return transactions;
     } catch (rpcError) {
       console.warn(
@@ -515,11 +561,23 @@ export const Dashboard: React.FC<DashboardProps> = ({
       // Fall back to existing fetchWalletTransactions
       return await fetchWalletTransactions(
         alert.walletAddress,
-        alert.tokenAddress,
+        alert.type === "WALLET" ? undefined : alert.tokenAddress,
         AssetType.TOKEN,
         forceRefresh
       );
     }
+  };
+
+  // Helper function to format token value based on decimals
+  const formatTokenValue = (value: bigint, decimals: number): number => {
+    const divisor = BigInt(10 ** decimals);
+    const integerPart = value / divisor;
+    const fractionalPart = value % divisor;
+
+    // Convert to number with appropriate decimal places
+    const fractionalStr = fractionalPart.toString().padStart(decimals, "0");
+    const combinedStr = `${integerPart}.${fractionalStr}`;
+    return parseFloat(combinedStr);
   };
 
   const runScan = useCallback(

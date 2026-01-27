@@ -778,9 +778,14 @@ export class DogechainRPCClient {
                   // Find all Transfer events involving our wallet
                   const walletTransferLogs = receipt.logs.filter((log: any) => {
                     if (log.topics[0] !== transferEventSignature) return false;
-                    const fromAddress = (log.topics[1] || "").slice(26).toLowerCase();
-                    const toAddress = (log.topics[2] || "").slice(26).toLowerCase();
-                    return fromAddress === normalizedWallet || toAddress === normalizedWallet;
+                    // Extract address from indexed parameter (topics[1] = from, topics[2] = to)
+                    // Topics are 32 bytes (66 chars with 0x) with address zero-padded to last 20 bytes
+                    const fromAddress = "0x" + (log.topics[1] || "").slice(26);
+                    const toAddress = "0x" + (log.topics[2] || "").slice(26);
+                    return (
+                      fromAddress.toLowerCase() === normalizedWallet ||
+                      toAddress.toLowerCase() === normalizedWallet
+                    );
                   });
 
                   console.log(
@@ -791,8 +796,8 @@ export class DogechainRPCClient {
                     // PRIORITY: For swaps, prefer tokens received (incoming to wallet)
                     // Look for Transfer where wallet is the TO address (receiving)
                     const incomingLog = walletTransferLogs.find((log: any) => {
-                      const toAddress = (log.topics[2] || "").slice(26).toLowerCase();
-                      return toAddress === normalizedWallet;
+                      const toAddress = "0x" + (log.topics[2] || "").slice(26);
+                      return toAddress.toLowerCase() === normalizedWallet;
                     });
 
                     // FALLBACK: Use the first wallet Transfer event (outgoing)

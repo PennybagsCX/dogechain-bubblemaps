@@ -38,33 +38,18 @@ export default defineConfig(({ mode }) => {
       VitePWA({
         registerType: "autoUpdate",
         includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
-        manifest: {
-          name: "Dogechain Bubblemaps",
-          short_name: "Bubblemaps",
-          description: "Visualize token distribution on Dogechain",
-          theme_color: "#8b5cf6",
-          background_color: "#0f172a",
-          display: "standalone",
-          icons: [
-            {
-              src: "/pwa-192x192.png",
-              sizes: "192x192",
-              type: "image/png",
-            },
-            {
-              src: "/pwa-512x512.png",
-              sizes: "512x512",
-              type: "image/png",
-            },
-            {
-              src: "/pwa-512x512.png",
-              sizes: "512x512",
-              type: "image/png",
-              purpose: "any maskable",
-            },
-          ],
+        // Force immediate service worker activation
+        devOptions: {
+          enabled: true,
+          type: "module",
         },
         workbox: {
+          // Force new service worker to become active immediately
+          navigateFallback: null,
+          navigateFallbackDenylist: [/^\/api/],
+          // Cleanup outdated caches on activation
+          cleanupOutdatedCaches: true,
+          // Skip waiting for immediate activation
           globPatterns: ["**/*.{js,css,html,ico,png,svg,json}"],
           runtimeCaching: [
             // Cache API responses for token searches with stale-while-revalidate
@@ -111,9 +96,31 @@ export default defineConfig(({ mode }) => {
             },
           ],
         },
-        devOptions: {
-          enabled: true,
-          type: "module",
+        manifest: {
+          name: "Dogechain Bubblemaps",
+          short_name: "Bubblemaps",
+          description: "Visualize token distribution on Dogechain",
+          theme_color: "#8b5cf6",
+          background_color: "#0f172a",
+          display: "standalone",
+          icons: [
+            {
+              src: "/pwa-192x192.png",
+              sizes: "192x192",
+              type: "image/png",
+            },
+            {
+              src: "/pwa-512x512.png",
+              sizes: "512x512",
+              type: "image/png",
+            },
+            {
+              src: "/pwa-512x512.png",
+              sizes: "512x512",
+              type: "image/png",
+              purpose: "any maskable",
+            },
+          ],
         },
       }),
     ].filter(Boolean),

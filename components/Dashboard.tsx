@@ -602,15 +602,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 : transactionsForBaseline.length > 0; // New alerts trigger on post-creation transactions
 
               // Keep triggered state persistent - once triggered, stay triggered until manually reset
-              // FIX: But don't persist if the alert was dismissed (dismissedAt > checkedAt)
+              // CRITICAL FIX: Dismissed alerts must NEVER re-trigger, even if there are transactions between old check and dismissal
               const wasTriggered = existingStatus?.triggered || false;
               const dismissedAt = existingStatus?.dismissedAt || 0;
               const checkedAt = existingStatus?.checkedAt || 0;
               // An alert is considered dismissed if dismissedAt is set (not 0) AND >= checkedAt
               // Using >= ensures equal timestamps (from clearNotificationsFromStorage) are treated as dismissed
               const wasDismissedAfterLastTrigger = dismissedAt > 0 && dismissedAt >= checkedAt;
+              // CRITICAL: If dismissed, never trigger. Otherwise trigger if new activity or was previously triggered.
               const shouldTrigger =
-                hasNewActivity || (wasTriggered && !wasDismissedAfterLastTrigger);
+                !wasDismissedAfterLastTrigger && (hasNewActivity || wasTriggered);
 
               newStatuses[alert.id] = {
                 currentValue: currentBalance,

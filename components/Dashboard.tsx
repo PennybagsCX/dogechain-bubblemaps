@@ -613,6 +613,19 @@ export const Dashboard: React.FC<DashboardProps> = ({
               const shouldTrigger =
                 !wasDismissedAfterLastTrigger && (hasNewActivity || wasTriggered);
 
+              // LOGGING: Debug dismissal state
+              if (existingStatus?.dismissedAt) {
+                console.log(`[Alert ${alert.id}] Dismissal state:`, {
+                  wasDismissedAfterLastTrigger,
+                  dismissedAt: new Date(dismissedAt).toISOString(),
+                  checkedAt: new Date(checkedAt).toISOString(),
+                  hasNewActivity,
+                  wasTriggered,
+                  shouldTrigger,
+                  filteredNewTransactions: filteredNewTransactions.length,
+                });
+              }
+
               newStatuses[alert.id] = {
                 currentValue: currentBalance,
                 triggered: shouldTrigger,

@@ -750,6 +750,16 @@ export class DogechainRPCClient {
             // This handles both: wallet→contract and contract→wallet transfers
             const isContractInteraction = tx.to && tx.to.toLowerCase() !== normalizedWallet;
 
+            console.log(
+              `[getWalletTransactions] Checking tx ${tx.hash.slice(0, 10)}... for token transfers`,
+              {
+                txFrom: tx.from?.toLowerCase(),
+                txTo: tx.to?.toLowerCase(),
+                wallet: normalizedWallet,
+                isContractInteraction,
+              }
+            );
+
             if (isContractInteraction || (tx.to && tx.to.toLowerCase() === normalizedWallet)) {
               try {
                 const receipt = await client.getTransactionReceipt({
@@ -757,6 +767,10 @@ export class DogechainRPCClient {
                 });
 
                 if (receipt && receipt.logs) {
+                  console.log(
+                    `[getWalletTransactions] Receipt for ${tx.hash.slice(0, 10)}... has ${receipt.logs.length} logs`
+                  );
+
                   // Find Transfer events involving our wallet
                   const transferEventSignature =
                     "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
@@ -768,6 +782,10 @@ export class DogechainRPCClient {
                     const toAddress = (log.topics[2] || "").slice(26).toLowerCase();
                     return fromAddress === normalizedWallet || toAddress === normalizedWallet;
                   });
+
+                  console.log(
+                    `[getWalletTransactions] Found ${walletTransferLogs.length} wallet Transfer events`
+                  );
 
                   if (walletTransferLogs.length > 0) {
                     // PRIORITY: For swaps, prefer tokens received (incoming to wallet)
@@ -804,7 +822,8 @@ export class DogechainRPCClient {
               // CRITICAL FIX: Convert RPC timestamp (seconds) to milliseconds for JavaScript compatibility
               timestamp: Number(block.timestamp) * 1000,
               blockNumber: block.number,
-              tokenAddress: tokenAddress || "0x0",
+              // Don't default to "0x0" - use undefined so caller can handle missing token data
+              tokenAddress: tokenAddress,
             });
 
             totalFetched++;

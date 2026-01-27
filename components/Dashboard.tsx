@@ -460,7 +460,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
     // Determine if we should use RPC based on alert type
     const shouldUseRPC =
       (alert.type === "TOKEN" && alert.tokenAddress) || // Existing: TOKEN alerts with token address
-      alert.type === "WALLET"; // NEW: Use RPC for WALLET alerts too
+      alert.type === "WALLET" || // Use RPC for WALLET alerts (fixed address extraction)
+      alert.type === "WHALE"; // Use RPC for WHALE alerts (same fix applies)
 
     console.log(
       `[HybridFetch DEBUG] alert: ${alert.name}, type: ${alert.type}, shouldUseRPC: ${shouldUseRPC}`
@@ -470,13 +471,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
       console.log(`[HybridFetch] Using Explorer API for ${alert.name} (type: ${alert.type})`);
       return await fetchWalletTransactions(
         alert.walletAddress,
-        alert.type === "WALLET" ? undefined : alert.tokenAddress,
+        // WALLET and WHALE alerts monitor all tokens (undefined), TOKEN alerts monitor specific token
+        alert.type === "WALLET" || alert.type === "WHALE" ? undefined : alert.tokenAddress,
         AssetType.TOKEN,
         forceRefresh
       );
     }
 
-    // Try RPC first for TOKEN and WALLET alerts
+    // Try RPC first for TOKEN, WALLET, and WHALE alerts
     try {
       const fromBlock = await calculateFromBlock(alert, existingStatus);
       const toBlock = await rpcClient.getLatestBlockNumber();

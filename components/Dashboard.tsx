@@ -692,11 +692,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   if (isNaN(d.getTime())) return new Date().toISOString();
                   return d.toISOString();
                 };
-                console.log(`[Alert ${alert.id}] Fetched ${transactions.length} transactions`, {
+                console.error(`[Alert ${alert.id}] Fetched ${transactions.length} transactions`, {
                   oldest: toSafeISOString(oldestTx?.timestamp),
                   newest: toSafeISOString(newestTx?.timestamp),
                   alertCreatedAt: toSafeISOString(alertCreatedAt),
                 });
+              } else {
+                // Debug: Log when no transactions were fetched
+                console.error(`[Alert ${alert.id}] No transactions fetched from RPC/Explorer API`);
               }
 
               // For new alerts, filter to only transactions AFTER alert creation
@@ -735,7 +738,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 const lastCheckTime = wasDismissed ? dismissedAt : checkedAt;
                 newTransactions = transactions.filter((tx) => tx.timestamp > lastCheckTime);
 
-                console.log(
+                // Debug: Log filtering results (use console.error to bypass production suppression)
+                console.error(
                   `[Alert ${alert.id}] Filtered to ${newTransactions.length} transactions since last check (${new Date(lastCheckTime).toISOString()})`
                 );
 
@@ -748,7 +752,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     if (isNaN(d.getTime())) return "Invalid timestamp";
                     return d.toISOString();
                   };
-                  console.log(
+                  console.error(
                     `[Alert ${alert.id}] New transactions:`,
                     newTransactions.map((tx) => ({
                       hash: tx.hash,

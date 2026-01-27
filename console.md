@@ -1,4983 +1,2573 @@
-content_script.js:4080 🚀 Initializing Moat Chrome Extension...
-content_script.js:4083 🔧 Moat: Initializing project connection...
-content_script.js:90 🔧 Moat: Initializing TaskStore and MarkdownGenerator utilities...
-content_script.js:91 🔧 Moat: window.MoatTaskStore available: true
-content_script.js:92 🔧 Moat: window.MoatMarkdownGenerator available: true
-content_script.js:93 🔧 Moat: window.directoryHandle available: false
-content_script.js:105 ⚠️ Moat: TaskStore created but not initialized (no directory handle)
-content_script.js:108 🔧 Moat: TaskStore instance: TaskStore {tasks: Array(0), directoryHandle: null}
-content_script.js:122 ✅ Moat: MarkdownGenerator initialized successfully
-content_script.js:123 🔧 Moat: MarkdownGenerator functions: (8) ['generateMarkdownFromTasks', 'rebuildMarkdownFromJson', 'rebuildMarkdownFile', 'writeMarkdownToFile', 'generateTaskStats', 'statusToCheckbox', 'truncateComment', 'sortTasksByTimestamp']
-content_script.js:133 🔧 Moat: Exposing initialized instances to global window...
-content_script.js:136 🔧 Moat: Global exposure complete - window.taskStore: true
-content_script.js:137 🔧 Moat: Global exposure complete - window.markdownGenerator: true
-content_script.js:4125 Moat Chrome Extension loaded (AG-UI disabled)
-content_script.js:4090 ⚠️ Falling back to legacy system
-content_script.js:621 🚀 Moat: Initializing project with persistence system...
-moat.js:286 🔧 ConnectionManager: Initialized
-moat.js:3404 Moat: Setting up event listeners...
-moat.js:3791 Moat: Initializing, document.readyState: interactive
-moat.js:3801 Moat: Document already loaded, initializing moat immediately...
-index-hTG4bAL7.js:1854 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
-index-hTG4bAL7.js:1854 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
-index-hTG4bAL7.js:1858 [DiagnosticLogger] Initialized with session: session_1769553935283_vo2qc5n
-index-hTG4bAL7.js:1858 [App] 📊 Diagnostic logger initialized: {sessionId: 'session_1769553935283_vo2qc5n', browser: {…}}
-index-hTG4bAL7.js:1858 [App] selectedWallet changed: null
-index-hTG4bAL7.js:1858 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
-persistence.js:32 ✅ Moat Persistence: IndexedDB initialized successfully
-persistence.js:111 ℹ️ Moat Persistence: No stored handle found for: project_https://www.dogechain-bubblemaps.xyz
-persistence.js:298 ℹ️ Moat Persistence: No stored connection found
-content_script.js:691 ℹ️ Moat: Persistence restoration failed: No stored connection
-content_script.js:706 🔄 Moat: Checking localStorage for legacy connections...
-content_script.js:741 🔧 Moat: No valid connections found - user must connect
-content_script.js:746 🔧 Moat: Dispatching not-connected event (no path)
-moat.js:3453 🔧 Moat: Received project-connected event: {status: 'not-connected', source: 'no-connection-found', eventSignature: 'not-connected-no-path-no-connection-found', timestamp: 1769553935348}
-moat.js:525 🔧 ConnectionManager: Processing connection event: {status: 'not-connected', source: 'no-connection-found', eventSignature: 'not-connected-no-path-no-connection-found', timestamp: 1769553935348}
-moat.js:391 🔧 ConnectionManager: Setting disconnected state
-moat.js:3477 🔧 Moat: Processing disconnection event...
-moat.js:2118 Moat: Initializing content visibility, connection state: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: false, isConnected: false, …}
-content_script.js:143 🔧 Moat: Initialization attempt 1/3
-content_script.js:90 🔧 Moat: Initializing TaskStore and MarkdownGenerator utilities...
-content_script.js:91 🔧 Moat: window.MoatTaskStore available: true
-content_script.js:92 🔧 Moat: window.MoatMarkdownGenerator available: true
-content_script.js:93 🔧 Moat: window.directoryHandle available: false
-content_script.js:105 ⚠️ Moat: TaskStore created but not initialized (no directory handle)
-content_script.js:108 🔧 Moat: TaskStore instance: TaskStore {tasks: Array(0), directoryHandle: null}
-content_script.js:122 ✅ Moat: MarkdownGenerator initialized successfully
-content_script.js:123 🔧 Moat: MarkdownGenerator functions: (8) ['generateMarkdownFromTasks', 'rebuildMarkdownFromJson', 'rebuildMarkdownFile', 'writeMarkdownToFile', 'generateTaskStats', 'statusToCheckbox', 'truncateComment', 'sortTasksByTimestamp']
-content_script.js:133 🔧 Moat: Exposing initialized instances to global window...
-content_script.js:136 🔧 Moat: Global exposure complete - window.taskStore: true
-content_script.js:137 🔧 Moat: Global exposure complete - window.markdownGenerator: true
-content_script.js:149 ✅ Moat: All utilities initialized successfully
-content_script.js:154 🔧 Moat: Instances exposed to global window during retry
-content_script.js:610 Moat: Extension loaded successfully
-content_script.js:621 🚀 Moat: Initializing project with persistence system...
-content_script.js:4106 ✅ Moat extension initialized
-content_script.js:4107 🔧 Moat: To connect to project, press Cmd+Shift+P or run setupProject()
-persistence.js:111 ℹ️ Moat Persistence: No stored handle found for: project_https://www.dogechain-bubblemaps.xyz
-persistence.js:298 ℹ️ Moat Persistence: No stored connection found
-content_script.js:691 ℹ️ Moat: Persistence restoration failed: No stored connection
-content_script.js:706 🔄 Moat: Checking localStorage for legacy connections...
-content_script.js:741 🔧 Moat: No valid connections found - user must connect
-content_script.js:746 🔧 Moat: Dispatching not-connected event (no path)
-moat.js:2128 Moat: Starting moat initialization...
-moat.js:2037 Moat: Theme initialized to light
-moat.js:1061 ✅ Moat: Google Fonts injected from moat.js (defensive check)
-moat.js:1071 Moat: createMoat called, creating sidebar element...
-moat.js:1075 Moat: Element created with class: float-moat
-moat.js:1198 Moat: Sidebar element added to DOM
-moat.js:3926 🌊 Moat: Animation system reset
-moat.js:2118 Moat: Initializing content visibility, connection state: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: false, isConnected: false, …}
-moat.js:2631 Moat: Rendering empty sidebar
-moat.js:1272 Moat: Event listeners attached
-moat.js:2051 Moat: Logo updated for light theme
-moat.js:2142 🔧 Moat: Waiting for content script to restore connection...
-moat.js:2051 Moat: Logo updated for light theme
-index-hTG4bAL7.js:1858 [Cleanup] Already completed, skipping
-index-hTG4bAL7.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:45:35.401Z
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [DB SAVE] Saving 12 alerts to IndexedDB...
-index-hTG4bAL7.js:1858 [DB SAVE] ✅ Alerts saved in 42.20ms
-index-hTG4bAL7.js:1858 [useStatsCounters] Stats received: {searches: 210, alerts: 83, timestamp: 1769553935570}
-index-hTG4bAL7.js:1858 [useStatsCounters] Stats received: {searches: 210, alerts: 83, timestamp: 1769553935577}
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [useStatsCounters] Stats received: {searches: 210, alerts: 83, timestamp: 1769553935580}
-core-DZF06cH1.js:2  GET https://api.web3modal.org/appkit/v1/config?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8 403 (Forbidden)
-Zr @ core-DZF06cH1.js:2
-get @ core-DZF06cH1.js:2
-fetchProjectConfig @ core-DZF06cH1.js:4
-fetchRemoteFeatures @ core-DZF06cH1.js:908
-initialize @ core-DZF06cH1.js:908
-await in initialize
-r1 @ core-DZF06cH1.js:908
-xh @ core-DZF06cH1.js:908
-n1 @ core-DZF06cH1.js:908
-initialize @ index.es-rCb-Iwbt.js:39
-await in initialize
-init @ index.es-rCb-Iwbt.js:39
-y @ index-hTG4bAL7.js:1755
-await in y
-getProvider @ index-hTG4bAL7.js:1755
-setup @ index-hTG4bAL7.js:1755
-h @ index-hTG4bAL7.js:77
-(anonymous) @ index-hTG4bAL7.js:77
-sA @ index-hTG4bAL7.js:77
-Mb @ index-hTG4bAL7.js:77
-bP @ index-hTG4bAL7.js:77
-vK @ index-hTG4bAL7.js:1756
-(anonymous) @ index-hTG4bAL7.js:1880
-index-hTG4bAL7.js:1858 [Reown Config] Failed to fetch remote project configuration. Using local/default values. Error: HTTP status code: 403
-    at Zr (core-DZF06cH1.js:2:34968)
-    at async Li.get (core-DZF06cH1.js:2:35184)
-    at async Object.fetchProjectConfig (core-DZF06cH1.js:4:6414)
-    at async Object.fetchRemoteFeatures (core-DZF06cH1.js:908:14946)
-    at async xh.initialize (core-DZF06cH1.js:908:19812)
-console.warn @ index-hTG4bAL7.js:1858
-fetchRemoteFeatures @ core-DZF06cH1.js:908
-await in fetchRemoteFeatures
-initialize @ core-DZF06cH1.js:908
-await in initialize
-r1 @ core-DZF06cH1.js:908
-xh @ core-DZF06cH1.js:908
-n1 @ core-DZF06cH1.js:908
-initialize @ index.es-rCb-Iwbt.js:39
-await in initialize
-init @ index.es-rCb-Iwbt.js:39
-y @ index-hTG4bAL7.js:1755
-await in y
-getProvider @ index-hTG4bAL7.js:1755
-setup @ index-hTG4bAL7.js:1755
-h @ index-hTG4bAL7.js:77
-(anonymous) @ index-hTG4bAL7.js:77
-sA @ index-hTG4bAL7.js:77
-Mb @ index-hTG4bAL7.js:77
-bP @ index-hTG4bAL7.js:77
-vK @ index-hTG4bAL7.js:1756
-(anonymous) @ index-hTG4bAL7.js:1880
-index-hTG4bAL7.js:1858 [SYNC] Syncing alerts with server...
-index-hTG4bAL7.js:1858 [DB SAVE] Saving 12 alerts to IndexedDB...
-content_script.js:3944 Uncaught TypeError: e.target.matches is not a function
-    at HTMLDocument.<anonymous> (content_script.js:3944:18)
-(anonymous) @ content_script.js:3944
-index-hTG4bAL7.js:1858 [DB SAVE] ✅ Alerts saved in 11.90ms
-core-DZF06cH1.js:2  POST https://pulse.walletconnect.org/e?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8 400 (Bad Request)
-Zr @ core-DZF06cH1.js:2
-post @ core-DZF06cH1.js:2
-_sendAnalyticsEvent @ core-DZF06cH1.js:4
-sendEvent @ core-DZF06cH1.js:4
-sendInitializeEvent @ core-DZF06cH1.js:908
-initialize @ core-DZF06cH1.js:908
-await in initialize
-r1 @ core-DZF06cH1.js:908
-xh @ core-DZF06cH1.js:908
-n1 @ core-DZF06cH1.js:908
-initialize @ index.es-rCb-Iwbt.js:39
-await in initialize
-init @ index.es-rCb-Iwbt.js:39
-y @ index-hTG4bAL7.js:1755
-await in y
-getProvider @ index-hTG4bAL7.js:1755
-setup @ index-hTG4bAL7.js:1755
-h @ index-hTG4bAL7.js:77
-(anonymous) @ index-hTG4bAL7.js:77
-sA @ index-hTG4bAL7.js:77
-Mb @ index-hTG4bAL7.js:77
-bP @ index-hTG4bAL7.js:77
-vK @ index-hTG4bAL7.js:1756
-(anonymous) @ index-hTG4bAL7.js:1880
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [SYNC] ✅ Alerts synced to server
-moat.js:2246 🔧 Moat: Updating UI with connection state: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: false, isConnected: false, …}
-moat.js:2254 🔧 Moat: Found DOM elements: {indicator: true, label: true, chevron: true, divider: true, button: true}
-moat.js:2270 🔧 Moat: Set label text to: Disconnected
-moat.js:2276 🔧 Moat: Set tooltip to: Click to connect to project
-moat.js:2284 🔧 Moat: UI update complete
-moat.js:2149 🔧 Moat: Starting connection verification with proper timing...
-moat.js:2289 🔧 Moat: Verifying initial connection...
-moat.js:414 🔧 ConnectionManager: Starting connection verification
-moat.js:372 🔧 ConnectionManager: State updated: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: true, isConnected: false, …}
-moat.js:2246 🔧 Moat: Updating UI with connection state: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: true, isConnected: false, …}
-moat.js:2254 🔧 Moat: Found DOM elements: {indicator: true, label: true, chevron: true, divider: true, button: true}
-moat.js:2270 🔧 Moat: Set label text to: Disconnected
-moat.js:2276 🔧 Moat: Set tooltip to: Click to connect to project
-moat.js:2284 🔧 Moat: UI update complete
-moat.js:2118 Moat: Initializing content visibility, connection state: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: true, isConnected: false, …}
-moat.js:2631 Moat: Rendering empty sidebar
-moat.js:420 🔧 ConnectionManager: No directory handle, checking for restoration
-moat.js:461 🔧 ConnectionManager: Attempting to restore connection
-persistence.js:111 ℹ️ Moat Persistence: No stored handle found for: project_https://www.dogechain-bubblemaps.xyz
-persistence.js:298 ℹ️ Moat Persistence: No stored connection found
-moat.js:391 🔧 ConnectionManager: Setting disconnected state
-moat.js:372 🔧 ConnectionManager: State updated: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: false, isConnected: false, …}
-moat.js:2246 🔧 Moat: Updating UI with connection state: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: false, isConnected: false, …}
-moat.js:2254 🔧 Moat: Found DOM elements: {indicator: true, label: true, chevron: true, divider: true, button: true}
-moat.js:2270 🔧 Moat: Set label text to: Disconnected
-moat.js:2276 🔧 Moat: Set tooltip to: Click to connect to project
-moat.js:2284 🔧 Moat: UI update complete
-moat.js:2118 Moat: Initializing content visibility, connection state: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: false, isConnected: false, …}
-moat.js:2631 Moat: Rendering empty sidebar
-moat.js:2294 🔧 Moat: Connection verification complete: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: false, isConnected: false, …}
-moat.js:2305 ❌ Moat: No valid connection found
-moat.js:2105 Moat: Restoring visibility state from localStorage: null
-moat.js:2111 Moat: Moat will remain hidden based on saved state
-moat.js:2181 Moat: DOM monitoring started
-moat.js:2158 Moat: Moat initialization complete
-index-hTG4bAL7.js:1858 [SYNC] ✅ Sync complete: 0 downloaded, 5 uploaded, 5 conflicts
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260918 to 54261418
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260918, toBlock=54261418, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260918 to 54260967
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260918 to 54261418
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260918, toBlock=54261418, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260918 to 54260967
-moat.js:973 🔔 Notification request: Press C to make a comment info content-script
-moat.js:798 🔔 Header Notification: Press C to make a comment info content-script
-moat.js:858 🔔 Processing header notification: Press C to make a comment info content-script 
+pulse.walletconnect.org/e?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8:1  Failed to load resource: the server responded with a status of 400 ()
+api.web3modal.org/appkit/v1/config?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8:1  Failed to load resource: the server responded with a status of 403 ()
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Filtered to 0 transactions since last check (2026-01-27T23:37:44.028Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Filtered to 0 transactions since last check (2026-01-27T23:37:44.032Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T23:37:44.025Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T23:37:44.027Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [Scan] Completed scan for 12 alerts at 2026-01-27T23:37:51.692Z, processed 12 alerts
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [ALERT TRIGGER] Sending to API: Object
+index-Cs2hFjIa.js:1858 [Notifications] Skipping already notified transaction: 0xd0e31179...
+index-Cs2hFjIa.js:1858 [Notifications] Skipping already notified transaction: 0xd0e31179...
+index-Cs2hFjIa.js:1858 [ALERT TRIGGER] API response: 200 OK
+index-Cs2hFjIa.js:1858 [App] handleAlertTriggered called - refreshing stats
+index-Cs2hFjIa.js:1858 [App] Stats cache cleared
+index-Cs2hFjIa.js:1858 [useStatsCounters] Manual refresh - bypassing cache
+index-Cs2hFjIa.js:1858 [useStatsCounters] Fetching stats: Object
+index-Cs2hFjIa.js:1858 [useStatsCounters] Stats received: Object
+index-Cs2hFjIa.js:1858 [App] Stats refresh completed
+index-Cs2hFjIa.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T23:38:00.019Z
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54262986 to 54262990
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xbce77b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xbce77b0d..., fromBlock=54262986, toBlock=54262990, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54262986 to 54262990
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22F419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22F4194F..., fromBlock=54262986, toBlock=54262990, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54262986 to 54262990
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54262986, toBlock=54262990, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54262986 to 54262990
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x64c53d...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x64c53d47..., fromBlock=54262986, toBlock=54262990, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T23:37:50.332Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T23:37:50.274Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T23:37:50.327Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T23:37:50.331Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54262986 to 54262990
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x85217a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x85217a34..., fromBlock=54262986, toBlock=54262990, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54262986 to 54262990
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x0f2d55...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x0f2d5575..., fromBlock=54262986, toBlock=54262990, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54262986 to 54262990
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22f419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22f4194f..., fromBlock=54262986, toBlock=54262990, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54262986 to 54262990
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6b7f5b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6b7f5b89..., fromBlock=54262986, toBlock=54262990, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T23:37:50.887Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T23:37:50.886Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T23:37:51.126Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T23:37:51.127Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54262986 to 54262990
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xc9e4aa...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xc9e4aaef..., fromBlock=54262986, toBlock=54262990, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54262986 to 54262990
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching whale wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54262986, toBlock=54262990, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54262986 to 54262990
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xec54ef...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xec54ef60..., fromBlock=54262986, toBlock=54262990, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54262986 to 54262990
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xdb617a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xdb617a31..., fromBlock=54262986, toBlock=54262990, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Filtered to 0 transactions since last check (2026-01-27T23:37:51.686Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T23:37:51.687Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Filtered to 0 transactions since last check (2026-01-27T23:37:51.686Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T23:37:51.692Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [Scan] Completed scan for 12 alerts at 2026-01-27T23:38:01.418Z, processed 12 alerts
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T23:38:10.981Z
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54262991 to 54262996
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22F419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22F4194F..., fromBlock=54262991, toBlock=54262996, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54262991 to 54262996
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x64c53d...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x64c53d47..., fromBlock=54262991, toBlock=54262996, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54262991 to 54262996
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xbce77b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xbce77b0d..., fromBlock=54262991, toBlock=54262996, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54262991 to 54262996
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54262991, toBlock=54262996, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T23:38:00.249Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T23:38:00.304Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T23:38:00.222Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T23:38:00.278Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54262991 to 54262996
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22f419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22f4194f..., fromBlock=54262991, toBlock=54262996, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54262991 to 54262996
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x0f2d55...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x0f2d5575..., fromBlock=54262991, toBlock=54262996, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54262991 to 54262996
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6b7f5b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6b7f5b89..., fromBlock=54262991, toBlock=54262996, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54262991 to 54262996
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x85217a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x85217a34..., fromBlock=54262991, toBlock=54262996, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T23:38:00.862Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T23:38:00.861Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T23:38:00.866Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T23:38:00.860Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54262991 to 54262996
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xc9e4aa...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xc9e4aaef..., fromBlock=54262991, toBlock=54262996, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54262991 to 54262996
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xec54ef...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xec54ef60..., fromBlock=54262991, toBlock=54262996, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54262991 to 54262996
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xdb617a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xdb617a31..., fromBlock=54262991, toBlock=54262996, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54262991 to 54262996
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching whale wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54262991, toBlock=54262996, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Filtered to 0 transactions since last check (2026-01-27T23:38:01.418Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T23:38:01.418Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T23:38:01.416Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Filtered to 0 transactions since last check (2026-01-27T23:38:01.416Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [Scan] Completed scan for 12 alerts at 2026-01-27T23:38:13.047Z, processed 12 alerts
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T23:38:20.979Z
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54262997 to 54263001
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22F419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22F4194F..., fromBlock=54262997, toBlock=54263001, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54262997 to 54263001
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54262997, toBlock=54263001, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54262997 to 54263001
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xbce77b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xbce77b0d..., fromBlock=54262997, toBlock=54263001, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54262997 to 54263001
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x64c53d...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x64c53d47..., fromBlock=54262997, toBlock=54263001, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T23:38:11.203Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T23:38:11.280Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T23:38:11.256Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T23:38:11.228Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54262997 to 54263001
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6b7f5b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6b7f5b89..., fromBlock=54262997, toBlock=54263001, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54262997 to 54263001
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x85217a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x85217a34..., fromBlock=54262997, toBlock=54263001, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54262997 to 54263001
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x0f2d55...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x0f2d5575..., fromBlock=54262997, toBlock=54263001, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54262997 to 54263001
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22f419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22f4194f..., fromBlock=54262997, toBlock=54263001, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T23:38:12.035Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T23:38:12.036Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T23:38:12.032Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T23:38:12.032Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54262997 to 54263001
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xec54ef...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xec54ef60..., fromBlock=54262997, toBlock=54263001, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54262997 to 54263001
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xc9e4aa...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xc9e4aaef..., fromBlock=54262997, toBlock=54263001, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54262997 to 54263001
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xdb617a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xdb617a31..., fromBlock=54262997, toBlock=54263001, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54262997 to 54263001
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching whale wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54262997, toBlock=54263001, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T23:38:13.044Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T23:38:13.045Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Filtered to 0 transactions since last check (2026-01-27T23:38:13.047Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Filtered to 0 transactions since last check (2026-01-27T23:38:13.040Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [Scan] Completed scan for 12 alerts at 2026-01-27T23:38:23.030Z, processed 12 alerts
+console.error @ index-Cs2hFjIa.js:1858
 moat.js:3546 Moat: Page became visible, checking moat state...
 moat.js:3557 Moat: Window focused, checking moat state...
-index-hTG4bAL7.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:45:45.404Z
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260968 to 54261017
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260968 to 54261017
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260923 to 54261423
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260923, toBlock=54261423, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260923 to 54260972
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260923 to 54261423
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260923, toBlock=54261423, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260923 to 54260972
-index-hTG4bAL7.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:45:55.954Z
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260930 to 54261430
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260930, toBlock=54261430, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260930 to 54260979
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260930 to 54261430
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260930, toBlock=54261430, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260930 to 54260979
-index-hTG4bAL7.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:46:05.959Z
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260935 to 54261435
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260935, toBlock=54261435, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260935 to 54260984
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260935 to 54261435
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260935, toBlock=54261435, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260935 to 54260984
-index-hTG4bAL7.js:1858 [getWalletTransactions] Checking tx 0x2ca6efa6... for token transfers {txFrom: '0x22f4194f6706e70abaa14ab352d0baa6c7ced24a', txTo: '0x45afcf57f7e3f3b9ca70335e5e85e4f77dcc5087', wallet: '0x22f4194f6706e70abaa14ab352d0baa6c7ced24a', isContractInteraction: true}
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54261018 to 54261067
-index-hTG4bAL7.js:1858 [getWalletTransactions] Receipt for 0x2ca6efa6... has 9 logs
-index-hTG4bAL7.js:1858 [getWalletTransactions] Found 2 wallet Transfer events
-index-hTG4bAL7.js:1858 [getWalletTransactions] Found token transfer in 0x2ca6efa69495c5241c00c9a90503d85c8ee9a4c93615838cc150f0e3edef72de: {token: '0xbdad927604c5cb78f15b3669a92fa5a1427d33a2', value: '224339380540895509116877', isIncoming: true}
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54261018 to 54261067
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260973 to 54261022
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260973 to 54261022
-index-hTG4bAL7.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:46:15.954Z
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [Scan] ⚠️ TIMEOUT after 45s, completing scan with partial results
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setTimeout
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:46:25.956Z
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [Scan] ⚠️ TIMEOUT after 45s, completing scan with partial results
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setTimeout
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:46:35.959Z
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260980 to 54261029
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260980 to 54261029
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260950 to 54261450
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260950, toBlock=54261450, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260950 to 54260999
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260950 to 54261450
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260950, toBlock=54261450, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260950 to 54260999
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260950 to 54261450
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260950, toBlock=54261450, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260950 to 54260999
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260950 to 54261450
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260950, toBlock=54261450, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260950 to 54260999
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260950 to 54261450
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260950, toBlock=54261450, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260950 to 54260999
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260950 to 54261450
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260950, toBlock=54261450, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260950 to 54260999
-index-hTG4bAL7.js:1858 [Scan] ⚠️ TIMEOUT after 45s, completing scan with partial results
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setTimeout
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:46:45.966Z
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-setInterval
-(anonymous) @ index-hTG4bAL7.js:1852
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-lh @ index-hTG4bAL7.js:33
-P2 @ index-hTG4bAL7.js:33
-M2 @ index-hTG4bAL7.js:33
-j2 @ index-hTG4bAL7.js:33
-k2 @ index-hTG4bAL7.js:33
-W2 @ index-hTG4bAL7.js:33
-Iu @ index-hTG4bAL7.js:33
-H2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-postMessage
-_postMessage @ content-script.js:2
-_write @ content-script.js:2
-O @ content-script.js:2
-(anonymous) @ content-script.js:2
-R.write @ content-script.js:2
-BroadcastChannelMessage.send @ content-script.js:2
-H.onRequest @ content-script.js:2
-await in H.onRequest
-(anonymous) @ content-script.js:2
-u.emit @ content-script.js:2
-E @ content-script.js:2
-O @ content-script.js:2
-R.push @ content-script.js:2
-_onData @ content-script.js:2
-_onMessage @ content-script.js:2
-postMessage
-_postMessage @ pageProvider.js:2
-_write @ pageProvider.js:2
-E @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-M.write @ pageProvider.js:2
-send @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-_proceed @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L._request @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-(anonymous) @ pageProvider.js:2
-call @ pageProvider.js:2
-L.request @ pageProvider.js:2
-getChainId @ index-hTG4bAL7.js:77
-await in getChainId
-connect @ index-hTG4bAL7.js:77
-await in connect
-Hz @ index-hTG4bAL7.js:77
-await in Hz
-onMount @ index-hTG4bAL7.js:77
-await in onMount
-(anonymous) @ index-hTG4bAL7.js:77
-Su @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-Ps @ index-hTG4bAL7.js:33
-w2 @ index-hTG4bAL7.js:33
-$2 @ index-hTG4bAL7.js:33
-(anonymous) @ index-hTG4bAL7.js:33
-F @ index-hTG4bAL7.js:18
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260985 to 54261034
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260985 to 54261034
-index-hTG4bAL7.js:1858 [Scan] ⚠️ TIMEOUT after 45s, completing scan with partial results
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260959 to 54261459
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260959, toBlock=54261459, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260959 to 54261008
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260959 to 54261459
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260959, toBlock=54261459, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260959 to 54261008
-index-hTG4bAL7.js:1858 [Scan] ⚠️ TIMEOUT after 45s, completing scan with partial results
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setTimeout
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54261068 to 54261117
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54261068 to 54261117
-index-hTG4bAL7.js:1858 [Scan] ⚠️ TIMEOUT after 45s, completing scan with partial results
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setTimeout
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
+index-Cs2hFjIa.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T23:38:30.019Z
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54263001 to 54263005
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22F419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22F4194F..., fromBlock=54263001, toBlock=54263005, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54263001 to 54263005
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x64c53d...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x64c53d47..., fromBlock=54263001, toBlock=54263005, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54263001 to 54263005
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54263001, toBlock=54263005, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54263001 to 54263005
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xbce77b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xbce77b0d..., fromBlock=54263001, toBlock=54263005, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 3 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 2 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 3 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T23:38:21.236Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 3 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T23:38:21.180Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 3 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T23:38:21.208Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 2 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 2 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 2 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Fetched 2 transactions Object
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 2 transactions since last check (2026-01-27T23:38:21.152Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] New transactions: Array(2)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54263001 to 54263005
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x85217a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x85217a34..., fromBlock=54263001, toBlock=54263005, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54263001 to 54263005
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6b7f5b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6b7f5b89..., fromBlock=54263001, toBlock=54263005, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54263001 to 54263005
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x0f2d55...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x0f2d5575..., fromBlock=54263001, toBlock=54263005, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54263001 to 54263005
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22f419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22f4194f..., fromBlock=54263001, toBlock=54263005, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 3 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T23:38:22.029Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 3 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T23:38:22.029Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 3 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T23:38:22.028Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 3 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 2 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 2 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 2 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 2 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Fetched 2 transactions Object
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 2 transactions since last check (2026-01-27T23:38:22.031Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] New transactions: Array(2)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T23:38:40.018Z
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T23:38:50.018Z
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22F419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22F4194F..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T23:38:21.152Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x64c53d...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x64c53d47..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xbce77b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xbce77b0d..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T23:38:21.236Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T23:38:21.208Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T23:38:21.180Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xc9e4aa...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xc9e4aaef..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xec54ef...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xec54ef60..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T23:38:23.030Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xdb617a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xdb617a31..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T23:38:23.030Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching whale wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Filtered to 0 transactions since last check (2026-01-27T23:38:23.030Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Filtered to 0 transactions since last check (2026-01-27T23:38:23.030Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [Scan] Completed scan for 12 alerts at 2026-01-27T23:38:50.948Z, processed 12 alerts
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [ALERT TRIGGER] Sending to API: Object
+index-Cs2hFjIa.js:1858 [Notifications] Skipping already notified transaction: 0x9e57114b...
+index-Cs2hFjIa.js:1858 [ALERT TRIGGER] Sending to API: Object
+index-Cs2hFjIa.js:1858 [Notifications] Skipping already notified transaction: 0x9e57114b...
+index-Cs2hFjIa.js:1858 [Notifications] Skipping already notified transaction: 0x9e57114b...
+index-Cs2hFjIa.js:1858 [ALERT TRIGGER] Sending to API: Object
+index-Cs2hFjIa.js:1858 [Notifications] Skipping already notified transaction: 0x9e57114b...
+index-Cs2hFjIa.js:1858 [Notifications] Skipping already notified transaction: 0x9e57114b...
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22F419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22F4194F..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [DB] Save triggered events failed: Re
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x64c53d...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x64c53d47..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T23:38:21.152Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [ALERT TRIGGER] API response: 200 OK
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T23:38:21.236Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [ALERT TRIGGER] API response: 200 OK
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xbce77b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xbce77b0d..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T23:38:21.180Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T23:38:21.208Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [ALERT TRIGGER] API response: 200 OK
+index-Cs2hFjIa.js:1858 [App] handleAlertTriggered called - refreshing stats
+index-Cs2hFjIa.js:1858 [App] Stats cache cleared
+index-Cs2hFjIa.js:1858 [useStatsCounters] Manual refresh - bypassing cache
+index-Cs2hFjIa.js:1858 [useStatsCounters] Fetching stats: Object
+index-Cs2hFjIa.js:1858 [App] handleAlertTriggered called - refreshing stats
+index-Cs2hFjIa.js:1858 [App] Stats cache cleared
+index-Cs2hFjIa.js:1858 [useStatsCounters] Manual refresh - bypassing cache
+index-Cs2hFjIa.js:1858 [useStatsCounters] Fetching stats: Object
+index-Cs2hFjIa.js:1858 [useStatsCounters] Stats received: Object
+index-Cs2hFjIa.js:1858 [App] Stats refresh completed
+index-Cs2hFjIa.js:1858 [useStatsCounters] Stats received: Object
+index-Cs2hFjIa.js:1858 [App] Stats refresh completed
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x0f2d55...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x0f2d5575..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22f419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22f4194f..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6b7f5b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6b7f5b89..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54263003 to 54263015
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x85217a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x85217a34..., fromBlock=54263003, toBlock=54263015, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [App] handleAlertTriggered called - refreshing stats
+index-Cs2hFjIa.js:1858 [App] Stats cache cleared
+index-Cs2hFjIa.js:1858 [useStatsCounters] Manual refresh - bypassing cache
+index-Cs2hFjIa.js:1858 [useStatsCounters] Fetching stats: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T23:38:22.029Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T23:38:22.028Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T23:38:22.031Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T23:38:22.029Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [useStatsCounters] Stats received: Object
+index-Cs2hFjIa.js:1858 [App] Stats refresh completed
+index-Cs2hFjIa.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T23:39:00.018Z
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54263007 to 54263020
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54263007, toBlock=54263020, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54263007 to 54263020
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xbce77b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xbce77b0d..., fromBlock=54263007, toBlock=54263020, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54263007 to 54263020
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22F419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22F4194F..., fromBlock=54263007, toBlock=54263020, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54263007 to 54263020
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x64c53d...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x64c53d47..., fromBlock=54263007, toBlock=54263020, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T23:38:30.100Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T23:38:30.100Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T23:38:30.128Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T23:38:30.099Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54263004 to 54263020
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xec54ef...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xec54ef60..., fromBlock=54263004, toBlock=54263020, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54263004 to 54263020
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x85217a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x85217a34..., fromBlock=54263004, toBlock=54263020, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54263004 to 54263020
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x0f2d55...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x0f2d5575..., fromBlock=54263004, toBlock=54263020, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54263004 to 54263020
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xc9e4aa...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xc9e4aaef..., fromBlock=54263004, toBlock=54263020, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T23:38:23.030Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T23:38:22.029Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T23:38:22.029Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T23:38:23.030Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54263004 to 54263020
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching whale wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54263004, toBlock=54263020, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54263004 to 54263020
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xdb617a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xdb617a31..., fromBlock=54263004, toBlock=54263020, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54263004 to 54263020
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6b7f5b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6b7f5b89..., fromBlock=54263004, toBlock=54263020, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54263004 to 54263020
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22f419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22f4194f..., fromBlock=54263004, toBlock=54263020, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Filtered to 0 transactions since last check (2026-01-27T23:38:23.030Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T23:38:22.028Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T23:38:22.031Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Filtered to 0 transactions since last check (2026-01-27T23:38:23.030Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [Scan] Completed scan for 12 alerts at 2026-01-27T23:39:01.419Z, processed 12 alerts
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T23:39:10.020Z
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54263006 to 54263026
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xec54ef...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xec54ef60..., fromBlock=54263006, toBlock=54263026, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54263017 to 54263026
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xbce77b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xbce77b0d..., fromBlock=54263017, toBlock=54263026, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54263017 to 54263026
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x64c53d...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x64c53d47..., fromBlock=54263017, toBlock=54263026, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54263006 to 54263026
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xc9e4aa...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xc9e4aaef..., fromBlock=54263006, toBlock=54263026, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T23:38:23.030Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T23:38:51.128Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T23:38:51.041Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: Object
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T23:38:23.030Z)
+console.error @ index-Cs2hFjIa.js:1858
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: Object
 moat.js:3546 Moat: Page became visible, checking moat state...
-index-hTG4bAL7.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:47:27.121Z
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [Scan] ⚠️ TIMEOUT after 45s, completing scan with partial results
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setTimeout
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-moat.js:3557 Moat: Window focused, checking moat state...
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [Scan] ⚠️ TIMEOUT after 45s, completing scan with partial results
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-setTimeout
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260976 to 54261476
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260976, toBlock=54261476, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54263006 to 54263026
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xdb617a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xdb617a31..., fromBlock=54263006, toBlock=54263026, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
 await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260976 to 54261025
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260976 to 54261476
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260976, toBlock=54261476, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54263009 to 54263026
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x0f2d55...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x0f2d5575..., fromBlock=54263009, toBlock=54263026, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
 await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260976 to 54261025
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54261023 to 54261072
-index-hTG4bAL7.js:1858 [getWalletTransactions] Checking tx 0x2ca6efa6... for token transfers {txFrom: '0x22f4194f6706e70abaa14ab352d0baa6c7ced24a', txTo: '0x45afcf57f7e3f3b9ca70335e5e85e4f77dcc5087', wallet: '0x22f4194f6706e70abaa14ab352d0baa6c7ced24a', isContractInteraction: true}
-index-hTG4bAL7.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:47:35.404Z
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54260976 to 54261476
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54260976, toBlock=54261476, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54263006 to 54263026
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching whale wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54263006, toBlock=54263026, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
 await in un
-(anonymous) @ index-hTG4bAL7.js:1852
-await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260976 to 54261025
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54260976 to 54261476
-index-hTG4bAL7.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-hTG4bAL7.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54260976, toBlock=54261476, maxResults=1000
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54263009 to 54263026
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6b7f5b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6b7f5b89..., fromBlock=54263009, toBlock=54263026, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
 await in un
-(anonymous) @ index-hTG4bAL7.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
 await in (anonymous)
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54260976 to 54261025
-index-hTG4bAL7.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:47:45.405Z
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 Failed to fetch receipt for 0x2ca6efa69495c5241c00c9a90503d85c8ee9a4c93615838cc150f0e3edef72de: TimeoutError: The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_getTransactionReceipt","params":["0x2ca6efa69495c5241c00c9a90503d85c8ee9a4c93615838cc150f0e3edef72de"]}
-
-Details: The request timed out.
-Version: viem@2.44.0
-    at Object.request (index-hTG4bAL7.js:72:58868)
-    at L (index-hTG4bAL7.js:77:4368)
-    at request (index-hTG4bAL7.js:77:4414)
-    at Rl.delay.count (index-hTG4bAL7.js:72:55458)
-    at c (index-hTG4bAL7.js:72:54933)
-    at d (index-hTG4bAL7.js:72:54899)
-console.warn @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
 await in (anonymous)
-executeWithRetry @ index-hTG4bAL7.js:1852
-getWalletTransactions @ index-hTG4bAL7.js:1852
-un @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [getWalletTransactions] Fetching blocks 54261023 to 54261072
-index-hTG4bAL7.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T22:47:55.404Z
-console.error @ index-hTG4bAL7.js:1858
-(anonymous) @ index-hTG4bAL7.js:1852
-(anonymous) @ index-hTG4bAL7.js:1852
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-hTG4bAL7.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Filtered to 0 transactions since last check (2026-01-27T23:38:23.030Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:38:23.030Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T23:38:30.683Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:38:30.683Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Filtered to 0 transactions since last check (2026-01-27T23:38:23.030Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:38:23.030Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [Scan] Completed scan for 12 alerts at 2026-01-27T23:39:12.029Z, processed 12 alerts
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T23:38:30.683Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:38:30.683Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54263017 to 54263026
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54263017, toBlock=54263026, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54263009 to 54263026
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x85217a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x85217a34..., fromBlock=54263009, toBlock=54263026, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54263017 to 54263026
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22F419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22F4194F..., fromBlock=54263017, toBlock=54263026, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54263009 to 54263026
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22f419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22f4194f..., fromBlock=54263009, toBlock=54263026, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T23:38:51.127Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:38:51.127Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T23:38:30.682Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:38:30.682Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T23:38:51.031Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T23:38:30.714Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T23:39:20.019Z
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54263019 to 54263031
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x85217a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x85217a34..., fromBlock=54263019, toBlock=54263031, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54263019 to 54263031
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x0f2d55...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x0f2d5575..., fromBlock=54263019, toBlock=54263031, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54263018 to 54263031
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xec54ef...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xec54ef60..., fromBlock=54263018, toBlock=54263031, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54263019 to 54263031
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x6b7f5b...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6b7f5b89..., fromBlock=54263019, toBlock=54263031, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T23:38:51.682Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:38:51.682Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T23:38:51.680Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:38:51.680Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T23:38:50.918Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:38:50.918Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T23:38:51.682Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:38:51.682Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54263018 to 54263031
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22f419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22f4194f..., fromBlock=54263018, toBlock=54263031, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54263018 to 54263031
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xdb617a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xdb617a31..., fromBlock=54263018, toBlock=54263031, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54263018 to 54263031
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0x22F419...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x22F4194F..., fromBlock=54263018, toBlock=54263031, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54263018 to 54263031
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xc9e4aa...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xc9e4aaef..., fromBlock=54263018, toBlock=54263031, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T23:38:51.682Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T23:38:50.291Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Filtered to 0 transactions since last check (2026-01-27T23:38:50.948Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:38:50.948Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T23:38:50.886Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:38:50.886Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54263022 to 54263031
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xec54ef...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xec54ef60..., fromBlock=54263022, toBlock=54263031, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54263022 to 54263031
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xc9e4aa...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xc9e4aaef..., fromBlock=54263022, toBlock=54263031, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54263022 to 54263031
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching whale wallet transfers (FAST) for 0x6c13d0...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0x6c13d097..., fromBlock=54263022, toBlock=54263031, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
+index-Cs2hFjIa.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54263022 to 54263031
+index-Cs2hFjIa.js:1858 [HybridFetch] Fetching wallet transfers (FAST) for 0xdb617a...
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast START: wallet=0xdb617a31..., fromBlock=54263022, toBlock=54263031, maxResults=1000
+console.error @ index-Cs2hFjIa.js:1858
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T23:39:00.852Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:39:00.852Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T23:39:00.860Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:39:00.860Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Filtered to 0 transactions since last check (2026-01-27T23:39:01.418Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:39:01.418Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Found 0 total Transfer events in range
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+executeWithRetry @ index-Cs2hFjIa.js:1852
+getWalletTransfersFast @ index-Cs2hFjIa.js:1852
+un @ index-Cs2hFjIa.js:1852
+await in un
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [HybridFetch] RPC returned 0 transactions
+index-Cs2hFjIa.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] No transactions fetched from RPC/Explorer API
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Filtered to 0 transactions since last check (2026-01-27T23:39:01.419Z)
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852
+await in (anonymous)
+(anonymous) @ index-Cs2hFjIa.js:1852
+index-Cs2hFjIa.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Dismissal state: {wasDismissedAfterLastTrigger: false, dismissedAt: '2026-01-27T23:31:38.711Z', checkedAt: '2026-01-27T23:39:01.419Z', hasNewActivity: false, wasTriggered: false, …}
+index-Cs2hFjIa.js:1858 [Scan] Completed scan for 12 alerts at 2026-01-27T23:39:23.170Z, processed 12 alerts
+console.error @ index-Cs2hFjIa.js:1858
+(anonymous) @ index-Cs2hFjIa.js:1852

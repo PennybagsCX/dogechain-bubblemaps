@@ -164,8 +164,8 @@ const getRPCConfig = (): DogechainRPCConfig => {
     // Blocks per batch (for old block-fetching method)
     batchSize: BigInt(process.env.DOGECHAIN_RPC_BATCH_SIZE || "50"),
 
-    // TEMPORARY: Disabled to debug alert delay issues
-    suppressConsoleLogs: false,
+    // Enable console log suppression for cleaner production output
+    suppressConsoleLogs: true,
   };
 };
 
@@ -756,7 +756,7 @@ export class DogechainRPCClient {
       const results: WalletTransaction[] = [];
 
       // Debug: Always log the wallet and block range being fetched
-      console.error(
+      console.log(
         `[RPC] getWalletTransactions START: wallet=${walletAddress.slice(0, 10)}..., fromBlock=${actualFromBlock}, toBlock=${actualToBlock}, maxResults=${maxResults}`
       );
 
@@ -1137,7 +1137,7 @@ export class DogechainRPCClient {
       );
     }
 
-    console.error(
+    console.log(
       `[RPC] getWalletTransfersFast START: wallet=${walletAddress.slice(0, 10)}..., fromBlock=${actualFromBlock}, toBlock=${actualToBlock}, maxResults=${maxResults}`
     );
 
@@ -1165,7 +1165,7 @@ export class DogechainRPCClient {
         toBlock: actualToBlock,
       });
 
-      console.error(
+      console.log(
         `[RPC] getWalletTransfersFast: Found ${logs.length} total Transfer events in range`
       );
 
@@ -1182,7 +1182,7 @@ export class DogechainRPCClient {
         );
       });
 
-      console.error(
+      console.log(
         `[RPC] getWalletTransfersFast: Filtered to ${walletTransferLogs.length} wallet Transfer events`
       );
 
@@ -1232,7 +1232,7 @@ export class DogechainRPCClient {
         });
       }
 
-      console.error(`[RPC] getWalletTransfersFast END: returning ${results.length} transactions`);
+      console.log(`[RPC] getWalletTransfersFast END: returning ${results.length} transactions`);
 
       return results;
     });

@@ -618,8 +618,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
       setIsScanning(true);
       const newStatuses: Record<string, AlertStatus> = {};
 
-      // Debug: Log scan start (use console.error to bypass production suppression)
-      console.error(
+      // Debug: Log scan start
+      console.log(
         `[Scan] Starting scan for ${currentAlerts.length} alerts at ${new Date().toISOString()}`
       );
 
@@ -627,7 +627,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       // If RPC takes too long, we still want to complete the scan so isScanning gets reset
       const scanTimeout = new Promise<Record<string, AlertStatus>>((resolve) => {
         setTimeout(() => {
-          console.error(`[Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results`);
+          console.warn(`[Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results`);
           resolve(newStatuses); // Return whatever we have so far
         }, 60000); // 60 second hard timeout for entire scan
       });
@@ -715,16 +715,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     if (isNaN(d.getTime())) return new Date().toISOString();
                     return d.toISOString();
                   };
-                  console.error(`[Alert ${alert.id}] Fetched ${transactions.length} transactions`, {
+                  console.log(`[Alert ${alert.id}] Fetched ${transactions.length} transactions`, {
                     oldest: toSafeISOString(oldestTx?.timestamp),
                     newest: toSafeISOString(newestTx?.timestamp),
                     alertCreatedAt: toSafeISOString(alertCreatedAt),
                   });
                 } else {
                   // Debug: Log when no transactions were fetched
-                  console.error(
-                    `[Alert ${alert.id}] No transactions fetched from RPC/Explorer API`
-                  );
+                  console.log(`[Alert ${alert.id}] No transactions fetched from RPC/Explorer API`);
                 }
 
                 // For new alerts, filter to only transactions AFTER alert creation
@@ -763,8 +761,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   const lastCheckTime = wasDismissed ? dismissedAt : checkedAt;
                   newTransactions = transactions.filter((tx) => tx.timestamp > lastCheckTime);
 
-                  // Debug: Log filtering results (use console.error to bypass production suppression)
-                  console.error(
+                  // Debug: Log filtering results
+                  console.log(
                     `[Alert ${alert.id}] Filtered to ${newTransactions.length} transactions since last check (${new Date(lastCheckTime).toISOString()})`
                   );
 
@@ -777,7 +775,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       if (isNaN(d.getTime())) return "Invalid timestamp";
                       return d.toISOString();
                     };
-                    console.error(
+                    console.log(
                       `[Alert ${alert.id}] New transactions:`,
                       newTransactions.map((tx) => ({
                         hash: tx.hash,
@@ -884,8 +882,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
           }
         }
 
-        // Debug: Log scan completion (use console.error to bypass production suppression)
-        console.error(
+        // Debug: Log scan completion
+        console.log(
           `[Scan] Completed scan for ${alertsToScan.length} alerts at ${new Date().toISOString()}, processed ${Object.keys(newStatuses).length} alerts`
         );
 
@@ -1026,8 +1024,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
       const currentAlerts = alertsRef.current;
       const inGrace = isInGracePeriod();
 
-      // Debug: Log periodic scan trigger (use console.error to bypass production suppression)
-      console.error(
+      // Debug: Log periodic scan trigger
+      console.log(
         `[Polling] isScanning=${isScanning}, alerts=${currentAlerts.length}, inGracePeriod=${inGrace}, willScan=${!isScanning && currentAlerts.length > 0 && !inGrace}`
       );
 

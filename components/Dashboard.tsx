@@ -610,8 +610,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
               const wasDismissedAfterLastTrigger = dismissedAt > 0 && dismissedAt >= checkedAt;
               // CRITICAL: If there are new transactions (which are already filtered to be after dismissal),
               // clear the dismissal state and allow triggering. Otherwise preserve dismissal.
-              const hasNewTransactionsAfterDismissal =
-                hasNewActivity && wasDismissedAfterLastTrigger;
               // If there are new transactions after dismissal, trigger. If no new transactions,
               // only trigger if not dismissed and was previously triggered.
               const shouldTrigger =

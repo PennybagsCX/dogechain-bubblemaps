@@ -639,8 +639,9 @@ export class DogechainRPCClient {
   }
 
   /**
-   * Get wallet transactions within a block range using event logs
-   * This is more efficient than fetching full transactions
+   * Get wallet transactions within a block range
+   * Fetches full blocks and filters for transactions involving the wallet
+   * This captures ALL transaction types: swaps, transfers, approvals, etc.
    */
   async getWalletTransactions(
     walletAddress: string,
@@ -684,83 +685,116 @@ export class DogechainRPCClient {
     }
 
     return this.executeWithRetry(async (client) => {
-      // Transfer(address indexed from, address indexed to, uint256 value)
-      const transferEventSignature =
-        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
-
-      // Normalize wallet address for comparison (indexed parameters are padded)
       const normalizedWallet = walletAddress.toLowerCase();
-
-      // Get all logs in range - this will include all token transfers
-      const logs = await client.getLogs({
-        fromBlock: actualFromBlock,
-        toBlock: actualToBlock,
-      });
-
-      // Filter for Transfer events involving our wallet
-      const walletTransferLogs = logs.filter((log: any) => {
-        // Must be Transfer event
-        if (log.topics[0] !== transferEventSignature) return false;
-
-        // Check if wallet is involved (from or to address)
-        const fromAddress = (log.topics[1] || "").slice(26).toLowerCase();
-        const toAddress = (log.topics[2] || "").slice(26).toLowerCase();
-
-        return fromAddress === normalizedWallet || toAddress === normalizedWallet;
-      });
-
-      // Limit results if needed
-      const limitedLogs = walletTransferLogs.slice(0, maxResults);
-
-      // Parse logs and fetch timestamps
       const results: WalletTransaction[] = [];
-      const blockCache = new Map<bigint, number>();
 
-      for (const log of limitedLogs) {
-        // Use cached block timestamp if available
-        let timestamp = blockCache.get(log.blockNumber);
+      // Fetch blocks in range (batch by 50 blocks to balance speed and RPC limits)
+      const batchSize = 50n;
+      let currentBlock = actualFromBlock;
+      let totalFetched = 0;
 
-        if (timestamp === undefined) {
-          try {
-            const block = await client.getBlock({
-              blockNumber: log.blockNumber,
-              includeTransactions: false,
+      while (currentBlock <= actualToBlock && totalFetched < maxResults) {
+        const endBlock =
+          currentBlock + batchSize - 1n > actualToBlock
+            ? actualToBlock
+            : currentBlock + batchSize - 1n;
+
+        console.log(`[getWalletTransactions] Fetching blocks ${currentBlock} to ${endBlock}`);
+
+        // Fetch block numbers
+        const blockNumbers: bigint[] = [];
+        for (let b = currentBlock; b <= endBlock; b++) {
+          blockNumbers.push(b);
+        }
+
+        // Fetch all blocks in parallel with concurrency limit
+        const concurrencyLimit = 10;
+        const blocks: (any | null)[] = [];
+
+        for (let i = 0; i < blockNumbers.length; i += concurrencyLimit) {
+          const batch = blockNumbers.slice(i, i + concurrencyLimit);
+          const batchResults = await Promise.all(
+            batch.map((blockNumber) =>
+              client.getBlock({ blockNumber, includeTransactions: true }).catch(() => null)
+            )
+          );
+          blocks.push(...batchResults);
+        }
+
+        // Process each block
+        for (const block of blocks) {
+          if (!block) continue;
+
+          // Skip blocks without transactions
+          if (!block.transactions || block.transactions.length === 0) continue;
+
+          // Filter transactions involving our wallet
+          for (const tx of block.transactions) {
+            if (totalFetched >= maxResults) break;
+
+            // Check if wallet is involved in this transaction
+            const walletInvolved =
+              tx.from?.toLowerCase() === normalizedWallet ||
+              tx.to?.toLowerCase() === normalizedWallet;
+
+            if (!walletInvolved) continue;
+
+            // For transaction to/from a contract, check logs for Transfer events
+            // to determine the token address and value
+            let tokenAddress: string | undefined;
+            let value: bigint = 0n;
+
+            if (tx.to && tx.to.toLowerCase() !== normalizedWallet) {
+              // Transaction TO a contract - check logs for Transfer events
+              try {
+                const receipt = await client.getTransactionReceipt({
+                  hash: tx.hash,
+                });
+
+                if (receipt && receipt.logs) {
+                  // Find Transfer events involving our wallet
+                  const transferEventSignature =
+                    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+
+                  const transferLog = receipt.logs.find((log: any) => {
+                    if (log.topics[0] !== transferEventSignature) return false;
+                    const fromAddress = (log.topics[1] || "").slice(26).toLowerCase();
+                    const toAddress = (log.topics[2] || "").slice(26).toLowerCase();
+                    return fromAddress === normalizedWallet || toAddress === normalizedWallet;
+                  });
+
+                  if (transferLog) {
+                    tokenAddress = transferLog.address;
+                    value = BigInt(transferLog.data || "0");
+                  }
+                }
+              } catch (error) {
+                // If receipt fetch fails, continue without token details
+                console.warn(`Failed to fetch receipt for ${tx.hash}:`, error);
+              }
+            }
+
+            results.push({
+              hash: tx.hash,
+              from: tx.from || "0x0",
+              to: tx.to || "0x0",
+              value,
+              timestamp: Number(block.timestamp),
+              blockNumber: block.number,
+              tokenAddress: tokenAddress || "0x0",
             });
 
-            if (!block) {
-              console.warn(`Unable to fetch block ${log.blockNumber}, skipping log`);
-              continue;
-            }
-            timestamp = Number(block.timestamp);
-            blockCache.set(log.blockNumber, timestamp);
-          } catch (error) {
-            console.warn(`Error fetching block ${log.blockNumber}:`, error);
-            continue;
+            totalFetched++;
           }
         }
 
-        // Parse indexed parameters from topics
-        const from = `0x${(log.topics[1] || "0".repeat(64)).slice(26)}`;
-        const to = `0x${(log.topics[2] || "0".repeat(64)).slice(26)}`;
-
-        results.push({
-          hash: log.transactionHash,
-          from,
-          to,
-          value: BigInt(log.data || "0"),
-          timestamp,
-          blockNumber: log.blockNumber,
-          tokenAddress: log.address,
-        });
+        currentBlock = endBlock + 1n;
       }
 
-      // Sort by block number (descending) and then by transaction index
-      results.sort((a, b) => {
-        if (a.blockNumber !== b.blockNumber) {
-          return Number(b.blockNumber - a.blockNumber);
-        }
-        return b.hash.localeCompare(a.hash);
-      });
+      console.log(`[getWalletTransactions] Found ${results.length} transactions for wallet`);
+
+      // Sort by timestamp (most recent first)
+      results.sort((a, b) => b.timestamp - a.timestamp);
 
       return results;
     });

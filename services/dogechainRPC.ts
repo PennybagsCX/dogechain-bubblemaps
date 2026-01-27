@@ -149,19 +149,19 @@ const getRPCConfig = (): DogechainRPCConfig => {
   // const isProduction = process.env.NODE_ENV === "production";
 
   return {
-    // CRITICAL FIX: Reduce timeout to 5s for faster failure and retry
-    timeout: parseInt(process.env.DOGECHAIN_RPC_TIMEOUT || "5000", 10),
+    // Timeout for individual RPC requests
+    timeout: parseInt(process.env.DOGECHAIN_RPC_TIMEOUT || "8000", 10),
 
-    // Read from env or default to 3 retries per provider
+    // Retries per provider
     retryCount: parseInt(process.env.DOGECHAIN_RPC_RETRY_COUNT || "3", 10),
 
-    // CRITICAL FIX: Reduce max retries to 1 to prevent long delays
-    maxRetries: parseInt(process.env.DOGECHAIN_RPC_MAX_RETRIES || "1", 10),
+    // Max retries before giving up
+    maxRetries: parseInt(process.env.DOGECHAIN_RPC_MAX_RETRIES || "2", 10),
 
-    // CRITICAL FIX: Increase concurrent requests to 10 for faster scanning
+    // Concurrent requests
     concurrencyLimit: parseInt(process.env.DOGECHAIN_RPC_CONCURRENCY_LIMIT || "10", 10),
 
-    // CRITICAL FIX: Increase batch size to 50 blocks for faster scanning
+    // Blocks per batch (for old block-fetching method)
     batchSize: BigInt(process.env.DOGECHAIN_RPC_BATCH_SIZE || "50"),
 
     // TEMPORARY: Disabled to debug alert delay issues
@@ -1097,6 +1097,148 @@ export class DogechainRPCClient {
       }
       return null;
     }
+  }
+
+  /**
+   * FAST VERSION: Get wallet token transfers using getLogs (much faster than block fetching)
+   * Fetches all Transfer events involving the wallet across ALL tokens
+   * This is the preferred method for WALLET alerts as it avoids slow block/receipt fetching
+   */
+  async getWalletTransfersFast(
+    walletAddress: string,
+    options: WalletTransactionOptions = {}
+  ): Promise<WalletTransaction[]> {
+    // Validate wallet address
+    if (!walletAddress.startsWith("0x") || walletAddress.length !== 42) {
+      throw new Error(`Invalid wallet address: ${walletAddress}`);
+    }
+
+    const { fromBlock, toBlock, maxResults = 1000 } = options;
+
+    // Determine block range
+    let actualFromBlock = fromBlock;
+    let actualToBlock = toBlock;
+
+    if (!actualFromBlock || !actualToBlock) {
+      // If no block range specified, use last 500 blocks (approximately 20 minutes)
+      const latestBlock = await this.getLatestBlockNumber();
+      actualToBlock = latestBlock;
+
+      if (!actualFromBlock) {
+        actualFromBlock = actualToBlock - BigInt(500);
+        if (actualFromBlock < 0n) actualFromBlock = 0n;
+      }
+    }
+
+    // Validate block range
+    if (actualFromBlock > actualToBlock) {
+      throw new Error(
+        `Invalid block range: fromBlock (${actualFromBlock}) cannot be greater than toBlock (${actualToBlock})`
+      );
+    }
+
+    console.error(
+      `[RPC] getWalletTransfersFast START: wallet=${walletAddress.slice(0, 10)}..., fromBlock=${actualFromBlock}, toBlock=${actualToBlock}, maxResults=${maxResults}`
+    );
+
+    return this.executeWithRetry(async (client) => {
+      // Transfer(address indexed from, address indexed to, uint256 value)
+      const transferEventSignature =
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+
+      // Normalize wallet address for comparison
+      const normalizedWallet = walletAddress.toLowerCase();
+
+      // Pad wallet address to 32 bytes for topic matching
+      const paddedWallet = normalizedWallet.slice(2).padStart(64, "0");
+
+      // Fetch all Transfer events involving the wallet
+      // We query for both "from wallet" and "to wallet" patterns
+      const logs = await client.getLogs({
+        event: {
+          type: "event",
+          name: "Transfer",
+          inputs: [
+            { type: "address", indexed: true, name: "from" },
+            { type: "address", indexed: true, name: "to" },
+            { type: "uint256", indexed: false, name: "value" },
+          ],
+        },
+        fromBlock: actualFromBlock,
+        toBlock: actualToBlock,
+      });
+
+      console.error(
+        `[RPC] getWalletTransfersFast: Found ${logs.length} total Transfer events in range`
+      );
+
+      // Filter for Transfer events involving our wallet
+      const walletTransferLogs = logs.filter((log: any) => {
+        if (log.topics[0] !== transferEventSignature) return false;
+
+        const fromAddress = "0x" + (log.topics[1] || "").slice(26);
+        const toAddress = "0x" + (log.topics[2] || "").slice(26);
+
+        return (
+          fromAddress.toLowerCase() === normalizedWallet ||
+          toAddress.toLowerCase() === normalizedWallet
+        );
+      });
+
+      console.error(
+        `[RPC] getWalletTransfersFast: Filtered to ${walletTransferLogs.length} wallet Transfer events`
+      );
+
+      // Limit results
+      const limitedLogs = walletTransferLogs.slice(0, maxResults);
+
+      // Parse logs and fetch timestamps (cached)
+      const results: WalletTransaction[] = [];
+      const blockCache = new Map<bigint, number>();
+
+      for (const log of limitedLogs) {
+        // Use cached block timestamp if available
+        let timestamp = blockCache.get(log.blockNumber);
+
+        if (timestamp === undefined) {
+          try {
+            const block = await client.getBlock({
+              blockNumber: log.blockNumber,
+              includeTransactions: false,
+            });
+
+            if (!block) {
+              console.warn(`Unable to fetch block ${log.blockNumber}, skipping log`);
+              continue;
+            }
+            timestamp = Number(block.timestamp) * 1000;
+            blockCache.set(log.blockNumber, timestamp);
+          } catch (error) {
+            console.warn(`Error fetching block ${log.blockNumber}:`, error);
+            continue;
+          }
+        }
+
+        // Parse Transfer event
+        const fromAddress = "0x" + (log.topics[1] || "").slice(26);
+        const toAddress = "0x" + (log.topics[2] || "").slice(26);
+        const value = BigInt(log.data || "0");
+
+        results.push({
+          hash: log.transactionHash,
+          from: fromAddress,
+          to: toAddress,
+          value,
+          timestamp,
+          blockNumber: log.blockNumber,
+          tokenAddress: log.address,
+        });
+      }
+
+      console.error(`[RPC] getWalletTransfersFast END: returning ${results.length} transactions`);
+
+      return results;
+    });
   }
 
   /**

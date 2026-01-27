@@ -28,6 +28,10 @@ export interface DbAlertStatus {
   checkedAt?: number; // Made optional - undefined means not yet scanned
   notified?: boolean;
   lastSeenTransactions?: string[];
+  // Dismissal and baseline tracking fields
+  dismissedAt?: number; // When the alert was manually dismissed
+  baselineTimestamp?: number; // When baseline was established
+  baselineEstablished?: boolean; // Track if initial baseline has been set
   pendingInitialScan?: boolean; // Flag to indicate alert needs its first scan
 }
 

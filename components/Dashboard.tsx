@@ -670,10 +670,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
               // Check if baseline already established (prevents historical transaction spam)
               const isBaselineEstablished = existingStatus?.baselineEstablished || false;
-              // For existing alerts, use baseline timestamp; for new alerts, use creation time
+              // CRITICAL FIX: Always use current time for baseline, NOT alert.createdAt
+              // This prevents synced alerts (which may have old createdAt) from triggering on historical transactions
               const alertCreatedAt = isBaselineEstablished
                 ? existingStatus?.baselineTimestamp || alert.createdAt || Date.now()
-                : alert.createdAt || Date.now();
+                : Date.now(); // Always use NOW for first-time baseline, ignoring alert.createdAt
 
               // Debug: Log transaction timestamps
               if (transactions.length > 0) {

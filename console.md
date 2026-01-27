@@ -18,12 +18,12 @@ moat.js:286 🔧 ConnectionManager: Initialized
 moat.js:3404 Moat: Setting up event listeners...
 moat.js:3791 Moat: Initializing, document.readyState: interactive
 moat.js:3801 Moat: Document already loaded, initializing moat immediately...
-index-DWqFpJH-.js:1854 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
-index-DWqFpJH-.js:1854 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
-index-DWqFpJH-.js:1858 [DiagnosticLogger] Initialized with session: session_1769538342389_9tpb0gc
-index-DWqFpJH-.js:1858 [App] 📊 Diagnostic logger initialized: {sessionId: 'session_1769538342389_9tpb0gc', browser: {…}}
-index-DWqFpJH-.js:1858 [App] selectedWallet changed: null
-index-DWqFpJH-.js:1858 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
+index-WzcjUMfJ.js:1854 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
+index-WzcjUMfJ.js:1854 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
+index-WzcjUMfJ.js:1858 [DiagnosticLogger] Initialized with session: session_1769549677374_j4xrd69
+index-WzcjUMfJ.js:1858 [App] 📊 Diagnostic logger initialized: {sessionId: 'session_1769549677374_j4xrd69', browser: {…}}
+index-WzcjUMfJ.js:1858 [App] selectedWallet changed: null
+index-WzcjUMfJ.js:1858 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
 persistence.js:32 ✅ Moat Persistence: IndexedDB initialized successfully
 persistence.js:111 ℹ️ Moat Persistence: No stored handle found for: project_https://www.dogechain-bubblemaps.xyz
 persistence.js:298 ℹ️ Moat Persistence: No stored connection found
@@ -31,8 +31,8 @@ content_script.js:691 ℹ️ Moat: Persistence restoration failed: No stored con
 content_script.js:706 🔄 Moat: Checking localStorage for legacy connections...
 content_script.js:741 🔧 Moat: No valid connections found - user must connect
 content_script.js:746 🔧 Moat: Dispatching not-connected event (no path)
-moat.js:3453 🔧 Moat: Received project-connected event: {status: 'not-connected', source: 'no-connection-found', eventSignature: 'not-connected-no-path-no-connection-found', timestamp: 1769538342472}
-moat.js:525 🔧 ConnectionManager: Processing connection event: {status: 'not-connected', source: 'no-connection-found', eventSignature: 'not-connected-no-path-no-connection-found', timestamp: 1769538342472}
+moat.js:3453 🔧 Moat: Received project-connected event: {status: 'not-connected', source: 'no-connection-found', eventSignature: 'not-connected-no-path-no-connection-found', timestamp: 1769549677423}
+moat.js:525 🔧 ConnectionManager: Processing connection event: {status: 'not-connected', source: 'no-connection-found', eventSignature: 'not-connected-no-path-no-connection-found', timestamp: 1769549677423}
 moat.js:391 🔧 ConnectionManager: Setting disconnected state
 moat.js:3477 🔧 Moat: Processing disconnection event...
 moat.js:2118 Moat: Initializing content visibility, connection state: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: false, isConnected: false, …}
@@ -66,27 +66,243 @@ moat.js:2631 Moat: Rendering empty sidebar
 moat.js:1272 Moat: Event listeners attached
 moat.js:2051 Moat: Logo updated for light theme
 moat.js:2142 🔧 Moat: Waiting for content script to restore connection...
-moat.js:2051 Moat: Logo updated for light theme
 persistence.js:111 ℹ️ Moat Persistence: No stored handle found for: project_https://www.dogechain-bubblemaps.xyz
 persistence.js:298 ℹ️ Moat Persistence: No stored connection found
 content_script.js:691 ℹ️ Moat: Persistence restoration failed: No stored connection
 content_script.js:706 🔄 Moat: Checking localStorage for legacy connections...
 content_script.js:741 🔧 Moat: No valid connections found - user must connect
 content_script.js:746 🔧 Moat: Dispatching not-connected event (no path)
-index-DWqFpJH-.js:1858 [Cleanup] Already completed, skipping
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [useStatsCounters] Stats received: {searches: 208, alerts: 83, timestamp: 1769538342796}
-index-DWqFpJH-.js:1858 [useStatsCounters] Stats received: {searches: 208, alerts: 83, timestamp: 1769538342796}
-index-DWqFpJH-.js:1858 [useStatsCounters] Stats received: {searches: 208, alerts: 83, timestamp: 1769538342796}
-index-DWqFpJH-.js:1858 [DB SAVE] Saving 12 alerts to IndexedDB...
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [DB SAVE] ✅ Alerts saved in 38.10ms
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+moat.js:2051 Moat: Logo updated for light theme
+index-WzcjUMfJ.js:1858 [Cleanup] Already completed, skipping
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:34:37.492Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [useStatsCounters] Stats received: {searches: 210, alerts: 83, timestamp: 1769549677527}
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [useStatsCounters] Stats received: {searches: 210, alerts: 83, timestamp: 1769549677571}
+index-WzcjUMfJ.js:1858 [DB SAVE] Saving 12 alerts to IndexedDB...
+index-WzcjUMfJ.js:1858 [DB SAVE] ✅ Alerts saved in 11.20ms
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [SYNC] Syncing alerts with server...
+index-WzcjUMfJ.js:1858 [DB SAVE] Saving 12 alerts to IndexedDB...
+content_script.js:3944 Uncaught TypeError: e.target.matches is not a function
+    at HTMLDocument.<anonymous> (content_script.js:3944:18)
+(anonymous) @ content_script.js:3944
+core-D4cCyKQ2.js:2  GET https://api.web3modal.org/appkit/v1/config?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8 403 (Forbidden)
+Zr @ core-D4cCyKQ2.js:2
+get @ core-D4cCyKQ2.js:2
+fetchProjectConfig @ core-D4cCyKQ2.js:4
+fetchRemoteFeatures @ core-D4cCyKQ2.js:908
+initialize @ core-D4cCyKQ2.js:908
+await in initialize
+r1 @ core-D4cCyKQ2.js:908
+xh @ core-D4cCyKQ2.js:908
+n1 @ core-D4cCyKQ2.js:908
+initialize @ index.es-BnVXYYne.js:39
+await in initialize
+init @ index.es-BnVXYYne.js:39
+y @ index-WzcjUMfJ.js:1755
+await in y
+getProvider @ index-WzcjUMfJ.js:1755
+setup @ index-WzcjUMfJ.js:1755
+h @ index-WzcjUMfJ.js:77
+(anonymous) @ index-WzcjUMfJ.js:77
+sA @ index-WzcjUMfJ.js:77
+Mb @ index-WzcjUMfJ.js:77
+bP @ index-WzcjUMfJ.js:77
+vK @ index-WzcjUMfJ.js:1756
+(anonymous) @ index-WzcjUMfJ.js:1880
+index-WzcjUMfJ.js:1858 [Reown Config] Failed to fetch remote project configuration. Using local/default values. Error: HTTP status code: 403
+    at Zr (core-D4cCyKQ2.js:2:34968)
+    at async Li.get (core-D4cCyKQ2.js:2:35184)
+    at async Object.fetchProjectConfig (core-D4cCyKQ2.js:4:6414)
+    at async Object.fetchRemoteFeatures (core-D4cCyKQ2.js:908:14946)
+    at async xh.initialize (core-D4cCyKQ2.js:908:19812)
+console.warn @ index-WzcjUMfJ.js:1858
+fetchRemoteFeatures @ core-D4cCyKQ2.js:908
+await in fetchRemoteFeatures
+initialize @ core-D4cCyKQ2.js:908
+await in initialize
+r1 @ core-D4cCyKQ2.js:908
+xh @ core-D4cCyKQ2.js:908
+n1 @ core-D4cCyKQ2.js:908
+initialize @ index.es-BnVXYYne.js:39
+await in initialize
+init @ index.es-BnVXYYne.js:39
+y @ index-WzcjUMfJ.js:1755
+await in y
+getProvider @ index-WzcjUMfJ.js:1755
+setup @ index-WzcjUMfJ.js:1755
+h @ index-WzcjUMfJ.js:77
+(anonymous) @ index-WzcjUMfJ.js:77
+sA @ index-WzcjUMfJ.js:77
+Mb @ index-WzcjUMfJ.js:77
+bP @ index-WzcjUMfJ.js:77
+vK @ index-WzcjUMfJ.js:1756
+(anonymous) @ index-WzcjUMfJ.js:1880
+index-WzcjUMfJ.js:1858 [DB SAVE] ✅ Alerts saved in 12.70ms
+core-D4cCyKQ2.js:2  POST https://pulse.walletconnect.org/e?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8 400 (Bad Request)
+Zr @ core-D4cCyKQ2.js:2
+post @ core-D4cCyKQ2.js:2
+_sendAnalyticsEvent @ core-D4cCyKQ2.js:4
+sendEvent @ core-D4cCyKQ2.js:4
+sendInitializeEvent @ core-D4cCyKQ2.js:908
+initialize @ core-D4cCyKQ2.js:908
+await in initialize
+r1 @ core-D4cCyKQ2.js:908
+xh @ core-D4cCyKQ2.js:908
+n1 @ core-D4cCyKQ2.js:908
+initialize @ index.es-BnVXYYne.js:39
+await in initialize
+init @ index.es-BnVXYYne.js:39
+y @ index-WzcjUMfJ.js:1755
+await in y
+getProvider @ index-WzcjUMfJ.js:1755
+setup @ index-WzcjUMfJ.js:1755
+h @ index-WzcjUMfJ.js:77
+(anonymous) @ index-WzcjUMfJ.js:77
+sA @ index-WzcjUMfJ.js:77
+Mb @ index-WzcjUMfJ.js:77
+bP @ index-WzcjUMfJ.js:77
+vK @ index-WzcjUMfJ.js:1756
+(anonymous) @ index-WzcjUMfJ.js:1880
+index-WzcjUMfJ.js:1858 [SYNC] ✅ Alerts synced to server
+index-WzcjUMfJ.js:1858 [SYNC] ✅ Sync complete: 0 downloaded, 5 uploaded, 5 conflicts
 moat.js:2246 🔧 Moat: Updating UI with connection state: {status: 'not-connected', path: null, directoryHandle: null, isVerifying: false, isConnected: false, …}
 moat.js:2254 🔧 Moat: Found DOM elements: {indicator: true, label: true, chevron: true, divider: true, button: true}
 moat.js:2270 🔧 Moat: Set label text to: Disconnected
@@ -122,7445 +338,6118 @@ moat.js:2105 Moat: Restoring visibility state from localStorage: null
 moat.js:2111 Moat: Moat will remain hidden based on saved state
 moat.js:2181 Moat: DOM monitoring started
 moat.js:2158 Moat: Moat initialization complete
-core-CPD-MLVK.js:2  POST https://pulse.walletconnect.org/e?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8 400 (Bad Request)
-Zr @ core-CPD-MLVK.js:2
-post @ core-CPD-MLVK.js:2
-_sendAnalyticsEvent @ core-CPD-MLVK.js:4
-sendEvent @ core-CPD-MLVK.js:4
-sendInitializeEvent @ core-CPD-MLVK.js:908
-initialize @ core-CPD-MLVK.js:908
-await in initialize
-r1 @ core-CPD-MLVK.js:908
-xh @ core-CPD-MLVK.js:908
-n1 @ core-CPD-MLVK.js:908
-initialize @ index.es-BdbG0jbP.js:39
-await in initialize
-init @ index.es-BdbG0jbP.js:39
-y @ index-DWqFpJH-.js:1755
-await in y
-getProvider @ index-DWqFpJH-.js:1755
-setup @ index-DWqFpJH-.js:1755
-h @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:77
-rA @ index-DWqFpJH-.js:77
-Db @ index-DWqFpJH-.js:77
-gP @ index-DWqFpJH-.js:77
-wK @ index-DWqFpJH-.js:1756
-(anonymous) @ index-DWqFpJH-.js:1880
-index-DWqFpJH-.js:1858 [SYNC] Syncing alerts with server...
-index-DWqFpJH-.js:1858 [DB SAVE] Saving 12 alerts to IndexedDB...
-content_script.js:3944 Uncaught TypeError: e.target.matches is not a function
-    at HTMLDocument.<anonymous> (content_script.js:3944:18)
-(anonymous) @ content_script.js:3944
-index-DWqFpJH-.js:1858 [DB SAVE] ✅ Alerts saved in 4.70ms
-core-CPD-MLVK.js:2  GET https://api.web3modal.org/appkit/v1/config?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8 403 (Forbidden)
-Zr @ core-CPD-MLVK.js:2
-get @ core-CPD-MLVK.js:2
-fetchProjectConfig @ core-CPD-MLVK.js:4
-fetchRemoteFeatures @ core-CPD-MLVK.js:908
-initialize @ core-CPD-MLVK.js:908
-await in initialize
-r1 @ core-CPD-MLVK.js:908
-xh @ core-CPD-MLVK.js:908
-n1 @ core-CPD-MLVK.js:908
-initialize @ index.es-BdbG0jbP.js:39
-await in initialize
-init @ index.es-BdbG0jbP.js:39
-y @ index-DWqFpJH-.js:1755
-await in y
-getProvider @ index-DWqFpJH-.js:1755
-setup @ index-DWqFpJH-.js:1755
-h @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:77
-rA @ index-DWqFpJH-.js:77
-Db @ index-DWqFpJH-.js:77
-gP @ index-DWqFpJH-.js:77
-wK @ index-DWqFpJH-.js:1756
-(anonymous) @ index-DWqFpJH-.js:1880
-index-DWqFpJH-.js:1858 [Reown Config] Failed to fetch remote project configuration. Using local/default values. Error: HTTP status code: 403
-    at Zr (core-CPD-MLVK.js:2:34968)
-    at async Li.get (core-CPD-MLVK.js:2:35184)
-    at async Object.fetchProjectConfig (core-CPD-MLVK.js:4:6414)
-    at async Object.fetchRemoteFeatures (core-CPD-MLVK.js:908:14946)
-    at async xh.initialize (core-CPD-MLVK.js:908:19812)
-console.warn @ index-DWqFpJH-.js:1858
-fetchRemoteFeatures @ core-CPD-MLVK.js:908
-await in fetchRemoteFeatures
-initialize @ core-CPD-MLVK.js:908
-await in initialize
-r1 @ core-CPD-MLVK.js:908
-xh @ core-CPD-MLVK.js:908
-n1 @ core-CPD-MLVK.js:908
-initialize @ index.es-BdbG0jbP.js:39
-await in initialize
-init @ index.es-BdbG0jbP.js:39
-y @ index-DWqFpJH-.js:1755
-await in y
-getProvider @ index-DWqFpJH-.js:1755
-setup @ index-DWqFpJH-.js:1755
-h @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:77
-rA @ index-DWqFpJH-.js:77
-Db @ index-DWqFpJH-.js:77
-gP @ index-DWqFpJH-.js:77
-wK @ index-DWqFpJH-.js:1756
-(anonymous) @ index-DWqFpJH-.js:1880
-index-DWqFpJH-.js:1858 [SYNC] ✅ Alerts synced to server
-index-DWqFpJH-.js:1858 [SYNC] ✅ Sync complete: 0 downloaded, 5 uploaded, 5 conflicts
+index-WzcjUMfJ.js:1858 [useStatsCounters] Stats received: {searches: 210, alerts: 83, timestamp: 1769549677983}
 moat.js:973 🔔 Notification request: Press C to make a comment info content-script
 moat.js:798 🔔 Header Notification: Press C to make a comment info content-script
 moat.js:858 🔔 Processing header notification: Press C to make a comment info content-script 
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54252718 to 54253622
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252718 to 54252767
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54252718 to 54253622
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252718 to 54252767
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54252730 to 54253622
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252730 to 54252779
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54252718 to 54253622
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252718 to 54252767
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54252742 to 54253622
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252742 to 54252791
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54252718 to 54253622
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252718 to 54252767
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54252730 to 54253622
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252730 to 54252779
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54252742 to 54253622
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252742 to 54252791
-moat.js:3557 Moat: Window focused, checking moat state...
-index-DWqFpJH-.js:1858 [clearTransactionCache] Cleared 0 cached transaction entries
-index-DWqFpJH-.js:1858 [GracePeriod] Entered grace period, ends at 2026-01-27T18:26:16.092Z
-index-DWqFpJH-.js:1858 [Notifications] Cleared all notification storage and alert state
-index-DWqFpJH-.js:1858 [clearTransactionCache] Cleared 0 cached transaction entries
-index-DWqFpJH-.js:1858 [GracePeriod] Entered grace period, ends at 2026-01-27T18:26:18.778Z
-moat.js:3557 Moat: Window focused, checking moat state...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252768 to 54252817
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252768 to 54252817
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252768 to 54252817
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252768 to 54252817
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252780 to 54252829
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252780 to 54252829
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252792 to 54252841
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252792 to 54252841
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253627 to 54253643
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253627 to 54253643
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253627 to 54253643
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253627 to 54253643
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253627 to 54253643
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253627 to 54253643
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253627 to 54253643
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253627 to 54253643
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252818 to 54252867
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252818 to 54252867
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252818 to 54252867
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252818 to 54252867
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252830 to 54252879
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252830 to 54252879
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252842 to 54252891
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252842 to 54252891
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253628 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253628 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253628 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253628 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253628 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253628 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253628 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253628 to 54253649
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253628 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253628 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253628 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253628 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253627 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253627 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253627 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253627 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253627 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253627 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253627 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253627 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253627 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253627 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253627 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253627 to 54253649
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253631 to 54253660
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253631 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54252660 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xc9e4aa...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xec54ef...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54252660 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xdb617a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252660 to 54252709
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253630 to 54253660
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253630 to 54253660
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252868 to 54252917
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252868 to 54252917
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252868 to 54252917
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252868 to 54252917
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252880 to 54252929
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252880 to 54252929
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252892 to 54252941
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252892 to 54252941
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253633 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253633 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253633 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253633 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253633 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253633 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253633 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253633 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253632 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253632 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253632 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253632 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253632 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253632 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253632 to 54253670
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253632 to 54253670
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xec54ef...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xc9e4aa...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54252675 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54252675 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xdb617a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252675 to 54252724
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xec54ef...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xc9e4aa...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253634 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54252675 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54252675 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xdb617a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252675 to 54252724
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253633 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253633 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253633 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253633 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253633 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253633 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253633 to 54253675
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253633 to 54253675
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252710 to 54252759
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252930 to 54252979
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252930 to 54252979
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252918 to 54252967
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252918 to 54252967
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252918 to 54252967
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252918 to 54252967
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252942 to 54252991
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252942 to 54252991
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253636 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253635 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253635 to 54253684
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253635 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253635 to 54253684
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253635 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253635 to 54253684
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253635 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253635 to 54253684
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252725 to 54252774
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252725 to 54252774
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54253638 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xc9e4aa...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54253638 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xec54ef...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54252693 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54252693 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xdb617a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252693 to 54252742
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54253638 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xc9e4aa...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54253638 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xec54ef...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54252693 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54252693 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xdb617a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252693 to 54252742
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253638 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253638 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253638 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253638 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253638 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253638 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253638 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253638 to 54253693
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252760 to 54252809
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252980 to 54253029
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252980 to 54253029
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252968 to 54253017
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252968 to 54253017
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252968 to 54253017
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252968 to 54253017
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252992 to 54253041
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252992 to 54253041
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253639 to 54253700
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253639 to 54253688
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253639 to 54253700
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253639 to 54253688
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253639 to 54253700
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253639 to 54253688
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253639 to 54253700
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253639 to 54253688
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253638 to 54253700
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253638 to 54253700
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253638 to 54253700
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253638 to 54253700
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253638 to 54253687
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253685 to 54253685
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253685 to 54253685
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253685 to 54253685
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253685 to 54253685
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54252706 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xdb617a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252706 to 54252755
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253640 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253640 to 54253689
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253640 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253640 to 54253689
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253640 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253640 to 54253689
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54253640 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xc9e4aa...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253640 to 54253689
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54252706 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253640 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253640 to 54253689
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54253640 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xec54ef...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253640 to 54253689
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54252706 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xdb617a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252706 to 54252755
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54253640 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xec54ef...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253640 to 54253689
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54252706 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54253640 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xc9e4aa...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253640 to 54253689
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253640 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253640 to 54253689
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253640 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253640 to 54253689
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253640 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253640 to 54253689
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253640 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253640 to 54253689
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253639 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253639 to 54253688
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253639 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253639 to 54253688
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253639 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253639 to 54253688
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253639 to 54253706
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253639 to 54253688
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252775 to 54252824
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252775 to 54252824
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253693
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253693
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253693
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253693
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253693
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253693
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253693
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253693
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253693
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253693
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253693
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253693
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252743 to 54252792
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252743 to 54252792
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253642 to 54253716
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253642 to 54253691
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253642 to 54253716
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253642 to 54253691
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253642 to 54253716
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253642 to 54253691
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253642 to 54253716
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253642 to 54253691
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252810 to 54252859
-moat.js:3557 Moat: Window focused, checking moat state...
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253642 to 54253716
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253642 to 54253691
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253642 to 54253716
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253642 to 54253691
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253642 to 54253716
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253642 to 54253691
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253642 to 54253716
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253642 to 54253691
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253030 to 54253079
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253030 to 54253079
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253042 to 54253091
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253042 to 54253091
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253689 to 54253700
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253689 to 54253700
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253689 to 54253700
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253689 to 54253700
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253700
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253700
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253700
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253688 to 54253700
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253643 to 54253722
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253643 to 54253692
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253643 to 54253722
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253643 to 54253692
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253643 to 54253722
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253643 to 54253692
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253643 to 54253722
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253643 to 54253692
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations - Whale Watch (WHALE) - block range: 54252722 to 54253722
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #3 (WALLET) - block range: 54253643 to 54253722
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xec54ef...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253643 to 54253692
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54252722 to 54253722
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xdb617a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252722 to 54252771
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #4 (WALLET) - block range: 54253643 to 54253722
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xc9e4aa...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253643 to 54253692
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253643 to 54253722
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253643 to 54253692
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253643 to 54253722
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253643 to 54253692
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253643 to 54253722
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253643 to 54253692
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253643 to 54253722
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253643 to 54253692
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253018 to 54253067
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253018 to 54253067
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253018 to 54253067
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253018 to 54253067
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252756 to 54252805
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252756 to 54252805
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253647 to 54253742
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253647 to 54253696
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253649 to 54253750
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253649 to 54253698
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253649 to 54253750
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253649 to 54253698
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253649 to 54253750
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253649 to 54253698
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253649 to 54253750
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253649 to 54253698
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253649 to 54253750
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253649 to 54253698
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253649 to 54253750
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253649 to 54253698
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253649 to 54253750
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253649 to 54253698
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253649 to 54253750
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253649 to 54253698
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253649 to 54253750
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253649 to 54253698
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253649 to 54253750
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253649 to 54253698
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253649 to 54253750
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253649 to 54253698
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253649 to 54253750
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253649 to 54253698
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252825 to 54252874
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252825 to 54252874
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253689 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253689 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253689 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253689 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253690 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253690 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253690 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253690 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253690 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253690 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253690 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253690 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253690 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253690 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253690 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253690 to 54253706
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252793 to 54252842
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252793 to 54252842
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254804 to 54259289
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254804, toBlock=54259289, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254804 to 54254813
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254804 to 54259289
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254804, toBlock=54259289, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254804 to 54254813
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254804 to 54259289
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254804, toBlock=54259289, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254804 to 54254813
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254804 to 54259289
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254804, toBlock=54259289, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254804 to 54254813
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:34:47.497Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254844 to 54254853
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254844 to 54254853
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254844 to 54254853
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254844 to 54254853
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254805 to 54259294
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254805, toBlock=54259294, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254805 to 54254814
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254805 to 54259294
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254805, toBlock=54259294, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254805 to 54254814
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254805 to 54259294
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254805, toBlock=54259294, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254805 to 54254814
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254805 to 54259294
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254805, toBlock=54259294, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254805 to 54254814
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254854 to 54254863
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254854 to 54254863
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254854 to 54254863
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254854 to 54254863
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254815 to 54254824
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254815 to 54254824
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254815 to 54254824
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254815 to 54254824
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254864 to 54254873
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254864 to 54254873
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254864 to 54254873
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254864 to 54254873
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254825 to 54254834
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254825 to 54254834
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254825 to 54254834
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254825 to 54254834
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:34:57.927Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254806 to 54259300
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254806, toBlock=54259300, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254806 to 54254815
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254806 to 54259300
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254806, toBlock=54259300, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254806 to 54254815
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254806 to 54259300
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254806, toBlock=54259300, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254806 to 54254815
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254806 to 54259300
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254806, toBlock=54259300, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254806 to 54254815
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254874 to 54254883
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254874 to 54254883
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254874 to 54254883
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254874 to 54254883
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254835 to 54254844
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254835 to 54254844
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254835 to 54254844
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254835 to 54254844
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254884 to 54254893
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254884 to 54254893
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254884 to 54254893
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254884 to 54254893
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254845 to 54254854
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254845 to 54254854
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254845 to 54254854
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254845 to 54254854
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254894 to 54254903
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254894 to 54254903
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254894 to 54254903
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254894 to 54254903
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254855 to 54254864
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254855 to 54254864
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254855 to 54254864
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254855 to 54254864
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254836 to 54254845
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254836 to 54254845
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254836 to 54254845
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254836 to 54254845
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254904 to 54254913
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254904 to 54254913
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254904 to 54254913
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254904 to 54254913
 moat.js:3546 Moat: Page became visible, checking moat state...
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:35:24.300Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
 moat.js:3557 Moat: Window focused, checking moat state...
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254865 to 54254874
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254865 to 54254874
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254865 to 54254874
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254865 to 54254874
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254809 to 54259314
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254809, toBlock=54259314, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254809 to 54259314
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254809, toBlock=54259314, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254809 to 54259314
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254809, toBlock=54259314, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254809 to 54259314
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254809, toBlock=54259314, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:35:27.496Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254809 to 54259314
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254809, toBlock=54259314, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254809 to 54259314
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254809, toBlock=54259314, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254809 to 54259314
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254809, toBlock=54259314, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254809 to 54259314
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254809, toBlock=54259314, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254809 to 54254818
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254846 to 54254855
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254846 to 54254855
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254846 to 54254855
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254846 to 54254855
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254914 to 54254923
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254914 to 54254923
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254914 to 54254923
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254914 to 54254923
+moat.js:3546 Moat: Page became visible, checking moat state...
 moat.js:3557 Moat: Window focused, checking moat state...
-index-DWqFpJH-.js:1858 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
-index-DWqFpJH-.js:1858 [useStatsCounters] Fetching stats: {bypassCache: false, url: 'https://www.dogechain-bubblemaps.xyz/api/stats'}
-index-DWqFpJH-.js:1858 [useStatsCounters] Stats received: {searches: 208, alerts: 83, timestamp: 1769538642517}
-index-DWqFpJH-.js:1858 [useStatsCounters] Stats received: {searches: 208, alerts: 83, timestamp: 1769538642540}
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253692 to 54253716
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253692 to 54253716
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253692 to 54253716
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253692 to 54253716
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253692 to 54253716
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253692 to 54253716
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253692 to 54253716
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253692 to 54253716
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252860 to 54252909
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253080 to 54253129
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253080 to 54253129
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-Connecting to '<URL>' violates the following Content Security Policy directive: "connect-src 'self' <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> <URL> blob: data:". The action has been blocked.
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Ecosystem DAO Fund, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Network Operations, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ Fetch completed in 150ms, parsing JSON...
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ JSON parsed in 157ms total
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] ✅ Found 72 transactions at offset 100
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 💾 Cached 72 transactions for 0x64c53d47d879eb...
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Fetched 72 transactions {oldest: '2022-08-22T06:40:05.000Z', newest: '2026-01-04T14:17:36.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ Fetch completed in 167ms, parsing JSON...
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ JSON parsed in 203ms total
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] ✅ Found 55 transactions at offset 100
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 💾 Cached 55 transactions for 0x6c13d0978d4d1e...
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Fetched 55 transactions {oldest: '2022-08-25T02:50:47.000Z', newest: '2026-01-27T09:26:01.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for @PennybagsCX, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Ecosystem DAO Fund, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x64c53d47d879eb...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Loyal Shibes, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Fetched 72 transactions {oldest: '2022-08-22T06:40:05.000Z', newest: '2026-01-04T14:17:36.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Loyal Shibes, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🔄 Request already in progress, waiting...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Ecosystem DAO Fund, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x64c53d47d879eb...
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Fetched 72 transactions {oldest: '2022-08-22T06:40:05.000Z', newest: '2026-01-04T14:17:36.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ Fetch completed in 111ms, parsing JSON...
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ Fetch completed in 129ms, parsing JSON...
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ JSON parsed in 133ms total
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] ✅ Found 56 transactions at offset 100
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 💾 Cached 56 transactions for 0x22F4194F6706E7...
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Fetched 56 transactions {oldest: '2025-12-20T17:45:00.000Z', newest: '2026-01-27T16:53:49.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ JSON parsed in 141ms total
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] ✅ Found 39 transactions at offset 100
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 💾 Cached 39 transactions for 0xbce77b0d91e98e...
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Fetched 39 transactions {oldest: '2022-08-21T08:39:22.000Z', newest: '2025-04-17T01:53:39.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Fetched 39 transactions {oldest: '2022-08-21T08:39:22.000Z', newest: '2025-04-17T01:53:39.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC #5, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ Fetch completed in 288ms, parsing JSON...
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ JSON parsed in 306ms total
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] ✅ Found 100 transactions at offset 100
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 💾 Cached 100 transactions for 0x0f2d557587022a...
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Fetched 100 transactions {oldest: '2026-01-16T21:03:07.000Z', newest: '2026-01-27T17:47:27.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 523811a4-13de-450c-8537-ee820cb16d6f] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $MCRIB #3, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $MCRIB #3, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🔄 Request already in progress, waiting...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $MCRIB #6, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC #4, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ Fetch completed in 105ms, parsing JSON...
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ JSON parsed in 109ms total
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] ✅ Found 41 transactions at offset 100
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 💾 Cached 41 transactions for 0xec54ef60e1beaa...
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Fetched 41 transactions {oldest: '2026-01-03T01:53:26.000Z', newest: '2026-01-08T14:55:46.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Fetched 41 transactions {oldest: '2026-01-03T01:53:26.000Z', newest: '2026-01-08T14:55:46.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert f7bd6f23-2c32-4cfc-acb9-54c3c27ed474] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ Fetch completed in 110ms, parsing JSON...
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ JSON parsed in 117ms total
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] ✅ Found 18 transactions at offset 100
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 💾 Cached 18 transactions for 0x85217a346f3fa6...
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Fetched 18 transactions {oldest: '2022-08-25T01:48:53.000Z', newest: '2025-10-23T03:21:38.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 44c37800-edd9-4191-ba56-3f8b8e0261d0] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ Fetch completed in 122ms, parsing JSON...
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ JSON parsed in 126ms total
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] ✅ Found 41 transactions at offset 100
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 💾 Cached 41 transactions for 0xdb617a3167462c...
-index-DWqFpJH-.js:1858 [Alert 412ff5dd-ab03-46f5-821e-d2c5efb7a84b] Fetched 41 transactions {oldest: '2025-11-11T22:34:11.000Z', newest: '2026-01-05T05:06:30.000Z', alertCreatedAt: '2026-01-27T18:31:00.898Z'}
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for @PennybagsCX, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x22F4194F6706E7...
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Fetched 56 transactions {oldest: '2025-12-20T17:45:00.000Z', newest: '2026-01-27T16:53:49.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Ecosystem DAO Fund, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x64c53d47d879eb...
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Fetched 72 transactions {oldest: '2022-08-22T06:40:05.000Z', newest: '2026-01-04T14:17:36.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for @PennybagsCX, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x22F4194F6706E7...
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Fetched 56 transactions {oldest: '2025-12-20T17:45:00.000Z', newest: '2026-01-27T16:53:49.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Loyal Shibes, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0xbce77b0d91e98e...
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Fetched 39 transactions {oldest: '2022-08-21T08:39:22.000Z', newest: '2025-04-17T01:53:39.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253092 to 54253141
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253092 to 54253141
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Loyal Shibes, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0xbce77b0d91e98e...
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Fetched 39 transactions {oldest: '2022-08-21T08:39:22.000Z', newest: '2025-04-17T01:53:39.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for @PennybagsCX, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x22F4194F6706E7...
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Fetched 56 transactions {oldest: '2025-12-20T17:45:00.000Z', newest: '2026-01-27T16:53:49.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-moat.js:3557 Moat: Window focused, checking moat state...
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 1): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 1): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 1): The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Network Operations, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x6c13d0978d4d1e...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for @PennybagsCX, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x22F4194F6706E7...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Network Operations, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x6c13d0978d4d1e...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Network Operations, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x6c13d0978d4d1e...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $MCRIB #1, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $MCRIB #4, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $MCRIB #4, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🔄 Request already in progress, waiting...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Ecosystem DAO Fund, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x64c53d47d879eb...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Ecosystem DAO Fund, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: The request took too long to respond.
-
-URL: https://rpc.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: The request timed out.
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x64c53d47d879eb...
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Fetched 55 transactions {oldest: '2022-08-25T02:50:47.000Z', newest: '2026-01-27T09:26:01.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Fetched 56 transactions {oldest: '2025-12-20T17:45:00.000Z', newest: '2026-01-27T16:53:49.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Fetched 55 transactions {oldest: '2022-08-25T02:50:47.000Z', newest: '2026-01-27T09:26:01.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Fetched 55 transactions {oldest: '2022-08-25T02:50:47.000Z', newest: '2026-01-27T09:26:01.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Fetched 72 transactions {oldest: '2022-08-22T06:40:05.000Z', newest: '2026-01-04T14:17:36.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Fetched 72 transactions {oldest: '2022-08-22T06:40:05.000Z', newest: '2026-01-04T14:17:36.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ Fetch completed in 139ms, parsing JSON...
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ JSON parsed in 144ms total
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] ✅ Found 59 transactions at offset 100
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 💾 Cached 59 transactions for 0xc9e4aaef81b952...
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Fetched 59 transactions {oldest: '2025-01-31T00:44:54.000Z', newest: '2026-01-13T18:07:43.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Fetched 59 transactions {oldest: '2025-01-31T00:44:54.000Z', newest: '2026-01-13T18:07:43.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert a4feb643-8eb2-425b-a6c8-a5f553bce3d5] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ Fetch completed in 158ms, parsing JSON...
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ JSON parsed in 166ms total
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] ✅ Found 18 transactions at offset 100
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 💾 Cached 18 transactions for 0x6b7f5b89fe258e...
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Fetched 18 transactions {oldest: '2026-01-05T05:24:50.000Z', newest: '2026-01-12T23:43:11.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for @PennybagsCX, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x22F4194F6706E7...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Loyal Shibes, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0xbce77b0d91e98e...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Network Operations - Whale Watch, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Network Operations - Whale Watch, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🔄 Request already in progress, waiting...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Network Operations, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Fetched 56 transactions {oldest: '2025-12-20T17:45:00.000Z', newest: '2026-01-27T16:53:49.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Fetched 39 transactions {oldest: '2022-08-21T08:39:22.000Z', newest: '2025-04-17T01:53:39.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for @PennybagsCX, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x22F4194F6706E7...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $MCRIB #2, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Loyal Shibes, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0xbce77b0d91e98e...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC Network Operations, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🔄 Request already in progress, waiting...
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Fetched 56 transactions {oldest: '2025-12-20T17:45:00.000Z', newest: '2026-01-27T16:53:49.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Fetched 39 transactions {oldest: '2022-08-21T08:39:22.000Z', newest: '2025-04-17T01:53:39.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ Fetch completed in 24ms, parsing JSON...
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ Fetch completed in 24ms, parsing JSON...
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ JSON parsed in 28ms total
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] ✅ Found 55 transactions at offset 100
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 💾 Cached 55 transactions for 0x6c13d0978d4d1e...
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Fetched 55 transactions {oldest: '2022-08-25T02:50:47.000Z', newest: '2026-01-27T09:26:01.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Fetched 55 transactions {oldest: '2022-08-25T02:50:47.000Z', newest: '2026-01-27T09:26:01.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ JSON parsed in 31ms total
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] ✅ Found 56 transactions at offset 100
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 💾 Cached 56 transactions for 0x22f4194f6706e7...
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Fetched 56 transactions {oldest: '2025-12-20T17:45:00.000Z', newest: '2026-01-27T16:53:49.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ Fetch completed in 108ms, parsing JSON...
-index-DWqFpJH-.js:1858 [fetchWithOffset] ✅ JSON parsed in 109ms total
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] ✅ Found 44 transactions at offset 100
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 💾 Cached 44 transactions for 0x6c13d0978d4d1e...
-index-DWqFpJH-.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Fetched 44 transactions {oldest: '2022-08-25T02:50:47.000Z', newest: '2026-01-27T09:26:01.000Z', alertCreatedAt: '2026-01-27T18:31:29.974Z'}
-index-DWqFpJH-.js:1858 [Alert 5eb668ba-d97b-4319-b638-d1d623fa34df] Fetched 44 transactions {oldest: '2022-08-25T02:50:47.000Z', newest: '2026-01-27T09:26:01.000Z', alertCreatedAt: '2026-01-27T18:31:29.975Z'}
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 1 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 2 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $MCRIB #1, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x6b7f5b89fe258e...
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Fetched 18 transactions {oldest: '2026-01-05T05:24:50.000Z', newest: '2026-01-12T23:43:11.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-us.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 0): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 1): HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $MCRIB #1, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x6b7f5b89fe258e...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC #4, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Starting transaction fetch with offsets: 100, 500, 1000, 2500
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] Attempt 1/4 with offset 100...
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $MCRIB #2, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-us.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🎯 Cache hit for 0x22f4194f6706e7...
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Fetched 18 transactions {oldest: '2026-01-05T05:24:50.000Z', newest: '2026-01-12T23:43:11.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b7b9813c-cec9-4c21-b83f-4afd15f9b56d] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Fetched 56 transactions {oldest: '2025-12-20T17:45:00.000Z', newest: '2026-01-27T16:53:49.000Z', alertCreatedAt: '2026-01-27T18:25:48.778Z'}
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert b3fb4b70-06c5-45f2-9c7c-7e3982772870] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:72 Fetch API cannot load https://rpc-sg.dogechain.dog/. Refused to connect because it violates the document's Content Security Policy.
-jp.errorInstance.S3.body @ index-DWqFpJH-.js:72
-await in jp.errorInstance.S3.body
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-jp @ index-DWqFpJH-.js:72
-request @ index-DWqFpJH-.js:72
-L @ index-DWqFpJH-.js:77
-request @ index-DWqFpJH-.js:77
-Rl.delay.count @ index-DWqFpJH-.js:72
-c @ index-DWqFpJH-.js:72
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-d @ index-DWqFpJH-.js:72
-await in d
-c @ index-DWqFpJH-.js:72
-await in c
-(anonymous) @ index-DWqFpJH-.js:72
-Rl @ index-DWqFpJH-.js:72
-tM.enabled @ index-DWqFpJH-.js:72
-tM @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-(anonymous) @ index-DWqFpJH-.js:72
-qD @ index-DWqFpJH-.js:72
-lf @ index-DWqFpJH-.js:72
-getBlockNumber @ index-DWqFpJH-.js:77
-(anonymous) @ index-DWqFpJH-.js:1852
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 RPC attempt 3 failed (provider 2): HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-executeWithRetry @ index-DWqFpJH-.js:1852
-await in executeWithRetry
-getLatestBlockNumber @ index-DWqFpJH-.js:1852
-tn @ index-DWqFpJH-.js:1852
-un @ index-DWqFpJH-.js:1852
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch] RPC failed for $DC #4, using Explorer API fallback: RPC operation failed after 3 attempts. Last error: HTTP request failed.
-
-URL: https://rpc-sg.dogechain.dog
-Request body: {"method":"eth_blockNumber"}
-
-Details: Failed to fetch
-Version: viem@2.44.0
-console.warn @ index-DWqFpJH-.js:1858
-un @ index-DWqFpJH-.js:1852
-await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [fetchWalletTransactions] 🔄 Request already in progress, waiting...
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253693 to 54253722
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253693 to 54253722
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253693 to 54253722
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253693 to 54253722
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253693 to 54253722
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253693 to 54253722
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253693 to 54253722
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253693 to 54253722
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253693 to 54253722
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253693 to 54253722
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252772 to 54252821
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253659 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253659 to 54253708
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253659 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253659 to 54253708
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #6 (WALLET) - block range: 54252802 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xdb617a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252802 to 54252851
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253659 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253659 to 54253708
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #1 (WALLET) - block range: 54253659 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6b7f5b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253659 to 54253708
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253659 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253659 to 54253708
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253659 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253659 to 54253708
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #4 (WALLET) - block range: 54253659 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x85217a...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253659 to 54253708
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253659 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253659 to 54253708
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $MCRIB #2 (WALLET) - block range: 54253659 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22f419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253659 to 54253708
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC #5 (WALLET) - block range: 54253659 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x0f2d55...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253659 to 54253708
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253722 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253722 to 54253771
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253722 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253722 to 54253771
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253722 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253722 to 54253771
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253722 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253722 to 54253771
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54253722 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253722 to 54253771
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54253722 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253722 to 54253771
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54253722 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253722 to 54253771
-index-DWqFpJH-.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54253722 to 54253802
-index-DWqFpJH-.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54253722 to 54253771
-index-DWqFpJH-.js:1858 [fetchWithOffset] ⏱️ Timeout after 15002ms (limit: 15000ms)
-console.warn @ index-DWqFpJH-.js:1858
-(anonymous) @ index-DWqFpJH-.js:1836
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254875 to 54254884
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254875 to 54254884
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254875 to 54254884
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254875 to 54254884
+index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
 setTimeout
-m @ index-DWqFpJH-.js:1836
-(anonymous) @ index-DWqFpJH-.js:1836
-zl @ index-DWqFpJH-.js:1836
-un @ index-DWqFpJH-.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:35:37.496Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254819 to 54254828
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254856 to 54254865
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254856 to 54254865
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254856 to 54254865
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254856 to 54254865
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254924 to 54254933
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254924 to 54254933
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254924 to 54254933
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254924 to 54254933
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254810 to 54259320
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254810, toBlock=54259320, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
 await in un
-(anonymous) @ index-DWqFpJH-.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
 await in (anonymous)
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252875 to 54252924
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252875 to 54252924
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #6, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [RateLimit] ❌ Network error on attempt 1/4 for /api/dogechain-proxy?module=account&action=tokentx&address=0x85217a346f3fa64893bab3caeea59effd0df8bc...: AbortError: signal is aborted without reason
-    at index-DWqFpJH-.js:1836:30641
-console.error @ index-DWqFpJH-.js:1858
-c @ index-DWqFpJH-.js:1836
-await in c
-execute @ index-DWqFpJH-.js:1836
-await in execute
-CY @ index-DWqFpJH-.js:1836
-(anonymous) @ index-DWqFpJH-.js:1836
-SY @ index-DWqFpJH-.js:1836
-Kn @ index-DWqFpJH-.js:1836
-m @ index-DWqFpJH-.js:1836
-(anonymous) @ index-DWqFpJH-.js:1836
-zl @ index-DWqFpJH-.js:1836
-un @ index-DWqFpJH-.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254810 to 54254819
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254810 to 54259320
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254810, toBlock=54259320, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
 await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations - Whale Watch, type: WHALE, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #3, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [RateLimit] ❌ Network error on attempt 2/4 for /api/dogechain-proxy?module=account&action=tokentx&address=0x85217a346f3fa64893bab3caeea59effd0df8bc...: AbortError: signal is aborted without reason
-    at index-DWqFpJH-.js:1836:30641
-console.error @ index-DWqFpJH-.js:1858
-c @ index-DWqFpJH-.js:1836
-await in c
-execute @ index-DWqFpJH-.js:1836
-await in execute
-CY @ index-DWqFpJH-.js:1836
-(anonymous) @ index-DWqFpJH-.js:1836
-SY @ index-DWqFpJH-.js:1836
-Kn @ index-DWqFpJH-.js:1836
-m @ index-DWqFpJH-.js:1836
-(anonymous) @ index-DWqFpJH-.js:1836
-zl @ index-DWqFpJH-.js:1836
-un @ index-DWqFpJH-.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254810 to 54254819
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254810 to 54259320
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254810, toBlock=54259320, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
 await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [RateLimit] ❌ Network error on attempt 3/4 for /api/dogechain-proxy?module=account&action=tokentx&address=0x85217a346f3fa64893bab3caeea59effd0df8bc...: AbortError: signal is aborted without reason
-    at index-DWqFpJH-.js:1836:30641
-console.error @ index-DWqFpJH-.js:1858
-c @ index-DWqFpJH-.js:1836
-await in c
-execute @ index-DWqFpJH-.js:1836
-await in execute
-CY @ index-DWqFpJH-.js:1836
-(anonymous) @ index-DWqFpJH-.js:1836
-SY @ index-DWqFpJH-.js:1836
-Kn @ index-DWqFpJH-.js:1836
-m @ index-DWqFpJH-.js:1836
-(anonymous) @ index-DWqFpJH-.js:1836
-zl @ index-DWqFpJH-.js:1836
-un @ index-DWqFpJH-.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254810 to 54254819
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254810 to 54259320
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254810, toBlock=54259320, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
 await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [RateLimit] ❌ Network error on attempt 1/4 for /api/dogechain-proxy?module=account&action=tokentx&address=0x85217a346f3fa64893bab3caeea59effd0df8bc...: AbortError: signal is aborted without reason
-    at index-DWqFpJH-.js:1836:30641
-console.error @ index-DWqFpJH-.js:1858
-c @ index-DWqFpJH-.js:1836
-await in c
-execute @ index-DWqFpJH-.js:1836
-await in execute
-CY @ index-DWqFpJH-.js:1836
-(anonymous) @ index-DWqFpJH-.js:1836
-SY @ index-DWqFpJH-.js:1836
-await in SY
-Kn @ index-DWqFpJH-.js:1836
-m @ index-DWqFpJH-.js:1836
-(anonymous) @ index-DWqFpJH-.js:1836
-zl @ index-DWqFpJH-.js:1836
-un @ index-DWqFpJH-.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+setInterval
+(anonymous) @ index-WzcjUMfJ.js:1852
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+lh @ index-WzcjUMfJ.js:33
+P2 @ index-WzcjUMfJ.js:33
+M2 @ index-WzcjUMfJ.js:33
+j2 @ index-WzcjUMfJ.js:33
+k2 @ index-WzcjUMfJ.js:33
+W2 @ index-WzcjUMfJ.js:33
+Iu @ index-WzcjUMfJ.js:33
+H2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+postMessage
+_postMessage @ content-script.js:2
+_write @ content-script.js:2
+O @ content-script.js:2
+(anonymous) @ content-script.js:2
+R.write @ content-script.js:2
+BroadcastChannelMessage.send @ content-script.js:2
+H.onRequest @ content-script.js:2
+await in H.onRequest
+(anonymous) @ content-script.js:2
+u.emit @ content-script.js:2
+E @ content-script.js:2
+O @ content-script.js:2
+R.push @ content-script.js:2
+_onData @ content-script.js:2
+_onMessage @ content-script.js:2
+postMessage
+_postMessage @ pageProvider.js:2
+_write @ pageProvider.js:2
+E @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+M.write @ pageProvider.js:2
+send @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+_proceed @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L._request @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+(anonymous) @ pageProvider.js:2
+call @ pageProvider.js:2
+L.request @ pageProvider.js:2
+getChainId @ index-WzcjUMfJ.js:77
+await in getChainId
+connect @ index-WzcjUMfJ.js:77
+await in connect
+Hz @ index-WzcjUMfJ.js:77
+await in Hz
+onMount @ index-WzcjUMfJ.js:77
+await in onMount
+(anonymous) @ index-WzcjUMfJ.js:77
+Su @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+Ps @ index-WzcjUMfJ.js:33
+w2 @ index-WzcjUMfJ.js:33
+$2 @ index-WzcjUMfJ.js:33
+(anonymous) @ index-WzcjUMfJ.js:33
+F @ index-WzcjUMfJ.js:18
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254810 to 54254819
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254885 to 54254894
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254885 to 54254894
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254885 to 54254894
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254885 to 54254894
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:35:47.496Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254829 to 54254838
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254866 to 54254875
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254866 to 54254875
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254866 to 54254875
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254866 to 54254875
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254934 to 54254943
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254934 to 54254943
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254934 to 54254943
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254934 to 54254943
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254820 to 54254829
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254820 to 54254829
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254820 to 54254829
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254820 to 54254829
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254811 to 54259326
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254811, toBlock=54259326, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
 await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [getWalletTransactions] Found 0 transactions for wallet
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] RPC returned 0 transactions
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [HybridFetch] ✅ Successfully processed 0 transactions via RPC
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 8a2718fd-0f90-4655-b42d-291c8bb04bf7] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert e903fbec-af56-487a-a7f5-f84639d62210] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7782a6a9-664f-4170-bbc7-1c7c8cf09465] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Filtered to 0 transactions since last check (2026-01-27T18:25:49.778Z)
-index-DWqFpJH-.js:1858 [Alert 7c66fca6-0da2-4c50-a22f-72c62aac9842] Dismissal state: {wasDismissedAfterLastTrigger: true, dismissedAt: '2026-01-27T18:25:49.778Z', checkedAt: '2026-01-27T18:25:48.778Z', hasNewActivity: false, wasTriggered: false, …}
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [RateLimit] ❌ Network error on attempt 2/4 for /api/dogechain-proxy?module=account&action=tokentx&address=0x85217a346f3fa64893bab3caeea59effd0df8bc...: AbortError: signal is aborted without reason
-    at index-DWqFpJH-.js:1836:30641
-console.error @ index-DWqFpJH-.js:1858
-c @ index-DWqFpJH-.js:1836
-await in c
-execute @ index-DWqFpJH-.js:1836
-await in execute
-CY @ index-DWqFpJH-.js:1836
-(anonymous) @ index-DWqFpJH-.js:1836
-SY @ index-DWqFpJH-.js:1836
-await in SY
-Kn @ index-DWqFpJH-.js:1836
-m @ index-DWqFpJH-.js:1836
-(anonymous) @ index-DWqFpJH-.js:1836
-zl @ index-DWqFpJH-.js:1836
-un @ index-DWqFpJH-.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254811 to 54259326
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254811, toBlock=54259326, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
 await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #2, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #4, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $DC #5, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [HybridFetch DEBUG] alert: $MCRIB #1, type: WALLET, shouldUseRPC: true
-index-DWqFpJH-.js:1858 [RateLimit] ❌ Network error on attempt 3/4 for /api/dogechain-proxy?module=account&action=tokentx&address=0x85217a346f3fa64893bab3caeea59effd0df8bc...: AbortError: signal is aborted without reason
-    at index-DWqFpJH-.js:1836:30641
-console.error @ index-DWqFpJH-.js:1858
-c @ index-DWqFpJH-.js:1836
-await in c
-execute @ index-DWqFpJH-.js:1836
-await in execute
-CY @ index-DWqFpJH-.js:1836
-(anonymous) @ index-DWqFpJH-.js:1836
-SY @ index-DWqFpJH-.js:1836
-await in SY
-Kn @ index-DWqFpJH-.js:1836
-m @ index-DWqFpJH-.js:1836
-(anonymous) @ index-DWqFpJH-.js:1836
-zl @ index-DWqFpJH-.js:1836
-un @ index-DWqFpJH-.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254811 to 54259326
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254811, toBlock=54259326, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
 await in un
-(anonymous) @ index-DWqFpJH-.js:1852
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252806 to 54252855
-index-DWqFpJH-.js:1858 [getWalletTransactions] Fetching blocks 54252806 to 54252855
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254811 to 54259326
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254811, toBlock=54259326, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254895 to 54254904
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254895 to 54254904
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254895 to 54254904
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254895 to 54254904
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:35:57.497Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254839 to 54254848
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254876 to 54254885
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254876 to 54254885
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254876 to 54254885
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254876 to 54254885
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254812 to 54259332
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254812, toBlock=54259332, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254812 to 54254821
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254812 to 54259332
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254812, toBlock=54259332, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254812 to 54254821
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254812 to 54259332
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254812, toBlock=54259332, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254812 to 54254821
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254812 to 54259332
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254812, toBlock=54259332, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254812 to 54254821
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254944 to 54254953
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254944 to 54254953
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254944 to 54254953
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254944 to 54254953
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254830 to 54254839
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254830 to 54254839
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254830 to 54254839
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254830 to 54254839
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:36:07.496Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254811 to 54259332
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254811, toBlock=54259332, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254811 to 54259332
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254811, toBlock=54259332, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254811 to 54259332
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254811, toBlock=54259332, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254811 to 54259332
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254811, toBlock=54259332, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254811 to 54254820
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254905 to 54254914
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254905 to 54254914
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254905 to 54254914
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254905 to 54254914
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254849 to 54254858
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:36:17.496Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254886 to 54254895
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254886 to 54254895
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254886 to 54254895
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254886 to 54254895
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254822 to 54254831
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254822 to 54254831
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254822 to 54254831
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254822 to 54254831
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254954 to 54254963
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254954 to 54254963
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254954 to 54254963
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254954 to 54254963
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254840 to 54254849
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254840 to 54254849
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254840 to 54254849
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254840 to 54254849
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254821 to 54254830
+index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254814 to 54259342
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254814, toBlock=54259342, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254814 to 54259342
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254814, toBlock=54259342, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254814 to 54259342
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254814, toBlock=54259342, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254814 to 54259342
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254814, toBlock=54259342, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254814 to 54254823
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254915 to 54254924
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254915 to 54254924
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254915 to 54254924
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254915 to 54254924
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:36:27.497Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254813 to 54259342
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254813, toBlock=54259342, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254813 to 54254822
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254813 to 54259342
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254813, toBlock=54259342, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254813 to 54254822
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254813 to 54259342
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254813, toBlock=54259342, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254813 to 54254822
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254813 to 54259342
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254813, toBlock=54259342, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254813 to 54254822
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254859 to 54254868
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254896 to 54254905
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254896 to 54254905
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254896 to 54254905
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254896 to 54254905
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254832 to 54254841
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254832 to 54254841
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254832 to 54254841
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254832 to 54254841
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254964 to 54254973
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254964 to 54254973
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254964 to 54254973
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254964 to 54254973
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:36:37.497Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254850 to 54254859
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254850 to 54254859
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254850 to 54254859
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254850 to 54254859
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254831 to 54254840
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254824 to 54254833
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254925 to 54254934
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254925 to 54254934
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254925 to 54254934
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254925 to 54254934
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254823 to 54254832
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254823 to 54254832
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254823 to 54254832
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254823 to 54254832
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254817 to 54259353
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254817, toBlock=54259353, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254817 to 54254826
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254817 to 54259353
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254817, toBlock=54259353, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254817 to 54254826
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254817 to 54259353
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254817, toBlock=54259353, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254817 to 54254826
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254817 to 54259353
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254817, toBlock=54259353, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254817 to 54254826
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:36:47.497Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+setTimeout
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254816 to 54259353
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254816, toBlock=54259353, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254816 to 54259353
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254816, toBlock=54259353, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254816 to 54259353
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254816, toBlock=54259353, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254816 to 54259353
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254816, toBlock=54259353, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254816 to 54254825
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254869 to 54254878
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254906 to 54254915
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254906 to 54254915
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254906 to 54254915
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254906 to 54254915
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254842 to 54254851
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254842 to 54254851
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254842 to 54254851
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254842 to 54254851
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254974 to 54254983
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254974 to 54254983
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254974 to 54254983
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254974 to 54254983
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254860 to 54254869
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254860 to 54254869
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254860 to 54254869
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254860 to 54254869
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254841 to 54254850
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:36:57.498Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254834 to 54254843
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254935 to 54254944
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254935 to 54254944
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254935 to 54254944
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254935 to 54254944
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254833 to 54254842
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254833 to 54254842
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254833 to 54254842
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254833 to 54254842
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254827 to 54254836
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254827 to 54254836
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254827 to 54254836
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254827 to 54254836
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254826 to 54254835
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254818 to 54259363
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254818, toBlock=54259363, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254818 to 54259363
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254818, toBlock=54259363, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254818 to 54259363
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254818, toBlock=54259363, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254818 to 54259363
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254818, toBlock=54259363, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254879 to 54254888
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:37:07.496Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for @PennybagsCX (WALLET) - block range: 54254818 to 54259363
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x22F419...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x22F4194F..., fromBlock=54254818, toBlock=54259363, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Loyal Shibes (WALLET) - block range: 54254818 to 54259363
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0xbce77b...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0xbce77b0d..., fromBlock=54254818, toBlock=54259363, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Network Operations (WALLET) - block range: 54254818 to 54259363
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x6c13d0...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x6c13d097..., fromBlock=54254818, toBlock=54259363, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch] Attempting RPC for $DC Ecosystem DAO Fund (WALLET) - block range: 54254818 to 54259363
+index-WzcjUMfJ.js:1858 [HybridFetch] Fetching wallet transactions for 0x64c53d...
+index-WzcjUMfJ.js:1858 [RPC] getWalletTransactions START: wallet=0x64c53d47..., fromBlock=54254818, toBlock=54259363, maxResults=1000
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+executeWithRetry @ index-WzcjUMfJ.js:1852
+getWalletTransactions @ index-WzcjUMfJ.js:1852
+un @ index-WzcjUMfJ.js:1852
+await in un
+(anonymous) @ index-WzcjUMfJ.js:1852
+await in (anonymous)
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254818 to 54254827
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254916 to 54254925
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254916 to 54254925
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254916 to 54254925
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254916 to 54254925
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254852 to 54254861
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254852 to 54254861
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254852 to 54254861
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254852 to 54254861
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254984 to 54254993
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254984 to 54254993
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254984 to 54254993
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254984 to 54254993
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254870 to 54254879
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254870 to 54254879
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254870 to 54254879
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254870 to 54254879
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254861 to 54254870
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254861 to 54254870
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254861 to 54254870
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254861 to 54254870
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
+index-WzcjUMfJ.js:1858 [getWalletTransactions] Fetching blocks 54254851 to 54254860
+index-WzcjUMfJ.js:1858 [Polling] isScanning=false, alerts=12, inGracePeriod=false, willScan=true
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] Starting scan for 12 alerts at 2026-01-27T21:37:17.498Z
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results
+console.error @ index-WzcjUMfJ.js:1858
+(anonymous) @ index-WzcjUMfJ.js:1852
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: @PennybagsCX, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Ecosystem DAO Fund, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Network Operations, type: WALLET, shouldUseRPC: true
+index-WzcjUMfJ.js:1858 [HybridFetch DEBUG] alert: $DC Loyal Shibes, type: WALLET, shouldUseRPC: true

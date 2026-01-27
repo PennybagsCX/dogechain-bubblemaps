@@ -1105,7 +1105,7 @@ export class DogechainRPCClient {
    * Helps avoid RPC timeouts with large ranges
    */
   calculateOptimalBlockRange(fromBlock: bigint, toBlock: bigint): BlockRange[] {
-    const MAX_RANGE_SIZE = BigInt(5000); // Maximum 5000 blocks per request
+    const MAX_RANGE_SIZE = BigInt(1000); // Maximum 1000 blocks per request to avoid timeout
     const ranges: BlockRange[] = [];
 
     let currentFrom = fromBlock;

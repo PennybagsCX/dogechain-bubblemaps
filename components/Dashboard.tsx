@@ -442,8 +442,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
     // Estimate blocks for the timeframe
     const blocksToFetch = rpcClient.estimateBlocksForTimeframe(minutesSinceCheck);
 
-    // Cap at reasonable maximum (5000 blocks ≈ 3.3 hours)
-    const maxBlocks = BigInt(5000);
+    // Cap at reasonable maximum (1000 blocks ≈ 40 minutes) to avoid timeout
+    const maxBlocks = BigInt(1000);
     const actualBlocks = BigInt(blocksToFetch) > maxBlocks ? maxBlocks : BigInt(blocksToFetch);
 
     const fromBlock = latestBlock - actualBlocks;

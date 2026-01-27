@@ -1149,9 +1149,6 @@ export class DogechainRPCClient {
       // Normalize wallet address for comparison
       const normalizedWallet = walletAddress.toLowerCase();
 
-      // Pad wallet address to 32 bytes for topic matching
-      const paddedWallet = normalizedWallet.slice(2).padStart(64, "0");
-
       // Fetch all Transfer events involving the wallet
       // We query for both "from wallet" and "to wallet" patterns
       const logs = await client.getLogs({

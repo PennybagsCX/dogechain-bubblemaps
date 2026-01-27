@@ -867,6 +867,7 @@ export const fetchWalletTransactions = async (
   // If forceRefresh, delete existing cache entry to ensure fresh data
   if (forceRefresh) {
     txCache.delete(cacheKey);
+    pendingFetches.delete(cacheKey); // Clear pending fetch to allow new request
     console.log(
       `[fetchWalletTransactions] 🔄 Force refresh - cache cleared for ${cacheKey.substring(0, 16)}...`
     );
@@ -1449,6 +1450,15 @@ export const fetchWalletAssetsHybrid = async (
   }
   const scheduler = new AdaptiveRequestScheduler();
 
+  // Helper to add forceRefresh parameter to API URLs
+  const addForceRefreshParam = (baseUrl: string): string => {
+    if (forceRefresh) {
+      const separator = baseUrl.includes("?") ? "&" : "?";
+      return `${baseUrl}${separator}forceRefresh=true`;
+    }
+    return baseUrl;
+  };
+
   // Check cache first (unless force refresh)
   if (!forceRefresh) {
     try {
@@ -1532,7 +1542,9 @@ export const fetchWalletAssetsHybrid = async (
           totalRequests++;
           const res = await scheduler.schedule(() =>
             fetchSafe(
-              `${EXPLORER_API_V1}?module=account&action=${action}&address=${cleanWallet}&page=1&offset=${offset}&sort=desc`
+              addForceRefreshParam(
+                `${EXPLORER_API_V1}?module=account&action=${action}&address=${cleanWallet}&page=1&offset=${offset}&sort=desc`
+              )
             )
           );
           if (!res.ok) continue;
@@ -1558,7 +1570,9 @@ export const fetchWalletAssetsHybrid = async (
       totalRequests++;
       const v1NftProbe = await scheduler.schedule(() =>
         fetchSafe(
-          `${EXPLORER_API_V1}?module=account&action=tokennfttx&address=${cleanWallet}&page=1&offset=20&sort=desc`
+          addForceRefreshParam(
+            `${EXPLORER_API_V1}?module=account&action=tokennfttx&address=${cleanWallet}&page=1&offset=20&sort=desc`
+          )
         )
       );
       if (v1NftProbe.ok) {

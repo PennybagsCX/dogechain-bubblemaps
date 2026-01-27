@@ -68,6 +68,7 @@ export default defineConfig(({ mode }) => {
           globPatterns: ["**/*.{js,css,html,ico,png,svg,json}"],
           runtimeCaching: [
             // Cache API responses for token searches with stale-while-revalidate
+            // Cache TTL reduced to 5 minutes to allow force-refresh to work effectively
             {
               urlPattern: /^https:\/\/dogechain-bubblemaps-api\.vercel\.app\/api\/.*/i,
               handler: "StaleWhileRevalidate",
@@ -75,7 +76,7 @@ export default defineConfig(({ mode }) => {
                 cacheName: "api-cache",
                 expiration: {
                   maxEntries: 50,
-                  maxAgeSeconds: 60 * 60 * 24, // 24 hours
+                  maxAgeSeconds: 60 * 5, // 5 minutes (reduced from 24 hours)
                 },
                 cacheableResponse: {
                   statuses: [0, 200],

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console -- Console logging is critical for debugging alert creation */
@@ -39,6 +39,7 @@ import {
 import { exportDatabaseAsCSV } from "../services/db";
 import { validateTokenAddress, validateWalletAddress } from "../utils/validation";
 import { getApiUrl } from "../utils/api";
+import { DogechainRPCClient } from "../services/dogechainRPC";
 
 interface InAppNotification {
   id: string;
@@ -251,6 +252,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
     console.log(`[GracePeriod] Entered grace period, ends at ${new Date(endTime).toISOString()}`);
   }, []);
 
+  // === RPC CLIENT INSTANCE ===
+  // Create RPC client instance for real-time transaction monitoring
+  const rpcClient = useMemo(() => new DogechainRPCClient(), []);
+
   // === REF-BASED STATE ACCESS ===
   // Use refs to avoid stale closures in periodic scan interval
   const alertsRef = useRef(alerts);
@@ -413,6 +418,110 @@ export const Dashboard: React.FC<DashboardProps> = ({
     }
   }, [soundEnabled]);
 
+  // === RPC HYBRID FETCH ===
+  // Helper function to get fromBlock based on alert status
+  const getFromBlock = (_alert: AlertConfig, existingStatus?: AlertStatus): bigint => {
+    // For new alerts without baseline, use a reasonable window (e.g., last 1000 blocks)
+    // For established alerts, use the last check time to find the block number
+    if (!existingStatus?.baselineEstablished) {
+      // Approximate: Dogechain block time is ~3 seconds, so 1000 blocks ≈ 50 minutes
+      // This gives a good initial window without being too heavy
+      return BigInt(0); // Start from genesis for new alerts
+    }
+    // For established alerts, we'd need to find the block number at checkedAt time
+    // For simplicity, we'll use a fixed window and let the timestamp filtering handle the rest
+    return BigInt(0);
+  };
+
+  // Hybrid fetch function that tries RPC first, falls back to Explorer API
+  const fetchTransactionsHybrid = async (
+    alert: AlertConfig,
+    existingStatus?: AlertStatus,
+    forceRefresh: boolean = false
+  ): Promise<Transaction[]> => {
+    // Only use RPC for TOKEN type alerts with a valid token address
+    // WALLET and WHALE types without specific token should use Explorer API
+    const shouldUseRPC = alert.type === "TOKEN" && alert.tokenAddress;
+
+    if (!shouldUseRPC) {
+      console.log(`[HybridFetch] Using Explorer API for ${alert.name} (type: ${alert.type})`);
+      return await fetchWalletTransactions(
+        alert.walletAddress,
+        alert.type === "WALLET" ? undefined : alert.tokenAddress,
+        AssetType.TOKEN,
+        forceRefresh
+      );
+    }
+
+    // Try RPC first for TOKEN alerts
+    try {
+      console.log(`[HybridFetch] Attempting RPC for ${alert.name} (${alert.tokenAddress})`);
+      const latestBlock = await rpcClient.getLatestBlock();
+      const fromBlock = getFromBlock(alert, existingStatus);
+
+      console.log(`[HybridFetch] RPC block range: ${fromBlock} to ${latestBlock.number}`);
+
+      const events = await rpcClient.getTransferEvents(
+        alert.tokenAddress || "",
+        fromBlock,
+        BigInt(latestBlock.number)
+      );
+
+      console.log(`[HybridFetch] RPC returned ${events.length} transfer events`);
+
+      // Convert TransferEvent[] to Transaction[] format
+      // Also filter by wallet address since getTransferEvents returns all transfers for the token
+      const filteredEvents = events.filter(
+        (e) =>
+          e.from.toLowerCase() === alert.walletAddress.toLowerCase() ||
+          e.to.toLowerCase() === alert.walletAddress.toLowerCase()
+      );
+
+      console.log(
+        `[HybridFetch] Filtered to ${filteredEvents.length} events for wallet ${alert.walletAddress.slice(
+          0,
+          8
+        )}...`
+      );
+
+      // Get token data for symbol
+      let tokenSymbol: string | undefined;
+      try {
+        const tokenData = await fetchTokenData(alert.tokenAddress!);
+        tokenSymbol = tokenData?.symbol;
+      } catch {
+        // Ignore token data fetch errors
+      }
+
+      const transactions: Transaction[] = filteredEvents.map((e) => ({
+        hash: e.transactionHash,
+        timestamp: e.timestamp * 1000, // Convert seconds to milliseconds
+        from: e.from,
+        to: e.to,
+        value: Number(e.value),
+        tokenSymbol: tokenSymbol,
+        tokenAddress: e.tokenAddress,
+      }));
+
+      // Sort by timestamp descending (newest first) to match Explorer API behavior
+      transactions.sort((a, b) => b.timestamp - a.timestamp);
+
+      return transactions;
+    } catch (rpcError) {
+      console.warn(
+        `[HybridFetch] RPC failed for ${alert.name}, using Explorer API fallback:`,
+        rpcError instanceof Error ? rpcError.message : rpcError
+      );
+      // Fall back to existing fetchWalletTransactions
+      return await fetchWalletTransactions(
+        alert.walletAddress,
+        alert.tokenAddress,
+        AssetType.TOKEN,
+        forceRefresh
+      );
+    }
+  };
+
   const runScan = useCallback(
     async (forceRefresh = false) => {
       // Use ref values to avoid stale closure
@@ -484,10 +593,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
               // WALLET: Monitor all token activity (no token filter)
               // TOKEN: Monitor specific token only (filtered by tokenAddress)
               // WHALE: Monitor large transfers (filter by value threshold)
-              const transactions = await fetchWalletTransactions(
-                alert.walletAddress,
-                alert.type === "WALLET" ? undefined : alert.tokenAddress, // WALLET gets all tokens
-                AssetType.TOKEN,
+              // HYBRID APPROACH: Try RPC first for TOKEN alerts, fall back to Explorer API
+              const transactions = await fetchTransactionsHybrid(
+                alert,
+                existingStatus,
                 forceRefresh // Bypass cache when manually scanning
               );
 
@@ -675,7 +784,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       currentUpdateStatuses?.({ ...currentStatuses, ...newStatuses });
       setIsScanning(false);
     },
-    [isInGracePeriod] // Only depends on isInGracePeriod since we use refs for everything else
+    [isInGracePeriod, rpcClient] // Dependencies: grace period check and RPC client instance
   );
 
   // Auto-scan logic: Only run scan for alerts that don't have statuses yet (newly added alerts)

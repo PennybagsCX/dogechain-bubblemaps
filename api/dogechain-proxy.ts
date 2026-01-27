@@ -20,6 +20,7 @@ export async function GET(req: Request): Promise<Response> {
     const page = url.searchParams.get("page");
     const offset = url.searchParams.get("offset");
     const sort = url.searchParams.get("sort");
+    const forceRefresh = url.searchParams.get("forceRefresh") === "true";
 
     // Build target URL based on parameters
     let targetUrl = "";
@@ -27,15 +28,19 @@ export async function GET(req: Request): Promise<Response> {
     if (path) {
       // V2 API with path parameter
       targetUrl = `${BLOCKSCOUT_API_BASE}${path}`;
-      // Add query parameters (except 'path')
+      // Add query parameters (except 'path' and 'forceRefresh')
       const searchParams = new URLSearchParams();
       for (const [key, value] of url.searchParams.entries()) {
-        if (key !== "path") {
+        if (key !== "path" && key !== "forceRefresh") {
           searchParams.append(key, value);
         }
       }
       if (searchParams.toString()) {
         targetUrl += `?${searchParams.toString()}`;
+      }
+      // Add cache-busting timestamp for force refresh
+      if (forceRefresh) {
+        targetUrl += `${searchParams.toString() ? "&" : "?"}_t=${Date.now()}`;
       }
     } else if (module && action) {
       // V1 API with module/action
@@ -46,6 +51,10 @@ export async function GET(req: Request): Promise<Response> {
       if (page) targetUrl += `&page=${page}`;
       if (offset) targetUrl += `&offset=${offset}`;
       if (sort) targetUrl += `&sort=${sort}`;
+      // Add cache-busting timestamp for force refresh
+      if (forceRefresh) {
+        targetUrl += `&_t=${Date.now()}`;
+      }
     } else {
       return Response.json(
         { error: "Missing required parameters: module/action or path" },
@@ -73,15 +82,23 @@ export async function GET(req: Request): Promise<Response> {
 
     const data = await response.json();
 
-    // Add CORS headers and return
-    return Response.json(data, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120",
-      },
-    });
+    // Add CORS headers and cache control
+    const headers: Record<string, string> = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    };
+
+    // Set cache headers based on forceRefresh flag
+    if (forceRefresh) {
+      headers["Cache-Control"] = "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0";
+      headers["Pragma"] = "no-cache";
+      headers["Expires"] = "0";
+    } else {
+      headers["Cache-Control"] = "public, s-maxage=60, stale-while-revalidate=120";
+    }
+
+    return Response.json(data, { headers });
   } catch (error) {
     return Response.json(
       { error: error instanceof Error ? error.message : "Unknown error" },

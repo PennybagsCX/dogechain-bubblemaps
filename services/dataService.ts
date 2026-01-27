@@ -849,9 +849,10 @@ export const fetchTokenHolders = async (
 // Track pending fetches to prevent infinite loops and duplicate requests
 const pendingFetches = new Map<string, Promise<Transaction[]>>();
 
-// Simple in-memory cache with 60-second TTL for fresh transaction detection
+// Simple in-memory cache with 30-second TTL for fresh transaction detection
+// Reduced from 60s to catch new transactions faster without excessive API calls
 const txCache = new Map<string, { data: Transaction[]; timestamp: number }>();
-const CACHE_TTL = 60 * 1000; // 60 seconds - balances freshness with API rate limits
+const CACHE_TTL = 30 * 1000; // 30 seconds - balances freshness with API rate limits
 
 export const fetchWalletTransactions = async (
   walletAddress: string,

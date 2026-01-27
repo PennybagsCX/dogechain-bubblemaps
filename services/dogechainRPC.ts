@@ -149,14 +149,15 @@ const getRPCConfig = (): DogechainRPCConfig => {
   // const isProduction = process.env.NODE_ENV === "production";
 
   return {
-    // Read from env or default to 30 seconds (increased from 10s)
-    timeout: parseInt(process.env.DOGECHAIN_RPC_TIMEOUT || "30000", 10),
+    // CRITICAL FIX: Reduce timeout from 30s back to 10s to prevent hanging
+    // The 30s timeout was causing RPC to hang indefinitely, blocking all scans
+    timeout: parseInt(process.env.DOGECHAIN_RPC_TIMEOUT || "10000", 10),
 
     // Read from env or default to 5 retries per provider (increased from 2)
     retryCount: parseInt(process.env.DOGECHAIN_RPC_RETRY_COUNT || "5", 10),
 
-    // Read from env or default to 5 total attempts (increased from 3)
-    maxRetries: parseInt(process.env.DOGECHAIN_RPC_MAX_RETRIES || "5", 10),
+    // CRITICAL FIX: Reduce max retries from 5 to 2 to prevent long delays
+    maxRetries: parseInt(process.env.DOGECHAIN_RPC_MAX_RETRIES || "2", 10),
 
     // Read from env or default to 5 concurrent requests (reduced from 10)
     concurrencyLimit: parseInt(process.env.DOGECHAIN_RPC_CONCURRENCY_LIMIT || "5", 10),

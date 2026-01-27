@@ -613,259 +613,278 @@ export const Dashboard: React.FC<DashboardProps> = ({
         `[Scan] Starting scan for ${currentAlerts.length} alerts at ${new Date().toISOString()}`
       );
 
-      // CRITICAL FIX: Scan ALL alerts, not just new ones
-      // New alerts (without status) get initial baseline scan
-      // Existing alerts get scanned for new transactions since last check
-      const alertsToScan = currentAlerts;
+      // CRITICAL FIX: Add timeout wrapper to prevent scan from hanging indefinitely
+      // If RPC takes too long, we still want to complete the scan so isScanning gets reset
+      const scanTimeout = new Promise<Record<string, AlertStatus>>((resolve) => {
+        const timeoutId = setTimeout(() => {
+          console.error(`[Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results`);
+          resolve(newStatuses); // Return whatever we have so far
+        }, 60000); // 60 second hard timeout for entire scan
+      });
 
-      // Batch processing to prevent rate limiting
-      const batchSize = 4;
-      const delayBetweenBatches = 750; // milliseconds
+      const scanPromise = (async () => {
+        // CRITICAL FIX: Scan ALL alerts, not just new ones
+        // New alerts (without status) get initial baseline scan
+        // Existing alerts get scanned for new transactions since last check
+        const alertsToScan = currentAlerts;
 
-      for (let i = 0; i < alertsToScan.length; i += batchSize) {
-        const batch = alertsToScan.slice(i, i + batchSize);
+        // Batch processing to prevent rate limiting
+        const batchSize = 4;
+        const delayBetweenBatches = 750; // milliseconds
 
-        await Promise.all(
-          batch.map(async (alert) => {
-            try {
-              // Validate addresses; skip invalid to avoid repeated bad requests
+        for (let i = 0; i < alertsToScan.length; i += batchSize) {
+          const batch = alertsToScan.slice(i, i + batchSize);
+
+          await Promise.all(
+            batch.map(async (alert) => {
               try {
-                validateWalletAddress(alert.walletAddress);
-                if (alert.tokenAddress) validateTokenAddress(alert.tokenAddress);
-              } catch {
-                return;
-              }
-
-              // Ensure we have a baseline for new alerts so we don't loop forever
-              const existingStatus = currentStatuses[alert.id];
-
-              // Fetch current balance first (needed for WHALE type threshold calculation)
-              let currentBalance = 0;
-              if (alert.tokenAddress) {
-                // Get token info first to ensure correct decimals
+                // Validate addresses; skip invalid to avoid repeated bad requests
                 try {
-                  const tokenData = await fetchTokenData(alert.tokenAddress);
-                  if (tokenData) {
+                  validateWalletAddress(alert.walletAddress);
+                  if (alert.tokenAddress) validateTokenAddress(alert.tokenAddress);
+                } catch {
+                  return;
+                }
+
+                // Ensure we have a baseline for new alerts so we don't loop forever
+                const existingStatus = currentStatuses[alert.id];
+
+                // Fetch current balance first (needed for WHALE type threshold calculation)
+                let currentBalance = 0;
+                if (alert.tokenAddress) {
+                  // Get token info first to ensure correct decimals
+                  try {
+                    const tokenData = await fetchTokenData(alert.tokenAddress);
+                    if (tokenData) {
+                      currentBalance = await fetchTokenBalance(
+                        alert.walletAddress,
+                        alert.tokenAddress,
+                        tokenData.decimals
+                      );
+                    }
+                  } catch {
+                    // Fallback without decimals
                     currentBalance = await fetchTokenBalance(
                       alert.walletAddress,
-                      alert.tokenAddress,
-                      tokenData.decimals
+                      alert.tokenAddress
                     );
                   }
-                } catch {
-                  // Fallback without decimals
-                  currentBalance = await fetchTokenBalance(alert.walletAddress, alert.tokenAddress);
+                } else {
+                  // Default to wDOGE if no token specified
+                  const wDogeAddress = "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101";
+                  currentBalance = await fetchTokenBalance(alert.walletAddress, wDogeAddress, 18);
                 }
-              } else {
-                // Default to wDOGE if no token specified
-                const wDogeAddress = "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101";
-                currentBalance = await fetchTokenBalance(alert.walletAddress, wDogeAddress, 18);
-              }
 
-              // Fetch transactions based on alert type
-              // WALLET: Monitor all token activity (no token filter)
-              // TOKEN: Monitor specific token only (filtered by tokenAddress)
-              // WHALE: Monitor large transfers (filter by value threshold)
-              // HYBRID APPROACH: Try RPC first for TOKEN alerts, fall back to Explorer API
-              const transactions = await fetchTransactionsHybrid(
-                alert,
-                existingStatus,
-                forceRefresh // Bypass cache when manually scanning
-              );
-
-              // Check if baseline already established (prevents historical transaction spam)
-              const isBaselineEstablished = existingStatus?.baselineEstablished || false;
-              // CRITICAL FIX: Always use current time for baseline, NOT alert.createdAt
-              // This prevents synced alerts (which may have old createdAt) from triggering on historical transactions
-              const alertCreatedAt = isBaselineEstablished
-                ? existingStatus?.baselineTimestamp || alert.createdAt || Date.now()
-                : Date.now(); // Always use NOW for first-time baseline, ignoring alert.createdAt
-
-              // Debug: Log transaction timestamps
-              if (transactions.length > 0) {
-                const oldestTx = transactions[transactions.length - 1];
-                const newestTx = transactions[0];
-                // Safe ISO string conversion with validation
-                const toSafeISOString = (ts: number | undefined) => {
-                  if (!ts || isNaN(ts)) return new Date().toISOString();
-                  const d = new Date(ts);
-                  if (isNaN(d.getTime())) return new Date().toISOString();
-                  return d.toISOString();
-                };
-                console.error(`[Alert ${alert.id}] Fetched ${transactions.length} transactions`, {
-                  oldest: toSafeISOString(oldestTx?.timestamp),
-                  newest: toSafeISOString(newestTx?.timestamp),
-                  alertCreatedAt: toSafeISOString(alertCreatedAt),
-                });
-              } else {
-                // Debug: Log when no transactions were fetched
-                console.error(`[Alert ${alert.id}] No transactions fetched from RPC/Explorer API`);
-              }
-
-              // For new alerts, filter to only transactions AFTER alert creation
-              let transactionsForBaseline = transactions;
-              if (!isBaselineEstablished) {
-                transactionsForBaseline = transactions.filter(
-                  (tx) => tx.timestamp >= alertCreatedAt
+                // Fetch transactions based on alert type
+                // WALLET: Monitor all token activity (no token filter)
+                // TOKEN: Monitor specific token only (filtered by tokenAddress)
+                // WHALE: Monitor large transfers (filter by value threshold)
+                // HYBRID APPROACH: Try RPC first for TOKEN alerts, fall back to Explorer API
+                const transactions = await fetchTransactionsHybrid(
+                  alert,
+                  existingStatus,
+                  forceRefresh // Bypass cache when manually scanning
                 );
-                // FIX: For WHALE alerts, also filter by value threshold in initial baseline
-                if (alert.type === "WHALE" && transactionsForBaseline.length > 0) {
+
+                // Check if baseline already established (prevents historical transaction spam)
+                const isBaselineEstablished = existingStatus?.baselineEstablished || false;
+                // CRITICAL FIX: Always use current time for baseline, NOT alert.createdAt
+                // This prevents synced alerts (which may have old createdAt) from triggering on historical transactions
+                const alertCreatedAt = isBaselineEstablished
+                  ? existingStatus?.baselineTimestamp || alert.createdAt || Date.now()
+                  : Date.now(); // Always use NOW for first-time baseline, ignoring alert.createdAt
+
+                // Debug: Log transaction timestamps
+                if (transactions.length > 0) {
+                  const oldestTx = transactions[transactions.length - 1];
+                  const newestTx = transactions[0];
+                  // Safe ISO string conversion with validation
+                  const toSafeISOString = (ts: number | undefined) => {
+                    if (!ts || isNaN(ts)) return new Date().toISOString();
+                    const d = new Date(ts);
+                    if (isNaN(d.getTime())) return new Date().toISOString();
+                    return d.toISOString();
+                  };
+                  console.error(`[Alert ${alert.id}] Fetched ${transactions.length} transactions`, {
+                    oldest: toSafeISOString(oldestTx?.timestamp),
+                    newest: toSafeISOString(newestTx?.timestamp),
+                    alertCreatedAt: toSafeISOString(alertCreatedAt),
+                  });
+                } else {
+                  // Debug: Log when no transactions were fetched
+                  console.error(
+                    `[Alert ${alert.id}] No transactions fetched from RPC/Explorer API`
+                  );
+                }
+
+                // For new alerts, filter to only transactions AFTER alert creation
+                let transactionsForBaseline = transactions;
+                if (!isBaselineEstablished) {
+                  transactionsForBaseline = transactions.filter(
+                    (tx) => tx.timestamp >= alertCreatedAt
+                  );
+                  // FIX: For WHALE alerts, also filter by value threshold in initial baseline
+                  if (alert.type === "WHALE" && transactionsForBaseline.length > 0) {
+                    const whaleThreshold = Math.max(10000, currentBalance * 0.01);
+                    transactionsForBaseline = transactionsForBaseline.filter(
+                      (tx) => tx.value >= whaleThreshold
+                    );
+                  }
+                }
+
+                // Get previously seen transactions or initialize baseline
+                const previousTxs =
+                  existingStatus?.lastSeenTransactions ||
+                  transactionsForBaseline.map((tx) => tx.hash);
+                const previousTxSet = new Set(previousTxs);
+
+                // CRITICAL FIX: For established baselines, only consider transactions AFTER last check
+                // This ensures we re-trigger on transactions that happened since the last scan
+                let newTransactions = transactions.filter((tx) => !previousTxSet.has(tx.hash));
+
+                if (isBaselineEstablished && existingStatus?.checkedAt) {
+                  // For established alerts, filter to only transactions AFTER last check
+                  // This re-detects recent transactions instead of only truly unseen ones
+                  // FIX: If alert was dismissed, use dismissedAt instead of checkedAt to prevent re-triggering on old transactions
+                  const dismissedAt = existingStatus.dismissedAt || 0;
+                  const checkedAt = existingStatus.checkedAt;
+                  // An alert is considered dismissed if dismissedAt >= checkedAt
+                  const wasDismissed = dismissedAt > 0 && dismissedAt >= checkedAt;
+                  const lastCheckTime = wasDismissed ? dismissedAt : checkedAt;
+                  newTransactions = transactions.filter((tx) => tx.timestamp > lastCheckTime);
+
+                  // Debug: Log filtering results (use console.error to bypass production suppression)
+                  console.error(
+                    `[Alert ${alert.id}] Filtered to ${newTransactions.length} transactions since last check (${new Date(lastCheckTime).toISOString()})`
+                  );
+
+                  // Log each new transaction for debugging
+                  if (newTransactions.length > 0) {
+                    // Safe ISO string conversion for transaction timestamps
+                    const toSafeISOString = (ts: number) => {
+                      if (!ts || isNaN(ts)) return "Invalid timestamp";
+                      const d = new Date(ts);
+                      if (isNaN(d.getTime())) return "Invalid timestamp";
+                      return d.toISOString();
+                    };
+                    console.error(
+                      `[Alert ${alert.id}] New transactions:`,
+                      newTransactions.map((tx) => ({
+                        hash: tx.hash,
+                        timestamp: toSafeISOString(tx.timestamp),
+                        value: tx.value,
+                      }))
+                    );
+                  }
+                }
+
+                // Apply type-specific filtering for new transactions
+                let filteredNewTransactions = newTransactions;
+
+                if (alert.type === "WHALE" && newTransactions.length > 0) {
+                  // WHALE type: Only trigger on large transactions
+                  // Define "large" as >= 10,000 tokens or >= 1% of current balance (whichever is larger)
                   const whaleThreshold = Math.max(10000, currentBalance * 0.01);
-                  transactionsForBaseline = transactionsForBaseline.filter(
+                  // FIX: Use >= instead of > to include transactions at the threshold boundary
+                  filteredNewTransactions = newTransactions.filter(
                     (tx) => tx.value >= whaleThreshold
                   );
                 }
-              }
 
-              // Get previously seen transactions or initialize baseline
-              const previousTxs =
-                existingStatus?.lastSeenTransactions ||
-                transactionsForBaseline.map((tx) => tx.hash);
-              const previousTxSet = new Set(previousTxs);
+                // Create new set of all seen transactions
+                const allSeenTxs = [
+                  ...new Set([...previousTxs, ...transactions.map((tx) => tx.hash)]),
+                ];
 
-              // CRITICAL FIX: For established baselines, only consider transactions AFTER last check
-              // This ensures we re-trigger on transactions that happened since the last scan
-              let newTransactions = transactions.filter((tx) => !previousTxSet.has(tx.hash));
+                // Trigger alert if we found new transactions
+                // For new alerts (no baseline): trigger on transactions AFTER alert creation
+                // For existing alerts: trigger on transactions since last scan
+                const hasNewActivity = isBaselineEstablished
+                  ? filteredNewTransactions.length > 0
+                  : transactionsForBaseline.length > 0; // New alerts trigger on post-creation transactions
 
-              if (isBaselineEstablished && existingStatus?.checkedAt) {
-                // For established alerts, filter to only transactions AFTER last check
-                // This re-detects recent transactions instead of only truly unseen ones
-                // FIX: If alert was dismissed, use dismissedAt instead of checkedAt to prevent re-triggering on old transactions
-                const dismissedAt = existingStatus.dismissedAt || 0;
-                const checkedAt = existingStatus.checkedAt;
-                // An alert is considered dismissed if dismissedAt >= checkedAt
-                const wasDismissed = dismissedAt > 0 && dismissedAt >= checkedAt;
-                const lastCheckTime = wasDismissed ? dismissedAt : checkedAt;
-                newTransactions = transactions.filter((tx) => tx.timestamp > lastCheckTime);
+                // Keep triggered state persistent - once triggered, stay triggered until manually reset
+                // CRITICAL FIX: Allow dismissed alerts to trigger again on genuinely new transactions
+                const wasTriggered = existingStatus?.triggered || false;
+                const dismissedAt = existingStatus?.dismissedAt || 0;
+                const checkedAt = existingStatus?.checkedAt || 0;
+                // An alert is considered dismissed if dismissedAt is set (not 0) AND >= checkedAt
+                const wasDismissedAfterLastTrigger = dismissedAt > 0 && dismissedAt >= checkedAt;
+                // CRITICAL: If there are new transactions (which are already filtered to be after dismissal),
+                // clear the dismissal state and allow triggering. Otherwise preserve dismissal.
+                // If there are new transactions after dismissal, trigger. If no new transactions,
+                // only trigger if not dismissed and was previously triggered.
+                const shouldTrigger =
+                  hasNewActivity || (wasTriggered && !wasDismissedAfterLastTrigger);
 
-                // Debug: Log filtering results (use console.error to bypass production suppression)
-                console.error(
-                  `[Alert ${alert.id}] Filtered to ${newTransactions.length} transactions since last check (${new Date(lastCheckTime).toISOString()})`
-                );
-
-                // Log each new transaction for debugging
-                if (newTransactions.length > 0) {
-                  // Safe ISO string conversion for transaction timestamps
-                  const toSafeISOString = (ts: number) => {
-                    if (!ts || isNaN(ts)) return "Invalid timestamp";
-                    const d = new Date(ts);
-                    if (isNaN(d.getTime())) return "Invalid timestamp";
-                    return d.toISOString();
-                  };
-                  console.error(
-                    `[Alert ${alert.id}] New transactions:`,
-                    newTransactions.map((tx) => ({
-                      hash: tx.hash,
-                      timestamp: toSafeISOString(tx.timestamp),
-                      value: tx.value,
-                    }))
-                  );
+                // LOGGING: Debug dismissal state
+                if (existingStatus?.dismissedAt) {
+                  console.log(`[Alert ${alert.id}] Dismissal state:`, {
+                    wasDismissedAfterLastTrigger,
+                    dismissedAt: new Date(dismissedAt).toISOString(),
+                    checkedAt: new Date(checkedAt).toISOString(),
+                    hasNewActivity,
+                    wasTriggered,
+                    shouldTrigger,
+                    filteredNewTransactions: filteredNewTransactions.length,
+                  });
                 }
+
+                newStatuses[alert.id] = {
+                  currentValue: currentBalance,
+                  triggered: shouldTrigger,
+                  checkedAt: Date.now(),
+                  lastSeenTransactions: allSeenTxs,
+                  newTransactions: hasNewActivity
+                    ? isBaselineEstablished
+                      ? filteredNewTransactions
+                      : transactionsForBaseline
+                    : undefined,
+                  baselineEstablished: true, // Mark baseline as established
+                  pendingInitialScan: false, // Clear the pending flag - scan complete
+                  // CRITICAL FIX: If alert was dismissed, update baselineTimestamp to dismissal time
+                  // This prevents old transactions from being treated as "new" after clear
+                  baselineTimestamp: isBaselineEstablished
+                    ? existingStatus?.dismissedAt &&
+                      existingStatus.dismissedAt >= (existingStatus.checkedAt || 0)
+                      ? existingStatus.dismissedAt
+                      : existingStatus?.baselineTimestamp
+                    : Date.now(),
+                  // CRITICAL FIX: Clear dismissedAt when new transactions occur after dismissal
+                  // This allows the alert to trigger again on genuinely new activity
+                  // If no new activity, preserve dismissedAt to keep it dismissed
+                  dismissedAt: hasNewActivity ? undefined : existingStatus?.dismissedAt,
+                };
+              } catch (error) {
+                console.error(`[Alert ${alert.id}] Error during scan:`, error);
+                // FIX: Clear pendingInitialScan flag to prevent infinite rescans on error
+                newStatuses[alert.id] = {
+                  currentValue: 0,
+                  triggered: false,
+                  checkedAt: Date.now(),
+                  pendingInitialScan: false,
+                };
               }
+            })
+          );
 
-              // Apply type-specific filtering for new transactions
-              let filteredNewTransactions = newTransactions;
+          // Add delay between batches to prevent rate limiting
+          if (i + batchSize < alertsToScan.length) {
+            await new Promise((resolve) => setTimeout(resolve, delayBetweenBatches));
+          }
+        }
 
-              if (alert.type === "WHALE" && newTransactions.length > 0) {
-                // WHALE type: Only trigger on large transactions
-                // Define "large" as >= 10,000 tokens or >= 1% of current balance (whichever is larger)
-                const whaleThreshold = Math.max(10000, currentBalance * 0.01);
-                // FIX: Use >= instead of > to include transactions at the threshold boundary
-                filteredNewTransactions = newTransactions.filter(
-                  (tx) => tx.value >= whaleThreshold
-                );
-              }
-
-              // Create new set of all seen transactions
-              const allSeenTxs = [
-                ...new Set([...previousTxs, ...transactions.map((tx) => tx.hash)]),
-              ];
-
-              // Trigger alert if we found new transactions
-              // For new alerts (no baseline): trigger on transactions AFTER alert creation
-              // For existing alerts: trigger on transactions since last scan
-              const hasNewActivity = isBaselineEstablished
-                ? filteredNewTransactions.length > 0
-                : transactionsForBaseline.length > 0; // New alerts trigger on post-creation transactions
-
-              // Keep triggered state persistent - once triggered, stay triggered until manually reset
-              // CRITICAL FIX: Allow dismissed alerts to trigger again on genuinely new transactions
-              const wasTriggered = existingStatus?.triggered || false;
-              const dismissedAt = existingStatus?.dismissedAt || 0;
-              const checkedAt = existingStatus?.checkedAt || 0;
-              // An alert is considered dismissed if dismissedAt is set (not 0) AND >= checkedAt
-              const wasDismissedAfterLastTrigger = dismissedAt > 0 && dismissedAt >= checkedAt;
-              // CRITICAL: If there are new transactions (which are already filtered to be after dismissal),
-              // clear the dismissal state and allow triggering. Otherwise preserve dismissal.
-              // If there are new transactions after dismissal, trigger. If no new transactions,
-              // only trigger if not dismissed and was previously triggered.
-              const shouldTrigger =
-                hasNewActivity || (wasTriggered && !wasDismissedAfterLastTrigger);
-
-              // LOGGING: Debug dismissal state
-              if (existingStatus?.dismissedAt) {
-                console.log(`[Alert ${alert.id}] Dismissal state:`, {
-                  wasDismissedAfterLastTrigger,
-                  dismissedAt: new Date(dismissedAt).toISOString(),
-                  checkedAt: new Date(checkedAt).toISOString(),
-                  hasNewActivity,
-                  wasTriggered,
-                  shouldTrigger,
-                  filteredNewTransactions: filteredNewTransactions.length,
-                });
-              }
-
-              newStatuses[alert.id] = {
-                currentValue: currentBalance,
-                triggered: shouldTrigger,
-                checkedAt: Date.now(),
-                lastSeenTransactions: allSeenTxs,
-                newTransactions: hasNewActivity
-                  ? isBaselineEstablished
-                    ? filteredNewTransactions
-                    : transactionsForBaseline
-                  : undefined,
-                baselineEstablished: true, // Mark baseline as established
-                pendingInitialScan: false, // Clear the pending flag - scan complete
-                // CRITICAL FIX: If alert was dismissed, update baselineTimestamp to dismissal time
-                // This prevents old transactions from being treated as "new" after clear
-                baselineTimestamp: isBaselineEstablished
-                  ? existingStatus?.dismissedAt &&
-                    existingStatus.dismissedAt >= (existingStatus.checkedAt || 0)
-                    ? existingStatus.dismissedAt
-                    : existingStatus?.baselineTimestamp
-                  : Date.now(),
-                // CRITICAL FIX: Clear dismissedAt when new transactions occur after dismissal
-                // This allows the alert to trigger again on genuinely new activity
-                // If no new activity, preserve dismissedAt to keep it dismissed
-                dismissedAt: hasNewActivity ? undefined : existingStatus?.dismissedAt,
-              };
-            } catch (error) {
-              console.error(`[Alert ${alert.id}] Error during scan:`, error);
-              // FIX: Clear pendingInitialScan flag to prevent infinite rescans on error
-              newStatuses[alert.id] = {
-                currentValue: 0,
-                triggered: false,
-                checkedAt: Date.now(),
-                pendingInitialScan: false,
-              };
-            }
-          })
+        // Debug: Log scan completion (use console.error to bypass production suppression)
+        console.error(
+          `[Scan] Completed scan for ${alertsToScan.length} alerts at ${new Date().toISOString()}, processed ${Object.keys(newStatuses).length} alerts`
         );
 
-        // Add delay between batches to prevent rate limiting
-        if (i + batchSize < alertsToScan.length) {
-          await new Promise((resolve) => setTimeout(resolve, delayBetweenBatches));
-        }
-      }
+        currentUpdateStatuses?.({ ...currentStatuses, ...newStatuses });
+        setIsScanning(false);
+      })();
 
-      // Debug: Log scan completion (use console.error to bypass production suppression)
-      console.error(
-        `[Scan] Completed scan for ${alertsToScan.length} alerts at ${new Date().toISOString()}, processed ${Object.keys(newStatuses).length} alerts`
-      );
-
-      currentUpdateStatuses?.({ ...currentStatuses, ...newStatuses });
-      setIsScanning(false);
+      // CRITICAL FIX: Race scan against timeout to prevent indefinite hanging
+      await Promise.race([scanPromise, scanTimeout]);
     },
     [isInGracePeriod, rpcClient] // Dependencies: grace period check and RPC client instance
   );

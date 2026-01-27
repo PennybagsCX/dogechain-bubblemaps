@@ -602,16 +602,20 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 : transactionsForBaseline.length > 0; // New alerts trigger on post-creation transactions
 
               // Keep triggered state persistent - once triggered, stay triggered until manually reset
-              // CRITICAL FIX: Dismissed alerts must NEVER re-trigger, even if there are transactions between old check and dismissal
+              // CRITICAL FIX: Allow dismissed alerts to trigger again on genuinely new transactions
               const wasTriggered = existingStatus?.triggered || false;
               const dismissedAt = existingStatus?.dismissedAt || 0;
               const checkedAt = existingStatus?.checkedAt || 0;
               // An alert is considered dismissed if dismissedAt is set (not 0) AND >= checkedAt
-              // Using >= ensures equal timestamps (from clearNotificationsFromStorage) are treated as dismissed
               const wasDismissedAfterLastTrigger = dismissedAt > 0 && dismissedAt >= checkedAt;
-              // CRITICAL: If dismissed, never trigger. Otherwise trigger if new activity or was previously triggered.
+              // CRITICAL: If there are new transactions (which are already filtered to be after dismissal),
+              // clear the dismissal state and allow triggering. Otherwise preserve dismissal.
+              const hasNewTransactionsAfterDismissal =
+                hasNewActivity && wasDismissedAfterLastTrigger;
+              // If there are new transactions after dismissal, trigger. If no new transactions,
+              // only trigger if not dismissed and was previously triggered.
               const shouldTrigger =
-                !wasDismissedAfterLastTrigger && (hasNewActivity || wasTriggered);
+                hasNewActivity || (wasTriggered && !wasDismissedAfterLastTrigger);
 
               // LOGGING: Debug dismissal state
               if (existingStatus?.dismissedAt) {
@@ -646,7 +650,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     ? existingStatus.dismissedAt
                     : existingStatus?.baselineTimestamp
                   : Date.now(),
-                dismissedAt: existingStatus?.dismissedAt, // Preserve dismissal timestamp
+                // CRITICAL FIX: Clear dismissedAt when new transactions occur after dismissal
+                // This allows the alert to trigger again on genuinely new activity
+                // If no new activity, preserve dismissedAt to keep it dismissed
+                dismissedAt: hasNewActivity ? undefined : existingStatus?.dismissedAt,
               };
             } catch (error) {
               console.error(`[Alert ${alert.id}] Error during scan:`, error);

@@ -462,6 +462,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
       (alert.type === "TOKEN" && alert.tokenAddress) || // Existing: TOKEN alerts with token address
       alert.type === "WALLET"; // NEW: Use RPC for WALLET alerts too
 
+    console.log(
+      `[HybridFetch DEBUG] alert: ${alert.name}, type: ${alert.type}, shouldUseRPC: ${shouldUseRPC}`
+    );
+
     if (!shouldUseRPC) {
       console.log(`[HybridFetch] Using Explorer API for ${alert.name} (type: ${alert.type})`);
       return await fetchWalletTransactions(

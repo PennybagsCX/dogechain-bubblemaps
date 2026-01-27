@@ -608,6 +608,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
       setIsScanning(true);
       const newStatuses: Record<string, AlertStatus> = {};
 
+      // Debug: Log scan start (use console.error to bypass production suppression)
+      console.error(
+        `[Scan] Starting scan for ${currentAlerts.length} alerts at ${new Date().toISOString()}`
+      );
+
       // CRITICAL FIX: Scan ALL alerts, not just new ones
       // New alerts (without status) get initial baseline scan
       // Existing alerts get scanned for new transactions since last check
@@ -850,6 +855,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
         }
       }
 
+      // Debug: Log scan completion (use console.error to bypass production suppression)
+      console.error(
+        `[Scan] Completed scan for ${alertsToScan.length} alerts at ${new Date().toISOString()}, processed ${Object.keys(newStatuses).length} alerts`
+      );
+
       currentUpdateStatuses?.({ ...currentStatuses, ...newStatuses });
       setIsScanning(false);
     },
@@ -981,7 +991,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
     const intervalId = setInterval(() => {
       // Use ref to check current alerts (avoids stale closure)
       const currentAlerts = alertsRef.current;
-      if (!isScanning && currentAlerts.length > 0 && !isInGracePeriod()) {
+      const inGrace = isInGracePeriod();
+
+      // Debug: Log periodic scan trigger (use console.error to bypass production suppression)
+      console.error(
+        `[Polling] isScanning=${isScanning}, alerts=${currentAlerts.length}, inGracePeriod=${inGrace}, willScan=${!isScanning && currentAlerts.length > 0 && !inGrace}`
+      );
+
+      if (!isScanning && currentAlerts.length > 0 && !inGrace) {
         runScan();
       }
     }, 10000); // 10 seconds (reduced from 30s for faster alert detection)

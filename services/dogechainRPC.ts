@@ -746,8 +746,11 @@ export class DogechainRPCClient {
             let tokenAddress: string | undefined;
             let value: bigint = 0n;
 
-            if (tx.to && tx.to.toLowerCase() !== normalizedWallet) {
-              // Transaction TO a contract - check logs for Transfer events
+            // Always check receipt for Transfer events when wallet is involved in a contract interaction
+            // This handles both: wallet→contract and contract→wallet transfers
+            const isContractInteraction = tx.to && tx.to.toLowerCase() !== normalizedWallet;
+
+            if (isContractInteraction || (tx.to && tx.to.toLowerCase() === normalizedWallet)) {
               try {
                 const receipt = await client.getTransactionReceipt({
                   hash: tx.hash,
@@ -758,16 +761,33 @@ export class DogechainRPCClient {
                   const transferEventSignature =
                     "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
 
-                  const transferLog = receipt.logs.find((log: any) => {
+                  // Find all Transfer events involving our wallet
+                  const walletTransferLogs = receipt.logs.filter((log: any) => {
                     if (log.topics[0] !== transferEventSignature) return false;
                     const fromAddress = (log.topics[1] || "").slice(26).toLowerCase();
                     const toAddress = (log.topics[2] || "").slice(26).toLowerCase();
                     return fromAddress === normalizedWallet || toAddress === normalizedWallet;
                   });
 
-                  if (transferLog) {
-                    tokenAddress = transferLog.address;
-                    value = BigInt(transferLog.data || "0");
+                  if (walletTransferLogs.length > 0) {
+                    // PRIORITY: For swaps, prefer tokens received (incoming to wallet)
+                    // Look for Transfer where wallet is the TO address (receiving)
+                    const incomingLog = walletTransferLogs.find((log: any) => {
+                      const toAddress = (log.topics[2] || "").slice(26).toLowerCase();
+                      return toAddress === normalizedWallet;
+                    });
+
+                    // FALLBACK: Use the first wallet Transfer event (outgoing)
+                    const selectedLog = incomingLog || walletTransferLogs[0];
+
+                    tokenAddress = selectedLog.address;
+                    value = BigInt(selectedLog.data || "0");
+
+                    console.log(`[getWalletTransactions] Found token transfer in ${tx.hash}:`, {
+                      token: tokenAddress,
+                      value: value.toString(),
+                      isIncoming: selectedLog === incomingLog,
+                    });
                   }
                 }
               } catch (error) {

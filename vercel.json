@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/favicon.ico",
+      "statusCode": 204,
+      "destination": "/favicon.ico"
+    }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",

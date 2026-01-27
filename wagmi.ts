@@ -32,8 +32,8 @@ export const dogechain = {
 export const config = getDefaultConfig({
   appName: "Dogechain BubbleMaps",
   // WalletConnect project ID (set in Vercel environment variables)
-  // If not set, uses local defaults without remote config fetch
-  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+  // If not set, uses empty string to skip remote config fetch
+  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "",
   chains: [dogechain],
   ssr: true, // Enable for better compatibility
   wallets: [

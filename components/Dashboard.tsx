@@ -616,7 +616,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       // CRITICAL FIX: Add timeout wrapper to prevent scan from hanging indefinitely
       // If RPC takes too long, we still want to complete the scan so isScanning gets reset
       const scanTimeout = new Promise<Record<string, AlertStatus>>((resolve) => {
-        const timeoutId = setTimeout(() => {
+        setTimeout(() => {
           console.error(`[Scan] ⚠️ TIMEOUT after 60s, completing scan with partial results`);
           resolve(newStatuses); // Return whatever we have so far
         }, 60000); // 60 second hard timeout for entire scan

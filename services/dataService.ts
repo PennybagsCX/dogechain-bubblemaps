@@ -1032,16 +1032,16 @@ export const fetchWalletTransactions = async (
           url += `&contractaddress=${cleanToken}`;
         }
 
-        // Add timing and timeout to prevent indefinite hanging (15s for better UX)
+        // Add timing and timeout to prevent indefinite hanging (60s for large wallet queries)
         const fetchStartTime = performance.now();
         const controller = new AbortController();
         const timeoutId = setTimeout(() => {
           const elapsedNumber = performance.now() - fetchStartTime;
           const elapsed = elapsedNumber.toFixed(0);
-          console.warn(`[fetchWithOffset] ⏱️ Timeout after ${elapsed}ms (limit: 15000ms)`);
+          console.warn(`[fetchWithOffset] ⏱️ Timeout after ${elapsed}ms (limit: 60000ms)`);
           onProgress?.(`Request timeout after ${Math.floor(elapsedNumber / 1000)}s...`);
           controller.abort();
-        }, 15000); // Reduced from 30s to 15s for faster feedback
+        }, 60000); // Increased from 15s to 60s for large wallet queries
 
         try {
           const response = await fetchSafe(url, { signal: controller.signal as any });
@@ -1085,7 +1085,8 @@ export const fetchWalletTransactions = async (
 
       // SMART AUTO-INCREASING OFFSET STRATEGY
       // Try progressively larger offsets for inactive wallets
-      const offsets = [100, 500, 1000, 2500];
+      // Note: Removed 2500 offset as it causes timeouts on Explorer API
+      const offsets = [100, 500, 1000];
 
       console.log(
         `[fetchWalletTransactions] Starting transaction fetch with offsets: ${offsets.join(", ")}`

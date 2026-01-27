@@ -130,10 +130,48 @@ interface FetchBlockRangeOptions {
   includeTransactions?: boolean;
 }
 
+// ============================================================================
+// RPC Configuration with environment variable support
+// ============================================================================
+
+interface DogechainRPCConfig {
+  timeout: number;
+  retryCount: number;
+  maxRetries: number;
+  concurrencyLimit: number;
+  batchSize: bigint;
+  suppressConsoleLogs: boolean;
+}
+
+// Get configuration from environment variables or use optimized defaults
+const getRPCConfig = (): DogechainRPCConfig => {
+  const isProduction = process.env.NODE_ENV === "production";
+
+  return {
+    // Read from env or default to 30 seconds (increased from 10s)
+    timeout: parseInt(process.env.DOGECHAIN_RPC_TIMEOUT || "30000", 10),
+
+    // Read from env or default to 5 retries per provider (increased from 2)
+    retryCount: parseInt(process.env.DOGECHAIN_RPC_RETRY_COUNT || "5", 10),
+
+    // Read from env or default to 5 total attempts (increased from 3)
+    maxRetries: parseInt(process.env.DOGECHAIN_RPC_MAX_RETRIES || "5", 10),
+
+    // Read from env or default to 5 concurrent requests (reduced from 10)
+    concurrencyLimit: parseInt(process.env.DOGECHAIN_RPC_CONCURRENCY_LIMIT || "5", 10),
+
+    // Read from env or default to 10 blocks per batch (reduced from 50)
+    batchSize: BigInt(process.env.DOGECHAIN_RPC_BATCH_SIZE || "10"),
+
+    // Suppress console spam in production
+    suppressConsoleLogs: isProduction,
+  };
+};
+
 export class DogechainRPCClient {
   private clients: Array<Client<any> & Record<string, any>>;
   private currentProvider: number = 0;
-  private maxRetries: number = 3;
+  private config: DogechainRPCConfig;
   private blockCache: Map<bigint, BlockCacheEntry> = new Map();
   private readonly CACHE_TTL: number = 30000; // 30 seconds in milliseconds
 
@@ -141,12 +179,13 @@ export class DogechainRPCClient {
   private tokenMetadataCache: Map<string, TokenMetadata> = new Map();
 
   constructor() {
+    this.config = getRPCConfig();
     this.clients = RPC_ENDPOINTS.map((url) =>
       createPublicClient({
         chain: dogechain,
         transport: http(url, {
-          retryCount: 2,
-          timeout: 10_000,
+          retryCount: this.config.retryCount,
+          timeout: this.config.timeout,
         }),
       })
     );
@@ -183,28 +222,47 @@ export class DogechainRPCClient {
 
   /**
    * Execute a provider operation with retry logic and provider switching
+   * OPTIMIZED: Suppress console spam in production, show only first attempt failure
    */
   private async executeWithRetry<T>(operation: (client: any) => Promise<T>): Promise<T> {
     let lastError: Error | undefined;
 
-    for (let attempt = 0; attempt < this.maxRetries; attempt++) {
+    for (let attempt = 0; attempt < this.config.maxRetries; attempt++) {
       try {
         const client = this.getClient();
         return await operation(client);
       } catch (error) {
         lastError = error as Error;
-        console.warn(
-          `RPC attempt ${attempt + 1} failed (provider ${this.currentProvider}):`,
-          lastError.message
-        );
+
+        // Suppress console spam in production - only log first attempt
+        if (this.config.suppressConsoleLogs) {
+          if (attempt === 0) {
+            console.warn(
+              `[RPC] First attempt failed for provider ${this.currentProvider}, switching...`
+            );
+          }
+          // Silent retry for subsequent attempts
+        } else {
+          console.warn(
+            `RPC attempt ${attempt + 1} failed (provider ${this.currentProvider}):`,
+            lastError.message
+          );
+        }
 
         // Switch to next provider for retry
         this.switchProvider();
       }
     }
 
+    // Log final failure in production with summary
+    if (this.config.suppressConsoleLogs && lastError) {
+      console.warn(
+        `[RPC] All ${this.config.maxRetries} attempts failed. Last error: ${lastError.message}`
+      );
+    }
+
     throw new Error(
-      `RPC operation failed after ${this.maxRetries} attempts. Last error: ${lastError?.message}`
+      `RPC operation failed after ${this.config.maxRetries} attempts. Last error: ${lastError?.message}`
     );
   }
 
@@ -411,7 +469,9 @@ export class DogechainRPCClient {
 
         return metadata;
       } catch (error) {
-        console.warn(`Failed to fetch metadata for ${tokenAddress}:`, error);
+        if (!this.config.suppressConsoleLogs) {
+          console.warn(`Failed to fetch metadata for ${tokenAddress}:`, error);
+        }
 
         // Return default metadata on error
         const defaultMetadata: TokenMetadata = {
@@ -508,7 +568,9 @@ export class DogechainRPCClient {
 
             return { address, metadata };
           } catch (error) {
-            console.warn(`Failed to fetch metadata for ${address}:`, error);
+            if (!this.config.suppressConsoleLogs) {
+              console.warn(`Failed to fetch metadata for ${address}:`, error);
+            }
 
             // Return default metadata on error
             const defaultMetadata: TokenMetadata = {
@@ -611,7 +673,9 @@ export class DogechainRPCClient {
           });
 
           if (!block) {
-            console.warn(`Unable to fetch block ${log.blockNumber}, skipping log`);
+            if (!this.config.suppressConsoleLogs) {
+              console.warn(`Unable to fetch block ${log.blockNumber}, skipping log`);
+            }
             continue;
           }
           // CRITICAL FIX: Convert RPC timestamp (seconds) to milliseconds for JavaScript compatibility
@@ -680,7 +744,7 @@ export class DogechainRPCClient {
     }
 
     const rangeSize = actualToBlock - actualFromBlock;
-    if (rangeSize > BigInt(10000)) {
+    if (rangeSize > BigInt(10000) && !this.config.suppressConsoleLogs) {
       console.warn(
         `[getWalletTransactions] Large block range detected (${rangeSize} blocks). Consider using smaller ranges for better performance.`
       );
@@ -690,8 +754,8 @@ export class DogechainRPCClient {
       const normalizedWallet = walletAddress.toLowerCase();
       const results: WalletTransaction[] = [];
 
-      // Fetch blocks in range (batch by 50 blocks to balance speed and RPC limits)
-      const batchSize = 50n;
+      // Fetch blocks in range using config batch size (reduced from 50 to 10 for reliability)
+      const batchSize = this.config.batchSize;
       let currentBlock = actualFromBlock;
       let totalFetched = 0;
 
@@ -701,7 +765,9 @@ export class DogechainRPCClient {
             ? actualToBlock
             : currentBlock + batchSize - 1n;
 
-        console.log(`[getWalletTransactions] Fetching blocks ${currentBlock} to ${endBlock}`);
+        if (!this.config.suppressConsoleLogs) {
+          console.log(`[getWalletTransactions] Fetching blocks ${currentBlock} to ${endBlock}`);
+        }
 
         // Fetch block numbers
         const blockNumbers: bigint[] = [];
@@ -709,8 +775,8 @@ export class DogechainRPCClient {
           blockNumbers.push(b);
         }
 
-        // Fetch all blocks in parallel with concurrency limit
-        const concurrencyLimit = 10;
+        // Fetch all blocks in parallel with config concurrency limit (reduced from 10 to 5)
+        const concurrencyLimit = this.config.concurrencyLimit;
         const blocks: (any | null)[] = [];
 
         for (let i = 0; i < blockNumbers.length; i += concurrencyLimit) {
@@ -750,15 +816,17 @@ export class DogechainRPCClient {
             // This handles both: wallet→contract and contract→wallet transfers
             const isContractInteraction = tx.to && tx.to.toLowerCase() !== normalizedWallet;
 
-            console.log(
-              `[getWalletTransactions] Checking tx ${tx.hash.slice(0, 10)}... for token transfers`,
-              {
-                txFrom: tx.from?.toLowerCase(),
-                txTo: tx.to?.toLowerCase(),
-                wallet: normalizedWallet,
-                isContractInteraction,
-              }
-            );
+            if (!this.config.suppressConsoleLogs) {
+              console.log(
+                `[getWalletTransactions] Checking tx ${tx.hash.slice(0, 10)}... for token transfers`,
+                {
+                  txFrom: tx.from?.toLowerCase(),
+                  txTo: tx.to?.toLowerCase(),
+                  wallet: normalizedWallet,
+                  isContractInteraction,
+                }
+              );
+            }
 
             if (isContractInteraction || (tx.to && tx.to.toLowerCase() === normalizedWallet)) {
               try {
@@ -767,9 +835,11 @@ export class DogechainRPCClient {
                 });
 
                 if (receipt && receipt.logs) {
-                  console.log(
-                    `[getWalletTransactions] Receipt for ${tx.hash.slice(0, 10)}... has ${receipt.logs.length} logs`
-                  );
+                  if (!this.config.suppressConsoleLogs) {
+                    console.log(
+                      `[getWalletTransactions] Receipt for ${tx.hash.slice(0, 10)}... has ${receipt.logs.length} logs`
+                    );
+                  }
 
                   // Find Transfer events involving our wallet
                   const transferEventSignature =
@@ -788,9 +858,11 @@ export class DogechainRPCClient {
                     );
                   });
 
-                  console.log(
-                    `[getWalletTransactions] Found ${walletTransferLogs.length} wallet Transfer events`
-                  );
+                  if (!this.config.suppressConsoleLogs) {
+                    console.log(
+                      `[getWalletTransactions] Found ${walletTransferLogs.length} wallet Transfer events`
+                    );
+                  }
 
                   if (walletTransferLogs.length > 0) {
                     // PRIORITY: For swaps, prefer tokens received (incoming to wallet)
@@ -806,16 +878,20 @@ export class DogechainRPCClient {
                     tokenAddress = selectedLog.address;
                     value = BigInt(selectedLog.data || "0");
 
-                    console.log(`[getWalletTransactions] Found token transfer in ${tx.hash}:`, {
-                      token: tokenAddress,
-                      value: value.toString(),
-                      isIncoming: selectedLog === incomingLog,
-                    });
+                    if (!this.config.suppressConsoleLogs) {
+                      console.log(`[getWalletTransactions] Found token transfer in ${tx.hash}:`, {
+                        token: tokenAddress,
+                        value: value.toString(),
+                        isIncoming: selectedLog === incomingLog,
+                      });
+                    }
                   }
                 }
               } catch (error) {
                 // If receipt fetch fails, continue without token details
-                console.warn(`Failed to fetch receipt for ${tx.hash}:`, error);
+                if (!this.config.suppressConsoleLogs) {
+                  console.warn(`Failed to fetch receipt for ${tx.hash}:`, error);
+                }
               }
             }
 
@@ -838,7 +914,9 @@ export class DogechainRPCClient {
         currentBlock = endBlock + 1n;
       }
 
-      console.log(`[getWalletTransactions] Found ${results.length} transactions for wallet`);
+      if (!this.config.suppressConsoleLogs) {
+        console.log(`[getWalletTransactions] Found ${results.length} transactions for wallet`);
+      }
 
       // Sort by timestamp (most recent first)
       results.sort((a, b) => b.timestamp - a.timestamp);
@@ -934,14 +1012,18 @@ export class DogechainRPCClient {
             });
 
             if (!block) {
-              console.warn(`Unable to fetch block ${log.blockNumber}, skipping log`);
+              if (!this.config.suppressConsoleLogs) {
+                console.warn(`Unable to fetch block ${log.blockNumber}, skipping log`);
+              }
               continue;
             }
             // CRITICAL FIX: Convert RPC timestamp (seconds) to milliseconds for JavaScript compatibility
             timestamp = Number(block.timestamp) * 1000;
             blockCache.set(log.blockNumber, timestamp);
           } catch (error) {
-            console.warn(`Error fetching block ${log.blockNumber}:`, error);
+            if (!this.config.suppressConsoleLogs) {
+              console.warn(`Error fetching block ${log.blockNumber}:`, error);
+            }
             continue;
           }
         }
@@ -997,7 +1079,9 @@ export class DogechainRPCClient {
         tokenAddress: log.address,
       };
     } catch (error) {
-      console.warn(`[parseTokenTransfer] Error parsing log:`, error);
+      if (!this.config.suppressConsoleLogs) {
+        console.warn(`[parseTokenTransfer] Error parsing log:`, error);
+      }
       return null;
     }
   }

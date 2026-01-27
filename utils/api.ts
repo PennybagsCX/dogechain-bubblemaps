@@ -47,20 +47,12 @@ export function getApiBaseUrl(): string {
     // IGNORE the env var if it's set to the old wrong URL
     // The old separate backend URL no longer exists - API is on main domain now
     if (envUrl.includes("dogechain-bubblemaps-api.vercel.app")) {
-      if (typeof window !== "undefined") {
-        console.warn("[API] Ignoring old backend URL from env var:", envUrl);
-      }
+      // Silently ignore old backend URL - use window.location.origin instead
     } else {
-      if (typeof window !== "undefined") {
-        console.debug("[API] Production mode - using env var:", envUrl);
-      }
       return envUrl;
     }
   }
 
-  if (typeof window !== "undefined") {
-    console.debug("[API] Production mode - using default backend URL");
-  }
   // The API routes are deployed on the same Vercel project as the frontend
   return window.location.origin;
 }
@@ -73,9 +65,5 @@ export function getApiBaseUrl(): string {
  */
 export function getApiUrl(endpoint: string): string {
   const baseUrl = getApiBaseUrl();
-  const fullUrl = `${baseUrl}${endpoint}`;
-  if (typeof window !== "undefined" && baseUrl !== "") {
-    console.debug("[API] Generated URL for", endpoint, ":", fullUrl);
-  }
-  return fullUrl;
+  return `${baseUrl}${endpoint}`;
 }

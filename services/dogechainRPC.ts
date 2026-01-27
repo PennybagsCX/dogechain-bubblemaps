@@ -223,7 +223,8 @@ export class DogechainRPCClient {
 
       return {
         number: block.number,
-        timestamp: Number(block.timestamp),
+        // CRITICAL FIX: Convert RPC timestamp (seconds) to milliseconds for JavaScript compatibility
+        timestamp: Number(block.timestamp) * 1000,
       };
     });
   }
@@ -613,7 +614,8 @@ export class DogechainRPCClient {
             console.warn(`Unable to fetch block ${log.blockNumber}, skipping log`);
             continue;
           }
-          timestamp = Number(block.timestamp);
+          // CRITICAL FIX: Convert RPC timestamp (seconds) to milliseconds for JavaScript compatibility
+          timestamp = Number(block.timestamp) * 1000;
           blockCache.set(log.blockNumber, timestamp);
         }
 
@@ -779,7 +781,8 @@ export class DogechainRPCClient {
               from: tx.from || "0x0",
               to: tx.to || "0x0",
               value,
-              timestamp: Number(block.timestamp),
+              // CRITICAL FIX: Convert RPC timestamp (seconds) to milliseconds for JavaScript compatibility
+              timestamp: Number(block.timestamp) * 1000,
               blockNumber: block.number,
               tokenAddress: tokenAddress || "0x0",
             });
@@ -890,7 +893,8 @@ export class DogechainRPCClient {
               console.warn(`Unable to fetch block ${log.blockNumber}, skipping log`);
               continue;
             }
-            timestamp = Number(block.timestamp);
+            // CRITICAL FIX: Convert RPC timestamp (seconds) to milliseconds for JavaScript compatibility
+            timestamp = Number(block.timestamp) * 1000;
             blockCache.set(log.blockNumber, timestamp);
           } catch (error) {
             console.warn(`Error fetching block ${log.blockNumber}:`, error);

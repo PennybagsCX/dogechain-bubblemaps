@@ -2,79 +2,61 @@ import { defineConfig } from "vite";
 import path from "path";
 import fs from "fs";
 import { execSync } from "child_process";
-import https from "https";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
-async function getGitHubCommitCount(): Promise<number> {
-  const repo = process.env.GITHUB_REPOSITORY || "PennybagsCX/dogechain-bubblemaps";
-  const token = process.env.GITHUB_TOKEN;
-
-  return new Promise((resolve) => {
-    const options = {
-      hostname: "api.github.com",
-      path: `/repos/${repo}/commits?per_page=1`,
-      method: "HEAD",
-      headers: {
-        "User-Agent": "vite-build",
-        ...(token && { Authorization: `Bearer ${token}` }),
-      },
-    };
-
-    const req = https.request(options, (res) => {
-      // Get commit count from Link header
-      const linkHeader = res.headers["link"];
-      if (linkHeader) {
-        const match = linkHeader.match(/page=(\d+)>; rel="last"/);
-        if (match) {
-          resolve(parseInt(match[1], 10));
-          return;
-        }
-      }
-      // Fallback: try to get from etag or default
-      resolve(0);
-    });
-
-    req.on("error", () => resolve(0));
-    req.setTimeout(5000, () => {
-      req.destroy();
-      resolve(0);
-    });
-    req.end();
-  });
-}
-
-export default defineConfig(async ({ mode }) => {
-  const isProduction = mode === "production";
-
-  // Get build number from git commit count
+function getBuildNumber(): number {
   let buildNumber = 0;
 
   try {
+    // First, try to get from local git
     buildNumber = parseInt(execSync("git rev-list --count HEAD", { encoding: "utf-8" }).trim(), 10);
 
-    // If git returns a small number (shallow clone in CI/CD), use GitHub API
+    // If git returns a small number (< 50), it's likely a shallow clone (CI/CD)
     if (buildNumber < 50) {
       console.log(
         `[vite.config] Shallow clone detected (git count: ${buildNumber}), fetching from GitHub API...`
       );
-      const githubCount = await getGitHubCommitCount();
-      if (githubCount > 0) {
-        buildNumber = githubCount;
-        console.log(`[vite.config] Using GitHub API commit count: ${buildNumber}`);
-      } else {
+
+      try {
+        // Use curl to fetch commit count from GitHub API (synchronous)
+        const repo = process.env.GITHUB_REPOSITORY || "PennybagsCX/dogechain-bubblemaps";
+        const token = process.env.GITHUB_TOKEN;
+        const authHeader = token ? `-H "Authorization: Bearer ${token}"` : "";
+        const curlCmd = `curl -s -I ${authHeader} -H "User-Agent: vite-build" "https://api.github.com/repos/${repo}/commits?per_page=1"`;
+        const response = execSync(curlCmd, { encoding: "utf-8", timeout: 5000 });
+
+        // Parse Link header to get commit count
+        const linkMatch = response.match(/link:.*page=(\d+)>; rel="last"/i);
+        if (linkMatch && linkMatch[1]) {
+          buildNumber = parseInt(linkMatch[1], 10);
+          console.log(`[vite.config] Using GitHub API commit count: ${buildNumber}`);
+        } else {
+          throw new Error("Could not parse GitHub API response");
+        }
+      } catch (apiError) {
         // Last resort: use build-metadata.json
+        console.log(`[vite.config] GitHub API failed, using build-metadata.json`);
         const metadataPath = path.resolve(__dirname, "build-metadata.json");
         const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8"));
         buildNumber = metadata.buildNumber;
-        console.log(`[vite.config] GitHub API failed, using build-metadata.json: ${buildNumber}`);
       }
     } else {
       console.log(`[vite.config] Using local git commit count: ${buildNumber}`);
     }
   } catch (error) {
     console.warn("[vite.config] Could not get build number, defaulting to 0");
+    buildNumber = 0;
   }
+
+  return buildNumber;
+}
+
+// Get build number synchronously before defining config
+const buildNumber = getBuildNumber();
+
+export default defineConfig(({ mode }) => {
+  const isProduction = mode === "production";
 
   return {
     server: {
@@ -85,7 +67,7 @@ export default defineConfig(async ({ mode }) => {
         "/api": {
           target: "https://dogechain-bubblemaps-api.vercel.app",
           changeOrigin: true,
-          rewrite: (path) => path,
+          rewrite: (path: string) => path,
         },
       },
     },

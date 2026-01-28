@@ -48,7 +48,7 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
         throw new Error("Failed to fetch network stats");
       }
       const data = await response.json();
-      setStats(data);
+      setStats(data.stats || data);
       setError(null);
     } catch (err) {
       console.error("Error fetching network stats:", err);

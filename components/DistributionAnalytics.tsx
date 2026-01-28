@@ -72,7 +72,7 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
           throw new Error("Failed to fetch distribution analysis");
         }
         const data = await response.json();
-        setAnalysis(data);
+        setAnalysis(data.analysis || data);
         setError(null);
       } catch (err) {
         console.error("Error fetching distribution analysis:", err);

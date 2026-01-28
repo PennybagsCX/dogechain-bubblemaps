@@ -1875,34 +1875,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="flex flex-col gap-2">
-                              <div className="text-center">
-                                <Tooltip content="View transaction on Dogechain Explorer">
-                                  <a
-                                    href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-sm font-medium text-white hover:text-purple-400 transition-colors truncate inline-block"
-                                  >
-                                    {tx.value.toLocaleString()} {tx.tokenSymbol || "tokens"}
-                                  </a>
-                                </Tooltip>
-                              </div>
-                              {hasValidToken && (
-                                <div className="flex justify-center">
-                                  <button
-                                    onClick={() => toggleNotificationChart(txChartId)}
-                                    className="inline-flex items-center justify-center gap-2 text-xs font-medium bg-purple-500/10 text-purple-400 hover:text-purple-300 hover:bg-purple-500/20 transition-all px-3 py-1.5 rounded-lg border border-purple-500/30"
-                                    aria-expanded={expandedNotificationCharts.has(txChartId)}
-                                    aria-label={`Toggle ${tx.tokenSymbol || "token"} chart`}
-                                  >
-                                    <LineChart size={12} />
-                                    {expandedNotificationCharts.has(txChartId)
-                                      ? "Hide Chart"
-                                      : "View Chart"}
-                                  </button>
-                                </div>
-                              )}
+                            <div className="text-center">
+                              <Tooltip content="View transaction on Dogechain Explorer">
+                                <a
+                                  href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm font-medium text-white hover:text-purple-400 transition-colors truncate inline-block"
+                                >
+                                  {tx.value.toLocaleString()} {tx.tokenSymbol || "tokens"}
+                                </a>
+                              </Tooltip>
                             </div>
                             <p className="text-xs text-slate-500 mt-1">
                               {isIncoming ? "From" : "To"}:{" "}
@@ -1919,6 +1902,21 @@ export const Dashboard: React.FC<DashboardProps> = ({
                                 </a>
                               </Tooltip>
                             </p>
+                            {hasValidToken && (
+                              <div className="flex justify-center mt-2">
+                                <button
+                                  onClick={() => toggleNotificationChart(txChartId)}
+                                  className="inline-flex items-center justify-center gap-2 text-xs font-medium bg-purple-500/10 text-purple-400 hover:text-purple-300 hover:bg-purple-500/20 transition-all px-3 py-1.5 rounded-lg border border-purple-500/30"
+                                  aria-expanded={expandedNotificationCharts.has(txChartId)}
+                                  aria-label={`Toggle ${tx.tokenSymbol || "token"} chart`}
+                                >
+                                  <LineChart size={12} />
+                                  {expandedNotificationCharts.has(txChartId)
+                                    ? "Hide Chart"
+                                    : "View Chart"}
+                                </button>
+                              </div>
+                            )}
                             {/* Inline Chart for this transaction */}
                             {expandedNotificationCharts.has(txChartId) && hasValidToken && (
                               <div className="mt-2 -mx-2 sm:mx-0 animate-in slide-in-from-top-2 duration-200 w-full">

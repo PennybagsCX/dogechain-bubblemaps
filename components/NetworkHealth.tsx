@@ -1,0 +1,345 @@
+/**
+ * Network Health Dashboard Component
+ *
+ * Displays real-time Dogechain network metrics including:
+ * - Block time monitoring
+ * - Gas price trends
+ * - Transaction throughput (TPS)
+ * - Network congestion indicator
+ */
+
+import React, { useState, useEffect, useRef } from "react";
+import { Activity, Zap, Clock, TrendingUp } from "lucide-react";
+import * as d3 from "d3";
+
+interface NetworkStats {
+  currentBlockNumber: number;
+  blockTime: number;
+  averageBlockTime: number;
+  gasPrice: string;
+  tps: number;
+  congestion: "low" | "medium" | "high";
+}
+
+interface BlockData {
+  number: number;
+  timestamp: number;
+  gasUsed: number;
+  gasLimit: number;
+  txCount: number;
+}
+
+interface NetworkHealthProps {
+  className?: string;
+}
+
+export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) => {
+  const [stats, setStats] = useState<NetworkStats | null>(null);
+  const [blockHistory, setBlockHistory] = useState<BlockData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const pollingRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Fetch network stats
+  const fetchNetworkStats = async () => {
+    try {
+      const response = await fetch("/api/network-health");
+      if (!response.ok) {
+        throw new Error("Failed to fetch network stats");
+      }
+      const data = await response.json();
+      setStats(data);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching network stats:", err);
+      setError("Failed to load network data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch historical block data
+  const fetchBlockHistory = async () => {
+    try {
+      const response = await fetch("/api/network-health?history=100");
+      if (!response.ok) {
+        throw new Error("Failed to fetch block history");
+      }
+      const data = await response.json();
+      setBlockHistory(data.history || []);
+    } catch (err) {
+      console.error("Error fetching block history:", err);
+    }
+  };
+
+  // Initial fetch and polling
+  useEffect(() => {
+    fetchNetworkStats();
+    fetchBlockHistory();
+
+    // Poll every 10 seconds
+    pollingRef.current = setInterval(() => {
+      fetchNetworkStats();
+      fetchBlockHistory();
+    }, 10000);
+
+    return () => {
+      if (pollingRef.current) {
+        clearInterval(pollingRef.current);
+      }
+    };
+  }, []);
+
+  // D3.js line chart for block time history
+  const blockTimeChartRef = useRef<SVGSVGElement | null>(null);
+
+  useEffect(() => {
+    if (!blockTimeChartRef.current || blockHistory.length === 0) return;
+
+    const svg = d3.select(blockTimeChartRef.current);
+    svg.selectAll("*").remove();
+
+    const width = blockTimeChartRef.current.clientWidth;
+    const height = 200;
+    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+
+    // Create scales
+    const x = d3
+      .scaleLinear()
+      .domain(d3.extent(blockHistory, (d) => d.number) as [number, number])
+      .range([margin.left, width - margin.right]);
+
+    const y = d3
+      .scaleLinear()
+      .domain([
+        0,
+        d3.max(blockHistory, (d) => {
+          const prevBlock = blockHistory.find((b) => b.number === d.number - 1);
+          if (!prevBlock) return 5000;
+          const blockTime = d.timestamp - prevBlock.timestamp;
+          return typeof blockTime === "number" ? blockTime : 5000;
+        }) || 5000,
+      ])
+      .range([height - margin.bottom, margin.top]);
+
+    // Create line generator
+    const line = d3
+      .line<BlockData>()
+      .x((d) => x(d.number))
+      .y((d) => {
+        const prevBlock = blockHistory.find((b) => b.number === d.number - 1);
+        if (!prevBlock) return y(2500);
+        return y(d.timestamp - prevBlock.timestamp);
+      })
+      .curve(d3.curveMonotoneX);
+
+    // Add X axis
+    svg
+      .append("g")
+      .attr("transform", `translate(0,${height - margin.bottom})`)
+      .call(
+        d3
+          .axisBottom(x)
+          .ticks(5)
+          .tickFormat((d) => `#${d}`)
+      );
+
+    // Add Y axis
+    svg
+      .append("g")
+      .attr("transform", `translate(${margin.left},0)`)
+      .call(d3.axisLeft(y).tickFormat((d) => `${(Number(d) / 1000).toFixed(0)}s`));
+
+    // Add the line
+    svg
+      .append("path")
+      .datum(blockHistory)
+      .attr("fill", "none")
+      .attr("stroke", "#8b5cf6")
+      .attr("stroke-width", 2)
+      .attr("d", line);
+  }, [blockHistory]);
+
+  // Congestion badge color
+  const getCongestionColor = (congestion: string) => {
+    switch (congestion) {
+      case "low":
+        return "bg-green-500/20 text-green-400 border-green-500/30";
+      case "medium":
+        return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
+      case "high":
+        return "bg-red-500/20 text-red-400 border-red-500/30";
+      default:
+        return "bg-slate-500/20 text-slate-400 border-slate-500/30";
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className={`space-y-6 ${className}`}>
+        <div className="animate-pulse space-y-4">
+          <div className="h-8 bg-space-700 rounded w-1/3"></div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-32 bg-space-700 rounded"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !stats) {
+    return (
+      <div className={`p-6 ${className}`}>
+        <div className="text-center text-slate-400">
+          <Activity className="w-12 h-12 mx-auto mb-4 opacity-50" />
+          <p>{error || "Unable to load network health data"}</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`space-y-6 ${className}`}>
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-white">Network Health</h2>
+          <p className="text-slate-400">Real-time Dogechain metrics</p>
+        </div>
+        <div className={`px-4 py-2 rounded-lg border ${getCongestionColor(stats.congestion)}`}>
+          <span className="font-medium capitalize">{stats.congestion}</span> Congestion
+        </div>
+      </div>
+
+      {/* Key Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Current Block */}
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-slate-400 text-sm">Current Block</span>
+            <Clock className="w-4 h-4 text-purple-500" />
+          </div>
+          <div className="text-3xl font-bold text-white">
+            #{stats.currentBlockNumber.toLocaleString()}
+          </div>
+          <div className="text-xs text-slate-500 mt-1">Target: ~2.5s block time</div>
+        </div>
+
+        {/* Block Time */}
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-slate-400 text-sm">Block Time</span>
+            <Clock className="w-4 h-4 text-blue-500" />
+          </div>
+          <div className="text-3xl font-bold text-white">
+            {(stats.blockTime / 1000).toFixed(2)}s
+          </div>
+          <div className="text-xs text-slate-500 mt-1">
+            Avg: {(stats.averageBlockTime / 1000).toFixed(2)}s
+          </div>
+        </div>
+
+        {/* Gas Price */}
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-slate-400 text-sm">Gas Price</span>
+            <Zap className="w-4 h-4 text-yellow-500" />
+          </div>
+          <div className="text-3xl font-bold text-white">
+            {(Number(stats.gasPrice) / 1e9).toFixed(2)} Gwei
+          </div>
+          <div className="text-xs text-slate-500 mt-1">
+            {stats.congestion === "low" && "Low gas fees"}
+            {stats.congestion === "medium" && "Moderate fees"}
+            {stats.congestion === "high" && "High fees"}
+          </div>
+        </div>
+
+        {/* TPS */}
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-slate-400 text-sm">Throughput</span>
+            <TrendingUp className="w-4 h-4 text-green-500" />
+          </div>
+          <div className="text-3xl font-bold text-white">{stats.tps.toFixed(1)} TPS</div>
+          <div className="text-xs text-slate-500 mt-1">Transactions per second</div>
+        </div>
+      </div>
+
+      {/* Block Time Chart */}
+      <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+        <h3 className="text-lg font-semibold text-white mb-4">Block Time Distribution</h3>
+        <p className="text-sm text-slate-400 mb-4">Last {blockHistory.length} blocks</p>
+        <svg ref={blockTimeChartRef} className="w-full" style={{ height: 200 }} />
+      </div>
+
+      {/* Network Status */}
+      <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+        <h3 className="text-lg font-semibold text-white mb-4">Network Status</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="flex items-center gap-3">
+            <div
+              className={`w-3 h-3 rounded-full ${
+                stats.blockTime < 3000
+                  ? "bg-green-500"
+                  : stats.blockTime < 5000
+                    ? "bg-yellow-500"
+                    : "bg-red-500"
+              }`}
+            />
+            <div>
+              <div className="text-white font-medium">Block Production</div>
+              <div className="text-sm text-slate-400">
+                {stats.blockTime < 3000
+                  ? "Healthy"
+                  : stats.blockTime < 5000
+                    ? "Slower than usual"
+                    : "Slow"}
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div
+              className={`w-3 h-3 rounded-full ${
+                Number(stats.gasPrice) < 5e9
+                  ? "bg-green-500"
+                  : Number(stats.gasPrice) < 20e9
+                    ? "bg-yellow-500"
+                    : "bg-red-500"
+              }`}
+            />
+            <div>
+              <div className="text-white font-medium">Gas Fees</div>
+              <div className="text-sm text-slate-400">
+                {Number(stats.gasPrice) < 5e9
+                  ? "Low"
+                  : Number(stats.gasPrice) < 20e9
+                    ? "Moderate"
+                    : "High"}
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div
+              className={`w-3 h-3 rounded-full ${
+                stats.tps > 5 ? "bg-green-500" : stats.tps > 2 ? "bg-yellow-500" : "bg-red-500"
+              }`}
+            />
+            <div>
+              <div className="text-white font-medium">Transaction Volume</div>
+              <div className="text-sm text-slate-400">
+                {stats.tps > 5
+                  ? "High activity"
+                  : stats.tps > 2
+                    ? "Normal activity"
+                    : "Low activity"}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

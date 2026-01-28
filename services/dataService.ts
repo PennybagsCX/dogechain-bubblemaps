@@ -1966,3 +1966,51 @@ export const findInteractions = async (
     return [];
   }
 };
+
+/**
+ * Fetch distribution analysis for a token
+ * Returns Gini coefficient, concentration bands, and distribution buckets
+ */
+export const fetchDistributionAnalysis = async (
+  token: Token
+): Promise<DistributionAnalysis | null> => {
+  try {
+    // Fetch token holders
+    const { wallets } = await fetchTokenHolders(token);
+
+    if (wallets.length === 0) {
+      return null;
+    }
+
+    // Import calculation utilities
+    const { calculateDistributionAnalysis } = await import("../utils/distributionCalculations");
+
+    // Calculate distribution metrics
+    return calculateDistributionAnalysis(wallets);
+  } catch (error) {
+    console.error(`[fetchDistributionAnalysis] Error for ${token.address}:`, error);
+    return null;
+  }
+};
+
+/**
+ * Distribution analysis interface
+ */
+export interface DistributionAnalysis {
+  giniCoefficient: number;
+  concentrationBands: {
+    top1Pct: number;
+    top5Pct: number;
+    top10Pct: number;
+    top25Pct: number;
+  };
+  totalHolders: number;
+  isCentralized: boolean;
+  distributionBuckets: Array<{
+    label: string;
+    minPct: number;
+    maxPct: number;
+    count: number;
+    percentage: number;
+  }>;
+}

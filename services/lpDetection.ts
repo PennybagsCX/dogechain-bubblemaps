@@ -215,3 +215,152 @@ export async function initializeLPDetection(
  * Set to false to disable LP pool detection
  */
 export const LP_DETECTION_ENABLED = true;
+
+/**
+ * Pool statistics for DEX analytics
+ */
+export interface PoolStats {
+  address: string;
+  token0: { address: string; symbol: string };
+  token1: { address: string; symbol: string };
+  factory: string; // DogeSwap, QuickSwap, etc.
+  reserve0: string;
+  reserve1: string;
+  tvlUsd: number;
+  lpTokenSupply: string;
+  createdAt: number;
+  pairAge: number; // seconds since creation
+}
+
+/**
+ * Factory statistics
+ */
+export interface FactoryStats {
+  name: string;
+  poolCount: number;
+  totalTVL: number;
+}
+
+/**
+ * Get all pools with statistics
+ * Returns cached LP pairs with additional metadata
+ */
+export async function getAllPools(): Promise<PoolStats[]> {
+  try {
+    const pairs = await loadAllLPPairs();
+
+    // Map DbLPPair to PoolStats with default values
+    // TVL calculation requires separate price data fetching
+    return pairs.map((pair) => {
+      const pairAge = Date.now() - pair.discoveredAt;
+
+      return {
+        address: pair.pairAddress,
+        token0: {
+          address: pair.token0Address,
+          symbol: "TOKEN0", // Will be fetched from metadata
+        },
+        token1: {
+          address: pair.token1Address,
+          symbol: "TOKEN1", // Will be fetched from metadata
+        },
+        factory: pair.dexName,
+        reserve0: "0",
+        reserve1: "0",
+        tvlUsd: 0,
+        lpTokenSupply: "0",
+        createdAt: pair.discoveredAt,
+        pairAge,
+      };
+    });
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Get top pools by TVL (placeholder for now)
+ * Real implementation requires price fetching and reserve queries
+ */
+export async function getTopPoolsByTVL(limit: number = 20): Promise<PoolStats[]> {
+  try {
+    const allPools = await getAllPools();
+
+    // Sort by creation date as proxy for TVL (older pools likely have more liquidity)
+    // Real implementation would fetch actual reserves and calculate TVL
+    return allPools.sort((a, b) => a.pairAge - b.pairAge).slice(0, limit);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Get new pools created within the specified time period
+ * @param since Time in milliseconds ago
+ */
+export async function getNewPools(since: number): Promise<PoolStats[]> {
+  try {
+    const pairs = await loadAllLPPairs();
+    const cutoffTime = Date.now() - since;
+
+    const newPairs = pairs.filter((pair) => pair.discoveredAt >= cutoffTime);
+
+    return newPairs.map((pair) => {
+      const pairAge = Date.now() - pair.discoveredAt;
+
+      return {
+        address: pair.pairAddress,
+        token0: {
+          address: pair.token0Address,
+          symbol: "TOKEN0",
+        },
+        token1: {
+          address: pair.token1Address,
+          symbol: "TOKEN1",
+        },
+        factory: pair.dexName,
+        reserve0: "0",
+        reserve1: "0",
+        tvlUsd: 0,
+        lpTokenSupply: "0",
+        createdAt: pair.discoveredAt,
+        pairAge,
+      };
+    });
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Get factory distribution statistics
+ * Shows how many pools each DEX factory has
+ */
+export async function getFactoryDistribution(): Promise<FactoryStats[]> {
+  try {
+    const pairs = await loadAllLPPairs();
+
+    // Group by factory (DexName)
+    const factoryMap = new Map<string, { count: number; totalAge: number }>();
+
+    for (const pair of pairs) {
+      const existing = factoryMap.get(pair.dexName);
+      if (existing) {
+        existing.count++;
+      } else {
+        factoryMap.set(pair.dexName, { count: 1, totalAge: 0 });
+      }
+    }
+
+    // Convert to FactoryStats array
+    return Array.from(factoryMap.entries())
+      .map(([name, data]) => ({
+        name,
+        poolCount: data.count,
+        totalTVL: 0, // Requires price data
+      }))
+      .sort((a, b) => b.poolCount - a.poolCount);
+  } catch {
+    return [];
+  }
+}

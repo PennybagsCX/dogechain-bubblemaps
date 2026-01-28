@@ -72,6 +72,9 @@ export enum ViewState {
   HOME = "HOME",
   ANALYSIS = "ANALYSIS",
   DASHBOARD = "DASHBOARD",
+  NETWORK_HEALTH = "NETWORK_HEALTH",
+  DISTRIBUTION = "DISTRIBUTION",
+  DEX_ANALYTICS = "DEX_ANALYTICS",
 }
 
 export interface AlertConfig {

@@ -33,7 +33,7 @@ export const config = getDefaultConfig({
   appName: "Dogechain BubbleMaps",
   // WalletConnect project ID - uses anonymous project if not provided
   projectId:
-    process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ||
+    (typeof process !== "undefined" && process.env?.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID) ||
     "8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d",
   chains: [dogechain],
   ssr: true, // Enable for better compatibility

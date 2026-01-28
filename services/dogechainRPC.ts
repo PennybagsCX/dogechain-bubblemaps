@@ -145,24 +145,35 @@ interface DogechainRPCConfig {
 
 // Get configuration from environment variables or use optimized defaults
 const getRPCConfig = (): DogechainRPCConfig => {
-  // TEMPORARY: Disable console suppression to debug alert issues
-  // const isProduction = process.env.NODE_ENV === "production";
+  // Check if running in browser or Node environment
+  const isBrowser = typeof window !== "undefined";
+
+  // In browser, Vite provides env vars via import.meta.env
+  // For backwards compatibility, check process.env too
+  const getEnv = (key: string, defaultValue: string): string => {
+    if (isBrowser) {
+      // Vite environment variables must be prefixed with VITE_ and accessed via import.meta.env
+      // For now, use defaults since we don't have VITE_ prefixed vars
+      return defaultValue;
+    }
+    return (typeof process !== "undefined" && process.env?.[key]) || defaultValue;
+  };
 
   return {
     // Timeout for individual RPC requests
-    timeout: parseInt(process.env.DOGECHAIN_RPC_TIMEOUT || "8000", 10),
+    timeout: parseInt(getEnv("DOGECHAIN_RPC_TIMEOUT", "8000"), 10),
 
     // Retries per provider
-    retryCount: parseInt(process.env.DOGECHAIN_RPC_RETRY_COUNT || "3", 10),
+    retryCount: parseInt(getEnv("DOGECHAIN_RPC_RETRY_COUNT", "3"), 10),
 
     // Max retries before giving up
-    maxRetries: parseInt(process.env.DOGECHAIN_RPC_MAX_RETRIES || "2", 10),
+    maxRetries: parseInt(getEnv("DOGECHAIN_RPC_MAX_RETRIES", "2"), 10),
 
     // Concurrent requests
-    concurrencyLimit: parseInt(process.env.DOGECHAIN_RPC_CONCURRENCY_LIMIT || "10", 10),
+    concurrencyLimit: parseInt(getEnv("DOGECHAIN_RPC_CONCURRENCY_LIMIT", "10"), 10),
 
     // Blocks per batch (for old block-fetching method)
-    batchSize: BigInt(process.env.DOGECHAIN_RPC_BATCH_SIZE || "50"),
+    batchSize: BigInt(getEnv("DOGECHAIN_RPC_BATCH_SIZE", "50")),
 
     // Enable console log suppression for cleaner production output
     suppressConsoleLogs: true,
@@ -1279,4 +1290,109 @@ export class DogechainRPCClient {
   getRPCEndpoints(): string[] {
     return [...RPC_ENDPOINTS];
   }
+
+  /**
+   * Get current network statistics including block time, gas price, and TPS
+   */
+  async getNetworkStats(): Promise<NetworkStats> {
+    return this.executeWithRetry(async (client) => {
+      const [latestBlock, blockNumber] = await Promise.all([
+        client.getBlock({ includeTransactions: true }),
+        client.getBlockNumber(),
+      ]);
+
+      if (!latestBlock || !blockNumber) {
+        throw new Error("Unable to fetch network stats");
+      }
+
+      // Get previous block for block time calculation
+      const prevBlock = await client.getBlock({
+        blockNumber: blockNumber - 1n,
+        includeTransactions: false,
+      });
+
+      const blockTime = prevBlock
+        ? Number(latestBlock.timestamp - prevBlock.timestamp) * 1000 // Convert to ms
+        : 2500; // Default 2.5s
+
+      // Get gas price
+      const gasPrice = await client.getGasPrice().catch(() => BigInt(1000000000)); // Default 1 gwei
+
+      // Calculate TPS (transactions per second)
+      const txCount = latestBlock.transactions?.length || 0;
+      const tps = blockTime > 0 ? (txCount * 1000) / blockTime : 0;
+
+      // Determine congestion level based on gas utilization
+      const gasUsed = latestBlock.gasUsed ? Number(latestBlock.gasUsed) : 0;
+      const gasLimit = latestBlock.gasLimit ? Number(latestBlock.gasLimit) : 0;
+      const utilization = gasLimit > 0 ? gasUsed / gasLimit : 0;
+
+      let congestion: "low" | "medium" | "high";
+      if (utilization < 0.5) {
+        congestion = "low";
+      } else if (utilization < 0.8) {
+        congestion = "medium";
+      } else {
+        congestion = "high";
+      }
+
+      return {
+        currentBlockNumber: Number(blockNumber),
+        blockTime,
+        averageBlockTime: blockTime, // Will be calculated from historical data
+        gasPrice: gasPrice.toString(),
+        tps,
+        congestion,
+      };
+    });
+  }
+
+  /**
+   * Get historical block data for trend analysis
+   * @param count Number of blocks to fetch (max 500)
+   */
+  async getHistoricalBlockData(count: number): Promise<BlockData[]> {
+    const maxCount = Math.min(count, 500);
+    const latest = await this.getLatestBlockNumber();
+    const startBlock = Number(latest) - maxCount + 1;
+
+    if (startBlock < 0) {
+      throw new Error("Cannot fetch blocks before genesis");
+    }
+
+    const blocks = await this.fetchBlockRange(BigInt(startBlock), latest, {
+      includeTransactions: false,
+    });
+
+    return blocks.map((block) => ({
+      number: Number(block.number),
+      timestamp: Number(block.timestamp) * 1000, // Convert to ms
+      gasUsed: Number(block.gasUsed),
+      gasLimit: Number(block.gasLimit),
+      txCount: block.transactions?.length || 0,
+    }));
+  }
+}
+
+/**
+ * Network statistics interface
+ */
+export interface NetworkStats {
+  currentBlockNumber: number;
+  blockTime: number; // ms since last block
+  averageBlockTime: number; // moving average
+  gasPrice: string; // current gas price in wei
+  tps: number; // transactions per second
+  congestion: "low" | "medium" | "high";
+}
+
+/**
+ * Historical block data for charts
+ */
+export interface BlockData {
+  number: number;
+  timestamp: number;
+  gasUsed: number;
+  gasLimit: number;
+  txCount: number;
 }

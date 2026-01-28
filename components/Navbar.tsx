@@ -3,7 +3,7 @@ import { ViewState } from "../types";
 import { useClickOutside } from "../hooks/useClickOutside";
 import { handleTouchStopPropagation } from "../utils/touchHandlers";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { LayoutDashboard, Map, Search, Menu, X } from "lucide-react";
+import { LayoutDashboard, Map, Search, Menu, X, Activity, Building2 } from "lucide-react";
 
 interface NavbarProps {
   currentView: ViewState;
@@ -75,7 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </span>
           </div>
 
-          {/* Desktop Menu */}
+          {/* Desktop Menu - Responsive layout */}
           <div className="hidden md:flex items-center gap-2">
             <button
               onTouchStart={handleTouchStopPropagation}
@@ -102,6 +102,28 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <LayoutDashboard size={18} />
               <span>Dashboard</span>
+            </button>
+
+            {/* Network Health - Icon only on tablet, full on desktop */}
+            <button
+              onTouchStart={handleTouchStopPropagation}
+              onClick={() => handleMobileNav(ViewState.NETWORK_HEALTH)}
+              className={navClass(ViewState.NETWORK_HEALTH)}
+              title="Network Health"
+            >
+              <Activity size={18} />
+              <span className="hidden lg:inline">Network</span>
+            </button>
+
+            {/* DEX Analytics - Icon only on tablet, full on desktop */}
+            <button
+              onTouchStart={handleTouchStopPropagation}
+              onClick={() => handleMobileNav(ViewState.DEX_ANALYTICS)}
+              className={navClass(ViewState.DEX_ANALYTICS)}
+              title="DEX Analytics"
+            >
+              <Building2 size={18} />
+              <span className="hidden lg:inline">DEX</span>
             </button>
           </div>
 
@@ -223,6 +245,20 @@ export const Navbar: React.FC<NavbarProps> = ({
               className={mobileNavClass(ViewState.DASHBOARD)}
             >
               <LayoutDashboard size={20} /> Dashboard
+            </button>
+            <button
+              onTouchStart={handleTouchStopPropagation}
+              onClick={() => handleMobileNav(ViewState.NETWORK_HEALTH)}
+              className={mobileNavClass(ViewState.NETWORK_HEALTH)}
+            >
+              <Activity size={20} /> Network Health
+            </button>
+            <button
+              onTouchStart={handleTouchStopPropagation}
+              onClick={() => handleMobileNav(ViewState.DEX_ANALYTICS)}
+              className={mobileNavClass(ViewState.DEX_ANALYTICS)}
+            >
+              <Building2 size={20} /> DEX Analytics
             </button>
           </div>
         )}

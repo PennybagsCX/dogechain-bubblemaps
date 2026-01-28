@@ -21,6 +21,9 @@ import { BubbleVisualizationGuide } from "./components/BubbleVisualizationGuide"
 import { TokenInfoPanelGuide } from "./components/TokenInfoPanelGuide";
 import { WalletDetailsGuide } from "./components/WalletDetailsGuide";
 import { DashboardGuide } from "./components/DashboardGuide";
+import { NetworkHealth } from "./components/NetworkHealth";
+import { DistributionAnalytics } from "./components/DistributionAnalytics";
+import { DexAnalytics } from "./components/DexAnalytics";
 import { useStatsCounters } from "./hooks/useStatsCounters";
 import { useOnboarding } from "./hooks/useOnboarding";
 import { useBubbleVisualizationGuide } from "./hooks/useBubbleVisualizationGuide";
@@ -909,6 +912,12 @@ const App: React.FC = () => {
     else if (view === ViewState.DASHBOARD) document.title = "My Dashboard | Dogechain BubbleMaps";
     else if (view === ViewState.ANALYSIS && token)
       document.title = `Analysis: ${token.symbol} | Dogechain BubbleMaps`;
+    else if (view === ViewState.NETWORK_HEALTH)
+      document.title = "Network Health | Dogechain BubbleMaps";
+    else if (view === ViewState.DISTRIBUTION)
+      document.title = "Distribution Analytics | Dogechain BubbleMaps";
+    else if (view === ViewState.DEX_ANALYTICS)
+      document.title = "DEX Analytics | Dogechain BubbleMaps";
   }, [view, token]);
 
   // --- MAP ANALYSIS GUIDE TRIGGERS ---
@@ -1492,6 +1501,9 @@ const App: React.FC = () => {
       const v = currentParams.get("view");
       if (v === "dashboard") setView(ViewState.DASHBOARD);
       else if (v === "analysis") setView(ViewState.ANALYSIS);
+      else if (v === "network-health") setView(ViewState.NETWORK_HEALTH);
+      else if (v === "distribution") setView(ViewState.DISTRIBUTION);
+      else if (v === "dex-analytics") setView(ViewState.DEX_ANALYTICS);
       else setView(ViewState.HOME);
     };
 
@@ -2956,6 +2968,42 @@ const App: React.FC = () => {
                 onAlertTriggered={handleAlertTriggered}
               />
             )}
+            <div className="mt-auto">
+              <Footer onOpenGuide={openOnboarding} />
+            </div>
+          </div>
+        )}
+
+        {/* NETWORK HEALTH VIEW */}
+        {view === ViewState.NETWORK_HEALTH && (
+          <div className="flex flex-col min-h-full">
+            <div className="flex-1 p-6">
+              <NetworkHealth />
+            </div>
+            <div className="mt-auto">
+              <Footer onOpenGuide={openOnboarding} />
+            </div>
+          </div>
+        )}
+
+        {/* DISTRIBUTION ANALYTICS VIEW */}
+        {view === ViewState.DISTRIBUTION && (
+          <div className="flex flex-col min-h-full">
+            <div className="flex-1 p-6">
+              <DistributionAnalytics token={token} />
+            </div>
+            <div className="mt-auto">
+              <Footer onOpenGuide={openOnboarding} />
+            </div>
+          </div>
+        )}
+
+        {/* DEX ANALYTICS VIEW */}
+        {view === ViewState.DEX_ANALYTICS && (
+          <div className="flex flex-col min-h-full">
+            <div className="flex-1 p-6">
+              <DexAnalytics />
+            </div>
             <div className="mt-auto">
               <Footer onOpenGuide={openOnboarding} />
             </div>

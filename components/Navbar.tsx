@@ -80,7 +80,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const isDashboardsActive =
     currentView === ViewState.NETWORK_HEALTH ||
     currentView === ViewState.DEX_ANALYTICS ||
-    currentView === ViewState.ALERTS;
+    currentView === ViewState.DASHBOARD;
 
   return (
     <>
@@ -181,6 +181,21 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <button
                     onTouchStart={handleTouchStopPropagation}
                     onClick={() => {
+                      onChangeView(ViewState.DASHBOARD);
+                      setDashboardsDropdownOpen(false);
+                    }}
+                    className={`w-full flex items-center gap-3 px-4 py-2 text-left transition-colors ${
+                      currentView === ViewState.DASHBOARD
+                        ? "bg-purple-600 text-white"
+                        : "text-slate-300 hover:bg-space-700 hover:text-white"
+                    }`}
+                  >
+                    <Bell size={16} />
+                    <span>Alerts</span>
+                  </button>
+                  <button
+                    onTouchStart={handleTouchStopPropagation}
+                    onClick={() => {
                       onChangeView(ViewState.NETWORK_HEALTH);
                       setDashboardsDropdownOpen(false);
                     }}
@@ -207,21 +222,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                   >
                     <Building2 size={16} />
                     <span>DEX Analytics</span>
-                  </button>
-                  <button
-                    onTouchStart={handleTouchStopPropagation}
-                    onClick={() => {
-                      onChangeView(ViewState.ALERTS);
-                      setDashboardsDropdownOpen(false);
-                    }}
-                    className={`w-full flex items-center gap-3 px-4 py-2 text-left transition-colors ${
-                      currentView === ViewState.ALERTS
-                        ? "bg-purple-600 text-white"
-                        : "text-slate-300 hover:bg-space-700 hover:text-white"
-                    }`}
-                  >
-                    <Bell size={16} />
-                    <span>Alerts</span>
                   </button>
                 </div>
               )}
@@ -363,6 +363,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
               <button
                 onTouchStart={handleTouchStopPropagation}
+                onClick={() => handleMobileNav(ViewState.DASHBOARD)}
+                className={mobileNavClass(currentView === ViewState.DASHBOARD)}
+              >
+                <Bell size={20} /> Alerts
+              </button>
+              <button
+                onTouchStart={handleTouchStopPropagation}
                 onClick={() => handleMobileNav(ViewState.NETWORK_HEALTH)}
                 className={mobileNavClass(currentView === ViewState.NETWORK_HEALTH)}
               >
@@ -374,13 +381,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className={mobileNavClass(currentView === ViewState.DEX_ANALYTICS)}
               >
                 <Building2 size={20} /> DEX Analytics
-              </button>
-              <button
-                onTouchStart={handleTouchStopPropagation}
-                onClick={() => handleMobileNav(ViewState.ALERTS)}
-                className={mobileNavClass(currentView === ViewState.ALERTS)}
-              >
-                <Bell size={20} /> Alerts
               </button>
             </div>
           </div>

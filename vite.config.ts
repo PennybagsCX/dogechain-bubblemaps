@@ -1,17 +1,39 @@
 import { defineConfig } from "vite";
 import path from "path";
+import { fileURLToPath } from "url";
 import fs from "fs";
 import { execSync } from "child_process";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
+// Get __dirname equivalent in ES modules
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 function getBuildNumber(): number {
   // In CI/CD (Vercel), git may not be available, so try build-metadata.json first
   try {
-    const metadataPath = path.resolve(__dirname, "build-metadata.json");
-    const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8"));
-    console.log(`[vite.config] Using build-metadata.json: ${metadata.buildNumber}`);
-    return metadata.buildNumber;
+    // Try multiple possible paths for build-metadata.json
+    const possiblePaths = [
+      path.resolve(process.cwd(), "build-metadata.json"),
+      path.resolve(__dirname, "build-metadata.json"),
+      path.resolve(__dirname, "../../build-metadata.json"),
+    ];
+
+    for (const metadataPath of possiblePaths) {
+      try {
+        if (fs.existsSync(metadataPath)) {
+          const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8"));
+          console.log(
+            `[vite.config] Using build-metadata.json: ${metadata.buildNumber} from ${metadataPath}`
+          );
+          return metadata.buildNumber;
+        }
+      } catch {
+        // Try next path
+        continue;
+      }
+    }
+    console.log(`[vite.config] build-metadata.json not found in any location, trying git...`);
   } catch (metadataError) {
     console.log(`[vite.config] build-metadata.json not available, trying git...`);
   }
@@ -19,7 +41,10 @@ function getBuildNumber(): number {
   // Fallback to git for local development
   try {
     const buildNumber = parseInt(
-      execSync("git rev-list --count HEAD", { encoding: "utf-8" }).trim(),
+      execSync("git rev-list --count HEAD", {
+        encoding: "utf-8",
+        stdio: ["pipe", "pipe", "ignore"],
+      }).trim(),
       10
     );
     console.log(`[vite.config] Using git commit count: ${buildNumber}`);

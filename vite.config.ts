@@ -9,38 +9,19 @@ function getBuildNumber(): number {
   let buildNumber = 0;
 
   try {
-    // First, try to get from local git
+    // Try local git first (works in development)
     buildNumber = parseInt(execSync("git rev-list --count HEAD", { encoding: "utf-8" }).trim(), 10);
 
-    // If git returns a small number (< 50), it's likely a shallow clone (CI/CD)
-    if (buildNumber < 50) {
+    // If git returns a small number (< 100), it's likely a shallow clone (CI/CD like Vercel)
+    // In this case, use the build-metadata.json which is maintained by the pre-commit hook
+    if (buildNumber < 100) {
       console.log(
-        `[vite.config] Shallow clone detected (git count: ${buildNumber}), fetching from GitHub API...`
+        `[vite.config] Shallow clone detected (git count: ${buildNumber}), using build-metadata.json`
       );
-
-      try {
-        // Use curl to fetch commit count from GitHub API (synchronous)
-        const repo = process.env.GITHUB_REPOSITORY || "PennybagsCX/dogechain-bubblemaps";
-        const token = process.env.GITHUB_TOKEN;
-        const authHeader = token ? `-H "Authorization: Bearer ${token}"` : "";
-        const curlCmd = `curl -s -I ${authHeader} -H "User-Agent: vite-build" "https://api.github.com/repos/${repo}/commits?per_page=1"`;
-        const response = execSync(curlCmd, { encoding: "utf-8", timeout: 5000 });
-
-        // Parse Link header to get commit count (format: Link: <url>; rel="last", <url>; rel="next")
-        const linkMatch = response.match(/page=(\d+)>; rel="last"/i);
-        if (linkMatch && linkMatch[1]) {
-          buildNumber = parseInt(linkMatch[1], 10);
-          console.log(`[vite.config] Using GitHub API commit count: ${buildNumber}`);
-        } else {
-          throw new Error("Could not parse GitHub API response");
-        }
-      } catch (apiError) {
-        // Last resort: use build-metadata.json
-        console.log(`[vite.config] GitHub API failed, using build-metadata.json`);
-        const metadataPath = path.resolve(__dirname, "build-metadata.json");
-        const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8"));
-        buildNumber = metadata.buildNumber;
-      }
+      const metadataPath = path.resolve(__dirname, "build-metadata.json");
+      const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8"));
+      buildNumber = metadata.buildNumber;
+      console.log(`[vite.config] Using build-metadata.json: ${buildNumber}`);
     } else {
       console.log(`[vite.config] Using local git commit count: ${buildNumber}`);
     }

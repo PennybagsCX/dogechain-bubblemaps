@@ -26,8 +26,8 @@ function getBuildNumber(): number {
         const curlCmd = `curl -s -I ${authHeader} -H "User-Agent: vite-build" "https://api.github.com/repos/${repo}/commits?per_page=1"`;
         const response = execSync(curlCmd, { encoding: "utf-8", timeout: 5000 });
 
-        // Parse Link header to get commit count
-        const linkMatch = response.match(/link:.*page=(\d+)>; rel="last"/i);
+        // Parse Link header to get commit count (format: Link: <url>; rel="last", <url>; rel="next")
+        const linkMatch = response.match(/page=(\d+)>; rel="last"/i);
         if (linkMatch && linkMatch[1]) {
           buildNumber = parseInt(linkMatch[1], 10);
           console.log(`[vite.config] Using GitHub API commit count: ${buildNumber}`);

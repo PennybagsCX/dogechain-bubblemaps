@@ -1540,6 +1540,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
           className="mb-6 space-y-3"
           aria-label={`New notifications: ${inAppNotifications.length} alert${inAppNotifications.length === 1 ? "" : "s"}`}
         >
+          {/* Clear All button - top */}
+          <button
+            onClick={() => {
+              setInAppNotifications([]);
+              clearNotificationsFromStorage(statuses, onUpdateStatuses, enterGracePeriod);
+            }}
+            className="w-full py-2 text-xs font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all px-4 py-2.5 rounded-lg border border-red-500/20 flex items-center justify-center gap-2"
+          >
+            <Trash2 size={14} />
+            Clear All Notifications
+          </button>
           {inAppNotifications.map((notif) => {
             const isIncoming =
               notif.transaction &&
@@ -1677,10 +1688,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
                           {/* Dexscreener Chart Section - Only show if valid token address */}
                           {notif.transaction.tokenAddress &&
                             /^0x[a-fA-F0-9]{40}$/.test(notif.transaction.tokenAddress) && (
-                              <div className="mt-3 pt-3 border-t border-black/20">
+                              <div className="mt-3 pt-3 border-t border-black/20 flex justify-center">
                                 <button
                                   onClick={() => toggleNotificationChart(notif.id)}
-                                  className="flex items-center gap-2 text-sm text-purple-400 hover:text-purple-300 transition-colors px-2 py-1 rounded hover:bg-purple-500/10 w-fit"
+                                  className="inline-flex items-center justify-center gap-2 text-sm font-medium bg-purple-500/10 text-purple-400 hover:text-purple-300 hover:bg-purple-500/20 transition-all px-4 py-2 rounded-lg border border-purple-500/30"
                                   aria-expanded={expandedNotificationCharts.has(notif.id)}
                                   aria-label={`Toggle ${notif.transaction.tokenSymbol || "token"} chart`}
                                 >
@@ -1862,27 +1873,33 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center justify-between gap-2">
-                              <Tooltip content="View transaction on Dogechain Explorer">
-                                <a
-                                  href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-sm font-medium text-white hover:text-purple-400 transition-colors truncate"
-                                >
-                                  {tx.value.toLocaleString()} {tx.tokenSymbol || "tokens"}
-                                </a>
-                              </Tooltip>
+                            <div className="flex flex-col gap-2">
+                              <div className="text-center">
+                                <Tooltip content="View transaction on Dogechain Explorer">
+                                  <a
+                                    href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-sm font-medium text-white hover:text-purple-400 transition-colors truncate inline-block"
+                                  >
+                                    {tx.value.toLocaleString()} {tx.tokenSymbol || "tokens"}
+                                  </a>
+                                </Tooltip>
+                              </div>
                               {hasValidToken && (
-                                <button
-                                  onClick={() => toggleNotificationChart(txChartId)}
-                                  className="flex items-center gap-1 text-xs text-purple-400 hover:text-purple-300 transition-colors px-2 py-1 rounded hover:bg-purple-500/10"
-                                  aria-expanded={expandedNotificationCharts.has(txChartId)}
-                                  aria-label={`Toggle ${tx.tokenSymbol || "token"} chart`}
-                                >
-                                  <LineChart size={12} />
-                                  {expandedNotificationCharts.has(txChartId) ? "Hide" : "Chart"}
-                                </button>
+                                <div className="flex justify-center">
+                                  <button
+                                    onClick={() => toggleNotificationChart(txChartId)}
+                                    className="inline-flex items-center justify-center gap-2 text-xs font-medium bg-purple-500/10 text-purple-400 hover:text-purple-300 hover:bg-purple-500/20 transition-all px-3 py-1.5 rounded-lg border border-purple-500/30"
+                                    aria-expanded={expandedNotificationCharts.has(txChartId)}
+                                    aria-label={`Toggle ${tx.tokenSymbol || "token"} chart`}
+                                  >
+                                    <LineChart size={12} />
+                                    {expandedNotificationCharts.has(txChartId)
+                                      ? "Hide Chart"
+                                      : "View Chart"}
+                                  </button>
+                                </div>
                               )}
                             </div>
                             <p className="text-xs text-slate-500 mt-1">
@@ -1947,6 +1964,43 @@ export const Dashboard: React.FC<DashboardProps> = ({
               );
             })}
           </div>
+          {/* Clear History button - bottom */}
+          <button
+            onClick={() => {
+              if (confirm("Clear all event history?")) {
+                // Clear transaction cache first to prevent re-triggering
+                clearTransactionCache();
+                // Clear the triggered events
+                onTriggeredEventsChange?.([]);
+                // Also clear notification tracking to prevent re-creating events for old transactions
+                localStorage.removeItem("doge_notified_transactions");
+
+                // Also reset alert dismissedAt state to prevent re-triggering on old transactions
+                const now = Date.now();
+                const resetStatuses: Record<string, AlertStatus> = {};
+                Object.keys(statuses).forEach((alertId) => {
+                  const status = statuses[alertId];
+                  if (status) {
+                    resetStatuses[alertId] = {
+                      ...status,
+                      dismissedAt: now + 1000, // Set dismissedAt AFTER checkedAt to ensure dismissal logic works
+                      checkedAt: now, // Move check point forward
+                      triggered: false, // Reset triggered state
+                      baselineTimestamp: now, // CRITICAL FIX: Reset baseline to NOW to ignore old transactions
+                    };
+                  }
+                });
+                onUpdateStatuses?.(resetStatuses);
+
+                // Enter grace period to prevent automatic scans from re-triggering
+                enterGracePeriod();
+              }
+            }}
+            className="w-full py-2.5 text-xs font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all px-4 py-2.5 rounded-lg border border-red-500/20 flex items-center justify-center gap-2 mt-4"
+          >
+            <Trash2 size={14} />
+            Clear History
+          </button>
         </div>
       )}
 

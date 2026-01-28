@@ -1,6 +1,9 @@
 import { SearchResult, AssetType, Token } from "../types";
+import { getApiUrl } from "../utils/api";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://dogechain-bubblemaps-api.vercel.app";
+// Use the same API URL resolution as other services
+// In production: goes through Vercel rewrites
+// In development: uses relative path (Vite proxy handles it)
 
 export interface LearnedToken {
   address: string;
@@ -25,7 +28,7 @@ export async function fetchLearnedTokens(
 ): Promise<SearchResult[]> {
   try {
     const typeParam = type === AssetType.NFT ? "NFT" : "TOKEN";
-    const url = `${API_BASE}/api/learned-tokens?type=${typeParam}&limit=${limit}&min_popularity=10`;
+    const url = getApiUrl(`/api/learned-tokens?type=${typeParam}&limit=${limit}&min_popularity=10`);
 
     const response = await fetch(url, {
       method: "GET",
@@ -70,7 +73,7 @@ export async function submitWalletScanResults(
   nfts: Token[]
 ): Promise<boolean> {
   try {
-    const response = await fetch(`${API_BASE}/api/wallet-scan`, {
+    const response = await fetch(getApiUrl("/api/wallet-scan"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -116,7 +119,7 @@ export async function logTokenInteraction(
   resultPosition?: number
 ): Promise<void> {
   try {
-    await fetch(`${API_BASE}/api/interactions`, {
+    await fetch(getApiUrl("/api/interactions"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -142,7 +145,7 @@ export async function getTrendingLearnedTokens(
   try {
     const typeParam = type === AssetType.NFT ? "NFT" : "TOKEN";
     const response = await fetch(
-      `${API_BASE}/api/trending-wallet?type=${typeParam}&limit=${limit}`,
+      getApiUrl(`/api/trending-wallet?type=${typeParam}&limit=${limit}`),
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },

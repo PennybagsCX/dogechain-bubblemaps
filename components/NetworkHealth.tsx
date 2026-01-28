@@ -43,7 +43,8 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
   // Fetch network stats
   const fetchNetworkStats = async () => {
     try {
-      const response = await fetch("/api/network-health");
+      // Add cache-busting timestamp to ensure fresh data
+      const response = await fetch(`/api/network-health?cache=false&_t=${Date.now()}`);
       if (!response.ok) {
         throw new Error("Failed to fetch network stats");
       }
@@ -52,7 +53,10 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
       setError(null);
     } catch (err) {
       console.error("Error fetching network stats:", err);
-      setError("Failed to load network data");
+      // Don't set error during polling, only on initial load
+      if (loading) {
+        setError("Failed to load network data");
+      }
     } finally {
       setLoading(false);
     }
@@ -61,7 +65,8 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
   // Fetch historical block data
   const fetchBlockHistory = async () => {
     try {
-      const response = await fetch("/api/network-health?history=100");
+      // Add cache-busting timestamp to ensure fresh data
+      const response = await fetch(`/api/network-health?history=100&cache=false&_t=${Date.now()}`);
       if (!response.ok) {
         throw new Error("Failed to fetch block history");
       }

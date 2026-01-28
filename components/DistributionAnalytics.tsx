@@ -259,45 +259,69 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
         {/* Pie Chart */}
         <div className="bg-space-800 rounded-xl p-6 border border-space-700">
           <h3 className="text-lg font-semibold text-white mb-4">Ownership Distribution</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={pieData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={(entry) => `${entry.name}: ${entry.value.toFixed(1)}%`}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {pieData.map((_entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+          {pieData.length > 0 ? (
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={pieData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={(entry) => `${entry.name}: ${entry.value.toFixed(1)}%`}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {pieData.map((_entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="flex items-center justify-center h-[300px] text-slate-400">
+              <div className="text-center">
+                <TrendingUp className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                <p>No distribution data available</p>
+                <p className="text-sm mt-1">Select a token with holder data</p>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Histogram */}
         <div className="bg-space-800 rounded-xl p-6 border border-space-700">
           <h3 className="text-lg font-semibold text-white mb-4">Holder Distribution</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={histogramData}>
-              <XAxis dataKey="label" tick={{ fill: "#94a3b8" }} axisLine={{ stroke: "#334155" }} />
-              <YAxis tick={{ fill: "#94a3b8" }} axisLine={{ stroke: "#334155" }} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#1e293b",
-                  border: "1px solid #334155",
-                  borderRadius: "8px",
-                }}
-              />
-              <Legend />
-              <Bar dataKey="count" fill="#8b5cf6" name="Holders" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
+          {histogramData.length > 0 ? (
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={histogramData}>
+                <XAxis
+                  dataKey="label"
+                  tick={{ fill: "#94a3b8" }}
+                  axisLine={{ stroke: "#334155" }}
+                />
+                <YAxis tick={{ fill: "#94a3b8" }} axisLine={{ stroke: "#334155" }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#1e293b",
+                    border: "1px solid #334155",
+                    borderRadius: "8px",
+                  }}
+                />
+                <Legend />
+                <Bar dataKey="count" fill="#8b5cf6" name="Holders" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="flex items-center justify-center h-[300px] text-slate-400">
+              <div className="text-center">
+                <Users className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                <p>No holder distribution data available</p>
+                <p className="text-sm mt-1">Try selecting a different token</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

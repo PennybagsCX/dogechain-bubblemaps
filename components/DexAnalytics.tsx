@@ -146,16 +146,17 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-space-700">
+      <div className="flex border-b border-space-700 overflow-x-auto">
         <button
           onClick={() => setActiveTab("tvl")}
-          className={`px-6 py-3 font-medium transition-colors relative ${
+          className={`px-3 sm:px-4 md:px-6 py-3 font-medium transition-colors relative whitespace-nowrap ${
             activeTab === "tvl" ? "text-purple-400" : "text-slate-400 hover:text-white"
           }`}
         >
           <div className="flex items-center gap-2">
             <TrendingUp size={16} />
-            Top Pools
+            <span className="hidden sm:inline">Top Pools</span>
+            <span className="sm:hidden">Top</span>
           </div>
           {activeTab === "tvl" && (
             <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500" />
@@ -163,13 +164,14 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
         </button>
         <button
           onClick={() => setActiveTab("new")}
-          className={`px-6 py-3 font-medium transition-colors relative ${
+          className={`px-3 sm:px-4 md:px-6 py-3 font-medium transition-colors relative whitespace-nowrap ${
             activeTab === "new" ? "text-purple-400" : "text-slate-400 hover:text-white"
           }`}
         >
           <div className="flex items-center gap-2">
             <Plus size={16} />
-            New Pools
+            <span className="hidden sm:inline">New Pools</span>
+            <span className="sm:hidden">New</span>
           </div>
           {activeTab === "new" && (
             <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500" />
@@ -177,13 +179,14 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
         </button>
         <button
           onClick={() => setActiveTab("factory")}
-          className={`px-6 py-3 font-medium transition-colors relative ${
+          className={`px-3 sm:px-4 md:px-6 py-3 font-medium transition-colors relative whitespace-nowrap ${
             activeTab === "factory" ? "text-purple-400" : "text-slate-400 hover:text-white"
           }`}
         >
           <div className="flex items-center gap-2">
             <Building2 size={16} />
-            Factory Distribution
+            <span className="hidden sm:inline">Factory</span>
+            <span className="sm:hidden">Factory</span>
           </div>
           {activeTab === "factory" && (
             <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500" />
@@ -263,55 +266,79 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
 
       {activeTab === "factory" && (
         <div className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Pool Count Chart */}
+          {factoryStats.length === 0 ? (
             <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-              <h3 className="text-lg font-semibold text-white mb-4">Pools per DEX</h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={factoryChartData}>
-                  <XAxis
-                    dataKey="name"
-                    tick={{ fill: "#94a3b8" }}
-                    axisLine={{ stroke: "#334155" }}
-                  />
-                  <YAxis tick={{ fill: "#94a3b8" }} axisLine={{ stroke: "#334155" }} />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#1e293b",
-                      border: "1px solid #334155",
-                      borderRadius: "8px",
-                    }}
-                  />
-                  <Bar dataKey="pools" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="text-center text-slate-400 py-12">
+                <Building2 className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                <p>No DEX factory data available</p>
+                <p className="text-sm mt-2">
+                  Try again later or check if DEXs are active on Dogechain
+                </p>
+              </div>
             </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Pool Count Chart */}
+              <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+                <h3 className="text-lg font-semibold text-white mb-4">Pools per DEX</h3>
+                {factoryChartData.length > 0 ? (
+                  <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={factoryChartData}>
+                      <XAxis
+                        dataKey="name"
+                        tick={{ fill: "#94a3b8" }}
+                        axisLine={{ stroke: "#334155" }}
+                      />
+                      <YAxis tick={{ fill: "#94a3b8" }} axisLine={{ stroke: "#334155" }} />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "#1e293b",
+                          border: "1px solid #334155",
+                          borderRadius: "8px",
+                        }}
+                      />
+                      <Bar dataKey="pools" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="flex items-center justify-center h-[300px] text-slate-400">
+                    No chart data available
+                  </div>
+                )}
+              </div>
 
-            {/* Distribution Pie Chart */}
-            <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-              <h3 className="text-lg font-semibold text-white mb-4">Factory Distribution</h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={factoryChartData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={(entry) => `${(entry as any).name}: ${(entry as any).pools}`}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="pools"
-                  >
-                    {factoryChartData.map((_entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
+              {/* Distribution Pie Chart */}
+              <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+                <h3 className="text-lg font-semibold text-white mb-4">Factory Distribution</h3>
+                {factoryChartData.length > 0 ? (
+                  <ResponsiveContainer width="100%" height={300}>
+                    <PieChart>
+                      <Pie
+                        data={factoryChartData}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        label={(entry) => `${(entry as any).name}: ${(entry as any).pools}`}
+                        outerRadius={80}
+                        fill="#8884d8"
+                        dataKey="pools"
+                      >
+                        {factoryChartData.map((_entry, index) => (
+                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                      <Legend />
+                    </PieChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="flex items-center justify-center h-[300px] text-slate-400">
+                    No chart data available
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Factory Stats Table */}
           <div className="bg-space-800 rounded-xl p-6 border border-space-700">

@@ -1,20 +1,18 @@
 import { defineConfig } from "vite";
 import path from "path";
-import fs from "fs";
+import { execSync } from "child_process";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig(({ mode }) => {
   const isProduction = mode === "production";
 
-  // Read build metadata
+  // Get build number from git commit count
   let buildNumber = 0;
   try {
-    const metadataPath = path.resolve(__dirname, "build-metadata.json");
-    const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8"));
-    buildNumber = metadata.buildNumber;
+    buildNumber = parseInt(execSync("git rev-list --count HEAD", { encoding: "utf-8" }).trim(), 10);
   } catch (error) {
-    console.warn("Could not read build metadata, defaulting to 0");
+    console.warn("Could not get git commit count, defaulting to 0");
   }
 
   return {

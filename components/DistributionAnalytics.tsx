@@ -292,11 +292,27 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
                   ))}
                 </Pie>
                 <Tooltip
-                  formatter={(value?: number) => [`${value?.toFixed(1) ?? "0"}%`, "Ownership"]}
-                  contentStyle={{
-                    backgroundColor: "#1e293b",
-                    border: "1px solid #334155",
-                    borderRadius: "8px",
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const data = payload[0].payload;
+                      return (
+                        <div className="bg-space-800 border border-space-600 rounded-lg px-3 py-2 shadow-xl">
+                          <div className="flex items-center gap-2">
+                            <div
+                              className="w-3 h-3 rounded-sm flex-shrink-0"
+                              style={{ backgroundColor: payload[0].color }}
+                            />
+                            <span className="text-sm font-medium text-white">{data.name}</span>
+                          </div>
+                          <div className="mt-1 ml-5">
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                              {data.value.toFixed(1)}%
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
                   }}
                 />
                 <Legend
@@ -344,10 +360,22 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
                 />
                 <YAxis tick={{ fill: "#94a3b8" }} axisLine={{ stroke: "#334155" }} />
                 <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#1e293b",
-                    border: "1px solid #334155",
-                    borderRadius: "8px",
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const data = payload[0].payload;
+                      return (
+                        <div className="bg-space-800 border border-space-600 rounded-lg px-3 py-2 shadow-xl">
+                          <div className="text-xs text-slate-400 mb-1">{data.label}</div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium text-white">Holders:</span>
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                              {data.count.toLocaleString()}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
                   }}
                 />
                 <Legend />

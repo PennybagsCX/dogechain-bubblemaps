@@ -1688,22 +1688,24 @@ export const Dashboard: React.FC<DashboardProps> = ({
                           {/* Dexscreener Chart Section - Only show if valid token address */}
                           {notif.transaction.tokenAddress &&
                             /^0x[a-fA-F0-9]{40}$/.test(notif.transaction.tokenAddress) && (
-                              <div className="mt-3 pt-3 border-t border-black/20 flex justify-center">
-                                <button
-                                  onClick={() => toggleNotificationChart(notif.id)}
-                                  className="inline-flex items-center justify-center gap-2 text-sm font-medium bg-purple-500/10 text-purple-400 hover:text-purple-300 hover:bg-purple-500/20 transition-all px-4 py-2 rounded-lg border border-purple-500/30"
-                                  aria-expanded={expandedNotificationCharts.has(notif.id)}
-                                  aria-label={`Toggle ${notif.transaction.tokenSymbol || "token"} chart`}
-                                >
-                                  <LineChart size={14} />
-                                  {expandedNotificationCharts.has(notif.id)
-                                    ? `Hide ${notif.transaction.tokenSymbol || "Token"} Chart`
-                                    : `View ${notif.transaction.tokenSymbol || "Token"} Chart`}
-                                </button>
+                              <div className="mt-3 pt-3 border-t border-black/20">
+                                <div className="flex justify-center">
+                                  <button
+                                    onClick={() => toggleNotificationChart(notif.id)}
+                                    className="inline-flex items-center justify-center gap-2 text-sm font-medium bg-purple-500/10 text-purple-400 hover:text-purple-300 hover:bg-purple-500/20 transition-all px-4 py-2 rounded-lg border border-purple-500/30"
+                                    aria-expanded={expandedNotificationCharts.has(notif.id)}
+                                    aria-label={`Toggle ${notif.transaction.tokenSymbol || "token"} chart`}
+                                  >
+                                    <LineChart size={14} />
+                                    {expandedNotificationCharts.has(notif.id)
+                                      ? `Hide ${notif.transaction.tokenSymbol || "Token"} Chart`
+                                      : `View ${notif.transaction.tokenSymbol || "Token"} Chart`}
+                                  </button>
+                                </div>
 
                                 {/* Inline Chart Container */}
                                 {expandedNotificationCharts.has(notif.id) && (
-                                  <div className="mt-3 animate-in slide-in-from-top-2 duration-200">
+                                  <div className="mt-3 animate-in slide-in-from-top-2 duration-200 w-full">
                                     <EmbeddedChart
                                       tokenAddress={notif.transaction.tokenAddress}
                                       tokenSymbol={notif.transaction.tokenSymbol || "Token"}
@@ -1919,7 +1921,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             </p>
                             {/* Inline Chart for this transaction */}
                             {expandedNotificationCharts.has(txChartId) && hasValidToken && (
-                              <div className="mt-2 animate-in slide-in-from-top-2 duration-200">
+                              <div className="mt-2 animate-in slide-in-from-top-2 duration-200 w-full">
                                 <EmbeddedChart
                                   tokenAddress={tx.tokenAddress!}
                                   tokenSymbol={tx.tokenSymbol || "Token"}

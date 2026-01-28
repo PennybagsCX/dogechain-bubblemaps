@@ -23,6 +23,7 @@ import {
 } from "recharts";
 import { AlertTriangle, TrendingUp, Users, Wallet } from "lucide-react";
 import { Token } from "../types";
+import { fetchDistributionAnalysis } from "../services/dataService";
 
 interface DistributionAnalysis {
   giniCoefficient: number;
@@ -67,12 +68,9 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
     const fetchAnalysis = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/distribution?address=${token.address}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch distribution analysis");
-        }
-        const data = await response.json();
-        setAnalysis(data.analysis || data);
+        // Use the existing fetchDistributionAnalysis from dataService
+        const analysisData = await fetchDistributionAnalysis(token);
+        setAnalysis(analysisData ?? null);
         setError(null);
       } catch (err) {
         console.error("Error fetching distribution analysis:", err);
@@ -170,6 +168,24 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
         <p className="text-slate-400">Wealth concentration analysis for {token.symbol}</p>
       </div>
 
+      {/* Data Source Disclaimer */}
+      <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
+        <div className="flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
+          <div>
+            <h3 className="text-yellow-400 font-semibold">Limited Data Analysis</h3>
+            <p className="text-sm text-yellow-300/80 mt-1">
+              <strong>Why not full data?</strong> The Dogechain Explorer API only provides paginated
+              holder data (100 per request). Fetching all holders would take dozens of API calls and
+              cause significant delays. Metrics shown are calculated from the top{" "}
+              {analysis.totalHolders} holders fetched from the Explorer, which includes all major
+              holders (whales, ecosystem wallets, LP pools). For complete blockchain analysis,
+              consider using dedicated blockchain explorers or running your own full node.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Centralization Alert */}
       {analysis.isCentralized && (
         <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
@@ -257,17 +273,16 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Pie Chart */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+        <div className="bg-space-800 rounded-xl sm:p-6 p-3 border border-space-700">
           <h3 className="text-lg font-semibold text-white mb-4">Ownership Distribution</h3>
           {pieData.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
+              <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
                 <Pie
                   data={pieData}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={(entry) => `${entry.name}: ${entry.value.toFixed(1)}%`}
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
@@ -276,7 +291,33 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value?: number) => [`${value?.toFixed(1) ?? "0"}%`, "Ownership"]}
+                  contentStyle={{
+                    backgroundColor: "#1e293b",
+                    border: "1px solid #334155",
+                    borderRadius: "8px",
+                  }}
+                />
+                <Legend
+                  verticalAlign="bottom"
+                  height={72}
+                  content={({ payload }) => (
+                    <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-2 px-2">
+                      {payload?.map((entry, index) => (
+                        <div key={index} className="flex items-center gap-1.5">
+                          <div
+                            className="w-3 h-3 rounded-sm flex-shrink-0"
+                            style={{ backgroundColor: entry.color }}
+                          />
+                          <span className="text-xs text-slate-300">
+                            {entry.value}: {pieData[index]?.value.toFixed(1)}%
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                />
               </PieChart>
             </ResponsiveContainer>
           ) : (
@@ -291,7 +332,7 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
         </div>
 
         {/* Histogram */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+        <div className="bg-space-800 rounded-xl sm:p-6 p-3 border border-space-700">
           <h3 className="text-lg font-semibold text-white mb-4">Holder Distribution</h3>
           {histogramData.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>

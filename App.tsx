@@ -1396,17 +1396,28 @@ const App: React.FC = () => {
       setSelectedWallet(null);
       setSelectedConnection(null);
       setSelectedConnectionId(null);
-      setView(ViewState.ANALYSIS);
 
       // URL State Persistence (Deep Linking)
       try {
         const newUrl = new URL(window.location.href);
+        const currentView = newUrl.searchParams.get("view");
         newUrl.searchParams.set("token", cleanQuery);
         newUrl.searchParams.set("type", typeToUse);
-        newUrl.searchParams.set("view", "analysis");
+        // Preserve existing view parameter, default to analysis if not set
+        if (!currentView) {
+          newUrl.searchParams.set("view", "analysis");
+        }
         window.history.pushState({}, "", newUrl);
+
+        // Set view based on URL parameter
+        const viewParam = newUrl.searchParams.get("view");
+        if (viewParam === "distribution") setView(ViewState.DISTRIBUTION);
+        else if (viewParam === "network-health") setView(ViewState.NETWORK_HEALTH);
+        else if (viewParam === "dex-analytics") setView(ViewState.DEX_ANALYTICS);
+        else setView(ViewState.ANALYSIS);
       } catch {
         /* ignore */
+        setView(ViewState.ANALYSIS);
       }
 
       // AI Summary feature is disabled - coming soon
@@ -1481,6 +1492,12 @@ const App: React.FC = () => {
       setView(ViewState.DASHBOARD);
     } else if (viewParam === "analysis") {
       setView(ViewState.ANALYSIS);
+    } else if (viewParam === "distribution") {
+      setView(ViewState.DISTRIBUTION);
+    } else if (viewParam === "network-health") {
+      setView(ViewState.NETWORK_HEALTH);
+    } else if (viewParam === "dex-analytics") {
+      setView(ViewState.DEX_ANALYTICS);
     }
 
     // Restore Data

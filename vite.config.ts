@@ -2,35 +2,78 @@ import { defineConfig } from "vite";
 import path from "path";
 import fs from "fs";
 import { execSync } from "child_process";
+import https from "https";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
-export default defineConfig(({ mode }) => {
+async function getGitHubCommitCount(): Promise<number> {
+  const repo = process.env.GITHUB_REPOSITORY || "PennybagsCX/dogechain-bubblemaps";
+  const token = process.env.GITHUB_TOKEN;
+
+  return new Promise((resolve) => {
+    const options = {
+      hostname: "api.github.com",
+      path: `/repos/${repo}/commits?per_page=1`,
+      method: "HEAD",
+      headers: {
+        "User-Agent": "vite-build",
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+    };
+
+    const req = https.request(options, (res) => {
+      // Get commit count from Link header
+      const linkHeader = res.headers["link"];
+      if (linkHeader) {
+        const match = linkHeader.match(/page=(\d+)>; rel="last"/);
+        if (match) {
+          resolve(parseInt(match[1], 10));
+          return;
+        }
+      }
+      // Fallback: try to get from etag or default
+      resolve(0);
+    });
+
+    req.on("error", () => resolve(0));
+    req.setTimeout(5000, () => {
+      req.destroy();
+      resolve(0);
+    });
+    req.end();
+  });
+}
+
+export default defineConfig(async ({ mode }) => {
   const isProduction = mode === "production";
 
   // Get build number from git commit count
   let buildNumber = 0;
+
   try {
     buildNumber = parseInt(execSync("git rev-list --count HEAD", { encoding: "utf-8" }).trim(), 10);
-    // If git returns a small number (shallow clone in CI/CD), fall back to build-metadata.json
+
+    // If git returns a small number (shallow clone in CI/CD), use GitHub API
     if (buildNumber < 50) {
-      try {
+      console.log(
+        `[vite.config] Shallow clone detected (git count: ${buildNumber}), fetching from GitHub API...`
+      );
+      const githubCount = await getGitHubCommitCount();
+      if (githubCount > 0) {
+        buildNumber = githubCount;
+        console.log(`[vite.config] Using GitHub API commit count: ${buildNumber}`);
+      } else {
+        // Last resort: use build-metadata.json
         const metadataPath = path.resolve(__dirname, "build-metadata.json");
         const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8"));
         buildNumber = metadata.buildNumber;
-        console.log(
-          `[vite.config] Using build-metadata.json (shallow clone detected): ${buildNumber}`
-        );
-      } catch {
-        console.warn(
-          `[vite.config] build-metadata.json not found, using git count: ${buildNumber}`
-        );
+        console.log(`[vite.config] GitHub API failed, using build-metadata.json: ${buildNumber}`);
       }
     } else {
-      console.log(`[vite.config] Using git commit count: ${buildNumber}`);
+      console.log(`[vite.config] Using local git commit count: ${buildNumber}`);
     }
   } catch (error) {
-    console.warn("Could not get git commit count, defaulting to 0");
+    console.warn("[vite.config] Could not get build number, defaulting to 0");
   }
 
   return {

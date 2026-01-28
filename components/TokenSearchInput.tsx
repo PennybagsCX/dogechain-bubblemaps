@@ -18,6 +18,7 @@ import {
   getRecentSearchHistory,
 } from "../services/searchAnalytics";
 import { highlightMatch } from "../utils/highlightText";
+import { detectSearchInputType, SearchInputType } from "../utils/searchInputTypeDetector";
 import { logSearchQuery, getTrendingAssetsWithFallback } from "../services/trendingService";
 import { getNicknameExpansions } from "../services/tokenNicknameRegistry";
 import { getCachedSearchResults, cacheSearchResults } from "../utils/searchCacheManager";
@@ -288,6 +289,9 @@ export function TokenSearchInput({
       return;
     }
 
+    // Detect input type for optimized search strategy
+    const inputType = detectSearchInputType(searchQuery);
+
     setIsSearching(true);
     currentQueryRef.current = searchQuery;
     searchTimestampRef.current = Date.now(); // Record search start time
@@ -316,7 +320,8 @@ export function TokenSearchInput({
         cacheHit = true;
       } else {
         // MINISEARCH FUZZY SEARCH: Fast, typo-tolerant search (3KB library vs 15KB custom)
-        if (useMiniSearch && !searchQuery.startsWith("0x")) {
+        // Skip fuzzy search for contract addresses - go directly to exact match
+        if (useMiniSearch && inputType !== SearchInputType.CONTRACT_ADDRESS) {
           try {
             searchResults = await fuzzySearchMini(searchQuery, 10);
 
@@ -332,11 +337,16 @@ export function TokenSearchInput({
           }
         }
         // PROGRESSIVE SEARCH: Stream results in stages for instant feedback (<50ms to first result)
-        else if (useProgressiveSearch && !searchQuery.startsWith("0x")) {
+        // Skip progressive search for contract addresses - use exact match
+        else if (useProgressiveSearch && inputType !== SearchInputType.CONTRACT_ADDRESS) {
           searchResults = await searchProgressiveAll(searchQuery, searchType, 10);
         }
-        // Try Web Worker for addresses (background processing, no UI blocking)
-        else if (workerReadyRef.current && searchWorker && searchQuery.startsWith("0x")) {
+        // Direct address search for contract addresses (background processing, no UI blocking)
+        else if (
+          workerReadyRef.current &&
+          searchWorker &&
+          inputType === SearchInputType.CONTRACT_ADDRESS
+        ) {
           try {
             searchResults = await searchWithWorker(searchQuery, searchType);
           } catch {
@@ -389,10 +399,16 @@ export function TokenSearchInput({
         // Track search analytics (async, non-blocking)
         trackSearch(searchQuery, searchResults, sessionIdRef.current).catch((_error) => {});
 
-        // If no results, fetch phonetic suggestions
-        if (searchResults.length === 0 && searchQuery.length >= 3) {
+        // Fetch phonetic suggestions for queries with 3+ characters (even with results)
+        // This shows "Similar tokens" to help users discover related assets
+        if (searchQuery.length >= 3) {
           const suggestions = await generatePhoneticSuggestions(searchQuery, searchType, 3);
-          setPhoneticSuggestions(suggestions);
+          // Filter out suggestions that are already in results to avoid duplicates
+          const resultAddresses = new Set(searchResults.map((r) => r.address.toLowerCase()));
+          const uniqueSuggestions = suggestions.filter(
+            (s) => !resultAddresses.has(s.address.toLowerCase())
+          );
+          setPhoneticSuggestions(uniqueSuggestions);
         } else {
           setPhoneticSuggestions([]);
         }
@@ -816,6 +832,45 @@ export function TokenSearchInput({
                     query
                   )}
                 </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Similar tokens section (phonetic suggestions) - shown when there are results */}
+      {showDropdown && !isSearching && results.length > 0 && phoneticSuggestions.length > 0 && (
+        <div
+          className="absolute z-50 w-full mt-2 bg-space-800 border border-space-700 rounded-lg shadow-xl max-h-48 overflow-y-auto"
+          style={{ top: "calc(100% + 20px)" }}
+          role="listbox"
+          aria-label="Similar tokens"
+        >
+          <div className="px-4 py-2 border-b border-space-700 bg-space-800/50 sticky top-0">
+            <p className="text-xs text-slate-500 font-medium">Similar tokens you might like</p>
+          </div>
+          {phoneticSuggestions.slice(0, 3).map((suggestion) => (
+            <button
+              key={suggestion.address}
+              type="button"
+              onClick={() => handleSelectResult(suggestion)}
+              className="w-full px-4 py-2 text-left flex items-center gap-3 hover:bg-space-700 active:bg-space-600 transition-colors text-slate-300"
+              style={{ touchAction: "manipulation", minHeight: "44px" }}
+              role="option"
+              aria-selected={false}
+            >
+              <div
+                className={`p-1.5 rounded-md ${
+                  suggestion.type === AssetType.NFT
+                    ? "bg-blue-600/20 text-blue-400"
+                    : "bg-purple-600/20 text-purple-400"
+                }`}
+              >
+                {suggestion.type === AssetType.NFT ? <ImageIcon size={14} /> : <Coins size={14} />}
+              </div>
+              <div className="flex-1 min-w-0">
+                <span className="text-sm font-medium text-white">{suggestion.symbol}</span>
+                <span className="text-xs text-slate-500 ml-2">{suggestion.name}</span>
               </div>
             </button>
           ))}

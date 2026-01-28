@@ -1705,7 +1705,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
                                 {/* Inline Chart Container */}
                                 {expandedNotificationCharts.has(notif.id) && (
-                                  <div className="mt-3 -mx-4 -left-4 sm:mx-0 sm:left-auto sm:w-full w-[calc(100%+2rem)] animate-in slide-in-from-top-2 duration-200">
+                                  <div className="mt-3 -mx-6 sm:-mx-8 w-[calc(100%+3rem)] sm:w-[calc(100%+4rem)] animate-in slide-in-from-top-2 duration-200">
                                     <EmbeddedChart
                                       tokenAddress={notif.transaction.tokenAddress}
                                       tokenSymbol={notif.transaction.tokenSymbol || "Token"}
@@ -1919,7 +1919,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             )}
                             {/* Inline Chart for this transaction */}
                             {expandedNotificationCharts.has(txChartId) && hasValidToken && (
-                              <div className="mt-2 -mx-4 -left-4 sm:mx-0 sm:left-auto sm:w-full w-[calc(100%+2rem)] animate-in slide-in-from-top-2 duration-200">
+                              <div className="mt-2 -mx-6 sm:-mx-8 w-[calc(100%+3rem)] sm:w-[calc(100%+4rem)] animate-in slide-in-from-top-2 duration-200">
                                 <EmbeddedChart
                                   tokenAddress={tx.tokenAddress!}
                                   tokenSymbol={tx.tokenSymbol || "Token"}

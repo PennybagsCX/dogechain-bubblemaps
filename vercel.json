@@ -1,4 +1,10 @@
 {
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://dogechain-bubblemaps-api.vercel.app/api/:path*"
+    }
+  ],
   "redirects": [
     {
       "source": "/favicon.ico",

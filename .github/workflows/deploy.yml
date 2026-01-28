@@ -35,10 +35,9 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod --yes'
+          vercel-args: '--prod'
           working-directory: ./
           github-comment: true
         env:
           VITE_API_BASE_URL: https://dogechain-bubblemaps-api.vercel.app
           VITE_ANALYTICS_API_ENDPOINT: https://dogechain-bubblemaps-api.vercel.app
-        timeout-minutes: 10

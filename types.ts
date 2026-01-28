@@ -75,6 +75,7 @@ export enum ViewState {
   NETWORK_HEALTH = "NETWORK_HEALTH",
   DISTRIBUTION = "DISTRIBUTION",
   DEX_ANALYTICS = "DEX_ANALYTICS",
+  ALERTS = "ALERTS",
 }
 
 export interface AlertConfig {

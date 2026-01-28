@@ -114,6 +114,7 @@ export function TokenSearchInput({
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [popularTokens, setPopularTokens] = useState<PopularToken[]>([]);
   const [trendingTokens, setTrendingTokens] = useState<PopularToken[]>([]);
+  const [isLoadingPopular, setIsLoadingPopular] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [resultCountMessage, setResultCountMessage] = useState<string>("");
   const useProgressiveSearch = true; // Enable progressive search by default
@@ -174,44 +175,47 @@ export function TokenSearchInput({
       .catch((_error) => {});
 
     // Load popular tokens from learned database (local, last 7 days)
-    fetchLearnedTokens(searchType, 20)
-      .then((tokens) => {
-        const popularTokenList: PopularToken[] = tokens
-          .filter((t) => {
-            const symbol = sanitizeSuggestion(t.symbol);
-            const name = sanitizeSuggestion(t.name);
-            return symbol || name;
-          })
-          .map((t) => ({
-            address: t.address,
-            symbol: t.symbol || "UNKNOWN",
-            name: t.name || "Unknown Token",
-            type: t.type,
-            source: "local" as const,
-          }));
-        setPopularTokens(popularTokenList);
-      })
-      .catch((_error) => {});
-
-    // Load global trending assets (server with local fallback)
-    getTrendingAssetsWithFallback<TrendingAssetWithHits>(
-      [],
-      searchType === AssetType.NFT ? "NFT" : "TOKEN",
-      20
-    )
-      .then((assets) => {
-        const tokens: PopularToken[] = assets
-          .filter((a) => a.address && (a.symbol || a.name))
-          .map((a) => ({
-            address: a.address,
-            symbol: a.symbol || "UNKNOWN",
-            name: a.name || "Unknown Token",
-            type: a.type === "NFT" ? AssetType.NFT : AssetType.TOKEN,
-            source: "trending" as const,
-          }));
-        setTrendingTokens(tokens);
-      })
-      .catch((_error) => {});
+    setIsLoadingPopular(true);
+    Promise.all([
+      fetchLearnedTokens(searchType, 20)
+        .then((tokens) => {
+          const popularTokenList: PopularToken[] = tokens
+            .filter((t) => {
+              const symbol = sanitizeSuggestion(t.symbol);
+              const name = sanitizeSuggestion(t.name);
+              return symbol || name;
+            })
+            .map((t) => ({
+              address: t.address,
+              symbol: t.symbol || "UNKNOWN",
+              name: t.name || "Unknown Token",
+              type: t.type,
+              source: "local" as const,
+            }));
+          setPopularTokens(popularTokenList);
+        })
+        .catch((_error) => {}),
+      getTrendingAssetsWithFallback<TrendingAssetWithHits>(
+        [],
+        searchType === AssetType.NFT ? "NFT" : "TOKEN",
+        20
+      )
+        .then((assets) => {
+          const tokens: PopularToken[] = assets
+            .filter((a) => a.address && (a.symbol || a.name))
+            .map((a) => ({
+              address: a.address,
+              symbol: a.symbol || "UNKNOWN",
+              name: a.name || "Unknown Token",
+              type: a.type === "NFT" ? AssetType.NFT : AssetType.TOKEN,
+              source: "trending" as const,
+            }));
+          setTrendingTokens(tokens);
+        })
+        .catch((_error) => {}),
+    ]).finally(() => {
+      setIsLoadingPopular(false);
+    });
 
     // Cleanup on unmount
     return () => {
@@ -623,6 +627,38 @@ export function TokenSearchInput({
     }
   }, [autoFocus, inputRef]);
 
+  // Keyboard shortcuts: Ctrl/Cmd + K to focus search, 1-9 for quick select
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ctrl/Cmd + K to focus search
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        inputRef.current?.focus();
+        return;
+      }
+
+      // Number keys 1-9 for quick select popular tokens (when dropdown is closed)
+      if (
+        !showDropdown &&
+        !showHistory &&
+        !e.ctrlKey &&
+        !e.metaKey &&
+        !e.altKey &&
+        /^[1-9]$/.test(e.key)
+      ) {
+        const index = parseInt(e.key) - 1;
+        const token = suggestionTokens[index];
+        if (token) {
+          e.preventDefault();
+          handlePopularTokenClick(token);
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [showDropdown, showHistory, suggestionTokens]);
+
   return (
     <div className="relative">
       {/* Hidden screen reader instructions */}
@@ -656,9 +692,11 @@ export function TokenSearchInput({
             type="text"
             placeholder={
               placeholder ||
-              (searchType === AssetType.NFT ? "Collection Address..." : "Token Address...")
+              (searchType === AssetType.NFT
+                ? "Collection Address... (1-9 for quick select, Ctrl+K to focus)"
+                : "Token Address... (1-9 for quick select, Ctrl+K to focus)")
             }
-            className="flex-1 min-w-0 bg-transparent py-3 px-2 text-white placeholder-slate-500 text-base outline-none font-mono"
+            className="flex-1 min-w-0 bg-transparent py-3 px-2 text-white placeholder-slate-500 text-sm outline-none font-mono"
             style={{ touchAction: "manipulation" }}
             value={query}
             onChange={handleInputChange}
@@ -703,6 +741,25 @@ export function TokenSearchInput({
           </button>
         </div>
       </form>
+
+      {/* Search History Chips - shown when input is focused but empty, and dropdown not shown */}
+      {!showDropdown && !showHistory && query.trim() === "" && recentSearches.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-2">
+          {recentSearches.slice(0, 5).map((searchQuery, index) => (
+            <button
+              key={`${searchQuery}-${index}`}
+              type="button"
+              onClick={() => handleHistorySelect(searchQuery)}
+              className="px-2 py-1 bg-space-700 hover:bg-space-600 rounded text-xs text-slate-400 transition-colors flex items-center gap-1"
+            >
+              <Clock size={10} />
+              <span className="max-w-[120px] truncate">
+                {searchQuery.startsWith("0x") ? `${searchQuery.slice(0, 8)}...` : searchQuery}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Search History Dropdown */}
       {showHistory && recentSearches.length > 0 && (
@@ -941,21 +998,36 @@ export function TokenSearchInput({
             {/* Popular token suggestions */}
             {phoneticSuggestions.length === 0 && suggestionTokens.length > 0 && (
               <div className="mt-4 pt-4 border-t border-space-700">
-                <p className="text-xs text-slate-500 mb-2">Popular tokens to try:</p>
-                <div className="flex flex-wrap gap-2 justify-center">
-                  {suggestionTokens.slice(0, searchType === AssetType.NFT ? 6 : 10).map((token) => (
-                    <button
-                      key={token.address}
-                      type="button"
-                      onClick={() => handlePopularTokenClick(token)}
-                      className="px-3 py-1.5 bg-space-700 hover:bg-space-600 rounded-full text-xs text-purple-400 font-medium transition-colors"
-                    >
-                      {token.symbol}
-                    </button>
-                  ))}
-                </div>
+                <p className="text-xs text-slate-500 mb-2">
+                  Popular tokens to try:
+                  {isLoadingPopular && <span className="ml-2 text-slate-600">(loading...)</span>}
+                </p>
+                {isLoadingPopular ? (
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {[...Array(4)].map((_, i) => (
+                      <div key={i} className="w-16 h-6 bg-space-700 rounded-full animate-pulse" />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {suggestionTokens
+                      .slice(0, searchType === AssetType.NFT ? 6 : 10)
+                      .map((token) => (
+                        <button
+                          key={token.address}
+                          type="button"
+                          onClick={() => handlePopularTokenClick(token)}
+                          className="px-3 py-1.5 bg-space-700 hover:bg-space-600 rounded-full text-xs text-purple-400 font-medium transition-colors"
+                          title={`${token.name} (${token.address})`}
+                        >
+                          {token.symbol}
+                        </button>
+                      ))}
+                  </div>
+                )}
                 <p className="text-xs text-slate-600 mt-3">
-                  💡 Search by token symbol, name, or contract address
+                  💡 Search by token symbol, name, or contract address. Press 1-
+                  {Math.min(9, suggestionTokens.length)} for quick select.
                 </p>
               </div>
             )}

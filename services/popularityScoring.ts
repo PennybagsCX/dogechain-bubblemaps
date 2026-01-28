@@ -369,3 +369,90 @@ export async function clearExpiredPopularityCache(): Promise<void> {
     // Silently fail if cache clear fails
   }
 }
+
+// =====================================================
+// TIME DECAY ALGORITHM
+// =====================================================
+
+/**
+ * Calculate time-decayed popularity score
+ *
+ * Old searches have less influence, fresh searches get higher priority.
+ * Uses exponential decay with a configurable half-life.
+ *
+ * @param hits - Number of hits/searches
+ * @param lastSeenAt - Timestamp of last search/click
+ * @param now - Current timestamp (default: Date.now())
+ * @param decayDays - Half-life in days (default: 7 days)
+ * @returns Decayed popularity score
+ *
+ * Formula:
+ * - Days since last seen = (now - lastSeenAt) / (1000 * 60 * 60 * 24)
+ * - Decay factor = 0.5 ^ (daysSinceLastSeen / decayDays)
+ * - Decayed score = hits * decayFactor
+ *
+ * Examples:
+ * - 100 hits, seen today = 100 points
+ * - 100 hits, seen 7 days ago = 50 points (50% decay)
+ * - 100 hits, seen 14 days ago = 25 points (75% decay)
+ * - 100 hits, seen 30 days ago = ~6 points (94% decay)
+ */
+export function calculateDecayedPopularity(
+  hits: number,
+  lastSeenAt: number,
+  now: number = Date.now(),
+  decayDays: number = 7
+): number {
+  if (hits <= 0 || !lastSeenAt || lastSeenAt <= 0) {
+    return 0;
+  }
+
+  const daysSinceLastSeen = (now - lastSeenAt) / (1000 * 60 * 60 * 24);
+
+  // Exponential decay: reduce score by 50% every N days
+  const decayFactor = Math.pow(0.5, daysSinceLastSeen / decayDays);
+
+  return hits * decayFactor;
+}
+
+/**
+ * Calculate popularity boost with time decay applied
+ *
+ * @param popularity - Token popularity metrics
+ * @param now - Current timestamp (default: Date.now())
+ * @returns Boost score (0-20 points) with time decay applied
+ */
+export function calculateBoostWithDecay(
+  popularity: TokenPopularity | CachedPopularity,
+  now: number = Date.now()
+): number {
+  // Apply time decay to click count
+  const decayedClicks = popularity.lastClicked
+    ? calculateDecayedPopularity(popularity.clickCount, popularity.lastClicked, now, 7)
+    : 0;
+
+  // Apply time decay to search count
+  const decayedSearches = popularity.lastSearched
+    ? calculateDecayedPopularity(popularity.searchCount, popularity.lastSearched, now, 7)
+    : 0;
+
+  // Recalculate CTR with decayed values
+  const decayedCtr =
+    decayedSearches > 0 ? Math.min(1, decayedClicks / decayedSearches) : popularity.ctr;
+
+  // Calculate boost components
+  const ctrComponent = decayedCtr * 10; // 0-10 points
+  const clickComponent = Math.min(decayedClicks * 0.5, 5); // 0-5 points
+
+  // Recency bonus (already handled by decay, but add extra for very recent)
+  let recencyBonus = 0;
+  if (popularity.lastClicked) {
+    const hoursSinceClick = (now - popularity.lastClicked) / (1000 * 60 * 60);
+    if (hoursSinceClick < 24) {
+      recencyBonus = Math.max(0, 5 * (1 - hoursSinceClick / 24)); // 0-5 points
+    }
+  }
+
+  const totalBoost = ctrComponent + clickComponent + recencyBonus;
+  return Math.round(Math.min(20, Math.max(0, totalBoost)));
+}

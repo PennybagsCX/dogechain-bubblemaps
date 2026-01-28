@@ -136,6 +136,16 @@ export interface DbAbbreviationCache {
   expiresAt: number; // Expiration timestamp (7 days TTL)
 }
 
+// Search aliases for learned nickname mappings (auto-discovered from user behavior)
+export interface DbSearchAlias {
+  id?: number; // Auto-incremented primary key
+  alias: string; // User's search term (e.g., "doge")
+  targetAddress: string; // Contract address this alias resolves to
+  confidence: number; // 0-1, increases with more confirmations
+  createdAt: number; // Timestamp when alias was first discovered
+  confirmedCount: number; // Number of times this alias was confirmed (clicked)
+}
+
 // Export data structure
 export interface DatabaseExport {
   version: string;
@@ -165,6 +175,7 @@ class DogeDatabase extends Dexie {
   abbreviationCache!: Table<DbAbbreviationCache>;
   searchAnalytics!: Table<any>; // Search analytics events
   tokenPopularity!: Table<any>; // Token popularity metrics
+  searchAliases!: Table<DbSearchAlias>; // Learned search aliases
 
   constructor() {
     super("DogechainBubbleMapsDB");
@@ -560,6 +571,34 @@ class DogeDatabase extends Dexie {
             // The unique constraint will prevent future duplicates
           }
         });
+
+      // Version 19: Add search aliases for learned nickname mappings
+      this.version(19).stores({
+        alerts: "++id, alertId, walletAddress, name, type, createdAt",
+        alertStatuses: "alertId, &alertId",
+        triggeredEvents: "++id, &eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits",
+        walletScanCache: "walletAddress, scannedAt, expiresAt",
+        assetMetadataCache: "address, cachedAt, expiresAt",
+        walletForcedContracts: "walletAddress, updatedAt",
+        discoveredContracts: "++id, contractAddress, type, discoveredAt, lastSeenAt",
+        lpPairs: "++id, &pairAddress, factoryAddress, dexName, discoveredAt, lastVerifiedAt",
+        scanCheckpoints: "++id, phase, lastUpdated",
+        discoveredFactories: "++id, &address, name, status, discoveredAt",
+        tokenSearchIndex: "++id, &address, [type+symbol], [type+name], source, indexedAt",
+        abbreviationCache: "tokenAddress, &tokenAddress, generatedAt, expiresAt",
+        invertedIndex: "++id, &term, [termType+term], frequency",
+        searchCache: "++id, &queryKey, timestamp, hits",
+        phoneticIndex: "++id, &tokenAddress, phoneticKey, similarityCache, updatedAt",
+        trigramIndex: "++id, &tokenAddress, ngram, tokenSet",
+        searchAnalytics: "++id, &sessionId, timestamp, query, clickedAddress",
+        tokenPopularity:
+          "&tokenAddress, searchCount, clickCount, ctr, lastSearched, lastClicked, cachedAt, expiresAt, updatedAt",
+        learnedTokensCache:
+          "&address, name, symbol, type, popularityScore, scanFrequency, holderCount, cachedAt, expiresAt",
+        searchAliases: "++id, &alias, targetAddress, confidence, createdAt, confirmedCount",
+      });
     } catch {
       // Error handled silently
 

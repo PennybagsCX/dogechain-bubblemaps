@@ -1919,7 +1919,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             )}
                             {/* Inline Chart for this transaction */}
                             {expandedNotificationCharts.has(txChartId) && hasValidToken && (
-                              <div className="mt-2 w-full animate-in slide-in-from-top-2 duration-200">
+                              <div className="mt-2 -mx-3 w-[calc(100%+0.75rem)] animate-in slide-in-from-top-2 duration-200">
                                 <EmbeddedChart
                                   tokenAddress={tx.tokenAddress!}
                                   tokenSymbol={tx.tokenSymbol || "Token"}

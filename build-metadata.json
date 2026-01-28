@@ -1,12 +1,7 @@
 {
-  "buildNumber": 2588,
-  "lastUpdated": "2026-01-28T18:30:11.486Z",
+  "buildNumber": 2589,
+  "lastUpdated": "2026-01-28T18:35:49.778Z",
   "commits": [
-    {
-      "build": 220,
-      "commit": "0e28ac6",
-      "timestamp": "2026-01-23T22:12:03.955Z"
-    },
     {
       "build": 221,
       "commit": "984b9d5",
@@ -501,6 +496,11 @@
       "build": 2588,
       "commit": "61d7037",
       "timestamp": "2026-01-28T18:30:11.486Z"
+    },
+    {
+      "build": 2589,
+      "commit": "f2e7434",
+      "timestamp": "2026-01-28T18:35:49.778Z"
     }
   ]
 }

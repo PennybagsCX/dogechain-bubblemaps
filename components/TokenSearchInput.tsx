@@ -4,6 +4,7 @@ import { Search, Loader2, Coins, Image as ImageIcon, Clock, TrendingUp } from "l
 import { Tooltip } from "./Tooltip";
 
 import { AssetType, SearchResult, TokenSearchInputProps } from "../types";
+import type { TrendingAsset } from "../services/trendingService";
 import {
   searchTokensHybrid,
   generatePhoneticSuggestions,
@@ -15,7 +16,6 @@ import {
   trackResultClick,
   getSessionId,
   getRecentSearchHistory,
-  getTopQueries,
 } from "../services/searchAnalytics";
 import { highlightMatch } from "../utils/highlightText";
 import { logSearchQuery, getTrendingAssetsWithFallback } from "../services/trendingService";
@@ -23,11 +23,33 @@ import { getNicknameExpansions } from "../services/tokenNicknameRegistry";
 import { getCachedSearchResults, cacheSearchResults } from "../utils/searchCacheManager";
 import { trackSearchPerformance } from "../utils/performanceMonitor";
 import SearchWorkerInstance from "../services/searchWorker.ts?worker";
-import { logTokenInteraction } from "../services/learnedTokensService";
+import { logTokenInteraction, fetchLearnedTokens } from "../services/learnedTokensService";
 
 // Worker pool management
 let searchWorker: Worker | null = null;
 let workerInitializationPromise: Promise<boolean> | null = null;
+
+// =====================================================
+// Popular Tokens Interface
+// =====================================================
+
+/**
+ * Enhanced popular token with address for direct search execution
+ */
+interface PopularToken {
+  address: string;
+  symbol: string;
+  name: string;
+  type: AssetType;
+  source: "local" | "trending";
+}
+
+/**
+ * Extended TrendingAsset with hits property for getTrendingAssetsWithFallback
+ */
+interface TrendingAssetWithHits extends TrendingAsset {
+  hits: number;
+}
 
 /**
  * Initialize search worker (singleton pattern)
@@ -89,8 +111,8 @@ export function TokenSearchInput({
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [phoneticSuggestions, setPhoneticSuggestions] = useState<SearchResult[]>([]);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
-  const [popularQueries, setPopularQueries] = useState<string[]>([]);
-  const [trendingQueries, setTrendingQueries] = useState<string[]>([]);
+  const [popularTokens, setPopularTokens] = useState<PopularToken[]>([]);
+  const [trendingTokens, setTrendingTokens] = useState<PopularToken[]>([]);
   const [showHistory, setShowHistory] = useState(false);
   const [resultCountMessage, setResultCountMessage] = useState<string>("");
   const useProgressiveSearch = true; // Enable progressive search by default
@@ -108,19 +130,19 @@ export function TokenSearchInput({
     return trimmed;
   }, []);
 
-  // Combined popular suggestions (local + global)
+  // Combined popular suggestions (local + global) with deduplication by address
   const suggestionTokens = useMemo(() => {
-    const combined = [...popularQueries, ...trendingQueries];
+    const allTokens = [...popularTokens, ...trendingTokens];
     const seen = new Set<string>();
-    const unique: string[] = [];
-    for (const token of combined) {
-      const key = token.toLowerCase();
+    const unique: PopularToken[] = [];
+    for (const token of allTokens) {
+      const key = token.address.toLowerCase();
       if (seen.has(key)) continue;
       seen.add(key);
       unique.push(token);
     }
     return unique;
-  }, [popularQueries, trendingQueries]);
+  }, [popularTokens, trendingTokens]);
 
   const internalInputRef = useRef<HTMLInputElement>(null);
   const inputRef = externalInputRef || internalInputRef;
@@ -150,33 +172,43 @@ export function TokenSearchInput({
       })
       .catch((_error) => {});
 
-    // Load popular queries (local, last 7 days)
-    getTopQueries(20)
-      .then((queries) => {
-        const filtered = queries
-          .map((q) => sanitizeSuggestion(q.query))
-          .filter((q): q is string => !!q);
-        setPopularQueries(filtered);
+    // Load popular tokens from learned database (local, last 7 days)
+    fetchLearnedTokens(searchType, 20)
+      .then((tokens) => {
+        const popularTokenList: PopularToken[] = tokens
+          .filter((t) => {
+            const symbol = sanitizeSuggestion(t.symbol);
+            const name = sanitizeSuggestion(t.name);
+            return symbol || name;
+          })
+          .map((t) => ({
+            address: t.address,
+            symbol: t.symbol || "UNKNOWN",
+            name: t.name || "Unknown Token",
+            type: t.type,
+            source: "local" as const,
+          }));
+        setPopularTokens(popularTokenList);
       })
       .catch((_error) => {});
 
     // Load global trending assets (server with local fallback)
-    getTrendingAssetsWithFallback<{
-      hits: number;
-      symbol?: string | null;
-      name?: string | null;
-      address?: string;
-      type?: string;
-    }>([], searchType === AssetType.NFT ? "NFT" : "TOKEN", 20)
+    getTrendingAssetsWithFallback<TrendingAssetWithHits>(
+      [],
+      searchType === AssetType.NFT ? "NFT" : "TOKEN",
+      20
+    )
       .then((assets) => {
-        const symbols = assets
-          // assets may be TrendingAsset or minimal shape from fallback
-          .map((a: unknown) => {
-            const asset = a as { symbol?: string; name?: string };
-            return sanitizeSuggestion(asset.symbol || asset.name || "");
-          })
-          .filter((s): s is string => !!s);
-        setTrendingQueries(symbols);
+        const tokens: PopularToken[] = assets
+          .filter((a) => a.address && (a.symbol || a.name))
+          .map((a) => ({
+            address: a.address,
+            symbol: a.symbol || "UNKNOWN",
+            name: a.name || "Unknown Token",
+            type: a.type === "NFT" ? AssetType.NFT : AssetType.TOKEN,
+            source: "trending" as const,
+          }));
+        setTrendingTokens(tokens);
       })
       .catch((_error) => {});
 
@@ -530,6 +562,27 @@ export function TokenSearchInput({
     performSearch(historyQuery);
   };
 
+  // Handle popular token click - executes search with contract address
+  const handlePopularTokenClick = (token: PopularToken) => {
+    if (isControlled) {
+      externalOnChange?.(token.address);
+    } else {
+      setInternalQuery(token.address);
+    }
+    setShowDropdown(false);
+    setShowHistory(false);
+    // Directly trigger search with address
+    onSearch(token.address, token.type);
+
+    // Log search analytics for popular token click
+    logSearchQuery(
+      token.address,
+      token.type === AssetType.NFT ? "NFT" : "TOKEN",
+      token.symbol,
+      token.name
+    ).catch((_error) => {});
+  };
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -837,12 +890,12 @@ export function TokenSearchInput({
                 <div className="flex flex-wrap gap-2 justify-center">
                   {suggestionTokens.slice(0, searchType === AssetType.NFT ? 6 : 10).map((token) => (
                     <button
-                      key={token}
+                      key={token.address}
                       type="button"
-                      onClick={() => handleHistorySelect(token)}
+                      onClick={() => handlePopularTokenClick(token)}
                       className="px-3 py-1.5 bg-space-700 hover:bg-space-600 rounded-full text-xs text-purple-400 font-medium transition-colors"
                     >
-                      {token}
+                      {token.symbol}
                     </button>
                   ))}
                 </div>

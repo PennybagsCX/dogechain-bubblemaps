@@ -6,31 +6,30 @@ import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
 function getBuildNumber(): number {
-  let buildNumber = 0;
-
+  // In CI/CD (Vercel), git may not be available, so try build-metadata.json first
   try {
-    // Try local git first (works in development)
-    buildNumber = parseInt(execSync("git rev-list --count HEAD", { encoding: "utf-8" }).trim(), 10);
-
-    // If git returns a small number (< 100), it's likely a shallow clone (CI/CD like Vercel)
-    // In this case, use the build-metadata.json which is maintained by the pre-commit hook
-    if (buildNumber < 100) {
-      console.log(
-        `[vite.config] Shallow clone detected (git count: ${buildNumber}), using build-metadata.json`
-      );
-      const metadataPath = path.resolve(__dirname, "build-metadata.json");
-      const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8"));
-      buildNumber = metadata.buildNumber;
-      console.log(`[vite.config] Using build-metadata.json: ${buildNumber}`);
-    } else {
-      console.log(`[vite.config] Using local git commit count: ${buildNumber}`);
-    }
-  } catch (error) {
-    console.warn("[vite.config] Could not get build number, defaulting to 0");
-    buildNumber = 0;
+    const metadataPath = path.resolve(__dirname, "build-metadata.json");
+    const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8"));
+    console.log(`[vite.config] Using build-metadata.json: ${metadata.buildNumber}`);
+    return metadata.buildNumber;
+  } catch (metadataError) {
+    console.log(`[vite.config] build-metadata.json not available, trying git...`);
   }
 
-  return buildNumber;
+  // Fallback to git for local development
+  try {
+    const buildNumber = parseInt(
+      execSync("git rev-list --count HEAD", { encoding: "utf-8" }).trim(),
+      10
+    );
+    console.log(`[vite.config] Using git commit count: ${buildNumber}`);
+    return buildNumber;
+  } catch (gitError) {
+    console.warn(
+      "[vite.config] Could not get build number from git or build-metadata.json, defaulting to 0"
+    );
+    return 0;
+  }
 }
 
 // Get build number synchronously before defining config

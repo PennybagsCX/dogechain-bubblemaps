@@ -1570,7 +1570,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 role="alert"
                 aria-live="assertive"
                 aria-atomic="true"
-                className={`bg-gradient-to-r ${txColor} rounded-xl p-4 animate-in slide-in-from-top-2 shadow-lg`}
+                className={`bg-gradient-to-r ${txColor} rounded-xl p-4 animate-in slide-in-from-top-2 shadow-lg ${expandedNotificationCharts.has(notif.id) ? "sm:p-4 p-2" : ""}`}
                 aria-label={`${notif.alertName}: ${isIncoming ? "Received" : "Sent"} ${notif.transaction?.value.toLocaleString()} ${notif.transaction?.tokenSymbol || "tokens"}`}
               >
                 <div className="flex items-start justify-between gap-4">
@@ -1705,7 +1705,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
                                 {/* Inline Chart Container */}
                                 {expandedNotificationCharts.has(notif.id) && (
-                                  <div className="mt-3 animate-in slide-in-from-top-2 duration-200 w-full">
+                                  <div className="mt-3 -mx-2 sm:mx-0 animate-in slide-in-from-top-2 duration-200 w-full">
                                     <EmbeddedChart
                                       tokenAddress={notif.transaction.tokenAddress}
                                       tokenSymbol={notif.transaction.tokenSymbol || "Token"}
@@ -1921,7 +1921,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             </p>
                             {/* Inline Chart for this transaction */}
                             {expandedNotificationCharts.has(txChartId) && hasValidToken && (
-                              <div className="mt-2 animate-in slide-in-from-top-2 duration-200 w-full">
+                              <div className="mt-2 -mx-2 sm:mx-0 animate-in slide-in-from-top-2 duration-200 w-full">
                                 <EmbeddedChart
                                   tokenAddress={tx.tokenAddress!}
                                   tokenSymbol={tx.tokenSymbol || "Token"}

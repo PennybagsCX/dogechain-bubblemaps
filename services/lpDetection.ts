@@ -279,88 +279,131 @@ export async function getAllPools(): Promise<PoolStats[]> {
 }
 
 /**
- * Get top pools by TVL (placeholder for now)
- * Real implementation requires price fetching and reserve queries
+ * Get top pools by TVL
+ * @param limit Maximum number of pools to return
  */
 export async function getTopPoolsByTVL(limit: number = 20): Promise<PoolStats[]> {
   try {
-    const allPools = await getAllPools();
+    const { DogechainRPCClient } = await import("./dogechainRPC");
 
-    // Sort by creation date as proxy for TVL (older pools likely have more liquidity)
-    // Real implementation would fetch actual reserves and calculate TVL
-    return allPools.sort((a, b) => a.pairAge - b.pairAge).slice(0, limit);
-  } catch {
+    const rpcClient = new DogechainRPCClient();
+    const pairs = await loadAllLPPairs();
+
+    // Fetch analytics for all pools (in batches)
+    const analytics = await (
+      await import("./dexPoolService")
+    ).fetchMultiplePoolsAnalytics(
+      pairs.map((p) => p.pairAddress),
+      rpcClient
+    );
+
+    // Merge with factory info and sort by TVL
+    const poolMap = new Map(pairs.map((p) => [p.pairAddress.toLowerCase(), p]));
+
+    const poolsWithAnalytics = analytics
+      .map((a) => ({
+        ...a,
+        factory: poolMap.get(a.address.toLowerCase())?.dexName || "Unknown",
+      }))
+      .filter((p) => p.tvlUsd > 0) // Only include pools with TVL
+      .sort((a, b) => b.tvlUsd - a.tvlUsd)
+      .slice(0, limit);
+
+    return poolsWithAnalytics;
+  } catch (error) {
+    console.warn("[lpDetection] Failed to get top pools by TVL:", error);
     return [];
   }
 }
 
 /**
  * Get new pools created within the specified time period
- * @param since Time in milliseconds ago
+ * @param since Time in milliseconds ago (default: 24 hours)
  */
-export async function getNewPools(since: number): Promise<PoolStats[]> {
+export async function getNewPools(since: number = 24 * 60 * 60 * 1000): Promise<PoolStats[]> {
   try {
+    const { DogechainRPCClient } = await import("./dogechainRPC");
+
+    const rpcClient = new DogechainRPCClient();
     const pairs = await loadAllLPPairs();
     const cutoffTime = Date.now() - since;
 
+    // Filter for new pools
     const newPairs = pairs.filter((pair) => pair.discoveredAt >= cutoffTime);
 
-    return newPairs.map((pair) => {
-      const pairAge = Date.now() - pair.discoveredAt;
+    // Fetch analytics for new pools
+    const analytics = await (
+      await import("./dexPoolService")
+    ).fetchMultiplePoolsAnalytics(
+      newPairs.map((p) => p.pairAddress),
+      rpcClient
+    );
 
-      return {
-        address: pair.pairAddress,
-        token0: {
-          address: pair.token0Address,
-          symbol: "TOKEN0",
-        },
-        token1: {
-          address: pair.token1Address,
-          symbol: "TOKEN1",
-        },
-        factory: pair.dexName,
-        reserve0: "0",
-        reserve1: "0",
-        tvlUsd: 0,
-        lpTokenSupply: "0",
-        createdAt: pair.discoveredAt,
-        pairAge,
-      };
-    });
-  } catch {
+    // Merge with factory info and sort by creation time (newest first)
+    const poolMap = new Map(newPairs.map((p) => [p.pairAddress.toLowerCase(), p]));
+
+    const poolsWithAnalytics = analytics
+      .map((a) => ({
+        ...a,
+        factory: poolMap.get(a.address.toLowerCase())?.dexName || "Unknown",
+      }))
+      .sort((a, b) => b.createdAt - a.createdAt);
+
+    return poolsWithAnalytics;
+  } catch (error) {
+    console.warn("[lpDetection] Failed to get new pools:", error);
     return [];
   }
 }
 
 /**
- * Get factory distribution statistics
- * Shows how many pools each DEX factory has
+ * Get factory distribution statistics with TVL
  */
 export async function getFactoryDistribution(): Promise<FactoryStats[]> {
   try {
+    const { DogechainRPCClient } = await import("./dogechainRPC");
+
+    const rpcClient = new DogechainRPCClient();
     const pairs = await loadAllLPPairs();
 
-    // Group by factory (DexName)
-    const factoryMap = new Map<string, { count: number; totalAge: number }>();
+    // Group by factory
+    const factoryMap = new Map<string, { pairs: DbLPPair[]; totalTVL: number }>();
 
     for (const pair of pairs) {
       const existing = factoryMap.get(pair.dexName);
       if (existing) {
-        existing.count++;
+        existing.pairs.push(pair);
       } else {
-        factoryMap.set(pair.dexName, { count: 1, totalAge: 0 });
+        factoryMap.set(pair.dexName, { pairs: [pair], totalTVL: 0 });
       }
     }
 
-    // Convert to FactoryStats array
-    return Array.from(factoryMap.entries())
-      .map(([name, data]) => ({
-        name,
-        poolCount: data.count,
-        totalTVL: 0, // Requires price data
-      }))
-      .sort((a, b) => b.poolCount - a.poolCount);
-  } catch {
+    // Calculate TVL for each factory (sample top 20 pools per factory for performance)
+    const results: FactoryStats[] = [];
+
+    for (const [factoryName, data] of factoryMap.entries()) {
+      // Fetch analytics for a sample of pools (limit to 20 for performance)
+      const samplePairs = data.pairs.slice(0, 20);
+      const analytics = await (
+        await import("./dexPoolService")
+      ).fetchMultiplePoolsAnalytics(
+        samplePairs.map((p) => p.pairAddress),
+        rpcClient
+      );
+
+      const totalTVL = analytics.reduce((sum, pool) => sum + pool.tvlUsd, 0);
+
+      results.push({
+        name: factoryName,
+        poolCount: data.pairs.length,
+        totalTVL,
+      });
+    }
+
+    // Sort by pool count
+    return results.sort((a, b) => b.poolCount - a.poolCount);
+  } catch (error) {
+    console.warn("[lpDetection] Failed to get factory distribution:", error);
     return [];
   }
 }

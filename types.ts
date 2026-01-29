@@ -332,3 +332,34 @@ export interface TokenMergeHistory {
   confidenceScore: number; // 0-1
   contributorHash: string;
 }
+
+// =====================================================
+// DEX Analytics Types
+// =====================================================
+
+export interface PoolStats {
+  address: string;
+  token0: { address: string; symbol: string; decimals?: number };
+  token1: { address: string; symbol: string; decimals?: number };
+  factory: string;
+  reserve0: string;
+  reserve1: string;
+  tvlUsd: number;
+  lpTokenSupply: string;
+  createdAt: number;
+  pairAge: number;
+}
+
+export interface FactoryStats {
+  name: string;
+  poolCount: number;
+  totalTVL: number;
+}
+
+export interface PoolAnalytics extends PoolStats {
+  reserve0Normalized: number;
+  reserve1Normalized: number;
+  token0Price: number;
+  token1Price: number;
+  lastUpdated: number;
+}

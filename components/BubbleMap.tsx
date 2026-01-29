@@ -544,7 +544,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .attr("id", "veinGradient")
       .attr("gradientUnits", "userSpaceOnUse");
     gradient.append("stop").attr("offset", "0%").attr("stop-color", "#22d3ee"); // Cyan
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#c084fc"); // Purple
+    gradient.append("stop").attr("offset", "50%").attr("stop-color", "#a855f7"); // Purple
+    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#f472b6"); // Pink
 
     // --- DATA PREPARATION ---
     const nodes: NodeDatum[] = wallets.map((w, idx) => {
@@ -1759,41 +1760,56 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
             </button>
 
             <div
-              className={`px-4 pb-4 transition-all duration-300 ${isLegendOpen ? "max-h-[300px] opacity-100 mt-2" : "max-h-0 opacity-0 overflow-hidden"}`}
+              className={`px-4 pb-5 transition-all duration-300 ${isLegendOpen ? "max-h-[360px] opacity-100 mt-2" : "max-h-0 opacity-0 overflow-hidden"}`}
             >
-              <div className="w-full h-2 rounded-full bg-gradient-to-r from-cyan-500 via-yellow-500 to-red-500 mb-1"></div>
-              <div className="flex justify-between text-[10px] text-slate-400 font-mono mb-4">
+              <div className="w-full h-2 rounded-full bg-gradient-to-r from-cyan-500 via-yellow-500 to-red-500 mb-3"></div>
+              <div className="flex justify-between text-[10px] text-slate-400 font-mono mb-5">
                 <span>Retail</span>
                 <span>Whale</span>
                 <span>Mega</span>
               </div>
 
-              <div className="space-y-2 text-xs">
-                <div className="flex items-start gap-4">
-                  <span className="flex items-center gap-2 text-slate-300 whitespace-nowrap">
-                    <span className="w-2 h-2 rounded-full bg-rose-400 shadow-[0_0_6px_rgba(251,113,133,0.8)]"></span>{" "}
-                    Contract
+              <div className="flex flex-col gap-3 text-xs text-slate-200">
+                <div className="flex items-start gap-3">
+                  <span className="flex items-center gap-2">
+                    <span className="inline-block w-3 h-3 rounded-full bg-rose-400 shadow-[0_0_10px_rgba(251,113,133,0.85)] shrink-0"></span>
+                    <span className="font-semibold">Protocol / LP / DAO</span>
                   </span>
-                  <span className="text-slate-500 text-[10px] whitespace-nowrap ml-1">
-                    Protocol / Treasury
-                  </span>
-                </div>
-                <div className="flex items-start gap-4">
-                  <span className="flex items-center gap-2 text-slate-300 whitespace-nowrap">
-                    <span className="w-2 h-2 rounded-full bg-white border border-space-600"></span>{" "}
-                    Node
-                  </span>
-                  <span className="text-slate-500 text-[10px] whitespace-nowrap ml-1">
-                    Interactive Wallet
+                  <span className="text-slate-500 text-[11px] leading-tight">
+                    Smart contracts, LP pools, ecosystem funds
                   </span>
                 </div>
+
+                <div className="flex items-start gap-3">
+                  <span className="flex items-center gap-2">
+                    <span
+                      className="block h-[4px] w-24 min-w-[96px] rounded-full shrink-0"
+                      style={{
+                        backgroundImage:
+                          "linear-gradient(90deg,#22d3ee 0%,#a855f7 50%,#f472b6 100%)",
+                        WebkitMaskImage:
+                          "repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 12px)",
+                        maskImage:
+                          "repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 12px)",
+                        boxShadow: "0 0 8px rgba(168,85,247,0.55)",
+                      }}
+                    ></span>
+                    <span className="font-semibold">Wallet Link</span>
+                  </span>
+                  <span className="text-slate-500 text-[11px] leading-tight">
+                    Connection between wallets
+                  </span>
+                </div>
+
                 {userNodeFound && (
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-start gap-3">
                     <span className="flex items-center gap-2 text-doge-400 font-bold">
-                      <span className="w-3 h-3 rounded-full bg-amber-400 border-2 border-white"></span>{" "}
+                      <span className="w-3 h-3 rounded-full bg-amber-400 border-2 border-white"></span>
                       YOU
                     </span>
-                    <span className="text-slate-500 text-[10px]">Connected Wallet</span>
+                    <span className="text-slate-500 text-[11px] leading-tight">
+                      Connected Wallet
+                    </span>
                   </div>
                 )}
               </div>
@@ -1876,7 +1892,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       </div>
 
       {/* Legend (desktop) */}
-      <div ref={legendRef} className="hidden md:block absolute bottom-6 left-6 z-20 max-w-[220px]">
+      <div ref={legendRef} className="hidden md:block absolute bottom-6 left-6 z-20 max-w-[240px]">
         <div className="bg-space-900 rounded-xl border border-space-700 shadow-xl overflow-hidden transition-all duration-300">
           <button
             onTouchStart={handleTouchStopPropagation}
@@ -1888,37 +1904,53 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           </button>
 
           <div
-            className={`px-4 pb-4 transition-all duration-300 ${isLegendOpen ? "max-h-[300px] opacity-100 mt-2" : "max-h-0 opacity-0 overflow-hidden"}`}
+            className={`px-4 pb-5 transition-all duration-300 ${isLegendOpen ? "max-h-[360px] opacity-100 mt-2" : "max-h-0 opacity-0 overflow-hidden"}`}
           >
-            <div className="w-full h-2 rounded-full bg-gradient-to-r from-cyan-500 via-yellow-500 to-red-500 mb-1"></div>
-            <div className="flex justify-between text-[10px] text-slate-400 font-mono mb-4">
+            <div className="w-full h-2 rounded-full bg-gradient-to-r from-cyan-500 via-yellow-500 to-red-500 mb-3"></div>
+            <div className="flex justify-between text-[10px] text-slate-400 font-mono mb-5">
               <span>Retail</span>
               <span>Whale</span>
               <span>Mega</span>
             </div>
 
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center justify-between">
-                <span className="flex items-center gap-2 text-slate-300">
-                  <span className="w-2 h-2 rounded-full bg-rose-400 shadow-[0_0_6px_rgba(251,113,133,0.8)]"></span>{" "}
-                  Contract
+            <div className="flex flex-col gap-3 text-xs text-slate-200">
+              <div className="flex items-start gap-3">
+                <span className="flex items-center gap-2">
+                  <span className="inline-block w-3 h-3 rounded-full bg-rose-400 shadow-[0_0_10px_rgba(251,113,133,0.85)] shrink-0"></span>
+                  <span className="font-semibold">Protocol / LP / DAO</span>
                 </span>
-                <span className="text-slate-500 text-[10px]">Protocol / Treasury</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="flex items-center gap-2 text-slate-300">
-                  <span className="w-2 h-2 rounded-full bg-white border border-space-600"></span>{" "}
-                  Node
+                <span className="text-slate-500 text-[11px] leading-tight">
+                  Smart contracts, LP pools, ecosystem funds
                 </span>
-                <span className="text-slate-500 text-[10px]">Interactive Wallet</span>
               </div>
+
+              <div className="flex items-start gap-3">
+                <span className="flex items-center gap-2">
+                  <span
+                    className="block h-[4px] w-24 min-w-[96px] rounded-full shrink-0"
+                    style={{
+                      backgroundImage: "linear-gradient(90deg,#22d3ee 0%,#a855f7 50%,#f472b6 100%)",
+                      WebkitMaskImage:
+                        "repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 12px)",
+                      maskImage:
+                        "repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 12px)",
+                      boxShadow: "0 0 8px rgba(168,85,247,0.55)",
+                    }}
+                  ></span>
+                  <span className="font-semibold">Wallet Link</span>
+                </span>
+                <span className="text-slate-500 text-[11px] leading-tight">
+                  Connection between wallets
+                </span>
+              </div>
+
               {userNodeFound && (
-                <div className="flex items-center justify-between">
+                <div className="flex items-start gap-3">
                   <span className="flex items-center gap-2 text-doge-400 font-bold">
-                    <span className="w-3 h-3 rounded-full bg-amber-400 border-2 border-white"></span>{" "}
+                    <span className="w-3 h-3 rounded-full bg-amber-400 border-2 border-white"></span>
                     YOU
                   </span>
-                  <span className="text-slate-500 text-[10px]">Connected Wallet</span>
+                  <span className="text-slate-500 text-[11px] leading-tight">Connected Wallet</span>
                 </div>
               )}
             </div>

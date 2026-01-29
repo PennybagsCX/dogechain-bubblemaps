@@ -92,7 +92,7 @@ interface DexAnalyticsProps {
   className?: string;
 }
 
-const COLORS = ["#8b5cf6", "#6366f1", "#3b82f6", "#0ea5e9", "#06b6d4", "#14b8a6"];
+const COLORS = ["#A855F7", "#BA9F33", "#22c55e", "#3b82f6", "#f59e0b", "#ef4444"];
 
 export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) => {
   const [activeTab, setActiveTab] = useState<TabValue>("tvl");
@@ -325,11 +325,11 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Header */}
-      <div className="flex flex-col gap-4 animate-fade-in">
+      <div className="flex flex-col gap-4">
         {/* Title and Controls Row */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold gradient-text">DEX Analytics</h2>
+            <h2 className="text-2xl font-bold text-white">DEX Analytics</h2>
             <p className="text-slate-400">Liquidity pool metrics on Dogechain</p>
           </div>
 
@@ -372,37 +372,37 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in animate-delay-100">
-        <div className="stat-card">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="bg-space-700/50 rounded-lg p-4 hover:bg-space-700 transition-colors">
           <div className="text-sm text-slate-400 mb-1">Total Pools</div>
           <div className="text-2xl font-bold text-white">{topPools.length}</div>
         </div>
-        <div className="stat-card">
+        <div className="bg-space-700/50 rounded-lg p-4 hover:bg-space-700 transition-colors">
           <div className="text-sm text-slate-400 mb-1">Total TVL</div>
-          <div className="text-2xl font-bold text-purple-400">
+          <div className="text-2xl font-bold text-doge-400">
             ${(topPools.reduce((sum, p) => sum + p.tvlUsd, 0) / 1_000_000).toFixed(2)}M
           </div>
         </div>
-        <div className="stat-card">
+        <div className="bg-space-700/50 rounded-lg p-4 hover:bg-space-700 transition-colors">
           <div className="text-sm text-slate-400 mb-1">24h Volume</div>
           <div className="text-2xl font-bold text-green-400">
             ${(volumePools.reduce((sum, p) => sum + (p.volume24h || 0), 0) / 1_000_000).toFixed(2)}M
           </div>
         </div>
-        <div className="stat-card">
+        <div className="bg-space-700/50 rounded-lg p-4 hover:bg-space-700 transition-colors">
           <div className="text-sm text-slate-400 mb-1">Active DEXes</div>
           <div className="text-2xl font-bold text-blue-400">{factoryStats.length}</div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="glass-card p-1 overflow-x-auto animate-fade-in animate-delay-200">
+      <div className="bg-space-800 rounded-xl p-1 border border-space-700 overflow-x-auto">
         <div className="flex gap-1">
           <button
             onClick={() => setActiveTab("tvl")}
             className={`px-4 sm:px-6 py-2.5 font-medium rounded-lg transition-all relative whitespace-nowrap focus-ring ${
               activeTab === "tvl"
-                ? "bg-purple-500 text-white shadow-lg shadow-purple-500/30"
+                ? "bg-purple-500 text-white"
                 : "text-slate-400 hover:text-white hover:bg-space-700"
             }`}
           >
@@ -416,7 +416,7 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
             onClick={() => setActiveTab("volume")}
             className={`px-4 sm:px-6 py-2.5 font-medium rounded-lg transition-all relative whitespace-nowrap focus-ring ${
               activeTab === "volume"
-                ? "bg-purple-500 text-white shadow-lg shadow-purple-500/30"
+                ? "bg-purple-500 text-white"
                 : "text-slate-400 hover:text-white hover:bg-space-700"
             }`}
           >
@@ -430,7 +430,7 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
             onClick={() => setActiveTab("price")}
             className={`px-4 sm:px-6 py-2.5 font-medium rounded-lg transition-all relative whitespace-nowrap focus-ring ${
               activeTab === "price"
-                ? "bg-purple-500 text-white shadow-lg shadow-purple-500/30"
+                ? "bg-purple-500 text-white"
                 : "text-slate-400 hover:text-white hover:bg-space-700"
             }`}
           >
@@ -444,7 +444,7 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
             onClick={() => setActiveTab("technical")}
             className={`px-4 sm:px-6 py-2.5 font-medium rounded-lg transition-all relative whitespace-nowrap focus-ring ${
               activeTab === "technical"
-                ? "bg-purple-500 text-white shadow-lg shadow-purple-500/30"
+                ? "bg-purple-500 text-white"
                 : "text-slate-400 hover:text-white hover:bg-space-700"
             }`}
           >
@@ -458,7 +458,7 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
             onClick={() => setActiveTab("chain")}
             className={`px-4 sm:px-6 py-2.5 font-medium rounded-lg transition-all relative whitespace-nowrap focus-ring ${
               activeTab === "chain"
-                ? "bg-purple-500 text-white shadow-lg shadow-purple-500/30"
+                ? "bg-purple-500 text-white"
                 : "text-slate-400 hover:text-white hover:bg-space-700"
             }`}
           >
@@ -472,7 +472,7 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
             onClick={() => setActiveTab("new")}
             className={`px-4 sm:px-6 py-2.5 font-medium rounded-lg transition-all relative whitespace-nowrap focus-ring ${
               activeTab === "new"
-                ? "bg-purple-500 text-white shadow-lg shadow-purple-500/30"
+                ? "bg-purple-500 text-white"
                 : "text-slate-400 hover:text-white hover:bg-space-700"
             }`}
           >
@@ -486,7 +486,7 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
             onClick={() => setActiveTab("factory")}
             className={`px-4 sm:px-6 py-2.5 font-medium rounded-lg transition-all relative whitespace-nowrap focus-ring ${
               activeTab === "factory"
-                ? "bg-purple-500 text-white shadow-lg shadow-purple-500/30"
+                ? "bg-purple-500 text-white"
                 : "text-slate-400 hover:text-white hover:bg-space-700"
             }`}
           >
@@ -501,14 +501,14 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
 
       {/* Tab Content */}
       {activeTab === "tvl" && (
-        <div className="space-y-6 animate-fade-in">
-          <div className="card-enhanced p-6">
+        <div className="space-y-6">
+          <div className="bg-space-800 rounded-xl p-6 border border-space-700">
             <h3 className="text-lg font-semibold text-white mb-4">Top Pools by TVL</h3>
             <div className="space-y-3">
               {topPools.slice(0, 10).map((pool, index) => (
                 <div
                   key={pool.address}
-                  className={`table-row-glass transition-all duration-300 ${
+                  className={`bg-space-700/50 rounded-lg hover:bg-space-700 transition-colors ${
                     expandedPoolId === pool.address ? "ring-2 ring-purple-500" : ""
                   }`}
                 >
@@ -560,7 +560,7 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
 
                   {/* Inline Expanded Pool Details */}
                   {expandedPoolId === pool.address && (
-                    <div id={`pool-details-${pool.address}`} className="px-4 pb-4 animate-scale-in">
+                    <div id={`pool-details-${pool.address}`} className="px-4 pb-4">
                       <InlinePoolDetails pool={pool} />
                     </div>
                   )}
@@ -597,7 +597,7 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
                   return (
                     <div
                       key={pool.address}
-                      className={`table-row-glass transition-all duration-300 ${
+                      className={`bg-space-700/50 rounded-lg hover:bg-space-700 transition-colors ${
                         expandedPoolId === pool.address ? "ring-2 ring-purple-500" : ""
                       }`}
                     >
@@ -658,10 +658,7 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
 
                       {/* Inline Expanded Pool Details */}
                       {expandedPoolId === pool.address && (
-                        <div
-                          id={`pool-details-${pool.address}`}
-                          className="px-4 pb-4 animate-scale-in"
-                        >
+                        <div id={`pool-details-${pool.address}`} className="px-4 pb-4">
                           <InlinePoolDetails pool={pool} />
                         </div>
                       )}
@@ -903,7 +900,7 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
               {newPools.slice(0, 10).map((pool, index) => (
                 <div
                   key={pool.address}
-                  className={`table-row-glass transition-all duration-300 ${
+                  className={`bg-space-700/50 rounded-lg hover:bg-space-700 transition-colors ${
                     expandedPoolId === pool.address ? "ring-2 ring-purple-500" : ""
                   }`}
                 >
@@ -956,7 +953,7 @@ export const DexAnalytics: React.FC<DexAnalyticsProps> = ({ className = "" }) =>
 
                   {/* Inline Expanded Pool Details */}
                   {expandedPoolId === pool.address && (
-                    <div id={`pool-details-${pool.address}`} className="px-4 pb-4 animate-scale-in">
+                    <div id={`pool-details-${pool.address}`} className="px-4 pb-4">
                       <InlinePoolDetails pool={pool} />
                     </div>
                   )}

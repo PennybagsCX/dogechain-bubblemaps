@@ -188,7 +188,7 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
       </div>
 
       {/* Price Overview */}
-      <div className="card-enhanced p-4">
+      <div className="bg-space-800 rounded-xl p-4 border border-space-700">
         <div className="flex items-center justify-between mb-4">
           <div>
             <p className="text-sm text-slate-400 mb-1">Current Price</p>
@@ -231,7 +231,7 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
 
       {/* Key Metrics Grid - Responsive */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="card-enhanced p-3">
+        <div className="bg-space-800 rounded-xl p-3 border border-space-700">
           <div className="flex items-center gap-2 mb-2">
             <Droplets className="w-4 h-4 text-blue-400" />
             <p className="text-xs text-slate-400">TVL</p>
@@ -240,7 +240,7 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
         </div>
 
         {pool.volume24h !== undefined && (
-          <div className="card-enhanced p-3">
+          <div className="bg-space-800 rounded-xl p-3 border border-space-700">
             <div className="flex items-center gap-2 mb-2">
               <Activity className="w-4 h-4 text-purple-400" />
               <p className="text-xs text-slate-400">24h Volume</p>
@@ -250,7 +250,7 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
         )}
 
         {pool.marketCap !== undefined && (
-          <div className="card-enhanced p-3">
+          <div className="bg-space-800 rounded-xl p-3 border border-space-700">
             <div className="flex items-center gap-2 mb-2">
               <BarChart3 className="w-4 h-4 text-green-400" />
               <p className="text-xs text-slate-400">Market Cap</p>
@@ -260,7 +260,7 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
         )}
 
         {pool.pairAge !== undefined && (
-          <div className="card-enhanced p-3">
+          <div className="bg-space-800 rounded-xl p-3 border border-space-700">
             <div className="flex items-center gap-2 mb-2">
               <Clock className="w-4 h-4 text-orange-400" />
               <p className="text-xs text-slate-400">Pool Age</p>
@@ -271,7 +271,7 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
       </div>
 
       {/* Technical Chart Section - Always visible, collapsible */}
-      <div className="card-enhanced overflow-hidden">
+      <div className="bg-space-800 rounded-xl overflow-hidden border border-space-700">
         <button
           onClick={() => toggleSection("chart")}
           className="w-full flex items-center justify-between p-4 hover:bg-space-700/50 transition-colors"
@@ -288,7 +288,7 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
         </button>
 
         {expandedSection === "chart" && (
-          <div className="p-4 pt-0 animate-fade-in">
+          <div className="p-4 pt-0">
             <TechnicalChart
               data={historicalData.map((item) => ({
                 timestamp: new Date(item.date).getTime(),
@@ -305,7 +305,7 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
       {/* Token Information - Responsive Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {/* Token 0 */}
-        <div className="card-enhanced p-4">
+        <div className="bg-space-800 rounded-xl p-4 border border-space-700">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white font-bold">
               {pool.token0.symbol.charAt(0)}
@@ -332,7 +332,7 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
         </div>
 
         {/* Token 1 */}
-        <div className="card-enhanced p-4">
+        <div className="bg-space-800 rounded-xl p-4 border border-space-700">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white font-bold">
               {pool.token1.symbol.charAt(0)}
@@ -360,7 +360,7 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
       </div>
 
       {/* Contract Links */}
-      <div className="card-enhanced p-4">
+      <div className="bg-space-800 rounded-xl p-4 border border-space-700">
         <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
           <ExternalLink className="w-4 h-4" />
           Contract Links
@@ -398,7 +398,7 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
       </div>
 
       {/* Historical Data Table - Collapsible */}
-      <div className="card-enhanced overflow-hidden">
+      <div className="bg-space-800 rounded-xl overflow-hidden border border-space-700">
         <button
           onClick={() => toggleSection("historical")}
           className="w-full flex items-center justify-between p-4 hover:bg-space-700/50 transition-colors"
@@ -415,7 +415,7 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
         </button>
 
         {expandedSection === "historical" && (
-          <div className="overflow-x-auto animate-fade-in">
+          <div className="overflow-x-auto">
             <div className="p-2">
               <table className="w-full text-sm">
                 <thead>
@@ -463,7 +463,7 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
           onClick={() => {
             window.open(`https://www.geckoterminal.com/dogechain/pools/${pool.address}`, "_blank");
           }}
-          className="flex-1 px-4 py-3 glass-button hover:bg-space-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+          className="flex-1 px-4 py-3 bg-space-700 hover:bg-space-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
         >
           <ExternalLink className="w-4 h-4" />
           View on GeckoTerminal

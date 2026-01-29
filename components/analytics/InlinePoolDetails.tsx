@@ -100,10 +100,10 @@ export const InlinePoolDetails: React.FC<InlinePoolDetailsProps> = ({ pool }) =>
 
   // Reset copied address after delay
   useEffect(() => {
-    if (copiedAddress) {
-      const timer = setTimeout(() => setCopiedAddress(null), 2000);
-      return () => clearTimeout(timer);
-    }
+    if (!copiedAddress) return;
+
+    const timer = setTimeout(() => setCopiedAddress(null), 2000);
+    return () => clearTimeout(timer);
   }, [copiedAddress]);
 
   // Format currency

@@ -1129,6 +1129,11 @@ const App: React.FC = () => {
     } else {
       addToast("No connections found to other mapped wallets.", "warning");
     }
+
+    // Close wallet details drawer on mobile after trace completes
+    if (typeof window !== "undefined" && window.innerWidth < 1024) {
+      setSelectedWallet(null);
+    }
   };
 
   // --- CONNECTION DETAILS ---

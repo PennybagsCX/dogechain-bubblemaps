@@ -49,11 +49,18 @@ export async function logSearchQuery(
   try {
     // eslint-disable-next-line no-console -- Intentional debug logging for search tracking
     console.log("[Search] Logging search for", address, assetType);
-    // Use getApiUrl to handle dev vs production environments
-    const response = await fetch(getApiUrl("/api/trending/log"), {
+    // Use /api/interactions endpoint which writes to token_interactions table
+    // This table is queried by /api/stats for the search counter
+    const response = await fetch(getApiUrl("/api/interactions"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ address, assetType, symbol, name }),
+      body: JSON.stringify({
+        tokenAddress: address,
+        interactionType: "search",
+        sessionId: null,
+        queryText: symbol || name || address,
+        resultPosition: null,
+      }),
     });
 
     if (!response.ok) {

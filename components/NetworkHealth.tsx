@@ -8,9 +8,9 @@
  * - Network congestion indicator
  */
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Activity, Zap, Clock, TrendingUp } from "lucide-react";
-import * as d3 from "d3";
+import { DogechainRPCClient } from "@/services/dogechainRPC";
 
 interface NetworkStats {
   currentBlockNumber: number;
@@ -21,71 +21,41 @@ interface NetworkStats {
   congestion: "low" | "medium" | "high";
 }
 
-interface BlockData {
-  number: number;
-  timestamp: number;
-  gasUsed: number;
-  gasLimit: number;
-  txCount: number;
-}
-
 interface NetworkHealthProps {
   className?: string;
 }
 
+// Create RPC client outside component to avoid re-creation on every render
+const rpcClient = new DogechainRPCClient();
+
 export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) => {
   const [stats, setStats] = useState<NetworkStats | null>(null);
-  const [blockHistory, setBlockHistory] = useState<BlockData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const pollingRef = useRef<NodeJS.Timeout | null>(null);
 
   // Fetch network stats
-  const fetchNetworkStats = async () => {
+  const fetchNetworkStats = useCallback(async () => {
     try {
-      // Add cache-busting timestamp to ensure fresh data
-      const response = await fetch(`/api/network-health?cache=false&_t=${Date.now()}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch network stats");
-      }
-      const data = await response.json();
-      setStats(data.stats || data);
+      const data = await rpcClient.getNetworkStats();
+      setStats(data);
       setError(null);
     } catch (err) {
       console.error("Error fetching network stats:", err);
       // Don't set error during polling, only on initial load
-      if (loading) {
-        setError("Failed to load network data");
-      }
+      setError("Failed to load network data");
     } finally {
       setLoading(false);
     }
-  };
-
-  // Fetch historical block data
-  const fetchBlockHistory = async () => {
-    try {
-      // Add cache-busting timestamp to ensure fresh data
-      const response = await fetch(`/api/network-health?history=100&cache=false&_t=${Date.now()}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch block history");
-      }
-      const data = await response.json();
-      setBlockHistory(data.history || []);
-    } catch (err) {
-      console.error("Error fetching block history:", err);
-    }
-  };
+  }, []); // Empty deps - rpcClient is now defined outside component
 
   // Initial fetch and polling
   useEffect(() => {
     fetchNetworkStats();
-    fetchBlockHistory();
 
-    // Poll every 10 seconds
+    // Poll network stats every 10 seconds
     pollingRef.current = setInterval(() => {
       fetchNetworkStats();
-      fetchBlockHistory();
     }, 10000);
 
     return () => {
@@ -93,77 +63,7 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
         clearInterval(pollingRef.current);
       }
     };
-  }, []);
-
-  // D3.js line chart for block time history
-  const blockTimeChartRef = useRef<SVGSVGElement | null>(null);
-
-  useEffect(() => {
-    if (!blockTimeChartRef.current || blockHistory.length === 0) return;
-
-    const svg = d3.select(blockTimeChartRef.current);
-    svg.selectAll("*").remove();
-
-    const width = blockTimeChartRef.current.clientWidth;
-    const height = 200;
-    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
-
-    // Create scales
-    const x = d3
-      .scaleLinear()
-      .domain(d3.extent(blockHistory, (d) => d.number) as [number, number])
-      .range([margin.left, width - margin.right]);
-
-    const y = d3
-      .scaleLinear()
-      .domain([
-        0,
-        d3.max(blockHistory, (d) => {
-          const prevBlock = blockHistory.find((b) => b.number === d.number - 1);
-          if (!prevBlock) return 5000;
-          const blockTime = d.timestamp - prevBlock.timestamp;
-          return typeof blockTime === "number" ? blockTime : 5000;
-        }) || 5000,
-      ])
-      .range([height - margin.bottom, margin.top]);
-
-    // Create line generator
-    const line = d3
-      .line<BlockData>()
-      .x((d) => x(d.number))
-      .y((d) => {
-        const prevBlock = blockHistory.find((b) => b.number === d.number - 1);
-        if (!prevBlock) return y(2500);
-        return y(d.timestamp - prevBlock.timestamp);
-      })
-      .curve(d3.curveMonotoneX);
-
-    // Add X axis
-    svg
-      .append("g")
-      .attr("transform", `translate(0,${height - margin.bottom})`)
-      .call(
-        d3
-          .axisBottom(x)
-          .ticks(5)
-          .tickFormat((d) => `#${d}`)
-      );
-
-    // Add Y axis
-    svg
-      .append("g")
-      .attr("transform", `translate(${margin.left},0)`)
-      .call(d3.axisLeft(y).tickFormat((d) => `${(Number(d) / 1000).toFixed(0)}s`));
-
-    // Add the line
-    svg
-      .append("path")
-      .datum(blockHistory)
-      .attr("fill", "none")
-      .attr("stroke", "#8b5cf6")
-      .attr("stroke-width", 2)
-      .attr("d", line);
-  }, [blockHistory]);
+  }, [fetchNetworkStats]);
 
   // Congestion badge color
   const getCongestionColor = (congestion: string) => {
@@ -273,11 +173,57 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
         </div>
       </div>
 
-      {/* Block Time Chart */}
+      {/* Block Time Distribution - Simple visualization */}
       <div className="bg-space-800 rounded-xl p-6 border border-space-700">
         <h3 className="text-lg font-semibold text-white mb-4">Block Time Distribution</h3>
-        <p className="text-sm text-slate-400 mb-4">Last {blockHistory.length} blocks</p>
-        <svg ref={blockTimeChartRef} className="w-full" style={{ height: 200 }} />
+
+        {/* Block time progress bar */}
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-slate-400">Current Block Time</span>
+            <span className="text-sm text-white font-medium">
+              {(stats.blockTime / 1000).toFixed(2)}s
+            </span>
+          </div>
+          <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
+            <div
+              className="h-full rounded-full transition-all duration-500"
+              style={{
+                width: `${Math.min((stats.blockTime / 5000) * 100, 100)}%`,
+                backgroundColor:
+                  stats.blockTime < 3000
+                    ? "#22c55e"
+                    : stats.blockTime < 5000
+                      ? "#eab308"
+                      : "#ef4444",
+              }}
+            />
+          </div>
+          <div className="flex justify-between text-xs text-slate-500 mt-1">
+            <span>0s</span>
+            <span>5s</span>
+          </div>
+        </div>
+
+        {/* Block time status */}
+        <div className="flex items-center gap-2 text-sm">
+          <Clock
+            className={`w-4 h-4 ${stats.blockTime < 3000 ? "text-green-500" : stats.blockTime < 5000 ? "text-yellow-500" : "text-red-500"}`}
+          />
+          <span
+            className={
+              stats.blockTime < 3000
+                ? "text-green-400"
+                : stats.blockTime < 5000
+                  ? "text-yellow-400"
+                  : "text-red-400"
+            }
+          >
+            {stats.blockTime < 3000 ? "Excellent" : stats.blockTime < 5000 ? "Good" : "Slow"}{" "}
+            performance
+          </span>
+          <span className="text-slate-500">• Target: ~2.5s</span>
+        </div>
       </div>
 
       {/* Network Status */}

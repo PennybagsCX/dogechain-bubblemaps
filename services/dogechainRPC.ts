@@ -1360,8 +1360,10 @@ export class DogechainRPCClient {
       throw new Error("Cannot fetch blocks before genesis");
     }
 
+    // Fetch with much larger batch size for better performance
     const blocks = await this.fetchBlockRange(BigInt(startBlock), latest, {
       includeTransactions: false,
+      batchSize: 100, // Increased from 10 to 100 for faster fetching
     });
 
     return blocks.map((block) => ({

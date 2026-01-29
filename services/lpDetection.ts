@@ -279,13 +279,46 @@ export async function getAllPools(): Promise<PoolStats[]> {
 }
 
 /**
- * Get top pools by TVL
+ * Get top pools by TVL with external API fallback
+ * First tries GeckoTerminal, falls back to RPC + DexScreener
  * @param limit Maximum number of pools to return
  */
 export async function getTopPoolsByTVL(limit: number = 20): Promise<PoolStats[]> {
   try {
-    const { DogechainRPCClient } = await import("./dogechainRPC");
+    // Try GeckoTerminal first for volume data
+    const geckoPools = await (await import("./geckoTerminalService")).getTopPoolsByVolume(limit);
 
+    if (geckoPools.length > 0) {
+      // Transform GeckoPool to PoolStats format
+      return geckoPools.map((pool) => ({
+        address: pool.address,
+        token0: {
+          address: pool.token0.address,
+          symbol: pool.token0.symbol,
+          decimals: pool.token0.decimals,
+        },
+        token1: {
+          address: pool.token1.address,
+          symbol: pool.token1.symbol,
+          decimals: pool.token1.decimals,
+        },
+        factory: pool.dexId || "GeckoTerminal",
+        reserve0: pool.reserve0Usd.toString(),
+        reserve1: pool.reserve1Usd.toString(),
+        tvlUsd: pool.totalValueLockedUsd,
+        lpTokenSupply: "0",
+        createdAt: new Date(pool.createdAt).getTime(),
+        pairAge: Date.now() - new Date(pool.createdAt).getTime(),
+        volume24h: pool.volume24hUsd,
+        priceChange24h: pool.priceChange24h,
+        marketCap: pool.marketCapUsd,
+      }));
+    }
+
+    // Fallback to RPC + DexScreener
+    console.warn("[lpDetection] GeckoTerminal unavailable, using RPC + DexScreener fallback");
+
+    const { DogechainRPCClient } = await import("./dogechainRPC");
     const rpcClient = new DogechainRPCClient();
     const pairs = await loadAllLPPairs();
 
@@ -300,16 +333,37 @@ export async function getTopPoolsByTVL(limit: number = 20): Promise<PoolStats[]>
     // Merge with factory info and sort by TVL
     const poolMap = new Map(pairs.map((p) => [p.pairAddress.toLowerCase(), p]));
 
-    const poolsWithAnalytics = analytics
-      .map((a) => ({
-        ...a,
-        factory: poolMap.get(a.address.toLowerCase())?.dexName || "Unknown",
-      }))
-      .filter((p) => p.tvlUsd > 0) // Only include pools with TVL
-      .sort((a, b) => b.tvlUsd - a.tvlUsd)
-      .slice(0, limit);
+    const poolsWithAnalytics = await Promise.all(
+      analytics.map(async (a) => {
+        const factory = poolMap.get(a.address.toLowerCase())?.dexName || "Unknown";
 
-    return poolsWithAnalytics;
+        // Try to enhance with DexScreener data
+        try {
+          const screenerData = await (
+            await import("./dexScreenerService")
+          ).getPairData("dogechain", a.address);
+
+          if (screenerData) {
+            return {
+              ...a,
+              factory,
+              volume24h: screenerData.volume24h,
+              priceChange24h: screenerData.priceChange24h,
+              marketCap: screenerData.fdv || screenerData.marketCap,
+            };
+          }
+        } catch {
+          // DexScreener fetch failed, use basic data
+        }
+
+        return { ...a, factory };
+      })
+    );
+
+    // Filter after Promise.all resolves
+    const filteredPools = poolsWithAnalytics.filter((p) => p.tvlUsd > 0);
+
+    return filteredPools.sort((a, b) => b.tvlUsd - a.tvlUsd).slice(0, limit);
   } catch (error) {
     console.warn("[lpDetection] Failed to get top pools by TVL:", error);
     return [];
@@ -317,13 +371,48 @@ export async function getTopPoolsByTVL(limit: number = 20): Promise<PoolStats[]>
 }
 
 /**
- * Get new pools created within the specified time period
+ * Get new pools created within the specified time period with external API fallback
  * @param since Time in milliseconds ago (default: 24 hours)
  */
 export async function getNewPools(since: number = 24 * 60 * 60 * 1000): Promise<PoolStats[]> {
   try {
-    const { DogechainRPCClient } = await import("./dogechainRPC");
+    // Try GeckoTerminal first for new pools
+    const geckoPools = await (await import("./geckoTerminalService")).getNewPools(50);
 
+    if (geckoPools.length > 0) {
+      // Filter by time period and transform
+      const cutoffTime = Date.now() - since;
+      return geckoPools
+        .filter((pool) => new Date(pool.createdAt).getTime() >= cutoffTime)
+        .map((pool) => ({
+          address: pool.address,
+          token0: {
+            address: pool.token0.address,
+            symbol: pool.token0.symbol,
+            decimals: pool.token0.decimals,
+          },
+          token1: {
+            address: pool.token1.address,
+            symbol: pool.token1.symbol,
+            decimals: pool.token1.decimals,
+          },
+          factory: pool.dexId || "GeckoTerminal",
+          reserve0: pool.reserve0Usd.toString(),
+          reserve1: pool.reserve1Usd.toString(),
+          tvlUsd: pool.totalValueLockedUsd,
+          lpTokenSupply: "0",
+          createdAt: new Date(pool.createdAt).getTime(),
+          pairAge: Date.now() - new Date(pool.createdAt).getTime(),
+          volume24h: pool.volume24hUsd,
+          priceChange24h: pool.priceChange24h,
+          marketCap: pool.marketCapUsd,
+        }));
+    }
+
+    // Fallback to RPC-based pool discovery
+    console.warn("[lpDetection] GeckoTerminal unavailable, using RPC fallback for new pools");
+
+    const { DogechainRPCClient } = await import("./dogechainRPC");
     const rpcClient = new DogechainRPCClient();
     const pairs = await loadAllLPPairs();
     const cutoffTime = Date.now() - since;

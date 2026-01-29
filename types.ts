@@ -363,3 +363,120 @@ export interface PoolAnalytics extends PoolStats {
   token1Price: number;
   lastUpdated: number;
 }
+
+// =====================================================
+// DEX Analytics Enhanced Types (GeckoTerminal/DexScreener)
+// =====================================================
+
+/**
+ * Enhanced pool stats with trading metrics from external APIs
+ */
+export interface EnhancedPoolStats extends PoolStats {
+  volume24h?: number;
+  volume7d?: number;
+  priceChange24h?: number;
+  priceChange7d?: number;
+  marketCap?: number;
+  transactions24h?: number;
+}
+
+/**
+ * OHLCV data for price charts
+ */
+export interface PoolOHLCV {
+  poolAddress: string;
+  timeframe: "1h" | "6h" | "1d";
+  data: Array<{
+    timestamp: number;
+    open: number;
+    high: number;
+    low: number;
+    close: number;
+    volume: number;
+  }>;
+}
+
+/**
+ * Chain-level metrics for network overview
+ */
+export interface ChainMetrics {
+  chainName: string;
+  totalTVL: number;
+  dexVolume24h: number;
+  dexVolume7d: number;
+  activePools: number;
+  dailyUsers: number;
+}
+
+/**
+ * GeckoTerminal pool data structure
+ */
+export interface GeckoPool {
+  address: string;
+  name: string;
+  token0: {
+    address: string;
+    symbol: string;
+    name: string;
+    decimals?: number;
+  };
+  token1: {
+    address: string;
+    symbol: string;
+    name: string;
+    decimals?: number;
+  };
+  reserve0Usd: number;
+  reserve1Usd: number;
+  totalValueLockedUsd: number;
+  volume24hUsd?: number;
+  priceChange24h?: number;
+  marketCapUsd?: number;
+  createdAt: string;
+  dexId?: string;
+}
+
+/**
+ * OHLCV data point for charting
+ */
+export interface OHLCVData {
+  timestamp: number;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+}
+
+/**
+ * DexScreener pair data structure
+ */
+export interface DexScreenerPair {
+  chainId: string;
+  pairAddress: string;
+  dexId: string;
+  baseToken: {
+    address: string;
+    name: string;
+    symbol: string;
+  };
+  quoteToken: {
+    address: string;
+    name: string;
+    symbol: string;
+  };
+  priceUsd: string;
+  liquidity: {
+    usd: number;
+    base: number;
+    quote: number;
+  };
+  volume24h: number;
+  priceChange24h: number;
+  txns24h: {
+    buys: number;
+    sells: number;
+  };
+  fdv?: number;
+  marketCap?: number;
+}

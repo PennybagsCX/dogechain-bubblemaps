@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { getApiUrl } from "../utils/api";
 
 const CACHE_KEY = "doge_stats_cache";
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const CACHE_TTL = 10 * 1000; // 10 seconds for near real-time counter updates
 
 interface StatsData {
   searches: number;

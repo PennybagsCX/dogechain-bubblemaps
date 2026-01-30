@@ -40,6 +40,7 @@ import { exportDatabaseAsCSV } from "../services/db";
 import { validateTokenAddress, validateWalletAddress } from "../utils/validation";
 import { getApiUrl } from "../utils/api";
 import { DogechainRPCClient } from "../services/dogechainRPC";
+import { getSessionId } from "../services/searchAnalytics";
 
 interface InAppNotification {
   id: string;
@@ -1097,6 +1098,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             tokenAddress: triggeredEvent.tokenAddress,
             tokenSymbol: triggeredEvent.tokenSymbol,
             transactionCount: triggeredEvent.transactions.length,
+            sessionId: getSessionId(),
           }),
         })
           .then(async (response) => {

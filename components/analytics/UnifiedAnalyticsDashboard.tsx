@@ -151,7 +151,7 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div className="flex flex-col items-center lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white">Unified Analytics</h1>
           <p className="text-slate-400">
@@ -160,29 +160,31 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 w-full lg:w-auto">
+        <div className="flex flex-col items-center justify-center gap-2 sm:gap-3 w-full lg:w-auto mx-auto">
           {/* Time Range Selector */}
-          <div className="flex flex-1 min-w-0 items-center gap-1 bg-space-800 rounded-lg p-1 border border-space-700 overflow-x-auto w-full max-w-full">
-            {TIME_RANGES.map((range) => (
-              <button
-                key={range.value}
-                onClick={() => setGlobalTimeRange(range.value)}
-                className={`flex-none whitespace-nowrap px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors ${
-                  globalTimeRange === range.value
-                    ? "bg-purple-500 text-white"
-                    : "text-slate-400 hover:text-white hover:bg-space-700"
-                }`}
-              >
-                {range.label}
-              </button>
-            ))}
+          <div className="flex w-full justify-center">
+            <div className="inline-flex items-center gap-1 bg-space-800 rounded-lg p-1 border border-space-700 overflow-x-auto justify-center mx-auto">
+              {TIME_RANGES.map((range) => (
+                <button
+                  key={range.value}
+                  onClick={() => setGlobalTimeRange(range.value)}
+                  className={`flex-none whitespace-nowrap px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors ${
+                    globalTimeRange === range.value
+                      ? "bg-purple-500 text-white"
+                      : "text-slate-400 hover:text-white hover:bg-space-700"
+                  }`}
+                >
+                  {range.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Refresh Button */}
           <button
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="flex-shrink-0 px-3 py-1.5 sm:px-4 sm:py-2 bg-space-800 border border-space-700 rounded-lg text-xs sm:text-sm font-medium text-slate-400 hover:text-white hover:bg-space-700 transition-colors flex items-center justify-center gap-1.5 sm:gap-2 disabled:opacity-50"
+            className="flex-shrink-0 px-3 py-1.5 sm:px-4 sm:py-2 bg-space-800 border border-space-700 rounded-lg text-xs sm:text-sm font-medium text-slate-400 hover:text-white hover:bg-space-700 transition-colors flex items-center justify-center gap-1.5 sm:gap-2 disabled:opacity-50 mx-auto"
           >
             <RefreshCw size={14} className={isRefreshing ? "animate-spin" : ""} />
             <span className="hidden sm:inline">Refresh</span>

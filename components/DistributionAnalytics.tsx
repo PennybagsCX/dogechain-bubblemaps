@@ -296,19 +296,17 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
                     if (active && payload && payload.length > 0) {
                       const data = payload[0].payload;
                       return (
-                        <div className="bg-space-800 border border-space-600 rounded-lg px-3 py-2 shadow-xl">
-                          <div className="flex items-center gap-2">
-                            <div
-                              className="w-3 h-3 rounded-sm flex-shrink-0"
+                        <div className="bg-space-800 border border-space-600 rounded-lg p-2 shadow-xl flex flex-col items-center text-center gap-1">
+                          <div className="relative flex items-center justify-center w-full">
+                            <span
+                              className="absolute left-2 w-3 h-3 rounded-sm"
                               style={{ backgroundColor: payload[0].color }}
                             />
-                            <span className="text-sm font-medium text-white">{data.name}</span>
+                            <span className="text-sm font-medium text-white text-center">{data.name}</span>
                           </div>
-                          <div className="mt-1 ml-5">
-                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                              {data.value.toFixed(1)}%
-                            </span>
-                          </div>
+                          <span className="inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-200 border border-purple-500/30">
+                            {data.value.toFixed(1)}%
+                          </span>
                         </div>
                       );
                     }
@@ -360,6 +358,7 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
                 />
                 <YAxis tick={{ fill: "#94a3b8" }} axisLine={{ stroke: "#334155" }} />
                 <Tooltip
+                  cursor={{ fill: "transparent" }}
                   content={({ active, payload }) => {
                     if (active && payload && payload.length > 0) {
                       const data = payload[0].payload;

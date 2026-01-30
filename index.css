@@ -170,6 +170,14 @@ body {
   outline-offset: 2px;
 }
 
+/* Suppress outlines inside Recharts visuals (SVG) to avoid box highlights on click/hover */
+.recharts-wrapper :focus,
+.recharts-wrapper :focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
+
 /* Remove focus outline from search inputs */
 input[type="text"]:focus-visible {
   outline: none !important;

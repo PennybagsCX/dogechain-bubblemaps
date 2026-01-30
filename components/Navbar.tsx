@@ -10,7 +10,6 @@ import {
   Menu,
   X,
   Activity,
-  Building2,
   PieChart,
   ChevronDown,
   Bell,

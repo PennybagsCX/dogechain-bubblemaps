@@ -79,7 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     currentView === ViewState.ANALYSIS || currentView === ViewState.DISTRIBUTION;
   const isDashboardsActive =
     currentView === ViewState.NETWORK_HEALTH ||
-    currentView === ViewState.DEX_ANALYTICS ||
+    // currentView === ViewState.DEX_ANALYTICS || // Hidden from menu until further refinement
     currentView === ViewState.DASHBOARD;
 
   return (
@@ -208,7 +208,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <Activity size={16} />
                     <span>Network Health</span>
                   </button>
-                  <button
+                  {/* DEX Analytics - Hidden from menu until further refinement */}
+                  {/* <button
                     onTouchStart={handleTouchStopPropagation}
                     onClick={() => {
                       onChangeView(ViewState.DEX_ANALYTICS);
@@ -222,7 +223,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   >
                     <Building2 size={16} />
                     <span>DEX Analytics</span>
-                  </button>
+                  </button> */}
                 </div>
               )}
             </div>
@@ -375,13 +376,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <Activity size={20} /> Network Health
               </button>
-              <button
+              {/* DEX Analytics - Hidden from menu until further refinement */}
+              {/* <button
                 onTouchStart={handleTouchStopPropagation}
                 onClick={() => handleMobileNav(ViewState.DEX_ANALYTICS)}
                 className={mobileNavClass(currentView === ViewState.DEX_ANALYTICS)}
               >
                 <Building2 size={20} /> DEX Analytics
-              </button>
+              </button> */}
             </div>
           </div>
         )}

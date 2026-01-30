@@ -9,10 +9,10 @@ import {
   Search,
   Menu,
   X,
-  Activity,
   PieChart,
   ChevronDown,
   Bell,
+  BarChart3,
 } from "lucide-react";
 
 interface NavbarProps {
@@ -77,9 +77,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const isAnalysisActive =
     currentView === ViewState.ANALYSIS || currentView === ViewState.DISTRIBUTION;
   const isDashboardsActive =
-    currentView === ViewState.NETWORK_HEALTH ||
-    // currentView === ViewState.DEX_ANALYTICS || // Hidden from menu until further refinement
-    currentView === ViewState.DASHBOARD;
+    currentView === ViewState.UNIFIED_ANALYTICS || currentView === ViewState.DASHBOARD;
 
   return (
     <>
@@ -195,34 +193,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <button
                     onTouchStart={handleTouchStopPropagation}
                     onClick={() => {
-                      onChangeView(ViewState.NETWORK_HEALTH);
+                      onChangeView(ViewState.UNIFIED_ANALYTICS);
                       setDashboardsDropdownOpen(false);
                     }}
                     className={`w-full flex items-center gap-3 px-4 py-2 text-left transition-colors ${
-                      currentView === ViewState.NETWORK_HEALTH
+                      currentView === ViewState.UNIFIED_ANALYTICS
                         ? "bg-purple-600 text-white"
                         : "text-slate-300 hover:bg-space-700 hover:text-white"
                     }`}
                   >
-                    <Activity size={16} />
-                    <span>Network Health</span>
+                    <BarChart3 size={16} />
+                    <span>Unified Analytics</span>
                   </button>
-                  {/* DEX Analytics - Hidden from menu until further refinement */}
-                  {/* <button
-                    onTouchStart={handleTouchStopPropagation}
-                    onClick={() => {
-                      onChangeView(ViewState.DEX_ANALYTICS);
-                      setDashboardsDropdownOpen(false);
-                    }}
-                    className={`w-full flex items-center gap-3 px-4 py-2 text-left transition-colors ${
-                      currentView === ViewState.DEX_ANALYTICS
-                        ? "bg-purple-600 text-white"
-                        : "text-slate-300 hover:bg-space-700 hover:text-white"
-                    }`}
-                  >
-                    <Building2 size={16} />
-                    <span>DEX Analytics</span>
-                  </button> */}
                 </div>
               )}
             </div>
@@ -370,19 +352,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
               <button
                 onTouchStart={handleTouchStopPropagation}
-                onClick={() => handleMobileNav(ViewState.NETWORK_HEALTH)}
-                className={mobileNavClass(currentView === ViewState.NETWORK_HEALTH)}
+                onClick={() => handleMobileNav(ViewState.UNIFIED_ANALYTICS)}
+                className={mobileNavClass(currentView === ViewState.UNIFIED_ANALYTICS)}
               >
-                <Activity size={20} /> Network Health
+                <BarChart3 size={20} /> Unified Analytics
               </button>
-              {/* DEX Analytics - Hidden from menu until further refinement */}
-              {/* <button
-                onTouchStart={handleTouchStopPropagation}
-                onClick={() => handleMobileNav(ViewState.DEX_ANALYTICS)}
-                className={mobileNavClass(currentView === ViewState.DEX_ANALYTICS)}
-              >
-                <Building2 size={20} /> DEX Analytics
-              </button> */}
             </div>
           </div>
         )}

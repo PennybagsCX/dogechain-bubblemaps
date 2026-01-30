@@ -1,217 +1,19 @@
 {
   "version": "0.1.0",
   "created": 1768694124,
-  "updated": 1769694528,
+  "updated": 1769794773,
   "files": {
-    "./utils/discoverFactories.ts": {
-      "path": "./utils/discoverFactories.ts",
-      "hash": "7d45cd031f9acef7e2ea35b8c4bf5109e83df1354f18c434dd8df13b3f9ce7b4",
-      "last_modified": 1768412901,
-      "size": 16450
+    "./utils/api.ts": {
+      "path": "./utils/api.ts",
+      "hash": "7ea5c68334ce0b7d1a2758d41cbe38522a20d26c370e837824c1cefe63af8423",
+      "last_modified": 1769745312,
+      "size": 2195
     },
-    "./package-lock.json": {
-      "path": "./package-lock.json",
-      "hash": "7354ee05e116dadceae6418545947ff3f194e6f5fb6c55d58df1d22ab5caf0c8",
-      "last_modified": 1769621799,
-      "size": 797486
-    },
-    "./postcss.config.js": {
-      "path": "./postcss.config.js",
-      "hash": "df297544dcc47775a5d46f9d708274ef66bde398de8f6563a3aecc59e85eae87",
-      "last_modified": 1768354254,
-      "size": 70
-    },
-    "./public/favicon.svg": {
-      "path": "./public/favicon.svg",
-      "hash": "7db33e8900071286ae7a39b0e63e954a456d940f3cf396db1b0818278e0f048d",
-      "last_modified": 1767584560,
-      "size": 1110
-    },
-    "./utils/dashboardGuideStorage.ts.bak": {
-      "path": "./utils/dashboardGuideStorage.ts.bak",
-      "hash": "78bf19416023c0b5d5d985fbba5ee009d3ef901cf0b148f26d3dbfff833718a6",
-      "last_modified": 1768408843,
-      "size": 3923
-    },
-    "./services/personalizedSearchRanking.ts": {
-      "path": "./services/personalizedSearchRanking.ts",
-      "hash": "2efb300f1059e8af40b6323eaa0c21c8ad584b8337a2dddc66d6c49461fec58d",
-      "last_modified": 1769608327,
-      "size": 7412
-    },
-    "./DEPLOYMENT_FIX_SUMMARY.md": {
-      "path": "./DEPLOYMENT_FIX_SUMMARY.md",
-      "hash": "4f88993ab987d15d73e95091a754547afc1c1ed1f4d01bd2c0de9b0ea210d761",
-      "last_modified": 1768089716,
-      "size": 5615
-    },
-    "./services/trendingService.ts": {
-      "path": "./services/trendingService.ts",
-      "hash": "47119a54e808ad78d795f2ba9a2353bcdfe2f2f71c4bc7bd9dd2ba6239a8d324",
-      "last_modified": 1769687756,
-      "size": 4989
-    },
-    "./console2.md": {
-      "path": "./console2.md",
-      "hash": "c411aff276124a869adc0f5f7b958d58e6d18ace9990a97510df89c82c553713",
-      "last_modified": 1769475702,
-      "size": 34230
-    },
-    "./scripts/setup-user-alerts-table.js": {
-      "path": "./scripts/setup-user-alerts-table.js",
-      "hash": "f6b97ecba7d84fab8f4e5c1a480fb4098d98c741e188d290fdb7166851c4fbf6",
-      "last_modified": 1768485812,
-      "size": 1791
-    },
-    "./RABBY_MOBILE_FIX.md": {
-      "path": "./RABBY_MOBILE_FIX.md",
-      "hash": "0d0c2e5d44afe1ccab94c08240c1cae69d733014adf5cc5dd795d7c7da2bfbee",
-      "last_modified": 1768089716,
-      "size": 4354
-    },
-    "./components/DistributionAnalytics.tsx": {
-      "path": "./components/DistributionAnalytics.tsx",
-      "hash": "6c16a5e35fb94ff14ec77ebb10bc32cd4c610ba72872ade5f572744727916de5",
-      "last_modified": 1769638932,
-      "size": 15526
-    },
-    "./components/TrendingSection.tsx": {
-      "path": "./components/TrendingSection.tsx",
-      "hash": "bdb5e588d379fae166c24c43da81afcdedecbf1850dfca2967d5e2c79bfc6f0d",
+    "./components/Footer.tsx": {
+      "path": "./components/Footer.tsx",
+      "hash": "6169ff9146c22f2da72532ca7438a5458871ac20484a94b3ddfef2f263d5891e",
       "last_modified": 1768411123,
-      "size": 3629
-    },
-    "./utils/encryption.ts": {
-      "path": "./utils/encryption.ts",
-      "hash": "d66349c604a2f2585fb5f70de724a3455811bd896e7aa6139d0e2c191739a57f",
-      "last_modified": 1768411070,
-      "size": 5003
-    },
-    "./types/d3.types.ts": {
-      "path": "./types/d3.types.ts",
-      "hash": "95da90d280f5b51301ddd08ff358c9e83c7ba77d4a9d2fbda2e5a721f6fbdbde",
-      "last_modified": 1767614339,
-      "size": 1382
-    },
-    "./tests/alert-setup.ts": {
-      "path": "./tests/alert-setup.ts",
-      "hash": "ce0f0c3ac717e07fedc38a1a018adb8128df7c6b4a8f2392ada52a7e532e5f94",
-      "last_modified": 1769349453,
-      "size": 1434
-    },
-    "./docs/ALERT_SYNC_MONITORING.md": {
-      "path": "./docs/ALERT_SYNC_MONITORING.md",
-      "hash": "12de5d9ca408037a3687e3b44b8e52cc99a5191684fc3a76b4f24422197fbf2c",
-      "last_modified": 1768487865,
-      "size": 16580
-    },
-    "./src/shared/utils/CLAUDE.md": {
-      "path": "./src/shared/utils/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768227195,
-      "size": 170
-    },
-    "./utils/guideStorage.ts": {
-      "path": "./utils/guideStorage.ts",
-      "hash": "5b85d24d906c244dfe8805beb31b2621b6195e4346cdbcb31fcb99818fa1faba",
-      "last_modified": 1768513862,
-      "size": 11858
-    },
-    "./api/__tests__/alerts.test.ts": {
-      "path": "./api/__tests__/alerts.test.ts",
-      "hash": "e812944575afef16b55201aa1bdad53d83375af15e4efcf18d16f57732f6f2a1",
-      "last_modified": 1768489185,
-      "size": 1007
-    },
-    "./tests/ALERT_SYNC_TESTING.md": {
-      "path": "./tests/ALERT_SYNC_TESTING.md",
-      "hash": "46f7048f10288f0020364c79c13561e75360958c10dbaa70f40e4b68afb679a8",
-      "last_modified": 1768486538,
-      "size": 12463
-    },
-    "./services/abbreviationCache.ts": {
-      "path": "./services/abbreviationCache.ts",
-      "hash": "965b365e6006eaa8266fc44cb13de9dbe3395f1bcfdc11666a1bc21a9345bf30",
-      "last_modified": 1768411238,
-      "size": 7719
-    },
-    "./prisma/migrations/20260115090244_add_user_alerts_table/migration.sql": {
-      "path": "./prisma/migrations/20260115090244_add_user_alerts_table/migration.sql",
-      "hash": "936edc73f5391de4ad2ce80e71cdbdf84ae1c5ee14a9d5c295da48be1a3afc49",
-      "last_modified": 1768485775,
-      "size": 2303
-    },
-    "./coverage/block-navigation.js": {
-      "path": "./coverage/block-navigation.js",
-      "hash": "b8d771585c62abc5ef97b655f2c449ba80b09dea62594553e76c719680705068",
-      "last_modified": 1768490661,
-      "size": 2655
-    },
-    "./api/__tests__/CLAUDE.md": {
-      "path": "./api/__tests__/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1769342847,
-      "size": 170
-    },
-    "./tests/setup.ts": {
-      "path": "./tests/setup.ts",
-      "hash": "d001acb5f126d383e619e1801540955923e855645007156febcba9095f0f142d",
-      "last_modified": 1769342548,
-      "size": 2049
-    },
-    "./docs/ARC_MOBILE_FIX_DOCUMENTATION.md": {
-      "path": "./docs/ARC_MOBILE_FIX_DOCUMENTATION.md",
-      "hash": "3998211d6628438188c82e795bf47315373e3a3780c40db45e79a32e53b7dec2",
-      "last_modified": 1768097427,
-      "size": 14186
-    },
-    "./components/RateLimitWarning.tsx": {
-      "path": "./components/RateLimitWarning.tsx",
-      "hash": "67b710c7851ae207c256d7ce4141f7070d851a4a45a27c34c9017a36937c4802",
-      "last_modified": 1769299164,
-      "size": 4964
-    },
-    "./api/trending/log.ts": {
-      "path": "./api/trending/log.ts",
-      "hash": "fa7b6ff7706982d29d4cecd8e96f342ffd936d25eed90949db1b8cb2d76e96c0",
-      "last_modified": 1768412320,
-      "size": 2953
-    },
-    "./components/ConnectionDetailsView.tsx": {
-      "path": "./components/ConnectionDetailsView.tsx",
-      "hash": "766a142abfea1c0f72428208bcd2cd8b6da39b9dcae640cc849bc4b39570d12e",
-      "last_modified": 1768414517,
-      "size": 13900
-    },
-    "./RAINBOWKIT_FIXES.md": {
-      "path": "./RAINBOWKIT_FIXES.md",
-      "hash": "bd295c15d71fa001ed0e31a11dd1ae7f1fa0e30bcfa1022a29cd86a1ea17ea45",
-      "last_modified": 1768089716,
-      "size": 8539
-    },
-    "./DOGECHAIN_RPC_RESEARCH_REPORT.md": {
-      "path": "./DOGECHAIN_RPC_RESEARCH_REPORT.md",
-      "hash": "bf86368bac6c56f7ddaeb5acf1f1470a248bc237b6208124771f68317b469e0b",
-      "last_modified": 1769523960,
-      "size": 17082
-    },
-    "./coverage/lcov-report/prettify.css": {
-      "path": "./coverage/lcov-report/prettify.css",
-      "hash": "7b4fa6fb8cd1ece3b6123fc3793721d930963e6d67865858cc1f0fffabf7e241",
-      "last_modified": 1768490671,
-      "size": 1060
-    },
-    "./scripts/setup-diagnostics-table.js": {
-      "path": "./scripts/setup-diagnostics-table.js",
-      "hash": "c7c80fdb7134fbb6130107bb0b542c33d85432f7bb95ebea1baf8d7048218d74",
-      "last_modified": 1768091394,
-      "size": 1997
-    },
-    "./test-chart-urls.html": {
-      "path": "./test-chart-urls.html",
-      "hash": "39f8fac78666e6dd085f3ecec74a07de840d4e46b2c852e738fdcf6e8c4c341c",
-      "last_modified": 1768337467,
-      "size": 3125
+      "size": 5075
     },
     "./api/token-search.ts": {
       "path": "./api/token-search.ts",
@@ -219,16 +21,310 @@
       "last_modified": 1768411162,
       "size": 2662
     },
-    "./services/comprehensiveScanner.ts": {
-      "path": "./services/comprehensiveScanner.ts",
-      "hash": "cddfd8e1af39ab4eed428ce970e95918034853cdebbd7773dbb3df36ab8f634b",
-      "last_modified": 1768412492,
-      "size": 11885
+    "./api/learned-tokens.ts": {
+      "path": "./api/learned-tokens.ts",
+      "hash": "5ed3d385758aa266bb8b8d996e328b8ab7c7f887b1c895b0cb88459d328f1977",
+      "last_modified": 1768411162,
+      "size": 4953
+    },
+    "./services/userBehaviorAnalytics.ts": {
+      "path": "./services/userBehaviorAnalytics.ts",
+      "hash": "527c223a4dab2b3d3955e2abc8d9d0aacb0c4661549e269f117a07cbb566623a",
+      "last_modified": 1769787993,
+      "size": 6513
+    },
+    "./src/api/__tests__/CLAUDE.md": {
+      "path": "./src/api/__tests__/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768409146,
+      "size": 170
+    },
+    "./components/analytics/PoolDetailModal.tsx": {
+      "path": "./components/analytics/PoolDetailModal.tsx",
+      "hash": "e34484c7053d66f51bfc19ee1d2f15ead6898d547e47ad64c197f77463e38b82",
+      "last_modified": 1769720506,
+      "size": 21746
+    },
+    "./docs/dev/SECURITY_FIXES.md": {
+      "path": "./docs/dev/SECURITY_FIXES.md",
+      "hash": "5848bc371edac2ba5dd3a215ff633b69cdd8cf3b309f7b2081799a4406cb9727",
+      "last_modified": 1767662125,
+      "size": 10968
+    },
+    "./RPC_WALLET_MONITORING_IMPLEMENTATION.md": {
+      "path": "./RPC_WALLET_MONITORING_IMPLEMENTATION.md",
+      "hash": "9e9cee568c14f21e7d13f4fa6895b4052dae09dc119269888ec7a1df371c6628",
+      "last_modified": 1769523960,
+      "size": 7916
+    },
+    "./public/search-cache-sw.js": {
+      "path": "./public/search-cache-sw.js",
+      "hash": "d846f1964cba857c5182f72a3c130fd8428d77ad6a036c10c91efa3eea7f7538",
+      "last_modified": 1767844157,
+      "size": 2917
+    },
+    "./coverage/lcov-report/alerts.ts.html": {
+      "path": "./coverage/lcov-report/alerts.ts.html",
+      "hash": "a091b96c7074929b5105858eed98ec8d41e25534ca0aa4a4b4d64d43aad9641d",
+      "last_modified": 1768490662,
+      "size": 11075
+    },
+    "./components/TokenInfoPanelGuide.tsx": {
+      "path": "./components/TokenInfoPanelGuide.tsx",
+      "hash": "60adc4f390d5f9ae38d0f75dda73cab274393e9e3319260d16d6fcfb6ab51ff5",
+      "last_modified": 1768589986,
+      "size": 9272
+    },
+    "./index.css": {
+      "path": "./index.css",
+      "hash": "e772bb33fa35844e8d616b47d37c361e9289e2d40673e9abd4474835a239eca2",
+      "last_modified": 1769743030,
+      "size": 4871
+    },
+    "./NEON_SETUP_SIMPLE.md": {
+      "path": "./NEON_SETUP_SIMPLE.md",
+      "hash": "b2b1b917f2d51162c3b9a59b41af40ea2edc5f457670fc8fce3605060c215eed",
+      "last_modified": 1767886141,
+      "size": 4226
+    },
+    "./types.ts": {
+      "path": "./types.ts",
+      "hash": "05c672089465b96af9cb30f7f26848d800a5fe86e0851c229034cb3fb0ff76f9",
+      "last_modified": 1769787968,
+      "size": 13417
+    },
+    "./components/Dashboard.tsx": {
+      "path": "./components/Dashboard.tsx",
+      "hash": "53b646b5065d61738ea63d7be19b9c65893c3ac736bd6ded7d57e4239640f89a",
+      "last_modified": 1769618741,
+      "size": 100310
+    },
+    "./docs/ARC_MOBILE_FIX_DOCUMENTATION.md": {
+      "path": "./docs/ARC_MOBILE_FIX_DOCUMENTATION.md",
+      "hash": "3998211d6628438188c82e795bf47315373e3a3780c40db45e79a32e53b7dec2",
+      "last_modified": 1768097427,
+      "size": 14186
+    },
+    "./services/searchAliasDiscovery.ts": {
+      "path": "./services/searchAliasDiscovery.ts",
+      "hash": "3d99a068e1265914d3ea0a43f70113daff90db67150cfc0a531687f9cb29137a",
+      "last_modified": 1769608327,
+      "size": 7470
+    },
+    "./RABBY_MOBILE_FIX.md": {
+      "path": "./RABBY_MOBILE_FIX.md",
+      "hash": "0d0c2e5d44afe1ccab94c08240c1cae69d733014adf5cc5dd795d7c7da2bfbee",
+      "last_modified": 1768089716,
+      "size": 4354
+    },
+    "./src/api/index.ts": {
+      "path": "./src/api/index.ts",
+      "hash": "a736398d8c6ea97db3a07834a2ce5c64015ed2fc1d069ed675e08c3db1298c77",
+      "last_modified": 1769696254,
+      "size": 1023
+    },
+    "./components/DexAnalytics.tsx": {
+      "path": "./components/DexAnalytics.tsx",
+      "hash": "f8260241efcf4dcaa2c1d804b31febd16f5ad7b124e0c90fcee33e21cf19a8dc",
+      "last_modified": 1769727444,
+      "size": 43602
+    },
+    "./services/popularityScoring.ts": {
+      "path": "./services/popularityScoring.ts",
+      "hash": "76bba159728b60c737dd65b25e20aafc73b9af3d713953ca884e2a24c0b7fafd",
+      "last_modified": 1769607967,
+      "size": 13522
+    },
+    "./services/invertedIndex.ts": {
+      "path": "./services/invertedIndex.ts",
+      "hash": "cdbd70c7ea03aea951788ee821b8a7e0e54243e5b88852c463620b2e254bb587",
+      "last_modified": 1768411238,
+      "size": 7409
+    },
+    "./services/defiLlamaService.ts": {
+      "path": "./services/defiLlamaService.ts",
+      "hash": "229f510d953ed1f724a248c47b33155a350c5544d456bede29d211431bed1df5",
+      "last_modified": 1769720506,
+      "size": 9821
+    },
+    "./TEST_REPORT.md": {
+      "path": "./TEST_REPORT.md",
+      "hash": "f9203d3a720231a4a92a320c5fe2f68b38dfa999bb784a000aa4a4f28c6d8d62",
+      "last_modified": 1767886141,
+      "size": 10287
+    },
+    "./coverage/lcov-report/index.html": {
+      "path": "./coverage/lcov-report/index.html",
+      "hash": "cb3e77398dcc43f53a7cec544e98a9bd0e85eaa654eaf84d469027505bc9ec3c",
+      "last_modified": 1768490662,
+      "size": 5700
+    },
+    "./services/searchWorker.ts": {
+      "path": "./services/searchWorker.ts",
+      "hash": "269100c175525999f1a8d6f1fa70df67465e505cd77c4c34d8be767d1c34fe90",
+      "last_modified": 1768412541,
+      "size": 8334
+    },
+    "./CHART_TESTING_GUIDE.md": {
+      "path": "./CHART_TESTING_GUIDE.md",
+      "hash": "09574b9727b1717094f95efa785b4cf1d425720f471c59c1df32b52924733f2d",
+      "last_modified": 1768352007,
+      "size": 11357
+    },
+    "./coverage/prettify.css": {
+      "path": "./coverage/prettify.css",
+      "hash": "7b4fa6fb8cd1ece3b6123fc3793721d930963e6d67865858cc1f0fffabf7e241",
+      "last_modified": 1768490671,
+      "size": 1060
+    },
+    "./src/components/CLAUDE.md": {
+      "path": "./src/components/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768409146,
+      "size": 170
+    },
+    "./services/factoryDiscovery.ts": {
+      "path": "./services/factoryDiscovery.ts",
+      "hash": "040f113ffa31b2f36016b5c6b8879397f21bd4a7895d363f7008fffb1e5addb1",
+      "last_modified": 1768411238,
+      "size": 5530
+    },
+    "./utils/onboardingStorage.ts": {
+      "path": "./utils/onboardingStorage.ts",
+      "hash": "c287d2c4707456362f349ab8e5b4468a6f8485dc1419c9d91173a19f6c560455",
+      "last_modified": 1768411070,
+      "size": 4099
+    },
+    "./coverage/index.html": {
+      "path": "./coverage/index.html",
+      "hash": "dd4352fe26a6c5943bc38bf6b8b9c541f58780ac4a237ba2a1d584622b16a7bc",
+      "last_modified": 1768490662,
+      "size": 5700
+    },
+    "./lib/CLAUDE.md": {
+      "path": "./lib/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768262047,
+      "size": 170
+    },
+    "./RPC_RESEARCH_SUMMARY.md": {
+      "path": "./RPC_RESEARCH_SUMMARY.md",
+      "hash": "5cf6a6b4e3bd551f25b3edb1794ff789d3143920abf07bf69906ee65a8704fb3",
+      "last_modified": 1769523960,
+      "size": 8534
+    },
+    "./utils/dashboardGuideStorage.ts.bak": {
+      "path": "./utils/dashboardGuideStorage.ts.bak",
+      "hash": "78bf19416023c0b5d5d985fbba5ee009d3ef901cf0b148f26d3dbfff833718a6",
+      "last_modified": 1768408843,
+      "size": 3923
     },
     "./api/**/CLAUDE.md": {
       "path": "./api/**/CLAUDE.md",
       "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
       "last_modified": 1768409145,
+      "size": 170
+    },
+    "./REMOTE_DIAGNOSTIC_LOGGING_GUIDE.md": {
+      "path": "./REMOTE_DIAGNOSTIC_LOGGING_GUIDE.md",
+      "hash": "210f3e85858b716f68a3c4214d215597f3e523569bf53e011a2e7b5d0cd4016c",
+      "last_modified": 1768089716,
+      "size": 12111
+    },
+    "./prisma/migrations/202601120858_add_triggered_alerts_table/migration.sql": {
+      "path": "./prisma/migrations/202601120858_add_triggered_alerts_table/migration.sql",
+      "hash": "cdee604c5de3b6d1ff64671f57fab54daa3183a5cbcb802486eff4fb33d9ecad",
+      "last_modified": 1768226296,
+      "size": 1841
+    },
+    "./app/api/dex-analytics/CLAUDE.md": {
+      "path": "./app/api/dex-analytics/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1769626328,
+      "size": 170
+    },
+    "./hooks/useTokenInfoPanelGuide.ts": {
+      "path": "./hooks/useTokenInfoPanelGuide.ts",
+      "hash": "a446694b48292e72ca6e118a1790604accd4f41c2dcf125c198facc83c4c8d9f",
+      "last_modified": 1768513841,
+      "size": 5893
+    },
+    "./apps/web/src/components/wallet/CLAUDE.md": {
+      "path": "./apps/web/src/components/wallet/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768408843,
+      "size": 170
+    },
+    "./hooks/useStatsCounters.ts": {
+      "path": "./hooks/useStatsCounters.ts",
+      "hash": "e3584fa2e4b9e0bfb8dad06883c817a783c9a4aa843b320ebd5bb59d41ea8258",
+      "last_modified": 1769380104,
+      "size": 3715
+    },
+    "./components/analytics/TechnicalChart.tsx": {
+      "path": "./components/analytics/TechnicalChart.tsx",
+      "hash": "ff3af9cff25c7145171a02d95b2912e3997b8ff7f58e1ac329537c72aef4ed77",
+      "last_modified": 1769720506,
+      "size": 16372
+    },
+    "./public/favicon.svg": {
+      "path": "./public/favicon.svg",
+      "hash": "7db33e8900071286ae7a39b0e63e954a456d940f3cf396db1b0818278e0f048d",
+      "last_modified": 1767584560,
+      "size": 1110
+    },
+    "./connection-point-console.md": {
+      "path": "./connection-point-console.md",
+      "hash": "5f148c1cc682b8d389bc5016877e4f6f52efa39cbe93a8098201d368caca469c",
+      "last_modified": 1767715946,
+      "size": 90787
+    },
+    "./docs/DEPLOYMENT_GUIDE.md": {
+      "path": "./docs/DEPLOYMENT_GUIDE.md",
+      "hash": "be2bdee14b4fb994f74263f1a5ccdfe489e2f17cf75850d298becf692e7606de",
+      "last_modified": 1767732048,
+      "size": 16374
+    },
+    "./api/wallet-scan.ts": {
+      "path": "./api/wallet-scan.ts",
+      "hash": "ec6c21e18fa01b8e758c6ccc29e3e26bc2d6fd5335b8a40f472dbce3a13b906d",
+      "last_modified": 1768412900,
+      "size": 3775
+    },
+    "./tests/ALERT_SYNC_TESTING.md": {
+      "path": "./tests/ALERT_SYNC_TESTING.md",
+      "hash": "46f7048f10288f0020364c79c13561e75360958c10dbaa70f40e4b68afb679a8",
+      "last_modified": 1768486538,
+      "size": 12463
+    },
+    "./api/log-diagnostics.ts": {
+      "path": "./api/log-diagnostics.ts",
+      "hash": "d51666fea988d4a17f582f2dd0e8d78aa76a28f5292100dc8e0e97a958c4bb37",
+      "last_modified": 1768411162,
+      "size": 2466
+    },
+    "./test-iframe.html": {
+      "path": "./test-iframe.html",
+      "hash": "3638b2718f75841662fa5655fe1696dc3458bcf09c73791b3e81ef643cd44d1d",
+      "last_modified": 1768272674,
+      "size": 9269
+    },
+    "./scripts/test-gecko-terminal.ts": {
+      "path": "./scripts/test-gecko-terminal.ts",
+      "hash": "87d4e2daed2bfb038813674e06e08d6f27bdddc45b64d07027e54b5d01e57145",
+      "last_modified": 1769720506,
+      "size": 2813
+    },
+    "./index.tsx": {
+      "path": "./index.tsx",
+      "hash": "ceb1a72ee2d98cc8e8605c6c5097259a6da3e494e8e20ae213920f3361387b7b",
+      "last_modified": 1769715533,
+      "size": 5262
+    },
+    "./src/CLAUDE.md": {
+      "path": "./src/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768409146,
       "size": 170
     },
     "./coverage/lcov-report/index.ts.html": {
@@ -237,521 +333,23 @@
       "last_modified": 1768490662,
       "size": 8096
     },
-    "./DATABASE_CLOSURE_FIX.md": {
-      "path": "./DATABASE_CLOSURE_FIX.md",
-      "hash": "3b41f1ffacd6bc2a78f210bf67d3b775215150406cbcc684578f4961869eca34",
-      "last_modified": 1768451251,
-      "size": 8715
-    },
-    "./vite-types.d.ts": {
-      "path": "./vite-types.d.ts",
-      "hash": "fb0aaad4092aee354be2b7e98665a18a597083bf1a67d271f443f45cef566d87",
-      "last_modified": 1767722282,
-      "size": 286
-    },
-    "./services/connectionService.ts": {
-      "path": "./services/connectionService.ts",
-      "hash": "2d4f22ff54561841df8b7d0203b4080c23b80053656761463db3bbbc9d6d7119",
-      "last_modified": 1768412686,
-      "size": 4813
-    },
-    "./TOOLTIP_GUIDELINES.md": {
-      "path": "./TOOLTIP_GUIDELINES.md",
-      "hash": "93f3b64e20ddb9f794d5e1a1ad990c40138f8dbbcea10dd8dc57357416ab4aba",
-      "last_modified": 1768252828,
-      "size": 11088
-    },
-    "./components/Tooltip.tsx": {
-      "path": "./components/Tooltip.tsx",
-      "hash": "588f2a49de9514dd071a075d790f236b4acfd5448c059ae7c32d332f2d861e63",
-      "last_modified": 1768412901,
-      "size": 10773
-    },
-    "./services/__tests__/alertSync.test.ts": {
-      "path": "./services/__tests__/alertSync.test.ts",
-      "hash": "75e6f9050dced763204137415bc7442dd5141b8bf87c1d636962f331103d7578",
-      "last_modified": 1768488901,
-      "size": 1223
-    },
-    "./docs/dev/SECURITY_FIXES.md": {
-      "path": "./docs/dev/SECURITY_FIXES.md",
-      "hash": "5848bc371edac2ba5dd3a215ff633b69cdd8cf3b309f7b2081799a4406cb9727",
-      "last_modified": 1767662125,
-      "size": 10968
-    },
-    "./services/trigramIndex.ts": {
-      "path": "./services/trigramIndex.ts",
-      "hash": "cba343a240b461198f72e952bf7ea2a6c10ecb60eb32b916f6e5799c56bbd70c",
-      "last_modified": 1768411238,
-      "size": 8282
-    },
-    "./coverage/lcov-report/alerts.ts.html": {
-      "path": "./coverage/lcov-report/alerts.ts.html",
-      "hash": "a091b96c7074929b5105858eed98ec8d41e25534ca0aa4a4b4d64d43aad9641d",
-      "last_modified": 1768490662,
-      "size": 11075
-    },
     "./components/TokenSearchInput.tsx": {
       "path": "./components/TokenSearchInput.tsx",
       "hash": "b00998defa1253c5d7e2e972f0c093e6bca8490b170acb04b89c68c4807321bd",
       "last_modified": 1769608327,
       "size": 37436
     },
-    "./ALERT_FIX_SUMMARY.md": {
-      "path": "./ALERT_FIX_SUMMARY.md",
-      "hash": "0b38d9d25a77cd5e8e35a57afd045f0301ca5d013013b634ed5fc3a5f956b791",
-      "last_modified": 1768451250,
-      "size": 9036
-    },
-    "./utils/validation.ts": {
-      "path": "./utils/validation.ts",
-      "hash": "7227dfaf914bb55eebe19cff32ff0df62b45e7b389b1b95aa0aa6c0f446477c6",
-      "last_modified": 1768412175,
-      "size": 4280
-    },
-    "./components/OnboardingModal.tsx": {
-      "path": "./components/OnboardingModal.tsx",
-      "hash": "20ec8065fabd4897468697d6eaf9fa36b3eb5151cabf03a8894631ed099dcb11",
-      "last_modified": 1768589968,
-      "size": 6904
-    },
-    "./services/peerTrending.ts": {
-      "path": "./services/peerTrending.ts",
-      "hash": "7adfce90178bf0621eef9728b867b17afa8c40dd3fe583f6c772f0f19ca1c534",
-      "last_modified": 1768411238,
-      "size": 3252
-    },
-    "./services/fuzzySearchService.ts": {
-      "path": "./services/fuzzySearchService.ts",
-      "hash": "d55f961eb8cbe3bc59c54aad36906dc0d03eb68c6e296c049fa8c75f4caaecf2",
-      "last_modified": 1768411764,
-      "size": 3386
-    },
-    "./tests/rpc-wallet-test.ts": {
-      "path": "./tests/rpc-wallet-test.ts",
-      "hash": "ebe9c1d54ec30a4390da84a79ecbc4cbd505e285b1bd6407e7910a0cac7fbfa7",
-      "last_modified": 1769522115,
-      "size": 2671
-    },
-    "./coverage/prettify.js": {
-      "path": "./coverage/prettify.js",
-      "hash": "7aed91c4cd326bacef7de7fc3737231b321001ad17e57ac96f2625731c179bbc",
-      "last_modified": 1768490662,
-      "size": 17590
-    },
-    "./scripts/create_og_from_url.py": {
-      "path": "./scripts/create_og_from_url.py",
-      "hash": "1e57e50b8322b130a54d2de1c92d8c2b8fb71c4de6f4b130853f5a53bb3c7526",
-      "last_modified": 1767895503,
-      "size": 2706
-    },
-    "./ARC_MOBILE_CORS_FIX.md": {
-      "path": "./ARC_MOBILE_CORS_FIX.md",
-      "hash": "27aa2a26ccd336322f65814601706fd421665c81e01356480ccea5b63b46d564",
-      "last_modified": 1768089703,
-      "size": 8885
-    },
-    "./services/dataService.ts.backup": {
-      "path": "./services/dataService.ts.backup",
-      "hash": "13398ee204047ffcabd958da83c6b33dcd791db30900e084ffe2a1bfa4322a06",
-      "last_modified": 1767890449,
-      "size": 65532
-    },
-    "./RPC_WALLET_MONITORING_IMPLEMENTATION.md": {
-      "path": "./RPC_WALLET_MONITORING_IMPLEMENTATION.md",
-      "hash": "9e9cee568c14f21e7d13f4fa6895b4052dae09dc119269888ec7a1df371c6628",
-      "last_modified": 1769523960,
-      "size": 7916
-    },
-    "./utils/testData.ts": {
-      "path": "./utils/testData.ts",
-      "hash": "3c49eb131f7c3c1581b09071be95d55b7f7955646f44f4f15d5b31581d4558e4",
-      "last_modified": 1768411070,
-      "size": 8326
-    },
-    "./ONBOARDING_FEATURE.md": {
-      "path": "./ONBOARDING_FEATURE.md",
-      "hash": "e958aa227814474cf0ffe2222becfc5863e6d2229c323bf21447b732dd56cb72",
-      "last_modified": 1768262047,
-      "size": 13780
-    },
-    "./setup-learning-db.sql": {
-      "path": "./setup-learning-db.sql",
-      "hash": "dd3665cf438cfe725b49e66a4dd6b8991fde53e69b0dfb262cbc1a7ad4f2fc24",
-      "last_modified": 1767881392,
-      "size": 4150
-    },
-    "./public/search-cache-sw.js": {
-      "path": "./public/search-cache-sw.js",
-      "hash": "d846f1964cba857c5182f72a3c130fd8428d77ad6a036c10c91efa3eea7f7538",
-      "last_modified": 1767844157,
-      "size": 2917
-    },
-    "./package.json": {
-      "path": "./package.json",
-      "hash": "e477739458a3ff9a3742e9e5d9a3cc5f91624ebd3a82b0e234b2a23cb3789700",
-      "last_modified": 1769621799,
-      "size": 3312
-    },
-    "./src/shared/constants/CLAUDE.md": {
-      "path": "./src/shared/constants/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768227195,
-      "size": 170
-    },
-    "./app/api/trending/log/CLAUDE.md": {
-      "path": "./app/api/trending/log/CLAUDE.md",
-      "hash": "8f5713e1519a7ffbe32c1faa831ce599a7a08ab2bdbf716d3c7d482b9064194f",
-      "last_modified": 1769651231,
-      "size": 169
-    },
-    "./connection-point-console.md": {
-      "path": "./connection-point-console.md",
-      "hash": "5f148c1cc682b8d389bc5016877e4f6f52efa39cbe93a8098201d368caca469c",
-      "last_modified": 1767715946,
-      "size": 90787
-    },
-    "./index.css": {
-      "path": "./index.css",
-      "hash": "abcb592c851c8a07743e9c05c63797b11c2c88a77da185af883fda0f398030cb",
-      "last_modified": 1767662125,
-      "size": 4623
-    },
-    "./app/api/dex-analytics/CLAUDE.md": {
-      "path": "./app/api/dex-analytics/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1769626328,
-      "size": 170
-    },
-    "./api/learned-tokens.ts": {
-      "path": "./api/learned-tokens.ts",
-      "hash": "5ed3d385758aa266bb8b8d996e328b8ab7c7f887b1c895b0cb88459d328f1977",
-      "last_modified": 1768411162,
-      "size": 4953
-    },
-    "./docs/SECURITY_GUIDE.md": {
-      "path": "./docs/SECURITY_GUIDE.md",
-      "hash": "6364fe9e446dfcec985dfdf5bdc5085110411933e02cd387188b4e26e59cec40",
-      "last_modified": 1767662125,
-      "size": 14372
-    },
-    "./services/**/CLAUDE.md": {
-      "path": "./services/**/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768409146,
-      "size": 170
-    },
-    "./X_POST_UPDATE.md": {
-      "path": "./X_POST_UPDATE.md",
-      "hash": "9c9e740a79ca07bfacdffc8cc2d14e30cf620658142c8bbfc43dd2db8c3f80e1",
-      "last_modified": 1768089716,
-      "size": 6859
-    },
-    "./components/WalletSidebar.tsx": {
-      "path": "./components/WalletSidebar.tsx",
-      "hash": "df443a9db6c896dc830a6376ab53786ea78a760f61cbd44b63087ff34d567e29",
-      "last_modified": 1768589464,
-      "size": 38997
-    },
-    "./api/get-diagnostics.ts": {
-      "path": "./api/get-diagnostics.ts",
-      "hash": "6e44f3b2754409ff784ca78abfdf36997218acc85287a2a68e829189e7800745",
-      "last_modified": 1768411162,
-      "size": 2857
-    },
-    "./services/lpDetection.ts": {
-      "path": "./services/lpDetection.ts",
-      "hash": "6a7169e69f29aa2da7281d06bc188ceb1442e1e8e0626b20974ceb4de94932b3",
-      "last_modified": 1769694102,
-      "size": 11213
-    },
-    "./ARC_MOBILE_CURRENT_STATUS.md": {
-      "path": "./ARC_MOBILE_CURRENT_STATUS.md",
-      "hash": "0548df6d440654742dd5b348e2ee5f5c19921d84a66f2311b1ffa75e86caab94",
-      "last_modified": 1768089716,
-      "size": 7176
-    },
-    "./utils/searchCacheManager.ts": {
-      "path": "./utils/searchCacheManager.ts",
-      "hash": "acb91381ed3e7b0de6f207649a6a6a1e77696424d837541a682b9470a0db63d7",
-      "last_modified": 1768412902,
-      "size": 7559
-    },
-    "./utils/api.ts": {
-      "path": "./utils/api.ts",
-      "hash": "7ea5c68334ce0b7d1a2758d41cbe38522a20d26c370e837824c1cefe63af8423",
-      "last_modified": 1769528222,
-      "size": 2195
-    },
-    "./docs/KNOWN_ISSUES.md": {
-      "path": "./docs/KNOWN_ISSUES.md",
-      "hash": "bdc4dd374cfcad32d276c068aea85288df879114812157d930e49b5cdc3543a7",
-      "last_modified": 1769373345,
-      "size": 11446
-    },
-    "./TEST_REPORT.md": {
-      "path": "./TEST_REPORT.md",
-      "hash": "f9203d3a720231a4a92a320c5fe2f68b38dfa999bb784a000aa4a4f28c6d8d62",
-      "last_modified": 1767886141,
-      "size": 10287
-    },
-    "./utils/CLAUDE.md": {
-      "path": "./utils/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768351687,
-      "size": 170
-    },
-    "./vite-plugin-pwa.d.ts": {
-      "path": "./vite-plugin-pwa.d.ts",
-      "hash": "e453f375bbe0a3947d79a7a17f23812a07197167a114680a4475c4d0d6d54505",
-      "last_modified": 1767844388,
-      "size": 430
-    },
-    "./docs/dev/BORDER_MIGRATION_LOG.md": {
-      "path": "./docs/dev/BORDER_MIGRATION_LOG.md",
-      "hash": "dc14adbbd225afcfd109be2a2c6739cb4a9ba57d2ac700201fa63833217eebbc",
-      "last_modified": 1767662124,
-      "size": 18073
-    },
-    "./components/BlockchainBackground.tsx": {
-      "path": "./components/BlockchainBackground.tsx",
-      "hash": "17b61bd6f2e538e868ec2503b7a0fd61d4a05cc2a9ca7cc127349fbb48a8a43b",
-      "last_modified": 1768411123,
-      "size": 6636
-    },
-    "./test_transaction_tiles.py": {
-      "path": "./test_transaction_tiles.py",
-      "hash": "9a7bb598b20e11878d6679da212e25a175b9a8858668da29e99f14c5b65fd3b4",
-      "last_modified": 1768408843,
-      "size": 7883
-    },
-    "./services/dexPoolService.ts": {
-      "path": "./services/dexPoolService.ts",
-      "hash": "88a63f0b33945ba74608cbcf6d6ad29eb4299eedcc11739b3f6fec8f92aa8a53",
-      "last_modified": 1769694102,
-      "size": 10841
-    },
-    "./docs/AI_INTEGRATION.md": {
-      "path": "./docs/AI_INTEGRATION.md",
-      "hash": "8a520e6fdcb27891198c9f348d32d509ac1c2f0fc3d49e8006bdbdfa891922c3",
-      "last_modified": 1767662124,
-      "size": 13141
-    },
-    "./utils/**/CLAUDE.md": {
-      "path": "./utils/**/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768409146,
-      "size": 170
-    },
-    "./services/dataService.ts": {
-      "path": "./services/dataService.ts",
-      "hash": "13c76b33393d9ae54a892b31c573bf47127079306cb5a7ba14405ff57b0e95a0",
-      "last_modified": 1769619201,
-      "size": 69986
-    },
-    "./tests/CLAUDE.md": {
-      "path": "./tests/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768487865,
-      "size": 170
-    },
-    "./services/searchAliasDiscovery.ts": {
-      "path": "./services/searchAliasDiscovery.ts",
-      "hash": "3d99a068e1265914d3ea0a43f70113daff90db67150cfc0a531687f9cb29137a",
-      "last_modified": 1769608327,
-      "size": 7470
-    },
-    "./coverage/index.ts.html": {
-      "path": "./coverage/index.ts.html",
-      "hash": "e0c0f4312f60750f2f4e1e7c80ab773b0048c8fd3f7d1297ec67227a46d0a3e5",
-      "last_modified": 1768490662,
-      "size": 8096
-    },
-    "./services/lpBatchScanner.ts.bak": {
-      "path": "./services/lpBatchScanner.ts.bak",
-      "hash": "477dfb3d1df58ff4d14e408409a0d16519c274b6ae2790d771d4629ee204b412",
-      "last_modified": 1768408843,
-      "size": 9494
-    },
-    "./ONBOARDING_FIX_SUMMARY.md": {
-      "path": "./ONBOARDING_FIX_SUMMARY.md",
-      "hash": "879b1e6742091f33fca30094d619dbd0bb923953e81501f0e809253337fe45da",
-      "last_modified": 1768351687,
-      "size": 2341
-    },
-    "./factory-discovery.html": {
-      "path": "./factory-discovery.html",
-      "hash": "464b9b93d08a295b3365fa151b015f2165cb0419c1a93a0a968be8cd33597acb",
-      "last_modified": 1767635752,
-      "size": 13892
-    },
-    "./scripts/CLAUDE.md": {
-      "path": "./scripts/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768092218,
-      "size": 170
-    },
-    "./services/invertedIndex.ts": {
-      "path": "./services/invertedIndex.ts",
-      "hash": "cdbd70c7ea03aea951788ee821b8a7e0e54243e5b88852c463620b2e254bb587",
-      "last_modified": 1768411238,
-      "size": 7409
-    },
-    "./utils/testData.ts.bak": {
-      "path": "./utils/testData.ts.bak",
-      "hash": "a87ef4d4fe50f997162903eb14ea0e6b2db75527b0d03f9916ccb29deea22bce",
-      "last_modified": 1768408843,
-      "size": 8350
-    },
-    "./TOKEN_TRANSFER_DETECTION_RESEARCH.md": {
-      "path": "./TOKEN_TRANSFER_DETECTION_RESEARCH.md",
-      "hash": "615cf7a0340c4420e5d78f0fb875cc53e4cba898071f46043b798848678f9b54",
-      "last_modified": 1769523960,
-      "size": 33521
-    },
-    "./ARC_MOBILE_DIAGNOSTIC_BUILD_129.md": {
-      "path": "./ARC_MOBILE_DIAGNOSTIC_BUILD_129.md",
-      "hash": "35c9ba8ccc93168024d1519c782cdd98752a262876d2807575434c4e6b0bc726",
-      "last_modified": 1768089716,
-      "size": 7720
-    },
-    "./LEARNING_SEARCH_SETUP.md": {
-      "path": "./LEARNING_SEARCH_SETUP.md",
-      "hash": "b34f1a5df572097c2434e304a8c2c4b9148354cae0665dfaba8e1dbb6fb7395f",
-      "last_modified": 1767886141,
-      "size": 7773
-    },
-    "./coverage/index.html": {
-      "path": "./coverage/index.html",
-      "hash": "dd4352fe26a6c5943bc38bf6b8b9c541f58780ac4a237ba2a1d584622b16a7bc",
-      "last_modified": 1768490662,
-      "size": 5700
-    },
-    "./services/knownFactories.ts": {
-      "path": "./services/knownFactories.ts",
-      "hash": "b7056dc79b81cc18f5377f73209b8778ce39b92748e5eb27d8a56ced77c37fcd",
-      "last_modified": 1768411238,
-      "size": 7279
-    },
-    "./NEON-INTEGRATION-SUMMARY.md": {
-      "path": "./NEON-INTEGRATION-SUMMARY.md",
-      "hash": "8c761382c6635189d054c1200e4468f965c8dfb7abb8720bd4b2b538aba683b5",
-      "last_modified": 1767715607,
-      "size": 11560
-    },
-    "./coverage/lcov-report/hello.ts.html": {
-      "path": "./coverage/lcov-report/hello.ts.html",
-      "hash": "7562a4764aec0c107e9b21523efa1655adf0c2824fe091992d449dc6938e696e",
-      "last_modified": 1768490662,
-      "size": 7545
-    },
-    "./docs/dev/PRODUCTION_READY_100.md": {
-      "path": "./docs/dev/PRODUCTION_READY_100.md",
-      "hash": "66c999ea93ebbda84a43195eab0dac24029761a20bcf6c88b1ba34c107707fc5",
-      "last_modified": 1767662125,
-      "size": 15978
-    },
-    "./components/TokenInfoPanelGuide.tsx": {
-      "path": "./components/TokenInfoPanelGuide.tsx",
-      "hash": "60adc4f390d5f9ae38d0f75dda73cab274393e9e3319260d16d6fcfb6ab51ff5",
-      "last_modified": 1768589986,
-      "size": 9272
-    },
-    "./TOOLTIP_TEST_REPORT.md": {
-      "path": "./TOOLTIP_TEST_REPORT.md",
-      "hash": "d50e332523ffe04e8fdd618aa2e89ed99ddf6584f18f064a172a73f63168c4a1",
-      "last_modified": 1768351687,
-      "size": 11997
-    },
-    "./utils/searchCacheManager.ts.bak2": {
-      "path": "./utils/searchCacheManager.ts.bak2",
-      "hash": "12b483f826856c5fec9597a4632076717d2283ae7eb5aff743a9652da352f280",
-      "last_modified": 1768408843,
-      "size": 7554
-    },
-    "./NEON_SETUP_SIMPLE.md": {
-      "path": "./NEON_SETUP_SIMPLE.md",
-      "hash": "b2b1b917f2d51162c3b9a59b41af40ea2edc5f457670fc8fce3605060c215eed",
-      "last_modified": 1767886141,
-      "size": 4226
-    },
-    "./App.tsx.backup": {
-      "path": "./App.tsx.backup",
-      "hash": "bdeaf7f6bb8dcd2ed11190bb38a05c27788efcfa71e2ce0170cb29a042f03761",
-      "last_modified": 1767926894,
-      "size": 97293
-    },
-    "./WALLET_CONFLICT_SOLUTION.md": {
-      "path": "./WALLET_CONFLICT_SOLUTION.md",
-      "hash": "1112042073c285b8c7a484797b8f67a9a9d09ce991368fa06c78a8a495bef7bc",
-      "last_modified": 1767923946,
-      "size": 5096
-    },
-    "./services/CLAUDE.md": {
-      "path": "./services/CLAUDE.md",
-      "hash": "76767f5b2b7f0bf4c3dc2ac3f417f6a4b51893bd30ceda85c7f90b18b37a1c18",
-      "last_modified": 1768225385,
-      "size": 1653
-    },
-    "./services/phoneticMatcher.ts": {
-      "path": "./services/phoneticMatcher.ts",
-      "hash": "8174629d6fa4218331cfb4590cb3ec045b919e11dd3a74acb683b38e6fb5afb9",
-      "last_modified": 1768411238,
-      "size": 7269
-    },
-    "./components/NetworkHealth.tsx": {
-      "path": "./components/NetworkHealth.tsx",
-      "hash": "a0e5b0ad4b3674a8a970e8298b0d09523b7fc037ceae99219257346df3846a19",
-      "last_modified": 1769646790,
-      "size": 10635
-    },
-    "./index.html": {
-      "path": "./index.html",
-      "hash": "3e3cc30f34e9f117a0f63f88d7d607840906e08399c9a5c46eda66f3f15c1b14",
-      "last_modified": 1767927083,
-      "size": 3117
-    },
-    "./services/searchWorker.ts": {
-      "path": "./services/searchWorker.ts",
-      "hash": "269100c175525999f1a8d6f1fa70df67465e505cd77c4c34d8be767d1c34fe90",
-      "last_modified": 1768412541,
-      "size": 8334
-    },
-    "./lib/CLAUDE.md": {
-      "path": "./lib/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768262047,
-      "size": 170
-    },
-    "./utils/touchHandlers.ts": {
-      "path": "./utils/touchHandlers.ts",
-      "hash": "3f9b3d090cab8ebb908f181668e92b6e2b4e554a2532702f9aeeee119aba92a7",
-      "last_modified": 1768411070,
-      "size": 498
-    },
-    "./services/dataService.ts.bak2": {
-      "path": "./services/dataService.ts.bak2",
-      "hash": "f245f6c8a36c6dc47085908f3ec9a9b9562e4e9bda70a0ee604f2839f7d28a7d",
-      "last_modified": 1768408843,
-      "size": 57153
-    },
-    "./api/interactions.ts": {
-      "path": "./api/interactions.ts",
-      "hash": "2878dfe5fd0622458b6b928bb7e70e7fc5bbcbedfd41ef0e50351d242b02348b",
-      "last_modified": 1768412654,
-      "size": 2025
-    },
-    "./src/**/CLAUDE.md": {
-      "path": "./src/**/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768409146,
-      "size": 170
-    },
-    "./LICENSE": {
-      "path": "./LICENSE",
-      "hash": "54bee1edd3680371ca49c1374b8f96c3d02a039a3bced0c4a29312695fd156b2",
-      "last_modified": 1767560491,
-      "size": 2314
+    "./src/api/hello.ts": {
+      "path": "./src/api/hello.ts",
+      "hash": "052e2a5c099d955e7a707b2f8ed5bc06c5464c9bb91dffbe8271997b4b8dc850",
+      "last_modified": 1768411170,
+      "size": 833
+    },
+    "./services/geckoTerminalApiClient.ts": {
+      "path": "./services/geckoTerminalApiClient.ts",
+      "hash": "49d0388752d8e23c54d82f7ad417c3a66e7024326ba7dcbcb4251b0f58a8593c",
+      "last_modified": 1769720506,
+      "size": 21246
     },
     "./docs/DEPLOYMENT.md": {
       "path": "./docs/DEPLOYMENT.md",
@@ -759,71 +357,143 @@
       "last_modified": 1767662124,
       "size": 10286
     },
-    "./services/whaleWalletRegistry.ts": {
-      "path": "./services/whaleWalletRegistry.ts",
-      "hash": "03b03c43dab82292304478088e40d24f68d45141061250f98674889db787084e",
+    "./utils/testData.ts.bak": {
+      "path": "./utils/testData.ts.bak",
+      "hash": "a87ef4d4fe50f997162903eb14ea0e6b2db75527b0d03f9916ccb29deea22bce",
+      "last_modified": 1768408843,
+      "size": 8350
+    },
+    "./docs/ALERTS_GUIDE.md": {
+      "path": "./docs/ALERTS_GUIDE.md",
+      "hash": "9d472ee3a3642e23009851b831719ef467b025302dae2f78b2cafe9e279fc5e0",
+      "last_modified": 1768451251,
+      "size": 11412
+    },
+    "./utils/performanceMonitor.ts": {
+      "path": "./utils/performanceMonitor.ts",
+      "hash": "f216988d90677f14ca14cd9b2290c238d77e66650d3bada96843e9653dc7120e",
+      "last_modified": 1768411070,
+      "size": 10299
+    },
+    "./components/BlockchainBackground.tsx": {
+      "path": "./components/BlockchainBackground.tsx",
+      "hash": "17b61bd6f2e538e868ec2503b7a0fd61d4a05cc2a9ca7cc127349fbb48a8a43b",
+      "last_modified": 1768411123,
+      "size": 6636
+    },
+    "./test-dexscreener-embed.html": {
+      "path": "./test-dexscreener-embed.html",
+      "hash": "6fc8879bd917b2f7f756218bfdaa03bb090b228afb60e4102e7435cf48b02d93",
+      "last_modified": 1768337053,
+      "size": 4974
+    },
+    "./scripts/test-all-apis.ts": {
+      "path": "./scripts/test-all-apis.ts",
+      "hash": "d957acbdaa89c8a6ea187dbaef0df18e06a2a53cf0df9c0f77ae765937f00cce",
+      "last_modified": 1769720506,
+      "size": 9900
+    },
+    "./factory-discovery-v2.html": {
+      "path": "./factory-discovery-v2.html",
+      "hash": "a3553e004c310602951275c0d9fcb3dd1a5be1f4c7a0261e36517093dd2c2e49",
+      "last_modified": 1767636101,
+      "size": 15768
+    },
+    "./utils/userPreferences.ts": {
+      "path": "./utils/userPreferences.ts",
+      "hash": "489aa4a1ad9ff239b8c68bddfdec0080a095ebbf332e21b23d9ebf3863e0009f",
+      "last_modified": 1768411070,
+      "size": 1771
+    },
+    "./prisma/migrations/20260115090244_add_user_alerts_table/migration.sql": {
+      "path": "./prisma/migrations/20260115090244_add_user_alerts_table/migration.sql",
+      "hash": "936edc73f5391de4ad2ce80e71cdbdf84ae1c5ee14a9d5c295da48be1a3afc49",
+      "last_modified": 1768485775,
+      "size": 2303
+    },
+    "./CONSOLE_FIXES_PLAN.md": {
+      "path": "./CONSOLE_FIXES_PLAN.md",
+      "hash": "e0e06575def090cc069c1e69db17a63bca0ad12b8dcad8e7b683a9150a5f0fe2",
+      "last_modified": 1769540864,
+      "size": 7780
+    },
+    "./services/scanProgress.ts": {
+      "path": "./services/scanProgress.ts",
+      "hash": "0523f504a085e9ef6e4351d76946e89062b83e0778db967007438ad323f13b33",
       "last_modified": 1768411238,
-      "size": 2497
+      "size": 9048
     },
-    "./app/api/network-health/CLAUDE.md": {
-      "path": "./app/api/network-health/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1769629432,
-      "size": 170
+    "./utils/guideStorage.ts.bak": {
+      "path": "./utils/guideStorage.ts.bak",
+      "hash": "832051039dc163a8072e6f3ec94b2363f5ae7dbc52645f3bd7c85445d9ca4f8c",
+      "last_modified": 1768408843,
+      "size": 11313
     },
-    "./coverage/lcov-report/prettify.js": {
-      "path": "./coverage/lcov-report/prettify.js",
-      "hash": "7aed91c4cd326bacef7de7fc3737231b321001ad17e57ac96f2625731c179bbc",
-      "last_modified": 1768490662,
-      "size": 17590
+    "./styles/glassmorphism.css": {
+      "path": "./styles/glassmorphism.css",
+      "hash": "5acd1e62a4980b5bf5c108fbaf1a198c9cff9ac7bc456f8fef24719e8aaecb3f",
+      "last_modified": 1769720501,
+      "size": 7830
     },
-    "./coverage/prettify.css": {
-      "path": "./coverage/prettify.css",
-      "hash": "7b4fa6fb8cd1ece3b6123fc3793721d930963e6d67865858cc1f0fffabf7e241",
-      "last_modified": 1768490671,
-      "size": 1060
+    "./utils/onboardingStorage.ts.bak": {
+      "path": "./utils/onboardingStorage.ts.bak",
+      "hash": "a36c1b612a764aa2ef3b7ed64d2789fb9a8b2a74bd6262f35c0925cef559bcf0",
+      "last_modified": 1768408843,
+      "size": 3977
     },
-    "./TOOLTIP_POSITIONING_FIX.md": {
-      "path": "./TOOLTIP_POSITIONING_FIX.md",
-      "hash": "0fa04957133983e442a9b19ad77e3a3d1e19c2cd5150f72e52e048f08d88c630",
-      "last_modified": 1768277355,
-      "size": 14004
+    "./NEON-INTEGRATION-SUMMARY.md": {
+      "path": "./NEON-INTEGRATION-SUMMARY.md",
+      "hash": "8c761382c6635189d054c1200e4468f965c8dfb7abb8720bd4b2b538aba683b5",
+      "last_modified": 1767715607,
+      "size": 11560
     },
-    "./src/components/bubble/CLAUDE.md": {
-      "path": "./src/components/bubble/CLAUDE.md",
+    "./services/dataService.ts.backup": {
+      "path": "./services/dataService.ts.backup",
+      "hash": "13398ee204047ffcabd958da83c6b33dcd791db30900e084ffe2a1bfa4322a06",
+      "last_modified": 1767890449,
+      "size": 65532
+    },
+    "./TOOLTIP_GUIDELINES.md": {
+      "path": "./TOOLTIP_GUIDELINES.md",
+      "hash": "93f3b64e20ddb9f794d5e1a1ad990c40138f8dbbcea10dd8dc57357416ab4aba",
+      "last_modified": 1768252828,
+      "size": 11088
+    },
+    "./TOKEN_TRANSFER_DETECTION_RESEARCH.md": {
+      "path": "./TOKEN_TRANSFER_DETECTION_RESEARCH.md",
+      "hash": "615cf7a0340c4420e5d78f0fb875cc53e4cba898071f46043b798848678f9b54",
+      "last_modified": 1769523960,
+      "size": 33521
+    },
+    "./TRENDING_TILES_IMPLEMENTATION.md": {
+      "path": "./TRENDING_TILES_IMPLEMENTATION.md",
+      "hash": "ef0102d9f6522f4eca21aaa340936b096cbd0d417bf5475d4d855ad1f98da158",
+      "last_modified": 1768245770,
+      "size": 18207
+    },
+    "./package-lock.json": {
+      "path": "./package-lock.json",
+      "hash": "7354ee05e116dadceae6418545947ff3f194e6f5fb6c55d58df1d22ab5caf0c8",
+      "last_modified": 1769621799,
+      "size": 797486
+    },
+    "./src/shared/types/CLAUDE.md": {
+      "path": "./src/shared/types/CLAUDE.md",
       "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
       "last_modified": 1768227195,
       "size": 170
     },
-    "./utils/guideStorage.ts.bak2": {
-      "path": "./utils/guideStorage.ts.bak2",
-      "hash": "c6e689fa409e8fe4fabcd583e7ddcc762b19aab4b33ad7fb1e2c11dcdd302b37",
-      "last_modified": 1768408843,
-      "size": 11309
+    "./LEARNING_SEARCH_SETUP.md": {
+      "path": "./LEARNING_SEARCH_SETUP.md",
+      "hash": "b34f1a5df572097c2434e304a8c2c4b9148354cae0665dfaba8e1dbb6fb7395f",
+      "last_modified": 1767886141,
+      "size": 7773
     },
-    "./vite.config.ts": {
-      "path": "./vite.config.ts",
-      "hash": "1c313119263284a5d87701543f5cc2d208a9b229ace4bb8dc21830e2b8a107be",
-      "last_modified": 1769625025,
-      "size": 6836
-    },
-    "./coverage/lcov-report/sorter.js": {
-      "path": "./coverage/lcov-report/sorter.js",
-      "hash": "d1adc37ef011a7a2a407a412c3bee30da334b5375bf71523f74612c703f66ce8",
-      "last_modified": 1768490662,
-      "size": 6731
-    },
-    "./utils/distributionCalculations.ts": {
-      "path": "./utils/distributionCalculations.ts",
-      "hash": "25e0eb7230930dc88cad436da05f0e7beb2d2182db4a6270209c85cb1e1954e0",
-      "last_modified": 1769622941,
-      "size": 5416
-    },
-    "./vitest.config.ts": {
-      "path": "./vitest.config.ts",
-      "hash": "daf595bcbdefa6fb5f8e036cb8a227cb5f8049392f3fe56c91971dcbb77953aa",
-      "last_modified": 1768490678,
-      "size": 1281
+    "./components/NetworkHealth.tsx": {
+      "path": "./components/NetworkHealth.tsx",
+      "hash": "a0e5b0ad4b3674a8a970e8298b0d09523b7fc037ceae99219257346df3846a19",
+      "last_modified": 1769646790,
+      "size": 10635
     },
     "./services/geminiService.ts": {
       "path": "./services/geminiService.ts",
@@ -837,863 +507,11 @@
       "last_modified": 1767886141,
       "size": 14563
     },
-    "./hooks/useTokenInfoPanelGuide.ts": {
-      "path": "./hooks/useTokenInfoPanelGuide.ts",
-      "hash": "a446694b48292e72ca6e118a1790604accd4f41c2dcf125c198facc83c4c8d9f",
-      "last_modified": 1768513841,
-      "size": 5893
-    },
-    "./WALLET_CONNECTION_FIX.md": {
-      "path": "./WALLET_CONNECTION_FIX.md",
-      "hash": "84db7b3dcc1be4bbfea644603c762ff5945439adbe4e21fccc595cfb540613cc",
-      "last_modified": 1767923947,
-      "size": 8060
-    },
-    "./vite-env.d.ts": {
-      "path": "./vite-env.d.ts",
-      "hash": "82fee5d1a00f6f62dba48aa7fe6e39b47d151f65dd780200ed10c9e877d44eb0",
-      "last_modified": 1767845232,
-      "size": 92
-    },
-    "./coverage/lcov.info": {
-      "path": "./coverage/lcov.info",
-      "hash": "4d83188ad021584a81f999b7f481045d639ca344431b58af1bc54a41d5096661",
-      "last_modified": 1768490662,
-      "size": 906
-    },
-    "./test-onboarding-with-console.py": {
-      "path": "./test-onboarding-with-console.py",
-      "hash": "60bdd5f593b45805bbff2f92775d8de81b8d8cb3777309daf0134040ade2ca1a",
-      "last_modified": 1768342557,
-      "size": 1691
-    },
-    "./services/userContributions.ts": {
-      "path": "./services/userContributions.ts",
-      "hash": "9f22a3b30d05a09b61be2c98149a0c1dfc7ad34298b531e67a796dee3ae9b84b",
-      "last_modified": 1768411238,
-      "size": 5617
-    },
-    "./RAINBOWKIT_THEMING.md": {
-      "path": "./RAINBOWKIT_THEMING.md",
-      "hash": "b23c93f584bc03004549a5d93cc4dd24f70646e4699f22ed8b89845ae9cddff6",
-      "last_modified": 1767929007,
-      "size": 5834
-    },
-    "./components/Toast.tsx": {
-      "path": "./components/Toast.tsx",
-      "hash": "17533557f046c419948629d96d78e1989ec28b900f030e7dc63df5b35b622d54",
-      "last_modified": 1768411123,
-      "size": 2133
-    },
-    "./types.ts": {
-      "path": "./types.ts",
-      "hash": "3bd1f44acb540cb872ef4ac3d9ed679fc8f2ad6980ff350f7343a0ce671a8450",
-      "last_modified": 1769690918,
-      "size": 9660
-    },
-    "./docs/ALERTS_GUIDE.md": {
-      "path": "./docs/ALERTS_GUIDE.md",
-      "hash": "9d472ee3a3642e23009851b831719ef467b025302dae2f78b2cafe9e279fc5e0",
-      "last_modified": 1768451251,
-      "size": 11412
-    },
-    "./api/alerts.ts": {
-      "path": "./api/alerts.ts",
-      "hash": "3c28d2b9a56218927f42ee9680dcbc3997db713838023b4743e22c2d3c4677b0",
-      "last_modified": 1769206350,
-      "size": 21787
-    },
-    "./tailwind.config.js": {
-      "path": "./tailwind.config.js",
-      "hash": "b587c6017660318384a4ce89d63372b9b431fe0a1303516134b081c87ea1a74c",
-      "last_modified": 1768354255,
-      "size": 1736
-    },
-    "./services/dogechainRPC.ts": {
-      "path": "./services/dogechainRPC.ts",
-      "hash": "4f0612384d87e40077e2285c72207936cb24db3866717f7cb385692e9f3b4e3c",
-      "last_modified": 1769644247,
-      "size": 44408
-    },
-    "./CHART_TESTING_GUIDE.md": {
-      "path": "./CHART_TESTING_GUIDE.md",
-      "hash": "09574b9727b1717094f95efa785b4cf1d425720f471c59c1df32b52924733f2d",
-      "last_modified": 1768352007,
-      "size": 11357
-    },
-    "./comprehensive-scanner.html": {
-      "path": "./comprehensive-scanner.html",
-      "hash": "953752f98b75d4a2c16b0c26865f4d75e0bb229aeae6b31f203d938bf4c86913",
-      "last_modified": 1767657440,
-      "size": 17408
-    },
-    "./TOOLTIP_COMPONENT_IMPLEMENTATION.md": {
-      "path": "./TOOLTIP_COMPONENT_IMPLEMENTATION.md",
-      "hash": "c60da53e127557a9eb9c51a4dfe2e3aa71021d1070d1f64120b14a576952cbcc",
-      "last_modified": 1768233209,
-      "size": 20731
-    },
-    "./docs/dev/PHASE1_COMPLETE.md": {
-      "path": "./docs/dev/PHASE1_COMPLETE.md",
-      "hash": "f3537bd9a3a9f3d88c93881bac8959ffc6c886965d6ae5f0157532b704996e27",
-      "last_modified": 1767662125,
-      "size": 9682
-    },
-    "./utils/discoverFactories.ts.bak": {
-      "path": "./utils/discoverFactories.ts.bak",
-      "hash": "e34b715478292fb2111627aa72973d27aecf40a73a6d083e46633847ffa3f9be",
-      "last_modified": 1768408843,
-      "size": 16451
-    },
-    "./coverage/lcov-report/base.css": {
-      "path": "./coverage/lcov-report/base.css",
-      "hash": "728572fd0910587e3a74ee20cb6c82c3cb35c9cd9933b47dcdf7d5efd418e7c4",
-      "last_modified": 1768490671,
-      "size": 5494
-    },
-    "./REMOTE_DIAGNOSTIC_LOGGING_GUIDE.md": {
-      "path": "./REMOTE_DIAGNOSTIC_LOGGING_GUIDE.md",
-      "hash": "210f3e85858b716f68a3c4214d215597f3e523569bf53e011a2e7b5d0cd4016c",
-      "last_modified": 1768089716,
-      "size": 12111
-    },
-    "./app/dashboard/CLAUDE.md": {
-      "path": "./app/dashboard/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768262047,
-      "size": 170
-    },
-    "./docs/CHANGELOG.md": {
-      "path": "./docs/CHANGELOG.md",
-      "hash": "9c4ad41d1c4b8a7020f547f1b897c0ba20f5aa202918332e409146d2090a4c8a",
-      "last_modified": 1767662124,
-      "size": 5181
-    },
-    "./utils/dashboardGuideStorage.ts": {
-      "path": "./utils/dashboardGuideStorage.ts",
-      "hash": "264af5bc4f64d2c43bed2a113e5783c6604c76c938a6926b7d3bd08c37f2601d",
-      "last_modified": 1768411070,
-      "size": 4048
-    },
-    "./components/BubbleVisualizationGuide.tsx": {
-      "path": "./components/BubbleVisualizationGuide.tsx",
-      "hash": "fe6500b75b0cf86ac5aa37af18c47f0288bed8de5f860fdeee08cf4e5093c6dc",
-      "last_modified": 1768589974,
-      "size": 9275
-    },
-    "./utils/sentry.config.ts": {
-      "path": "./utils/sentry.config.ts",
-      "hash": "a2ef659ad5bd25091acc34bb516db5040a2766bf4902544a2df1a7dad6a9dc68",
-      "last_modified": 1768411070,
-      "size": 3638
-    },
-    "./App.tsx": {
-      "path": "./App.tsx",
-      "hash": "952494207a64791a8176f5aec7acac5afd8caf12e97f2ab16386749b000274d2",
-      "last_modified": 1769687424,
-      "size": 119888
-    },
-    "./src/api/hello.ts": {
-      "path": "./src/api/hello.ts",
-      "hash": "052e2a5c099d955e7a707b2f8ed5bc06c5464c9bb91dffbe8271997b4b8dc850",
-      "last_modified": 1768411170,
-      "size": 833
-    },
-    "./RPC_RESEARCH_SUMMARY.md": {
-      "path": "./RPC_RESEARCH_SUMMARY.md",
-      "hash": "5cf6a6b4e3bd551f25b3edb1794ff789d3143920abf07bf69906ee65a8704fb3",
-      "last_modified": 1769523960,
-      "size": 8534
-    },
-    "./prisma/migrations/202601110026_add_diagnostics_table/CLAUDE.md": {
-      "path": "./prisma/migrations/202601110026_add_diagnostics_table/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768244456,
-      "size": 170
-    },
-    "./services/db.ts": {
-      "path": "./services/db.ts",
-      "hash": "28d94679b596c5176e1c19261b523edfd06a2e01ba2934fafbd2b3fa2522eb19",
-      "last_modified": 1769607918,
-      "size": 63033
-    },
-    "./docs/API_REFERENCE.md": {
-      "path": "./docs/API_REFERENCE.md",
-      "hash": "bc9c80804d0483a3c62c36e473ad92b7ff552a6f5d434207c224c3256202d879",
-      "last_modified": 1767732048,
-      "size": 17104
-    },
-    "./services/tokenNicknameRegistry.ts": {
-      "path": "./services/tokenNicknameRegistry.ts",
-      "hash": "280297c646b9bccb5d4b868ce41c5ca1afe817a346b8397fdb3ecc8e1b4f273a",
-      "last_modified": 1768411238,
-      "size": 3387
-    },
-    "./CONSOLE_FIXES_PLAN.md": {
-      "path": "./CONSOLE_FIXES_PLAN.md",
-      "hash": "e0e06575def090cc069c1e69db17a63bca0ad12b8dcad8e7b683a9150a5f0fe2",
-      "last_modified": 1769540864,
-      "size": 7780
-    },
-    "./utils/rateLimit.ts": {
-      "path": "./utils/rateLimit.ts",
-      "hash": "1ca7580699049dc8807362f997c5cdd4731c7b4c9095ff4da58d4ba9d58635dc",
-      "last_modified": 1769299339,
-      "size": 14505
-    },
-    "./components/EmbeddedChart.tsx": {
-      "path": "./components/EmbeddedChart.tsx",
-      "hash": "a02fd97e66bf8f45db9a0129b593718b9f3e08ab53d706f58b489ac5b968dfdf",
-      "last_modified": 1769114001,
-      "size": 9602
-    },
-    "./api/log-diagnostics.ts": {
-      "path": "./api/log-diagnostics.ts",
-      "hash": "d51666fea988d4a17f582f2dd0e8d78aa76a28f5292100dc8e0e97a958c4bb37",
-      "last_modified": 1768411162,
-      "size": 2466
-    },
-    "./coverage/alerts.ts.html": {
-      "path": "./coverage/alerts.ts.html",
-      "hash": "b4176113eba1c00aca0f9dbf750a496b2a68906556b9aa8de78daa2bc324f4be",
-      "last_modified": 1768490662,
-      "size": 11075
-    },
-    "./utils/userPreferences.ts": {
-      "path": "./utils/userPreferences.ts",
-      "hash": "489aa4a1ad9ff239b8c68bddfdec0080a095ebbf332e21b23d9ebf3863e0009f",
-      "last_modified": 1768411070,
-      "size": 1771
-    },
-    "./components/Navbar.tsx": {
-      "path": "./components/Navbar.tsx",
-      "hash": "944d6a28afdc9c0b98be6a6a24be34f70b0974d60f6d858221f8fbb1d7f43ec6",
-      "last_modified": 1769639250,
-      "size": 16708
-    },
-    "./hooks/useStatsCounters.ts": {
-      "path": "./hooks/useStatsCounters.ts",
-      "hash": "e3584fa2e4b9e0bfb8dad06883c817a783c9a4aa843b320ebd5bb59d41ea8258",
-      "last_modified": 1769380104,
-      "size": 3715
-    },
-    "./utils/onboardingStorage.ts": {
-      "path": "./utils/onboardingStorage.ts",
-      "hash": "c287d2c4707456362f349ab8e5b4468a6f8485dc1419c9d91173a19f6c560455",
-      "last_modified": 1768411070,
-      "size": 4099
-    },
-    "./docs/STATS_COUNTER_CACHE_FIX.md": {
-      "path": "./docs/STATS_COUNTER_CACHE_FIX.md",
-      "hash": "a7029b25027fe880b36db68a435b19dcde440578b8c2494ecc560bd0a5d70d12",
-      "last_modified": 1769187990,
-      "size": 9504
-    },
-    "./src/shared/types/CLAUDE.md": {
-      "path": "./src/shared/types/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768227195,
-      "size": 170
-    },
-    "./test-onboarding-fix.py": {
-      "path": "./test-onboarding-fix.py",
-      "hash": "f52851aeffbccecaba7918363c8f8798de2c424ee4947beef17ee3e8df46b961",
-      "last_modified": 1768342403,
-      "size": 3019
-    },
-    "./api/stats.ts": {
-      "path": "./api/stats.ts",
-      "hash": "98154395bc163d49108de2185f3bc9c0346c80b085e354dcb007457d503c5423",
-      "last_modified": 1769383522,
-      "size": 1412
-    },
-    "./utils/testData.ts.bak2": {
-      "path": "./utils/testData.ts.bak2",
-      "hash": "17d67fe32d6dc828659d42091b6742902129e16cfd2ad438294fc5e497b2d432",
-      "last_modified": 1768408843,
-      "size": 8332
-    },
-    "./utils/guideStorage.ts.bak": {
-      "path": "./utils/guideStorage.ts.bak",
-      "hash": "832051039dc163a8072e6f3ec94b2363f5ae7dbc52645f3bd7c85445d9ca4f8c",
-      "last_modified": 1768408843,
-      "size": 11313
-    },
-    "./components/DashboardGuide.tsx": {
-      "path": "./components/DashboardGuide.tsx",
-      "hash": "0c79f9b8e2c030b12668e173fa8310b6ad55ae9b0e4d398da3155f3fcf416fa3",
-      "last_modified": 1768589996,
-      "size": 9245
-    },
-    "./utils/resetDatabase.ts": {
-      "path": "./utils/resetDatabase.ts",
-      "hash": "e9d0d4213c8c6c0ad80e543c5d325ca9405e265cb0645c35689ec5d5a9bbb0dc",
-      "last_modified": 1768411070,
-      "size": 1357
-    },
-    "./coverage/coverage-final.json": {
-      "path": "./coverage/coverage-final.json",
-      "hash": "9edeed3d51eeaa701a3bdce87e22988b983b76c8278ed65c9f725440e5d8125a",
-      "last_modified": 1768490671,
-      "size": 9950
-    },
-    "./src/api/__tests__/api.test.ts": {
-      "path": "./src/api/__tests__/api.test.ts",
-      "hash": "9c8a350320d30d979d4cbb8bc5b22a9fac9ae43d7fe99e1a564d06a066758a73",
-      "last_modified": 1768403830,
-      "size": 886
-    },
-    "./build-metadata.json": {
-      "path": "./build-metadata.json",
-      "hash": "5b36fded84ca46af60523b90344605b186e2ed3ae94af5870e4450d38be8a0a9",
-      "last_modified": 1769694084,
-      "size": 10773
-    },
-    "./hooks/useOnboarding.ts": {
-      "path": "./hooks/useOnboarding.ts",
-      "hash": "81a50367fc4eae0d52df8de6c3312ba630b6021590946aba8c71b208c51ee8ac",
-      "last_modified": 1768411594,
-      "size": 5921
-    },
-    "./utils/searchCacheManager.ts.bak3": {
-      "path": "./utils/searchCacheManager.ts.bak3",
-      "hash": "754fd4524d8412d4932f92fd7c7a0cf0e13d5e1513f2794e8b94c73f4509fd1b",
-      "last_modified": 1768408843,
-      "size": 7421
-    },
-    "./test-iframe.html": {
-      "path": "./test-iframe.html",
-      "hash": "3638b2718f75841662fa5655fe1696dc3458bcf09c73791b3e81ef643cd44d1d",
-      "last_modified": 1768272674,
-      "size": 9269
-    },
-    "./coverage/base.css": {
-      "path": "./coverage/base.css",
-      "hash": "728572fd0910587e3a74ee20cb6c82c3cb35c9cd9933b47dcdf7d5efd418e7c4",
-      "last_modified": 1768490671,
-      "size": 5494
-    },
-    "./tests/ALERT_MANUAL_TEST.md": {
-      "path": "./tests/ALERT_MANUAL_TEST.md",
-      "hash": "61b49cb20cc0546ba30490d4578acfa17d9b9815db24b4f618f01f349eb2dcb0",
-      "last_modified": 1768451416,
-      "size": 6940
-    },
-    "./services/searchCache.ts": {
-      "path": "./services/searchCache.ts",
-      "hash": "009ba32117d1ede36fc18d29aaa28fd451f95727a0820b047d0493c9df562944",
-      "last_modified": 1768411238,
-      "size": 5959
-    },
-    "./services/popularityScoring.ts": {
-      "path": "./services/popularityScoring.ts",
-      "hash": "76bba159728b60c737dd65b25e20aafc73b9af3d713953ca884e2a24c0b7fafd",
-      "last_modified": 1769607967,
-      "size": 13522
-    },
-    "./api/trending/CLAUDE.md": {
-      "path": "./api/trending/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768227195,
-      "size": 170
-    },
-    "./CONSOLE_FIXES_SUMMARY.md": {
-      "path": "./CONSOLE_FIXES_SUMMARY.md",
-      "hash": "2c8113f6d98464df00a44c06c3bc97dac6ea278d34c1be55d9fa6b1b920e5175",
-      "last_modified": 1769540864,
-      "size": 4044
-    },
-    "./coverage/lcov-report/block-navigation.js": {
-      "path": "./coverage/lcov-report/block-navigation.js",
-      "hash": "b8d771585c62abc5ef97b655f2c449ba80b09dea62594553e76c719680705068",
-      "last_modified": 1768490662,
-      "size": 2655
-    },
-    "./app/CLAUDE.md": {
-      "path": "./app/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768351687,
-      "size": 170
-    },
-    "./tsconfig.json": {
-      "path": "./tsconfig.json",
-      "hash": "93ea52973c2119b04c586c725419e6ca09ec7314589ae10d22c731e43f112257",
-      "last_modified": 1769349236,
-      "size": 1014
-    },
-    "./components/**/CLAUDE.md": {
-      "path": "./components/**/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768409146,
-      "size": 170
-    },
-    "./docs/SEARCH_ENHANCEMENTS.md": {
-      "path": "./docs/SEARCH_ENHANCEMENTS.md",
-      "hash": "2805267a39b1a5a171ff2d2652b5ef6145c59b30178d694ca22f13fe500375eb",
-      "last_modified": 1769608640,
-      "size": 14542
-    },
-    "./coverage/sorter.js": {
-      "path": "./coverage/sorter.js",
-      "hash": "d1adc37ef011a7a2a407a412c3bee30da334b5375bf71523f74612c703f66ce8",
-      "last_modified": 1768490661,
-      "size": 6731
-    },
-    "./services/factoryDiscovery.ts": {
-      "path": "./services/factoryDiscovery.ts",
-      "hash": "040f113ffa31b2f36016b5c6b8879397f21bd4a7895d363f7008fffb1e5addb1",
-      "last_modified": 1768411238,
-      "size": 5530
-    },
-    "./utils/accessibility.ts": {
-      "path": "./utils/accessibility.ts",
-      "hash": "9b6bc6fd415a928fefa6e1336e2e917aa3643bd9df6d10b845ef65cac74e2a6f",
-      "last_modified": 1768411070,
-      "size": 7087
-    },
-    "./_types/diagnostics.ts": {
-      "path": "./_types/diagnostics.ts",
-      "hash": "28eeb47185d5976a52dd625971183dd0f5ea38f057264bb62b32488516467504",
-      "last_modified": 1768089175,
-      "size": 1313
-    },
-    "./coverage/lcov-report/index.html": {
-      "path": "./coverage/lcov-report/index.html",
-      "hash": "cb3e77398dcc43f53a7cec544e98a9bd0e85eaa654eaf84d469027505bc9ec3c",
-      "last_modified": 1768490662,
-      "size": 5700
-    },
-    "./hooks/useBubbleVisualizationGuide.ts": {
-      "path": "./hooks/useBubbleVisualizationGuide.ts",
-      "hash": "2e13de1f5142ebc67847d8c9193eeab13d33ec2c78bfe5891cdc239fc9044a73",
-      "last_modified": 1768527652,
-      "size": 5817
-    },
-    "./services/phoneticIndex.ts": {
-      "path": "./services/phoneticIndex.ts",
-      "hash": "fec2b0702cf7f3499877aafff3c79ecc50b204590764e8d01d1363bc5268581c",
-      "last_modified": 1768411238,
-      "size": 9023
-    },
-    "./GUIDE_TESTING.md": {
-      "path": "./GUIDE_TESTING.md",
-      "hash": "88e1f7ba88e0c92d53475d22e9d56fbc6ffc725dfa7057e3c009b2bd7c0f2f60",
-      "last_modified": 1768351687,
-      "size": 5613
-    },
-    "./hooks/useWalletDetailsGuide.ts": {
-      "path": "./hooks/useWalletDetailsGuide.ts",
-      "hash": "6833169001456a73e13d9c6aba217bea6c294bac642733ed20a6ddbb143acf1f",
-      "last_modified": 1768517020,
-      "size": 5957
-    },
-    "./components/ErrorBoundary.tsx": {
-      "path": "./components/ErrorBoundary.tsx",
-      "hash": "ae05e6e1a1650d631e409e62306bfd03f52572f484158bcdd6dd7bcd7e48ceba",
-      "last_modified": 1768411123,
-      "size": 3689
-    },
-    "./src/api/__tests__/CLAUDE.md": {
-      "path": "./src/api/__tests__/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768409146,
-      "size": 170
-    },
-    "./components/Footer.tsx": {
-      "path": "./components/Footer.tsx",
-      "hash": "6169ff9146c22f2da72532ca7438a5458871ac20484a94b3ddfef2f263d5891e",
-      "last_modified": 1768411123,
-      "size": 5075
-    },
-    "./LEARNING_SEARCH_IMPLEMENTATION.md": {
-      "path": "./LEARNING_SEARCH_IMPLEMENTATION.md",
-      "hash": "7ed5a44bf691dae45f74fd6935d5f1464f6e720e277a3735c415fad2dc103c35",
-      "last_modified": 1768089716,
-      "size": 17348
-    },
-    "./apps/web/src/components/wallet/CLAUDE.md": {
-      "path": "./apps/web/src/components/wallet/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768408843,
-      "size": 170
-    },
-    "./api/dogechain-proxy.ts": {
-      "path": "./api/dogechain-proxy.ts",
-      "hash": "e864667fda0b84de7dcecc4ac7023262da03fe5ce3ff5f412e56f1c4f17618f2",
-      "last_modified": 1769517907,
-      "size": 4136
-    },
-    "./services/searchAnalytics.ts": {
-      "path": "./services/searchAnalytics.ts",
-      "hash": "be5c71764b23ddc3faeef3a450f3cb0de7b25989c7e0a1f987a0094cca59fd41",
-      "last_modified": 1768411238,
-      "size": 11500
-    },
-    "./test-dexscreener-tabs.html": {
-      "path": "./test-dexscreener-tabs.html",
-      "hash": "94de292c916067902fdafd4daddbad28b0f6e9efa92a01a90bbb18a1c11ea9d1",
-      "last_modified": 1768338634,
-      "size": 9541
-    },
-    "./DEX_REFERENCE.md": {
-      "path": "./DEX_REFERENCE.md",
-      "hash": "e048aed80797758c46adbe2ea5b303b81a0e8af7dd9b7c18c3cc69d01df97afb",
-      "last_modified": 1767662123,
-      "size": 9218
-    },
-    "./utils/lpDetectionInit.ts.bak": {
-      "path": "./utils/lpDetectionInit.ts.bak",
-      "hash": "d6c7c214b6f7c516b1d30519001aa39fed18cfc4b12ce6f2831f6d3f425248cf",
-      "last_modified": 1768408843,
-      "size": 4749
-    },
-    "./hooks/useDashboardGuide.ts": {
-      "path": "./hooks/useDashboardGuide.ts",
-      "hash": "5729c1743547ef84af38f7c07d38c8bacf6e5922d3345ef1af7c1654abdcbbf1",
-      "last_modified": 1768517397,
-      "size": 5800
-    },
-    "./components/Dashboard.tsx": {
-      "path": "./components/Dashboard.tsx",
-      "hash": "53b646b5065d61738ea63d7be19b9c65893c3ac736bd6ded7d57e4239640f89a",
-      "last_modified": 1769618741,
-      "size": 100310
-    },
-    "./app/api/distribution/CLAUDE.md": {
-      "path": "./app/api/distribution/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1769626328,
-      "size": 170
-    },
-    "./test-dexscreener-embed.html": {
-      "path": "./test-dexscreener-embed.html",
-      "hash": "6fc8879bd917b2f7f756218bfdaa03bb090b228afb60e4102e7435cf48b02d93",
-      "last_modified": 1768337053,
-      "size": 4974
-    },
-    "./utils/searchInputTypeDetector.ts": {
-      "path": "./utils/searchInputTypeDetector.ts",
-      "hash": "098e9263fd9f0524529350915e6971bf69c6d145419196a6d72836e41e4939d7",
-      "last_modified": 1769606620,
-      "size": 2306
-    },
-    "./SEARCH_OPTIMIZATION_SUMMARY.md": {
-      "path": "./SEARCH_OPTIMIZATION_SUMMARY.md",
-      "hash": "36d57644bb1afaee7dbd50a345b5f04531cf306386e94d38d59c1cfa2b4d5837",
-      "last_modified": 1767715607,
-      "size": 24791
-    },
-    "./components/DexAnalytics.tsx": {
-      "path": "./components/DexAnalytics.tsx",
-      "hash": "e6ef1f51d16895ba9b3264e8c79e906d1b1b6be84a0ffe52465821e8f8b5409c",
-      "last_modified": 1769629458,
-      "size": 13396
-    },
-    "./test-onboarding-debug.py": {
-      "path": "./test-onboarding-debug.py",
-      "hash": "26cd295b5d4af45f0b4860c8a3e9b709a817196365de27ec20cc07f67c0e605f",
-      "last_modified": 1768342504,
-      "size": 2292
-    },
-    "./utils/highlightText.tsx": {
-      "path": "./utils/highlightText.tsx",
-      "hash": "d9738fec61434d057c8792150e63013bd1f798d3fe24c35b677e98b0a2750162",
-      "last_modified": 1768403830,
-      "size": 2682
-    },
-    "./IMPLEMENTATION_SUMMARY.md": {
-      "path": "./IMPLEMENTATION_SUMMARY.md",
-      "hash": "a760bcf89d642e2e9af5e52f4ef4a77a76fc99780051189b383ad821b2986d66",
-      "last_modified": 1767844903,
-      "size": 18933
-    },
-    "./services/lpBatchScanner.ts": {
-      "path": "./services/lpBatchScanner.ts",
-      "hash": "944dd999e4a957c890244af70c889f4ebaf1fa107e85ec38c1bf58d9daf28e7c",
-      "last_modified": 1768412532,
-      "size": 9395
-    },
-    "./RPC_WALLET_SCANNING_IMPLEMENTATION.md": {
-      "path": "./RPC_WALLET_SCANNING_IMPLEMENTATION.md",
-      "hash": "8fedd1b320ba35a0112f3d9202aeea26db4eb1c0e58d61b9021084567f00bdf2",
-      "last_modified": 1769558178,
-      "size": 9882
-    },
-    "./lib/consoleLogger.ts": {
-      "path": "./lib/consoleLogger.ts",
-      "hash": "1bb6c83d65d40016a83b965f8bc5b3aafdf14cd68d6496d78a9a720915dfb5ce",
-      "last_modified": 1769113125,
-      "size": 7808
-    },
-    "./app/api/CLAUDE.md": {
-      "path": "./app/api/CLAUDE.md",
-      "hash": "8f5713e1519a7ffbe32c1faa831ce599a7a08ab2bdbf716d3c7d482b9064194f",
-      "last_modified": 1769689698,
-      "size": 169
-    },
-    "./TRENDING_TILES_IMPLEMENTATION.md": {
-      "path": "./TRENDING_TILES_IMPLEMENTATION.md",
-      "hash": "ef0102d9f6522f4eca21aaa340936b096cbd0d417bf5475d4d855ad1f98da158",
-      "last_modified": 1768245770,
-      "size": 18207
-    },
-    "./prisma/migrations/202601120858_add_triggered_alerts_table/migration.sql": {
-      "path": "./prisma/migrations/202601120858_add_triggered_alerts_table/migration.sql",
-      "hash": "cdee604c5de3b6d1ff64671f57fab54daa3183a5cbcb802486eff4fb33d9ecad",
-      "last_modified": 1768226296,
-      "size": 1841
-    },
-    "./src/components/CLAUDE.md": {
-      "path": "./src/components/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768409146,
-      "size": 170
-    },
-    "./src/api/__tests__/hello.test.ts": {
-      "path": "./src/api/__tests__/hello.test.ts",
-      "hash": "326efcf9b0c3d15fd58df681d08343f4fbf6415705fb3492d0c4be1a4d33924d",
-      "last_modified": 1768403830,
-      "size": 1582
-    },
-    "./hooks/useClickOutside.ts": {
-      "path": "./hooks/useClickOutside.ts",
-      "hash": "a4ad395cb08fef18ae367e14340b663c087626c5f3a4ba09eb29982b787e8862",
-      "last_modified": 1767630483,
-      "size": 946
-    },
-    "./services/factoryDiscovery.ts.bak": {
-      "path": "./services/factoryDiscovery.ts.bak",
-      "hash": "24a94d308e679f431085dd6dde9c66322a414b3f6a29825f6511dd689ea481bd",
-      "last_modified": 1768408843,
-      "size": 5489
-    },
-    "./scripts/increment-build.cjs": {
-      "path": "./scripts/increment-build.cjs",
-      "hash": "3a0cb6c39afa05468630294a89bba910d61f1c1fa1e342dddc6645e5e252eac2",
-      "last_modified": 1767574511,
-      "size": 1318
-    },
-    "./src/api/index.ts": {
-      "path": "./src/api/index.ts",
-      "hash": "a736398d8c6ea97db3a07834a2ce5c64015ed2fc1d069ed675e08c3db1298c77",
-      "last_modified": 1768491056,
-      "size": 1023
-    },
-    "./services/abbreviationGenerator.ts": {
-      "path": "./services/abbreviationGenerator.ts",
-      "hash": "fb89c722c096b1317732524a1f6133ba11e55bc4805938da3874c0838677fda0",
-      "last_modified": 1768411238,
-      "size": 5322
-    },
-    "./README.md": {
-      "path": "./README.md",
-      "hash": "e2f87c487f772ab694460a0f4be7d793f6a4107b3768d78ae5cd6151face438a",
-      "last_modified": 1768245755,
-      "size": 10526
-    },
-    "./vercel.json": {
-      "path": "./vercel.json",
-      "hash": "5dac6196f2abbc3c99f859de34e74e48c3bf8f34418c7d009607453dd1641734",
-      "last_modified": 1769626321,
-      "size": 2079
-    },
-    "./test-hardreload-behavior.py": {
-      "path": "./test-hardreload-behavior.py",
-      "hash": "730f255c4663b0cc774fa055b95f520902860fae578d88d54a9a2187cedf2336",
-      "last_modified": 1768342793,
-      "size": 2145
-    },
-    "./components/WalletDetailsGuide.tsx": {
-      "path": "./components/WalletDetailsGuide.tsx",
-      "hash": "97574f12c1cabf74384d3eadc1c69f1556a3bb183096d390231a5270a39ba5eb",
-      "last_modified": 1768590004,
-      "size": 9033
-    },
-    "./manual-factory-entry.html": {
-      "path": "./manual-factory-entry.html",
-      "hash": "7acbd4cf65e3472bfb598764c112e84c44570678ea66c4bd773c2b3251ab08e7",
-      "last_modified": 1767657440,
-      "size": 13268
-    },
-    "./api/trending.ts": {
-      "path": "./api/trending.ts",
-      "hash": "66cfc534192597081c3de8239609b1e9891ee1bef8a54c303e6d3816a5230982",
-      "last_modified": 1768411162,
-      "size": 1843
-    },
-    "./coverage/hello.ts.html": {
-      "path": "./coverage/hello.ts.html",
-      "hash": "bf094260aedbdbcdd789e0113b010291ce0b7dcccb8efb677509cd3871011b2a",
-      "last_modified": 1768490662,
-      "size": 7545
-    },
-    "./DEXSCREENER_INTEGRATION_SUMMARY.md": {
-      "path": "./DEXSCREENER_INTEGRATION_SUMMARY.md",
-      "hash": "435f342474fa7d75f9a0cb7c716cc044c3cc32e08a0b8d2cd8f8e3331228856b",
-      "last_modified": 1768351687,
-      "size": 10239
-    },
-    "./src/CLAUDE.md": {
-      "path": "./src/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768409146,
-      "size": 170
-    },
-    "./docs/dev/CLAUDE.md": {
-      "path": "./docs/dev/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1769304401,
-      "size": 170
-    },
-    "./setup-trending-db.sql": {
-      "path": "./setup-trending-db.sql",
-      "hash": "015db827819c49bd1cd00c276a8e30648cf3a5e75050d31e31161f551a8c2b79",
-      "last_modified": 1767628342,
-      "size": 1457
-    },
-    "./docs/DEPLOYMENT_GUIDE.md": {
-      "path": "./docs/DEPLOYMENT_GUIDE.md",
-      "hash": "be2bdee14b4fb994f74263f1a5ccdfe489e2f17cf75850d298becf692e7606de",
-      "last_modified": 1767732048,
-      "size": 16374
-    },
-    "./NETWORK_SWITCHER_REMOVED.md": {
-      "path": "./NETWORK_SWITCHER_REMOVED.md",
-      "hash": "6297c234800b3376c884e2f994ecf5991093c33f11c55399f81409e47542b93f",
-      "last_modified": 1767929007,
-      "size": 1900
-    },
-    "./console.md": {
-      "path": "./console.md",
-      "hash": "5c4ff3820284aab856900701008779f6cb5604406cf9adbdb9e1f0a7fab054f3",
-      "last_modified": 1769557180,
-      "size": 171953
-    },
-    "./public/custom-screenshot.png": {
-      "path": "./public/custom-screenshot.png",
-      "hash": "a71760ca7e5e27740bfa7cc0b0408f80e5c56120ebcf322ac720b1dd25bc066f",
-      "last_modified": 1767895486,
-      "size": 49
-    },
-    "./src/api/CLAUDE.md": {
-      "path": "./src/api/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768409146,
-      "size": 170
-    },
-    "./utils/performanceMonitor.ts": {
-      "path": "./utils/performanceMonitor.ts",
-      "hash": "f216988d90677f14ca14cd9b2290c238d77e66650d3bada96843e9653dc7120e",
-      "last_modified": 1768411070,
-      "size": 10299
-    },
-    "./components/OnboardingContent.tsx": {
-      "path": "./components/OnboardingContent.tsx",
-      "hash": "d58a92e56096494c2deee4ce689c5af0110df49b8ade71945af3b0b222c57a18",
-      "last_modified": 1768411123,
-      "size": 3501
-    },
-    "./components/BubbleMap.tsx": {
-      "path": "./components/BubbleMap.tsx",
-      "hash": "9f5cb6d99fe1158db7015efcac71abe341289e4288350cb68e0bda749c77adfb",
-      "last_modified": 1769689400,
-      "size": 77058
-    },
-    "./api/CLAUDE.md": {
-      "path": "./api/CLAUDE.md",
-      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
-      "last_modified": 1768091459,
-      "size": 170
-    },
-    "./components/CLAUDE.md": {
-      "path": "./components/CLAUDE.md",
-      "hash": "3325d46e337b4183e80f1d0e6f75bce6b82bb2451c13617ffe7c59351023d86a",
-      "last_modified": 1768245733,
-      "size": 2676
-    },
-    "./components/SearchAnalytics.tsx": {
-      "path": "./components/SearchAnalytics.tsx",
-      "hash": "4eb76549e5041969a0f195341da187907da29a689c45f944d7251153aa2e3ce4",
-      "last_modified": 1768411123,
-      "size": 12164
-    },
-    "./services/learnedTokensService.ts": {
-      "path": "./services/learnedTokensService.ts",
-      "hash": "ea872567d4301a0eaf347b3d4dddd2d71ba9c1f16681c82357787a7c2b410442",
-      "last_modified": 1769627981,
-      "size": 4811
-    },
-    "./utils/lpDetectionInit.ts": {
-      "path": "./utils/lpDetectionInit.ts",
-      "hash": "54f3dc1ea2c9145c6076f1e893832c30938d7818eeac48f1a331a9ec309d14f9",
-      "last_modified": 1768411070,
-      "size": 4351
-    },
-    "./utils/onboardingStorage.ts.bak": {
-      "path": "./utils/onboardingStorage.ts.bak",
-      "hash": "a36c1b612a764aa2ef3b7ed64d2789fb9a8b2a74bd6262f35c0925cef559bcf0",
-      "last_modified": 1768408843,
-      "size": 3977
-    },
-    "./wagmi.ts": {
-      "path": "./wagmi.ts",
-      "hash": "cb3984db0f5ec0cd28dfc64543601c347f8ea2a71fb22dbab219a1e976cd986f",
-      "last_modified": 1769621327,
-      "size": 1323
-    },
-    "./components/CustomSelect.tsx": {
-      "path": "./components/CustomSelect.tsx",
-      "hash": "fb402db305258bc084b1b837c7d1d7c9bb0ead90c4eb750c46a87d76546b6255",
-      "last_modified": 1768451263,
-      "size": 6574
-    },
-    "./REMOTE_DIAGNOSTIC_LOGGING_IMPLEMENTATION.md": {
-      "path": "./REMOTE_DIAGNOSTIC_LOGGING_IMPLEMENTATION.md",
-      "hash": "3adfc25fd41a3e29605e22025aac23df1baa431087cef038e8cd8645fa2080fc",
-      "last_modified": 1768089716,
-      "size": 7858
-    },
-    "./STATS_COUNTERS_IMPLEMENTATION.md": {
-      "path": "./STATS_COUNTERS_IMPLEMENTATION.md",
-      "hash": "0fd48cb49138875ba8e4fe0ddf109335c1b5d0f069589c4140f1074e6a2369ad",
-      "last_modified": 1769187990,
-      "size": 14797
-    },
-    "./index.tsx": {
-      "path": "./index.tsx",
-      "hash": "5fd6422ca0f6a2903176bcdf4b72fec4370e99e4c9eb67c3e32b980f5040368c",
-      "last_modified": 1769526258,
-      "size": 5225
-    },
-    "./services/tokenSearchService.ts": {
-      "path": "./services/tokenSearchService.ts",
-      "hash": "936e18acf9f2aba7e7d71f28643665e5b55ea291fc92014986ff88c7931e67a1",
-      "last_modified": 1768411238,
-      "size": 32168
-    },
-    "./services/scanProgress.ts": {
-      "path": "./services/scanProgress.ts",
-      "hash": "0523f504a085e9ef6e4351d76946e89062b83e0778db967007438ad323f13b33",
-      "last_modified": 1768411238,
-      "size": 9048
-    },
-    "./factory-discovery-v2.html": {
-      "path": "./factory-discovery-v2.html",
-      "hash": "a3553e004c310602951275c0d9fcb3dd1a5be1f4c7a0261e36517093dd2c2e49",
-      "last_modified": 1767636101,
-      "size": 15768
-    },
-    "./ERROR_FIX_SUMMARY_BUILD_128.md": {
-      "path": "./ERROR_FIX_SUMMARY_BUILD_128.md",
-      "hash": "9410866c5729f2da2665bb5e1eaa88a3b57fc9db6eb9bf4d2df8b189944ad075",
-      "last_modified": 1768089716,
-      "size": 6852
-    },
-    "./prisma/migrations/202601110026_add_diagnostics_table/migration.sql": {
-      "path": "./prisma/migrations/202601110026_add_diagnostics_table/migration.sql",
-      "hash": "7a6a0e683ac1437900ba0d3b3d540c3c143811910f28537f94ff06b3fbc1b8c0",
-      "last_modified": 1768091321,
-      "size": 1268
+    "./api/trending/log.ts": {
+      "path": "./api/trending/log.ts",
+      "hash": "fa7b6ff7706982d29d4cecd8e96f342ffd936d25eed90949db1b8cb2d76e96c0",
+      "last_modified": 1768412320,
+      "size": 2953
     },
     "./RAINBOWKIT_MIGRATION_COMPLETE.md": {
       "path": "./RAINBOWKIT_MIGRATION_COMPLETE.md",
@@ -1701,29 +519,557 @@
       "last_modified": 1767929007,
       "size": 7923
     },
-    "./TRENDING_SETUP.md": {
-      "path": "./TRENDING_SETUP.md",
-      "hash": "ce94d37ecde7c8aa6c0f009d501bf0cd708e7ddb5996eee383224651f373d4cc",
-      "last_modified": 1767628564,
-      "size": 7585
+    "./hooks/useClickOutside.ts": {
+      "path": "./hooks/useClickOutside.ts",
+      "hash": "a4ad395cb08fef18ae367e14340b663c087626c5f3a4ba09eb29982b787e8862",
+      "last_modified": 1767630483,
+      "size": 946
     },
-    "./api/wallet-scan.ts": {
-      "path": "./api/wallet-scan.ts",
-      "hash": "ec6c21e18fa01b8e758c6ccc29e3e26bc2d6fd5335b8a40f472dbce3a13b906d",
-      "last_modified": 1768412900,
-      "size": 3775
+    "./services/**/CLAUDE.md": {
+      "path": "./services/**/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768409146,
+      "size": 170
     },
-    "./RPC_QUICK_START.md": {
-      "path": "./RPC_QUICK_START.md",
-      "hash": "70d6973c253c8b03e7e0bef3c81f406278f987870de5b054f8235b46bbd6ceca",
+    "./utils/highlightText.tsx": {
+      "path": "./utils/highlightText.tsx",
+      "hash": "d9738fec61434d057c8792150e63013bd1f798d3fe24c35b677e98b0a2750162",
+      "last_modified": 1768403830,
+      "size": 2682
+    },
+    "./api/trending.ts": {
+      "path": "./api/trending.ts",
+      "hash": "66cfc534192597081c3de8239609b1e9891ee1bef8a54c303e6d3816a5230982",
+      "last_modified": 1768411162,
+      "size": 1843
+    },
+    "./services/trendingService.ts": {
+      "path": "./services/trendingService.ts",
+      "hash": "47119a54e808ad78d795f2ba9a2353bcdfe2f2f71c4bc7bd9dd2ba6239a8d324",
+      "last_modified": 1769687756,
+      "size": 4989
+    },
+    "./utils/encryption.ts": {
+      "path": "./utils/encryption.ts",
+      "hash": "d66349c604a2f2585fb5f70de724a3455811bd896e7aa6139d0e2c191739a57f",
+      "last_modified": 1768411070,
+      "size": 5003
+    },
+    "./_types/diagnostics.ts": {
+      "path": "./_types/diagnostics.ts",
+      "hash": "28eeb47185d5976a52dd625971183dd0f5ea38f057264bb62b32488516467504",
+      "last_modified": 1768089175,
+      "size": 1313
+    },
+    "./build-metadata.json": {
+      "path": "./build-metadata.json",
+      "hash": "5b36fded84ca46af60523b90344605b186e2ed3ae94af5870e4450d38be8a0a9",
+      "last_modified": 1769694084,
+      "size": 10773
+    },
+    "./components/SearchAnalytics.tsx": {
+      "path": "./components/SearchAnalytics.tsx",
+      "hash": "4eb76549e5041969a0f195341da187907da29a689c45f944d7251153aa2e3ce4",
+      "last_modified": 1768411123,
+      "size": 12164
+    },
+    "./docs/API_REFERENCE.md": {
+      "path": "./docs/API_REFERENCE.md",
+      "hash": "bc9c80804d0483a3c62c36e473ad92b7ff552a6f5d434207c224c3256202d879",
+      "last_modified": 1767732048,
+      "size": 17104
+    },
+    "./coverage/lcov-report/hello.ts.html": {
+      "path": "./coverage/lcov-report/hello.ts.html",
+      "hash": "7562a4764aec0c107e9b21523efa1655adf0c2824fe091992d449dc6938e696e",
+      "last_modified": 1768490662,
+      "size": 7545
+    },
+    "./services/abbreviationGenerator.ts": {
+      "path": "./services/abbreviationGenerator.ts",
+      "hash": "fb89c722c096b1317732524a1f6133ba11e55bc4805938da3874c0838677fda0",
+      "last_modified": 1768411238,
+      "size": 5322
+    },
+    "./package.json": {
+      "path": "./package.json",
+      "hash": "e477739458a3ff9a3742e9e5d9a3cc5f91624ebd3a82b0e234b2a23cb3789700",
+      "last_modified": 1769621799,
+      "size": 3312
+    },
+    "./prisma/migrations/202601110026_add_diagnostics_table/CLAUDE.md": {
+      "path": "./prisma/migrations/202601110026_add_diagnostics_table/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768244456,
+      "size": 170
+    },
+    "./utils/discoverFactories.ts.bak": {
+      "path": "./utils/discoverFactories.ts.bak",
+      "hash": "e34b715478292fb2111627aa72973d27aecf40a73a6d083e46633847ffa3f9be",
+      "last_modified": 1768408843,
+      "size": 16451
+    },
+    "./services/dogechainRPC.ts": {
+      "path": "./services/dogechainRPC.ts",
+      "hash": "bae3975c78ff662340ff0bc547e24afc006f7ca9e01887846daf0f420fee73a5",
+      "last_modified": 1769794698,
+      "size": 47594
+    },
+    "./services/dexScreenerService.ts": {
+      "path": "./services/dexScreenerService.ts",
+      "hash": "4b3d74495de1cde9bf2ed73030f34684f787a7ba82b478d9224fa1877a4f7c04",
+      "last_modified": 1769720506,
+      "size": 17611
+    },
+    "./GUIDE_TESTING.md": {
+      "path": "./GUIDE_TESTING.md",
+      "hash": "88e1f7ba88e0c92d53475d22e9d56fbc6ffc725dfa7057e3c009b2bd7c0f2f60",
+      "last_modified": 1768351687,
+      "size": 5613
+    },
+    "./IMPLEMENTATION_SUMMARY.md": {
+      "path": "./IMPLEMENTATION_SUMMARY.md",
+      "hash": "a760bcf89d642e2e9af5e52f4ef4a77a76fc99780051189b383ad821b2986d66",
+      "last_modified": 1767844903,
+      "size": 18933
+    },
+    "./test-hardreload-behavior.py": {
+      "path": "./test-hardreload-behavior.py",
+      "hash": "730f255c4663b0cc774fa055b95f520902860fae578d88d54a9a2187cedf2336",
+      "last_modified": 1768342793,
+      "size": 2145
+    },
+    "./services/searchCache.ts": {
+      "path": "./services/searchCache.ts",
+      "hash": "009ba32117d1ede36fc18d29aaa28fd451f95727a0820b047d0493c9df562944",
+      "last_modified": 1768411238,
+      "size": 5959
+    },
+    "./README.md": {
+      "path": "./README.md",
+      "hash": "e2f87c487f772ab694460a0f4be7d793f6a4107b3768d78ae5cd6151face438a",
+      "last_modified": 1768245755,
+      "size": 10526
+    },
+    "./utils/lpDetectionInit.ts": {
+      "path": "./utils/lpDetectionInit.ts",
+      "hash": "54f3dc1ea2c9145c6076f1e893832c30938d7818eeac48f1a331a9ec309d14f9",
+      "last_modified": 1768411070,
+      "size": 4351
+    },
+    "./coverage/lcov-report/prettify.js": {
+      "path": "./coverage/lcov-report/prettify.js",
+      "hash": "7aed91c4cd326bacef7de7fc3737231b321001ad17e57ac96f2625731c179bbc",
+      "last_modified": 1768490662,
+      "size": 17590
+    },
+    "./components/Navbar.tsx": {
+      "path": "./components/Navbar.tsx",
+      "hash": "9d215d19ed23f8073f2ef6d4aa80fa2a7c143d14bb02578f7bb7a18326f3dd7a",
+      "last_modified": 1769787853,
+      "size": 16947
+    },
+    "./components/DashboardGuide.tsx": {
+      "path": "./components/DashboardGuide.tsx",
+      "hash": "0c79f9b8e2c030b12668e173fa8310b6ad55ae9b0e4d398da3155f3fcf416fa3",
+      "last_modified": 1768589996,
+      "size": 9245
+    },
+    "./types/d3.types.ts": {
+      "path": "./types/d3.types.ts",
+      "hash": "95da90d280f5b51301ddd08ff358c9e83c7ba77d4a9d2fbda2e5a721f6fbdbde",
+      "last_modified": 1767614339,
+      "size": 1382
+    },
+    "./components/ConnectionDetailsView.tsx": {
+      "path": "./components/ConnectionDetailsView.tsx",
+      "hash": "766a142abfea1c0f72428208bcd2cd8b6da39b9dcae640cc849bc4b39570d12e",
+      "last_modified": 1768414517,
+      "size": 13900
+    },
+    "./app/dashboard/CLAUDE.md": {
+      "path": "./app/dashboard/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768262047,
+      "size": 170
+    },
+    "./src/components/bubble/CLAUDE.md": {
+      "path": "./src/components/bubble/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768227195,
+      "size": 170
+    },
+    "./coverage/lcov.info": {
+      "path": "./coverage/lcov.info",
+      "hash": "4d83188ad021584a81f999b7f481045d639ca344431b58af1bc54a41d5096661",
+      "last_modified": 1768490662,
+      "size": 906
+    },
+    "./api/interactions.ts": {
+      "path": "./api/interactions.ts",
+      "hash": "2878dfe5fd0622458b6b928bb7e70e7fc5bbcbedfd41ef0e50351d242b02348b",
+      "last_modified": 1768412654,
+      "size": 2025
+    },
+    "./App.tsx.backup": {
+      "path": "./App.tsx.backup",
+      "hash": "bdeaf7f6bb8dcd2ed11190bb38a05c27788efcfa71e2ce0170cb29a042f03761",
+      "last_modified": 1767926894,
+      "size": 97293
+    },
+    "./app/api/trending/log/CLAUDE.md": {
+      "path": "./app/api/trending/log/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1769720501,
+      "size": 170
+    },
+    "./utils/discoverFactories.ts": {
+      "path": "./utils/discoverFactories.ts",
+      "hash": "7d45cd031f9acef7e2ea35b8c4bf5109e83df1354f18c434dd8df13b3f9ce7b4",
+      "last_modified": 1768412901,
+      "size": 16450
+    },
+    "./services/db.ts": {
+      "path": "./services/db.ts",
+      "hash": "28d94679b596c5176e1c19261b523edfd06a2e01ba2934fafbd2b3fa2522eb19",
+      "last_modified": 1769787582,
+      "size": 63033
+    },
+    "./utils/guideStorage.ts.bak2": {
+      "path": "./utils/guideStorage.ts.bak2",
+      "hash": "c6e689fa409e8fe4fabcd583e7ddcc762b19aab4b33ad7fb1e2c11dcdd302b37",
+      "last_modified": 1768408843,
+      "size": 11309
+    },
+    "./tsconfig.json": {
+      "path": "./tsconfig.json",
+      "hash": "93ea52973c2119b04c586c725419e6ca09ec7314589ae10d22c731e43f112257",
+      "last_modified": 1769349236,
+      "size": 1014
+    },
+    "./hooks/useOnboarding.ts": {
+      "path": "./hooks/useOnboarding.ts",
+      "hash": "81a50367fc4eae0d52df8de6c3312ba630b6021590946aba8c71b208c51ee8ac",
+      "last_modified": 1768411594,
+      "size": 5921
+    },
+    "./test-dexscreener-tabs.html": {
+      "path": "./test-dexscreener-tabs.html",
+      "hash": "94de292c916067902fdafd4daddbad28b0f6e9efa92a01a90bbb18a1c11ea9d1",
+      "last_modified": 1768338634,
+      "size": 9541
+    },
+    "./coverage/prettify.js": {
+      "path": "./coverage/prettify.js",
+      "hash": "7aed91c4cd326bacef7de7fc3737231b321001ad17e57ac96f2625731c179bbc",
+      "last_modified": 1768490662,
+      "size": 17590
+    },
+    "./utils/**/CLAUDE.md": {
+      "path": "./utils/**/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768409146,
+      "size": 170
+    },
+    "./ARC_MOBILE_CURRENT_STATUS.md": {
+      "path": "./ARC_MOBILE_CURRENT_STATUS.md",
+      "hash": "0548df6d440654742dd5b348e2ee5f5c19921d84a66f2311b1ffa75e86caab94",
+      "last_modified": 1768089716,
+      "size": 7176
+    },
+    "./coverage/hello.ts.html": {
+      "path": "./coverage/hello.ts.html",
+      "hash": "bf094260aedbdbcdd789e0113b010291ce0b7dcccb8efb677509cd3871011b2a",
+      "last_modified": 1768490662,
+      "size": 7545
+    },
+    "./DEX_REFERENCE.md": {
+      "path": "./DEX_REFERENCE.md",
+      "hash": "e048aed80797758c46adbe2ea5b303b81a0e8af7dd9b7c18c3cc69d01df97afb",
+      "last_modified": 1767662123,
+      "size": 9218
+    },
+    "./coverage/sorter.js": {
+      "path": "./coverage/sorter.js",
+      "hash": "d1adc37ef011a7a2a407a412c3bee30da334b5375bf71523f74612c703f66ce8",
+      "last_modified": 1768490661,
+      "size": 6731
+    },
+    "./hooks/useDashboardGuide.ts": {
+      "path": "./hooks/useDashboardGuide.ts",
+      "hash": "5729c1743547ef84af38f7c07d38c8bacf6e5922d3345ef1af7c1654abdcbbf1",
+      "last_modified": 1768517397,
+      "size": 5800
+    },
+    "./vercel.json": {
+      "path": "./vercel.json",
+      "hash": "5dac6196f2abbc3c99f859de34e74e48c3bf8f34418c7d009607453dd1641734",
+      "last_modified": 1769626321,
+      "size": 2079
+    },
+    "./DATABASE_CLOSURE_FIX.md": {
+      "path": "./DATABASE_CLOSURE_FIX.md",
+      "hash": "3b41f1ffacd6bc2a78f210bf67d3b775215150406cbcc684578f4961869eca34",
+      "last_modified": 1768451251,
+      "size": 8715
+    },
+    "./services/peerTrending.ts": {
+      "path": "./services/peerTrending.ts",
+      "hash": "7adfce90178bf0621eef9728b867b17afa8c40dd3fe583f6c772f0f19ca1c534",
+      "last_modified": 1768411238,
+      "size": 3252
+    },
+    "./src/**/CLAUDE.md": {
+      "path": "./src/**/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768409146,
+      "size": 170
+    },
+    "./components/**/CLAUDE.md": {
+      "path": "./components/**/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768409146,
+      "size": 170
+    },
+    "./components/ErrorBoundary.tsx": {
+      "path": "./components/ErrorBoundary.tsx",
+      "hash": "ae05e6e1a1650d631e409e62306bfd03f52572f484158bcdd6dd7bcd7e48ceba",
+      "last_modified": 1768411123,
+      "size": 3689
+    },
+    "./vite.config.ts": {
+      "path": "./vite.config.ts",
+      "hash": "1c313119263284a5d87701543f5cc2d208a9b229ace4bb8dc21830e2b8a107be",
+      "last_modified": 1769696216,
+      "size": 6836
+    },
+    "./console.md": {
+      "path": "./console.md",
+      "hash": "5c4ff3820284aab856900701008779f6cb5604406cf9adbdb9e1f0a7fab054f3",
+      "last_modified": 1769557180,
+      "size": 171953
+    },
+    "./tests/alert-setup.ts": {
+      "path": "./tests/alert-setup.ts",
+      "hash": "ce0f0c3ac717e07fedc38a1a018adb8128df7c6b4a8f2392ada52a7e532e5f94",
+      "last_modified": 1769745312,
+      "size": 1434
+    },
+    "./components/OnboardingContent.tsx": {
+      "path": "./components/OnboardingContent.tsx",
+      "hash": "d58a92e56096494c2deee4ce689c5af0110df49b8ade71945af3b0b222c57a18",
+      "last_modified": 1768411123,
+      "size": 3501
+    },
+    "./coverage/alerts.ts.html": {
+      "path": "./coverage/alerts.ts.html",
+      "hash": "b4176113eba1c00aca0f9dbf750a496b2a68906556b9aa8de78daa2bc324f4be",
+      "last_modified": 1768490662,
+      "size": 11075
+    },
+    "./coverage/lcov-report/base.css": {
+      "path": "./coverage/lcov-report/base.css",
+      "hash": "728572fd0910587e3a74ee20cb6c82c3cb35c9cd9933b47dcdf7d5efd418e7c4",
+      "last_modified": 1768490671,
+      "size": 5494
+    },
+    "./docs/AI_INTEGRATION.md": {
+      "path": "./docs/AI_INTEGRATION.md",
+      "hash": "8a520e6fdcb27891198c9f348d32d509ac1c2f0fc3d49e8006bdbdfa891922c3",
+      "last_modified": 1767662124,
+      "size": 13141
+    },
+    "./utils/sentry.config.ts": {
+      "path": "./utils/sentry.config.ts",
+      "hash": "a2ef659ad5bd25091acc34bb516db5040a2766bf4902544a2df1a7dad6a9dc68",
+      "last_modified": 1768411070,
+      "size": 3638
+    },
+    "./test-onboarding-debug.py": {
+      "path": "./test-onboarding-debug.py",
+      "hash": "26cd295b5d4af45f0b4860c8a3e9b709a817196365de27ec20cc07f67c0e605f",
+      "last_modified": 1768342504,
+      "size": 2292
+    },
+    "./services/tokenSearchService.ts": {
+      "path": "./services/tokenSearchService.ts",
+      "hash": "936e18acf9f2aba7e7d71f28643665e5b55ea291fc92014986ff88c7931e67a1",
+      "last_modified": 1768411238,
+      "size": 32168
+    },
+    "./DEXSCREENER_INTEGRATION_SUMMARY.md": {
+      "path": "./DEXSCREENER_INTEGRATION_SUMMARY.md",
+      "hash": "435f342474fa7d75f9a0cb7c716cc044c3cc32e08a0b8d2cd8f8e3331228856b",
+      "last_modified": 1768351687,
+      "size": 10239
+    },
+    "./docs/KNOWN_ISSUES.md": {
+      "path": "./docs/KNOWN_ISSUES.md",
+      "hash": "bdc4dd374cfcad32d276c068aea85288df879114812157d930e49b5cdc3543a7",
+      "last_modified": 1769373345,
+      "size": 11446
+    },
+    "./components/OnboardingModal.tsx": {
+      "path": "./components/OnboardingModal.tsx",
+      "hash": "20ec8065fabd4897468697d6eaf9fa36b3eb5151cabf03a8894631ed099dcb11",
+      "last_modified": 1768589968,
+      "size": 6904
+    },
+    "./test_transaction_tiles.py": {
+      "path": "./test_transaction_tiles.py",
+      "hash": "9a7bb598b20e11878d6679da212e25a175b9a8858668da29e99f14c5b65fd3b4",
+      "last_modified": 1768408843,
+      "size": 7883
+    },
+    "./test-onboarding-with-console.py": {
+      "path": "./test-onboarding-with-console.py",
+      "hash": "60bdd5f593b45805bbff2f92775d8de81b8d8cb3777309daf0134040ade2ca1a",
+      "last_modified": 1768342557,
+      "size": 1691
+    },
+    "./components/WalletSidebar.tsx": {
+      "path": "./components/WalletSidebar.tsx",
+      "hash": "df443a9db6c896dc830a6376ab53786ea78a760f61cbd44b63087ff34d567e29",
+      "last_modified": 1768589464,
+      "size": 38997
+    },
+    "./hooks/useBubbleVisualizationGuide.ts": {
+      "path": "./hooks/useBubbleVisualizationGuide.ts",
+      "hash": "2e13de1f5142ebc67847d8c9193eeab13d33ec2c78bfe5891cdc239fc9044a73",
+      "last_modified": 1768527652,
+      "size": 5817
+    },
+    "./WALLET_CONNECTION_FIX.md": {
+      "path": "./WALLET_CONNECTION_FIX.md",
+      "hash": "84db7b3dcc1be4bbfea644603c762ff5945439adbe4e21fccc595cfb540613cc",
+      "last_modified": 1767923947,
+      "size": 8060
+    },
+    "./components/Toast.tsx": {
+      "path": "./components/Toast.tsx",
+      "hash": "17533557f046c419948629d96d78e1989ec28b900f030e7dc63df5b35b622d54",
+      "last_modified": 1768411123,
+      "size": 2133
+    },
+    "./api/dogechain-proxy.ts": {
+      "path": "./api/dogechain-proxy.ts",
+      "hash": "e864667fda0b84de7dcecc4ac7023262da03fe5ce3ff5f412e56f1c4f17618f2",
+      "last_modified": 1769517907,
+      "size": 4136
+    },
+    "./setup-learning-db.sql": {
+      "path": "./setup-learning-db.sql",
+      "hash": "dd3665cf438cfe725b49e66a4dd6b8991fde53e69b0dfb262cbc1a7ad4f2fc24",
+      "last_modified": 1767881392,
+      "size": 4150
+    },
+    "./coverage/lcov-report/block-navigation.js": {
+      "path": "./coverage/lcov-report/block-navigation.js",
+      "hash": "b8d771585c62abc5ef97b655f2c449ba80b09dea62594553e76c719680705068",
+      "last_modified": 1768490662,
+      "size": 2655
+    },
+    "./services/dexPoolService.ts": {
+      "path": "./services/dexPoolService.ts",
+      "hash": "88a63f0b33945ba74608cbcf6d6ad29eb4299eedcc11739b3f6fec8f92aa8a53",
+      "last_modified": 1769694102,
+      "size": 10841
+    },
+    "./docs/dev/CLAUDE.md": {
+      "path": "./docs/dev/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1769304401,
+      "size": 170
+    },
+    "./services/userContributions.ts": {
+      "path": "./services/userContributions.ts",
+      "hash": "9f22a3b30d05a09b61be2c98149a0c1dfc7ad34298b531e67a796dee3ae9b84b",
+      "last_modified": 1768411238,
+      "size": 5617
+    },
+    "./services/__tests__/alertSync.test.ts": {
+      "path": "./services/__tests__/alertSync.test.ts",
+      "hash": "75e6f9050dced763204137415bc7442dd5141b8bf87c1d636962f331103d7578",
+      "last_modified": 1768488901,
+      "size": 1223
+    },
+    "./coverage/lcov-report/sorter.js": {
+      "path": "./coverage/lcov-report/sorter.js",
+      "hash": "d1adc37ef011a7a2a407a412c3bee30da334b5375bf71523f74612c703f66ce8",
+      "last_modified": 1768490662,
+      "size": 6731
+    },
+    "./TOOLTIP_TEST_REPORT.md": {
+      "path": "./TOOLTIP_TEST_REPORT.md",
+      "hash": "d50e332523ffe04e8fdd618aa2e89ed99ddf6584f18f064a172a73f63168c4a1",
+      "last_modified": 1768351687,
+      "size": 11997
+    },
+    "./public/custom-screenshot.png": {
+      "path": "./public/custom-screenshot.png",
+      "hash": "a71760ca7e5e27740bfa7cc0b0408f80e5c56120ebcf322ac720b1dd25bc066f",
+      "last_modified": 1767895486,
+      "size": 49
+    },
+    "./test-onboarding-fix.py": {
+      "path": "./test-onboarding-fix.py",
+      "hash": "f52851aeffbccecaba7918363c8f8798de2c424ee4947beef17ee3e8df46b961",
+      "last_modified": 1768342403,
+      "size": 3019
+    },
+    "./services/lpBatchScanner.ts.bak": {
+      "path": "./services/lpBatchScanner.ts.bak",
+      "hash": "477dfb3d1df58ff4d14e408409a0d16519c274b6ae2790d771d4629ee204b412",
+      "last_modified": 1768408843,
+      "size": 9494
+    },
+    "./DOGECHAIN_RPC_RESEARCH_REPORT.md": {
+      "path": "./DOGECHAIN_RPC_RESEARCH_REPORT.md",
+      "hash": "bf86368bac6c56f7ddaeb5acf1f1470a248bc237b6208124771f68317b469e0b",
       "last_modified": 1769523960,
-      "size": 9334
+      "size": 17082
     },
-    "./api/schema.sql": {
-      "path": "./api/schema.sql",
-      "hash": "f48fb5dd980f0563b43208668ca638bd11cc707cfaa8de1c3b27ad861c66cf18",
-      "last_modified": 1769203304,
-      "size": 1598
+    "./utils/searchCacheManager.ts.bak3": {
+      "path": "./utils/searchCacheManager.ts.bak3",
+      "hash": "754fd4524d8412d4932f92fd7c7a0cf0e13d5e1513f2794e8b94c73f4509fd1b",
+      "last_modified": 1768408843,
+      "size": 7421
+    },
+    "./ALERT_FIX_SUMMARY.md": {
+      "path": "./ALERT_FIX_SUMMARY.md",
+      "hash": "0b38d9d25a77cd5e8e35a57afd045f0301ca5d013013b634ed5fc3a5f956b791",
+      "last_modified": 1768451250,
+      "size": 9036
+    },
+    "./coverage/lcov-report/prettify.css": {
+      "path": "./coverage/lcov-report/prettify.css",
+      "hash": "7b4fa6fb8cd1ece3b6123fc3793721d930963e6d67865858cc1f0fffabf7e241",
+      "last_modified": 1768490671,
+      "size": 1060
+    },
+    "./coverage/block-navigation.js": {
+      "path": "./coverage/block-navigation.js",
+      "hash": "b8d771585c62abc5ef97b655f2c449ba80b09dea62594553e76c719680705068",
+      "last_modified": 1768490661,
+      "size": 2655
+    },
+    "./services/geckoTerminalService.ts": {
+      "path": "./services/geckoTerminalService.ts",
+      "hash": "e87dd8432ec6c7e3f1db4683b1c7654199147498a5f6484a33e7c2263329af4a",
+      "last_modified": 1769744171,
+      "size": 17512
+    },
+    "./services/platformHealthService.ts": {
+      "path": "./services/platformHealthService.ts",
+      "hash": "a210e82f78ce5cbb380f5017ad9b26243d8cc885fac1762f84cacee1002e6af3",
+      "last_modified": 1769788217,
+      "size": 2406
+    },
+    "./services/phoneticMatcher.ts": {
+      "path": "./services/phoneticMatcher.ts",
+      "hash": "8174629d6fa4218331cfb4590cb3ec045b919e11dd3a74acb683b38e6fb5afb9",
+      "last_modified": 1768411238,
+      "size": 7269
     },
     "./utils/chartUrls.ts": {
       "path": "./utils/chartUrls.ts",
@@ -1731,11 +1077,839 @@
       "last_modified": 1768411070,
       "size": 2864
     },
+    "./utils/searchCacheManager.ts.bak2": {
+      "path": "./utils/searchCacheManager.ts.bak2",
+      "hash": "12b483f826856c5fec9597a4632076717d2283ae7eb5aff743a9652da352f280",
+      "last_modified": 1768408843,
+      "size": 7554
+    },
+    "./utils/resetDatabase.ts": {
+      "path": "./utils/resetDatabase.ts",
+      "hash": "e9d0d4213c8c6c0ad80e543c5d325ca9405e265cb0645c35689ec5d5a9bbb0dc",
+      "last_modified": 1768411070,
+      "size": 1357
+    },
+    "./src/api/__tests__/hello.test.ts": {
+      "path": "./src/api/__tests__/hello.test.ts",
+      "hash": "326efcf9b0c3d15fd58df681d08343f4fbf6415705fb3492d0c4be1a4d33924d",
+      "last_modified": 1768403830,
+      "size": 1582
+    },
+    "./api/trending/CLAUDE.md": {
+      "path": "./api/trending/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768227195,
+      "size": 170
+    },
+    "./utils/alertFirstTimeStorage.ts": {
+      "path": "./utils/alertFirstTimeStorage.ts",
+      "hash": "41701c7835050b9abbfe39fd636b81d5793954a51c8cebb9c1a52e84d02433bc",
+      "last_modified": 1769745874,
+      "size": 1250
+    },
+    "./NETWORK_SWITCHER_REMOVED.md": {
+      "path": "./NETWORK_SWITCHER_REMOVED.md",
+      "hash": "6297c234800b3376c884e2f994ecf5991093c33f11c55399f81409e47542b93f",
+      "last_modified": 1767929007,
+      "size": 1900
+    },
+    "./src/shared/constants/CLAUDE.md": {
+      "path": "./src/shared/constants/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768227195,
+      "size": 170
+    },
+    "./vite-plugin-pwa.d.ts": {
+      "path": "./vite-plugin-pwa.d.ts",
+      "hash": "e453f375bbe0a3947d79a7a17f23812a07197167a114680a4475c4d0d6d54505",
+      "last_modified": 1767844388,
+      "size": 430
+    },
+    "./services/connectionService.ts": {
+      "path": "./services/connectionService.ts",
+      "hash": "2d4f22ff54561841df8b7d0203b4080c23b80053656761463db3bbbc9d6d7119",
+      "last_modified": 1768412686,
+      "size": 4813
+    },
+    "./scripts/increment-build.cjs": {
+      "path": "./scripts/increment-build.cjs",
+      "hash": "3a0cb6c39afa05468630294a89bba910d61f1c1fa1e342dddc6645e5e252eac2",
+      "last_modified": 1767574511,
+      "size": 1318
+    },
+    "./components/analytics/EnhancedChartTooltip.tsx": {
+      "path": "./components/analytics/EnhancedChartTooltip.tsx",
+      "hash": "befab303c45f9eed02fb4f5b4c22793e36030260633440b32e7f3d008f945fd5",
+      "last_modified": 1769720506,
+      "size": 10883
+    },
+    "./utils/distributionCalculations.ts": {
+      "path": "./utils/distributionCalculations.ts",
+      "hash": "25e0eb7230930dc88cad436da05f0e7beb2d2182db4a6270209c85cb1e1954e0",
+      "last_modified": 1769622941,
+      "size": 5416
+    },
+    "./utils/technicalIndicators.ts": {
+      "path": "./utils/technicalIndicators.ts",
+      "hash": "1d2318d584da5d4c1c9483b94c053649160a0c8875b81bf326c517f5f50db283",
+      "last_modified": 1769720506,
+      "size": 10068
+    },
+    "./app/api/distribution/CLAUDE.md": {
+      "path": "./app/api/distribution/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1769626328,
+      "size": 170
+    },
+    "./services/CLAUDE.md": {
+      "path": "./services/CLAUDE.md",
+      "hash": "76767f5b2b7f0bf4c3dc2ac3f417f6a4b51893bd30ceda85c7f90b18b37a1c18",
+      "last_modified": 1768225385,
+      "size": 1653
+    },
+    "./docs/dev/PHASE1_COMPLETE.md": {
+      "path": "./docs/dev/PHASE1_COMPLETE.md",
+      "hash": "f3537bd9a3a9f3d88c93881bac8959ffc6c886965d6ae5f0157532b704996e27",
+      "last_modified": 1767662125,
+      "size": 9682
+    },
+    "./services/learnedTokensService.ts": {
+      "path": "./services/learnedTokensService.ts",
+      "hash": "ea872567d4301a0eaf347b3d4dddd2d71ba9c1f16681c82357787a7c2b410442",
+      "last_modified": 1769627981,
+      "size": 4811
+    },
+    "./app/api/CLAUDE.md": {
+      "path": "./app/api/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1769720501,
+      "size": 170
+    },
+    "./lib/consoleLogger.ts": {
+      "path": "./lib/consoleLogger.ts",
+      "hash": "1bb6c83d65d40016a83b965f8bc5b3aafdf14cd68d6496d78a9a720915dfb5ce",
+      "last_modified": 1769113125,
+      "size": 7808
+    },
+    "./utils/testData.ts.bak2": {
+      "path": "./utils/testData.ts.bak2",
+      "hash": "17d67fe32d6dc828659d42091b6742902129e16cfd2ad438294fc5e497b2d432",
+      "last_modified": 1768408843,
+      "size": 8332
+    },
+    "./docs/dev/BORDER_MIGRATION_LOG.md": {
+      "path": "./docs/dev/BORDER_MIGRATION_LOG.md",
+      "hash": "dc14adbbd225afcfd109be2a2c6739cb4a9ba57d2ac700201fa63833217eebbc",
+      "last_modified": 1767662124,
+      "size": 18073
+    },
+    "./components/DistributionAnalytics.tsx": {
+      "path": "./components/DistributionAnalytics.tsx",
+      "hash": "e24d9e5987d19ac99e130a09aaf947dc6926efd549ca21e5db20224bc454432d",
+      "last_modified": 1769746062,
+      "size": 15638
+    },
+    "./TRENDING_SETUP.md": {
+      "path": "./TRENDING_SETUP.md",
+      "hash": "ce94d37ecde7c8aa6c0f009d501bf0cd708e7ddb5996eee383224651f373d4cc",
+      "last_modified": 1767628564,
+      "size": 7585
+    },
+    "./utils/dashboardGuideStorage.ts": {
+      "path": "./utils/dashboardGuideStorage.ts",
+      "hash": "264af5bc4f64d2c43bed2a113e5783c6604c76c938a6926b7d3bd08c37f2601d",
+      "last_modified": 1768411070,
+      "size": 4048
+    },
+    "./manual-factory-entry.html": {
+      "path": "./manual-factory-entry.html",
+      "hash": "7acbd4cf65e3472bfb598764c112e84c44570678ea66c4bd773c2b3251ab08e7",
+      "last_modified": 1767657440,
+      "size": 13268
+    },
+    "./services/whaleWalletRegistry.ts": {
+      "path": "./services/whaleWalletRegistry.ts",
+      "hash": "03b03c43dab82292304478088e40d24f68d45141061250f98674889db787084e",
+      "last_modified": 1768411238,
+      "size": 2497
+    },
+    "./ERROR_FIX_SUMMARY_BUILD_128.md": {
+      "path": "./ERROR_FIX_SUMMARY_BUILD_128.md",
+      "hash": "9410866c5729f2da2665bb5e1eaa88a3b57fc9db6eb9bf4d2df8b189944ad075",
+      "last_modified": 1768089716,
+      "size": 6852
+    },
+    "./RAINBOWKIT_FIXES.md": {
+      "path": "./RAINBOWKIT_FIXES.md",
+      "hash": "bd295c15d71fa001ed0e31a11dd1ae7f1fa0e30bcfa1022a29cd86a1ea17ea45",
+      "last_modified": 1768089716,
+      "size": 8539
+    },
+    "./docs/CHANGELOG.md": {
+      "path": "./docs/CHANGELOG.md",
+      "hash": "9c4ad41d1c4b8a7020f547f1b897c0ba20f5aa202918332e409146d2090a4c8a",
+      "last_modified": 1767662124,
+      "size": 5181
+    },
+    "./utils/searchInputTypeDetector.ts": {
+      "path": "./utils/searchInputTypeDetector.ts",
+      "hash": "098e9263fd9f0524529350915e6971bf69c6d145419196a6d72836e41e4939d7",
+      "last_modified": 1769606620,
+      "size": 2306
+    },
     "./metadata.json": {
       "path": "./metadata.json",
       "hash": "8d5bc82ca21adb8cfc5f38a443342e99fc6dedf5bcb5cb9542a62dff19e61bf2",
       "last_modified": 1767662125,
       "size": 286
+    },
+    "./scripts/create_og_from_url.py": {
+      "path": "./scripts/create_og_from_url.py",
+      "hash": "1e57e50b8322b130a54d2de1c92d8c2b8fb71c4de6f4b130853f5a53bb3c7526",
+      "last_modified": 1767895503,
+      "size": 2706
+    },
+    "./utils/validation.ts": {
+      "path": "./utils/validation.ts",
+      "hash": "7227dfaf914bb55eebe19cff32ff0df62b45e7b389b1b95aa0aa6c0f446477c6",
+      "last_modified": 1768412175,
+      "size": 4280
+    },
+    "./app/api/network-health/CLAUDE.md": {
+      "path": "./app/api/network-health/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1769629432,
+      "size": 170
+    },
+    "./RPC_QUICK_START.md": {
+      "path": "./RPC_QUICK_START.md",
+      "hash": "70d6973c253c8b03e7e0bef3c81f406278f987870de5b054f8235b46bbd6ceca",
+      "last_modified": 1769523960,
+      "size": 9334
+    },
+    "./services/comprehensiveScanner.ts": {
+      "path": "./services/comprehensiveScanner.ts",
+      "hash": "cddfd8e1af39ab4eed428ce970e95918034853cdebbd7773dbb3df36ab8f634b",
+      "last_modified": 1768412492,
+      "size": 11885
+    },
+    "./components/CustomSelect.tsx": {
+      "path": "./components/CustomSelect.tsx",
+      "hash": "fb402db305258bc084b1b837c7d1d7c9bb0ead90c4eb750c46a87d76546b6255",
+      "last_modified": 1768451263,
+      "size": 6574
+    },
+    "./components/analytics/InlinePoolDetails.tsx": {
+      "path": "./components/analytics/InlinePoolDetails.tsx",
+      "hash": "ec8771da7cd4645377245ee0cf6e94b4ca00eaffd140b62dcb29eef4d231e917",
+      "last_modified": 1769725907,
+      "size": 18096
+    },
+    "./RPC_WALLET_SCANNING_IMPLEMENTATION.md": {
+      "path": "./RPC_WALLET_SCANNING_IMPLEMENTATION.md",
+      "hash": "8fedd1b320ba35a0112f3d9202aeea26db4eb1c0e58d61b9021084567f00bdf2",
+      "last_modified": 1769558178,
+      "size": 9882
+    },
+    "./components/analytics/PoolSearch.tsx": {
+      "path": "./components/analytics/PoolSearch.tsx",
+      "hash": "b37d8faddbb93b22797ff2947aa185b81602832414f03b6900dbda4a2a3f7b43",
+      "last_modified": 1769720506,
+      "size": 16734
+    },
+    "./tests/setup.ts": {
+      "path": "./tests/setup.ts",
+      "hash": "d001acb5f126d383e619e1801540955923e855645007156febcba9095f0f142d",
+      "last_modified": 1769342548,
+      "size": 2049
+    },
+    "./TOOLTIP_COMPONENT_IMPLEMENTATION.md": {
+      "path": "./TOOLTIP_COMPONENT_IMPLEMENTATION.md",
+      "hash": "c60da53e127557a9eb9c51a4dfe2e3aa71021d1070d1f64120b14a576952cbcc",
+      "last_modified": 1768233209,
+      "size": 20731
+    },
+    "./utils/guideStorage.ts": {
+      "path": "./utils/guideStorage.ts",
+      "hash": "5b85d24d906c244dfe8805beb31b2621b6195e4346cdbcb31fcb99818fa1faba",
+      "last_modified": 1768513862,
+      "size": 11858
+    },
+    "./api/__tests__/CLAUDE.md": {
+      "path": "./api/__tests__/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1769342847,
+      "size": 170
+    },
+    "./hooks/useWalletDetailsGuide.ts": {
+      "path": "./hooks/useWalletDetailsGuide.ts",
+      "hash": "6833169001456a73e13d9c6aba217bea6c294bac642733ed20a6ddbb143acf1f",
+      "last_modified": 1768517020,
+      "size": 5957
+    },
+    "./components/BubbleVisualizationGuide.tsx": {
+      "path": "./components/BubbleVisualizationGuide.tsx",
+      "hash": "fe6500b75b0cf86ac5aa37af18c47f0288bed8de5f860fdeee08cf4e5093c6dc",
+      "last_modified": 1768589974,
+      "size": 9275
+    },
+    "./setup-trending-db.sql": {
+      "path": "./setup-trending-db.sql",
+      "hash": "015db827819c49bd1cd00c276a8e30648cf3a5e75050d31e31161f551a8c2b79",
+      "last_modified": 1767628342,
+      "size": 1457
+    },
+    "./utils/rateLimit.ts": {
+      "path": "./utils/rateLimit.ts",
+      "hash": "1ca7580699049dc8807362f997c5cdd4731c7b4c9095ff4da58d4ba9d58635dc",
+      "last_modified": 1769299339,
+      "size": 14505
+    },
+    "./utils/lpDetectionInit.ts.bak": {
+      "path": "./utils/lpDetectionInit.ts.bak",
+      "hash": "d6c7c214b6f7c516b1d30519001aa39fed18cfc4b12ce6f2831f6d3f425248cf",
+      "last_modified": 1768408843,
+      "size": 4749
+    },
+    "./docs/STATS_COUNTER_CACHE_FIX.md": {
+      "path": "./docs/STATS_COUNTER_CACHE_FIX.md",
+      "hash": "a7029b25027fe880b36db68a435b19dcde440578b8c2494ecc560bd0a5d70d12",
+      "last_modified": 1769187990,
+      "size": 9504
+    },
+    "./test-chart-urls.html": {
+      "path": "./test-chart-urls.html",
+      "hash": "39f8fac78666e6dd085f3ecec74a07de840d4e46b2c852e738fdcf6e8c4c341c",
+      "last_modified": 1768337467,
+      "size": 3125
+    },
+    "./vite-types.d.ts": {
+      "path": "./vite-types.d.ts",
+      "hash": "fb0aaad4092aee354be2b7e98665a18a597083bf1a67d271f443f45cef566d87",
+      "last_modified": 1767722282,
+      "size": 286
+    },
+    "./services/lpDetection.ts": {
+      "path": "./services/lpDetection.ts",
+      "hash": "24a8b51efde09b422360cbfcb2dd723c57da5c3705d6cb11d4f802a54520d1c7",
+      "last_modified": 1769720506,
+      "size": 14565
+    },
+    "./STATS_COUNTERS_IMPLEMENTATION.md": {
+      "path": "./STATS_COUNTERS_IMPLEMENTATION.md",
+      "hash": "0fd48cb49138875ba8e4fe0ddf109335c1b5d0f069589c4140f1074e6a2369ad",
+      "last_modified": 1769187990,
+      "size": 14797
+    },
+    "./utils/searchCacheManager.ts": {
+      "path": "./utils/searchCacheManager.ts",
+      "hash": "acb91381ed3e7b0de6f207649a6a6a1e77696424d837541a682b9470a0db63d7",
+      "last_modified": 1768412902,
+      "size": 7559
+    },
+    "./App.tsx": {
+      "path": "./App.tsx",
+      "hash": "bf008340e78b18d6994a7497326977281f157e37e6fcbaa12af819245d249ee5",
+      "last_modified": 1769787857,
+      "size": 122800
+    },
+    "./comprehensive-scanner.html": {
+      "path": "./comprehensive-scanner.html",
+      "hash": "953752f98b75d4a2c16b0c26865f4d75e0bb229aeae6b31f203d938bf4c86913",
+      "last_modified": 1767657440,
+      "size": 17408
+    },
+    "./components/analytics/VolumeChart.tsx": {
+      "path": "./components/analytics/VolumeChart.tsx",
+      "hash": "70b0699051c35957e50f9d0a25ce0dc758981b82f6e53d4d636ca1781debbc26",
+      "last_modified": 1769720506,
+      "size": 5731
+    },
+    "./components/analytics/PriceChart.tsx": {
+      "path": "./components/analytics/PriceChart.tsx",
+      "hash": "b5c93cba644d2cee9c390866994d5c5d06f245b0c5bb350424304ce6bda1da57",
+      "last_modified": 1769720506,
+      "size": 8950
+    },
+    "./SEARCH_OPTIMIZATION_SUMMARY.md": {
+      "path": "./SEARCH_OPTIMIZATION_SUMMARY.md",
+      "hash": "36d57644bb1afaee7dbd50a345b5f04531cf306386e94d38d59c1cfa2b4d5837",
+      "last_modified": 1767715607,
+      "size": 24791
+    },
+    "./vite-env.d.ts": {
+      "path": "./vite-env.d.ts",
+      "hash": "82fee5d1a00f6f62dba48aa7fe6e39b47d151f65dd780200ed10c9e877d44eb0",
+      "last_modified": 1767845232,
+      "size": 92
+    },
+    "./utils/touchHandlers.ts": {
+      "path": "./utils/touchHandlers.ts",
+      "hash": "3f9b3d090cab8ebb908f181668e92b6e2b4e554a2532702f9aeeee119aba92a7",
+      "last_modified": 1768411070,
+      "size": 498
+    },
+    "./scripts/setup-user-alerts-table.js": {
+      "path": "./scripts/setup-user-alerts-table.js",
+      "hash": "f6b97ecba7d84fab8f4e5c1a480fb4098d98c741e188d290fdb7166851c4fbf6",
+      "last_modified": 1768485812,
+      "size": 1791
+    },
+    "./components/analytics/WalletFlowAnalytics.tsx": {
+      "path": "./components/analytics/WalletFlowAnalytics.tsx",
+      "hash": "180035805dd23bbfb4583eb4be577677629438adb3d2fe3762a7add326a27b78",
+      "last_modified": 1769794644,
+      "size": 19151
+    },
+    "./src/api/__tests__/api.test.ts": {
+      "path": "./src/api/__tests__/api.test.ts",
+      "hash": "9c8a350320d30d979d4cbb8bc5b22a9fac9ae43d7fe99e1a564d06a066758a73",
+      "last_modified": 1768403830,
+      "size": 886
+    },
+    "./CONSOLE_FIXES_SUMMARY.md": {
+      "path": "./CONSOLE_FIXES_SUMMARY.md",
+      "hash": "2c8113f6d98464df00a44c06c3bc97dac6ea278d34c1be55d9fa6b1b920e5175",
+      "last_modified": 1769540864,
+      "size": 4044
+    },
+    "./api/stats.ts": {
+      "path": "./api/stats.ts",
+      "hash": "98154395bc163d49108de2185f3bc9c0346c80b085e354dcb007457d503c5423",
+      "last_modified": 1769383522,
+      "size": 1412
+    },
+    "./docs/dev/PRODUCTION_READY_100.md": {
+      "path": "./docs/dev/PRODUCTION_READY_100.md",
+      "hash": "66c999ea93ebbda84a43195eab0dac24029761a20bcf6c88b1ba34c107707fc5",
+      "last_modified": 1767662125,
+      "size": 15978
+    },
+    "./api/schema.sql": {
+      "path": "./api/schema.sql",
+      "hash": "f48fb5dd980f0563b43208668ca638bd11cc707cfaa8de1c3b27ad861c66cf18",
+      "last_modified": 1769203304,
+      "size": 1598
+    },
+    "./components/EmbeddedChart.tsx": {
+      "path": "./components/EmbeddedChart.tsx",
+      "hash": "a02fd97e66bf8f45db9a0129b593718b9f3e08ab53d706f58b489ac5b968dfdf",
+      "last_modified": 1769114001,
+      "size": 9602
+    },
+    "./docs/SEARCH_ENHANCEMENTS.md": {
+      "path": "./docs/SEARCH_ENHANCEMENTS.md",
+      "hash": "2805267a39b1a5a171ff2d2652b5ef6145c59b30178d694ca22f13fe500375eb",
+      "last_modified": 1769608640,
+      "size": 14542
+    },
+    "./tests/rpc-wallet-test.ts": {
+      "path": "./tests/rpc-wallet-test.ts",
+      "hash": "ebe9c1d54ec30a4390da84a79ecbc4cbd505e285b1bd6407e7910a0cac7fbfa7",
+      "last_modified": 1769745312,
+      "size": 2671
+    },
+    "./X_POST_UPDATE.md": {
+      "path": "./X_POST_UPDATE.md",
+      "hash": "9c9e740a79ca07bfacdffc8cc2d14e30cf620658142c8bbfc43dd2db8c3f80e1",
+      "last_modified": 1768089716,
+      "size": 6859
+    },
+    "./app/CLAUDE.md": {
+      "path": "./app/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768351687,
+      "size": 170
+    },
+    "./services/factoryDiscovery.ts.bak": {
+      "path": "./services/factoryDiscovery.ts.bak",
+      "hash": "24a94d308e679f431085dd6dde9c66322a414b3f6a29825f6511dd689ea481bd",
+      "last_modified": 1768408843,
+      "size": 5489
+    },
+    "./components/analytics/AutoRefreshButton.tsx": {
+      "path": "./components/analytics/AutoRefreshButton.tsx",
+      "hash": "11552523bf74617444cb05015fa9f71972f3a8426947b916cef3b353f98bd032",
+      "last_modified": 1769720506,
+      "size": 6394
+    },
+    "./coverage/index.ts.html": {
+      "path": "./coverage/index.ts.html",
+      "hash": "e0c0f4312f60750f2f4e1e7c80ab773b0048c8fd3f7d1297ec67227a46d0a3e5",
+      "last_modified": 1768490662,
+      "size": 8096
+    },
+    "./wagmi.ts": {
+      "path": "./wagmi.ts",
+      "hash": "cb3984db0f5ec0cd28dfc64543601c347f8ea2a71fb22dbab219a1e976cd986f",
+      "last_modified": 1769621327,
+      "size": 1323
+    },
+    "./utils/accessibility.ts": {
+      "path": "./utils/accessibility.ts",
+      "hash": "9b6bc6fd415a928fefa6e1336e2e917aa3643bd9df6d10b845ef65cac74e2a6f",
+      "last_modified": 1768411070,
+      "size": 7087
+    },
+    "./index.html": {
+      "path": "./index.html",
+      "hash": "3e3cc30f34e9f117a0f63f88d7d607840906e08399c9a5c46eda66f3f15c1b14",
+      "last_modified": 1767927083,
+      "size": 3117
+    },
+    "./src/shared/utils/CLAUDE.md": {
+      "path": "./src/shared/utils/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768227195,
+      "size": 170
+    },
+    "./console2.md": {
+      "path": "./console2.md",
+      "hash": "c411aff276124a869adc0f5f7b958d58e6d18ace9990a97510df89c82c553713",
+      "last_modified": 1769475702,
+      "size": 34230
+    },
+    "./DEX_ANALYTICS_UX_ENHANCEMENT_PLAN.md": {
+      "path": "./DEX_ANALYTICS_UX_ENHANCEMENT_PLAN.md",
+      "hash": "6635d94f8a59cf126999945eb7eb5792c3663db7cbf7847f17abb1191952805c",
+      "last_modified": 1769720501,
+      "size": 27448
+    },
+    "./factory-discovery.html": {
+      "path": "./factory-discovery.html",
+      "hash": "464b9b93d08a295b3365fa151b015f2165cb0419c1a93a0a968be8cd33597acb",
+      "last_modified": 1767635752,
+      "size": 13892
+    },
+    "./services/searchAnalytics.ts": {
+      "path": "./services/searchAnalytics.ts",
+      "hash": "be5c71764b23ddc3faeef3a450f3cb0de7b25989c7e0a1f987a0094cca59fd41",
+      "last_modified": 1768411238,
+      "size": 11500
+    },
+    "./hooks/useAutoRefresh.ts": {
+      "path": "./hooks/useAutoRefresh.ts",
+      "hash": "02ece894e2a35a4407a465371d0d400b49c6d937e79b94e85eabff495c5a0f4d",
+      "last_modified": 1769720506,
+      "size": 3091
+    },
+    "./utils/dataExport.ts": {
+      "path": "./utils/dataExport.ts",
+      "hash": "0a01a5d0678d88ebb0587d0680db25f6fd2471c1c9f6128446b86fe83a8dd6fe",
+      "last_modified": 1769788300,
+      "size": 9504
+    },
+    "./components/CLAUDE.md": {
+      "path": "./components/CLAUDE.md",
+      "hash": "3325d46e337b4183e80f1d0e6f75bce6b82bb2451c13617ffe7c59351023d86a",
+      "last_modified": 1768245733,
+      "size": 2676
+    },
+    "./components/WalletDetailsGuide.tsx": {
+      "path": "./components/WalletDetailsGuide.tsx",
+      "hash": "97574f12c1cabf74384d3eadc1c69f1556a3bb183096d390231a5270a39ba5eb",
+      "last_modified": 1768590004,
+      "size": 9033
+    },
+    "./components/RateLimitWarning.tsx": {
+      "path": "./components/RateLimitWarning.tsx",
+      "hash": "67b710c7851ae207c256d7ce4141f7070d851a4a45a27c34c9017a36937c4802",
+      "last_modified": 1769299164,
+      "size": 4964
+    },
+    "./REMOTE_DIAGNOSTIC_LOGGING_IMPLEMENTATION.md": {
+      "path": "./REMOTE_DIAGNOSTIC_LOGGING_IMPLEMENTATION.md",
+      "hash": "3adfc25fd41a3e29605e22025aac23df1baa431087cef038e8cd8645fa2080fc",
+      "last_modified": 1768089716,
+      "size": 7858
+    },
+    "./services/dataService.ts.bak2": {
+      "path": "./services/dataService.ts.bak2",
+      "hash": "f245f6c8a36c6dc47085908f3ec9a9b9562e4e9bda70a0ee604f2839f7d28a7d",
+      "last_modified": 1768408843,
+      "size": 57153
+    },
+    "./RAINBOWKIT_THEMING.md": {
+      "path": "./RAINBOWKIT_THEMING.md",
+      "hash": "b23c93f584bc03004549a5d93cc4dd24f70646e4699f22ed8b89845ae9cddff6",
+      "last_modified": 1767929007,
+      "size": 5834
+    },
+    "./api/__tests__/alerts.test.ts": {
+      "path": "./api/__tests__/alerts.test.ts",
+      "hash": "e812944575afef16b55201aa1bdad53d83375af15e4efcf18d16f57732f6f2a1",
+      "last_modified": 1768489185,
+      "size": 1007
+    },
+    "./postcss.config.js": {
+      "path": "./postcss.config.js",
+      "hash": "df297544dcc47775a5d46f9d708274ef66bde398de8f6563a3aecc59e85eae87",
+      "last_modified": 1768354254,
+      "size": 70
+    },
+    "./services/phoneticIndex.ts": {
+      "path": "./services/phoneticIndex.ts",
+      "hash": "fec2b0702cf7f3499877aafff3c79ecc50b204590764e8d01d1363bc5268581c",
+      "last_modified": 1768411238,
+      "size": 9023
+    },
+    "./services/abbreviationCache.ts": {
+      "path": "./services/abbreviationCache.ts",
+      "hash": "965b365e6006eaa8266fc44cb13de9dbe3395f1bcfdc11666a1bc21a9345bf30",
+      "last_modified": 1768411238,
+      "size": 7719
+    },
+    "./LICENSE": {
+      "path": "./LICENSE",
+      "hash": "54bee1edd3680371ca49c1374b8f96c3d02a039a3bced0c4a29312695fd156b2",
+      "last_modified": 1767560491,
+      "size": 2314
+    },
+    "./services/trigramIndex.ts": {
+      "path": "./services/trigramIndex.ts",
+      "hash": "cba343a240b461198f72e952bf7ea2a6c10ecb60eb32b916f6e5799c56bbd70c",
+      "last_modified": 1768411238,
+      "size": 8282
+    },
+    "./src/api/CLAUDE.md": {
+      "path": "./src/api/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768409146,
+      "size": 170
+    },
+    "./api/alerts.ts": {
+      "path": "./api/alerts.ts",
+      "hash": "3c28d2b9a56218927f42ee9680dcbc3997db713838023b4743e22c2d3c4677b0",
+      "last_modified": 1769206350,
+      "size": 21787
+    },
+    "./services/walletFlowService.ts": {
+      "path": "./services/walletFlowService.ts",
+      "hash": "5f4d1352351d3f6a412dd4c2d0b1af91d8384221cb62f496755b10fee3f24122",
+      "last_modified": 1769794602,
+      "size": 17715
+    },
+    "./components/analytics/ExportButton.tsx": {
+      "path": "./components/analytics/ExportButton.tsx",
+      "hash": "c450e0710bfd3e2b7a76e4e59ed5a4e9ac92ea38d397ae890d788f48ca97eb90",
+      "last_modified": 1769720506,
+      "size": 14922
+    },
+    "./docs/ALERT_SYNC_MONITORING.md": {
+      "path": "./docs/ALERT_SYNC_MONITORING.md",
+      "hash": "12de5d9ca408037a3687e3b44b8e52cc99a5191684fc3a76b4f24422197fbf2c",
+      "last_modified": 1768487865,
+      "size": 16580
+    },
+    "./tests/CLAUDE.md": {
+      "path": "./tests/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768487865,
+      "size": 170
+    },
+    "./docs/SECURITY_GUIDE.md": {
+      "path": "./docs/SECURITY_GUIDE.md",
+      "hash": "6364fe9e446dfcec985dfdf5bdc5085110411933e02cd387188b4e26e59cec40",
+      "last_modified": 1767662125,
+      "size": 14372
+    },
+    "./prisma/migrations/202601110026_add_diagnostics_table/migration.sql": {
+      "path": "./prisma/migrations/202601110026_add_diagnostics_table/migration.sql",
+      "hash": "7a6a0e683ac1437900ba0d3b3d540c3c143811910f28537f94ff06b3fbc1b8c0",
+      "last_modified": 1768091321,
+      "size": 1268
+    },
+    "./ONBOARDING_FIX_SUMMARY.md": {
+      "path": "./ONBOARDING_FIX_SUMMARY.md",
+      "hash": "879b1e6742091f33fca30094d619dbd0bb923953e81501f0e809253337fe45da",
+      "last_modified": 1768351687,
+      "size": 2341
+    },
+    "./components/analytics/ChainOverview.tsx": {
+      "path": "./components/analytics/ChainOverview.tsx",
+      "hash": "37381808301ae685cc7bb75341df62b607b0ba63abaf1adfb6fbd9693601356e",
+      "last_modified": 1769720506,
+      "size": 4528
+    },
+    "./services/fuzzySearchService.ts": {
+      "path": "./services/fuzzySearchService.ts",
+      "hash": "d55f961eb8cbe3bc59c54aad36906dc0d03eb68c6e296c049fa8c75f4caaecf2",
+      "last_modified": 1768411764,
+      "size": 3386
+    },
+    "./scripts/setup-diagnostics-table.js": {
+      "path": "./scripts/setup-diagnostics-table.js",
+      "hash": "c7c80fdb7134fbb6130107bb0b542c33d85432f7bb95ebea1baf8d7048218d74",
+      "last_modified": 1768091394,
+      "size": 1997
+    },
+    "./coverage/coverage-final.json": {
+      "path": "./coverage/coverage-final.json",
+      "hash": "9edeed3d51eeaa701a3bdce87e22988b983b76c8278ed65c9f725440e5d8125a",
+      "last_modified": 1768490671,
+      "size": 9950
+    },
+    "./components/analytics/UnifiedAnalyticsDashboard.tsx": {
+      "path": "./components/analytics/UnifiedAnalyticsDashboard.tsx",
+      "hash": "05a2d2536297aa18f59630fc7598312fda9b30ff481b7b473cbf3bc2a55959df",
+      "last_modified": 1769787857,
+      "size": 18052
+    },
+    "./components/TrendingSection.tsx": {
+      "path": "./components/TrendingSection.tsx",
+      "hash": "bdb5e588d379fae166c24c43da81afcdedecbf1850dfca2967d5e2c79bfc6f0d",
+      "last_modified": 1768411123,
+      "size": 3629
+    },
+    "./services/personalizedSearchRanking.ts": {
+      "path": "./services/personalizedSearchRanking.ts",
+      "hash": "2efb300f1059e8af40b6323eaa0c21c8ad584b8337a2dddc66d6c49461fec58d",
+      "last_modified": 1769744171,
+      "size": 7412
+    },
+    "./coverage/base.css": {
+      "path": "./coverage/base.css",
+      "hash": "728572fd0910587e3a74ee20cb6c82c3cb35c9cd9933b47dcdf7d5efd418e7c4",
+      "last_modified": 1768490671,
+      "size": 5494
+    },
+    "./components/BubbleMap.tsx": {
+      "path": "./components/BubbleMap.tsx",
+      "hash": "9f5cb6d99fe1158db7015efcac71abe341289e4288350cb68e0bda749c77adfb",
+      "last_modified": 1769689400,
+      "size": 77058
+    },
+    "./services/lpBatchScanner.ts": {
+      "path": "./services/lpBatchScanner.ts",
+      "hash": "944dd999e4a957c890244af70c889f4ebaf1fa107e85ec38c1bf58d9daf28e7c",
+      "last_modified": 1768412532,
+      "size": 9395
+    },
+    "./DEPLOYMENT_FIX_SUMMARY.md": {
+      "path": "./DEPLOYMENT_FIX_SUMMARY.md",
+      "hash": "4f88993ab987d15d73e95091a754547afc1c1ed1f4d01bd2c0de9b0ea210d761",
+      "last_modified": 1768089716,
+      "size": 5615
+    },
+    "./components/Tooltip.tsx": {
+      "path": "./components/Tooltip.tsx",
+      "hash": "588f2a49de9514dd071a075d790f236b4acfd5448c059ae7c32d332f2d861e63",
+      "last_modified": 1768412901,
+      "size": 10773
+    },
+    "./services/tokenNicknameRegistry.ts": {
+      "path": "./services/tokenNicknameRegistry.ts",
+      "hash": "280297c646b9bccb5d4b868ce41c5ca1afe817a346b8397fdb3ecc8e1b4f273a",
+      "last_modified": 1768411238,
+      "size": 3387
+    },
+    "./utils/CLAUDE.md": {
+      "path": "./utils/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768351687,
+      "size": 170
+    },
+    "./WALLET_CONFLICT_SOLUTION.md": {
+      "path": "./WALLET_CONFLICT_SOLUTION.md",
+      "hash": "1112042073c285b8c7a484797b8f67a9a9d09ce991368fa06c78a8a495bef7bc",
+      "last_modified": 1767923946,
+      "size": 5096
+    },
+    "./vitest.config.ts": {
+      "path": "./vitest.config.ts",
+      "hash": "daf595bcbdefa6fb5f8e036cb8a227cb5f8049392f3fe56c91971dcbb77953aa",
+      "last_modified": 1768490678,
+      "size": 1281
+    },
+    "./api/get-diagnostics.ts": {
+      "path": "./api/get-diagnostics.ts",
+      "hash": "6e44f3b2754409ff784ca78abfdf36997218acc85287a2a68e829189e7800745",
+      "last_modified": 1768411162,
+      "size": 2857
+    },
+    "./TOOLTIP_POSITIONING_FIX.md": {
+      "path": "./TOOLTIP_POSITIONING_FIX.md",
+      "hash": "0fa04957133983e442a9b19ad77e3a3d1e19c2cd5150f72e52e048f08d88c630",
+      "last_modified": 1768277355,
+      "size": 14004
+    },
+    "./services/dataService.ts": {
+      "path": "./services/dataService.ts",
+      "hash": "13c76b33393d9ae54a892b31c573bf47127079306cb5a7ba14405ff57b0e95a0",
+      "last_modified": 1769619201,
+      "size": 69986
+    },
+    "./tests/ALERT_MANUAL_TEST.md": {
+      "path": "./tests/ALERT_MANUAL_TEST.md",
+      "hash": "61b49cb20cc0546ba30490d4578acfa17d9b9815db24b4f618f01f349eb2dcb0",
+      "last_modified": 1768451416,
+      "size": 6940
+    },
+    "./scripts/CLAUDE.md": {
+      "path": "./scripts/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768092218,
+      "size": 170
+    },
+    "./ARC_MOBILE_DIAGNOSTIC_BUILD_129.md": {
+      "path": "./ARC_MOBILE_DIAGNOSTIC_BUILD_129.md",
+      "hash": "35c9ba8ccc93168024d1519c782cdd98752a262876d2807575434c4e6b0bc726",
+      "last_modified": 1768089716,
+      "size": 7720
+    },
+    "./ONBOARDING_FEATURE.md": {
+      "path": "./ONBOARDING_FEATURE.md",
+      "hash": "e958aa227814474cf0ffe2222becfc5863e6d2229c323bf21447b732dd56cb72",
+      "last_modified": 1768262047,
+      "size": 13780
+    },
+    "./utils/testData.ts": {
+      "path": "./utils/testData.ts",
+      "hash": "3c49eb131f7c3c1581b09071be95d55b7f7955646f44f4f15d5b31581d4558e4",
+      "last_modified": 1768411070,
+      "size": 8326
+    },
+    "./ARC_MOBILE_CORS_FIX.md": {
+      "path": "./ARC_MOBILE_CORS_FIX.md",
+      "hash": "27aa2a26ccd336322f65814601706fd421665c81e01356480ccea5b63b46d564",
+      "last_modified": 1768089703,
+      "size": 8885
+    },
+    "./components/analytics/PlatformHealth.tsx": {
+      "path": "./components/analytics/PlatformHealth.tsx",
+      "hash": "992619d46f2fb55edcbd89c1dae85e16113cf4cf9b98421df5ecffbe863f3428",
+      "last_modified": 1769788148,
+      "size": 10163
+    },
+    "./api/CLAUDE.md": {
+      "path": "./api/CLAUDE.md",
+      "hash": "51d81820726ba60fdacf651dcd9d9f93701fb8733214c14dc0e6197cd0c1d878",
+      "last_modified": 1768091459,
+      "size": 170
+    },
+    "./tailwind.config.js": {
+      "path": "./tailwind.config.js",
+      "hash": "b587c6017660318384a4ce89d63372b9b431fe0a1303516134b081c87ea1a74c",
+      "last_modified": 1768354255,
+      "size": 1736
+    },
+    "./services/knownFactories.ts": {
+      "path": "./services/knownFactories.ts",
+      "hash": "b7056dc79b81cc18f5377f73209b8778ce39b92748e5eb27d8a56ced77c37fcd",
+      "last_modified": 1768411238,
+      "size": 7279
+    },
+    "./components/analytics/UserBehaviorAnalytics.tsx": {
+      "path": "./components/analytics/UserBehaviorAnalytics.tsx",
+      "hash": "6af3ce1275abca8b9d5b024c4148c34bcb51afc16490cc9ae8f40b04485c13ec",
+      "last_modified": 1769788117,
+      "size": 8872
+    },
+    "./LEARNING_SEARCH_IMPLEMENTATION.md": {
+      "path": "./LEARNING_SEARCH_IMPLEMENTATION.md",
+      "hash": "7ed5a44bf691dae45f74fd6935d5f1464f6e720e277a3735c415fad2dc103c35",
+      "last_modified": 1768089716,
+      "size": 17348
     }
   },
   "embedding_model": "BAAI/bge-small-en-v1.5",

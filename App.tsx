@@ -23,7 +23,6 @@ import { WalletDetailsGuide } from "./components/WalletDetailsGuide";
 import { DashboardGuide } from "./components/DashboardGuide";
 import { NetworkHealth } from "./components/NetworkHealth";
 import { DistributionAnalytics } from "./components/DistributionAnalytics";
-import { DexAnalytics } from "./components/DexAnalytics";
 import { UnifiedAnalyticsDashboard } from "./components/analytics/UnifiedAnalyticsDashboard";
 import { useStatsCounters } from "./hooks/useStatsCounters";
 import { useOnboarding } from "./hooks/useOnboarding";
@@ -45,7 +44,6 @@ import {
 } from "./types";
 import {
   trackPageView,
-  trackPageViewEnd,
   trackTokenAnalysis,
   trackWalletConnection,
 } from "./services/userBehaviorAnalytics";
@@ -224,14 +222,6 @@ const App: React.FC = () => {
     isLoading: isLoadingStats,
     refresh: refreshStats,
   } = useStatsCounters();
-
-  // Analytics cleanup on unmount
-  useEffect(() => {
-    return () => {
-      // Track final page view duration when component unmounts
-      trackPageViewEnd();
-    };
-  }, []);
 
   // Version check to detect new builds and force refresh
   useEffect(() => {
@@ -934,8 +924,6 @@ const App: React.FC = () => {
       document.title = "Network Health | Dogechain BubbleMaps";
     else if (view === ViewState.DISTRIBUTION)
       document.title = "Distribution Analytics | Dogechain BubbleMaps";
-    else if (view === ViewState.DEX_ANALYTICS)
-      document.title = "DEX Analytics | Dogechain BubbleMaps";
     else if (view === ViewState.UNIFIED_ANALYTICS)
       document.title = "Unified Analytics | Dogechain BubbleMaps";
 
@@ -1425,13 +1413,8 @@ const App: React.FC = () => {
       setSelectedConnection(null);
       setSelectedConnectionId(null);
 
-      // Track token analysis event with all parameters
-      trackTokenAnalysis(
-        tokenData.address,
-        finalWallets.length,
-        1, // wallet connected count (user's own wallet if connected)
-        0 // bubbles explored (not tracked yet)
-      );
+      // Track token analysis event
+      trackTokenAnalysis(tokenData.address, tokenData.symbol);
 
       // URL State Persistence (Deep Linking)
       try {
@@ -1449,7 +1432,6 @@ const App: React.FC = () => {
         const viewParam = newUrl.searchParams.get("view");
         if (viewParam === "distribution") setView(ViewState.DISTRIBUTION);
         else if (viewParam === "network-health") setView(ViewState.NETWORK_HEALTH);
-        else if (viewParam === "dex-analytics") setView(ViewState.DEX_ANALYTICS);
         else if (viewParam === "unified-analytics") setView(ViewState.UNIFIED_ANALYTICS);
         else setView(ViewState.ANALYSIS);
       } catch {
@@ -1541,8 +1523,6 @@ const App: React.FC = () => {
       setView(ViewState.DISTRIBUTION);
     } else if (viewParam === "network-health") {
       setView(ViewState.NETWORK_HEALTH);
-    } else if (viewParam === "dex-analytics") {
-      setView(ViewState.DEX_ANALYTICS);
     } else if (viewParam === "unified-analytics") {
       setView(ViewState.UNIFIED_ANALYTICS);
     }
@@ -1567,7 +1547,6 @@ const App: React.FC = () => {
       else if (v === "analysis") setView(ViewState.ANALYSIS);
       else if (v === "network-health") setView(ViewState.NETWORK_HEALTH);
       else if (v === "distribution") setView(ViewState.DISTRIBUTION);
-      else if (v === "dex-analytics") setView(ViewState.DEX_ANALYTICS);
       else if (v === "unified-analytics") setView(ViewState.UNIFIED_ANALYTICS);
       else setView(ViewState.HOME);
     };
@@ -2017,19 +1996,10 @@ const App: React.FC = () => {
       }
 
       // Check if this is the user's first alert created - redirect to Dashboard
-      const isFirstAlert = !hasCreatedFirstAlert();
-      console.log("[ALERT CREATE] 🔍 First alert check:", {
-        hasCreatedFirstAlert: hasCreatedFirstAlert(),
-        isFirstAlert,
-        localStorageValue: localStorage.getItem("dogechain_first_alert_created"),
-      });
-
-      if (isFirstAlert) {
+      if (!hasCreatedFirstAlert()) {
         console.log("[ALERT CREATE] 🎯 First alert created - redirecting to Dashboard");
         markFirstAlertCreated();
         handleViewChange(ViewState.DASHBOARD);
-      } else {
-        console.log("[ALERT CREATE] ℹ️ Not first alert - staying on current view");
       }
 
       console.log("[ALERT CREATE] ✅ Alert creation flow complete");
@@ -2048,9 +2018,9 @@ const App: React.FC = () => {
     tokenSymbol?: string;
     alertType?: "WALLET" | "TOKEN" | "WHALE";
   }) => {
-    // Only switch to Dashboard view if not already there AND user hasn't created their first alert yet
-    // This prevents unnecessary redirects for experienced users
-    if (view !== ViewState.DASHBOARD && !hasCreatedFirstAlert()) {
+    // Switch to Dashboard view if not already there
+    // IMPORTANT: Use handleViewChange to ensure browser history is properly updated
+    if (view !== ViewState.DASHBOARD) {
       handleViewChange(ViewState.DASHBOARD);
     }
     // Set pre-fill data and open modal
@@ -3095,18 +3065,6 @@ const App: React.FC = () => {
           <div className="flex flex-col min-h-full">
             <div className="flex-1 p-6">
               <DistributionAnalytics token={token} />
-            </div>
-            <div className="mt-auto">
-              <Footer onOpenGuide={openOnboarding} />
-            </div>
-          </div>
-        )}
-
-        {/* DEX ANALYTICS VIEW */}
-        {view === ViewState.DEX_ANALYTICS && (
-          <div className="flex flex-col min-h-full">
-            <div className="flex-1 p-6">
-              <DexAnalytics />
             </div>
             <div className="mt-auto">
               <Footer onOpenGuide={openOnboarding} />

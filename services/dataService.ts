@@ -307,9 +307,6 @@ const getDecimals = (
   return type === AssetType.NFT ? 0 : 18;
 };
 
-// Flag to ensure we only log LP pairs once per token
-const loggedTokens = new Set<string>();
-
 const resolveKnownLabel = async (
   address: string,
   tokenAddress?: string
@@ -322,43 +319,7 @@ const resolveKnownLabel = async (
   // 2. Check if this is the token contract itself
   if (tokenAddress && lowerAddr === tokenAddress.toLowerCase()) return "Token Contract";
 
-  // 3. Check if this is an LP pair
-  try {
-    const { isAddressLPPair, loadAllLPPairs } = await import("./lpDetection");
-
-    // Log LP pairs for this token (only once)
-    if (tokenAddress && !loggedTokens.has(tokenAddress.toLowerCase())) {
-      loggedTokens.add(tokenAddress.toLowerCase());
-
-      const allPairs = await loadAllLPPairs();
-      const tokenLPairs = allPairs.filter(
-        (p) =>
-          p.token0Address.toLowerCase() === tokenAddress.toLowerCase() ||
-          p.token1Address.toLowerCase() === tokenAddress.toLowerCase()
-      );
-
-      console.log(
-        `[LP Detection] Token ${tokenAddress}: Found ${tokenLPairs.length} LP pairs in database:`
-      );
-      if (tokenLPairs.length > 0) {
-        tokenLPairs.forEach((p) => {
-          console.log(
-            `[LP Detection]   - LP Pair: ${p.pairAddress} (${p.dexName}) [${p.token0Address} / ${p.token1Address}]`
-          );
-        });
-      }
-    }
-
-    const lpPair = await isAddressLPPair(lowerAddr);
-    if (lpPair && lpPair.isValid) {
-      return "LP Pool";
-    } else {
-      // Not an LP pool
-    }
-  } catch {
-    // Silently fail - don't break existing functionality
-  }
-
+  // LP Detection was removed - skipping LP pool detection
   return undefined;
 };
 
@@ -687,68 +648,6 @@ export const fetchTokenHolders = async (
         };
       })
     );
-
-    // Add LP pairs from database that involve this token
-    try {
-      const { loadAllLPPairs } = await import("./lpDetection");
-      const allLPPairs = await loadAllLPPairs();
-
-      // Filter LP pairs that involve this token
-      const tokenLPPairs = allLPPairs.filter(
-        (lp) =>
-          lp.token0Address.toLowerCase() === cleanAddress.toLowerCase() ||
-          lp.token1Address.toLowerCase() === cleanAddress.toLowerCase()
-      );
-
-      if (tokenLPPairs.length > 0) {
-        // For each LP pair, query its token balance
-        for (const lpPair of tokenLPPairs) {
-          try {
-            await sleep(100); // gentle rate limiting
-
-            // Query the balance of this token in the LP pair contract
-            const balanceUrl = `${EXPLORER_API_V1}?module=account&action=tokenbalance&contractaddress=${cleanAddress}&address=${lpPair.pairAddress}`;
-            const balanceRes = await fetchSafe(balanceUrl);
-            const balanceData = await balanceRes.json();
-
-            if (balanceData.status === "1" && balanceData.result) {
-              const lpBalance = parseBalance(balanceData.result, decimals);
-
-              // Only add if LP pair has non-zero balance of this token
-              if (lpBalance > 0) {
-                const lpWallet: Wallet = {
-                  id: lpPair.pairAddress,
-                  address: lpPair.pairAddress,
-                  balance: lpBalance,
-                  percentage: 0, // Will be calculated below
-                  isWhale: true, // LP pairs are important
-                  isContract: true,
-                  label: `LP Pool (${lpPair.dexName})`,
-                  connections: [],
-                };
-
-                // Check if this LP pair is already in the list (from holder API)
-                const existingIndex = processedWallets.findIndex(
-                  (w) => w.address.toLowerCase() === lpPair.pairAddress.toLowerCase()
-                );
-
-                if (existingIndex >= 0) {
-                  // Update existing entry with proper LP label
-                  processedWallets[existingIndex] = lpWallet;
-                } else {
-                  // Add new LP pair to the list
-                  processedWallets.push(lpWallet);
-                }
-              }
-            }
-          } catch {
-            // Error in processing
-          }
-        }
-      }
-    } catch {
-      // Error in wallet processing
-    }
 
     const labeledBeforeRecalc = processedWallets.filter((w) => w.label);
     if (labeledBeforeRecalc.length > 0) {
@@ -1819,82 +1718,8 @@ export const fetchWalletAssetsHybrid = async (
 
     phasesCompleted.push("whale-scan");
 
-    // --- PHASE 4: LP POOL DETECTION (5-10 seconds) ---
-    try {
-      triggerProgress("lp-detection", 95, "Detecting liquidity pool contracts...");
-
-      // Import LP detection utilities
-      const { loadAllLPPairs, LP_DETECTION_ENABLED } = await import("./lpDetection");
-
-      // Check if LP detection is enabled
-      if (LP_DETECTION_ENABLED) {
-        // Load all cached LP pairs from database
-        const allLPPairs = await loadAllLPPairs();
-
-        if (allLPPairs.length > 0) {
-          let foundLPPairs = 0;
-
-          // Check balances for LP pairs in batches
-          for (let i = 0; i < allLPPairs.length; i += 20) {
-            const batch = allLPPairs.slice(i, i + 20);
-
-            for (const lpPair of batch) {
-              try {
-                // Check if wallet holds this LP token
-                const { hasBalance } = await checkTokenBalance(walletAddress, lpPair.pairAddress);
-
-                if (hasBalance) {
-                  // Add LP token to discovered tokens
-                  const tokenKey = lpPair.pairAddress.toLowerCase();
-
-                  if (!tokensMap.has(tokenKey)) {
-                    tokensMap.set(tokenKey, {
-                      address: lpPair.pairAddress,
-                      symbol: "LP",
-                      name: `${lpPair.dexName} LP`,
-                      decimals: 18, // LP tokens always 18 decimals
-                      type: AssetType.TOKEN,
-                      totalSupply: 0, // LP pairs don't have a fixed total supply
-                      hits: 1,
-                    });
-
-                    foundLPPairs++;
-                    console.log(
-                      `[LP Detection] Found LP pair: ${lpPair.dexName} - ${lpPair.pairAddress}`
-                    );
-                  }
-                }
-              } catch {
-                // Continue on error - individual LP check failures shouldn't break the scan
-              }
-            }
-
-            // Update progress
-            const progress =
-              95 + ((i + Math.min(20, allLPPairs.length - i)) / allLPPairs.length) * 5;
-            triggerProgress(
-              "lp-detection",
-              Math.floor(progress),
-              `Checking LP pairs... ${Math.floor(((i + Math.min(20, allLPPairs.length - i)) / allLPPairs.length) * 100)}%`
-            );
-          }
-
-          if (foundLPPairs > 0) {
-            console.log(
-              `[LP Detection] Found ${foundLPPairs} LP pairs for wallet ${walletAddress}`
-            );
-          }
-        } else {
-          // No LP pairs found
-        }
-      } else {
-        // No transactions to scan
-      }
-    } catch {
-      // Error handled silently
-      // Non-critical phase - continue anyway
-    }
-
+    // --- PHASE 4: LP POOL DETECTION (REMOVED) ---
+    // LP Detection was removed - skipping this phase
     phasesCompleted.push("lp-detection");
 
     // Sort by interaction count

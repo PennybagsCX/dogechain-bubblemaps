@@ -74,7 +74,7 @@ export enum ViewState {
   DASHBOARD = "DASHBOARD",
   NETWORK_HEALTH = "NETWORK_HEALTH",
   DISTRIBUTION = "DISTRIBUTION",
-  DEX_ANALYTICS = "DEX_ANALYTICS",
+  UNIFIED_ANALYTICS = "UNIFIED_ANALYTICS",
   ALERTS = "ALERTS",
 }
 
@@ -479,4 +479,81 @@ export interface DexScreenerPair {
   };
   fdv?: number;
   marketCap?: number;
+}
+
+// =====================================================
+// Unified Analytics Types
+// =====================================================
+
+export type TimeRange = "1h" | "24h" | "7d" | "30d" | "all";
+
+export interface UserBehaviorStats {
+  period: TimeRange;
+  sessions: {
+    total: number;
+    active: number;
+    avgDuration: number;
+  };
+  searches: {
+    total: number;
+    successRate: number;
+    avgResults: number;
+  };
+}
+
+export interface HealthStatus {
+  status: "operational" | "degraded" | "down";
+  latency: number;
+  lastCheck: number;
+}
+
+export interface PlatformHealthStats {
+  period: TimeRange;
+  apis: {
+    performance: Record<string, { avgLatency: number; successRate: number }>;
+    status: Record<string, HealthStatus>;
+  };
+  cache: {
+    entries: number;
+    hitRate: number;
+  };
+}
+
+export interface WhaleFlowData {
+  walletAddress: string;
+  label?: string;
+  totalVolumeIn: number;
+  totalVolumeOut: number;
+  netFlow: number;
+  transactionCount: number;
+}
+
+export interface FlowData {
+  from: string;
+  to: string;
+  volume: number;
+  transactions: number;
+}
+
+export interface WalletFlowStats {
+  period: TimeRange;
+  totalVolume: number;
+  transactionCount: number;
+  avgTransactionSize: number;
+  top10WalletsVolumePct: number;
+  whales: WhaleFlowData[];
+  topFlows: FlowData[];
+  concentration: {
+    top10WalletsVolumePct: number;
+  };
+  patterns: {
+    dailyVolumes: Array<{ date: string; volume: number }>;
+  };
+}
+
+export interface AnalyticsExportData {
+  type: string;
+  timeRange: string;
+  exportDate: string;
+  data: any;
 }

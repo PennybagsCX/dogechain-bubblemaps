@@ -95,6 +95,18 @@ export interface TransferEvent {
   tokenAddress: string;
 }
 
+/**
+ * Progress callback for Transfer event fetching and processing
+ */
+export interface TransferProgressCallback {
+  (progress: {
+    phase: "fetching_logs" | "processing_events";
+    current: number;
+    total: number;
+    message: string;
+  }): void;
+}
+
 export interface WalletTransaction {
   hash: string;
   from: string;
@@ -643,7 +655,8 @@ export class DogechainRPCClient {
   async getTransferEvents(
     tokenAddress: string,
     fromBlock: bigint,
-    toBlock: bigint
+    toBlock: bigint,
+    onProgress?: TransferProgressCallback
   ): Promise<TransferEvent[]> {
     // Validate address format
     if (!tokenAddress.startsWith("0x") || tokenAddress.length !== 42) {
@@ -661,38 +674,108 @@ export class DogechainRPCClient {
       const transferEventSignature =
         "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
 
-      const logs = await client.getLogs({
-        address: tokenAddress as `0x${string}`,
-        fromBlock,
-        toBlock,
-      });
+      // Split large block ranges into smaller chunks to avoid RPC timeouts
+      const MAX_RANGE_SIZE = BigInt(5000); // Maximum 5000 blocks per request
+      const allLogs: any[] = [];
+      let currentFrom = fromBlock;
+
+      while (currentFrom <= toBlock) {
+        const rangeEnd =
+          currentFrom + MAX_RANGE_SIZE - 1n > toBlock ? toBlock : currentFrom + MAX_RANGE_SIZE - 1n;
+
+        console.log(`[getTransferEvents] Fetching logs for blocks ${currentFrom} to ${rangeEnd}`);
+
+        const logs = await client.getLogs({
+          address: tokenAddress as `0x${string}`,
+          fromBlock: currentFrom,
+          toBlock: rangeEnd,
+        });
+
+        allLogs.push(...logs);
+        currentFrom = rangeEnd + 1n;
+      }
+
+      console.log(`[getTransferEvents] Fetched ${allLogs.length} total logs`);
 
       // Filter logs for Transfer events only
-      const transferLogs = logs.filter((log: any) => log.topics[0] === transferEventSignature);
+      const transferLogs = allLogs.filter((log: any) => log.topics[0] === transferEventSignature);
 
-      // Parse logs and fetch timestamps
+      console.log(
+        `[getTransferEvents] Found ${transferLogs.length} Transfer events out of ${allLogs.length} total logs`
+      );
+
+      // Report progress after fetching logs
+      if (onProgress) {
+        onProgress({
+          phase: "fetching_logs",
+          current: transferLogs.length,
+          total: transferLogs.length,
+          message: `Found ${transferLogs.length} Transfer events`,
+        });
+      }
+
+      // Parse logs and fetch timestamps using parallel batch fetching
       const results: TransferEvent[] = [];
-      const blockCache = new Map<bigint, number>();
 
+      // Get unique block numbers that need timestamps
+      const uniqueBlockNumbers = new Set(transferLogs.map((log) => log.blockNumber));
+      const blockNumbers = Array.from(uniqueBlockNumbers);
+
+      console.log(`[getTransferEvents] Need timestamps for ${blockNumbers.length} unique blocks`);
+
+      // Use parallel batch fetching (pattern from getWalletTransactions lines 828-840)
+      const concurrencyLimit = this.config.concurrencyLimit; // default 10
+      const timestampMap = new Map<bigint, number>();
+
+      for (let i = 0; i < blockNumbers.length; i += concurrencyLimit) {
+        const batch = blockNumbers.slice(i, i + concurrencyLimit);
+
+        // Fetch blocks in parallel
+        const batchResults = await Promise.all(
+          batch.map((blockNumber) =>
+            client
+              .getBlock({
+                blockNumber,
+                includeTransactions: false,
+              })
+              .then((block: { timestamp: bigint }) => ({
+                blockNumber,
+                timestamp: Number(block.timestamp) * 1000,
+              }))
+              .catch(() => null)
+          )
+        );
+
+        // Store results
+        for (const result of batchResults) {
+          if (result) {
+            timestampMap.set(result.blockNumber, result.timestamp);
+          }
+        }
+
+        // Report progress
+        if (onProgress) {
+          const processed = Math.min(i + batch.length, blockNumbers.length);
+          onProgress({
+            phase: "processing_events",
+            current: processed,
+            total: blockNumbers.length,
+            message: `Fetching block timestamps (${processed}/${blockNumbers.length})`,
+          });
+        }
+      }
+
+      console.log(`[getTransferEvents] Fetched ${timestampMap.size} block timestamps`);
+
+      // Process transfer events using cached timestamps
       for (const log of transferLogs) {
-        // Use cached block timestamp if available
-        let timestamp = blockCache.get(log.blockNumber);
+        const timestamp = timestampMap.get(log.blockNumber);
 
         if (timestamp === undefined) {
-          const block = await client.getBlock({
-            blockNumber: log.blockNumber,
-            includeTransactions: false,
-          });
-
-          if (!block) {
-            if (!this.config.suppressConsoleLogs) {
-              console.warn(`Unable to fetch block ${log.blockNumber}, skipping log`);
-            }
-            continue;
-          }
-          // CRITICAL FIX: Convert RPC timestamp (seconds) to milliseconds for JavaScript compatibility
-          timestamp = Number(block.timestamp) * 1000;
-          blockCache.set(log.blockNumber, timestamp);
+          console.warn(
+            `[getTransferEvents] Missing timestamp for block ${log.blockNumber}, skipping`
+          );
+          continue;
         }
 
         // Parse indexed parameters from topics
@@ -710,7 +793,19 @@ export class DogechainRPCClient {
           timestamp,
           tokenAddress: log.address,
         });
+
+        // Report progress every 100 events
+        if (onProgress && results.length % 100 === 0) {
+          onProgress({
+            phase: "processing_events",
+            current: results.length,
+            total: transferLogs.length,
+            message: `Processing Transfer events (${results.length}/${transferLogs.length})`,
+          });
+        }
       }
+
+      console.log(`[getTransferEvents] Processed ${results.length} Transfer events successfully`);
 
       return results;
     });

@@ -644,20 +644,8 @@ export async function safeDbOperation<T>(
  * once when the database is empty.
  */
 export async function ensureLPDetectionInitialized(): Promise<void> {
-  try {
-    const { loadAllLPPairs, initializeLPDetection } = await import("./lpDetection");
-    const existingPairs = await loadAllLPPairs();
-
-    if (existingPairs.length === 0) {
-      await initializeLPDetection(false, (_msg, _progress) => {
-        // Progress callback
-      });
-    } else {
-      // No existing tokens
-    }
-  } catch {
-    // Error loading tokens
-  }
+  // LP Detection was removed - this function is now a no-op
+  return;
 }
 
 // Helper functions to convert between app types and DB types

@@ -302,7 +302,9 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
                               className="absolute left-2 w-3 h-3 rounded-sm"
                               style={{ backgroundColor: payload[0].color }}
                             />
-                            <span className="text-sm font-medium text-white text-center">{data.name}</span>
+                            <span className="text-sm font-medium text-white text-center">
+                              {data.name}
+                            </span>
                           </div>
                           <span className="inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-200 border border-purple-500/30">
                             {data.value.toFixed(1)}%

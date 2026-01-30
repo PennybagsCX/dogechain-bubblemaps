@@ -57,6 +57,7 @@ import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 import { fetchConnectionDetails } from "./services/connectionService";
 import { initializeDiagnosticLogger, getDiagnosticLogger } from "./lib/consoleLogger";
 import { resetAllGuides } from "./utils/guideStorage";
+import { hasCreatedFirstAlert, markFirstAlertCreated } from "./utils/alertFirstTimeStorage";
 
 /**
  * Format number with commas (e.g., 1,234,567)
@@ -1971,6 +1972,13 @@ const App: React.FC = () => {
           console.error("[ALERT CREATE] ⚠️ Failed to sync new alert to server:", error);
           addToast("Alert saved locally but not synced to server", "warning");
         });
+      }
+
+      // Check if this is the user's first alert created - redirect to Dashboard
+      if (!hasCreatedFirstAlert()) {
+        console.log("[ALERT CREATE] 🎯 First alert created - redirecting to Dashboard");
+        markFirstAlertCreated();
+        handleViewChange(ViewState.DASHBOARD);
       }
 
       console.log("[ALERT CREATE] ✅ Alert creation flow complete");

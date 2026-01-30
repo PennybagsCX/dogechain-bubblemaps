@@ -24,6 +24,7 @@ import { DashboardGuide } from "./components/DashboardGuide";
 import { NetworkHealth } from "./components/NetworkHealth";
 import { DistributionAnalytics } from "./components/DistributionAnalytics";
 import { DexAnalytics } from "./components/DexAnalytics";
+import { UnifiedAnalyticsDashboard } from "./components/analytics/UnifiedAnalyticsDashboard";
 import { useStatsCounters } from "./hooks/useStatsCounters";
 import { useOnboarding } from "./hooks/useOnboarding";
 import { useBubbleVisualizationGuide } from "./hooks/useBubbleVisualizationGuide";
@@ -42,6 +43,12 @@ import {
   TriggeredEvent,
   ScanProgressUpdate,
 } from "./types";
+import {
+  trackPageView,
+  trackPageViewEnd,
+  trackTokenAnalysis,
+  trackWalletConnection,
+} from "./services/userBehaviorAnalytics";
 import {
   fetchTokenData,
   fetchTokenHolders,
@@ -129,6 +136,8 @@ import {
   Wallet as WalletIcon,
   ScanLine,
   ExternalLink,
+  BarChart3,
+  LayoutDashboard,
 } from "lucide-react";
 
 interface RecentSearch {
@@ -215,6 +224,14 @@ const App: React.FC = () => {
     isLoading: isLoadingStats,
     refresh: refreshStats,
   } = useStatsCounters();
+
+  // Analytics cleanup on unmount
+  useEffect(() => {
+    return () => {
+      // Track final page view duration when component unmounts
+      trackPageViewEnd();
+    };
+  }, []);
 
   // Version check to detect new builds and force refresh
   useEffect(() => {
@@ -919,6 +936,11 @@ const App: React.FC = () => {
       document.title = "Distribution Analytics | Dogechain BubbleMaps";
     else if (view === ViewState.DEX_ANALYTICS)
       document.title = "DEX Analytics | Dogechain BubbleMaps";
+    else if (view === ViewState.UNIFIED_ANALYTICS)
+      document.title = "Unified Analytics | Dogechain BubbleMaps";
+
+    // Track page view for analytics
+    trackPageView(view, token?.address);
   }, [view, token]);
 
   // --- MAP ANALYSIS GUIDE TRIGGERS ---
@@ -1403,6 +1425,14 @@ const App: React.FC = () => {
       setSelectedConnection(null);
       setSelectedConnectionId(null);
 
+      // Track token analysis event with all parameters
+      trackTokenAnalysis(
+        tokenData.address,
+        finalWallets.length,
+        1, // wallet connected count (user's own wallet if connected)
+        0 // bubbles explored (not tracked yet)
+      );
+
       // URL State Persistence (Deep Linking)
       try {
         const newUrl = new URL(window.location.href);
@@ -1420,6 +1450,7 @@ const App: React.FC = () => {
         if (viewParam === "distribution") setView(ViewState.DISTRIBUTION);
         else if (viewParam === "network-health") setView(ViewState.NETWORK_HEALTH);
         else if (viewParam === "dex-analytics") setView(ViewState.DEX_ANALYTICS);
+        else if (viewParam === "unified-analytics") setView(ViewState.UNIFIED_ANALYTICS);
         else setView(ViewState.ANALYSIS);
       } catch {
         /* ignore */
@@ -1449,6 +1480,9 @@ const App: React.FC = () => {
       // Clear disconnect flag if user connects their wallet
       sessionStorage.removeItem("wallet-intentionally-disconnected");
 
+      // Track wallet connection for analytics
+      trackWalletConnection(userAddress, true);
+
       // Re-inject user if we are currently viewing a map
       if (token && wallets.length > 0) {
         const injectUserWalletAsync = async () => {
@@ -1468,6 +1502,11 @@ const App: React.FC = () => {
           }
         };
         injectUserWalletAsync();
+      }
+    } else {
+      // Track wallet disconnection for analytics
+      if (!isConnected) {
+        trackWalletConnection("", false);
       }
     }
   }, [userAddress, isConnected, token, wallets, injectUserWallet]);
@@ -1504,6 +1543,8 @@ const App: React.FC = () => {
       setView(ViewState.NETWORK_HEALTH);
     } else if (viewParam === "dex-analytics") {
       setView(ViewState.DEX_ANALYTICS);
+    } else if (viewParam === "unified-analytics") {
+      setView(ViewState.UNIFIED_ANALYTICS);
     }
 
     // Restore Data
@@ -1527,6 +1568,7 @@ const App: React.FC = () => {
       else if (v === "network-health") setView(ViewState.NETWORK_HEALTH);
       else if (v === "distribution") setView(ViewState.DISTRIBUTION);
       else if (v === "dex-analytics") setView(ViewState.DEX_ANALYTICS);
+      else if (v === "unified-analytics") setView(ViewState.UNIFIED_ANALYTICS);
       else setView(ViewState.HOME);
     };
 
@@ -1975,10 +2017,19 @@ const App: React.FC = () => {
       }
 
       // Check if this is the user's first alert created - redirect to Dashboard
-      if (!hasCreatedFirstAlert()) {
+      const isFirstAlert = !hasCreatedFirstAlert();
+      console.log("[ALERT CREATE] 🔍 First alert check:", {
+        hasCreatedFirstAlert: hasCreatedFirstAlert(),
+        isFirstAlert,
+        localStorageValue: localStorage.getItem("dogechain_first_alert_created"),
+      });
+
+      if (isFirstAlert) {
         console.log("[ALERT CREATE] 🎯 First alert created - redirecting to Dashboard");
         markFirstAlertCreated();
         handleViewChange(ViewState.DASHBOARD);
+      } else {
+        console.log("[ALERT CREATE] ℹ️ Not first alert - staying on current view");
       }
 
       console.log("[ALERT CREATE] ✅ Alert creation flow complete");
@@ -1997,9 +2048,9 @@ const App: React.FC = () => {
     tokenSymbol?: string;
     alertType?: "WALLET" | "TOKEN" | "WHALE";
   }) => {
-    // Switch to Dashboard view if not already there
-    // IMPORTANT: Use handleViewChange to ensure browser history is properly updated
-    if (view !== ViewState.DASHBOARD) {
+    // Only switch to Dashboard view if not already there AND user hasn't created their first alert yet
+    // This prevents unnecessary redirects for experienced users
+    if (view !== ViewState.DASHBOARD && !hasCreatedFirstAlert()) {
       handleViewChange(ViewState.DASHBOARD);
     }
     // Set pre-fill data and open modal
@@ -3007,6 +3058,29 @@ const App: React.FC = () => {
         {/* NETWORK HEALTH VIEW */}
         {view === ViewState.NETWORK_HEALTH && (
           <div className="flex flex-col min-h-full">
+            <div className="px-6 py-4 bg-purple-500/10 border-b border-purple-500/20">
+              <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">
+                <div className="flex items-center gap-3">
+                  <BarChart3 className="w-5 h-5 text-purple-400" />
+                  <div>
+                    <p className="text-white font-medium">
+                      Network Health is now part of Unified Analytics
+                    </p>
+                    <p className="text-sm text-slate-400">
+                      Get comprehensive insights in one dashboard with User Behavior, Platform
+                      Health, and Wallet Flows
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => handleViewChange(ViewState.UNIFIED_ANALYTICS)}
+                  className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+                >
+                  <LayoutDashboard size={16} />
+                  Go to Unified Analytics
+                </button>
+              </div>
+            </div>
             <div className="flex-1 p-6">
               <NetworkHealth />
             </div>
@@ -3033,6 +3107,18 @@ const App: React.FC = () => {
           <div className="flex flex-col min-h-full">
             <div className="flex-1 p-6">
               <DexAnalytics />
+            </div>
+            <div className="mt-auto">
+              <Footer onOpenGuide={openOnboarding} />
+            </div>
+          </div>
+        )}
+
+        {/* UNIFIED ANALYTICS VIEW */}
+        {view === ViewState.UNIFIED_ANALYTICS && (
+          <div className="flex flex-col min-h-full">
+            <div className="flex-1 p-6">
+              <UnifiedAnalyticsDashboard />
             </div>
             <div className="mt-auto">
               <Footer onOpenGuide={openOnboarding} />

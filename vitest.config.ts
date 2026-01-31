@@ -23,22 +23,15 @@ export default defineConfig({
         "**/*.config.*",
         "**/mockData",
         "dist/",
-        "api/alerts/", // Vercel serverless functions - tested manually
+        "api/alerts/",
       ],
       thresholds: {
-        // Temporarily disable coverage thresholds
-        // Alert sync and API tests are skipped due to ES module mocking complexity
-        // These functions are tested manually via the Vercel deployment
-        // branches: 70,
-        // functions: 70,
-        // lines: 70,
         branches: 0,
         functions: 85.71,
         lines: 66.66,
-        // Auto-update coverage thresholds instead of failing
-        perFile: false,
-        autoUpdate: true,
       },
+      perFile: false,
+      autoUpdate: true,
     },
   },
   resolve: {

@@ -6,25 +6,6 @@
  * Scans for factories and discovers all LP pairs from them.
  */
 
-// Known DEX factory patterns (reserved for future use)
-// const FACTORY_PATTERNS = [
-//   {
-//     name: "Uniswap V2 Factory",
-//     method: "createPair(address,address)",
-//     event: "PairCreated(address,address,address,uint256)",
-//   },
-//   {
-//     name: "Uniswap V3 Factory",
-//     method: "createPool(address,uint24,address)",
-//     event: "PoolCreated(address,address,uint24,int24,address)",
-//   },
-//   {
-//     name: "PancakeSwap V2 Factory",
-//     method: "createPair(address,address)",
-//     event: "PairCreated(address,address,address,uint256)",
-//   },
-// ];
-
 // Registry of discovered factories
 interface DiscoveredFactory {
   address: string;

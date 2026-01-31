@@ -40,15 +40,17 @@ export function getApiBaseUrl(): string {
     return "";
   }
 
-  // In production, use the backend URL directly
-  // Check for env var first, then fallback to hardcoded URL
+  // In production, use relative path so Vercel rewrites can handle it
+  // The vercel.json rewrites /api/* to dogechain-bubblemaps-api.vercel.app
+  // Check for env var override first (for testing)
   const envUrl = import.meta.env.VITE_API_BASE_URL;
-  if (envUrl && envUrl.trim() !== "") {
+  if (envUrl && envUrl.trim() !== "" && !envUrl.includes("vercel.app")) {
+    // Only use custom env URL if it's not a vercel URL (to avoid conflicts with rewrites)
     return envUrl;
   }
 
-  // Default to the separate backend API for alerts and stats
-  return "https://dogechain-bubblemaps-api.vercel.app";
+  // Use relative path for production - Vercel rewrites handle routing to backend
+  return "";
 }
 
 /**

@@ -98,17 +98,34 @@ export default defineConfig(({ mode }) => {
           // Skip waiting for immediate activation
           globPatterns: ["**/*.{js,css,html,ico,png,svg,json}"],
           runtimeCaching: [
-            // Cache API responses for token searches with stale-while-revalidate
-            // Cache TTL reduced to 5 minutes to allow force-refresh to work effectively
+            // Cache API responses with NetworkFirst to always get fresh data
+            // Handles both same-origin relative URLs and backend API calls
             {
-              urlPattern: /^https:\/\/dogechain-bubblemaps-api\.vercel\.app\/api\/.*/i,
-              handler: "StaleWhileRevalidate",
+              urlPattern: /^\/api\/.*/i,
+              handler: "NetworkFirst",
               options: {
-                cacheName: "api-cache",
+                cacheName: "api-cache-v2",
                 expiration: {
                   maxEntries: 50,
-                  maxAgeSeconds: 60 * 5, // 5 minutes (reduced from 24 hours)
+                  maxAgeSeconds: 10, // 10 seconds for near real-time data
                 },
+                networkTimeoutSeconds: 5,
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            // Backend API direct calls (for compatibility)
+            {
+              urlPattern: /^https:\/\/dogechain-bubblemaps-api\.vercel\.app\/api\/.*/i,
+              handler: "NetworkFirst",
+              options: {
+                cacheName: "api-cache-v2",
+                expiration: {
+                  maxEntries: 50,
+                  maxAgeSeconds: 10,
+                },
+                networkTimeoutSeconds: 5,
                 cacheableResponse: {
                   statuses: [0, 200],
                 },

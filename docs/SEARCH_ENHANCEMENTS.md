@@ -415,6 +415,20 @@ Result: Old search has 50% influence after 7 days
 2. Check if `recentSearches` state has data
 3. Ensure input is focused but empty when checking
 
+### Page View Entries in Search History
+
+**Symptom**: "PAGE_VIEW:HOME" or similar entries showing in search history
+
+**Status**: ✅ **FIXED** (Build #2621)
+
+**Root Cause**: `getRecentSearches()` was not filtering out `type: "pageview"` events. User behavior analytics tracks page views for metrics but these should not appear in search history.
+
+**Solution**: Updated filter in `services/searchAnalytics.ts:308` to exclude both `click` and `pageview` types:
+
+```typescript
+.filter((e: any) => !e.type || (e.type !== "click" && e.type !== "pageview"))
+```
+
 ### Keyboard Shortcuts Not Working
 
 **Symptom**: Ctrl+K or number keys not working
@@ -559,6 +573,11 @@ For issues or questions:
 
 ---
 
-**Version**: 1.0
-**Last Updated**: 2025-01-28
-**Build**: #2568
+**Version**: 1.1
+**Last Updated**: 2026-01-31
+**Build**: #2621
+
+**Changelog:**
+
+- v1.1 (2026-01-31): Fixed PAGE_VIEW events appearing in search history (Build #2621)
+- v1.0 (2025-01-28): Initial release

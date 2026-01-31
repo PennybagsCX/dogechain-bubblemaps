@@ -2,7 +2,19 @@
  * Known DEX Factory Contracts on Dogechain
  *
  * This file contains a registry of verified DEX factory contracts deployed on Dogechain.
- * These factories emit PairCreated events that can be monitored to discover liquidity pools.
+ *
+ * **IMPORTANT:** The deployBlock field is set to 0 for newly added factories.
+ * This is intentional - the actual deployBlock is discovered by running the
+ * factory discovery utility from browser console (see utils/discoverFactories.ts).
+ *
+ * **To update deployBlock values:**
+ * 1. Open app in browser
+ * 2. Open DevTools console
+ * 3. Run: `await discoverFactoriesWithCheckpoint()`
+ * 4. Copy the generated code and update deployBlock values
+ *
+ * **NOTE:** This is a ONE-TIME manual process per factory, not automatic.
+ * The deployBlock field is used by developer tools, not production code.
  *
  * Sources:
  * - ChewySwap (formerly Dogeshrek): https://github.com/ChewySwap/dogeshrek-contracts

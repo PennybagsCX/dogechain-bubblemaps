@@ -4,13 +4,45 @@
 /**
  * DEX Factory Discovery Utility
  *
- * This utility discovers ALL DEX factory contracts on Dogechain by:
- * 1. Scanning the blockchain for PairCreated events
- * 2. Extracting unique factory addresses from events
- * 3. Verifying each factory is valid
- * 4. Auto-adding all discovered factories (with checkpointing)
+ * ⚠️ **DEVELOPER TOOL - NOT PRODUCTION CODE** ⚠️
  *
- * This is the most comprehensive method to ensure 100% DEX coverage.
+ * This utility is used ONCE to discover new DEX factory contracts on Dogechain
+ * and generate the deployBlock values for knownFactories.ts.
+ *
+ * **WHEN TO USE:**
+ * - A new DEX launches on Dogechain
+ * - You need to add its factory to the registry
+ * - You need to find its first pair creation block
+ *
+ * **HOW TO USE:**
+ * 1. Open app in browser
+ * 2. Open DevTools console
+ * 3. Run: `await discoverFactoriesWithCheckpoint()`
+ * 4. Copy the generated TypeScript code
+ * 5. Paste into services/knownFactories.ts
+ *
+ * **WHAT IT DOES:**
+ * 1. Scans the blockchain from block 0 for PairCreated events
+ * 2. Extracts unique factory addresses from events
+ * 3. Verifies each factory is valid
+ * 4. Outputs TypeScript code to copy into knownFactories.ts
+ *
+ * **WHY deployBlock=0 IS INTENTIONAL:**
+ * - When adding a NEW factory, we don't know its deploy block yet
+ * - Setting deployBlock=0 causes the scanner to find the first PairCreated event
+ * - The block number of that first event IS the deploy block
+ * - After discovery, update knownFactories.ts with the discovered value
+ *
+ * **THIS IS NOT:**
+ * - ❌ Automatic discovery that runs in production
+ * - ❌ Per-token scanning (it's per-DEX factory)
+ * - ❌ Performance-critical code
+ * - ❌ User-facing functionality
+ *
+ * **THIS IS:**
+ * - ✅ A developer utility for adding new DEXes
+ * - ✅ Run manually from browser console when needed
+ * - ✅ Generates code to copy into knownFactories.ts
  */
 
 import type { ScanCheckpoint, ScanError } from "../services/scanProgress";

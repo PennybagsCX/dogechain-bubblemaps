@@ -1056,10 +1056,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       // Save triggered event to history (once per alert trigger)
       const eventId = generateEventId();
+      // Only check if THIS SPECIFIC ALERT was already recorded with the same transactions
+      // Different alert configurations should always be logged separately
       const alreadyRecorded = triggeredEvents.some(
         (e) =>
           e.alertId === alert.id &&
-          e.transactions.some((t) => status.newTransactions?.some((nt) => nt.hash === t.hash))
+          e.transactions.length === status.newTransactions?.length &&
+          e.transactions.every((t, i) => t.hash === status.newTransactions?.[i]?.hash)
       );
 
       if (!alreadyRecorded) {

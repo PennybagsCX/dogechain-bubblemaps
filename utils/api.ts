@@ -44,17 +44,11 @@ export function getApiBaseUrl(): string {
   // Check for env var first, then fallback to hardcoded URL
   const envUrl = import.meta.env.VITE_API_BASE_URL;
   if (envUrl && envUrl.trim() !== "") {
-    // IGNORE the env var if it's set to the old wrong URL
-    // The old separate backend URL no longer exists - API is on main domain now
-    if (envUrl.includes("dogechain-bubblemaps-api.vercel.app")) {
-      // Silently ignore old backend URL - use window.location.origin instead
-    } else {
-      return envUrl;
-    }
+    return envUrl;
   }
 
-  // The API routes are deployed on the same Vercel project as the frontend
-  return window.location.origin;
+  // Default to the separate backend API for alerts and stats
+  return "https://dogechain-bubblemaps-api.vercel.app";
 }
 
 /**

@@ -305,7 +305,7 @@ export async function getRecentSearches(limit: number = 100): Promise<SearchAnal
       .toArray();
 
     return events
-      .filter((e: any) => !e.type || e.type !== "click")
+      .filter((e: any) => !e.type || (e.type !== "click" && e.type !== "pageview"))
       .map((e: any) => ({
         sessionId: e.sessionId,
         query: e.query,

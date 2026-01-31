@@ -29,9 +29,8 @@ export default defineConfig({
         branches: 0,
         functions: 85.71,
         lines: 66.66,
+        autoUpdate: true,
       },
-      perFile: false,
-      autoUpdate: true,
     },
   },
   resolve: {

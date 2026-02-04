@@ -2,12 +2,15 @@
  * Platform Health Service
  *
  * Monitors platform health metrics including:
- * - API performance
- * - Data source status
+ * - API performance (latency, success rates)
+ * - Data source health
  * - Cache statistics
+ *
+ * Now uses real metrics from the apiMetrics service instead of simulated data.
  */
 
 import { PlatformHealthStats, TimeRange } from "../types";
+import { getApiMetricsStats } from "./apiMetrics";
 
 // =====================================================
 // PLATFORM HEALTH STATS
@@ -16,67 +19,47 @@ import { PlatformHealthStats, TimeRange } from "../types";
 /**
  * Get platform health statistics for a time range
  *
- * NOTE: This returns simulated data for demonstration purposes.
- * In production, this would aggregate real metrics from monitoring systems.
- * The platform does not currently track API performance metrics.
+ * This now returns REAL metrics from the apiMetrics service:
+ * - API latencies are actual measured values from IndexedDB
+ * - Success rates are calculated from tracked API calls
+ * - Cache statistics are from actual IndexedDB tables
+ *
+ * If no metrics have been collected yet (e.g., first time using the app),
+ * returns empty/zero values rather than fake data.
  */
 export async function getPlatformHealthStats(timeRange: TimeRange): Promise<PlatformHealthStats> {
-  const now = Date.now();
+  try {
+    // Get real metrics from IndexedDB
+    const metrics = await getApiMetricsStats(timeRange);
 
-  // Return realistic simulated data for demonstration
-  // In a production environment, this would query actual monitoring systems
-  const multiplier = getTimeRangeMultiplier(timeRange);
-
-  return {
-    period: timeRange,
-    lastUpdated: now,
-    apis: {
-      performance: {
-        GeckoTerminal: {
-          avgLatency: 350 + Math.random() * 200,
-          successRate: 0.95 + Math.random() * 0.04,
-        },
-        DexScreener: {
-          avgLatency: 280 + Math.random() * 150,
-          successRate: 0.96 + Math.random() * 0.03,
-        },
-        Blockscout: {
-          avgLatency: 450 + Math.random() * 300,
-          successRate: 0.92 + Math.random() * 0.06,
-        },
-        DogechainRPC: {
-          avgLatency: 150 + Math.random() * 100,
-          successRate: 0.98 + Math.random() * 0.01,
-        },
+    return {
+      period: timeRange,
+      lastUpdated: metrics.lastUpdated,
+      apis: {
+        performance: metrics.apis.performance,
+        status: metrics.apis.status,
       },
-      status: {
-        GeckoTerminal: {
-          status: "operational",
-          latency: 350,
-          lastCheck: now,
-        },
-        DexScreener: {
-          status: "operational",
-          latency: 280,
-          lastCheck: now,
-        },
-        Blockscout: {
-          status: "operational",
-          latency: 450,
-          lastCheck: now,
-        },
-        DogechainRPC: {
-          status: "operational",
-          latency: 150,
-          lastCheck: now,
-        },
+      cache: {
+        entries: metrics.cache.entries,
+        hitRate: metrics.cache.hitRate,
       },
-    },
-    cache: {
-      entries: Math.floor(1500 * multiplier),
-      hitRate: 0.75 + Math.random() * 0.15,
-    },
-  };
+    };
+  } catch (error) {
+    console.error("Error fetching platform health stats:", error);
+    // Return empty stats on error rather than fake data
+    return {
+      period: timeRange,
+      lastUpdated: Date.now(),
+      apis: {
+        performance: {},
+        status: {},
+      },
+      cache: {
+        entries: 0,
+        hitRate: 0,
+      },
+    };
+  }
 }
 
 // =====================================================
@@ -84,19 +67,22 @@ export async function getPlatformHealthStats(timeRange: TimeRange): Promise<Plat
 // =====================================================
 
 /**
- * Get multiplier for stub data based on time range
+ * Get time range bounds for filtering
+ * (No longer needed - kept for potential future use)
  */
-function getTimeRangeMultiplier(timeRange: TimeRange): number {
+export function getTimeRangeBounds(timeRange: TimeRange): { startTime: number; endTime: number } {
+  const now = Date.now();
+
   switch (timeRange) {
     case "1h":
-      return 0.1;
+      return { startTime: now - 60 * 60 * 1000, endTime: now };
     case "24h":
-      return 1;
+      return { startTime: now - 24 * 60 * 60 * 1000, endTime: now };
     case "7d":
-      return 7;
+      return { startTime: now - 7 * 24 * 60 * 60 * 1000, endTime: now };
     case "30d":
-      return 30;
+      return { startTime: now - 30 * 24 * 60 * 60 * 1000, endTime: now };
     case "all":
-      return 90;
+      return { startTime: 0, endTime: now };
   }
 }

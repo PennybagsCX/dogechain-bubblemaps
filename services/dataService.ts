@@ -26,6 +26,7 @@ import {
   DbDiscoveredContracts,
 } from "./db";
 import { submitWalletScanResults } from "./learnedTokensService";
+import { trackApiCall } from "./apiMetrics";
 
 // Proxy to Dogechain Explorer to avoid CORS issues
 // Using relative URL since the proxy endpoint is in the same app
@@ -48,128 +49,130 @@ const getCachedMetadata = (address: string) => {
 
 // Light heuristic: inspect token vs NFT activity to detect contract type
 export const detectContractType = async (address: string): Promise<AssetType | null> => {
-  try {
-    const lower = address.toLowerCase();
-    // Bootstrap with explicit type
-    if (BOOTSTRAP_TOKENS[lower]?.type) return BOOTSTRAP_TOKENS[lower].type;
-
-    // 1) Token list metadata (may include explicit type; decimals alone are not decisive)
+  return trackApiCall("Explorer", "detectContractType", async () => {
     try {
-      const metaRes = await fetchSafe(
-        `${EXPLORER_API_V1}?module=token&action=getToken&contractaddress=${address}`
-      );
-      if (metaRes.ok) {
-        const metaJson = await metaRes.json();
-        if (metaJson.status === "1" && metaJson.result) {
-          const info = metaJson.result[0] || metaJson.result;
-          const rawType = info.type?.toString().toLowerCase();
-          if (
-            rawType?.includes("721") ||
-            rawType?.includes("1155") ||
-            rawType === "erc721" ||
-            rawType === "erc1155"
-          ) {
-            return AssetType.NFT;
-          }
-          // Only trust explicit token types here; decimals=0 is common for NFTs
-          if (rawType?.includes("20")) return AssetType.TOKEN;
-        }
-      }
-    } catch {
-      /* ignore */
-    }
+      const lower = address.toLowerCase();
+      // Bootstrap with explicit type
+      if (BOOTSTRAP_TOKENS[lower]?.type) return BOOTSTRAP_TOKENS[lower].type;
 
-    // 2) Check V2 token metadata
-    try {
-      const v2Res = await fetchSafe(`${EXPLORER_API_V2}?path=/v2/tokens/${address}`);
-      if (v2Res.ok) {
-        const v2Json = await v2Res.json();
-        const typeField = v2Json?.type?.toString().toLowerCase();
-        if (typeField?.includes("721") || typeField?.includes("1155")) return AssetType.NFT;
-        if (typeField?.includes("20")) return AssetType.TOKEN;
-      }
-    } catch {
-      /* ignore */
-    }
-
-    // 3) Inspect ABI from sourcecode for NFT interfaces
-    try {
-      const abiRes = await fetchSafe(
-        `${EXPLORER_API_V1}?module=contract&action=getsourcecode&address=${address}`
-      );
-      if (abiRes.ok) {
-        const abiJson = await abiRes.json();
-        const abiStr = abiJson?.result?.[0]?.ABI;
-        if (abiStr && abiStr !== "Contract source code not verified") {
-          const abi = JSON.parse(abiStr);
-          if (Array.isArray(abi)) {
-            const hasOwnerOf = abi.some(
-              (item: any) => item?.type === "function" && item?.name === "ownerOf"
-            );
-            const hasTokenURI = abi.some(
-              (item: any) => item?.type === "function" && item?.name === "tokenURI"
-            );
-            const hasSupportsInterface = abi.some(
-              (item: any) => item?.type === "function" && item?.name === "supportsInterface"
-            );
-            const hasSafeTransfer721 = abi.some(
-              (item: any) =>
-                item?.type === "function" &&
-                item?.name === "safeTransferFrom" &&
-                item?.inputs?.length === 3
-            );
-            const hasSafeTransfer1155 = abi.some(
-              (item: any) =>
-                item?.type === "function" &&
-                item?.name === "safeTransferFrom" &&
-                item?.inputs?.length === 5
-            );
+      // 1) Token list metadata (may include explicit type; decimals alone are not decisive)
+      try {
+        const metaRes = await fetchSafe(
+          `${EXPLORER_API_V1}?module=token&action=getToken&contractaddress=${address}`
+        );
+        if (metaRes.ok) {
+          const metaJson = await metaRes.json();
+          if (metaJson.status === "1" && metaJson.result) {
+            const info = metaJson.result[0] || metaJson.result;
+            const rawType = info.type?.toString().toLowerCase();
             if (
-              hasOwnerOf ||
-              hasTokenURI ||
-              hasSupportsInterface ||
-              hasSafeTransfer721 ||
-              hasSafeTransfer1155
+              rawType?.includes("721") ||
+              rawType?.includes("1155") ||
+              rawType === "erc721" ||
+              rawType === "erc1155"
             ) {
               return AssetType.NFT;
             }
-            const hasDecimals = abi.some(
-              (item: any) => item?.type === "function" && item?.name === "decimals"
-            );
-            if (hasDecimals) return AssetType.TOKEN;
+            // Only trust explicit token types here; decimals=0 is common for NFTs
+            if (rawType?.includes("20")) return AssetType.TOKEN;
           }
         }
+      } catch {
+        /* ignore */
       }
+
+      // 2) Check V2 token metadata
+      try {
+        const v2Res = await fetchSafe(`${EXPLORER_API_V2}?path=/v2/tokens/${address}`);
+        if (v2Res.ok) {
+          const v2Json = await v2Res.json();
+          const typeField = v2Json?.type?.toString().toLowerCase();
+          if (typeField?.includes("721") || typeField?.includes("1155")) return AssetType.NFT;
+          if (typeField?.includes("20")) return AssetType.TOKEN;
+        }
+      } catch {
+        /* ignore */
+      }
+
+      // 3) Inspect ABI from sourcecode for NFT interfaces
+      try {
+        const abiRes = await fetchSafe(
+          `${EXPLORER_API_V1}?module=contract&action=getsourcecode&address=${address}`
+        );
+        if (abiRes.ok) {
+          const abiJson = await abiRes.json();
+          const abiStr = abiJson?.result?.[0]?.ABI;
+          if (abiStr && abiStr !== "Contract source code not verified") {
+            const abi = JSON.parse(abiStr);
+            if (Array.isArray(abi)) {
+              const hasOwnerOf = abi.some(
+                (item: any) => item?.type === "function" && item?.name === "ownerOf"
+              );
+              const hasTokenURI = abi.some(
+                (item: any) => item?.type === "function" && item?.name === "tokenURI"
+              );
+              const hasSupportsInterface = abi.some(
+                (item: any) => item?.type === "function" && item?.name === "supportsInterface"
+              );
+              const hasSafeTransfer721 = abi.some(
+                (item: any) =>
+                  item?.type === "function" &&
+                  item?.name === "safeTransferFrom" &&
+                  item?.inputs?.length === 3
+              );
+              const hasSafeTransfer1155 = abi.some(
+                (item: any) =>
+                  item?.type === "function" &&
+                  item?.name === "safeTransferFrom" &&
+                  item?.inputs?.length === 5
+              );
+              if (
+                hasOwnerOf ||
+                hasTokenURI ||
+                hasSupportsInterface ||
+                hasSafeTransfer721 ||
+                hasSafeTransfer1155
+              ) {
+                return AssetType.NFT;
+              }
+              const hasDecimals = abi.some(
+                (item: any) => item?.type === "function" && item?.name === "decimals"
+              );
+              if (hasDecimals) return AssetType.TOKEN;
+            }
+          }
+        }
+      } catch {
+        /* ignore */
+      }
+
+      // 4) Check NFT tx endpoint (can 400 on non-contracts; place late)
+      const nftRes = await fetchSafe(
+        `${EXPLORER_API_V1}?module=account&action=tokennfttx&contractaddress=${address}&page=1&offset=1&sort=desc`
+      );
+      if (nftRes.ok) {
+        const nftJson = await nftRes.json();
+        if (Array.isArray(nftJson.result) && nftJson.result.length > 0) {
+          return AssetType.NFT;
+        }
+      }
+
+      // 5) Check fungible token tx endpoint
+      const ftRes = await fetchSafe(
+        `${EXPLORER_API_V1}?module=account&action=tokentx&contractaddress=${address}&page=1&offset=1&sort=desc`
+      );
+      if (ftRes.ok) {
+        const ftJson = await ftRes.json();
+        if (Array.isArray(ftJson.result) && ftJson.result.length > 0) {
+          return AssetType.TOKEN;
+        }
+      }
+
+      return null;
     } catch {
-      /* ignore */
+      return null;
     }
-
-    // 4) Check NFT tx endpoint (can 400 on non-contracts; place late)
-    const nftRes = await fetchSafe(
-      `${EXPLORER_API_V1}?module=account&action=tokennfttx&contractaddress=${address}&page=1&offset=1&sort=desc`
-    );
-    if (nftRes.ok) {
-      const nftJson = await nftRes.json();
-      if (Array.isArray(nftJson.result) && nftJson.result.length > 0) {
-        return AssetType.NFT;
-      }
-    }
-
-    // 5) Check fungible token tx endpoint
-    const ftRes = await fetchSafe(
-      `${EXPLORER_API_V1}?module=account&action=tokentx&contractaddress=${address}&page=1&offset=1&sort=desc`
-    );
-    if (ftRes.ok) {
-      const ftJson = await ftRes.json();
-      if (Array.isArray(ftJson.result) && ftJson.result.length > 0) {
-        return AssetType.TOKEN;
-      }
-    }
-
-    return null;
-  } catch {
-    return null;
-  }
+  });
 };
 
 const saveMetadataToCache = (
@@ -413,140 +416,147 @@ const fetchTokenDataInternal = async (
   address: string,
   preferredType: AssetType = AssetType.TOKEN
 ): Promise<Token | null> => {
-  // Validate and sanitize address
-  let cleanAddress: string;
-  try {
-    cleanAddress = validateTokenAddress(address);
-  } catch {
-    // Error handled silently
-    return null;
-  }
-
-  // Load from sources
-  const bootstrap = BOOTSTRAP_TOKENS[cleanAddress];
-  let cached = getCachedMetadata(cleanAddress);
-
-  // Clear stale cached data that has generic names/symbols
-  if (
-    cached &&
-    (cached.symbol === "TOKEN" ||
-      cached.symbol === "???" ||
-      cached.name === "Unverified Token" ||
-      cached.name === "Unknown Token")
-  ) {
+  return trackApiCall("Explorer", "fetchTokenData", async () => {
+    // Validate and sanitize address
+    let cleanAddress: string;
     try {
-      const cacheRaw = localStorage.getItem(METADATA_CACHE_KEY);
-      if (cacheRaw) {
-        const cache = JSON.parse(cacheRaw);
-        delete cache[cleanAddress.toLowerCase()];
-        localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(cache));
-        cached = null;
-      }
+      cleanAddress = validateTokenAddress(address);
     } catch {
-      // Error in operation
+      // Error handled silently
+      return null;
     }
-  }
 
-  try {
-    const isVerified = await checkContractVerification(cleanAddress);
+    // Load from sources
+    const bootstrap = BOOTSTRAP_TOKENS[cleanAddress];
+    let cached = getCachedMetadata(cleanAddress);
 
-    // Always attempt detection to correct stale cache
-    const detectedType: AssetType | null = await detectContractType(cleanAddress);
-
-    // Prefer V1 metadata first to avoid V2 400s, then optionally enrich via transfers/token list
-    const tokenListData = await fetchMetadataFromTokenList(cleanAddress);
-
-    let finalName = tokenListData?.name || cached?.name || bootstrap?.name;
-    let finalSymbol = tokenListData?.symbol || cached?.symbol || bootstrap?.symbol;
-    let finalDecimals = tokenListData?.decimals;
-    const type = detectedType || cached?.type || bootstrap?.type || preferredType;
-
-    // Attempt lightweight transfer scrape if metadata is still generic/missing
-    if (!finalName || !finalSymbol || finalName === "ERC-20" || finalName === "Unverified Token") {
-      const healedData = await fetchMetadataFromTransfers(cleanAddress);
-      if (healedData) {
-        if (healedData.name) finalName = healedData.name;
-        if (healedData.symbol) finalSymbol = healedData.symbol;
-        if (healedData.decimals !== undefined) finalDecimals = healedData.decimals;
+    // Clear stale cached data that has generic names/symbols
+    if (
+      cached &&
+      (cached.symbol === "TOKEN" ||
+        cached.symbol === "???" ||
+        cached.name === "Unverified Token" ||
+        cached.name === "Unknown Token")
+    ) {
+      try {
+        const cacheRaw = localStorage.getItem(METADATA_CACHE_KEY);
+        if (cacheRaw) {
+          const cache = JSON.parse(cacheRaw);
+          delete cache[cleanAddress.toLowerCase()];
+          localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(cache));
+          cached = null;
+        }
+      } catch {
+        // Error in operation
       }
     }
 
-    // Determine decimals/type fallbacks
-    finalDecimals = getDecimals(cleanAddress, finalDecimals, type);
-    finalName =
-      finalName || (type === AssetType.NFT ? "Unverified Collection" : "Unverified Token");
-    finalSymbol = finalSymbol || (type === AssetType.NFT ? "NFT" : "TOKEN");
+    try {
+      const isVerified = await checkContractVerification(cleanAddress);
 
-    // Save to cache if valid identifiers
-    if (finalName && finalSymbol && finalName !== "Unverified Token") {
-      saveMetadataToCache(cleanAddress, {
-        symbol: finalSymbol,
+      // Always attempt detection to correct stale cache
+      const detectedType: AssetType | null = await detectContractType(cleanAddress);
+
+      // Prefer V1 metadata first to avoid V2 400s, then optionally enrich via transfers/token list
+      const tokenListData = await fetchMetadataFromTokenList(cleanAddress);
+
+      let finalName = tokenListData?.name || cached?.name || bootstrap?.name;
+      let finalSymbol = tokenListData?.symbol || cached?.symbol || bootstrap?.symbol;
+      let finalDecimals = tokenListData?.decimals;
+      const type = detectedType || cached?.type || bootstrap?.type || preferredType;
+
+      // Attempt lightweight transfer scrape if metadata is still generic/missing
+      if (
+        !finalName ||
+        !finalSymbol ||
+        finalName === "ERC-20" ||
+        finalName === "Unverified Token"
+      ) {
+        const healedData = await fetchMetadataFromTransfers(cleanAddress);
+        if (healedData) {
+          if (healedData.name) finalName = healedData.name;
+          if (healedData.symbol) finalSymbol = healedData.symbol;
+          if (healedData.decimals !== undefined) finalDecimals = healedData.decimals;
+        }
+      }
+
+      // Determine decimals/type fallbacks
+      finalDecimals = getDecimals(cleanAddress, finalDecimals, type);
+      finalName =
+        finalName || (type === AssetType.NFT ? "Unverified Collection" : "Unverified Token");
+      finalSymbol = finalSymbol || (type === AssetType.NFT ? "NFT" : "TOKEN");
+
+      // Save to cache if valid identifiers
+      if (finalName && finalSymbol && finalName !== "Unverified Token") {
+        saveMetadataToCache(cleanAddress, {
+          symbol: finalSymbol,
+          name: finalName,
+          decimals: finalDecimals,
+          type,
+        });
+      }
+
+      // Try supply via V1 stats (cheap) — skip if it fails
+      let totalSupply = 0;
+      try {
+        const v1Res = await fetchSafe(
+          `${EXPLORER_API_V1}?module=stats&action=tokensupply&contractaddress=${cleanAddress}`
+        );
+        const v1Data = await v1Res.json();
+        if (v1Data.status === "1" || (v1Data.result && !isNaN(parseFloat(v1Data.result)))) {
+          totalSupply = parseBalance(v1Data.result, finalDecimals);
+        }
+      } catch {
+        // ignore supply failure
+      }
+
+      return {
+        address: cleanAddress,
         name: finalName,
+        symbol: finalSymbol,
+        totalSupply,
         decimals: finalDecimals,
         type,
-      });
-    }
+        priceUsd: 0,
+        isVerified,
+      };
+    } catch (error: any) {
+      // Enhanced error handling with graceful degradation
+      const isRateLimit = error?.isRateLimit || error?.status === 429;
 
-    // Try supply via V1 stats (cheap) — skip if it fails
-    let totalSupply = 0;
-    try {
-      const v1Res = await fetchSafe(
-        `${EXPLORER_API_V1}?module=stats&action=tokensupply&contractaddress=${cleanAddress}`
-      );
-      const v1Data = await v1Res.json();
-      if (v1Data.status === "1" || (v1Data.result && !isNaN(parseFloat(v1Data.result)))) {
-        totalSupply = parseBalance(v1Data.result, finalDecimals);
+      if (isRateLimit) {
+        console.warn(
+          `[fetchTokenData] ⚠️ Rate limit hit while fetching token ${cleanAddress}. Using cached/bootstrap data if available.`
+        );
+
+        // Try to return cached or bootstrap data even on rate limit
+        const cachedData = cached || bootstrap;
+        if (cachedData) {
+          const type = cachedData.type || preferredType;
+          return {
+            address: cleanAddress,
+            name:
+              cachedData.name ||
+              (type === AssetType.NFT ? "Unverified Collection" : "Unverified Token"),
+            symbol: cachedData.symbol || (type === AssetType.NFT ? "NFT" : "TOKEN"),
+            totalSupply: 0,
+            decimals: cachedData.decimals ?? (type === AssetType.NFT ? 0 : 18),
+            type,
+            priceUsd: 0,
+            isVerified: false,
+          };
+        }
+      } else {
+        console.error(
+          `[fetchTokenData] ❌ Error fetching token data for ${cleanAddress}:`,
+          error?.message || error
+        );
       }
-    } catch {
-      // ignore supply failure
+
+      // Return null as last resort - caller should handle this gracefully
+      return null;
     }
-
-    return {
-      address: cleanAddress,
-      name: finalName,
-      symbol: finalSymbol,
-      totalSupply,
-      decimals: finalDecimals,
-      type,
-      priceUsd: 0,
-      isVerified,
-    };
-  } catch (error: any) {
-    // Enhanced error handling with graceful degradation
-    const isRateLimit = error?.isRateLimit || error?.status === 429;
-
-    if (isRateLimit) {
-      console.warn(
-        `[fetchTokenData] ⚠️ Rate limit hit while fetching token ${cleanAddress}. Using cached/bootstrap data if available.`
-      );
-
-      // Try to return cached or bootstrap data even on rate limit
-      const cachedData = cached || bootstrap;
-      if (cachedData) {
-        const type = cachedData.type || preferredType;
-        return {
-          address: cleanAddress,
-          name:
-            cachedData.name ||
-            (type === AssetType.NFT ? "Unverified Collection" : "Unverified Token"),
-          symbol: cachedData.symbol || (type === AssetType.NFT ? "NFT" : "TOKEN"),
-          totalSupply: 0,
-          decimals: cachedData.decimals ?? (type === AssetType.NFT ? 0 : 18),
-          type,
-          priceUsd: 0,
-          isVerified: false,
-        };
-      }
-    } else {
-      console.error(
-        `[fetchTokenData] ❌ Error fetching token data for ${cleanAddress}:`,
-        error?.message || error
-      );
-    }
-
-    // Return null as last resort - caller should handle this gracefully
-    return null;
-  }
+  });
 };
 
 /**
@@ -602,147 +612,150 @@ export const clearTokenCache = (): void => {
 export const fetchTokenHolders = async (
   token: Token
 ): Promise<{ wallets: Wallet[]; links: Link[] }> => {
-  console.log(
-    `[LP Detection] ===== fetchTokenHolders called for ${token.symbol || token.address} =====`
-  );
-
-  const cleanAddress = validateTokenAddress(token.address);
-  const decimals =
-    token.decimals !== undefined ? token.decimals : token.type === AssetType.NFT ? 0 : 18;
-
-  // V1-only: avoid V2 holders endpoint (returns 400 in production)
-  try {
-    await sleep(150); // small spacing to be gentle on API
-    const v1Response = await fetchSafe(
-      `${EXPLORER_API_V1}?module=token&action=getTokenHolders&contractaddress=${cleanAddress}&page=1&offset=100`
-    );
-    const v1Json = await v1Response.json();
-
-    if (!(v1Json.status === "1" && Array.isArray(v1Json.result))) {
-      return { wallets: [], links: [] };
-    }
-
-    const holders: { address: string; balance: string; is_contract: boolean }[] = v1Json.result.map(
-      (item: any) => ({
-        address: item.TokenHolderAddress || item.address,
-        balance: item.TokenHolderQuantity || item.value,
-        is_contract: false,
-      })
-    );
-
-    if (holders.length === 0) return { wallets: [], links: [] };
-
-    const processedWallets: Wallet[] = await Promise.all(
-      holders.map(async (h) => {
-        const balance = parseBalance(h.balance, decimals);
-        const label = await resolveKnownLabel(h.address, token.address);
-        return {
-          id: h.address,
-          address: h.address,
-          balance,
-          percentage: 0,
-          isWhale: false,
-          isContract: h.is_contract || label === "LP Pool", // Mark LP pairs as contracts
-          label: label,
-          connections: [],
-        };
-      })
-    );
-
-    const labeledBeforeRecalc = processedWallets.filter((w) => w.label);
-    if (labeledBeforeRecalc.length > 0) {
-      labeledBeforeRecalc.forEach((w) => w.label);
-    }
-
-    const totalWalletBalance = processedWallets.reduce((acc, w) => acc + w.balance, 0);
-    const effectiveTotalSupply = token.totalSupply > 0 ? token.totalSupply : totalWalletBalance;
-
-    processedWallets.forEach((w, index) => {
-      w.percentage = effectiveTotalSupply > 0 ? (w.balance / effectiveTotalSupply) * 100 : 0;
-      w.isWhale = index < 10;
-    });
-
-    // DIAGNOSTIC: Check labeled wallets after whale recalculation
-    const labeledAfterRecalc = processedWallets.filter((w) => w.label);
+  return trackApiCall("Explorer", "fetchTokenHolders", async () => {
     console.log(
-      `[LP Detection] After recalc - Total: ${processedWallets.length}, Labeled: ${labeledAfterRecalc.length}`
+      `[LP Detection] ===== fetchTokenHolders called for ${token.symbol || token.address} =====`
     );
-    if (labeledAfterRecalc.length > 0) {
-      labeledAfterRecalc.forEach((w) => w.label);
-    }
 
-    const links: Link[] = [];
-    const topWallets = processedWallets.slice(0, 3);
+    const cleanAddress = validateTokenAddress(token.address);
+    const decimals =
+      token.decimals !== undefined ? token.decimals : token.type === AssetType.NFT ? 0 : 18;
 
-    for (const whale of topWallets) {
-      try {
-        await sleep(300);
-        const url = `${EXPLORER_API_V1}?module=account&action=tokentx&contractaddress=${cleanAddress}&address=${whale.address}&page=1&offset=20`;
-        const res = await fetchSafe(url);
-        const data = await res.json();
+    // V1-only: avoid V2 holders endpoint (returns 400 in production)
+    try {
+      await sleep(150); // small spacing to be gentle on API
+      const v1Response = await fetchSafe(
+        `${EXPLORER_API_V1}?module=token&action=getTokenHolders&contractaddress=${cleanAddress}&page=1&offset=100`
+      );
+      const v1Json = await v1Response.json();
 
-        if (data.result && Array.isArray(data.result)) {
-          data.result.forEach((tx: any) => {
-            const other = tx.from.toLowerCase() === whale.address.toLowerCase() ? tx.to : tx.from;
-            const match = processedWallets.find(
-              (w) => w.address.toLowerCase() === other.toLowerCase()
-            );
+      if (!(v1Json.status === "1" && Array.isArray(v1Json.result))) {
+        return { wallets: [], links: [] };
+      }
 
-            if (match && match.id !== whale.id) {
-              const linkExists = links.some(
-                (l) =>
-                  (typeof l.source === "string"
-                    ? l.source === whale.id
-                    : l.source.id === whale.id) &&
-                  (typeof l.target === "string" ? l.target === match.id : l.target.id === match.id)
+      const holders: { address: string; balance: string; is_contract: boolean }[] =
+        v1Json.result.map((item: any) => ({
+          address: item.TokenHolderAddress || item.address,
+          balance: item.TokenHolderQuantity || item.value,
+          is_contract: false,
+        }));
+
+      if (holders.length === 0) return { wallets: [], links: [] };
+
+      const processedWallets: Wallet[] = await Promise.all(
+        holders.map(async (h) => {
+          const balance = parseBalance(h.balance, decimals);
+          const label = await resolveKnownLabel(h.address, token.address);
+          return {
+            id: h.address,
+            address: h.address,
+            balance,
+            percentage: 0,
+            isWhale: false,
+            isContract: h.is_contract || label === "LP Pool", // Mark LP pairs as contracts
+            label: label,
+            connections: [],
+          };
+        })
+      );
+
+      const labeledBeforeRecalc = processedWallets.filter((w) => w.label);
+      if (labeledBeforeRecalc.length > 0) {
+        labeledBeforeRecalc.forEach((w) => w.label);
+      }
+
+      const totalWalletBalance = processedWallets.reduce((acc, w) => acc + w.balance, 0);
+      const effectiveTotalSupply = token.totalSupply > 0 ? token.totalSupply : totalWalletBalance;
+
+      processedWallets.forEach((w, index) => {
+        w.percentage = effectiveTotalSupply > 0 ? (w.balance / effectiveTotalSupply) * 100 : 0;
+        w.isWhale = index < 10;
+      });
+
+      // DIAGNOSTIC: Check labeled wallets after whale recalculation
+      const labeledAfterRecalc = processedWallets.filter((w) => w.label);
+      console.log(
+        `[LP Detection] After recalc - Total: ${processedWallets.length}, Labeled: ${labeledAfterRecalc.length}`
+      );
+      if (labeledAfterRecalc.length > 0) {
+        labeledAfterRecalc.forEach((w) => w.label);
+      }
+
+      const links: Link[] = [];
+      const topWallets = processedWallets.slice(0, 3);
+
+      for (const whale of topWallets) {
+        try {
+          await sleep(300);
+          const url = `${EXPLORER_API_V1}?module=account&action=tokentx&contractaddress=${cleanAddress}&address=${whale.address}&page=1&offset=20`;
+          const res = await fetchSafe(url);
+          const data = await res.json();
+
+          if (data.result && Array.isArray(data.result)) {
+            data.result.forEach((tx: any) => {
+              const other = tx.from.toLowerCase() === whale.address.toLowerCase() ? tx.to : tx.from;
+              const match = processedWallets.find(
+                (w) => w.address.toLowerCase() === other.toLowerCase()
               );
 
-              if (!linkExists) {
-                links.push({ source: whale.id, target: match.id, value: 1 });
-                const w = processedWallets.find((wal) => wal.id === whale.id);
-                if (w && !w.connections.includes(match.id)) w.connections.push(match.id);
-                const m = processedWallets.find((wal) => wal.id === match.id);
-                if (m && !m.connections.includes(whale.id)) m.connections.push(whale.id);
+              if (match && match.id !== whale.id) {
+                const linkExists = links.some(
+                  (l) =>
+                    (typeof l.source === "string"
+                      ? l.source === whale.id
+                      : l.source.id === whale.id) &&
+                    (typeof l.target === "string"
+                      ? l.target === match.id
+                      : l.target.id === match.id)
+                );
+
+                if (!linkExists) {
+                  links.push({ source: whale.id, target: match.id, value: 1 });
+                  const w = processedWallets.find((wal) => wal.id === whale.id);
+                  if (w && !w.connections.includes(match.id)) w.connections.push(match.id);
+                  const m = processedWallets.find((wal) => wal.id === match.id);
+                  if (m && !m.connections.includes(whale.id)) m.connections.push(whale.id);
+                }
               }
-            }
-          });
+            });
+          }
+        } catch {
+          // ignore
         }
-      } catch {
-        // ignore
       }
+
+      // Debug: Log all wallets with labels to verify LP pairs
+      // IMPORTANT: Preserve labeled wallets even if they're outside the top 100
+      const top100Wallets = processedWallets.slice(0, 100);
+      const labeledWallets = processedWallets.filter((w) => w.label);
+
+      // Create a set of addresses from top 100 to avoid duplicates
+      const top100Addresses = new Set(top100Wallets.map((w) => w.address.toLowerCase()));
+
+      // Add labeled wallets that aren't already in the top 100
+      const additionalLabeled = labeledWallets.filter(
+        (w) => !top100Addresses.has(w.address.toLowerCase())
+      );
+
+      // Combine: top 100 + any labeled wallets that were excluded
+      const walletsToShow = [...top100Wallets, ...additionalLabeled].slice(0, 105); // Max 105 to prevent huge arrays
+
+      console.log(
+        `[LP Detection] Top 100: ${top100Wallets.length}, Labeled wallets: ${labeledWallets.length}, Additional labeled: ${additionalLabeled.length}, Final: ${walletsToShow.length}`
+      );
+      if (labeledWallets.length > 0) {
+        labeledWallets.forEach((w) => {
+          console.log(
+            `[LP Detection] Labeled wallet: ${w.address} - label: "${w.label}", isContract: ${w.isContract}, balance: ${w.balance}`
+          );
+        });
+      }
+
+      return { wallets: walletsToShow, links };
+    } catch {
+      return { wallets: [], links: [] };
     }
-
-    // Debug: Log all wallets with labels to verify LP pairs
-    // IMPORTANT: Preserve labeled wallets even if they're outside the top 100
-    const top100Wallets = processedWallets.slice(0, 100);
-    const labeledWallets = processedWallets.filter((w) => w.label);
-
-    // Create a set of addresses from top 100 to avoid duplicates
-    const top100Addresses = new Set(top100Wallets.map((w) => w.address.toLowerCase()));
-
-    // Add labeled wallets that aren't already in the top 100
-    const additionalLabeled = labeledWallets.filter(
-      (w) => !top100Addresses.has(w.address.toLowerCase())
-    );
-
-    // Combine: top 100 + any labeled wallets that were excluded
-    const walletsToShow = [...top100Wallets, ...additionalLabeled].slice(0, 105); // Max 105 to prevent huge arrays
-
-    console.log(
-      `[LP Detection] Top 100: ${top100Wallets.length}, Labeled wallets: ${labeledWallets.length}, Additional labeled: ${additionalLabeled.length}, Final: ${walletsToShow.length}`
-    );
-    if (labeledWallets.length > 0) {
-      labeledWallets.forEach((w) => {
-        console.log(
-          `[LP Detection] Labeled wallet: ${w.address} - label: "${w.label}", isContract: ${w.isContract}, balance: ${w.balance}`
-        );
-      });
-    }
-
-    return { wallets: walletsToShow, links };
-  } catch {
-    return { wallets: [], links: [] };
-  }
+  });
 };
 
 // Track pending fetches to prevent infinite loops and duplicate requests

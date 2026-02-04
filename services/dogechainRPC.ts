@@ -1,5 +1,6 @@
 import { createPublicClient, http } from "viem";
 import type { Client } from "viem";
+import { trackApiCall } from "./apiMetrics";
 
 const RPC_ENDPOINTS = [
   "https://rpc.dogechain.dog",
@@ -294,20 +295,22 @@ export class DogechainRPCClient {
    * Get the latest block information
    */
   async getLatestBlock(): Promise<{ number: bigint; timestamp: number }> {
-    return this.executeWithRetry(async (client) => {
-      const block = await client.getBlock({
-        includeTransactions: false,
+    return trackApiCall("RPC", "getLatestBlock", async () => {
+      return this.executeWithRetry(async (client) => {
+        const block = await client.getBlock({
+          includeTransactions: false,
+        });
+
+        if (!block) {
+          throw new Error("Unable to fetch latest block");
+        }
+
+        return {
+          number: block.number,
+          // CRITICAL FIX: Convert RPC timestamp (seconds) to milliseconds for JavaScript compatibility
+          timestamp: Number(block.timestamp) * 1000,
+        };
       });
-
-      if (!block) {
-        throw new Error("Unable to fetch latest block");
-      }
-
-      return {
-        number: block.number,
-        // CRITICAL FIX: Convert RPC timestamp (seconds) to milliseconds for JavaScript compatibility
-        timestamp: Number(block.timestamp) * 1000,
-      };
     });
   }
 
@@ -339,68 +342,72 @@ export class DogechainRPCClient {
     end: bigint,
     options: FetchBlockRangeOptions = {}
   ): Promise<any[]> {
-    const { batchSize = 10, includeTransactions = false } = options;
+    return trackApiCall("RPC", "fetchBlockRange", async () => {
+      const { batchSize = 10, includeTransactions = false } = options;
 
-    // Validate block range
-    if (start > end) {
-      throw new Error(`Invalid block range: start (${start}) cannot be greater than end (${end})`);
-    }
-
-    const totalBlocks = Number(end - start) + 1;
-    const blocks: any[] = [];
-
-    // Clean expired cache entries before proceeding
-    this.cleanExpiredCache();
-
-    // Process blocks in batches
-    for (let i = 0; i < totalBlocks; i += batchSize) {
-      const batchStart = i;
-      const batchEnd = Math.min(i + batchSize, totalBlocks);
-
-      // Fetch batch in parallel
-      const batchPromises: Promise<any>[] = [];
-
-      for (let j = batchStart; j < batchEnd; j++) {
-        const blockNumber = start + BigInt(j);
-
-        // Check cache first
-        const cachedEntry = this.blockCache.get(blockNumber);
-        const now = Date.now();
-
-        if (cachedEntry && now - cachedEntry.timestamp < this.CACHE_TTL) {
-          // Use cached block
-          batchPromises.push(Promise.resolve(cachedEntry.block));
-        } else {
-          // Fetch from RPC
-          batchPromises.push(
-            this.executeWithRetry(async (client) => {
-              const block = await client.getBlock({
-                blockNumber,
-                includeTransactions,
-              });
-
-              if (!block) {
-                throw new Error(`Unable to fetch block ${blockNumber}`);
-              }
-
-              // Cache the block
-              this.blockCache.set(blockNumber, {
-                block,
-                timestamp: now,
-              });
-
-              return block;
-            })
-          );
-        }
+      // Validate block range
+      if (start > end) {
+        throw new Error(
+          `Invalid block range: start (${start}) cannot be greater than end (${end})`
+        );
       }
 
-      // Wait for all blocks in this batch to complete
-      const batchResults = await Promise.all(batchPromises);
-      blocks.push(...batchResults);
-    }
+      const totalBlocks = Number(end - start) + 1;
+      const blocks: any[] = [];
 
-    return blocks;
+      // Clean expired cache entries before proceeding
+      this.cleanExpiredCache();
+
+      // Process blocks in batches
+      for (let i = 0; i < totalBlocks; i += batchSize) {
+        const batchStart = i;
+        const batchEnd = Math.min(i + batchSize, totalBlocks);
+
+        // Fetch batch in parallel
+        const batchPromises: Promise<any>[] = [];
+
+        for (let j = batchStart; j < batchEnd; j++) {
+          const blockNumber = start + BigInt(j);
+
+          // Check cache first
+          const cachedEntry = this.blockCache.get(blockNumber);
+          const now = Date.now();
+
+          if (cachedEntry && now - cachedEntry.timestamp < this.CACHE_TTL) {
+            // Use cached block
+            batchPromises.push(Promise.resolve(cachedEntry.block));
+          } else {
+            // Fetch from RPC
+            batchPromises.push(
+              this.executeWithRetry(async (client) => {
+                const block = await client.getBlock({
+                  blockNumber,
+                  includeTransactions,
+                });
+
+                if (!block) {
+                  throw new Error(`Unable to fetch block ${blockNumber}`);
+                }
+
+                // Cache the block
+                this.blockCache.set(blockNumber, {
+                  block,
+                  timestamp: now,
+                });
+
+                return block;
+              })
+            );
+          }
+        }
+
+        // Wait for all blocks in this batch to complete
+        const batchResults = await Promise.all(batchPromises);
+        blocks.push(...batchResults);
+      }
+
+      return blocks;
+    });
   }
 
   /**
@@ -658,156 +665,160 @@ export class DogechainRPCClient {
     toBlock: bigint,
     onProgress?: TransferProgressCallback
   ): Promise<TransferEvent[]> {
-    // Validate address format
-    if (!tokenAddress.startsWith("0x") || tokenAddress.length !== 42) {
-      throw new Error(`Invalid token address: ${tokenAddress}`);
-    }
-
-    if (fromBlock > toBlock) {
-      throw new Error(
-        `Invalid block range: fromBlock (${fromBlock}) cannot be greater than toBlock (${toBlock})`
-      );
-    }
-
-    return this.executeWithRetry(async (client) => {
-      // Transfer(address indexed from, address indexed to, uint256 value)
-      const transferEventSignature =
-        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
-
-      // Split large block ranges into smaller chunks to avoid RPC timeouts
-      const MAX_RANGE_SIZE = BigInt(5000); // Maximum 5000 blocks per request
-      const allLogs: any[] = [];
-      let currentFrom = fromBlock;
-
-      while (currentFrom <= toBlock) {
-        const rangeEnd =
-          currentFrom + MAX_RANGE_SIZE - 1n > toBlock ? toBlock : currentFrom + MAX_RANGE_SIZE - 1n;
-
-        console.log(`[getTransferEvents] Fetching logs for blocks ${currentFrom} to ${rangeEnd}`);
-
-        const logs = await client.getLogs({
-          address: tokenAddress as `0x${string}`,
-          fromBlock: currentFrom,
-          toBlock: rangeEnd,
-        });
-
-        allLogs.push(...logs);
-        currentFrom = rangeEnd + 1n;
+    return trackApiCall("RPC", "getTransferEvents", async () => {
+      // Validate address format
+      if (!tokenAddress.startsWith("0x") || tokenAddress.length !== 42) {
+        throw new Error(`Invalid token address: ${tokenAddress}`);
       }
 
-      console.log(`[getTransferEvents] Fetched ${allLogs.length} total logs`);
-
-      // Filter logs for Transfer events only
-      const transferLogs = allLogs.filter((log: any) => log.topics[0] === transferEventSignature);
-
-      console.log(
-        `[getTransferEvents] Found ${transferLogs.length} Transfer events out of ${allLogs.length} total logs`
-      );
-
-      // Report progress after fetching logs
-      if (onProgress) {
-        onProgress({
-          phase: "fetching_logs",
-          current: transferLogs.length,
-          total: transferLogs.length,
-          message: `Found ${transferLogs.length} Transfer events`,
-        });
+      if (fromBlock > toBlock) {
+        throw new Error(
+          `Invalid block range: fromBlock (${fromBlock}) cannot be greater than toBlock (${toBlock})`
+        );
       }
 
-      // Parse logs and fetch timestamps using parallel batch fetching
-      const results: TransferEvent[] = [];
+      return this.executeWithRetry(async (client) => {
+        // Transfer(address indexed from, address indexed to, uint256 value)
+        const transferEventSignature =
+          "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
 
-      // Get unique block numbers that need timestamps
-      const uniqueBlockNumbers = new Set(transferLogs.map((log) => log.blockNumber));
-      const blockNumbers = Array.from(uniqueBlockNumbers);
+        // Split large block ranges into smaller chunks to avoid RPC timeouts
+        const MAX_RANGE_SIZE = BigInt(5000); // Maximum 5000 blocks per request
+        const allLogs: any[] = [];
+        let currentFrom = fromBlock;
 
-      console.log(`[getTransferEvents] Need timestamps for ${blockNumbers.length} unique blocks`);
+        while (currentFrom <= toBlock) {
+          const rangeEnd =
+            currentFrom + MAX_RANGE_SIZE - 1n > toBlock
+              ? toBlock
+              : currentFrom + MAX_RANGE_SIZE - 1n;
 
-      // Use parallel batch fetching (pattern from getWalletTransactions lines 828-840)
-      const concurrencyLimit = this.config.concurrencyLimit; // default 10
-      const timestampMap = new Map<bigint, number>();
+          console.log(`[getTransferEvents] Fetching logs for blocks ${currentFrom} to ${rangeEnd}`);
 
-      for (let i = 0; i < blockNumbers.length; i += concurrencyLimit) {
-        const batch = blockNumbers.slice(i, i + concurrencyLimit);
+          const logs = await client.getLogs({
+            address: tokenAddress as `0x${string}`,
+            fromBlock: currentFrom,
+            toBlock: rangeEnd,
+          });
 
-        // Fetch blocks in parallel
-        const batchResults = await Promise.all(
-          batch.map((blockNumber) =>
-            client
-              .getBlock({
-                blockNumber,
-                includeTransactions: false,
-              })
-              .then((block: { timestamp: bigint }) => ({
-                blockNumber,
-                timestamp: Number(block.timestamp) * 1000,
-              }))
-              .catch(() => null)
-          )
+          allLogs.push(...logs);
+          currentFrom = rangeEnd + 1n;
+        }
+
+        console.log(`[getTransferEvents] Fetched ${allLogs.length} total logs`);
+
+        // Filter logs for Transfer events only
+        const transferLogs = allLogs.filter((log: any) => log.topics[0] === transferEventSignature);
+
+        console.log(
+          `[getTransferEvents] Found ${transferLogs.length} Transfer events out of ${allLogs.length} total logs`
         );
 
-        // Store results
-        for (const result of batchResults) {
-          if (result) {
-            timestampMap.set(result.blockNumber, result.timestamp);
+        // Report progress after fetching logs
+        if (onProgress) {
+          onProgress({
+            phase: "fetching_logs",
+            current: transferLogs.length,
+            total: transferLogs.length,
+            message: `Found ${transferLogs.length} Transfer events`,
+          });
+        }
+
+        // Parse logs and fetch timestamps using parallel batch fetching
+        const results: TransferEvent[] = [];
+
+        // Get unique block numbers that need timestamps
+        const uniqueBlockNumbers = new Set(transferLogs.map((log) => log.blockNumber));
+        const blockNumbers = Array.from(uniqueBlockNumbers);
+
+        console.log(`[getTransferEvents] Need timestamps for ${blockNumbers.length} unique blocks`);
+
+        // Use parallel batch fetching (pattern from getWalletTransactions lines 828-840)
+        const concurrencyLimit = this.config.concurrencyLimit; // default 10
+        const timestampMap = new Map<bigint, number>();
+
+        for (let i = 0; i < blockNumbers.length; i += concurrencyLimit) {
+          const batch = blockNumbers.slice(i, i + concurrencyLimit);
+
+          // Fetch blocks in parallel
+          const batchResults = await Promise.all(
+            batch.map((blockNumber) =>
+              client
+                .getBlock({
+                  blockNumber,
+                  includeTransactions: false,
+                })
+                .then((block: { timestamp: bigint }) => ({
+                  blockNumber,
+                  timestamp: Number(block.timestamp) * 1000,
+                }))
+                .catch(() => null)
+            )
+          );
+
+          // Store results
+          for (const result of batchResults) {
+            if (result) {
+              timestampMap.set(result.blockNumber, result.timestamp);
+            }
+          }
+
+          // Report progress
+          if (onProgress) {
+            const processed = Math.min(i + batch.length, blockNumbers.length);
+            onProgress({
+              phase: "processing_events",
+              current: processed,
+              total: blockNumbers.length,
+              message: `Fetching block timestamps (${processed}/${blockNumbers.length})`,
+            });
           }
         }
 
-        // Report progress
-        if (onProgress) {
-          const processed = Math.min(i + batch.length, blockNumbers.length);
-          onProgress({
-            phase: "processing_events",
-            current: processed,
-            total: blockNumbers.length,
-            message: `Fetching block timestamps (${processed}/${blockNumbers.length})`,
+        console.log(`[getTransferEvents] Fetched ${timestampMap.size} block timestamps`);
+
+        // Process transfer events using cached timestamps
+        for (const log of transferLogs) {
+          const timestamp = timestampMap.get(log.blockNumber);
+
+          if (timestamp === undefined) {
+            console.warn(
+              `[getTransferEvents] Missing timestamp for block ${log.blockNumber}, skipping`
+            );
+            continue;
+          }
+
+          // Parse indexed parameters from topics
+          // topics[1] = from address (indexed, padded to 32 bytes)
+          // topics[2] = to address (indexed, padded to 32 bytes)
+          const from = `0x${log.topics[1]?.slice(26) || "0".repeat(40)}`;
+          const to = `0x${log.topics[2]?.slice(26) || "0".repeat(40)}`;
+
+          results.push({
+            transactionHash: log.transactionHash,
+            blockNumber: log.blockNumber,
+            from,
+            to,
+            value: BigInt(log.data || "0"),
+            timestamp,
+            tokenAddress: log.address,
           });
-        }
-      }
 
-      console.log(`[getTransferEvents] Fetched ${timestampMap.size} block timestamps`);
-
-      // Process transfer events using cached timestamps
-      for (const log of transferLogs) {
-        const timestamp = timestampMap.get(log.blockNumber);
-
-        if (timestamp === undefined) {
-          console.warn(
-            `[getTransferEvents] Missing timestamp for block ${log.blockNumber}, skipping`
-          );
-          continue;
+          // Report progress every 100 events
+          if (onProgress && results.length % 100 === 0) {
+            onProgress({
+              phase: "processing_events",
+              current: results.length,
+              total: transferLogs.length,
+              message: `Processing Transfer events (${results.length}/${transferLogs.length})`,
+            });
+          }
         }
 
-        // Parse indexed parameters from topics
-        // topics[1] = from address (indexed, padded to 32 bytes)
-        // topics[2] = to address (indexed, padded to 32 bytes)
-        const from = `0x${log.topics[1]?.slice(26) || "0".repeat(40)}`;
-        const to = `0x${log.topics[2]?.slice(26) || "0".repeat(40)}`;
+        console.log(`[getTransferEvents] Processed ${results.length} Transfer events successfully`);
 
-        results.push({
-          transactionHash: log.transactionHash,
-          blockNumber: log.blockNumber,
-          from,
-          to,
-          value: BigInt(log.data || "0"),
-          timestamp,
-          tokenAddress: log.address,
-        });
-
-        // Report progress every 100 events
-        if (onProgress && results.length % 100 === 0) {
-          onProgress({
-            phase: "processing_events",
-            current: results.length,
-            total: transferLogs.length,
-            message: `Processing Transfer events (${results.length}/${transferLogs.length})`,
-          });
-        }
-      }
-
-      console.log(`[getTransferEvents] Processed ${results.length} Transfer events successfully`);
-
-      return results;
+        return results;
+      });
     });
   }
 
@@ -820,227 +831,229 @@ export class DogechainRPCClient {
     walletAddress: string,
     options: WalletTransactionOptions = {}
   ): Promise<WalletTransaction[]> {
-    // Validate wallet address
-    if (!walletAddress.startsWith("0x") || walletAddress.length !== 42) {
-      throw new Error(`Invalid wallet address: ${walletAddress}`);
-    }
-
-    const { fromBlock, toBlock, maxResults = 1000 } = options;
-
-    // Determine block range
-    let actualFromBlock = fromBlock;
-    let actualToBlock = toBlock;
-
-    if (!actualFromBlock || !actualToBlock) {
-      // If no block range specified, use last 1000 blocks (approximately 40 minutes)
-      const latestBlock = await this.getLatestBlockNumber();
-      actualToBlock = latestBlock;
-
-      if (!actualFromBlock) {
-        // Default to last 1000 blocks
-        actualFromBlock = actualToBlock - BigInt(1000);
-        if (actualFromBlock < 0n) actualFromBlock = 0n;
-      }
-    }
-
-    // Validate block range
-    if (actualFromBlock > actualToBlock) {
-      throw new Error(
-        `Invalid block range: fromBlock (${actualFromBlock}) cannot be greater than toBlock (${actualToBlock})`
-      );
-    }
-
-    const rangeSize = actualToBlock - actualFromBlock;
-    if (rangeSize > BigInt(10000) && !this.config.suppressConsoleLogs) {
-      console.warn(
-        `[getWalletTransactions] Large block range detected (${rangeSize} blocks). Consider using smaller ranges for better performance.`
-      );
-    }
-
-    return this.executeWithRetry(async (client) => {
-      const normalizedWallet = walletAddress.toLowerCase();
-      const results: WalletTransaction[] = [];
-
-      // Debug: Always log the wallet and block range being fetched
-      console.log(
-        `[RPC] getWalletTransactions START: wallet=${walletAddress.slice(0, 10)}..., fromBlock=${actualFromBlock}, toBlock=${actualToBlock}, maxResults=${maxResults}`
-      );
-
-      // Fetch blocks in range using config batch size (reduced from 50 to 10 for reliability)
-      const batchSize = this.config.batchSize;
-      let currentBlock = actualFromBlock;
-      let totalFetched = 0;
-
-      while (currentBlock <= actualToBlock && totalFetched < maxResults) {
-        const endBlock =
-          currentBlock + batchSize - 1n > actualToBlock
-            ? actualToBlock
-            : currentBlock + batchSize - 1n;
-
-        if (!this.config.suppressConsoleLogs) {
-          console.log(`[getWalletTransactions] Fetching blocks ${currentBlock} to ${endBlock}`);
-        }
-
-        // Fetch block numbers
-        const blockNumbers: bigint[] = [];
-        for (let b = currentBlock; b <= endBlock; b++) {
-          blockNumbers.push(b);
-        }
-
-        // Fetch all blocks in parallel with config concurrency limit (reduced from 10 to 5)
-        const concurrencyLimit = this.config.concurrencyLimit;
-        const blocks: (any | null)[] = [];
-
-        for (let i = 0; i < blockNumbers.length; i += concurrencyLimit) {
-          const batch = blockNumbers.slice(i, i + concurrencyLimit);
-          const batchResults = await Promise.all(
-            batch.map((blockNumber) =>
-              client.getBlock({ blockNumber, includeTransactions: true }).catch(() => null)
-            )
-          );
-          blocks.push(...batchResults);
-        }
-
-        // Process each block
-        for (const block of blocks) {
-          if (!block) continue;
-
-          // Skip blocks without transactions
-          if (!block.transactions || block.transactions.length === 0) continue;
-
-          // Filter transactions involving our wallet
-          for (const tx of block.transactions) {
-            if (totalFetched >= maxResults) break;
-
-            // Check if wallet is involved in this transaction
-            const walletInvolved =
-              tx.from?.toLowerCase() === normalizedWallet ||
-              tx.to?.toLowerCase() === normalizedWallet;
-
-            if (!walletInvolved) continue;
-
-            // For transaction to/from a contract, check logs for Transfer events
-            // to determine the token address and value
-            let tokenAddress: string | undefined;
-            let value: bigint = 0n;
-
-            // Always check receipt for Transfer events when wallet is involved in a contract interaction
-            // This handles both: wallet→contract and contract→wallet transfers
-            const isContractInteraction = tx.to && tx.to.toLowerCase() !== normalizedWallet;
-
-            if (!this.config.suppressConsoleLogs) {
-              console.log(
-                `[getWalletTransactions] Checking tx ${tx.hash.slice(0, 10)}... for token transfers`,
-                {
-                  txFrom: tx.from?.toLowerCase(),
-                  txTo: tx.to?.toLowerCase(),
-                  wallet: normalizedWallet,
-                  isContractInteraction,
-                }
-              );
-            }
-
-            if (isContractInteraction || (tx.to && tx.to.toLowerCase() === normalizedWallet)) {
-              try {
-                const receipt = await client.getTransactionReceipt({
-                  hash: tx.hash,
-                });
-
-                if (receipt && receipt.logs) {
-                  if (!this.config.suppressConsoleLogs) {
-                    console.log(
-                      `[getWalletTransactions] Receipt for ${tx.hash.slice(0, 10)}... has ${receipt.logs.length} logs`
-                    );
-                  }
-
-                  // Find Transfer events involving our wallet
-                  const transferEventSignature =
-                    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
-
-                  // Find all Transfer events involving our wallet
-                  const walletTransferLogs = receipt.logs.filter((log: any) => {
-                    if (log.topics[0] !== transferEventSignature) return false;
-                    // Extract address from indexed parameter (topics[1] = from, topics[2] = to)
-                    // Topics are 32 bytes (66 chars with 0x) with address zero-padded to last 20 bytes
-                    const fromAddress = "0x" + (log.topics[1] || "").slice(26);
-                    const toAddress = "0x" + (log.topics[2] || "").slice(26);
-                    return (
-                      fromAddress.toLowerCase() === normalizedWallet ||
-                      toAddress.toLowerCase() === normalizedWallet
-                    );
-                  });
-
-                  if (!this.config.suppressConsoleLogs) {
-                    console.log(
-                      `[getWalletTransactions] Found ${walletTransferLogs.length} wallet Transfer events`
-                    );
-                  }
-
-                  if (walletTransferLogs.length > 0) {
-                    // PRIORITY: For swaps, prefer tokens received (incoming to wallet)
-                    // Look for Transfer where wallet is the TO address (receiving)
-                    const incomingLog = walletTransferLogs.find((log: any) => {
-                      const toAddress = "0x" + (log.topics[2] || "").slice(26);
-                      return toAddress.toLowerCase() === normalizedWallet;
-                    });
-
-                    // FALLBACK: Use the first wallet Transfer event (outgoing)
-                    const selectedLog = incomingLog || walletTransferLogs[0];
-
-                    tokenAddress = selectedLog.address;
-                    value = BigInt(selectedLog.data || "0");
-
-                    if (!this.config.suppressConsoleLogs) {
-                      console.log(`[getWalletTransactions] Found token transfer in ${tx.hash}:`, {
-                        token: tokenAddress,
-                        value: value.toString(),
-                        isIncoming: selectedLog === incomingLog,
-                      });
-                    }
-                  }
-                }
-              } catch (error) {
-                // If receipt fetch fails, continue without token details
-                if (!this.config.suppressConsoleLogs) {
-                  console.warn(`Failed to fetch receipt for ${tx.hash}:`, error);
-                }
-              }
-            }
-
-            results.push({
-              hash: tx.hash,
-              from: tx.from || "0x0",
-              to: tx.to || "0x0",
-              value,
-              // CRITICAL FIX: Convert RPC timestamp (seconds) to milliseconds for JavaScript compatibility
-              timestamp: Number(block.timestamp) * 1000,
-              blockNumber: block.number,
-              // Don't default to "0x0" - use undefined so caller can handle missing token data
-              tokenAddress: tokenAddress,
-            });
-
-            totalFetched++;
-          }
-        }
-
-        currentBlock = endBlock + 1n;
+    return trackApiCall("RPC", "getWalletTransactions", async () => {
+      // Validate wallet address
+      if (!walletAddress.startsWith("0x") || walletAddress.length !== 42) {
+        throw new Error(`Invalid wallet address: ${walletAddress}`);
       }
 
-      // Debug: Always log the results
-      console.error(
-        `[RPC] getWalletTransactions END: wallet=${walletAddress.slice(0, 10)}..., found=${results.length} transactions`
-      );
+      const { fromBlock, toBlock, maxResults = 1000 } = options;
 
-      if (results.length > 0) {
-        console.error(
-          `[RPC] Transactions: ${results.map((tx) => `${tx.hash.slice(0, 10)}... (${new Date(tx.timestamp).toISOString()})`).join(", ")}`
+      // Determine block range
+      let actualFromBlock = fromBlock;
+      let actualToBlock = toBlock;
+
+      if (!actualFromBlock || !actualToBlock) {
+        // If no block range specified, use last 1000 blocks (approximately 40 minutes)
+        const latestBlock = await this.getLatestBlockNumber();
+        actualToBlock = latestBlock;
+
+        if (!actualFromBlock) {
+          // Default to last 1000 blocks
+          actualFromBlock = actualToBlock - BigInt(1000);
+          if (actualFromBlock < 0n) actualFromBlock = 0n;
+        }
+      }
+
+      // Validate block range
+      if (actualFromBlock > actualToBlock) {
+        throw new Error(
+          `Invalid block range: fromBlock (${actualFromBlock}) cannot be greater than toBlock (${actualToBlock})`
         );
       }
 
-      // Sort by timestamp (most recent first)
-      results.sort((a, b) => b.timestamp - a.timestamp);
+      const rangeSize = actualToBlock - actualFromBlock;
+      if (rangeSize > BigInt(10000) && !this.config.suppressConsoleLogs) {
+        console.warn(
+          `[getWalletTransactions] Large block range detected (${rangeSize} blocks). Consider using smaller ranges for better performance.`
+        );
+      }
 
-      return results;
+      return this.executeWithRetry(async (client) => {
+        const normalizedWallet = walletAddress.toLowerCase();
+        const results: WalletTransaction[] = [];
+
+        // Debug: Always log the wallet and block range being fetched
+        console.log(
+          `[RPC] getWalletTransactions START: wallet=${walletAddress.slice(0, 10)}..., fromBlock=${actualFromBlock}, toBlock=${actualToBlock}, maxResults=${maxResults}`
+        );
+
+        // Fetch blocks in range using config batch size (reduced from 50 to 10 for reliability)
+        const batchSize = this.config.batchSize;
+        let currentBlock = actualFromBlock;
+        let totalFetched = 0;
+
+        while (currentBlock <= actualToBlock && totalFetched < maxResults) {
+          const endBlock =
+            currentBlock + batchSize - 1n > actualToBlock
+              ? actualToBlock
+              : currentBlock + batchSize - 1n;
+
+          if (!this.config.suppressConsoleLogs) {
+            console.log(`[getWalletTransactions] Fetching blocks ${currentBlock} to ${endBlock}`);
+          }
+
+          // Fetch block numbers
+          const blockNumbers: bigint[] = [];
+          for (let b = currentBlock; b <= endBlock; b++) {
+            blockNumbers.push(b);
+          }
+
+          // Fetch all blocks in parallel with config concurrency limit (reduced from 10 to 5)
+          const concurrencyLimit = this.config.concurrencyLimit;
+          const blocks: (any | null)[] = [];
+
+          for (let i = 0; i < blockNumbers.length; i += concurrencyLimit) {
+            const batch = blockNumbers.slice(i, i + concurrencyLimit);
+            const batchResults = await Promise.all(
+              batch.map((blockNumber) =>
+                client.getBlock({ blockNumber, includeTransactions: true }).catch(() => null)
+              )
+            );
+            blocks.push(...batchResults);
+          }
+
+          // Process each block
+          for (const block of blocks) {
+            if (!block) continue;
+
+            // Skip blocks without transactions
+            if (!block.transactions || block.transactions.length === 0) continue;
+
+            // Filter transactions involving our wallet
+            for (const tx of block.transactions) {
+              if (totalFetched >= maxResults) break;
+
+              // Check if wallet is involved in this transaction
+              const walletInvolved =
+                tx.from?.toLowerCase() === normalizedWallet ||
+                tx.to?.toLowerCase() === normalizedWallet;
+
+              if (!walletInvolved) continue;
+
+              // For transaction to/from a contract, check logs for Transfer events
+              // to determine the token address and value
+              let tokenAddress: string | undefined;
+              let value: bigint = 0n;
+
+              // Always check receipt for Transfer events when wallet is involved in a contract interaction
+              // This handles both: wallet→contract and contract→wallet transfers
+              const isContractInteraction = tx.to && tx.to.toLowerCase() !== normalizedWallet;
+
+              if (!this.config.suppressConsoleLogs) {
+                console.log(
+                  `[getWalletTransactions] Checking tx ${tx.hash.slice(0, 10)}... for token transfers`,
+                  {
+                    txFrom: tx.from?.toLowerCase(),
+                    txTo: tx.to?.toLowerCase(),
+                    wallet: normalizedWallet,
+                    isContractInteraction,
+                  }
+                );
+              }
+
+              if (isContractInteraction || (tx.to && tx.to.toLowerCase() === normalizedWallet)) {
+                try {
+                  const receipt = await client.getTransactionReceipt({
+                    hash: tx.hash,
+                  });
+
+                  if (receipt && receipt.logs) {
+                    if (!this.config.suppressConsoleLogs) {
+                      console.log(
+                        `[getWalletTransactions] Receipt for ${tx.hash.slice(0, 10)}... has ${receipt.logs.length} logs`
+                      );
+                    }
+
+                    // Find Transfer events involving our wallet
+                    const transferEventSignature =
+                      "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+
+                    // Find all Transfer events involving our wallet
+                    const walletTransferLogs = receipt.logs.filter((log: any) => {
+                      if (log.topics[0] !== transferEventSignature) return false;
+                      // Extract address from indexed parameter (topics[1] = from, topics[2] = to)
+                      // Topics are 32 bytes (66 chars with 0x) with address zero-padded to last 20 bytes
+                      const fromAddress = "0x" + (log.topics[1] || "").slice(26);
+                      const toAddress = "0x" + (log.topics[2] || "").slice(26);
+                      return (
+                        fromAddress.toLowerCase() === normalizedWallet ||
+                        toAddress.toLowerCase() === normalizedWallet
+                      );
+                    });
+
+                    if (!this.config.suppressConsoleLogs) {
+                      console.log(
+                        `[getWalletTransactions] Found ${walletTransferLogs.length} wallet Transfer events`
+                      );
+                    }
+
+                    if (walletTransferLogs.length > 0) {
+                      // PRIORITY: For swaps, prefer tokens received (incoming to wallet)
+                      // Look for Transfer where wallet is the TO address (receiving)
+                      const incomingLog = walletTransferLogs.find((log: any) => {
+                        const toAddress = "0x" + (log.topics[2] || "").slice(26);
+                        return toAddress.toLowerCase() === normalizedWallet;
+                      });
+
+                      // FALLBACK: Use the first wallet Transfer event (outgoing)
+                      const selectedLog = incomingLog || walletTransferLogs[0];
+
+                      tokenAddress = selectedLog.address;
+                      value = BigInt(selectedLog.data || "0");
+
+                      if (!this.config.suppressConsoleLogs) {
+                        console.log(`[getWalletTransactions] Found token transfer in ${tx.hash}:`, {
+                          token: tokenAddress,
+                          value: value.toString(),
+                          isIncoming: selectedLog === incomingLog,
+                        });
+                      }
+                    }
+                  }
+                } catch (error) {
+                  // If receipt fetch fails, continue without token details
+                  if (!this.config.suppressConsoleLogs) {
+                    console.warn(`Failed to fetch receipt for ${tx.hash}:`, error);
+                  }
+                }
+              }
+
+              results.push({
+                hash: tx.hash,
+                from: tx.from || "0x0",
+                to: tx.to || "0x0",
+                value,
+                // CRITICAL FIX: Convert RPC timestamp (seconds) to milliseconds for JavaScript compatibility
+                timestamp: Number(block.timestamp) * 1000,
+                blockNumber: block.number,
+                // Don't default to "0x0" - use undefined so caller can handle missing token data
+                tokenAddress: tokenAddress,
+              });
+
+              totalFetched++;
+            }
+          }
+
+          currentBlock = endBlock + 1n;
+        }
+
+        // Debug: Always log the results
+        console.error(
+          `[RPC] getWalletTransactions END: wallet=${walletAddress.slice(0, 10)}..., found=${results.length} transactions`
+        );
+
+        if (results.length > 0) {
+          console.error(
+            `[RPC] Transactions: ${results.map((tx) => `${tx.hash.slice(0, 10)}... (${new Date(tx.timestamp).toISOString()})`).join(", ")}`
+          );
+        }
+
+        // Sort by timestamp (most recent first)
+        results.sort((a, b) => b.timestamp - a.timestamp);
+
+        return results;
+      });
     });
   }
 
@@ -1390,55 +1403,57 @@ export class DogechainRPCClient {
    * Get current network statistics including block time, gas price, and TPS
    */
   async getNetworkStats(): Promise<NetworkStats> {
-    return this.executeWithRetry(async (client) => {
-      const [latestBlock, blockNumber] = await Promise.all([
-        client.getBlock({ includeTransactions: true }),
-        client.getBlockNumber(),
-      ]);
+    return trackApiCall("RPC", "getNetworkStats", async () => {
+      return this.executeWithRetry(async (client) => {
+        const [latestBlock, blockNumber] = await Promise.all([
+          client.getBlock({ includeTransactions: true }),
+          client.getBlockNumber(),
+        ]);
 
-      if (!latestBlock || !blockNumber) {
-        throw new Error("Unable to fetch network stats");
-      }
+        if (!latestBlock || !blockNumber) {
+          throw new Error("Unable to fetch network stats");
+        }
 
-      // Get previous block for block time calculation
-      const prevBlock = await client.getBlock({
-        blockNumber: blockNumber - 1n,
-        includeTransactions: false,
+        // Get previous block for block time calculation
+        const prevBlock = await client.getBlock({
+          blockNumber: blockNumber - 1n,
+          includeTransactions: false,
+        });
+
+        const blockTime = prevBlock
+          ? Number(latestBlock.timestamp - prevBlock.timestamp) * 1000 // Convert to ms
+          : 2500; // Default 2.5s
+
+        // Get gas price
+        const gasPrice = await client.getGasPrice().catch(() => BigInt(1000000000)); // Default 1 gwei
+
+        // Calculate TPS (transactions per second)
+        const txCount = latestBlock.transactions?.length || 0;
+        const tps = blockTime > 0 ? (txCount * 1000) / blockTime : 0;
+
+        // Determine congestion level based on gas utilization
+        const gasUsed = latestBlock.gasUsed ? Number(latestBlock.gasUsed) : 0;
+        const gasLimit = latestBlock.gasLimit ? Number(latestBlock.gasLimit) : 0;
+        const utilization = gasLimit > 0 ? gasUsed / gasLimit : 0;
+
+        let congestion: "low" | "medium" | "high";
+        if (utilization < 0.5) {
+          congestion = "low";
+        } else if (utilization < 0.8) {
+          congestion = "medium";
+        } else {
+          congestion = "high";
+        }
+
+        return {
+          currentBlockNumber: Number(blockNumber),
+          blockTime,
+          averageBlockTime: blockTime, // Will be calculated from historical data
+          gasPrice: gasPrice.toString(),
+          tps,
+          congestion,
+        };
       });
-
-      const blockTime = prevBlock
-        ? Number(latestBlock.timestamp - prevBlock.timestamp) * 1000 // Convert to ms
-        : 2500; // Default 2.5s
-
-      // Get gas price
-      const gasPrice = await client.getGasPrice().catch(() => BigInt(1000000000)); // Default 1 gwei
-
-      // Calculate TPS (transactions per second)
-      const txCount = latestBlock.transactions?.length || 0;
-      const tps = blockTime > 0 ? (txCount * 1000) / blockTime : 0;
-
-      // Determine congestion level based on gas utilization
-      const gasUsed = latestBlock.gasUsed ? Number(latestBlock.gasUsed) : 0;
-      const gasLimit = latestBlock.gasLimit ? Number(latestBlock.gasLimit) : 0;
-      const utilization = gasLimit > 0 ? gasUsed / gasLimit : 0;
-
-      let congestion: "low" | "medium" | "high";
-      if (utilization < 0.5) {
-        congestion = "low";
-      } else if (utilization < 0.8) {
-        congestion = "medium";
-      } else {
-        congestion = "high";
-      }
-
-      return {
-        currentBlockNumber: Number(blockNumber),
-        blockTime,
-        averageBlockTime: blockTime, // Will be calculated from historical data
-        gasPrice: gasPrice.toString(),
-        tps,
-        congestion,
-      };
     });
   }
 

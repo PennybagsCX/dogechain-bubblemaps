@@ -146,6 +146,18 @@ export interface DbSearchAlias {
   confirmedCount: number; // Number of times this alias was confirmed (clicked)
 }
 
+// API performance metrics (tracks external API call performance)
+export interface DbApiMetric {
+  id?: number; // Auto-incremented primary key
+  sessionId: string; // Session identifier
+  apiName: string; // API/service name (e.g., "RPC", "Explorer", "Blockscout")
+  functionName: string; // Function name (e.g., "getLatestBlock", "fetchTokenData")
+  duration: number; // Request duration in milliseconds
+  success: boolean; // Whether the request succeeded
+  statusCode?: number; // HTTP status code (if available)
+  timestamp: number; // When the API call was made
+}
+
 // Export data structure
 export interface DatabaseExport {
   version: string;
@@ -176,6 +188,7 @@ class DogeDatabase extends Dexie {
   searchAnalytics!: Table<any>; // Search analytics events
   tokenPopularity!: Table<any>; // Token popularity metrics
   searchAliases!: Table<DbSearchAlias>; // Learned search aliases
+  apiMetrics!: Table<DbApiMetric>; // API performance metrics
 
   constructor() {
     super("DogechainBubbleMapsDB");
@@ -598,6 +611,35 @@ class DogeDatabase extends Dexie {
         learnedTokensCache:
           "&address, name, symbol, type, popularityScore, scanFrequency, holderCount, cachedAt, expiresAt",
         searchAliases: "++id, &alias, targetAddress, confidence, createdAt, confirmedCount",
+      });
+
+      // Version 20: Add API performance metrics tracking
+      this.version(20).stores({
+        alerts: "++id, alertId, walletAddress, name, type, createdAt",
+        alertStatuses: "alertId, &alertId",
+        triggeredEvents: "++id, &eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits",
+        walletScanCache: "walletAddress, scannedAt, expiresAt",
+        assetMetadataCache: "address, cachedAt, expiresAt",
+        walletForcedContracts: "walletAddress, updatedAt",
+        discoveredContracts: "++id, contractAddress, type, discoveredAt, lastSeenAt",
+        lpPairs: "++id, &pairAddress, factoryAddress, dexName, discoveredAt, lastVerifiedAt",
+        scanCheckpoints: "++id, phase, lastUpdated",
+        discoveredFactories: "++id, &address, name, status, discoveredAt",
+        tokenSearchIndex: "++id, &address, [type+symbol], [type+name], source, indexedAt",
+        abbreviationCache: "tokenAddress, &tokenAddress, generatedAt, expiresAt",
+        invertedIndex: "++id, &term, [termType+term], frequency",
+        searchCache: "++id, &queryKey, timestamp, hits",
+        phoneticIndex: "++id, &tokenAddress, phoneticKey, similarityCache, updatedAt",
+        trigramIndex: "++id, &tokenAddress, ngram, tokenSet",
+        searchAnalytics: "++id, &sessionId, timestamp, query, clickedAddress",
+        tokenPopularity:
+          "&tokenAddress, searchCount, clickCount, ctr, lastSearched, lastClicked, cachedAt, expiresAt, updatedAt",
+        learnedTokensCache:
+          "&address, name, symbol, type, popularityScore, scanFrequency, holderCount, cachedAt, expiresAt",
+        searchAliases: "++id, &alias, targetAddress, confidence, createdAt, confirmedCount",
+        apiMetrics: "++id, sessionId, apiName, functionName, timestamp",
       });
     } catch {
       // Error handled silently

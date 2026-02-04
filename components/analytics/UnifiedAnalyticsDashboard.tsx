@@ -9,7 +9,6 @@ import React, { useState, useEffect } from "react";
 import {
   LayoutDashboard,
   Users,
-  Server,
   ArrowRight,
   RefreshCw,
   BarChart3,
@@ -19,17 +18,15 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { UserBehaviorAnalytics } from "./UserBehaviorAnalytics";
-import { PlatformHealth } from "./PlatformHealth";
 import { NetworkHealth } from "../NetworkHealth";
-import { TimeRange, UserBehaviorStats, PlatformHealthStats } from "../../types";
+import { TimeRange, UserBehaviorStats } from "../../types";
 import { getUserBehaviorStats } from "../../services/userBehaviorAnalytics";
-import { getPlatformHealthStats } from "../../services/platformHealthService";
 
 interface UnifiedAnalyticsDashboardProps {
   className?: string;
 }
 
-type AnalyticsTab = "overview" | "user-behavior" | "platform-health" | "network-health";
+type AnalyticsTab = "overview" | "user-behavior" | "network-health";
 
 const TIME_RANGES: { value: TimeRange; label: string }[] = [
   { value: "1h", label: "1h" },
@@ -48,7 +45,6 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
 
   // State for overview data
   const [userStats, setUserStats] = useState<UserBehaviorStats | null>(null);
-  const [platformStats, setPlatformStats] = useState<PlatformHealthStats | null>(null);
   const [overviewLoading, setOverviewLoading] = useState(false);
 
   // Fetch overview data when time range changes
@@ -56,14 +52,9 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
     const loadOverviewData = async () => {
       setOverviewLoading(true);
       try {
-        const [userData, platformData] = await Promise.all([
-          getUserBehaviorStats(globalTimeRange),
-          getPlatformHealthStats(globalTimeRange),
-        ]);
+        const userData = await getUserBehaviorStats(globalTimeRange);
         console.log("Fetched user stats:", userData);
-        console.log("Fetched platform stats:", platformData);
         setUserStats(userData);
-        setPlatformStats(platformData);
       } catch (err) {
         console.error("Error loading overview data:", err);
       } finally {
@@ -165,11 +156,17 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
 
         <div className="bg-space-800 rounded-xl p-6 border border-space-700">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-slate-400 text-sm">System Status</span>
-            <Server className="w-4 h-4 text-green-500" />
+            <span className="text-slate-400 text-sm">Avg Session</span>
+            <TrendingUp className="w-4 h-4 text-green-500" />
           </div>
-          <div className="text-3xl font-bold text-green-400">Healthy</div>
-          <div className="text-xs text-slate-500 mt-1">All services operational</div>
+          <div className="text-3xl font-bold text-white">
+            {overviewLoading
+              ? "--"
+              : userStats
+                ? `${userStats.sessions.avgDuration.toFixed(1)}s`
+                : "--"}
+          </div>
+          <div className="text-xs text-slate-500 mt-1">Average visit duration</div>
         </div>
 
         <div className="bg-space-800 rounded-xl p-6 border border-space-700">
@@ -205,39 +202,28 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
         </button>
 
         <button
-          onClick={() => handleTabChange("platform-health")}
-          className="p-6 bg-space-800 rounded-xl border border-space-700 hover:border-green-500/50 transition-all text-left"
+          onClick={() => handleTabChange("network-health")}
+          className="p-6 bg-space-800 rounded-xl border border-space-700 hover:border-blue-500/50 transition-all text-left"
         >
           <div className="flex items-center justify-between mb-2">
-            <div className="font-semibold text-white">Platform Health</div>
-            <Server className="text-green-500" size={20} />
+            <div className="font-semibold text-white">Network Health</div>
+            <Activity className="text-blue-500" size={20} />
           </div>
-          <div className="text-sm text-slate-400">Monitor API performance and system status</div>
-          <div className="mt-3 flex items-center text-sm text-green-400">
+          <div className="text-sm text-slate-400">Real-time Dogechain blockchain metrics</div>
+          <div className="mt-3 flex items-center text-sm text-blue-400">
             View Details <ArrowRight size={16} />
           </div>
         </button>
       </div>
 
       {/* Mini Preview Sections */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-space-800 rounded-xl border border-space-700 p-6">
-          <h3 className="text-lg font-semibold text-white mb-4">Quick User Behavior</h3>
-          <UserBehaviorAnalytics
-            className="border-none p-0"
-            externalStats={userStats}
-            externalLoading={overviewLoading}
-          />
-        </div>
-
-        <div className="bg-space-800 rounded-xl border border-space-700 p-6">
-          <h3 className="text-lg font-semibold text-white mb-4">Quick Platform Health</h3>
-          <PlatformHealth
-            className="border-none p-0"
-            externalStats={platformStats}
-            externalLoading={overviewLoading}
-          />
-        </div>
+      <div className="bg-space-800 rounded-xl border border-space-700 p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">Quick User Behavior</h3>
+        <UserBehaviorAnalytics
+          className="border-none p-0"
+          externalStats={userStats}
+          externalLoading={overviewLoading}
+        />
       </div>
     </div>
   );
@@ -245,23 +231,22 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Header */}
-      <div className="flex flex-col items-center lg:flex-row lg:items-center lg:justify-between gap-4">
-        <div>
+      <div className="flex flex-col items-center gap-6">
+        {/* Title */}
+        <div className="text-center">
           <h1 className="text-3xl font-bold text-white">Unified Analytics</h1>
-          <p className="text-slate-400">
-            Comprehensive dashboard for user behavior and platform health
-          </p>
+          <p className="text-slate-400">Real-time metrics for user behavior and network health</p>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col items-center justify-center gap-2 sm:gap-3 w-full lg:w-auto mx-auto">
+        {/* Action Buttons - Centered for all screen sizes */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           {/* Time Range Selector */}
           <div className="inline-flex items-center justify-center gap-1 bg-space-800 rounded-lg p-1 border border-space-700 overflow-x-auto">
             {TIME_RANGES.map((range) => (
               <button
                 key={range.value}
                 onClick={() => setGlobalTimeRange(range.value)}
-                className={`flex-none whitespace-nowrap px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors ${
+                className={`flex-none whitespace-nowrap px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
                   globalTimeRange === range.value
                     ? "bg-purple-500 text-white"
                     : "text-slate-400 hover:text-white hover:bg-space-700"
@@ -276,10 +261,10 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
           <button
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="flex-shrink-0 px-3 py-1.5 sm:px-4 sm:py-2 bg-space-800 border border-space-700 rounded-lg text-xs sm:text-sm font-medium text-slate-400 hover:text-white hover:bg-space-700 transition-colors flex items-center justify-center gap-1.5 sm:gap-2 disabled:opacity-50"
+            className="px-4 py-2 bg-space-800 border border-space-700 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-space-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
           >
             <RefreshCw size={14} className={isRefreshing ? "animate-spin" : ""} />
-            <span className="hidden sm:inline">Refresh</span>
+            Refresh
           </button>
         </div>
       </div>
@@ -314,19 +299,6 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
             </div>
           </button>
           <button
-            onClick={() => handleTabChange("platform-health")}
-            className={`px-4 sm:px-6 py-2.5 font-medium rounded-lg transition-all relative whitespace-nowrap focus-ring ${
-              activeTab === "platform-health"
-                ? "bg-purple-500 text-white"
-                : "text-slate-400 hover:text-white hover:bg-space-700"
-            }`}
-          >
-            <div className="flex items-center gap-2">
-              <Server size={16} />
-              <span>Platform Health</span>
-            </div>
-          </button>
-          <button
             onClick={() => handleTabChange("network-health")}
             className={`px-4 sm:px-6 py-2.5 font-medium rounded-lg transition-all relative whitespace-nowrap focus-ring ${
               activeTab === "network-health"
@@ -347,9 +319,6 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
         {activeTab === "overview" && renderOverviewTab()}
         {activeTab === "user-behavior" && (
           <UserBehaviorAnalytics externalStats={userStats} externalLoading={overviewLoading} />
-        )}
-        {activeTab === "platform-health" && (
-          <PlatformHealth externalStats={platformStats} externalLoading={overviewLoading} />
         )}
         {activeTab === "network-health" && <NetworkHealth />}
       </div>

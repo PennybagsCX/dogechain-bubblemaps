@@ -15,15 +15,21 @@ import { PlatformHealthStats, TimeRange } from "../types";
 
 /**
  * Get platform health statistics for a time range
+ *
+ * NOTE: This returns simulated data for demonstration purposes.
+ * In production, this would aggregate real metrics from monitoring systems.
+ * The platform does not currently track API performance metrics.
  */
 export async function getPlatformHealthStats(timeRange: TimeRange): Promise<PlatformHealthStats> {
-  // Return realistic stub data
-  // In production, this would aggregate real metrics from monitoring systems
+  const now = Date.now();
 
+  // Return realistic simulated data for demonstration
+  // In a production environment, this would query actual monitoring systems
   const multiplier = getTimeRangeMultiplier(timeRange);
 
   return {
     period: timeRange,
+    lastUpdated: now,
     apis: {
       performance: {
         GeckoTerminal: {
@@ -47,22 +53,22 @@ export async function getPlatformHealthStats(timeRange: TimeRange): Promise<Plat
         GeckoTerminal: {
           status: "operational",
           latency: 350,
-          lastCheck: Date.now(),
+          lastCheck: now,
         },
         DexScreener: {
           status: "operational",
           latency: 280,
-          lastCheck: Date.now(),
+          lastCheck: now,
         },
         Blockscout: {
           status: "operational",
           latency: 450,
-          lastCheck: Date.now(),
+          lastCheck: now,
         },
         DogechainRPC: {
           status: "operational",
           latency: 150,
-          lastCheck: Date.now(),
+          lastCheck: now,
         },
       },
     },

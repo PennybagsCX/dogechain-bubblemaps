@@ -5,7 +5,7 @@
  * Includes Overview, User Behavior, Platform Health, and Network Health tabs.
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   LayoutDashboard,
   Users,
@@ -15,11 +15,16 @@ import {
   RefreshCw,
   BarChart3,
   Activity,
+  Search,
+  Target,
+  TrendingUp,
 } from "lucide-react";
 import { UserBehaviorAnalytics } from "./UserBehaviorAnalytics";
 import { PlatformHealth } from "./PlatformHealth";
 import { NetworkHealth } from "../NetworkHealth";
-import { TimeRange } from "../../types";
+import { TimeRange, UserBehaviorStats, PlatformHealthStats } from "../../types";
+import { getUserBehaviorStats } from "../../services/userBehaviorAnalytics";
+import { getPlatformHealthStats } from "../../services/platformHealthService";
 
 interface UnifiedAnalyticsDashboardProps {
   className?: string;
@@ -43,7 +48,33 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastRefresh, setLastRefresh] = useState<Date | null>(new Date());
 
-  // Handle tab change
+  // State for overview data
+  const [userStats, setUserStats] = useState<UserBehaviorStats | null>(null);
+  const [platformStats, setPlatformStats] = useState<PlatformHealthStats | null>(null);
+  const [overviewLoading, setOverviewLoading] = useState(false);
+
+  // Fetch overview data when time range changes
+  useEffect(() => {
+    const loadOverviewData = async () => {
+      setOverviewLoading(true);
+      try {
+        const [userData, platformData] = await Promise.all([
+          getUserBehaviorStats(globalTimeRange),
+          getPlatformHealthStats(globalTimeRange),
+        ]);
+        console.log("Fetched user stats:", userData);
+        console.log("Fetched platform stats:", platformData);
+        setUserStats(userData);
+        setPlatformStats(platformData);
+      } catch (err) {
+        console.error("Error loading overview data:", err);
+      } finally {
+        setOverviewLoading(false);
+      }
+    };
+
+    loadOverviewData();
+  }, [globalTimeRange]);
   const handleTabChange = (tab: AnalyticsTab) => {
     setActiveTab(tab);
   };
@@ -56,20 +87,96 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
     setTimeout(() => setIsRefreshing(false), 500);
   };
 
+  const formatNumber = (num: number): string => {
+    if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
+    if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
+    return Math.round(num).toString();
+  };
+
+  const formatTimeAgo = (date: Date | null): string => {
+    if (!date) return "--";
+    const now = Date.now();
+    const diffMs = now - date.getTime();
+    const diffSecs = Math.floor(diffMs / 1000);
+    const diffMins = Math.floor(diffSecs / 60);
+
+    if (diffSecs < 60) return `${diffSecs}s ago`;
+    if (diffMins < 60) return `${diffMins}m ago`;
+    if (diffMins < 1440) return `${Math.floor(diffMins / 60)}h ago`;
+    return `${Math.floor(diffMins / 1440)}d ago`;
+  };
+
+  // Force re-render every minute to update "ago" time
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => setTick((t) => t + 1), 60000);
+    return () => clearInterval(interval);
+  }, []);
+
   // Render overview tab content
   const renderOverviewTab = () => (
     <div className="space-y-6">
-      {/* Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Overview Cards - Row 1 */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-space-800 rounded-xl p-6 border border-space-700">
           <div className="flex items-center justify-between mb-2">
             <span className="text-slate-400 text-sm">Active Users</span>
             <Users className="w-4 h-4 text-purple-500" />
           </div>
-          <div className="text-3xl font-bold text-white">--</div>
+          <div className="text-3xl font-bold text-white">
+            {overviewLoading ? "--" : userStats ? formatNumber(userStats.sessions.active) : "--"}
+          </div>
           <div className="text-xs text-slate-500 mt-1">
             Last {TIME_RANGES.find((r) => r.value === globalTimeRange)?.label}
           </div>
+        </div>
+
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-slate-400 text-sm">Total Searches</span>
+            <Search className="w-4 h-4 text-blue-500" />
+          </div>
+          <div className="text-3xl font-bold text-white">
+            {overviewLoading ? "--" : userStats ? formatNumber(userStats.searches.total) : "--"}
+          </div>
+          <div className="text-xs text-slate-500 mt-1">
+            Last {TIME_RANGES.find((r) => r.value === globalTimeRange)?.label}
+          </div>
+        </div>
+
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-slate-400 text-sm">Search Success</span>
+            <Target className="w-4 h-4 text-green-500" />
+          </div>
+          <div className="text-3xl font-bold text-white">
+            {overviewLoading
+              ? "--"
+              : userStats
+                ? `${(userStats.searches.successRate * 100).toFixed(1)}%`
+                : "--"}
+          </div>
+          <div className="text-xs text-slate-500 mt-1">
+            {overviewLoading
+              ? ""
+              : userStats && userStats.searches.total > 0
+                ? `${formatNumber(Math.round(userStats.searches.total * userStats.searches.successRate))} successful`
+                : "No searches"}
+          </div>
+        </div>
+      </div>
+
+      {/* Overview Cards - Row 2 */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-slate-400 text-sm">Avg Results</span>
+            <TrendingUp className="w-4 h-4 text-purple-500" />
+          </div>
+          <div className="text-3xl font-bold text-white">
+            {overviewLoading ? "--" : userStats ? userStats.searches.avgResults.toFixed(1) : "--"}
+          </div>
+          <div className="text-xs text-slate-500 mt-1">Per search</div>
         </div>
 
         <div className="bg-space-800 rounded-xl p-6 border border-space-700">
@@ -86,19 +193,14 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
             <span className="text-slate-400 text-sm">Data Points</span>
             <BarChart3 className="w-4 h-4 text-blue-500" />
           </div>
-          <div className="text-3xl font-bold text-white">--</div>
-          <div className="text-xs text-slate-500 mt-1">Analytics collected</div>
-        </div>
-
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-slate-400 text-sm">Last Refresh</span>
-            <Clock className="w-4 h-4 text-yellow-500" />
-          </div>
           <div className="text-3xl font-bold text-white">
-            {lastRefresh ? lastRefresh.toLocaleTimeString() : "--"}
+            {overviewLoading
+              ? "--"
+              : userStats
+                ? formatNumber(userStats.sessions.total + userStats.searches.total)
+                : "--"}
           </div>
-          <div className="text-xs text-slate-500 mt-1">Just now</div>
+          <div className="text-xs text-slate-500 mt-1">Analytics collected</div>
         </div>
       </div>
 
@@ -137,12 +239,20 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-space-800 rounded-xl border border-space-700 p-6">
           <h3 className="text-lg font-semibold text-white mb-4">Quick User Behavior</h3>
-          <UserBehaviorAnalytics className="border-none p-0" />
+          <UserBehaviorAnalytics
+            className="border-none p-0"
+            externalStats={userStats}
+            externalLoading={overviewLoading}
+          />
         </div>
 
         <div className="bg-space-800 rounded-xl border border-space-700 p-6">
           <h3 className="text-lg font-semibold text-white mb-4">Quick Platform Health</h3>
-          <PlatformHealth className="border-none p-0" />
+          <PlatformHealth
+            className="border-none p-0"
+            externalStats={platformStats}
+            externalLoading={overviewLoading}
+          />
         </div>
       </div>
     </div>
@@ -162,29 +272,27 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
         {/* Action Buttons */}
         <div className="flex flex-col items-center justify-center gap-2 sm:gap-3 w-full lg:w-auto mx-auto">
           {/* Time Range Selector */}
-          <div className="flex w-full justify-center">
-            <div className="inline-flex items-center gap-1 bg-space-800 rounded-lg p-1 border border-space-700 overflow-x-auto justify-center mx-auto">
-              {TIME_RANGES.map((range) => (
-                <button
-                  key={range.value}
-                  onClick={() => setGlobalTimeRange(range.value)}
-                  className={`flex-none whitespace-nowrap px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors ${
-                    globalTimeRange === range.value
-                      ? "bg-purple-500 text-white"
-                      : "text-slate-400 hover:text-white hover:bg-space-700"
-                  }`}
-                >
-                  {range.label}
-                </button>
-              ))}
-            </div>
+          <div className="inline-flex items-center justify-center gap-1 bg-space-800 rounded-lg p-1 border border-space-700 overflow-x-auto">
+            {TIME_RANGES.map((range) => (
+              <button
+                key={range.value}
+                onClick={() => setGlobalTimeRange(range.value)}
+                className={`flex-none whitespace-nowrap px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors ${
+                  globalTimeRange === range.value
+                    ? "bg-purple-500 text-white"
+                    : "text-slate-400 hover:text-white hover:bg-space-700"
+                }`}
+              >
+                {range.label}
+              </button>
+            ))}
           </div>
 
           {/* Refresh Button */}
           <button
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="flex-shrink-0 px-3 py-1.5 sm:px-4 sm:py-2 bg-space-800 border border-space-700 rounded-lg text-xs sm:text-sm font-medium text-slate-400 hover:text-white hover:bg-space-700 transition-colors flex items-center justify-center gap-1.5 sm:gap-2 disabled:opacity-50 mx-auto"
+            className="flex-shrink-0 px-3 py-1.5 sm:px-4 sm:py-2 bg-space-800 border border-space-700 rounded-lg text-xs sm:text-sm font-medium text-slate-400 hover:text-white hover:bg-space-700 transition-colors flex items-center justify-center gap-1.5 sm:gap-2 disabled:opacity-50"
           >
             <RefreshCw size={14} className={isRefreshing ? "animate-spin" : ""} />
             <span className="hidden sm:inline">Refresh</span>
@@ -253,8 +361,12 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
       {/* Tab Content */}
       <div key={`${activeTab}-${globalTimeRange}-${isRefreshing}`}>
         {activeTab === "overview" && renderOverviewTab()}
-        {activeTab === "user-behavior" && <UserBehaviorAnalytics />}
-        {activeTab === "platform-health" && <PlatformHealth />}
+        {activeTab === "user-behavior" && (
+          <UserBehaviorAnalytics externalStats={userStats} externalLoading={overviewLoading} />
+        )}
+        {activeTab === "platform-health" && (
+          <PlatformHealth externalStats={platformStats} externalLoading={overviewLoading} />
+        )}
         {activeTab === "network-health" && <NetworkHealth />}
       </div>
     </div>

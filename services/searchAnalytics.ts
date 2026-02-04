@@ -81,11 +81,6 @@ export async function trackSearch(
       timestamp: Date.now(),
     };
 
-    // Skip tracking if no results (not a useful search event)
-    if (results.length === 0) {
-      return;
-    }
-
     // Update session stats
     if (currentSession) {
       currentSession.searchCount++;

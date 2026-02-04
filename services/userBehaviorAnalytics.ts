@@ -193,9 +193,13 @@ export async function getUserBehaviorStats(timeRange: TimeRange): Promise<UserBe
     const totalSessions = sessions.size;
     const avgDuration = totalSessions > 0 ? totalSessionDuration / totalSessions / 1000 / 60 : 0;
 
-    // Return realistic stub data if no real data
+    // Return zeros if no real data (no fake numbers)
     if (totalSessions === 0) {
-      return getStubUserBehaviorStats(timeRange);
+      return {
+        period: timeRange,
+        sessions: { total: 0, active: 0, avgDuration: 0 },
+        searches: { total: 0, successRate: 0, avgResults: 0 },
+      };
     }
 
     return {
@@ -212,8 +216,12 @@ export async function getUserBehaviorStats(timeRange: TimeRange): Promise<UserBe
       },
     };
   } catch {
-    // Return stub data on error
-    return getStubUserBehaviorStats(timeRange);
+    // Return empty stats on error (not stub data)
+    return {
+      period: timeRange,
+      sessions: { total: 0, active: 0, avgDuration: 0 },
+      searches: { total: 0, successRate: 0, avgResults: 0 },
+    };
   }
 }
 

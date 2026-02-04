@@ -509,6 +509,7 @@ export interface HealthStatus {
 
 export interface PlatformHealthStats {
   period: TimeRange;
+  lastUpdated: number;
   apis: {
     performance: Record<string, { avgLatency: number; successRate: number }>;
     status: Record<string, HealthStatus>;

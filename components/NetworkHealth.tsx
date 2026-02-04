@@ -110,7 +110,12 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Network Health</h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-white">Network Health</h2>
+            <span className="px-2 py-0.5 text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30 rounded-full">
+              Live Data
+            </span>
+          </div>
           <p className="text-slate-400">Real-time Dogechain metrics</p>
         </div>
         <div className={`px-4 py-2 rounded-lg border ${getCongestionColor(stats.congestion)}`}>

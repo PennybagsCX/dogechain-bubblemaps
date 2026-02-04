@@ -24,6 +24,8 @@ import { getPlatformHealthStats } from "../../services/platformHealthService";
 
 interface PlatformHealthProps {
   className?: string;
+  externalStats?: PlatformHealthStats | null;
+  externalLoading?: boolean;
 }
 
 const TIME_RANGES: { value: TimeRange; label: string }[] = [
@@ -34,24 +36,35 @@ const TIME_RANGES: { value: TimeRange; label: string }[] = [
   { value: "all", label: "All" },
 ];
 
-export const PlatformHealth: React.FC<PlatformHealthProps> = ({ className = "" }) => {
-  const [stats, setStats] = useState<PlatformHealthStats | null>(null);
-  const [loading, setLoading] = useState(true);
+export const PlatformHealth: React.FC<PlatformHealthProps> = ({
+  className = "",
+  externalStats,
+  externalLoading,
+}) => {
+  const [internalStats, setInternalStats] = useState<PlatformHealthStats | null>(null);
+  const [internalLoading, setInternalLoading] = useState(true);
   const [selectedTimeRange, setSelectedTimeRange] = useState<TimeRange>("24h");
+
+  // Use external stats if provided, otherwise use internal
+  const stats = externalStats !== undefined ? externalStats : internalStats;
+  const loading = externalLoading !== undefined ? externalLoading : internalLoading;
 
   useEffect(() => {
     loadStats();
   }, [selectedTimeRange]);
 
   const loadStats = async () => {
+    // Skip fetching if external stats are provided
+    if (externalStats !== undefined) return;
+
     try {
-      setLoading(true);
+      setInternalLoading(true);
       const data = await getPlatformHealthStats(selectedTimeRange);
-      setStats(data);
+      setInternalStats(data);
     } catch (err) {
       console.error("Error loading platform health stats:", err);
     } finally {
-      setLoading(false);
+      setInternalLoading(false);
     }
   };
 
@@ -73,6 +86,18 @@ export const PlatformHealth: React.FC<PlatformHealthProps> = ({ className = "" }
 
   const formatPercent = (decimal: number): string => {
     return `${(decimal * 100).toFixed(1)}%`;
+  };
+
+  const formatTimeAgo = (timestamp: number): string => {
+    const now = Date.now();
+    const diffMs = now - timestamp;
+    const diffSecs = Math.floor(diffMs / 1000);
+    const diffMins = Math.floor(diffSecs / 60);
+
+    if (diffSecs < 60) return `${diffSecs}s ago`;
+    if (diffMins < 60) return `${diffMins}m ago`;
+    if (diffMins < 1440) return `${Math.floor(diffMins / 60)}h ago`;
+    return `${Math.floor(diffMins / 1440)}d ago`;
   };
 
   if (loading) {
@@ -109,28 +134,35 @@ export const PlatformHealth: React.FC<PlatformHealthProps> = ({ className = "" }
   return (
     <div className={`space-y-4 ${className}`}>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
-          <h3 className="text-lg font-semibold text-white">Platform Health</h3>
+          <div className="flex items-center gap-2">
+            <h3 className="text-lg font-semibold text-white">Platform Health</h3>
+            <span className="px-2 py-0.5 text-xs font-medium bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 rounded-full">
+              Simulated Data
+            </span>
+          </div>
           <p className="text-sm text-slate-400">API performance and system status</p>
         </div>
 
-        {/* Time Range Selector */}
-        <div className="flex flex-1 min-w-0 items-center gap-2 bg-space-800 rounded-lg p-1 border border-space-700 w-full overflow-x-auto">
-          {TIME_RANGES.map((range) => (
-            <button
-              key={range.value}
-              onClick={() => setSelectedTimeRange(range.value)}
-              className={`flex-none whitespace-nowrap px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors ${
-                selectedTimeRange === range.value
-                  ? "bg-purple-500 text-white"
-                  : "text-slate-400 hover:text-white hover:bg-space-700"
-              }`}
-            >
-              {range.label}
-            </button>
-          ))}
-        </div>
+        {/* Time Range Selector - only show if no external stats */}
+        {externalStats === undefined && (
+          <div className="flex flex-1 min-w-0 items-center gap-2 bg-space-800 rounded-lg p-1 border border-space-700 w-full overflow-x-auto">
+            {TIME_RANGES.map((range) => (
+              <button
+                key={range.value}
+                onClick={() => setSelectedTimeRange(range.value)}
+                className={`flex-none whitespace-nowrap px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors ${
+                  selectedTimeRange === range.value
+                    ? "bg-purple-500 text-white"
+                    : "text-slate-400 hover:text-white hover:bg-space-700"
+                }`}
+              >
+                {range.label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Key Metrics */}
@@ -258,7 +290,7 @@ export const PlatformHealth: React.FC<PlatformHealthProps> = ({ className = "" }
           <div>
             <div className="text-sm text-slate-400">Last Updated</div>
             <div className="text-xl font-semibold text-white">
-              <Clock size={20} className="inline" />
+              {formatTimeAgo(stats.lastUpdated)}
             </div>
           </div>
         </div>

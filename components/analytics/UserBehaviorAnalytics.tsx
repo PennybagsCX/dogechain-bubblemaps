@@ -14,6 +14,8 @@ import { getUserBehaviorStats } from "../../services/userBehaviorAnalytics";
 
 interface UserBehaviorAnalyticsProps {
   className?: string;
+  externalStats?: UserBehaviorStats | null;
+  externalLoading?: boolean;
 }
 
 const TIME_RANGES: { value: TimeRange; label: string }[] = [
@@ -24,24 +26,35 @@ const TIME_RANGES: { value: TimeRange; label: string }[] = [
   { value: "all", label: "All Time" },
 ];
 
-export const UserBehaviorAnalytics: React.FC<UserBehaviorAnalyticsProps> = ({ className = "" }) => {
-  const [stats, setStats] = useState<UserBehaviorStats | null>(null);
-  const [loading, setLoading] = useState(true);
+export const UserBehaviorAnalytics: React.FC<UserBehaviorAnalyticsProps> = ({
+  className = "",
+  externalStats,
+  externalLoading,
+}) => {
+  const [internalStats, setInternalStats] = useState<UserBehaviorStats | null>(null);
+  const [internalLoading, setInternalLoading] = useState(true);
   const [selectedTimeRange, setSelectedTimeRange] = useState<TimeRange>("7d");
+
+  // Use external stats if provided, otherwise use internal
+  const stats = externalStats !== undefined ? externalStats : internalStats;
+  const loading = externalLoading !== undefined ? externalLoading : internalLoading;
 
   useEffect(() => {
     loadStats();
   }, [selectedTimeRange]);
 
   const loadStats = async () => {
+    // Skip fetching if external stats are provided
+    if (externalStats !== undefined) return;
+
     try {
-      setLoading(true);
+      setInternalLoading(true);
       const data = await getUserBehaviorStats(selectedTimeRange);
-      setStats(data);
+      setInternalStats(data);
     } catch (err) {
       console.error("Error loading user behavior stats:", err);
     } finally {
-      setLoading(false);
+      setInternalLoading(false);
     }
   };
 
@@ -85,28 +98,35 @@ export const UserBehaviorAnalytics: React.FC<UserBehaviorAnalyticsProps> = ({ cl
   return (
     <div className={`space-y-4 ${className}`}>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
-          <h3 className="text-lg font-semibold text-white">User Behavior</h3>
+          <div className="flex items-center gap-2">
+            <h3 className="text-lg font-semibold text-white">User Behavior</h3>
+            <span className="px-2 py-0.5 text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full">
+              Local Data
+            </span>
+          </div>
           <p className="text-sm text-slate-400">Track sessions, searches, and user flows</p>
         </div>
 
-        {/* Time Range Selector */}
-        <div className="flex items-center gap-2 bg-space-800 rounded-lg p-1 border border-space-700 w-full overflow-x-auto">
-          {TIME_RANGES.map((range) => (
-            <button
-              key={range.value}
-              onClick={() => setSelectedTimeRange(range.value)}
-              className={`flex-none whitespace-nowrap px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors ${
-                selectedTimeRange === range.value
-                  ? "bg-purple-500 text-white"
-                  : "text-slate-400 hover:text-white hover:bg-space-700"
-              }`}
-            >
-              {range.label}
-            </button>
-          ))}
-        </div>
+        {/* Time Range Selector - only show if no external stats */}
+        {externalStats === undefined && (
+          <div className="flex items-center gap-2 bg-space-800 rounded-lg p-1 border border-space-700 w-full overflow-x-auto">
+            {TIME_RANGES.map((range) => (
+              <button
+                key={range.value}
+                onClick={() => setSelectedTimeRange(range.value)}
+                className={`flex-none whitespace-nowrap px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors ${
+                  selectedTimeRange === range.value
+                    ? "bg-purple-500 text-white"
+                    : "text-slate-400 hover:text-white hover:bg-space-700"
+                }`}
+              >
+                {range.label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Key Metrics */}

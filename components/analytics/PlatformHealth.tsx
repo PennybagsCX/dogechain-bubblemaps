@@ -9,16 +9,7 @@
  */
 
 import React, { useState, useEffect } from "react";
-import {
-  Server,
-  Activity,
-  Database,
-  Zap,
-  CheckCircle,
-  XCircle,
-  AlertTriangle,
-  Clock,
-} from "lucide-react";
+import { Server, Activity, Database, Zap, CheckCircle, XCircle, AlertTriangle } from "lucide-react";
 import { TimeRange, PlatformHealthStats } from "../../types";
 import { getPlatformHealthStats } from "../../services/platformHealthService";
 

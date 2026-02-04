@@ -226,27 +226,6 @@ export async function getUserBehaviorStats(timeRange: TimeRange): Promise<UserBe
 }
 
 /**
- * Get stub user behavior stats for demonstration
- */
-function getStubUserBehaviorStats(timeRange: TimeRange): UserBehaviorStats {
-  const multiplier = getTimeRangeMultiplier(timeRange);
-
-  return {
-    period: timeRange,
-    sessions: {
-      total: Math.floor(150 * multiplier),
-      active: Math.floor(105 * multiplier),
-      avgDuration: 8,
-    },
-    searches: {
-      total: Math.floor(450 * multiplier),
-      successRate: 0.87,
-      avgResults: 12.5,
-    },
-  };
-}
-
-/**
  * Convert time range to milliseconds
  */
 function getTimeRangeMs(timeRange: TimeRange): number {
@@ -261,23 +240,5 @@ function getTimeRangeMs(timeRange: TimeRange): number {
       return 30 * 24 * 60 * 60 * 1000;
     case "all":
       return 365 * 24 * 60 * 60 * 1000; // 1 year
-  }
-}
-
-/**
- * Get multiplier for stub data based on time range
- */
-function getTimeRangeMultiplier(timeRange: TimeRange): number {
-  switch (timeRange) {
-    case "1h":
-      return 0.01;
-    case "24h":
-      return 1;
-    case "7d":
-      return 7;
-    case "30d":
-      return 30;
-    case "all":
-      return 90;
   }
 }

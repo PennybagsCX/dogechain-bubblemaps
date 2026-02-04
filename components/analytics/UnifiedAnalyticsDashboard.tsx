@@ -11,7 +11,6 @@ import {
   Users,
   Server,
   ArrowRight,
-  Clock,
   RefreshCw,
   BarChart3,
   Activity,
@@ -46,7 +45,6 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
   const [activeTab, setActiveTab] = useState<AnalyticsTab>("overview");
   const [globalTimeRange, setGlobalTimeRange] = useState<TimeRange>("7d");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [lastRefresh, setLastRefresh] = useState<Date | null>(new Date());
 
   // State for overview data
   const [userStats, setUserStats] = useState<UserBehaviorStats | null>(null);
@@ -82,7 +80,6 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
   // Handle manual refresh
   const handleRefresh = () => {
     setIsRefreshing(true);
-    setLastRefresh(new Date());
     // Trigger re-render of child components
     setTimeout(() => setIsRefreshing(false), 500);
   };
@@ -91,19 +88,6 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
     if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
     if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
     return Math.round(num).toString();
-  };
-
-  const formatTimeAgo = (date: Date | null): string => {
-    if (!date) return "--";
-    const now = Date.now();
-    const diffMs = now - date.getTime();
-    const diffSecs = Math.floor(diffMs / 1000);
-    const diffMins = Math.floor(diffSecs / 60);
-
-    if (diffSecs < 60) return `${diffSecs}s ago`;
-    if (diffMins < 60) return `${diffMins}m ago`;
-    if (diffMins < 1440) return `${Math.floor(diffMins / 60)}h ago`;
-    return `${Math.floor(diffMins / 1440)}d ago`;
   };
 
   // Force re-render every minute to update "ago" time

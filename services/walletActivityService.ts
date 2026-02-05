@@ -28,7 +28,6 @@ import {
   loadAllTransactionsCache,
   saveAllTransactionsCache,
 } from "./db";
-import { getWalletActivityWorkerClient } from "./walletActivityWorkerClient";
 
 // =====================================================
 // Time Range Utilities
@@ -138,21 +137,9 @@ export function classifyWalletBehavior(
 export async function buildActivityTimeline(
   transactions: Transaction[],
   timeRange: TimeRange,
-  holderAddresses: Set<string>,
-  useWorker = true
+  holderAddresses: Set<string>
 ): Promise<ActivityTimelinePoint[]> {
-  // Try worker first if enabled
-  if (useWorker) {
-    try {
-      const workerClient = getWalletActivityWorkerClient();
-      return await workerClient.buildActivityTimeline(transactions, timeRange, holderAddresses);
-    } catch (error) {
-      console.warn("[buildActivityTimeline] Worker failed, falling back to main thread:", error);
-      // Fall through to main thread implementation
-    }
-  }
-
-  // Main thread fallback (original implementation)
+  // Main thread implementation
   const cutoffTime = getTimeRangeFilter(timeRange);
   const filteredTxs = transactions.filter((tx) => tx.timestamp >= cutoffTime);
 
@@ -235,21 +222,9 @@ export async function buildActivityTimeline(
  */
 export async function calculateFlowPatterns(
   activities: WalletActivity[],
-  transactions: Transaction[],
-  useWorker = true
+  transactions: Transaction[]
 ): Promise<FlowPattern[]> {
-  // Try worker first if enabled
-  if (useWorker) {
-    try {
-      const workerClient = getWalletActivityWorkerClient();
-      return await workerClient.calculateFlowPatterns(activities, transactions);
-    } catch (error) {
-      console.warn("[calculateFlowPatterns] Worker failed, falling back to main thread:", error);
-      // Fall through to main thread implementation
-    }
-  }
-
-  // Main thread fallback (original implementation)
+  // Main thread implementation
   // Create address -> behavior mapping
   const addressToBehavior = new Map<string, WalletBehaviorType>();
   activities.forEach((activity) => {

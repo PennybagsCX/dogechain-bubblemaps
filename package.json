@@ -24,7 +24,8 @@
     "test:alert:scanning": "vitest run tests/alert-scanning.test.ts",
     "test:alert:trigger": "vitest run tests/trigger-detection.test.ts",
     "test:alert:integration": "vitest run tests/integration.test.ts",
-    "test:alert:all": "vitest run tests/alert-creation.test.ts tests/alert-scanning.test.ts tests/trigger-detection.test.ts tests/integration.test.ts"
+    "test:alert:all": "vitest run tests/alert-creation.test.ts tests/alert-scanning.test.ts tests/trigger-detection.test.ts tests/integration.test.ts",
+    "test:timeframes": "tsx test-timeframe-analytics.ts"
   },
   "dependencies": {
     "@google/genai": "^1.30.0",

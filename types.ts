@@ -74,6 +74,7 @@ export enum ViewState {
   DASHBOARD = "DASHBOARD",
   NETWORK_HEALTH = "NETWORK_HEALTH",
   DISTRIBUTION = "DISTRIBUTION",
+  WALLET_ACTIVITY = "WALLET_ACTIVITY",
   UNIFIED_ANALYTICS = "UNIFIED_ANALYTICS",
   ALERTS = "ALERTS",
 }
@@ -557,4 +558,138 @@ export interface AnalyticsExportData {
   timeRange: string;
   exportDate: string;
   data: any;
+}
+
+// =====================================================
+// Wallet Activity Analytics Types
+// =====================================================
+
+/**
+ * Wallet behavior classification for activity analytics
+ */
+export enum WalletBehaviorType {
+  WHALE = "WHALE", // Large holder
+  RETAIL = "RETAIL", // Small holder
+  SMART_MONEY = "SMART_MONEY", // Professional trader
+  HODLER = "HODLER", // Long-term holder
+  TRADER = "TRADER", // Active trader
+  SNIPER = "SNIPER", // Early buyer
+  UNKNOWN = "UNKNOWN",
+}
+
+/**
+ * Transaction type classification for activity analysis
+ */
+export enum TransactionType {
+  BUY = "BUY", // Token purchase
+  SELL = "SELL", // Token sale
+  TRANSFER = "TRANSFER", // Transfer between wallets
+  MINT = "MINT", // New tokens minted
+  BURN = "BURN", // Tokens burned
+}
+
+/**
+ * Individual wallet activity statistics
+ */
+export interface WalletActivity {
+  walletAddress: string;
+  label?: string;
+  behaviorType: WalletBehaviorType;
+
+  // Transaction metrics
+  totalTransactions: number;
+  buyCount: number;
+  sellCount: number;
+  transferCount: number;
+
+  // Volume metrics
+  totalBuyVolume: number;
+  totalSellVolume: number;
+  netVolume: number; // buy - sell
+
+  // Timing metrics
+  firstTransaction: number; // timestamp
+  lastTransaction: number; // timestamp
+  avgDaysBetweenTxs: number;
+  holdingPeriod: number; // days since first buy
+
+  // Balance metrics
+  currentBalance: number;
+  peakBalance: number;
+  lowestBalance: number;
+
+  // Classification flags
+  isWhale: boolean;
+  isActive: boolean;
+  isAccumulating: boolean; // Buying more
+  isDistributing: boolean; // Selling off
+}
+
+/**
+ * Aggregated wallet activity analytics for a token
+ */
+export interface WalletActivityStats {
+  period: TimeRange;
+  lastUpdated: number;
+
+  // Overall metrics
+  totalWallets: number;
+  activeWallets: number;
+  totalTransactions: number;
+  totalVolume: number;
+
+  // Behavior breakdown
+  behaviorDistribution: Record<WalletBehaviorType, number>;
+
+  // Transaction breakdown
+  transactionTypes: {
+    buys: number;
+    sells: number;
+    transfers: number;
+  };
+
+  // Top wallets
+  topBuyers: WalletActivity[];
+  topSellers: WalletActivity[];
+  topAccumulators: WalletActivity[];
+  topDistributors: WalletActivity[];
+
+  // Timeline data
+  activityTimeline: ActivityTimelinePoint[];
+
+  // Flow patterns
+  flowPatterns: FlowPattern[];
+}
+
+/**
+ * Timeline data point for activity charts
+ */
+export interface ActivityTimelinePoint {
+  timestamp: number;
+  date: string;
+  transactions: number;
+  volume: number;
+  activeWallets: number;
+  buys: number;
+  sells: number;
+}
+
+/**
+ * Flow pattern between wallet behavior clusters
+ */
+export interface FlowPattern {
+  fromCluster: WalletBehaviorType;
+  toCluster: WalletBehaviorType;
+  volume: number;
+  transactionCount: number;
+}
+
+/**
+ * Heatmap data for activity patterns by hour/day
+ */
+export interface ActivityHeatmapData {
+  dayOfWeek: number; // 0-6 (Sunday-Saturday)
+  hourOfDay: number; // 0-23
+  transactionCount: number;
+  volume: number;
 }

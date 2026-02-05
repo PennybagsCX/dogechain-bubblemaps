@@ -2,7 +2,16 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Dexie, { Table } from "dexie";
-import { AlertConfig, TriggeredEvent, Transaction, Token, ScanMetadata } from "../types";
+import {
+  AlertConfig,
+  TriggeredEvent,
+  Transaction,
+  Token,
+  ScanMetadata,
+  TimeRange,
+  Wallet,
+  WalletActivityStats,
+} from "../types";
 import { calculateSearchRelevance } from "./tokenSearchService";
 import { getApiUrl } from "../utils/api";
 
@@ -158,6 +167,42 @@ export interface DbApiMetric {
   timestamp: number; // When the API call was made
 }
 
+// Wallet Activity Analytics Cache (for fast timeframe switching)
+export interface DbWalletActivityCache {
+  tokenAddress: string; // Token contract address (primary key component)
+  timeRange: string; // Time range - "1h", "24h", "7d", "30d", "all" (primary key component)
+  data: any; // Serialized WalletActivityStats
+  cachedAt: number; // When this cache was created
+  expiresAt: number; // When this cache expires (5 minutes for most, 15 min for "all")
+}
+
+// Full transaction cache for wallet activity (enables instant timeframe filtering)
+export interface DbWalletTransactionCache {
+  tokenAddress: string; // Token contract address (primary key component)
+  walletAddress: string; // Wallet address (primary key component)
+  transactions: any; // Serialized Transaction[] (all transactions, no time filter)
+  cachedAt: number; // When this cache was created
+  expiresAt: number; // When this cache expires (15 minutes)
+}
+
+// All transactions cache for wallet activity (aggregated across all wallets for a token)
+export interface DbWalletAllTransactionsCache {
+  tokenAddress: string; // Token contract address (primary key)
+  transactions: any; // Serialized Transaction[] (all transactions for all wallets)
+  cachedAt: number; // When this cache was created
+  expiresAt: number; // When this cache expires (20 minutes)
+}
+
+// Analytics state cache for instant restoration when returning to Wallet Activity view
+export interface DbWalletAnalyticsStateCache {
+  tokenAddress: string; // Token contract address (primary key part 1)
+  timeRange: TimeRange; // Time range (primary key part 2)
+  stats: any; // Serialized WalletActivityStats
+  wallets: any; // Serialized Wallet[]
+  lastUpdated: number; // When this cache was created
+  expiresAt: number; // When this cache expires (15 minutes)
+}
+
 // Export data structure
 export interface DatabaseExport {
   version: string;
@@ -189,6 +234,10 @@ class DogeDatabase extends Dexie {
   tokenPopularity!: Table<any>; // Token popularity metrics
   searchAliases!: Table<DbSearchAlias>; // Learned search aliases
   apiMetrics!: Table<DbApiMetric>; // API performance metrics
+  walletActivityCache!: Table<DbWalletActivityCache>; // Wallet activity analytics cache
+  walletTransactionCache!: Table<DbWalletTransactionCache>; // Full transaction cache for time filtering
+  allTransactionsCache!: Table<DbWalletAllTransactionsCache>; // All transactions cache for token
+  analyticsStateCache!: Table<DbWalletAnalyticsStateCache>; // Analytics state for instant restoration
 
   constructor() {
     super("DogechainBubbleMapsDB");
@@ -640,6 +689,70 @@ class DogeDatabase extends Dexie {
           "&address, name, symbol, type, popularityScore, scanFrequency, holderCount, cachedAt, expiresAt",
         searchAliases: "++id, &alias, targetAddress, confidence, createdAt, confirmedCount",
         apiMetrics: "++id, sessionId, apiName, functionName, timestamp",
+      });
+
+      // Version 21: Add Wallet Activity Analytics cache for fast timeframe switching
+      this.version(21).stores({
+        alerts: "++id, alertId, walletAddress, name, type, createdAt",
+        alertStatuses: "alertId, &alertId",
+        triggeredEvents: "++id, &eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits",
+        walletScanCache: "walletAddress, scannedAt, expiresAt",
+        assetMetadataCache: "address, cachedAt, expiresAt",
+        walletForcedContracts: "walletAddress, updatedAt",
+        discoveredContracts: "++id, contractAddress, type, discoveredAt, lastSeenAt",
+        lpPairs: "++id, &pairAddress, factoryAddress, dexName, discoveredAt, lastVerifiedAt",
+        scanCheckpoints: "++id, phase, lastUpdated",
+        discoveredFactories: "++id, &address, name, status, discoveredAt",
+        tokenSearchIndex: "++id, &address, [type+symbol], [type+name], source, indexedAt",
+        abbreviationCache: "tokenAddress, &tokenAddress, generatedAt, expiresAt",
+        invertedIndex: "++id, &term, [termType+term], frequency",
+        searchCache: "++id, &queryKey, timestamp, hits",
+        phoneticIndex: "++id, &tokenAddress, phoneticKey, similarityCache, updatedAt",
+        trigramIndex: "++id, &tokenAddress, ngram, tokenSet",
+        searchAnalytics: "++id, &sessionId, timestamp, query, clickedAddress",
+        tokenPopularity:
+          "&tokenAddress, searchCount, clickCount, ctr, lastSearched, lastClicked, cachedAt, expiresAt, updatedAt",
+        learnedTokensCache:
+          "&address, name, symbol, type, popularityScore, scanFrequency, holderCount, cachedAt, expiresAt",
+        searchAliases: "++id, &alias, targetAddress, confidence, createdAt, confirmedCount",
+        apiMetrics: "++id, sessionId, apiName, functionName, timestamp",
+        walletActivityCache: "[tokenAddress+timeRange], cachedAt, expiresAt",
+        walletTransactionCache: "[tokenAddress+walletAddress], cachedAt, expiresAt",
+      });
+
+      // Version 22: Add all transactions cache for token (aggregated across all wallets)
+      this.version(22).stores({
+        alerts: "++id, alertId, walletAddress, name, type, createdAt",
+        alertStatuses: "alertId, &alertId",
+        triggeredEvents: "++id, &eventId, alertId, triggeredAt",
+        recentSearches: "++id, timestamp",
+        trendingAssets: "++id, symbol, address, hits",
+        walletScanCache: "walletAddress, scannedAt, expiresAt",
+        assetMetadataCache: "address, cachedAt, expiresAt",
+        walletForcedContracts: "walletAddress, updatedAt",
+        discoveredContracts: "++id, contractAddress, type, discoveredAt, lastSeenAt",
+        lpPairs: "++id, &pairAddress, factoryAddress, dexName, discoveredAt, lastVerifiedAt",
+        scanCheckpoints: "++id, phase, lastUpdated",
+        discoveredFactories: "++id, &address, name, status, discoveredAt",
+        tokenSearchIndex: "++id, &address, [type+symbol], [type+name], source, indexedAt",
+        abbreviationCache: "tokenAddress, &tokenAddress, generatedAt, expiresAt",
+        invertedIndex: "++id, &term, [termType+term], frequency",
+        searchCache: "++id, &queryKey, timestamp, hits",
+        phoneticIndex: "++id, &tokenAddress, phoneticKey, similarityCache, updatedAt",
+        trigramIndex: "++id, &tokenAddress, ngram, tokenSet",
+        searchAnalytics: "++id, &sessionId, timestamp, query, clickedAddress",
+        tokenPopularity:
+          "&tokenAddress, searchCount, clickCount, ctr, lastSearched, lastClicked, cachedAt, expiresAt, updatedAt",
+        learnedTokensCache:
+          "&address, name, symbol, type, popularityScore, scanFrequency, holderCount, cachedAt, expiresAt",
+        searchAliases: "++id, &alias, targetAddress, confidence, createdAt, confirmedCount",
+        apiMetrics: "++id, sessionId, apiName, functionName, timestamp",
+        walletActivityCache: "[tokenAddress+timeRange], cachedAt, expiresAt",
+        walletTransactionCache: "[tokenAddress+walletAddress], cachedAt, expiresAt",
+        allTransactionsCache: "tokenAddress, &tokenAddress, cachedAt, expiresAt",
+        analyticsStateCache: "[tokenAddress+timeRange], &tokenAddress, lastUpdated, expiresAt",
       });
     } catch {
       // Error handled silently
@@ -1923,5 +2036,306 @@ export async function saveAlertToServer(
   } catch (error) {
     console.error("[SYNC] Failed to save alert to server:", error);
     return false;
+  }
+}
+
+// =====================================================
+// Wallet Activity Analytics Cache Functions
+// =====================================================
+
+/**
+ * Save wallet activity analytics to cache
+ * Cache duration: 5 minutes for filtered time ranges, 15 minutes for "all"
+ */
+export async function saveWalletActivityCache(
+  tokenAddress: string,
+  timeRange: string,
+  data: any
+): Promise<void> {
+  try {
+    const now = Date.now();
+    const ttl = timeRange === "all" ? 15 * 60 * 1000 : 5 * 60 * 1000; // 15 min for "all", 5 min for others
+    const cacheEntry: DbWalletActivityCache = {
+      tokenAddress: tokenAddress.toLowerCase(),
+      timeRange,
+      data,
+      cachedAt: now,
+      expiresAt: now + ttl,
+    };
+
+    await db.walletActivityCache.put(cacheEntry);
+    console.log(`[Cache] Saved wallet activity cache for ${timeRange}`);
+  } catch (error) {
+    console.error("[Cache] Failed to save wallet activity cache:", error);
+  }
+}
+
+/**
+ * Load wallet activity analytics from cache
+ * Returns null if cache is expired or doesn't exist
+ */
+export async function loadWalletActivityCache(
+  tokenAddress: string,
+  timeRange: string
+): Promise<DbWalletActivityCache | null> {
+  try {
+    const cacheEntry = await db.walletActivityCache.get([tokenAddress.toLowerCase(), timeRange]);
+
+    if (!cacheEntry) {
+      return null;
+    }
+
+    // Check if cache is still valid
+    if (Date.now() > cacheEntry.expiresAt) {
+      // Remove expired entry
+      await db.walletActivityCache.delete([tokenAddress.toLowerCase(), timeRange]);
+      console.log(`[Cache] Expired cache for ${timeRange}`);
+      return null;
+    }
+
+    console.log(
+      `[Cache] HIT for wallet activity ${timeRange} (${Math.round((cacheEntry.expiresAt - Date.now()) / 1000)}s remaining)`
+    );
+    return cacheEntry;
+  } catch (error) {
+    console.error("[Cache] Failed to load wallet activity cache:", error);
+    return null;
+  }
+}
+
+/**
+ * Delete wallet activity analytics from cache
+ * Used to invalidate incomplete cached data
+ */
+export async function deleteWalletActivityCache(
+  tokenAddress: string,
+  timeRange: string
+): Promise<void> {
+  try {
+    await db.walletActivityCache.delete([tokenAddress.toLowerCase(), timeRange]);
+    console.log(`[Cache] Deleted wallet activity cache for ${timeRange}`);
+  } catch (error) {
+    console.error("[Cache] Failed to delete wallet activity cache:", error);
+  }
+}
+
+/**
+ * Save full wallet transactions to cache (for instant time-range filtering)
+ * Cache duration: 15 minutes
+ */
+export async function saveWalletTransactionsCache(
+  tokenAddress: string,
+  walletAddress: string,
+  transactions: any[]
+): Promise<void> {
+  try {
+    const now = Date.now();
+    const cacheEntry: DbWalletTransactionCache = {
+      tokenAddress: tokenAddress.toLowerCase(),
+      walletAddress: walletAddress.toLowerCase(),
+      transactions,
+      cachedAt: now,
+      expiresAt: now + 15 * 60 * 1000, // 15 minutes
+    };
+
+    await db.walletTransactionCache.put(cacheEntry);
+  } catch (error) {
+    console.error("[Cache] Failed to save wallet transactions cache:", error);
+  }
+}
+
+/**
+ * Load full wallet transactions from cache
+ * Returns null if cache is expired or doesn't exist
+ */
+export async function loadWalletTransactionsCache(
+  tokenAddress: string,
+  walletAddress: string
+): Promise<DbWalletTransactionCache | null> {
+  try {
+    const cacheEntry = await db.walletTransactionCache.get([
+      tokenAddress.toLowerCase(),
+      walletAddress.toLowerCase(),
+    ]);
+
+    if (!cacheEntry) {
+      return null;
+    }
+
+    // Check if cache is still valid
+    if (Date.now() > cacheEntry.expiresAt) {
+      // Remove expired entry
+      await db.walletTransactionCache.delete([
+        tokenAddress.toLowerCase(),
+        walletAddress.toLowerCase(),
+      ]);
+      return null;
+    }
+
+    return cacheEntry;
+  } catch (error) {
+    console.error("[Cache] Failed to load wallet transactions cache:", error);
+    return null;
+  }
+}
+
+/**
+ * Clear all wallet activity cache for a specific token
+ * Useful when token data might have changed significantly
+ */
+export async function clearWalletActivityCache(tokenAddress: string): Promise<void> {
+  try {
+    const tokenLower = tokenAddress.toLowerCase();
+    await db.walletActivityCache.where("tokenAddress").equals(tokenLower).delete();
+    await db.walletTransactionCache.where("tokenAddress").equals(tokenLower).delete();
+    console.log(`[Cache] Cleared all wallet activity cache for ${tokenLower}`);
+  } catch (error) {
+    console.error("[Cache] Failed to clear wallet activity cache:", error);
+  }
+}
+
+// =====================================================
+// All Transactions Cache Functions (Aggregated)
+// =====================================================
+
+/**
+ * Save all transactions for a token (aggregated across all wallets)
+ * Cache duration: 20 minutes
+ * This enables instant timeframe filtering without re-fetching from API
+ */
+export async function saveAllTransactionsCache(
+  tokenAddress: string,
+  transactions: any[]
+): Promise<void> {
+  try {
+    const now = Date.now();
+    const cacheEntry: DbWalletAllTransactionsCache = {
+      tokenAddress: tokenAddress.toLowerCase(),
+      transactions,
+      cachedAt: now,
+      expiresAt: now + 20 * 60 * 1000, // 20 minutes
+    };
+
+    await db.allTransactionsCache.put(cacheEntry);
+    console.log(`[Cache] Saved all transactions cache for ${tokenAddress.toLowerCase()}`);
+  } catch (error) {
+    console.error("[Cache] Failed to save all transactions cache:", error);
+  }
+}
+
+/**
+ * Load all transactions for a token from cache
+ * Returns null if cache is expired or doesn't exist
+ */
+export async function loadAllTransactionsCache(
+  tokenAddress: string
+): Promise<DbWalletAllTransactionsCache | null> {
+  try {
+    const cacheEntry = await db.allTransactionsCache.get(tokenAddress.toLowerCase());
+
+    if (!cacheEntry) {
+      return null;
+    }
+
+    // Check if cache is still valid
+    if (Date.now() > cacheEntry.expiresAt) {
+      // Remove expired entry
+      await db.allTransactionsCache.delete(tokenAddress.toLowerCase());
+      console.log(`[Cache] Expired all transactions cache for ${tokenAddress.toLowerCase()}`);
+      return null;
+    }
+
+    const remainingTime = Math.round((cacheEntry.expiresAt - Date.now()) / 1000);
+    console.log(`[Cache] HIT for all transactions cache (${remainingTime}s remaining)`);
+    return cacheEntry;
+  } catch (error) {
+    console.error("[Cache] Failed to load all transactions cache:", error);
+    return null;
+  }
+}
+
+/**
+ * Save analytics state (stats + wallets) to cache for instant restoration
+ * @param tokenAddress - Token contract address
+ * @param timeRange - Time range for the analytics
+ * @param stats - WalletActivityStats to cache
+ * @param wallets - Wallet array to cache
+ */
+export async function saveAnalyticsState(
+  tokenAddress: string,
+  timeRange: TimeRange,
+  stats: WalletActivityStats,
+  wallets: Wallet[]
+): Promise<void> {
+  try {
+    const now = Date.now();
+    const cacheEntry: DbWalletAnalyticsStateCache = {
+      tokenAddress: tokenAddress.toLowerCase(),
+      timeRange,
+      stats,
+      wallets,
+      lastUpdated: now,
+      expiresAt: now + 15 * 60 * 1000, // 15 minutes TTL
+    };
+
+    await db.analyticsStateCache.put(cacheEntry);
+    console.log(`[Cache] Saved analytics state for ${timeRange} (${tokenAddress})`);
+  } catch (error) {
+    console.error("[Cache] Failed to save analytics state:", error);
+  }
+}
+
+/**
+ * Load analytics state from cache
+ * Returns null if cache is expired or doesn't exist
+ * @param tokenAddress - Token contract address
+ * @param timeRange - Time range to load
+ */
+export async function loadAnalyticsState(
+  tokenAddress: string,
+  timeRange: TimeRange
+): Promise<DbWalletAnalyticsStateCache | null> {
+  try {
+    const cacheEntry = await db.analyticsStateCache.get([tokenAddress.toLowerCase(), timeRange]);
+
+    if (!cacheEntry) {
+      return null;
+    }
+
+    // Check if cache is still valid
+    if (Date.now() > cacheEntry.expiresAt) {
+      // Remove expired entry
+      await db.analyticsStateCache.delete([tokenAddress.toLowerCase(), timeRange]);
+      console.log(`[Cache] Expired analytics state cache for ${timeRange}`);
+      return null;
+    }
+
+    const remainingTime = Math.round((cacheEntry.expiresAt - Date.now()) / 1000);
+    console.log(`[Cache] HIT for analytics state (${timeRange}) - ${remainingTime}s remaining`);
+    return cacheEntry;
+  } catch (error) {
+    console.error("[Cache] Failed to load analytics state:", error);
+    return null;
+  }
+}
+
+/**
+ * Invalidate all analytics cache for a token (call when token holders change)
+ * @param tokenAddress - Token contract address
+ */
+export async function invalidateAnalyticsCache(tokenAddress: string): Promise<void> {
+  try {
+    const keys = await db.analyticsStateCache
+      .where("tokenAddress")
+      .equals(tokenAddress.toLowerCase())
+      .keys();
+
+    for (const key of keys) {
+      await db.analyticsStateCache.delete(key);
+    }
+
+    console.log(`[Cache] Invalidated ${keys.length} analytics cache entries for ${tokenAddress}`);
+  } catch (error) {
+    console.error("[Cache] Failed to invalidate analytics cache:", error);
   }
 }

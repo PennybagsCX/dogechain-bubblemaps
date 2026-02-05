@@ -13,6 +13,7 @@ import {
   ChevronDown,
   Bell,
   BarChart3,
+  Activity,
 } from "lucide-react";
 
 interface NavbarProps {
@@ -75,7 +76,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   const isAnalysisActive =
-    currentView === ViewState.ANALYSIS || currentView === ViewState.DISTRIBUTION;
+    currentView === ViewState.ANALYSIS ||
+    currentView === ViewState.DISTRIBUTION ||
+    currentView === ViewState.WALLET_ACTIVITY;
   const isDashboardsActive =
     currentView === ViewState.UNIFIED_ANALYTICS || currentView === ViewState.DASHBOARD;
 
@@ -156,6 +159,21 @@ export const Navbar: React.FC<NavbarProps> = ({
                   >
                     <PieChart size={16} />
                     <span>Distribution</span>
+                  </button>
+                  <button
+                    onTouchStart={handleTouchStopPropagation}
+                    onClick={() => {
+                      onChangeView(ViewState.WALLET_ACTIVITY);
+                      setAnalysisDropdownOpen(false);
+                    }}
+                    className={`w-full flex items-center gap-3 px-4 py-2 text-left transition-colors ${
+                      currentView === ViewState.WALLET_ACTIVITY
+                        ? "bg-purple-600 text-white"
+                        : "text-slate-300 hover:bg-space-700 hover:text-white"
+                    }`}
+                  >
+                    <Activity size={16} />
+                    <span>Wallet Activity</span>
                   </button>
                 </div>
               )}
@@ -335,6 +353,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                 disabled={!hasAnalysisData}
               >
                 <PieChart size={20} /> Distribution
+              </button>
+              <button
+                onTouchStart={handleTouchStopPropagation}
+                onClick={() => handleMobileNav(ViewState.WALLET_ACTIVITY)}
+                className={mobileNavClass(
+                  currentView === ViewState.WALLET_ACTIVITY,
+                  !hasAnalysisData
+                )}
+                disabled={!hasAnalysisData}
+              >
+                <Activity size={20} /> Wallet Activity
               </button>
             </div>
 

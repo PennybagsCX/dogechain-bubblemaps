@@ -23,6 +23,7 @@ import { WalletDetailsGuide } from "./components/WalletDetailsGuide";
 import { DashboardGuide } from "./components/DashboardGuide";
 import { NetworkHealth } from "./components/NetworkHealth";
 import { DistributionAnalytics } from "./components/DistributionAnalytics";
+import { WalletActivityAnalytics } from "./components/WalletActivityAnalytics";
 import { UnifiedAnalyticsDashboard } from "./components/analytics/UnifiedAnalyticsDashboard";
 import { useStatsCounters } from "./hooks/useStatsCounters";
 import { useOnboarding } from "./hooks/useOnboarding";
@@ -924,6 +925,8 @@ const App: React.FC = () => {
       document.title = "Network Health | Dogechain BubbleMaps";
     else if (view === ViewState.DISTRIBUTION)
       document.title = "Distribution Analytics | Dogechain BubbleMaps";
+    else if (view === ViewState.WALLET_ACTIVITY)
+      document.title = "Wallet Activity Analytics | Dogechain BubbleMaps";
     else if (view === ViewState.UNIFIED_ANALYTICS)
       document.title = "Unified Analytics | Dogechain BubbleMaps";
 
@@ -1099,6 +1102,36 @@ const App: React.FC = () => {
       .catch(() => {
         addToast("Failed to copy link", "error");
       });
+  };
+
+  // --- WALLET ACTIVITY ANALYTICS WALLET SELECTION ---
+  // Handle wallet click from WalletActivityAnalytics to navigate to bubble map
+  const handleWalletSelectFromAnalytics = (walletAddress: string) => {
+    // Find the wallet in the wallets array
+    const wallet = wallets.find((w) => w.address.toLowerCase() === walletAddress.toLowerCase());
+    if (!wallet) {
+      console.error(`[App] Wallet not found: ${walletAddress}`);
+      return;
+    }
+
+    // Switch to Analysis view (bubble map)
+    setView(ViewState.ANALYSIS);
+
+    // Select the wallet (this will trigger highlight via targetWalletId)
+    handleWalletClickOnMap(wallet);
+
+    // Update URL to reflect the change
+    try {
+      const newUrl = new URL(window.location.href);
+      newUrl.searchParams.set("view", "analysis");
+      window.history.pushState({}, "", newUrl);
+    } catch {
+      /* ignore URL errors */
+    }
+
+    console.log(
+      `[App] Navigated to bubble map and selected wallet: ${wallet.label || walletAddress}`
+    );
   };
 
   // --- TRACE CONNECTIONS ---
@@ -1431,6 +1464,7 @@ const App: React.FC = () => {
         // Set view based on URL parameter
         const viewParam = newUrl.searchParams.get("view");
         if (viewParam === "distribution") setView(ViewState.DISTRIBUTION);
+        else if (viewParam === "wallet-activity") setView(ViewState.WALLET_ACTIVITY);
         else if (viewParam === "network-health") setView(ViewState.NETWORK_HEALTH);
         else if (viewParam === "unified-analytics") setView(ViewState.UNIFIED_ANALYTICS);
         else setView(ViewState.ANALYSIS);
@@ -1521,6 +1555,8 @@ const App: React.FC = () => {
       setView(ViewState.ANALYSIS);
     } else if (viewParam === "distribution") {
       setView(ViewState.DISTRIBUTION);
+    } else if (viewParam === "wallet-activity") {
+      setView(ViewState.WALLET_ACTIVITY);
     } else if (viewParam === "network-health") {
       setView(ViewState.NETWORK_HEALTH);
     } else if (viewParam === "unified-analytics") {
@@ -1545,8 +1581,9 @@ const App: React.FC = () => {
       const v = currentParams.get("view");
       if (v === "dashboard") setView(ViewState.DASHBOARD);
       else if (v === "analysis") setView(ViewState.ANALYSIS);
-      else if (v === "network-health") setView(ViewState.NETWORK_HEALTH);
       else if (v === "distribution") setView(ViewState.DISTRIBUTION);
+      else if (v === "wallet-activity") setView(ViewState.WALLET_ACTIVITY);
+      else if (v === "network-health") setView(ViewState.NETWORK_HEALTH);
       else if (v === "unified-analytics") setView(ViewState.UNIFIED_ANALYTICS);
       else setView(ViewState.HOME);
     };
@@ -3065,6 +3102,22 @@ const App: React.FC = () => {
           <div className="flex flex-col min-h-full">
             <div className="flex-1 p-6">
               <DistributionAnalytics token={token} />
+            </div>
+            <div className="mt-auto">
+              <Footer onOpenGuide={openOnboarding} />
+            </div>
+          </div>
+        )}
+
+        {/* WALLET ACTIVITY ANALYTICS VIEW */}
+        {view === ViewState.WALLET_ACTIVITY && (
+          <div className="flex flex-col min-h-full">
+            <div className="flex-1 p-6">
+              <WalletActivityAnalytics
+                token={token}
+                onWalletSelect={handleWalletSelectFromAnalytics}
+                wallets={wallets}
+              />
             </div>
             <div className="mt-auto">
               <Footer onOpenGuide={openOnboarding} />

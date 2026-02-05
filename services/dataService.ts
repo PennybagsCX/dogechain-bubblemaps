@@ -623,7 +623,7 @@ export const fetchTokenHolders = async (
 
     // V1-only: avoid V2 holders endpoint (returns 400 in production)
     try {
-      await sleep(150); // small spacing to be gentle on API
+      // OPTIMIZATION: Removed 150ms sleep - rate limiter handles spacing
       const v1Response = await fetchSafe(
         `${EXPLORER_API_V1}?module=token&action=getTokenHolders&contractaddress=${cleanAddress}&page=1&offset=100`
       );
@@ -686,7 +686,7 @@ export const fetchTokenHolders = async (
 
       for (const whale of topWallets) {
         try {
-          await sleep(300);
+          await sleep(50); // OPTIMIZATION: Reduced from 300ms to 50ms
           const url = `${EXPLORER_API_V1}?module=account&action=tokentx&contractaddress=${cleanAddress}&address=${whale.address}&page=1&offset=20`;
           const res = await fetchSafe(url);
           const data = await res.json();
@@ -995,10 +995,9 @@ export const fetchWalletTransactions = async (
         }
       };
 
-      // SMART AUTO-INCREASING OFFSET STRATEGY
-      // Try progressively larger offsets for inactive wallets
-      // Note: Removed 2500 offset as it causes timeouts on Explorer API
-      const offsets = [100, 500, 1000];
+      // OPTIMIZED OFFSET STRATEGY - Try largest first to minimize API calls
+      // Also removed sleep between attempts for faster loading
+      const offsets = [1000, 500, 100]; // Try largest offset first
 
       console.log(
         `[fetchWalletTransactions] Starting transaction fetch with offsets: ${offsets.join(", ")}`
@@ -1024,12 +1023,8 @@ export const fetchWalletTransactions = async (
 
         console.log(`[fetchWalletTransactions] No transactions at offset ${offset}`);
 
-        // If this isn't the last attempt, wait before trying the next offset
-        // to respect rate limits
-        if (i < offsets.length - 1) {
-          console.log(`[fetchWalletTransactions] Waiting 500ms before next attempt...`);
-          await sleep(500);
-        }
+        // OPTIMIZATION: Removed 500ms sleep between attempts
+        // The rate limiter will handle API rate limiting automatically
       }
 
       // No transactions found at any offset

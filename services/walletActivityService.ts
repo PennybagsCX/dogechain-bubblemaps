@@ -28,6 +28,7 @@ import {
   loadAllTransactionsCache,
   saveAllTransactionsCache,
 } from "./db";
+import { getWalletActivityWorkerClient } from "./walletActivityWorkerClient";
 
 // =====================================================
 // Time Range Utilities
@@ -139,7 +140,16 @@ export async function buildActivityTimeline(
   timeRange: TimeRange,
   holderAddresses: Set<string>
 ): Promise<ActivityTimelinePoint[]> {
-  // Main thread implementation
+  // Try worker first for better performance, with fallback to main thread
+  try {
+    const workerClient = getWalletActivityWorkerClient();
+    return await workerClient.buildActivityTimeline(transactions, timeRange, holderAddresses);
+  } catch (error) {
+    console.warn("[buildActivityTimeline] Worker failed, falling back to main thread:", error);
+    // Fall through to main thread implementation
+  }
+
+  // Main thread implementation (fallback)
   const cutoffTime = getTimeRangeFilter(timeRange);
   const filteredTxs = transactions.filter((tx) => tx.timestamp >= cutoffTime);
 
@@ -224,7 +234,16 @@ export async function calculateFlowPatterns(
   activities: WalletActivity[],
   transactions: Transaction[]
 ): Promise<FlowPattern[]> {
-  // Main thread implementation
+  // Try worker first for better performance, with fallback to main thread
+  try {
+    const workerClient = getWalletActivityWorkerClient();
+    return await workerClient.calculateFlowPatterns(activities, transactions);
+  } catch (error) {
+    console.warn("[calculateFlowPatterns] Worker failed, falling back to main thread:", error);
+    // Fall through to main thread implementation
+  }
+
+  // Main thread implementation (fallback)
   // Create address -> behavior mapping
   const addressToBehavior = new Map<string, WalletBehaviorType>();
   activities.forEach((activity) => {

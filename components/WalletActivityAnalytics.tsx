@@ -118,17 +118,6 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
   const [walletsCache, setWalletsCache] = useState<Wallet[] | null>(null);
   const cachedTokenAddressRef = useRef<string | null>(null);
 
-  // OPTIMIZATION: Track pre-fetching status for each timeframe to show loading indicators
-  const [prefetchingStatus, setPrefetchingStatus] = useState<
-    Record<TimeRange, "loading" | "cached" | "idle">
-  >({
-    "1h": "idle",
-    "24h": "idle",
-    "7d": "idle",
-    "30d": "idle",
-    all: "idle",
-  });
-
   // Track when analytics were last refreshed (for cache indicator)
   const [lastRefreshed, setLastRefreshed] = useState<number>(Date.now());
 
@@ -160,16 +149,8 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
     return () => clearInterval(interval);
   }, [loading]);
 
-  // Reset pre-fetching status when token changes
+  // Reset status when token changes
   useEffect(() => {
-    setPrefetchingStatus({
-      "1h": "idle",
-      "24h": "idle",
-      "7d": "idle",
-      "30d": "idle",
-      all: "idle",
-    });
-
     // Clean up sessionStorage entries for old tokens to prevent stale data
     try {
       const allKeys = Object.keys(sessionStorage);
@@ -203,13 +184,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
       setError(null);
       setWalletsCache(null);
       cachedTokenAddressRef.current = null;
-      setPrefetchingStatus({
-        "1h": "idle",
-        "24h": "idle",
-        "7d": "idle",
-        "30d": "idle",
-        all: "idle",
-      });
+      // Reset status - no longer tracking per-timeframe status
       return;
     }
 
@@ -217,80 +192,123 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
     if (currentKey === fetchKeyRef.current) return;
     fetchKeyRef.current = currentKey;
 
-    // OPTIMIZATION: Check if analytics STATE is cached (instant return!)
-    // This enables instant restoration when returning from bubble map
-    const { loadAnalyticsState } = await import("../services/db");
-    const cachedState = await loadAnalyticsState(token.address, timeRange);
+    // OPTIMIZATION: First check if "all" timeframe data is available for instant client-side filtering
+    // This is the most efficient approach - load "all" once (60s), then all timeframes work instantly (<100ms)
+    if (timeRange !== "all") {
+      const { loadWalletActivityCache } = await import("../services/db");
+      const allData = await loadWalletActivityCache(token.address, "all");
 
-    if (cachedState && Date.now() < cachedState.expiresAt) {
-      // Instant restore from cache - no loading state!
-      console.log(`[WalletActivityAnalytics] Restored from state cache for ${timeRange}`);
-      setStats(cachedState.stats as WalletActivityStats);
-      setWalletsCache(cachedState.wallets);
-      setError(null);
-      setLoading(false);
-      setProgressStage("");
-      setProgressDetails("");
-      setLastRefreshed(cachedState.lastUpdated);
-      // Mark this timeframe as cached
-      setPrefetchingStatus((prev) => ({ ...prev, [timeRange]: "cached" }));
+      if (allData && allData.data && Date.now() < allData.expiresAt) {
+        const allStats = allData.data as WalletActivityStats;
 
-      // Trigger background pre-fetch for other time ranges
-      (async () => {
-        const { prefetchOtherTimeRangesWithProgress } =
-          await import("../services/walletActivityService");
-        prefetchOtherTimeRangesWithProgress(token, cachedState.wallets, timeRange, (progress) => {
-          if (progress.type === "complete") {
-            setPrefetchingStatus((prev) => ({ ...prev, [progress.timeRange]: "cached" }));
-          } else if (progress.type === "error") {
-            setPrefetchingStatus((prev) => ({ ...prev, [progress.timeRange]: "idle" }));
+        // Validate completeness
+        const isIncomplete =
+          Object.keys(allStats.behaviorDistribution).length === 0 ||
+          allStats.topBuyers.length === 0 ||
+          allStats.topSellers.length === 0;
+
+        if (!isIncomplete) {
+          // Filter "all" data to the selected timeframe (instant!)
+          const { generateAnalyticsFromCachedTransactions } =
+            await import("../services/walletActivityService");
+
+          // Check if we have the raw transactions cached for client-side filtering
+          const { loadAllTransactionsCache } = await import("../services/db");
+          const rawAllData = await loadAllTransactionsCache(token.address);
+
+          if (rawAllData && Date.now() < rawAllData.expiresAt && walletsCache) {
+            console.log(
+              `[WalletActivityAnalytics] Using cached 'all' transactions, filtering for ${timeRange} (<100ms)`
+            );
+
+            // Generate analytics for the selected timeframe from cached data
+            const filteredStats = await generateAnalyticsFromCachedTransactions(
+              token,
+              walletsCache,
+              timeRange,
+              (msg) => console.log(`[WalletActivityAnalytics] ${msg}`)
+            );
+
+            // Mark all timeframes as cached since we have the raw "all" data
+            // All timeframes are now cached - no status tracking needed
+
+            if (filteredStats) {
+              setStats(filteredStats);
+              setError(null);
+              setLoading(false);
+              setProgressStage("");
+              setProgressDetails("");
+              setLastRefreshed(rawAllData.cachedAt);
+              return;
+            }
+
+            // No data for this timeframe, but all timeframes are still cached
+            setStats(null);
+            setError(null);
+            setLoading(false);
+            setProgressStage("");
+            setProgressDetails("");
+            return;
           }
-        }).catch(() => {});
-      })();
-
-      return;
+        }
+      }
     }
 
-    // FALLBACK: Check sessionStorage for instant restoration (in case IndexedDB save is pending)
-    // This provides instant restore even when the user navigates away quickly
-    try {
-      const sessionKey = `analytics-${token.address}-${timeRange}`;
-      const sessionData = sessionStorage.getItem(sessionKey);
-      if (sessionData) {
-        const parsed = JSON.parse(sessionData);
-        if (parsed && Date.now() < parsed.expiresAt) {
-          console.log(
-            `[WalletActivityAnalytics] Restored from sessionStorage for ${timeRange} (IndexedDB save may be pending)`
-          );
-          setStats(parsed.stats as WalletActivityStats);
-          setWalletsCache(parsed.wallets);
+    // OPTIMIZATION: Check if analytics STATE is cached (instant return!)
+    // This enables instant restoration when returning from bubble map
+    const { loadAnalyticsState, loadAllTransactionsCache } = await import("../services/db");
+
+    // First, check if we have "all" analytics cached (our new strategy)
+    const allCachedState = await loadAnalyticsState(token.address, "all");
+
+    if (allCachedState && Date.now() < allCachedState.expiresAt) {
+      // We have "all" data cached - filter it to the requested timeframe
+      console.log(
+        `[WalletActivityAnalytics] Found 'all' analytics in cache, filtering to ${timeRange}`
+      );
+
+      // If requesting "all" timeframe, use it directly
+      if (timeRange === "all") {
+        setStats(allCachedState.stats as WalletActivityStats);
+        setWalletsCache(allCachedState.wallets);
+        setError(null);
+        setLoading(false);
+        setProgressStage("");
+        setProgressDetails("");
+        setLastRefreshed(allCachedState.lastUpdated);
+        return;
+      }
+
+      // Otherwise, filter client-side from "all" transactions
+      const rawAllData = await loadAllTransactionsCache(token.address);
+      if (rawAllData && Date.now() < rawAllData.expiresAt) {
+        const { generateAnalyticsFromCachedTransactions } =
+          await import("../services/walletActivityService");
+        const filteredStats = await generateAnalyticsFromCachedTransactions(
+          token,
+          allCachedState.wallets,
+          timeRange,
+          (msg) => console.log(`[WalletActivityAnalytics] ${msg}`)
+        );
+
+        if (filteredStats) {
+          setStats(filteredStats);
+          setWalletsCache(allCachedState.wallets);
           setError(null);
           setLoading(false);
           setProgressStage("");
           setProgressDetails("");
-          setLastRefreshed(parsed.lastUpdated);
-          setPrefetchingStatus((prev) => ({ ...prev, [timeRange]: "cached" }));
-
-          // Trigger background pre-fetch for other time ranges
-          (async () => {
-            const { prefetchOtherTimeRangesWithProgress } =
-              await import("../services/walletActivityService");
-            prefetchOtherTimeRangesWithProgress(token, parsed.wallets, timeRange, (progress) => {
-              if (progress.type === "complete") {
-                setPrefetchingStatus((prev) => ({ ...prev, [progress.timeRange]: "cached" }));
-              } else if (progress.type === "error") {
-                setPrefetchingStatus((prev) => ({ ...prev, [progress.timeRange]: "idle" }));
-              }
-            }).catch(() => {});
-          })();
-
+          setLastRefreshed(rawAllData.cachedAt);
+          console.log(`[WalletActivityAnalytics] Filtered 'all' data to ${timeRange} successfully`);
           return;
         }
       }
-    } catch (e) {
-      // SessionStorage error - continue to normal fetch
-      console.warn("[WalletActivityAnalytics] SessionStorage read failed:", e);
+
+      // If filtering failed, fall back to fetching from API
+      console.log(`[WalletActivityAnalytics] Filtering failed, falling back to API fetch`);
     }
+
+    // SessionStorage restore removed - we only cache "all" data and filter client-side
 
     // OPTIMIZATION: Check if analytics data is already cached (instant switch!)
     // This check happens BEFORE setting loading=true for truly instant switches
@@ -331,8 +349,17 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
         setProgressStage("");
         setProgressDetails("");
         setLastRefreshed(Date.now());
-        // Mark this timeframe as cached
-        setPrefetchingStatus((prev) => ({ ...prev, [timeRange]: "cached" }));
+
+        // Check if we have "all" transactions cached - if so, mark ALL timeframes as cached
+        const { loadAllTransactionsCache } = await import("../services/db");
+        const rawAllData = await loadAllTransactionsCache(token.address);
+        if (rawAllData && Date.now() < rawAllData.expiresAt) {
+          // All timeframes are cached - no status tracking needed
+        } else {
+          // Only this timeframe is cached
+          // Timeframe cached - no status tracking needed
+        }
+
         return;
       }
     }
@@ -352,13 +379,14 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
       if (needsWalletsFetch) {
         // New token - fetch holders
         setProgressStage("Initializing");
-        setProgressPercent(5);
+        setProgressPercent(2);
         setProgressDetails("Preparing to fetch wallet data...");
-        setEstimatedTimeRemaining(45); // Initial estimate: 45 seconds
+        setEstimatedTimeRemaining(60); // Updated estimate: 60 seconds for "all" timeframe
 
-        setProgressStage("Fetching Wallet Holders");
-        setProgressPercent(10);
-        setProgressDetails("Connecting to Dogechain Explorer...");
+        // Show progress bar during initialization
+        setProgressPercent(5);
+        setProgressDetails("Fetching wallet holders...");
+
         const { fetchTokenHolders } = await import("../services/dataService");
         const { wallets: fetchedWallets } = await fetchTokenHolders(token);
 
@@ -391,8 +419,19 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
 
       // Fetch analytics with progress callbacks
       setProgressStage("Analyzing Wallet Activity");
-      const { fetchWalletActivityStats } = await import("../services/walletActivityService");
-      const analytics = await fetchWalletActivityStats(token, wallets, timeRange, (msg) => {
+
+      // OPTIMIZATION: Always fetch "all" timeframe first (only ~15s extra than 24h)
+      // This enables instant switching to ANY timeframe afterward
+      // We'll display the selected timeframe by filtering the "all" data
+      const timeframeToFetch = "all"; // Always fetch "all" for maximum efficiency
+      const displayTimeRange = timeRange; // This is what the user wants to see
+
+      // Update the message to reflect we're loading all data
+      setProgressDetails(`Loading all transaction data for instant timeframe switching...`);
+
+      const { fetchWalletActivityStats, generateAnalyticsFromCachedTransactions } =
+        await import("../services/walletActivityService");
+      const analytics = await fetchWalletActivityStats(token, wallets, timeframeToFetch, (msg) => {
         console.log(`[WalletActivityAnalytics] ${msg}`);
 
         // Parse progress message and update UI
@@ -435,33 +474,55 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
         return;
       }
 
-      setStats(analytics);
+      // OPTIMIZATION: If we fetched "all" but user wants a different timeframe, filter the data
+      let finalStats = analytics;
+      if (timeframeToFetch === "all" && displayTimeRange !== "all") {
+        // Filter "all" data to the selected timeframe (instant!)
+        console.log(
+          `[WalletActivityAnalytics] Filtering 'all' data to ${displayTimeRange} (<100ms)`
+        );
+        setProgressStage("Filtering Data");
+        setProgressDetails(`Filtering to ${displayTimeRange.toUpperCase()} timeframe...`);
+
+        // Use the generateAnalyticsFromCachedTransactions function which does client-side filtering
+        const { loadAllTransactionsCache } = await import("../services/db");
+        const rawAllData = await loadAllTransactionsCache(token.address);
+
+        if (rawAllData && Date.now() < rawAllData.expiresAt) {
+          // Generate filtered analytics from cached transactions
+          const filteredStats = await generateAnalyticsFromCachedTransactions(
+            token,
+            wallets,
+            displayTimeRange,
+            (msg) => console.log(`[WalletActivityAnalytics] ${msg}`)
+          );
+
+          if (filteredStats) {
+            finalStats = filteredStats;
+          }
+        }
+      }
+
+      setStats(finalStats);
       setProgressPercent(100);
       setProgressDetails("Complete!");
       setLastRefreshed(Date.now());
 
-      // CRITICAL: Save to cache IMMEDIATELY for instant restoration when returning from bubble map
-      // This is NOT fire-and-forget - we need to ensure data is saved before user can navigate away
+      // CRITICAL: Save ONLY "all" data to cache - filtering happens client-side on restore
+      // This prevents saving incorrect data to specific timeframe keys
       (async () => {
-        const { saveAnalyticsState } = await import("../services/db");
-        await saveAnalyticsState(token.address, timeRange, analytics, wallets);
+        const { saveAnalyticsState, saveWalletActivityCache } = await import("../services/db");
 
-        // Also save to sessionStorage as a fast fallback (survives page refresh, instant access)
-        try {
-          const sessionKey = `analytics-${token.address}-${timeRange}`;
-          const sessionData = {
-            stats: analytics,
-            wallets,
-            lastUpdated: Date.now(),
-            expiresAt: Date.now() + 15 * 60 * 1000, // 15 minutes
-          };
-          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
-          console.log(
-            `[WalletActivityAnalytics] Saved to cache and sessionStorage for ${timeRange}`
-          );
-        } catch (e) {
-          // SessionStorage might be full or unavailable, ignore
-        }
+        // Save the "all" timeframe analytics (this is the source of truth)
+        await saveWalletActivityCache(token.address, "all", analytics);
+        await saveAnalyticsState(token.address, "all", analytics, wallets);
+
+        // Note: We do NOT save filtered timeframes to cache
+        // Instead, we always filter from "all" data client-side when switching timeframes
+
+        console.log(
+          "[WalletActivityAnalytics] Saved 'all' data to cache - timeframe filtering happens client-side"
+        );
       })();
 
       setTimeout(() => {
@@ -469,52 +530,11 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
         setProgressDetails("");
       }, 500);
 
-      // PHASE 2 OPTIMIZATION: Trigger background pre-fetch for other time ranges
-      // This runs silently in the background without blocking the UI
-      // Fire and forget - don't await the result
-      (async () => {
-        const { prefetchOtherTimeRangesWithProgress } =
-          await import("../services/walletActivityService");
-
-        // Set loading status for timeframes being pre-fetched
-        const allTimeRanges: TimeRange[] = ["1h", "24h", "7d", "30d", "all"];
-        const timeRangesToPrefetch = allTimeRanges.filter((tr) => tr !== timeRange);
-
-        // Mark current timeframe as cached
-        setPrefetchingStatus((prev) => ({
-          ...prev,
-          [timeRange]: "cached",
-        }));
-
-        // Mark other timeframes as loading
-        setPrefetchingStatus((prev) => {
-          const updated = { ...prev };
-          timeRangesToPrefetch.forEach((tr) => {
-            if (tr !== timeRange) {
-              updated[tr] = "loading";
-            }
-          });
-          return updated;
-        });
-
-        // Prefetch with progress callbacks
-        await prefetchOtherTimeRangesWithProgress(token, wallets, timeRange, (progress) => {
-          if (progress.type === "complete") {
-            setPrefetchingStatus((prev) => ({
-              ...prev,
-              [progress.timeRange]: "cached",
-            }));
-          } else if (progress.type === "error") {
-            setPrefetchingStatus((prev) => ({
-              ...prev,
-              [progress.timeRange]: "idle",
-            }));
-          }
-        }).catch((error: Error) => {
-          // Silently handle pre-fetch errors - don't affect the UI
-          console.error("[WalletActivityAnalytics] Pre-fetch error:", error);
-        });
-      })();
+      // OPTIMIZATION: Since we loaded "all" data, ALL timeframes are now cached!
+      // All timeframes are available for instant switching
+      console.log(
+        "[WalletActivityAnalytics] All data loaded - instant timeframe switching enabled!"
+      );
     } catch (err) {
       console.error("Error fetching wallet activity analytics:", err);
       setError("Failed to load wallet activity data");
@@ -536,20 +556,10 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
     setRefreshKey((prev) => prev + 1);
   };
 
-  // Handle wallet click to load transactions inline
-  // section: 'buyers' or 'sellers' to track expansion separately
-  const handleWalletClick = async (
-    walletAddress: string,
-    _walletActivity: WalletActivity,
-    section: "buyers" | "sellers"
-  ) => {
+  // Handle toggle expand/collapse and load transactions
+  const handleToggleExpand = async (walletAddress: string, section: "buyers" | "sellers") => {
     const setExpanded = section === "buyers" ? setExpandedBuyerWallet : setExpandedSellerWallet;
     const expanded = section === "buyers" ? expandedBuyerWallet : expandedSellerWallet;
-
-    // Navigate to bubble map and highlight wallet
-    if (onWalletSelect) {
-      onWalletSelect(walletAddress);
-    }
 
     // Toggle collapse if already expanded
     if (expanded === walletAddress) {
@@ -563,18 +573,23 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
     if (!walletTransactions[walletAddress] && !loadingTransactions[walletAddress]) {
       setLoadingTransactions((prev) => ({ ...prev, [walletAddress]: true }));
       try {
-        const txs = await fetchWalletTransactions(
-          walletAddress,
-          token!.address,
-          token!.type,
-          true // Force refresh
-        );
+        const txs = await fetchWalletTransactions(walletAddress, token!.address, token!.type);
         setWalletTransactions((prev) => ({ ...prev, [walletAddress]: txs }));
-      } catch (err) {
-        console.error(`Error fetching transactions for ${walletAddress}:`, err);
+      } catch (error) {
+        console.error(
+          `[WalletActivityAnalytics] Failed to load transactions for ${walletAddress}:`,
+          error
+        );
       } finally {
         setLoadingTransactions((prev) => ({ ...prev, [walletAddress]: false }));
       }
+    }
+  };
+
+  // Handle wallet address click to navigate to bubble map
+  const handleWalletAddressClick = (walletAddress: string) => {
+    if (onWalletSelect) {
+      onWalletSelect(walletAddress);
     }
   };
 
@@ -749,40 +764,23 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
           <p className="text-slate-400">Activity analysis for {token.symbol}</p>
         </div>
 
-        {/* Time Range Selector with Pre-fetching Indicators */}
+        {/* Time Range Selector - All data loaded instantly from "all" timeframe cache */}
         <div className="flex items-center gap-2 bg-space-800 rounded-lg p-1">
           {TIME_RANGES.map((range) => {
-            const status = prefetchingStatus[range];
-            const isCached = status === "cached"; // FIX: Only show cached when truly cached
-            const isLoading = status === "loading" && range !== timeRange;
-
             return (
               <button
                 key={range}
                 onClick={() => setTimeRange(range)}
-                disabled={isLoading}
-                className={`relative px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                disabled={loading}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
                   timeRange === range
                     ? "bg-purple-600 text-white"
-                    : isLoading
+                    : loading
                       ? "text-slate-500 cursor-wait"
                       : "text-slate-400 hover:text-white hover:bg-space-700"
                 }`}
-                title={
-                  isLoading
-                    ? "Pre-fetching..."
-                    : isCached && range !== timeRange
-                      ? "Cached - instant load"
-                      : undefined
-                }
               >
-                <span className="flex items-center gap-1.5">
-                  {range === "all" ? "All Time" : range.toUpperCase()}
-                  {isLoading && <Loader2 className="w-3 h-3 animate-spin" />}
-                  {isCached && range !== timeRange && !isLoading && (
-                    <Zap className="w-3 h-3 text-green-400" />
-                  )}
-                </span>
+                {range === "all" ? "All Time" : range.toUpperCase()}
               </button>
             );
           })}
@@ -1141,10 +1139,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                   key={activity.walletAddress}
                   className="border border-space-700 rounded-lg overflow-hidden"
                 >
-                  <button
-                    onClick={() => handleWalletClick(activity.walletAddress, activity, "buyers")}
-                    className="w-full flex items-center justify-between p-3 bg-space-700/50 hover:bg-space-700 transition-colors"
-                  >
+                  <div className="w-full flex items-center justify-between p-3 bg-space-700/50">
                     <div className="flex items-center gap-3">
                       <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center text-xs font-bold text-white">
                         {index + 1}
@@ -1153,10 +1148,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                         <div className="text-sm font-medium text-white">
                           {onWalletSelect ? (
                             <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                onWalletSelect(activity.walletAddress);
-                              }}
+                              onClick={() => handleWalletAddressClick(activity.walletAddress)}
                               className="hover:text-purple-400 transition-colors underline decoration-dotted underline-offset-2"
                               title="Click to view on bubble map"
                             >
@@ -1178,13 +1170,22 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                           {BEHAVIOR_LABELS[activity.behaviorType]}
                         </div>
                       </div>
-                      {isExpanded ? (
-                        <ChevronUp className="w-4 h-4 text-slate-400" />
-                      ) : (
-                        <ChevronDown className="w-4 h-4 text-slate-400" />
-                      )}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleToggleExpand(activity.walletAddress, "buyers");
+                        }}
+                        className="p-1 hover:bg-space-600 rounded transition-colors"
+                        title={isExpanded ? "Collapse" : "Expand"}
+                      >
+                        {isExpanded ? (
+                          <ChevronUp className="w-4 h-4 text-slate-400" />
+                        ) : (
+                          <ChevronDown className="w-4 h-4 text-slate-400" />
+                        )}
+                      </button>
                     </div>
-                  </button>
+                  </div>
 
                   {/* Inline Transaction Details */}
                   {isExpanded && (
@@ -1271,10 +1272,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                   key={activity.walletAddress}
                   className="border border-space-700 rounded-lg overflow-hidden"
                 >
-                  <button
-                    onClick={() => handleWalletClick(activity.walletAddress, activity, "sellers")}
-                    className="w-full flex items-center justify-between p-3 bg-space-700/50 hover:bg-space-700 transition-colors"
-                  >
+                  <div className="w-full flex items-center justify-between p-3 bg-space-700/50">
                     <div className="flex items-center gap-3">
                       <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center text-xs font-bold text-white">
                         {index + 1}
@@ -1283,10 +1281,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                         <div className="text-sm font-medium text-white">
                           {onWalletSelect ? (
                             <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                onWalletSelect(activity.walletAddress);
-                              }}
+                              onClick={() => handleWalletAddressClick(activity.walletAddress)}
                               className="hover:text-purple-400 transition-colors underline decoration-dotted underline-offset-2"
                               title="Click to view on bubble map"
                             >
@@ -1308,13 +1303,22 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                           {BEHAVIOR_LABELS[activity.behaviorType]}
                         </div>
                       </div>
-                      {isExpanded ? (
-                        <ChevronUp className="w-4 h-4 text-slate-400" />
-                      ) : (
-                        <ChevronDown className="w-4 h-4 text-slate-400" />
-                      )}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleToggleExpand(activity.walletAddress, "sellers");
+                        }}
+                        className="p-1 hover:bg-space-600 rounded transition-colors"
+                        title={isExpanded ? "Collapse" : "Expand"}
+                      >
+                        {isExpanded ? (
+                          <ChevronUp className="w-4 h-4 text-slate-400" />
+                        ) : (
+                          <ChevronDown className="w-4 h-4 text-slate-400" />
+                        )}
+                      </button>
                     </div>
-                  </button>
+                  </div>
 
                   {/* Inline Transaction Details */}
                   {isExpanded && (

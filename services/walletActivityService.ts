@@ -786,7 +786,14 @@ export async function fetchWalletActivityStats(
     // OPTIMIZATION: Save all transactions when timeRange is "all" for instant client-side filtering
     // This enables the fast path for time range switches without API calls
     if (timeRange === "all" && allTransactions.length > 0) {
-      await saveAllTransactionsCache(token.address, allTransactions);
+      const walletAddresses = wallets.map((w) => w.address);
+      const holderAddressesArray = Array.from(holderAddresses);
+      await saveAllTransactionsCache(
+        token.address,
+        allTransactions,
+        walletAddresses,
+        holderAddressesArray
+      );
       console.log(
         `[Cache] Saved ${allTransactions.length} transactions for fast client-side filtering`
       );
@@ -929,4 +936,364 @@ export async function prefetchOtherTimeRangesWithProgress(
   }
 
   console.log("[Prefetch] All pre-fetch tasks initiated");
+}
+
+// =====================================================
+// OPTIMIZATION: Transaction-Level Caching for Instant Switching
+// =====================================================
+
+/**
+ * Fetch ALL transactions for ALL wallets once
+ * This enables instant client-side timeframe filtering (<100ms)
+ * OPTIMIZED: Single API call roundtrip per wallet, cached for 20 minutes
+ */
+export async function fetchAllTransactionsForToken(
+  token: Token,
+  wallets: Wallet[],
+  onProgress?: (message: string) => void
+): Promise<{
+  transactions: Transaction[];
+  walletAddresses: string[];
+  holderAddresses: string[];
+}> {
+  onProgress?.("Fetching all wallet transactions...");
+
+  const allTransactions: Transaction[] = [];
+  const BATCH_SIZE = 15;
+  const totalWallets = wallets.length;
+
+  for (let i = 0; i < totalWallets; i += BATCH_SIZE) {
+    const batch = wallets.slice(i, i + BATCH_SIZE);
+    const progress = Math.round((i / totalWallets) * 100);
+    onProgress?.(
+      `Fetching wallet transactions ${i + 1}-${Math.min(i + BATCH_SIZE, totalWallets)}/${totalWallets} (${progress}%)`
+    );
+
+    // Small delay between batches to prevent rate limiting
+    if (i > 0) {
+      await new Promise((resolve) => setTimeout(resolve, 200));
+    }
+
+    const batchResults = await Promise.allSettled(
+      batch.map(async (wallet) => {
+        try {
+          return await fetchWalletTransactions(wallet.address, token.address, token.type);
+        } catch (error) {
+          console.error(`Error fetching transactions for ${wallet.address}:`, error);
+          return [];
+        }
+      })
+    );
+
+    batchResults.forEach((result) => {
+      if (result.status === "fulfilled" && result.value) {
+        allTransactions.push(...result.value);
+      }
+    });
+  }
+
+  const holderAddresses = wallets.map((w) => w.address.toLowerCase());
+  const walletAddresses = wallets.map((w) => w.address);
+
+  // Cache ALL transactions for instant client-side filtering
+  await saveAllTransactionsCache(token.address, allTransactions, walletAddresses, holderAddresses);
+
+  console.log(`[Cache] Saved ${allTransactions.length} transactions for instant filtering`);
+
+  return {
+    transactions: allTransactions,
+    walletAddresses,
+    holderAddresses,
+  };
+}
+
+/**
+ * Generate analytics for ANY timeframe from cached transactions
+ * This is INSTANT (<100ms) because it's all client-side
+ */
+export async function generateAnalyticsFromCachedTransactions(
+  token: Token,
+  _wallets: Wallet[],
+  timeRange: TimeRange,
+  onProgress?: (message: string) => void
+): Promise<WalletActivityStats | null> {
+  onProgress?.("Loading from cache...");
+
+  // Load all transactions
+  const allData = await loadAllTransactionsCache(token.address);
+
+  if (!allData || Date.now() >= allData.expiresAt) {
+    onProgress?.("Cache expired, fetching from API...");
+    return null; // Fall back to API fetch
+  }
+
+  onProgress?.("Filtering transactions...");
+
+  // Filter transactions by timeframe (instant!)
+  const filteredTxs = filterTransactionsByTimeRange(allData.transactions, timeRange);
+
+  if (filteredTxs.length === 0) {
+    return null;
+  }
+
+  // Process filtered data (fast, no API calls)
+  onProgress?.("Analyzing wallet activities...");
+  const holderAddressesSet = new Set(allData.holderAddresses);
+
+  const activities = await analyzeWalletActivitiesFromTransactions(
+    filteredTxs,
+    allData.walletAddresses,
+    token.address,
+    timeRange,
+    holderAddressesSet
+  );
+
+  if (activities.length === 0) return null;
+
+  onProgress?.("Building analytics...");
+
+  // Calculate metrics (instant, client-side)
+  const activeWallets = activities.filter((a) => a.isActive).length;
+  const totalTransactions = activities.reduce((sum, a) => sum + a.totalTransactions, 0);
+  const totalVolume = activities.reduce((sum, a) => sum + a.totalBuyVolume + a.totalSellVolume, 0);
+
+  // Calculate behavior distribution
+  const behaviorDistribution: Record<WalletBehaviorType, number> = {
+    [WalletBehaviorType.WHALE]: 0,
+    [WalletBehaviorType.RETAIL]: 0,
+    [WalletBehaviorType.SMART_MONEY]: 0,
+    [WalletBehaviorType.HODLER]: 0,
+    [WalletBehaviorType.TRADER]: 0,
+    [WalletBehaviorType.SNIPER]: 0,
+    [WalletBehaviorType.UNKNOWN]: 0,
+  };
+
+  activities.forEach((a) => {
+    behaviorDistribution[a.behaviorType] = (behaviorDistribution[a.behaviorType] || 0) + 1;
+  });
+
+  // Calculate transaction type breakdown
+  const transactionTypes = {
+    buys: activities.reduce((sum, a) => sum + a.buyCount, 0),
+    sells: activities.reduce((sum, a) => sum + a.sellCount, 0),
+    transfers: activities.reduce((sum, a) => sum + a.transferCount, 0),
+  };
+
+  // Sort top wallets
+  const topBuyers = [...activities]
+    .filter((a) => a.totalBuyVolume > 0)
+    .sort((a, b) => b.totalBuyVolume - a.totalBuyVolume)
+    .slice(0, 10);
+
+  const topSellers = [...activities]
+    .filter((a) => a.totalSellVolume > 0)
+    .sort((a, b) => b.totalSellVolume - a.totalSellVolume)
+    .slice(0, 10);
+
+  const topAccumulators = [...activities]
+    .filter((a) => a.netVolume > 0)
+    .sort((a, b) => b.netVolume - a.netVolume)
+    .slice(0, 10);
+
+  const topDistributors = [...activities]
+    .filter((a) => a.netVolume < 0)
+    .sort((a, b) => a.netVolume - b.netVolume)
+    .slice(0, 10);
+
+  // Build timeline from filtered transactions
+  onProgress?.("Building timeline...");
+  const activityTimeline = await buildActivityTimeline(filteredTxs, timeRange, holderAddressesSet);
+
+  // Calculate flow patterns
+  onProgress?.("Calculating flows...");
+  const flowPatterns = await calculateFlowPatterns(activities, filteredTxs);
+
+  const result: WalletActivityStats = {
+    period: timeRange,
+    lastUpdated: allData.cachedAt,
+    totalWallets: activities.length,
+    activeWallets,
+    totalTransactions,
+    totalVolume,
+    behaviorDistribution,
+    transactionTypes,
+    topBuyers,
+    topSellers,
+    topAccumulators,
+    topDistributors,
+    activityTimeline,
+    flowPatterns,
+  };
+
+  return result;
+}
+
+/**
+ * Analyze wallet activities from transaction data
+ * Simplified version that works with cached transactions
+ */
+async function analyzeWalletActivitiesFromTransactions(
+  transactions: Transaction[],
+  walletAddresses: string[],
+  _tokenAddress: string,
+  timeRange: TimeRange,
+  holderAddresses: Set<string>
+): Promise<WalletActivity[]> {
+  const cutoffTime = getTimeRangeFilter(timeRange);
+
+  // Group transactions by wallet
+  const walletTxs = new Map<string, Transaction[]>();
+  transactions.forEach((tx) => {
+    if (tx.timestamp < cutoffTime) return;
+
+    const fromLower = tx.from.toLowerCase();
+    const toLower = tx.to.toLowerCase();
+
+    // Track incoming transactions (to is wallet)
+    if (walletAddresses.includes(fromLower)) {
+      if (!walletTxs.has(fromLower)) {
+        walletTxs.set(fromLower, []);
+      }
+      walletTxs.get(fromLower)!.push(tx);
+    }
+
+    // Track outgoing transactions (from is wallet)
+    if (walletAddresses.includes(toLower)) {
+      if (!walletTxs.has(toLower)) {
+        walletTxs.set(toLower, []);
+      }
+      walletTxs.get(toLower)!.push(tx);
+    }
+  });
+
+  const activities: WalletActivity[] = [];
+
+  for (const [walletAddress, txs] of walletTxs) {
+    if (txs.length === 0) continue;
+
+    let buyCount = 0;
+    let sellCount = 0;
+    let transferCount = 0;
+    let totalBuyVolume = 0;
+    let totalSellVolume = 0;
+    let firstTx = Number.MAX_VALUE;
+    let lastTx = 0;
+    const currentBalance = 0;
+
+    // Process transactions
+    txs.forEach((tx) => {
+      const fromLower = tx.from.toLowerCase();
+      const toLower = tx.to.toLowerCase();
+      const toIsHolder = holderAddresses.has(toLower);
+      const fromIsHolder = holderAddresses.has(fromLower);
+
+      // Classify transaction
+      if (toIsHolder && !fromIsHolder) {
+        buyCount++;
+        totalBuyVolume += tx.value;
+      } else if (fromIsHolder && !toIsHolder) {
+        sellCount++;
+        totalSellVolume += tx.value;
+      } else {
+        transferCount++;
+      }
+
+      // Track timing
+      firstTx = Math.min(firstTx, tx.timestamp);
+      lastTx = Math.max(lastTx, tx.timestamp);
+    });
+
+    // Calculate holding period (days since first buy)
+    const holdingPeriod = buyCount > 0 ? (Date.now() - firstTx) / (1000 * 60 * 60 * 24) : 0;
+
+    // Calculate average days between transactions
+    const avgDaysBetweenTxs =
+      txs.length > 1 ? (lastTx - firstTx) / (1000 * 60 * 24 * (txs.length - 1)) : 0;
+
+    // Classify behavior
+    const behaviorType = classifyWalletBehaviorFromMetrics(
+      walletAddress,
+      buyCount,
+      sellCount,
+      totalBuyVolume,
+      totalSellVolume,
+      holdingPeriod,
+      txs.length
+    );
+
+    activities.push({
+      walletAddress,
+      label: undefined,
+      behaviorType,
+      isActive: txs.length > 0,
+      totalTransactions: txs.length,
+      buyCount,
+      sellCount,
+      transferCount,
+      totalBuyVolume,
+      totalSellVolume,
+      netVolume: totalBuyVolume - totalSellVolume,
+      firstTransaction: firstTx,
+      lastTransaction: lastTx,
+      avgDaysBetweenTxs,
+      holdingPeriod,
+      currentBalance,
+      peakBalance: currentBalance, // Use currentBalance as peak (we don't track balance history)
+      lowestBalance: currentBalance, // Use currentBalance as lowest (we don't track balance history)
+      isWhale: totalBuyVolume > 10000 || totalSellVolume > 10000, // Simple threshold
+      isAccumulating: totalBuyVolume > totalSellVolume, // Net buyer
+      isDistributing: totalSellVolume > totalBuyVolume, // Net seller
+    });
+  }
+
+  return activities;
+}
+
+/**
+ * Classify wallet behavior from metrics (simplified version)
+ */
+function classifyWalletBehaviorFromMetrics(
+  _walletAddress: string,
+  buyCount: number,
+  sellCount: number,
+  totalBuyVolume: number,
+  totalSellVolume: number,
+  holdingPeriod: number,
+  txCount: number
+): WalletBehaviorType {
+  // Calculate metrics
+  const netVolume = totalBuyVolume - totalSellVolume;
+  const avgVolume = (totalBuyVolume + totalSellVolume) / (txCount || 1);
+
+  // Sniper: early buyer with long holding period
+  if (holdingPeriod > 180 && buyCount > 0 && sellCount === 0) {
+    return WalletBehaviorType.SNIPER;
+  }
+
+  // HODLer: long holding, low selling
+  if (holdingPeriod > 90 && sellCount < buyCount * 0.2) {
+    return WalletBehaviorType.HODLER;
+  }
+
+  // Trader: high transaction count with both buys and sells
+  if (txCount > 10 && buyCount > 0 && sellCount > 0) {
+    return WalletBehaviorType.TRADER;
+  }
+
+  // Whale: very high volume
+  if (avgVolume > 100000) {
+    return WalletBehaviorType.WHALE;
+  }
+
+  // Smart Money: profitable with significant volume
+  if (netVolume > 0 && avgVolume > 10000 && txCount > 5) {
+    return WalletBehaviorType.SMART_MONEY;
+  }
+
+  // Retail: small transactions, occasional activity
+  if (avgVolume < 1000 || txCount <= 3) {
+    return WalletBehaviorType.RETAIL;
+  }
+
+  return WalletBehaviorType.UNKNOWN;
 }

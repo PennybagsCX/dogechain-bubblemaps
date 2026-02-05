@@ -189,6 +189,8 @@ export interface DbWalletTransactionCache {
 export interface DbWalletAllTransactionsCache {
   tokenAddress: string; // Token contract address (primary key)
   transactions: any; // Serialized Transaction[] (all transactions for all wallets)
+  walletAddresses: string[]; // All wallet addresses (from wallets array)
+  holderAddresses: string[]; // All holder addresses (for buy/sell classification)
   cachedAt: number; // When this cache was created
   expiresAt: number; // When this cache expires (20 minutes)
 }
@@ -2202,16 +2204,24 @@ export async function clearWalletActivityCache(tokenAddress: string): Promise<vo
  * Save all transactions for a token (aggregated across all wallets)
  * Cache duration: 20 minutes
  * This enables instant timeframe filtering without re-fetching from API
+ * @param tokenAddress - Token contract address
+ * @param transactions - All transactions for all wallets
+ * @param walletAddresses - All wallet addresses (from wallets array)
+ * @param holderAddresses - All holder addresses (for buy/sell classification)
  */
 export async function saveAllTransactionsCache(
   tokenAddress: string,
-  transactions: any[]
+  transactions: any[],
+  walletAddresses: string[],
+  holderAddresses: string[]
 ): Promise<void> {
   try {
     const now = Date.now();
     const cacheEntry: DbWalletAllTransactionsCache = {
       tokenAddress: tokenAddress.toLowerCase(),
       transactions,
+      walletAddresses,
+      holderAddresses,
       cachedAt: now,
       expiresAt: now + 20 * 60 * 1000, // 20 minutes
     };

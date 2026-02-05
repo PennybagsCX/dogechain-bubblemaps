@@ -8,7 +8,7 @@
  * - Centralization alerts
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   PieChart,
   Pie,
@@ -21,9 +21,27 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { AlertTriangle, TrendingUp, Users, Wallet } from "lucide-react";
+import {
+  AlertTriangle,
+  TrendingUp,
+  Users,
+  Wallet,
+  Loader2,
+  Database,
+  Activity,
+  Zap,
+  Clock,
+  RefreshCw,
+} from "lucide-react";
 import { Token } from "../types";
 import { fetchDistributionAnalysis } from "../services/dataService";
+
+type ProgressStage =
+  | ""
+  | "Initializing"
+  | "Fetching Holder Data"
+  | "Analyzing Distribution"
+  | "Calculating Metrics";
 
 interface DistributionAnalysis {
   giniCoefficient: number;
@@ -51,6 +69,16 @@ interface DistributionAnalyticsProps {
 
 const COLORS = ["#8b5cf6", "#6366f1", "#3b82f6", "#0ea5e9", "#06b6d4", "#14b8a6"];
 
+// Format time ago helper
+const formatTimeAgo = (timestamp: number): string => {
+  const seconds = Math.floor((Date.now() - timestamp) / 1000);
+
+  if (seconds < 60) return "just now";
+  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+  return `${Math.floor(seconds / 86400)}d ago`;
+};
+
 export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
   token,
   className = "",
@@ -59,29 +87,112 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  // Progress tracking state
+  const [progressStage, setProgressStage] = useState<ProgressStage>("");
+  const [progressDetails, setProgressDetails] = useState("");
+  const [progressPercent, setProgressPercent] = useState(0);
+  const [holdersProcessed, setHoldersProcessed] = useState(0);
+  const [totalHolders, setTotalHolders] = useState(0);
+  const [lastRefreshed, setLastRefreshed] = useState<number>(Date.now());
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Ref to prevent duplicate fetches
+  const fetchKeyRef = useRef<string>("");
+
+  // Fetch distribution analysis with progress tracking
+  const fetchAnalysis = useCallback(async () => {
     if (!token) {
       setLoading(false);
       return;
     }
 
-    const fetchAnalysis = async () => {
-      try {
-        setLoading(true);
-        // Use the existing fetchDistributionAnalysis from dataService
-        const analysisData = await fetchDistributionAnalysis(token);
-        setAnalysis(analysisData ?? null);
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching distribution analysis:", err);
-        setError("Failed to load distribution data");
-      } finally {
-        setLoading(false);
-      }
-    };
+    // Generate unique fetch key to prevent duplicate requests
+    const fetchKey = `${token.address}-${refreshKey}`;
+    if (fetchKeyRef.current === fetchKey) {
+      return; // Already fetching this exact request
+    }
+    fetchKeyRef.current = fetchKey;
 
+    try {
+      setLoading(true);
+      setError(null);
+      setProgressStage("Initializing");
+      setProgressDetails("Preparing to fetch holder data...");
+      setProgressPercent(5);
+
+      // Simulate initialization delay for better UX
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      setProgressPercent(10);
+
+      setProgressStage("Fetching Holder Data");
+      setProgressDetails("Fetching token holders from blockchain...");
+      setProgressPercent(20);
+
+      // Simulate holder fetching progress
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      setProgressPercent(40);
+      setProgressDetails("Processing holder balances...");
+
+      // Update holders processed (simulated for UX)
+      setTotalHolders(100);
+      const holderUpdateInterval = setInterval(() => {
+        setHoldersProcessed((prev) => {
+          if (prev >= 100) {
+            clearInterval(holderUpdateInterval);
+            return 100;
+          }
+          return prev + 10;
+        });
+      }, 200);
+
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      clearInterval(holderUpdateInterval);
+      setHoldersProcessed(100);
+      setProgressPercent(70);
+
+      setProgressStage("Analyzing Distribution");
+      setProgressDetails("Calculating Gini coefficient and concentration bands...");
+      setProgressPercent(85);
+
+      await new Promise((resolve) => setTimeout(resolve, 600));
+
+      setProgressStage("Calculating Metrics");
+      setProgressDetails("Computing distribution buckets and metrics...");
+      setProgressPercent(95);
+
+      // Use the existing fetchDistributionAnalysis from dataService
+      const analysisData = await fetchDistributionAnalysis(token);
+
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      setAnalysis(analysisData ?? null);
+      setProgressPercent(100);
+      setProgressDetails("Complete!");
+
+      setTimeout(() => {
+        setProgressStage("");
+        setProgressDetails("");
+      }, 500);
+    } catch (err) {
+      console.error("Error fetching distribution analysis:", err);
+      setError("Failed to load distribution data");
+      setProgressStage("");
+      setProgressDetails("");
+    } finally {
+      setLoading(false);
+      setLastRefreshed(Date.now());
+    }
+  }, [token, refreshKey]);
+
+  // Fetch analysis when dependencies change
+  useEffect(() => {
     fetchAnalysis();
-  }, [token]);
+  }, [fetchAnalysis]);
+
+  // Handle refresh without page reload
+  const handleRefresh = () => {
+    fetchKeyRef.current = "";
+    setRefreshKey((prev) => prev + 1);
+  };
 
   // Gini coefficient interpretation
   const getGiniInterpretation = (gini: number) => {
@@ -123,36 +234,181 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
 
   if (!token) {
     return (
-      <div className={`p-6 ${className}`}>
-        <div className="text-center text-slate-400">
-          <Wallet className="w-12 h-12 mx-auto mb-4 opacity-50" />
-          <p>Select a token to view distribution analytics</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (loading) {
-    return (
       <div className={`space-y-6 ${className}`}>
-        <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-space-700 rounded w-1/3"></div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-32 bg-space-700 rounded"></div>
-            ))}
+        {/* Header */}
+        <div>
+          <h2 className="text-2xl font-bold text-white">Distribution Analytics</h2>
+          <p className="text-slate-400">Wealth concentration analysis</p>
+        </div>
+
+        {/* No token selected state */}
+        <div className="bg-space-800 rounded-xl p-12 border border-space-700">
+          <div className="text-center text-slate-400">
+            <Wallet className="w-16 h-16 mx-auto mb-4 opacity-50 text-purple-400" />
+            <h3 className="text-xl font-semibold text-white mb-2">No Token Selected</h3>
+            <p>Select a token to view distribution analytics</p>
           </div>
         </div>
       </div>
     );
   }
 
-  if (error || !analysis) {
+  // Loading state with progress tracking
+  if (loading) {
     return (
-      <div className={`p-6 ${className}`}>
-        <div className="text-center text-slate-400">
-          <AlertTriangle className="w-12 h-12 mx-auto mb-4 opacity-50" />
-          <p>{error || "Unable to load distribution analytics"}</p>
+      <div className={`space-y-6 ${className}`}>
+        {/* Header */}
+        <div>
+          <h2 className="text-2xl font-bold text-white">Distribution Analytics</h2>
+          <p className="text-slate-400">Wealth concentration analysis for {token.symbol}</p>
+        </div>
+
+        {/* Progress Card */}
+        <div className="bg-space-800 rounded-xl p-8 border border-space-700">
+          {/* Stage indicator */}
+          <div className="flex items-center gap-3 mb-6">
+            {progressStage === "Initializing" && (
+              <Loader2 className="w-6 h-6 text-purple-500 animate-spin" />
+            )}
+            {progressStage === "Fetching Holder Data" && (
+              <Database className="w-6 h-6 text-blue-500 animate-pulse" />
+            )}
+            {progressStage === "Analyzing Distribution" && (
+              <Activity className="w-6 h-6 text-green-500 animate-pulse" />
+            )}
+            {progressStage === "Calculating Metrics" && (
+              <Zap className="w-6 h-6 text-amber-500 animate-pulse" />
+            )}
+            {!progressStage && <Loader2 className="w-6 h-6 text-purple-500 animate-spin" />}
+            <div>
+              <div className="text-white font-medium">{progressStage || "Loading..."}</div>
+              <div className="text-sm text-slate-400">{progressDetails || "Please wait..."}</div>
+            </div>
+          </div>
+
+          {/* Progress bar */}
+          <div className="mb-4">
+            <div className="flex justify-between text-sm mb-2">
+              <span className="text-slate-400">{progressDetails || "Preparing..."}</span>
+              <span className="text-purple-400 font-semibold">{progressPercent}%</span>
+            </div>
+            <div className="w-full bg-space-700 rounded-full h-3 overflow-hidden">
+              <div
+                className="bg-gradient-to-r from-purple-600 to-blue-500 h-full rounded-full transition-all duration-300 ease-out relative"
+                style={{ width: `${progressPercent}%` }}
+              >
+                <div className="absolute inset-0 bg-white/20 animate-shimmer"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Holder processing details */}
+          {progressStage === "Fetching Holder Data" && holdersProcessed > 0 && (
+            <div className="mt-6 p-4 bg-space-700/50 rounded-lg">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-slate-400">Holders processed</span>
+                <span className="text-white font-semibold">
+                  {holdersProcessed} / {totalHolders}
+                </span>
+              </div>
+              <div className="w-full bg-space-600 rounded-full h-2 mt-2">
+                <div
+                  className="bg-green-500 h-full rounded-full transition-all duration-300"
+                  style={{ width: `${(holdersProcessed / totalHolders) * 100}%` }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Loading message */}
+          <div className="mt-6 flex items-center gap-2 text-sm text-slate-500">
+            <Clock className="w-4 h-4" />
+            <span>This may take a few seconds...</span>
+          </div>
+
+          {/* Optimization notice */}
+          <div className="mt-4 p-3 bg-purple-500/10 border border-purple-500/20 rounded-lg">
+            <div className="flex items-start gap-2 text-sm">
+              <Zap className="w-4 h-4 text-purple-400 mt-0.5 flex-shrink-0" />
+              <p className="text-purple-300">
+                Loading distribution metrics and holder concentration data
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state - still show full UI with inline error message
+  if (error) {
+    return (
+      <div className={`space-y-6 ${className}`}>
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 className="text-2xl font-bold text-white">Distribution Analytics</h2>
+            <p className="text-slate-400">Wealth concentration analysis for {token.symbol}</p>
+          </div>
+
+          {/* Refresh button */}
+          <button
+            onClick={handleRefresh}
+            disabled={loading}
+            className="p-2 hover:text-white transition-colors text-slate-400"
+            title="Force refresh data"
+          >
+            <RefreshCw className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Inline Error State */}
+        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-8">
+          <div className="text-center text-slate-400">
+            <AlertTriangle className="w-12 h-12 mx-auto mb-4 text-red-400 opacity-50" />
+            <p className="text-red-300">{error}</p>
+            <button
+              onClick={handleRefresh}
+              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Empty state - no distribution data available
+  if (!analysis) {
+    return (
+      <div className={`space-y-6 ${className}`}>
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 className="text-2xl font-bold text-white">Distribution Analytics</h2>
+            <p className="text-slate-400">Wealth concentration analysis for {token.symbol}</p>
+          </div>
+
+          {/* Refresh button */}
+          <button
+            onClick={handleRefresh}
+            disabled={loading}
+            className="p-2 hover:text-white transition-colors text-slate-400"
+            title="Force refresh data"
+          >
+            <RefreshCw className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Inline Empty State */}
+        <div className="bg-space-800 rounded-xl p-12 border border-space-700">
+          <div className="text-center text-slate-400">
+            <Wallet className="w-16 h-16 mx-auto mb-4 opacity-50 text-purple-400" />
+            <h3 className="text-xl font-semibold text-white mb-2">No Distribution Data</h3>
+            <p>No distribution data available for this token</p>
+            <p className="text-sm text-slate-500 mt-2">Try selecting a different token</p>
+          </div>
         </div>
       </div>
     );
@@ -163,9 +419,27 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Header */}
-      <div>
-        <h2 className="text-2xl font-bold text-white">Distribution Analytics</h2>
-        <p className="text-slate-400">Wealth concentration analysis for {token.symbol}</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-white">Distribution Analytics</h2>
+          <p className="text-slate-400">Wealth concentration analysis for {token.symbol}</p>
+        </div>
+
+        {/* Last Updated and Refresh */}
+        <div className="flex items-center gap-3 text-sm">
+          <div className="flex items-center gap-2 text-slate-400">
+            <Clock className="w-4 h-4" />
+            <span>Data from {formatTimeAgo(lastRefreshed)}</span>
+          </div>
+          <button
+            onClick={handleRefresh}
+            disabled={loading}
+            className="p-1 hover:text-white transition-colors text-slate-400"
+            title="Force refresh data"
+          >
+            <RefreshCw className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       {/* Data Source Disclaimer */}

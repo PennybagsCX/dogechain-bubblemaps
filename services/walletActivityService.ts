@@ -1079,6 +1079,17 @@ export async function generateAnalyticsFromCachedTransactions(
     transfers: activities.reduce((sum, a) => sum + a.transferCount, 0),
   };
 
+  // Check if there's sufficient trading activity for meaningful analytics
+  // If total volume is 0 and there are no buys or sells, the data is not meaningful
+  // (likely only transfers between wallets, not actual trading activity)
+  const hasTradingActivity =
+    totalVolume > 0 || transactionTypes.buys > 0 || transactionTypes.sells > 0;
+
+  if (!hasTradingActivity) {
+    onProgress?.("No trading activity in this timeframe");
+    return null; // Show empty state instead of meaningless partial data
+  }
+
   // Sort top wallets
   const topBuyers = [...activities]
     .filter((a) => a.totalBuyVolume > 0)

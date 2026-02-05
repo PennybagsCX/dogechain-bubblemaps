@@ -304,8 +304,19 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
         }
       }
 
-      // If filtering failed, fall back to fetching from API
-      console.log(`[WalletActivityAnalytics] Filtering failed, falling back to API fetch`);
+      // If filtering failed (no data in this timeframe), show empty state instead of error
+      // This happens for small tokens with no activity in short timeframes (1H, 24H)
+      console.log(
+        `[WalletActivityAnalytics] No data in ${timeRange} timeframe - showing empty state`
+      );
+      setStats(null); // Show empty state message
+      setWalletsCache(allCachedState.wallets);
+      setError(null);
+      setLoading(false);
+      setProgressStage("");
+      setProgressDetails("");
+      setLastRefreshed(rawAllData ? rawAllData.cachedAt : Date.now());
+      return;
     }
 
     // SessionStorage restore removed - we only cache "all" data and filter client-side
@@ -499,6 +510,19 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
 
           if (filteredStats) {
             finalStats = filteredStats;
+          } else {
+            // No data in this timeframe - show empty state instead of showing "all" data
+            // This happens for small tokens with no activity in short timeframes (1H, 24H)
+            console.log(
+              `[WalletActivityAnalytics] No data in ${displayTimeRange} timeframe - showing empty state`
+            );
+            setStats(null); // Show empty state message
+            setWalletsCache(wallets);
+            setLoading(false);
+            setProgressStage("");
+            setProgressDetails("");
+            setLastRefreshed(Date.now());
+            return;
           }
         }
       }
@@ -737,19 +761,62 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
     );
   }
 
-  // Error state
-  if (error || !stats) {
+  // Error state - still show full UI with inline error message
+  if (error) {
     return (
-      <div className={`p-6 ${className}`}>
-        <div className="text-center text-slate-400">
-          <AlertCircle className="w-12 h-12 mx-auto mb-4 opacity-50" />
-          <p>{error || "Unable to load wallet activity analytics"}</p>
+      <div className={`space-y-6 ${className}`}>
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 className="text-2xl font-bold text-white">Wallet Activity Analytics</h2>
+            <p className="text-slate-400">Activity analysis for {token.symbol}</p>
+          </div>
+
+          {/* Time Range Selector - All data loaded instantly from "all" timeframe cache */}
+          <div className="flex items-center gap-2 bg-space-800 rounded-lg p-1">
+            {TIME_RANGES.map((range) => {
+              return (
+                <button
+                  key={range}
+                  onClick={() => setTimeRange(range)}
+                  disabled={loading}
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    timeRange === range
+                      ? "bg-purple-600 text-white"
+                      : loading
+                        ? "text-slate-500 cursor-wait"
+                        : "text-slate-400 hover:text-white hover:bg-space-700"
+                  }`}
+                >
+                  {range === "all" ? "All Time" : range.toUpperCase()}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Refresh button */}
           <button
-            onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+            onClick={handleRefresh}
+            disabled={loading}
+            className="p-2 hover:text-white transition-colors text-slate-400"
+            title="Force refresh data"
           >
-            Retry
+            <RefreshCw className="w-5 h-5" />
           </button>
+        </div>
+
+        {/* Inline Error State */}
+        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-8">
+          <div className="text-center text-slate-400">
+            <AlertCircle className="w-12 h-12 mx-auto mb-4 text-red-400 opacity-50" />
+            <p className="text-red-300">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+            >
+              Retry
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -787,23 +854,25 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
         </div>
 
         {/* Last Updated */}
-        <div className="flex items-center gap-3 text-sm">
-          <div className="flex items-center gap-2 text-slate-400">
-            <Clock className="w-4 h-4" />
-            <span>Data from {formatTimeAgo(stats.lastUpdated)}</span>
-            {!loading && (
-              <span className="text-slate-500">({formatTimeAgo(lastRefreshed)} refreshed)</span>
-            )}
+        {stats && (
+          <div className="flex items-center gap-3 text-sm">
+            <div className="flex items-center gap-2 text-slate-400">
+              <Clock className="w-4 h-4" />
+              <span>Data from {formatTimeAgo(stats.lastUpdated)}</span>
+              {!loading && (
+                <span className="text-slate-500">({formatTimeAgo(lastRefreshed)} refreshed)</span>
+              )}
+            </div>
+            <button
+              onClick={handleRefresh}
+              disabled={loading}
+              className="p-1 hover:text-white transition-colors text-slate-400"
+              title="Force refresh data"
+            >
+              <RefreshCw className="w-4 h-4" />
+            </button>
           </div>
-          <button
-            onClick={handleRefresh}
-            disabled={loading}
-            className="p-1 hover:text-white transition-colors text-slate-400"
-            title="Force refresh data"
-          >
-            <RefreshCw className="w-4 h-4" />
-          </button>
-        </div>
+        )}
       </div>
 
       {/* Data Disclaimer */}
@@ -831,104 +900,280 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
         </div>
       </div>
 
-      {/* Key Metrics Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Active Wallets */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Users className="w-4 h-4 text-purple-500" />
-            <span className="text-slate-400 text-sm">Active Wallets</span>
-          </div>
-          <div className="text-3xl font-bold text-white">
-            {stats.activeWallets.toLocaleString()}
-          </div>
-          <div className="text-xs text-slate-500 mt-2">
-            of {stats.totalWallets.toLocaleString()} total
+      {/* Inline Empty State - shown when no data for selected time range */}
+      {!stats && (
+        <div className="bg-space-800 rounded-xl p-12 border border-space-700">
+          <div className="text-center text-slate-400">
+            <WalletIcon className="w-16 h-16 mx-auto mb-4 opacity-50 text-purple-400" />
+            <h3 className="text-xl font-semibold text-white mb-2">No Wallet Activity Data</h3>
+            <p className="mb-4">No wallet activity data available for the selected time range</p>
+            <p className="text-sm text-slate-500">
+              Try selecting a different time range (e.g., &ldquo;All Time&rdquo; or
+              &ldquo;30d&rdquo;)
+            </p>
           </div>
         </div>
+      )}
 
-        {/* Total Transactions */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Activity className="w-4 h-4 text-blue-500" />
-            <span className="text-slate-400 text-sm">Total Transactions</span>
-          </div>
-          <div className="text-3xl font-bold text-white">
-            {formatNumber(stats.totalTransactions)}
-          </div>
-          <div className="text-xs text-slate-500 mt-2">
-            {stats.transactionTypes.buys} buys / {stats.transactionTypes.sells} sells
-          </div>
-        </div>
+      {/* Key Metrics Cards - only show when stats exist */}
+      {stats && (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Active Wallets */}
+            <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Users className="w-4 h-4 text-purple-500" />
+                <span className="text-slate-400 text-sm">Active Wallets</span>
+              </div>
+              <div className="text-3xl font-bold text-white">
+                {stats.activeWallets.toLocaleString()}
+              </div>
+              <div className="text-xs text-slate-500 mt-2">
+                of {stats.totalWallets.toLocaleString()} total
+              </div>
+            </div>
 
-        {/* Total Volume */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <TrendingUp className="w-4 h-4 text-green-500" />
-            <span className="text-slate-400 text-sm">Total Volume</span>
-          </div>
-          <div className="text-3xl font-bold text-white">{formatNumber(stats.totalVolume)}</div>
-          <div className="text-xs text-slate-500 mt-2">{token.symbol} tokens</div>
-        </div>
+            {/* Total Transactions */}
+            <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Activity className="w-4 h-4 text-blue-500" />
+                <span className="text-slate-400 text-sm">Total Transactions</span>
+              </div>
+              <div className="text-3xl font-bold text-white">
+                {formatNumber(stats.totalTransactions)}
+              </div>
+              <div className="text-xs text-slate-500 mt-2">
+                {stats.transactionTypes.buys} buys / {stats.transactionTypes.sells} sells
+              </div>
+            </div>
 
-        {/* Avg Holding Period */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Clock className="w-4 h-4 text-amber-500" />
-            <span className="text-slate-400 text-sm">Avg Holding</span>
-          </div>
-          <div className="text-3xl font-bold text-white">
-            {/* Calculate avg holding from activities */}
-            {(() => {
-              const allActivities: WalletActivity[] = [
-                ...stats.topBuyers,
-                ...stats.topSellers,
-                ...stats.topAccumulators,
-                ...stats.topDistributors,
-              ];
-              const unique = new Map<string, WalletActivity>();
-              allActivities.forEach((a) => unique.set(a.walletAddress, a));
-              const avgHolding =
-                Array.from(unique.values()).reduce((sum, a) => sum + a.holdingPeriod, 0) /
-                unique.size;
-              return avgHolding > 0 ? `${avgHolding.toFixed(0)}d` : "N/A";
-            })()}
-          </div>
-          <div className="text-xs text-slate-500 mt-2">Average days held</div>
-        </div>
-      </div>
+            {/* Total Volume */}
+            <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <TrendingUp className="w-4 h-4 text-green-500" />
+                <span className="text-slate-400 text-sm">Total Volume</span>
+              </div>
+              <div className="text-3xl font-bold text-white">{formatNumber(stats.totalVolume)}</div>
+              <div className="text-xs text-slate-500 mt-2">{token.symbol} tokens</div>
+            </div>
 
-      {/* Charts Row 1: Behavior Distribution and Activity Timeline */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Behavior Distribution Pie Chart */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <h3 className="text-lg font-semibold text-white mb-4">Wallet Behavior Distribution</h3>
-          {behaviorDistributionData.length > 0 ? (
-            <div className="space-y-4">
-              <ResponsiveContainer width="100%" height={280}>
-                <PieChart margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
-                  <Pie
-                    data={behaviorDistributionData}
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={70}
-                    dataKey="value"
-                    label={false} // Disable labels on pie slices, using legend instead
+            {/* Avg Holding Period */}
+            <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Clock className="w-4 h-4 text-amber-500" />
+                <span className="text-slate-400 text-sm">Avg Holding</span>
+              </div>
+              <div className="text-3xl font-bold text-white">
+                {/* Calculate avg holding from activities */}
+                {(() => {
+                  const allActivities: WalletActivity[] = [
+                    ...stats.topBuyers,
+                    ...stats.topSellers,
+                    ...stats.topAccumulators,
+                    ...stats.topDistributors,
+                  ];
+                  const unique = new Map<string, WalletActivity>();
+                  allActivities.forEach((a) => unique.set(a.walletAddress, a));
+                  const avgHolding =
+                    Array.from(unique.values()).reduce((sum, a) => sum + a.holdingPeriod, 0) /
+                    unique.size;
+                  return avgHolding > 0 ? `${avgHolding.toFixed(0)}d` : "N/A";
+                })()}
+              </div>
+              <div className="text-xs text-slate-500 mt-2">Average days held</div>
+            </div>
+          </div>
+
+          {/* Charts Row 1: Behavior Distribution and Activity Timeline */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Behavior Distribution Pie Chart */}
+            <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+              <h3 className="text-lg font-semibold text-white mb-4">
+                Wallet Behavior Distribution
+              </h3>
+              {behaviorDistributionData.length > 0 ? (
+                <div className="space-y-4">
+                  <ResponsiveContainer width="100%" height={280}>
+                    <PieChart margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
+                      <Pie
+                        data={behaviorDistributionData}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={70}
+                        dataKey="value"
+                        label={false} // Disable labels on pie slices, using legend instead
+                      >
+                        {behaviorDistributionData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={BEHAVIOR_COLORS[entry.behavior]} />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        content={({ active, payload }) => {
+                          if (active && payload && payload.length > 0) {
+                            const data = payload[0].payload;
+                            return (
+                              <div className="bg-space-800 border border-space-600 rounded-lg p-3 shadow-xl">
+                                <div className="text-sm font-medium text-white">{data.name}</div>
+                                <div className="text-lg font-bold text-purple-400">
+                                  {data.value} wallets (
+                                  {((data.value / (stats?.totalWallets || 1)) * 100).toFixed(1)}%)
+                                </div>
+                              </div>
+                            );
+                          }
+                          return null;
+                        }}
+                      />
+                      <Legend
+                        verticalAlign="bottom"
+                        height={80}
+                        iconType="circle"
+                        content={({ payload }) => (
+                          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-2 px-2">
+                            {payload?.map((entry, index) => (
+                              <div key={index} className="flex items-center gap-1.5">
+                                <div
+                                  className="w-3 h-3 rounded-full flex-shrink-0"
+                                  style={{ backgroundColor: entry.color }}
+                                />
+                                <span className="text-xs text-slate-300">
+                                  {entry.value} (
+                                  {(
+                                    (entry.payload?.value / (stats?.totalWallets || 1)) *
+                                    100
+                                  ).toFixed(1)}
+                                  %)
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center h-[250px] text-slate-400">
+                  <p>No behavior data available</p>
+                </div>
+              )}
+            </div>
+
+            {/* Activity Timeline */}
+            <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+              <h3 className="text-lg font-semibold text-white mb-4">Activity Timeline</h3>
+              {stats.activityTimeline.length > 0 ? (
+                <ResponsiveContainer width="100%" height={250}>
+                  <AreaChart
+                    data={stats.activityTimeline}
+                    margin={{ top: 10, right: 30, bottom: 20, left: 0 }}
                   >
-                    {behaviorDistributionData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={BEHAVIOR_COLORS[entry.behavior]} />
-                    ))}
-                  </Pie>
+                    <XAxis
+                      dataKey="date"
+                      tick={{ fill: "#94a3b8", fontSize: 12 }}
+                      axisLine={{ stroke: "#334155" }}
+                    />
+                    <YAxis
+                      tick={{ fill: "#94a3b8", fontSize: 12 }}
+                      axisLine={{ stroke: "#334155" }}
+                      width={40}
+                    />
+                    <Tooltip
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length > 0) {
+                          const data = payload[0].payload;
+                          return (
+                            <div className="bg-space-800 border border-space-600 rounded-lg p-3 shadow-xl">
+                              <div className="text-sm text-slate-400 mb-1">{data.date}</div>
+                              <div className="text-sm font-medium text-white">
+                                TXs: {data.transactions}
+                              </div>
+                              <div className="text-sm font-medium text-green-400">
+                                Vol: {data.volume.toFixed(2)}
+                              </div>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="transactions"
+                      stroke="#8b5cf6"
+                      fill="#8b5cf6"
+                      fillOpacity={0.3}
+                      name="Transactions"
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="volume"
+                      stroke="#10b981"
+                      fill="#10b981"
+                      fillOpacity={0.3}
+                      name="Volume"
+                      yAxisId="right"
+                    />
+                    <Legend
+                      verticalAlign="bottom"
+                      height={36}
+                      content={({ payload }) => (
+                        <div className="flex justify-center gap-4 mt-2">
+                          {payload?.map((entry, index) => (
+                            <div key={index} className="flex items-center gap-1.5">
+                              <div
+                                className="w-3 h-3 rounded-sm"
+                                style={{ backgroundColor: entry.color }}
+                              />
+                              <span className="text-xs text-slate-300">{entry.value}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="flex items-center justify-center h-[250px] text-slate-400">
+                  <p>No timeline data available for this time range</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Buy/Sell Pressure Chart */}
+          <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+            <h3 className="text-lg font-semibold text-white mb-4">Buy/Sell Pressure</h3>
+            {stats.activityTimeline.length > 0 ? (
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart
+                  data={stats.activityTimeline}
+                  margin={{ top: 10, right: 30, bottom: 20, left: 0 }}
+                >
+                  <XAxis
+                    dataKey="date"
+                    tick={{ fill: "#94a3b8", fontSize: 12 }}
+                    axisLine={{ stroke: "#334155" }}
+                  />
+                  <YAxis
+                    tick={{ fill: "#94a3b8", fontSize: 12 }}
+                    axisLine={{ stroke: "#334155" }}
+                    width={40}
+                  />
                   <Tooltip
                     content={({ active, payload }) => {
                       if (active && payload && payload.length > 0) {
                         const data = payload[0].payload;
                         return (
                           <div className="bg-space-800 border border-space-600 rounded-lg p-3 shadow-xl">
-                            <div className="text-sm font-medium text-white">{data.name}</div>
-                            <div className="text-lg font-bold text-purple-400">
-                              {data.value} wallets (
-                              {((data.value / (stats?.totalWallets || 1)) * 100).toFixed(1)}%)
+                            <div className="text-sm text-slate-400 mb-1">{data.date}</div>
+                            <div className="flex items-center gap-2">
+                              <ArrowUpRight className="w-4 h-4 text-green-500" />
+                              <span className="text-sm text-green-400">Buys: {data.buys}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <ArrowDownRight className="w-4 h-4 text-red-500" />
+                              <span className="text-sm text-red-400">Sells: {data.sells}</span>
                             </div>
                           </div>
                         );
@@ -938,456 +1183,320 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                   />
                   <Legend
                     verticalAlign="bottom"
-                    height={80}
-                    iconType="circle"
+                    height={36}
                     content={({ payload }) => (
-                      <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-2 px-2">
+                      <div className="flex justify-center gap-4 mt-2">
                         {payload?.map((entry, index) => (
                           <div key={index} className="flex items-center gap-1.5">
                             <div
-                              className="w-3 h-3 rounded-full flex-shrink-0"
+                              className="w-3 h-3 rounded-sm"
                               style={{ backgroundColor: entry.color }}
                             />
-                            <span className="text-xs text-slate-300">
-                              {entry.value} (
-                              {((entry.payload?.value / (stats?.totalWallets || 1)) * 100).toFixed(
-                                1
-                              )}
-                              %)
-                            </span>
+                            <span className="text-xs text-slate-300">{entry.value}</span>
                           </div>
                         ))}
                       </div>
                     )}
                   />
-                </PieChart>
+                  <Bar dataKey="buys" fill="#10b981" name="Buys" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="sells" fill="#ef4444" name="Sells" radius={[4, 4, 0, 0]} />
+                </BarChart>
               </ResponsiveContainer>
-            </div>
-          ) : (
-            <div className="flex items-center justify-center h-[250px] text-slate-400">
-              <p>No behavior data available</p>
-            </div>
-          )}
-        </div>
+            ) : (
+              <div className="flex items-center justify-center h-[300px] text-slate-400">
+                <p>No buy/sell data available for this time range</p>
+              </div>
+            )}
+          </div>
 
-        {/* Activity Timeline */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <h3 className="text-lg font-semibold text-white mb-4">Activity Timeline</h3>
-          {stats.activityTimeline.length > 0 ? (
-            <ResponsiveContainer width="100%" height={250}>
-              <AreaChart
-                data={stats.activityTimeline}
-                margin={{ top: 10, right: 30, bottom: 20, left: 0 }}
-              >
-                <XAxis
-                  dataKey="date"
-                  tick={{ fill: "#94a3b8", fontSize: 12 }}
-                  axisLine={{ stroke: "#334155" }}
-                />
-                <YAxis
-                  tick={{ fill: "#94a3b8", fontSize: 12 }}
-                  axisLine={{ stroke: "#334155" }}
-                  width={40}
-                />
-                <Tooltip
-                  content={({ active, payload }) => {
-                    if (active && payload && payload.length > 0) {
-                      const data = payload[0].payload;
-                      return (
-                        <div className="bg-space-800 border border-space-600 rounded-lg p-3 shadow-xl">
-                          <div className="text-sm text-slate-400 mb-1">{data.date}</div>
-                          <div className="text-sm font-medium text-white">
-                            TXs: {data.transactions}
+          {/* Top Wallets */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Top Buyers */}
+            <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+              <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                <ArrowUpRight className="w-5 h-5 text-green-500" />
+                Top Buyers
+              </h3>
+              <div className="space-y-2">
+                {stats.topBuyers.slice(0, 10).map((activity, index) => {
+                  const isExpanded = expandedBuyerWallet === activity.walletAddress;
+                  const transactions = walletTransactions[activity.walletAddress] || [];
+                  const isLoadingTxs = loadingTransactions[activity.walletAddress];
+
+                  return (
+                    <div
+                      key={activity.walletAddress}
+                      className="border border-space-700 rounded-lg overflow-hidden"
+                    >
+                      <div className="w-full flex items-center justify-between p-3 bg-space-700/50">
+                        <div className="flex items-center gap-3">
+                          <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center text-xs font-bold text-white">
+                            {index + 1}
                           </div>
-                          <div className="text-sm font-medium text-green-400">
-                            Vol: {data.volume.toFixed(2)}
+                          <div className="text-left">
+                            <div className="text-sm font-medium text-white">
+                              {onWalletSelect ? (
+                                <button
+                                  onClick={() => handleWalletAddressClick(activity.walletAddress)}
+                                  className="hover:text-purple-400 transition-colors underline decoration-dotted underline-offset-2"
+                                  title="Click to view on bubble map"
+                                >
+                                  {activity.label || formatAddress(activity.walletAddress)}
+                                </button>
+                              ) : (
+                                activity.label || formatAddress(activity.walletAddress)
+                              )}
+                            </div>
+                            <div className="text-xs text-slate-400">{activity.buyCount} buys</div>
                           </div>
                         </div>
-                      );
-                    }
-                    return null;
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="transactions"
-                  stroke="#8b5cf6"
-                  fill="#8b5cf6"
-                  fillOpacity={0.3}
-                  name="Transactions"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="volume"
-                  stroke="#10b981"
-                  fill="#10b981"
-                  fillOpacity={0.3}
-                  name="Volume"
-                  yAxisId="right"
-                />
-                <Legend
-                  verticalAlign="bottom"
-                  height={36}
-                  content={({ payload }) => (
-                    <div className="flex justify-center gap-4 mt-2">
-                      {payload?.map((entry, index) => (
-                        <div key={index} className="flex items-center gap-1.5">
-                          <div
-                            className="w-3 h-3 rounded-sm"
-                            style={{ backgroundColor: entry.color }}
-                          />
-                          <span className="text-xs text-slate-300">{entry.value}</span>
+                        <div className="flex items-center gap-3">
+                          <div className="text-right">
+                            <div className="text-sm font-bold text-green-400">
+                              {formatNumber(activity.totalBuyVolume)}
+                            </div>
+                            <div className="text-xs text-slate-400">
+                              {BEHAVIOR_LABELS[activity.behaviorType]}
+                            </div>
+                          </div>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleToggleExpand(activity.walletAddress, "buyers");
+                            }}
+                            className="p-1 hover:bg-space-600 rounded transition-colors"
+                            title={isExpanded ? "Collapse" : "Expand"}
+                          >
+                            {isExpanded ? (
+                              <ChevronUp className="w-4 h-4 text-slate-400" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4 text-slate-400" />
+                            )}
+                          </button>
                         </div>
-                      ))}
+                      </div>
+
+                      {/* Inline Transaction Details */}
+                      {isExpanded && (
+                        <div className="border-t border-space-700 bg-space-800/50 p-3">
+                          {isLoadingTxs ? (
+                            <div className="text-center py-4 text-slate-400 text-sm">
+                              <RefreshCw className="w-4 h-4 mx-auto mb-2 animate-spin" />
+                              Loading transactions...
+                            </div>
+                          ) : transactions.length > 0 ? (
+                            <div className="space-y-2 max-h-60 overflow-y-auto">
+                              <div className="text-xs text-slate-400 mb-2">
+                                Recent transactions (showing first 10)
+                              </div>
+                              {transactions.slice(0, 10).map((tx, idx) => (
+                                <div
+                                  key={idx}
+                                  className="flex items-center justify-between p-2 bg-space-700/30 rounded text-xs"
+                                >
+                                  <div className="flex-1">
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-slate-400">
+                                        {formatTimeAgo(tx.timestamp)}
+                                      </span>
+                                      <span
+                                        className={`px-1.5 py-0.5 rounded ${
+                                          tx.to.toLowerCase() ===
+                                          activity.walletAddress.toLowerCase()
+                                            ? "bg-green-500/20 text-green-400"
+                                            : "bg-red-500/20 text-red-400"
+                                        }`}
+                                      >
+                                        {tx.to.toLowerCase() ===
+                                        activity.walletAddress.toLowerCase()
+                                          ? "IN"
+                                          : "OUT"}
+                                      </span>
+                                    </div>
+                                    <div className="text-slate-500 mt-1">
+                                      {formatAddress(tx.from)} → {formatAddress(tx.to)}
+                                    </div>
+                                  </div>
+                                  <div className="text-right">
+                                    <div className="text-white font-medium">
+                                      {formatNumber(tx.value)} {token.symbol}
+                                    </div>
+                                    <a
+                                      href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-purple-400 hover:text-purple-300 flex items-center gap-1"
+                                    >
+                                      View <ExternalLink className="w-3 h-3" />
+                                    </a>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="text-center py-4 text-slate-400 text-sm">
+                              No transactions found
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
-                  )}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          ) : (
-            <div className="flex items-center justify-center h-[250px] text-slate-400">
-              <p>No timeline data available for this time range</p>
-            </div>
-          )}
-        </div>
-      </div>
+                  );
+                })}
 
-      {/* Buy/Sell Pressure Chart */}
-      <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-        <h3 className="text-lg font-semibold text-white mb-4">Buy/Sell Pressure</h3>
-        {stats.activityTimeline.length > 0 ? (
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart
-              data={stats.activityTimeline}
-              margin={{ top: 10, right: 30, bottom: 20, left: 0 }}
-            >
-              <XAxis
-                dataKey="date"
-                tick={{ fill: "#94a3b8", fontSize: 12 }}
-                axisLine={{ stroke: "#334155" }}
-              />
-              <YAxis
-                tick={{ fill: "#94a3b8", fontSize: 12 }}
-                axisLine={{ stroke: "#334155" }}
-                width={40}
-              />
-              <Tooltip
-                content={({ active, payload }) => {
-                  if (active && payload && payload.length > 0) {
-                    const data = payload[0].payload;
-                    return (
-                      <div className="bg-space-800 border border-space-600 rounded-lg p-3 shadow-xl">
-                        <div className="text-sm text-slate-400 mb-1">{data.date}</div>
-                        <div className="flex items-center gap-2">
-                          <ArrowUpRight className="w-4 h-4 text-green-500" />
-                          <span className="text-sm text-green-400">Buys: {data.buys}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <ArrowDownRight className="w-4 h-4 text-red-500" />
-                          <span className="text-sm text-red-400">Sells: {data.sells}</span>
-                        </div>
-                      </div>
-                    );
-                  }
-                  return null;
-                }}
-              />
-              <Legend
-                verticalAlign="bottom"
-                height={36}
-                content={({ payload }) => (
-                  <div className="flex justify-center gap-4 mt-2">
-                    {payload?.map((entry, index) => (
-                      <div key={index} className="flex items-center gap-1.5">
-                        <div
-                          className="w-3 h-3 rounded-sm"
-                          style={{ backgroundColor: entry.color }}
-                        />
-                        <span className="text-xs text-slate-300">{entry.value}</span>
-                      </div>
-                    ))}
+                {/* Empty state for buyers */}
+                {stats.topBuyers.length === 0 && (
+                  <div className="text-center py-8 text-slate-400">
+                    <p className="text-sm">No buyers found in this time range</p>
                   </div>
                 )}
-              />
-              <Bar dataKey="buys" fill="#10b981" name="Buys" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="sells" fill="#ef4444" name="Sells" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        ) : (
-          <div className="flex items-center justify-center h-[300px] text-slate-400">
-            <p>No buy/sell data available for this time range</p>
-          </div>
-        )}
-      </div>
+              </div>
+            </div>
 
-      {/* Top Wallets */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Top Buyers */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <ArrowUpRight className="w-5 h-5 text-green-500" />
-            Top Buyers
-          </h3>
-          <div className="space-y-2">
-            {stats.topBuyers.slice(0, 10).map((activity, index) => {
-              const isExpanded = expandedBuyerWallet === activity.walletAddress;
-              const transactions = walletTransactions[activity.walletAddress] || [];
-              const isLoadingTxs = loadingTransactions[activity.walletAddress];
+            {/* Top Sellers */}
+            <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+              <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                <ArrowDownRight className="w-5 h-5 text-red-500" />
+                Top Sellers
+              </h3>
+              <div className="space-y-2">
+                {stats.topSellers.slice(0, 10).map((activity, index) => {
+                  const isExpanded = expandedSellerWallet === activity.walletAddress;
+                  const transactions = walletTransactions[activity.walletAddress] || [];
+                  const isLoadingTxs = loadingTransactions[activity.walletAddress];
 
-              return (
-                <div
-                  key={activity.walletAddress}
-                  className="border border-space-700 rounded-lg overflow-hidden"
-                >
-                  <div className="w-full flex items-center justify-between p-3 bg-space-700/50">
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center text-xs font-bold text-white">
-                        {index + 1}
-                      </div>
-                      <div className="text-left">
-                        <div className="text-sm font-medium text-white">
-                          {onWalletSelect ? (
-                            <button
-                              onClick={() => handleWalletAddressClick(activity.walletAddress)}
-                              className="hover:text-purple-400 transition-colors underline decoration-dotted underline-offset-2"
-                              title="Click to view on bubble map"
-                            >
-                              {activity.label || formatAddress(activity.walletAddress)}
-                            </button>
-                          ) : (
-                            activity.label || formatAddress(activity.walletAddress)
-                          )}
-                        </div>
-                        <div className="text-xs text-slate-400">{activity.buyCount} buys</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="text-right">
-                        <div className="text-sm font-bold text-green-400">
-                          {formatNumber(activity.totalBuyVolume)}
-                        </div>
-                        <div className="text-xs text-slate-400">
-                          {BEHAVIOR_LABELS[activity.behaviorType]}
-                        </div>
-                      </div>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleToggleExpand(activity.walletAddress, "buyers");
-                        }}
-                        className="p-1 hover:bg-space-600 rounded transition-colors"
-                        title={isExpanded ? "Collapse" : "Expand"}
-                      >
-                        {isExpanded ? (
-                          <ChevronUp className="w-4 h-4 text-slate-400" />
-                        ) : (
-                          <ChevronDown className="w-4 h-4 text-slate-400" />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Inline Transaction Details */}
-                  {isExpanded && (
-                    <div className="border-t border-space-700 bg-space-800/50 p-3">
-                      {isLoadingTxs ? (
-                        <div className="text-center py-4 text-slate-400 text-sm">
-                          <RefreshCw className="w-4 h-4 mx-auto mb-2 animate-spin" />
-                          Loading transactions...
-                        </div>
-                      ) : transactions.length > 0 ? (
-                        <div className="space-y-2 max-h-60 overflow-y-auto">
-                          <div className="text-xs text-slate-400 mb-2">
-                            Recent transactions (showing first 10)
+                  return (
+                    <div
+                      key={activity.walletAddress}
+                      className="border border-space-700 rounded-lg overflow-hidden"
+                    >
+                      <div className="w-full flex items-center justify-between p-3 bg-space-700/50">
+                        <div className="flex items-center gap-3">
+                          <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center text-xs font-bold text-white">
+                            {index + 1}
                           </div>
-                          {transactions.slice(0, 10).map((tx, idx) => (
-                            <div
-                              key={idx}
-                              className="flex items-center justify-between p-2 bg-space-700/30 rounded text-xs"
-                            >
-                              <div className="flex-1">
-                                <div className="flex items-center gap-2">
-                                  <span className="text-slate-400">
-                                    {formatTimeAgo(tx.timestamp)}
-                                  </span>
-                                  <span
-                                    className={`px-1.5 py-0.5 rounded ${
-                                      tx.to.toLowerCase() === activity.walletAddress.toLowerCase()
-                                        ? "bg-green-500/20 text-green-400"
-                                        : "bg-red-500/20 text-red-400"
-                                    }`}
-                                  >
-                                    {tx.to.toLowerCase() === activity.walletAddress.toLowerCase()
-                                      ? "IN"
-                                      : "OUT"}
-                                  </span>
-                                </div>
-                                <div className="text-slate-500 mt-1">
-                                  {formatAddress(tx.from)} → {formatAddress(tx.to)}
-                                </div>
-                              </div>
-                              <div className="text-right">
-                                <div className="text-white font-medium">
-                                  {formatNumber(tx.value)} {token.symbol}
-                                </div>
-                                <a
-                                  href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-purple-400 hover:text-purple-300 flex items-center gap-1"
+                          <div className="text-left">
+                            <div className="text-sm font-medium text-white">
+                              {onWalletSelect ? (
+                                <button
+                                  onClick={() => handleWalletAddressClick(activity.walletAddress)}
+                                  className="hover:text-purple-400 transition-colors underline decoration-dotted underline-offset-2"
+                                  title="Click to view on bubble map"
                                 >
-                                  View <ExternalLink className="w-3 h-3" />
-                                </a>
-                              </div>
+                                  {activity.label || formatAddress(activity.walletAddress)}
+                                </button>
+                              ) : (
+                                activity.label || formatAddress(activity.walletAddress)
+                              )}
                             </div>
-                          ))}
+                            <div className="text-xs text-slate-400">{activity.sellCount} sells</div>
+                          </div>
                         </div>
-                      ) : (
-                        <div className="text-center py-4 text-slate-400 text-sm">
-                          No transactions found
+                        <div className="flex items-center gap-3">
+                          <div className="text-right">
+                            <div className="text-sm font-bold text-red-400">
+                              {formatNumber(activity.totalSellVolume)}
+                            </div>
+                            <div className="text-xs text-slate-400">
+                              {BEHAVIOR_LABELS[activity.behaviorType]}
+                            </div>
+                          </div>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleToggleExpand(activity.walletAddress, "sellers");
+                            }}
+                            className="p-1 hover:bg-space-600 rounded transition-colors"
+                            title={isExpanded ? "Collapse" : "Expand"}
+                          >
+                            {isExpanded ? (
+                              <ChevronUp className="w-4 h-4 text-slate-400" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4 text-slate-400" />
+                            )}
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Inline Transaction Details */}
+                      {isExpanded && (
+                        <div className="border-t border-space-700 bg-space-800/50 p-3">
+                          {isLoadingTxs ? (
+                            <div className="text-center py-4 text-slate-400 text-sm">
+                              <RefreshCw className="w-4 h-4 mx-auto mb-2 animate-spin" />
+                              Loading transactions...
+                            </div>
+                          ) : transactions.length > 0 ? (
+                            <div className="space-y-2 max-h-60 overflow-y-auto">
+                              <div className="text-xs text-slate-400 mb-2">
+                                Recent transactions (showing first 10)
+                              </div>
+                              {transactions.slice(0, 10).map((tx, idx) => (
+                                <div
+                                  key={idx}
+                                  className="flex items-center justify-between p-2 bg-space-700/30 rounded text-xs"
+                                >
+                                  <div className="flex-1">
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-slate-400">
+                                        {formatTimeAgo(tx.timestamp)}
+                                      </span>
+                                      <span
+                                        className={`px-1.5 py-0.5 rounded ${
+                                          tx.to.toLowerCase() ===
+                                          activity.walletAddress.toLowerCase()
+                                            ? "bg-green-500/20 text-green-400"
+                                            : "bg-red-500/20 text-red-400"
+                                        }`}
+                                      >
+                                        {tx.to.toLowerCase() ===
+                                        activity.walletAddress.toLowerCase()
+                                          ? "IN"
+                                          : "OUT"}
+                                      </span>
+                                    </div>
+                                    <div className="text-slate-500 mt-1">
+                                      {formatAddress(tx.from)} → {formatAddress(tx.to)}
+                                    </div>
+                                  </div>
+                                  <div className="text-right">
+                                    <div className="text-white font-medium">
+                                      {formatNumber(tx.value)} {token.symbol}
+                                    </div>
+                                    <a
+                                      href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-purple-400 hover:text-purple-300 flex items-center gap-1"
+                                    >
+                                      View <ExternalLink className="w-3 h-3" />
+                                    </a>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="text-center py-4 text-slate-400 text-sm">
+                              No transactions found
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+                  );
+                })}
 
-        {/* Top Sellers */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <ArrowDownRight className="w-5 h-5 text-red-500" />
-            Top Sellers
-          </h3>
-          <div className="space-y-2">
-            {stats.topSellers.slice(0, 10).map((activity, index) => {
-              const isExpanded = expandedSellerWallet === activity.walletAddress;
-              const transactions = walletTransactions[activity.walletAddress] || [];
-              const isLoadingTxs = loadingTransactions[activity.walletAddress];
-
-              return (
-                <div
-                  key={activity.walletAddress}
-                  className="border border-space-700 rounded-lg overflow-hidden"
-                >
-                  <div className="w-full flex items-center justify-between p-3 bg-space-700/50">
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center text-xs font-bold text-white">
-                        {index + 1}
-                      </div>
-                      <div className="text-left">
-                        <div className="text-sm font-medium text-white">
-                          {onWalletSelect ? (
-                            <button
-                              onClick={() => handleWalletAddressClick(activity.walletAddress)}
-                              className="hover:text-purple-400 transition-colors underline decoration-dotted underline-offset-2"
-                              title="Click to view on bubble map"
-                            >
-                              {activity.label || formatAddress(activity.walletAddress)}
-                            </button>
-                          ) : (
-                            activity.label || formatAddress(activity.walletAddress)
-                          )}
-                        </div>
-                        <div className="text-xs text-slate-400">{activity.sellCount} sells</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="text-right">
-                        <div className="text-sm font-bold text-red-400">
-                          {formatNumber(activity.totalSellVolume)}
-                        </div>
-                        <div className="text-xs text-slate-400">
-                          {BEHAVIOR_LABELS[activity.behaviorType]}
-                        </div>
-                      </div>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleToggleExpand(activity.walletAddress, "sellers");
-                        }}
-                        className="p-1 hover:bg-space-600 rounded transition-colors"
-                        title={isExpanded ? "Collapse" : "Expand"}
-                      >
-                        {isExpanded ? (
-                          <ChevronUp className="w-4 h-4 text-slate-400" />
-                        ) : (
-                          <ChevronDown className="w-4 h-4 text-slate-400" />
-                        )}
-                      </button>
-                    </div>
+                {/* Empty state for sellers */}
+                {stats.topSellers.length === 0 && (
+                  <div className="text-center py-8 text-slate-400">
+                    <p className="text-sm">No sellers found in this time range</p>
                   </div>
-
-                  {/* Inline Transaction Details */}
-                  {isExpanded && (
-                    <div className="border-t border-space-700 bg-space-800/50 p-3">
-                      {isLoadingTxs ? (
-                        <div className="text-center py-4 text-slate-400 text-sm">
-                          <RefreshCw className="w-4 h-4 mx-auto mb-2 animate-spin" />
-                          Loading transactions...
-                        </div>
-                      ) : transactions.length > 0 ? (
-                        <div className="space-y-2 max-h-60 overflow-y-auto">
-                          <div className="text-xs text-slate-400 mb-2">
-                            Recent transactions (showing first 10)
-                          </div>
-                          {transactions.slice(0, 10).map((tx, idx) => (
-                            <div
-                              key={idx}
-                              className="flex items-center justify-between p-2 bg-space-700/30 rounded text-xs"
-                            >
-                              <div className="flex-1">
-                                <div className="flex items-center gap-2">
-                                  <span className="text-slate-400">
-                                    {formatTimeAgo(tx.timestamp)}
-                                  </span>
-                                  <span
-                                    className={`px-1.5 py-0.5 rounded ${
-                                      tx.to.toLowerCase() === activity.walletAddress.toLowerCase()
-                                        ? "bg-green-500/20 text-green-400"
-                                        : "bg-red-500/20 text-red-400"
-                                    }`}
-                                  >
-                                    {tx.to.toLowerCase() === activity.walletAddress.toLowerCase()
-                                      ? "IN"
-                                      : "OUT"}
-                                  </span>
-                                </div>
-                                <div className="text-slate-500 mt-1">
-                                  {formatAddress(tx.from)} → {formatAddress(tx.to)}
-                                </div>
-                              </div>
-                              <div className="text-right">
-                                <div className="text-white font-medium">
-                                  {formatNumber(tx.value)} {token.symbol}
-                                </div>
-                                <a
-                                  href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-purple-400 hover:text-purple-300 flex items-center gap-1"
-                                >
-                                  View <ExternalLink className="w-3 h-3" />
-                                </a>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="text-center py-4 text-slate-400 text-sm">
-                          No transactions found
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

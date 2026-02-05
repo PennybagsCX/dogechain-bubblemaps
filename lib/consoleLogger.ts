@@ -227,7 +227,11 @@ class DiagnosticLogger {
 
       return result;
     } catch (error) {
-      this.originalConsole.error("[DiagnosticLogger] Failed to send logs:", error);
+      // Silently fail - remote diagnostic logging is optional
+      // Only log unexpected errors, not 404/405 for missing endpoints
+      if (error instanceof Error && error.message !== "HTTP 404" && error.message !== "HTTP 405") {
+        this.originalConsole.error("[DiagnosticLogger] Failed to send logs:", error);
+      }
       return {
         success: false,
         message: error instanceof Error ? error.message : "Unknown error",

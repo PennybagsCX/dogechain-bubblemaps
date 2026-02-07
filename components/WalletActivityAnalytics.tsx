@@ -766,43 +766,47 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
     return (
       <div className={`space-y-6 ${className}`}>
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="sm:w-48">
             <h2 className="text-2xl font-bold text-white">Wallet Activity Analytics</h2>
             <p className="text-slate-400">Activity analysis for {token.symbol}</p>
           </div>
 
-          {/* Time Range Selector - All data loaded instantly from "all" timeframe cache */}
-          <div className="flex items-center gap-2 bg-space-800 rounded-lg p-1">
-            {TIME_RANGES.map((range) => {
-              return (
-                <button
-                  key={range}
-                  onClick={() => setTimeRange(range)}
-                  disabled={loading}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                    timeRange === range
-                      ? "bg-purple-600 text-white"
-                      : loading
-                        ? "text-slate-500 cursor-wait"
-                        : "text-slate-400 hover:text-white hover:bg-space-700"
-                  }`}
-                >
-                  {range === "all" ? "All Time" : range.toUpperCase()}
-                </button>
-              );
-            })}
+          {/* Time Range Selector - Centered */}
+          <div className="flex-1 flex justify-center">
+            <div className="flex items-center gap-2 bg-space-800 rounded-lg p-1">
+              {TIME_RANGES.map((range) => {
+                return (
+                  <button
+                    key={range}
+                    onClick={() => setTimeRange(range)}
+                    disabled={loading}
+                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                      timeRange === range
+                        ? "bg-purple-600 text-white"
+                        : loading
+                          ? "text-slate-500 cursor-wait"
+                          : "text-slate-400 hover:text-white hover:bg-space-700"
+                    }`}
+                  >
+                    {range === "all" ? "All Time" : range.toUpperCase()}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Refresh button */}
-          <button
-            onClick={handleRefresh}
-            disabled={loading}
-            className="p-2 hover:text-white transition-colors text-slate-400"
-            title="Force refresh data"
-          >
-            <RefreshCw className="w-5 h-5" />
-          </button>
+          {/* Refresh button - Right aligned with fixed width */}
+          <div className="sm:w-48 flex justify-end">
+            <button
+              onClick={handleRefresh}
+              disabled={loading}
+              className="p-2 hover:text-white transition-colors text-slate-400"
+              title="Force refresh data"
+            >
+              <RefreshCw className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Inline Error State */}
@@ -825,54 +829,67 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+        <div className="sm:w-48">
           <h2 className="text-2xl font-bold text-white">Wallet Activity Analytics</h2>
           <p className="text-slate-400">Activity analysis for {token.symbol}</p>
         </div>
 
-        {/* Time Range Selector - All data loaded instantly from "all" timeframe cache */}
-        <div className="flex items-center gap-2 bg-space-800 rounded-lg p-1">
-          {TIME_RANGES.map((range) => {
-            return (
-              <button
-                key={range}
-                onClick={() => setTimeRange(range)}
-                disabled={loading}
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  timeRange === range
-                    ? "bg-purple-600 text-white"
-                    : loading
-                      ? "text-slate-500 cursor-wait"
-                      : "text-slate-400 hover:text-white hover:bg-space-700"
-                }`}
-              >
-                {range === "all" ? "All Time" : range.toUpperCase()}
-              </button>
-            );
-          })}
+        {/* Time Range Selector - Centered */}
+        <div className="flex-1 flex justify-center">
+          <div className="flex items-center gap-2 bg-space-800 rounded-lg p-1">
+            {TIME_RANGES.map((range) => {
+              return (
+                <button
+                  key={range}
+                  onClick={() => setTimeRange(range)}
+                  disabled={loading}
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    timeRange === range
+                      ? "bg-purple-600 text-white"
+                      : loading
+                        ? "text-slate-500 cursor-wait"
+                        : "text-slate-400 hover:text-white hover:bg-space-700"
+                  }`}
+                >
+                  {range === "all" ? "All Time" : range.toUpperCase()}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Last Updated */}
-        {stats && (
-          <div className="flex items-center gap-3 text-sm">
-            <div className="flex items-center gap-2 text-slate-400">
-              <Clock className="w-4 h-4" />
-              <span>Data from {formatTimeAgo(stats.lastUpdated)}</span>
+        {/* Last Updated / Refresh - Right aligned with fixed width */}
+        <div className="sm:w-48 flex justify-end">
+          {stats ? (
+            <div className="flex items-center gap-3 text-sm">
+              <div className="flex items-center gap-2 text-slate-400">
+                <Clock className="w-4 h-4" />
+                <span>Data from {formatTimeAgo(stats.lastUpdated)}</span>
+              </div>
               {!loading && (
                 <span className="text-slate-500">({formatTimeAgo(lastRefreshed)} refreshed)</span>
               )}
+              <button
+                onClick={handleRefresh}
+                disabled={loading}
+                className="p-1 hover:text-white transition-colors text-slate-400"
+                title="Force refresh data"
+              >
+                <RefreshCw className="w-4 h-4" />
+              </button>
             </div>
+          ) : (
             <button
               onClick={handleRefresh}
               disabled={loading}
-              className="p-1 hover:text-white transition-colors text-slate-400"
+              className="p-2 hover:text-white transition-colors text-slate-400"
               title="Force refresh data"
             >
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw className="w-5 h-5" />
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {/* Data Disclaimer */}

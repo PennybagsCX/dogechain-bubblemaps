@@ -1004,7 +1004,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
           {/* Charts Row 1: Behavior Distribution and Activity Timeline */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Behavior Distribution Pie Chart */}
-            <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+            <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
               <h3 className="text-lg font-semibold text-white mb-4">
                 Wallet Behavior Distribution
               </h3>
@@ -1077,7 +1077,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
             </div>
 
             {/* Activity Timeline */}
-            <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+            <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
               <h3 className="text-lg font-semibold text-white mb-4">Activity Timeline</h3>
               {stats.activityTimeline.length > 0 ? (
                 <ResponsiveContainer width="100%" height={250}>
@@ -1159,7 +1159,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
           </div>
 
           {/* Buy/Sell Pressure Chart */}
-          <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+          <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
             <h3 className="text-lg font-semibold text-white mb-4">Buy/Sell Pressure</h3>
             {stats.activityTimeline.length > 0 ? (
               <ResponsiveContainer width="100%" height={300}>
@@ -1229,7 +1229,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
           {/* Top Wallets */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Top Buyers */}
-            <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+            <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                 <ArrowUpRight className="w-5 h-5 text-green-500" />
                 Top Buyers
@@ -1371,7 +1371,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
             </div>
 
             {/* Top Sellers */}
-            <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+            <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                 <ArrowDownRight className="w-5 h-5 text-red-500" />
                 Top Sellers

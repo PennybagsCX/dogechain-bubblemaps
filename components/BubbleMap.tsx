@@ -3,6 +3,9 @@ import * as d3 from "d3";
 import { useClickOutside } from "../hooks/useClickOutside";
 import { Wallet, Link, AssetType } from "../types";
 import { ensureLPDetectionInitialized } from "../services/db";
+import { useFilters } from "../contexts/FilterContext";
+import { FilterControls } from "./FilterControls";
+import { filterWallets } from "../utils/filterUtils";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // D3.js requires 'any' types for its dynamic simulation system
@@ -18,12 +21,9 @@ import {
   Pause,
   Play,
   RotateCcw,
-  EyeOff,
-  Eye,
   ChevronDown,
   ChevronUp,
   Settings,
-  Sliders,
   X,
   Layers,
   RefreshCw,
@@ -340,10 +340,10 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     lastSelectedConnectionIdRef.current = connectionId;
   }, []);
 
-  // --- MAP SETTINGS ---
-  const [showLinks, setShowLinks] = useState(true);
-  const [showLabels, setShowLabels] = useState(true);
-  const [minBalancePercent, setMinBalancePercent] = useState(0); // 0 to 100 slider representing % of max balance or just arbitrary threshold
+  // --- MAP SETTINGS - Use Filter Context ---
+  const { filters } = useFilters();
+  const showLinks = filters.showLinks;
+  const showLabels = filters.showLabels;
 
   // Helper: map click selection to parent + highlight
   const handleSelectNode = useCallback(
@@ -478,6 +478,10 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     const svg = d3.select(svgRef.current);
 
+    // Apply advanced filters
+    const filteredWallets = filterWallets(wallets, filters);
+    const visibleWalletIds = new Set(filteredWallets.map((w) => w.id));
+
     // Update Links
     svg.selectAll(".neural-vein").style("display", showLinks ? "block" : "none");
 
@@ -489,20 +493,24 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .style("display", showLabels ? "block" : "none");
     // Note: We DON'T set opacity here to avoid conflicts with hover animations
 
-    // Update Nodes based on slider (Simple logic: filter by % of max holding in this set)
+    // Update Nodes based on advanced filters
     if (wallets.length > 0) {
-      const max = Math.max(...wallets.map((w) => w.balance));
-      const threshold = (max * minBalancePercent) / 100;
-
       svg
         .selectAll(".nodes circle")
         .style("opacity", (d: any) => {
+          // Always show user wallet
           if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return 1;
-          return d.balance >= threshold ? 1 : 0.1;
+          // Show filtered wallets, dim others
+          return visibleWalletIds.has(d.id) ? 1 : 0.1;
         })
-        .style("pointer-events", (d: any) => (d.balance >= threshold ? "all" : "none"));
+        .style("pointer-events", (d: any) => {
+          // Always allow clicking user wallet
+          if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return "all";
+          // Only allow clicking visible wallets
+          return visibleWalletIds.has(d.id) ? "all" : "none";
+        });
     }
-  }, [showLinks, showLabels, minBalancePercent, wallets, userAddress, hasMeasured]);
+  }, [filters, wallets, userAddress, hasMeasured, showLinks, showLabels]);
 
   useEffect(() => {
     if (!svgRef.current || wallets.length === 0 || !hasMeasured) return;
@@ -548,7 +556,12 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     gradient.append("stop").attr("offset", "100%").attr("stop-color", "#f472b6"); // Pink
 
     // --- DATA PREPARATION ---
-    const nodes: NodeDatum[] = wallets.map((w, idx) => {
+    // Apply advanced filters to determine which wallets should be visible
+    const filteredWallets = filterWallets(wallets, filters);
+    const visibleWalletIds = new Set(filteredWallets.map((w) => w.id));
+
+    // Only include filtered wallets in the simulation
+    const nodes: NodeDatum[] = filteredWallets.map((w, idx) => {
       const savedPosition = nodePositionsRef.current.get(w.id);
       return {
         ...w,
@@ -557,6 +570,13 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         rank: idx + 1,
       };
     }) as NodeDatum[];
+
+    // Filter links to only include connections between visible wallets
+    const filteredLinks = links.filter((link) => {
+      const sourceId = typeof link.source === "string" ? link.source : link.source.id;
+      const targetId = typeof link.target === "string" ? link.target : link.target.id;
+      return visibleWalletIds.has(sourceId) && visibleWalletIds.has(targetId);
+    });
 
     const maxBalance = d3.max(nodes, (d: NodeDatum) => d.balance) || 1;
     const minBalance = d3.min(nodes, (d: NodeDatum) => d.balance) || 0;
@@ -586,7 +606,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       }
     }
 
-    const linksCopy: LinkDatum[] = links.map((l) => {
+    const linksCopy: LinkDatum[] = filteredLinks.map((l) => {
       const sourceId = typeof l.source === "string" ? l.source : l.source.id;
       const targetId = typeof l.target === "string" ? l.target : l.target.id;
       return { source: sourceId, target: targetId, value: l.value };
@@ -945,7 +965,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     // Attach hover handlers to the wrapper group
     nodeWrapperSelection
       .on("mouseover", (_event: any, d: NodeDatum) => {
-        const threshold = (maxBalance * minBalancePercent) / 100;
+        // Apply advanced filters for hover state
+        const filteredWallets = filterWallets(wallets, filters);
+        const visibleWalletIds = new Set(filteredWallets.map((w) => w.id));
 
         // Logic to dim everyone but connected
         nodeSelection
@@ -953,9 +975,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           .transition()
           .duration(200)
           .attr("opacity", (n: NodeDatum) => {
-            // If node should be hidden by threshold, keep it hidden (0.1)
+            // If node should be hidden by filters, keep it hidden (0.1)
             if (
-              n.balance < threshold &&
+              !visibleWalletIds.has(n.id) &&
               !(userAddress && n.address.toLowerCase() === userAddress.toLowerCase())
             ) {
               return 0.1;
@@ -1034,7 +1056,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         // Remove hover state from wrapper
         d3.select(_event.currentTarget).classed("hovering", false);
 
-        const threshold = (maxBalance * minBalancePercent) / 100;
+        // Apply advanced filters for reset state
+        const filteredWallets = filterWallets(wallets, filters);
+        const visibleWalletIds = new Set(filteredWallets.map((w) => w.id));
 
         // Reset all nodes to normal appearance
         nodeSelection
@@ -1043,7 +1067,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           .duration(200)
           .attr("opacity", (d: NodeDatum) => {
             if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return 1;
-            return d.balance >= threshold ? 1 : 0.1;
+            return visibleWalletIds.has(d.id) ? 1 : 0.1;
           })
           .style("filter", "url(#glow)");
         linkSelection
@@ -1199,7 +1223,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     dimensions,
     assetType,
     userAddress,
-    minBalancePercent,
+    filters,
     showLabels,
     showLinks,
     hasMeasured,
@@ -1503,7 +1527,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
         {/* Settings button and popup container for click-outside detection */}
         <div className="relative" ref={settingsRef}>
-          <Tooltip content="Open map settings">
+          <Tooltip content="Open advanced filters">
             <button
               onTouchStart={handleTouchStopPropagation}
               onClick={() => setIsSettingsOpen(!isSettingsOpen)}
@@ -1513,72 +1537,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
             </button>
           </Tooltip>
 
-          {/* --- SETTINGS POPUP --- */}
-          {isSettingsOpen && (
-            <div className="absolute top-0 left-14 z-30 bg-space-800 rounded-xl border border-space-700 shadow-2xl p-4 w-64 animate-in fade-in slide-in-from-left-2">
-              <h4 className="text-xs font-bold text-slate-400 uppercase mb-3 flex items-center gap-2">
-                <Sliders size={12} /> Filter Map
-              </h4>
-
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-white flex items-center gap-2">
-                    {showLinks ? (
-                      <Eye size={14} />
-                    ) : (
-                      <EyeOff size={14} className="text-slate-500" />
-                    )}{" "}
-                    Links
-                  </span>
-                  <button
-                    onTouchStart={handleTouchStopPropagation}
-                    onClick={() => setShowLinks(!showLinks)}
-                    className={`w-10 h-5 rounded-full relative transition-colors ${showLinks ? "bg-purple-600" : "bg-space-600"}`}
-                  >
-                    <span
-                      className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-transform ${showLinks ? "left-6" : "left-1"}`}
-                    ></span>
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-white flex items-center gap-2">
-                    {showLabels ? (
-                      <Eye size={14} />
-                    ) : (
-                      <EyeOff size={14} className="text-slate-500" />
-                    )}{" "}
-                    Labels
-                  </span>
-                  <button
-                    onTouchStart={handleTouchStopPropagation}
-                    onClick={() => setShowLabels(!showLabels)}
-                    className={`w-10 h-5 rounded-full relative transition-colors ${showLabels ? "bg-purple-600" : "bg-space-600"}`}
-                  >
-                    <span
-                      className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-transform ${showLabels ? "left-6" : "left-1"}`}
-                    ></span>
-                  </button>
-                </div>
-
-                <div>
-                  <div className="flex justify-between text-xs text-slate-400 mb-1">
-                    <span>Filter Dust</span>
-                    <span>{minBalancePercent}%</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="50"
-                    step="1"
-                    value={minBalancePercent}
-                    onChange={(e) => setMinBalancePercent(parseInt(e.target.value))}
-                    className="w-full h-1 bg-space-600 rounded-lg appearance-none cursor-pointer accent-purple-500"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
+          {/* --- ADVANCED FILTER CONTROLS --- */}
+          <FilterControls isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
         </div>
       </div>
       {/* --- HELP MODAL --- */}

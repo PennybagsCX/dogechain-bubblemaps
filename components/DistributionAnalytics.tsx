@@ -479,8 +479,8 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Gini Coefficient */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Gini Coefficient</span>
             <TrendingUp className="w-4 h-4 text-purple-500" />
           </div>
@@ -490,8 +490,8 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
         </div>
 
         {/* Total Holders */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Total Holders</span>
             <Users className="w-4 h-4 text-blue-500" />
           </div>
@@ -502,8 +502,8 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
         </div>
 
         {/* Centralization Status */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Centralization</span>
             <Wallet className="w-4 h-4 text-yellow-500" />
           </div>
@@ -521,7 +521,7 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
       </div>
 
       {/* Concentration Bands */}
-      <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+      <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
         <h3 className="text-lg font-semibold text-white mb-4">Concentration Bands</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[

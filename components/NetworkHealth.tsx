@@ -126,8 +126,8 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Current Block */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Current Block</span>
             <Clock className="w-4 h-4 text-purple-500" />
           </div>
@@ -138,8 +138,8 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
         </div>
 
         {/* Block Time */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Block Time</span>
             <Clock className="w-4 h-4 text-blue-500" />
           </div>
@@ -152,8 +152,8 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
         </div>
 
         {/* Gas Price */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Gas Price</span>
             <Zap className="w-4 h-4 text-yellow-500" />
           </div>
@@ -168,8 +168,8 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
         </div>
 
         {/* TPS */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Throughput</span>
             <TrendingUp className="w-4 h-4 text-green-500" />
           </div>
@@ -179,12 +179,12 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
       </div>
 
       {/* Block Time Distribution - Simple visualization */}
-      <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+      <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
         <h3 className="text-lg font-semibold text-white mb-4">Block Time Distribution</h3>
 
         {/* Block time progress bar */}
         <div className="mb-4">
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-sm text-slate-400">Current Block Time</span>
             <span className="text-sm text-white font-medium">
               {(stats.blockTime / 1000).toFixed(2)}s
@@ -204,14 +204,14 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
               }}
             />
           </div>
-          <div className="flex justify-between text-xs text-slate-500 mt-1">
+          <div className="flex justify-center gap-8 text-xs text-slate-500 mt-1">
             <span>0s</span>
             <span>5s</span>
           </div>
         </div>
 
         {/* Block time status */}
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-center justify-center gap-2 text-sm">
           <Clock
             className={`w-4 h-4 ${stats.blockTime < 3000 ? "text-green-500" : stats.blockTime < 5000 ? "text-yellow-500" : "text-red-500"}`}
           />
@@ -232,10 +232,10 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
       </div>
 
       {/* Network Status */}
-      <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+      <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
         <h3 className="text-lg font-semibold text-white mb-4">Network Status</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             <div
               className={`w-3 h-3 rounded-full ${
                 stats.blockTime < 3000
@@ -245,7 +245,7 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
                     : "bg-red-500"
               }`}
             />
-            <div>
+            <div className="text-center">
               <div className="text-white font-medium">Block Production</div>
               <div className="text-sm text-slate-400">
                 {stats.blockTime < 3000
@@ -256,7 +256,7 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             <div
               className={`w-3 h-3 rounded-full ${
                 Number(stats.gasPrice) < 5e9
@@ -266,7 +266,7 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
                     : "bg-red-500"
               }`}
             />
-            <div>
+            <div className="text-center">
               <div className="text-white font-medium">Gas Fees</div>
               <div className="text-sm text-slate-400">
                 {Number(stats.gasPrice) < 5e9
@@ -277,13 +277,13 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             <div
               className={`w-3 h-3 rounded-full ${
                 stats.tps > 5 ? "bg-green-500" : stats.tps > 2 ? "bg-yellow-500" : "bg-red-500"
               }`}
             />
-            <div>
+            <div className="text-center">
               <div className="text-white font-medium">Transaction Volume</div>
               <div className="text-sm text-slate-400">
                 {stats.tps > 5

@@ -132,8 +132,8 @@ export const UserBehaviorAnalytics: React.FC<UserBehaviorAnalyticsProps> = ({
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Total Sessions */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Total Sessions</span>
             <Users className="w-4 h-4 text-purple-500" />
           </div>
@@ -144,8 +144,8 @@ export const UserBehaviorAnalytics: React.FC<UserBehaviorAnalyticsProps> = ({
         </div>
 
         {/* Avg Session Duration */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Avg Duration</span>
             <Clock className="w-4 h-4 text-blue-500" />
           </div>
@@ -154,8 +154,8 @@ export const UserBehaviorAnalytics: React.FC<UserBehaviorAnalyticsProps> = ({
         </div>
 
         {/* Search Success Rate */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Search Success</span>
             <Target className="w-4 h-4 text-green-500" />
           </div>

@@ -31,6 +31,7 @@ import { useBubbleVisualizationGuide } from "./hooks/useBubbleVisualizationGuide
 import { useTokenInfoPanelGuide } from "./hooks/useTokenInfoPanelGuide";
 import { useWalletDetailsGuide } from "./hooks/useWalletDetailsGuide";
 import { useDashboardGuide } from "./hooks/useDashboardGuide";
+import { FilterProvider } from "./contexts/FilterContext";
 import {
   Token,
   Wallet,
@@ -2209,35 +2210,36 @@ const App: React.FC = () => {
   }, [refreshStats]);
 
   return (
-    <div className="min-h-screen bg-space-900 text-slate-100 font-sans selection:bg-purple-500 selection:text-white flex flex-col overflow-x-hidden">
-      <Analytics />
-      <ToastContainer toasts={toasts} onClose={removeToast} />
+    <FilterProvider>
+      <div className="min-h-screen bg-space-900 text-slate-100 font-sans selection:bg-purple-500 selection:text-white flex flex-col overflow-x-hidden">
+        <Analytics />
+        <ToastContainer toasts={toasts} onClose={removeToast} />
 
-      {/* Diagnostic Mode Indicator */}
-      {import.meta.env.MODE === "production" && (
-        <div className="fixed bottom-2 left-2 z-50 flex items-center gap-2 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-full border border-purple-500/30 shadow-lg">
-          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-          <span className="text-xs text-purple-300 font-medium">Diagnostic Mode Active</span>
-        </div>
-      )}
+        {/* Diagnostic Mode Indicator */}
+        {import.meta.env.MODE === "production" && (
+          <div className="fixed bottom-2 left-2 z-50 flex items-center gap-2 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-full border border-purple-500/30 shadow-lg">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <span className="text-xs text-purple-300 font-medium">Diagnostic Mode Active</span>
+          </div>
+        )}
 
-      <Navbar currentView={view} onChangeView={handleViewChange} hasAnalysisData={!!token} />
+        <Navbar currentView={view} onChangeView={handleViewChange} hasAnalysisData={!!token} />
 
-      {/* MAIN CONTENT AREA */}
-      <div className="flex-1 flex flex-col">
-        {/* HOME VIEW */}
-        {view === ViewState.HOME && (
-          <div className="flex-1 flex flex-col justify-center min-h-screen relative bg-space-900">
-            {/* Animated background */}
-            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(56,189,248,0.12),transparent_30%)]">
-              <BlockchainBackground />
-            </div>
+        {/* MAIN CONTENT AREA */}
+        <div className="flex-1 flex flex-col">
+          {/* HOME VIEW */}
+          {view === ViewState.HOME && (
+            <div className="flex-1 flex flex-col justify-center min-h-screen relative bg-space-900">
+              {/* Animated background */}
+              <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(56,189,248,0.12),transparent_30%)]">
+                <BlockchainBackground />
+              </div>
 
-            {/* Main Content - Mobile First Design */}
-            <div className="relative z-10 w-full max-w-7xl mx-auto px-0 sm:px-4 py-8">
-              {/* Hero Section - Simplified for Mobile */}
-              <div className="text-center space-y-6 mb-8">
-                <style>{`
+              {/* Main Content - Mobile First Design */}
+              <div className="relative z-10 w-full max-w-7xl mx-auto px-0 sm:px-4 py-8">
+                {/* Hero Section - Simplified for Mobile */}
+                <div className="text-center space-y-6 mb-8">
+                  <style>{`
                   @keyframes float-glow {
                     0% { transform: translateY(0); filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.45)); }
                     50% { transform: translateY(-8px); filter: drop-shadow(0 0 22px rgba(168, 85, 247, 0.85)); }
@@ -2247,955 +2249,963 @@ const App: React.FC = () => {
                     animation: float-glow 3.6s ease-in-out infinite;
                   }
                 `}</style>
-                {/* Logo */}
-                <div className="flex justify-center mb-6">
-                  <img
-                    src="/dogchain-logo.png"
-                    alt="Dogchain Logo"
-                    className="w-20 h-20 sm:w-32 sm:h-32 animate-float-glow"
-                  />
+                  {/* Logo */}
+                  <div className="flex justify-center mb-6">
+                    <img
+                      src="/dogchain-logo.png"
+                      alt="Dogchain Logo"
+                      className="w-20 h-20 sm:w-32 sm:h-32 animate-float-glow"
+                    />
+                  </div>
+
+                  {/* Heading */}
+                  <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight px-2">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
+                      Reveal the
+                    </span>{" "}
+                    <span className="text-purple-500">Dogechain</span>
+                  </h1>
+
+                  {/* Description */}
+                  <p className="text-sm sm:text-base text-slate-400 px-4 sm:px-0 max-w-2xl mx-auto leading-relaxed">
+                    Visualize token & NFT distributions, uncover hidden whale connections, analyze
+                    on-chain risks, and set user & token alerts with{" "}
+                    <strong className="text-white">100% Live Data</strong>.
+                  </p>
+
+                  {/* Beta Badge */}
+                  <div className="flex justify-center">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-wide">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                      Beta Build #{__BETA_BUILD_NUMBER__}
+                    </span>
+                  </div>
+
+                  {/* Stats Counters */}
+                  <div className="mt-6 flex justify-center items-center gap-6 text-xs">
+                    {/* Search Counter */}
+                    <Tooltip content="Since January 12, 2026">
+                      <div className="flex items-center gap-2 text-slate-400">
+                        <Search size={14} className="text-purple-500" />
+                        <span className="text-slate-500">Total Searches:</span>
+                        <span className="font-mono font-semibold text-purple-400">
+                          {isLoadingStats ? "..." : formatNumber(totalSearches)}
+                        </span>
+                      </div>
+                    </Tooltip>
+
+                    {/* Alert Counter */}
+                    <Tooltip content="Since January 12, 2026">
+                      <div className="flex items-center gap-2 text-slate-400">
+                        <AlertTriangle size={14} className="text-amber-500" />
+                        <span className="text-slate-500">Alerts Fired:</span>
+                        <span className="font-mono font-semibold text-amber-400">
+                          {isLoadingStats ? "..." : formatNumber(totalAlerts)}
+                        </span>
+                      </div>
+                    </Tooltip>
+                  </div>
                 </div>
 
-                {/* Heading */}
-                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight px-2">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
-                    Reveal the
-                  </span>{" "}
-                  <span className="text-purple-500">Dogechain</span>
-                </h1>
+                {/* Search Section - Completely Redesigned for Mobile */}
+                <div className="w-full max-w-lg mx-auto px-3 sm:px-0">
+                  {/* Type Toggles - Stack on Mobile */}
+                  <div className="flex justify-center gap-2 mb-4">
+                    <button
+                      onClick={() => setSearchType(AssetType.TOKEN)}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all border ${
+                        searchType === AssetType.TOKEN
+                          ? "bg-purple-600 text-white border-purple-600"
+                          : "bg-space-800 text-slate-400 border-space-700 hover:bg-space-700"
+                      }`}
+                    >
+                      <Coins size={14} />
+                      <span>Tokens</span>
+                    </button>
+                    <button
+                      onClick={() => setSearchType(AssetType.NFT)}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all border ${
+                        searchType === AssetType.NFT
+                          ? "bg-blue-600 text-white border-blue-600"
+                          : "bg-space-800 text-slate-400 border-space-700 hover:bg-space-700"
+                      }`}
+                    >
+                      <ImageIcon size={14} />
+                      <span>NFTs</span>
+                    </button>
+                  </div>
 
-                {/* Description */}
-                <p className="text-sm sm:text-base text-slate-400 px-4 sm:px-0 max-w-2xl mx-auto leading-relaxed">
-                  Visualize token & NFT distributions, uncover hidden whale connections, analyze
-                  on-chain risks, and set user & token alerts with{" "}
-                  <strong className="text-white">100% Live Data</strong>.
-                </p>
-
-                {/* Beta Badge */}
-                <div className="flex justify-center">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-wide">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-                    Beta Build #{__BETA_BUILD_NUMBER__}
-                  </span>
-                </div>
-
-                {/* Stats Counters */}
-                <div className="mt-6 flex justify-center items-center gap-6 text-xs">
-                  {/* Search Counter */}
-                  <Tooltip content="Since January 12, 2026">
-                    <div className="flex items-center gap-2 text-slate-400">
-                      <Search size={14} className="text-purple-500" />
-                      <span className="text-slate-500">Total Searches:</span>
-                      <span className="font-mono font-semibold text-purple-400">
-                        {isLoadingStats ? "..." : formatNumber(totalSearches)}
-                      </span>
-                    </div>
-                  </Tooltip>
-
-                  {/* Alert Counter */}
-                  <Tooltip content="Since January 12, 2026">
-                    <div className="flex items-center gap-2 text-slate-400">
-                      <AlertTriangle size={14} className="text-amber-500" />
-                      <span className="text-slate-500">Alerts Fired:</span>
-                      <span className="font-mono font-semibold text-amber-400">
-                        {isLoadingStats ? "..." : formatNumber(totalAlerts)}
-                      </span>
-                    </div>
-                  </Tooltip>
-                </div>
-              </div>
-
-              {/* Search Section - Completely Redesigned for Mobile */}
-              <div className="w-full max-w-lg mx-auto px-3 sm:px-0">
-                {/* Type Toggles - Stack on Mobile */}
-                <div className="flex justify-center gap-2 mb-4">
-                  <button
-                    onClick={() => setSearchType(AssetType.TOKEN)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all border ${
-                      searchType === AssetType.TOKEN
-                        ? "bg-purple-600 text-white border-purple-600"
-                        : "bg-space-800 text-slate-400 border-space-700 hover:bg-space-700"
-                    }`}
-                  >
-                    <Coins size={14} />
-                    <span>Tokens</span>
-                  </button>
-                  <button
-                    onClick={() => setSearchType(AssetType.NFT)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all border ${
+                  {/* Search Form - Simplified */}
+                  <TokenSearchInput
+                    searchType={searchType}
+                    onSearch={(address, type) => handleSearch(undefined, address, type)}
+                    placeholder={
                       searchType === AssetType.NFT
-                        ? "bg-blue-600 text-white border-blue-600"
-                        : "bg-space-800 text-slate-400 border-space-700 hover:bg-space-700"
-                    }`}
-                  >
-                    <ImageIcon size={14} />
-                    <span>NFTs</span>
-                  </button>
-                </div>
+                        ? "Search collections..."
+                        : "Search token or contract ..."
+                    }
+                    disabled={loading}
+                    value={searchQuery}
+                    onChange={setSearchQuery}
+                    inputRef={searchInputRef}
+                  />
 
-                {/* Search Form - Simplified */}
-                <TokenSearchInput
-                  searchType={searchType}
-                  onSearch={(address, type) => handleSearch(undefined, address, type)}
-                  placeholder={
-                    searchType === AssetType.NFT
-                      ? "Search collections..."
-                      : "Search token or contract ..."
-                  }
-                  disabled={loading}
-                  value={searchQuery}
-                  onChange={setSearchQuery}
-                  inputRef={searchInputRef}
-                />
-
-                {/* Recent Searches - Wrapped (moved above scanner) */}
-                {recentSearches.length > 0 && (
-                  <div className="mt-4">
-                    <div className="flex items-center justify-center gap-2 text-xs text-slate-500 mb-2 px-2">
-                      <History size={12} />
-                      <span>Recent</span>
-                      <button onClick={clearHistory} className="hover:text-red-400">
-                        <Trash2 size={12} />
-                      </button>
-                    </div>
-                    <div className="flex flex-wrap justify-center gap-1.5 px-2">
-                      {recentSearches.map((item, index) => (
-                        <button
-                          key={`${item.query}-${index}`}
-                          onClick={(e) => {
-                            // Scroll to search input and focus it for visual feedback
-                            searchInputRef.current?.scrollIntoView({
-                              behavior: "smooth",
-                              block: "center",
-                            });
-                            setTimeout(() => {
-                              searchInputRef.current?.focus();
-                            }, 300);
-
-                            handleSearch(e, item.query, item.type);
-                          }}
-                          className="flex items-center gap-1 px-2 py-1 rounded bg-space-800 border border-space-700 text-xs text-slate-300 hover:text-white transition-all"
-                        >
-                          <span
-                            className={`w-1 h-1 rounded-full ${item.type === AssetType.NFT ? "bg-blue-500" : "bg-purple-500"}`}
-                          ></span>
-                          <span className="max-w-20 truncate">
-                            {item.symbol || item.query.slice(0, 8)}
-                          </span>
+                  {/* Recent Searches - Wrapped (moved above scanner) */}
+                  {recentSearches.length > 0 && (
+                    <div className="mt-4">
+                      <div className="flex items-center justify-center gap-2 text-xs text-slate-500 mb-2 px-2">
+                        <History size={12} />
+                        <span>Recent</span>
+                        <button onClick={clearHistory} className="hover:text-red-400">
+                          <Trash2 size={12} />
                         </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Wallet Scanner */}
-                <div className="mt-4 p-3 rounded-lg bg-space-800 border border-space-700 shadow-lg">
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="flex items-center gap-2">
-                      <div className="p-2 rounded-md bg-space-700 text-purple-300">
-                        <ScanLine size={16} />
                       </div>
-                      <div className="text-center sm:text-left">
-                        <p className="text-xs uppercase tracking-wide text-slate-400">
-                          Wallet Scanner
-                        </p>
-                        <p className="text-sm text-white font-semibold">
-                          {userAddress
-                            ? `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`
-                            : "Connect wallet to scan"}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap justify-center gap-2 w-full">
-                      <Tooltip content="Fresh scan (bypasses cache)">
-                        <button
-                          onClick={handleManualScan}
-                          className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-purple-600 hover:bg-purple-700 text-white disabled:opacity-50 transition-colors"
-                          disabled={isScanningWallet || !userAddress}
-                        >
-                          {isScanningWallet ? (
-                            <Loader2 size={14} className="animate-spin" />
-                          ) : (
-                            <WalletIcon size={14} />
-                          )}
-                          <span>{isScanningWallet ? "Scanning" : "Scan"}</span>
-                        </button>
-                      </Tooltip>
-                      <Tooltip content="Quick reload (uses cache if available)">
-                        <button
-                          onClick={handleRefreshScan}
-                          className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-space-700 hover:bg-space-600 text-white disabled:opacity-50 transition-colors border border-space-600"
-                          disabled={isScanningWallet || !userAddress}
-                        >
-                          <RefreshCw size={14} className={isScanningWallet ? "animate-spin" : ""} />
-                          <span className="hidden sm:inline">Refresh</span>
-                        </button>
-                      </Tooltip>
-                      {isScanningWallet && (
-                        <Tooltip content="Stop scan">
+                      <div className="flex flex-wrap justify-center gap-1.5 px-2">
+                        {recentSearches.map((item, index) => (
                           <button
-                            onClick={handleCancelScan}
-                            className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-red-600 hover:bg-red-700 text-white transition-colors"
+                            key={`${item.query}-${index}`}
+                            onClick={(e) => {
+                              // Scroll to search input and focus it for visual feedback
+                              searchInputRef.current?.scrollIntoView({
+                                behavior: "smooth",
+                                block: "center",
+                              });
+                              setTimeout(() => {
+                                searchInputRef.current?.focus();
+                              }, 300);
+
+                              handleSearch(e, item.query, item.type);
+                            }}
+                            className="flex items-center gap-1 px-2 py-1 rounded bg-space-800 border border-space-700 text-xs text-slate-300 hover:text-white transition-all"
                           >
-                            <X size={14} />
-                            <span className="hidden sm:inline">Stop</span>
+                            <span
+                              className={`w-1 h-1 rounded-full ${item.type === AssetType.NFT ? "bg-blue-500" : "bg-purple-500"}`}
+                            ></span>
+                            <span className="max-w-20 truncate">
+                              {item.symbol || item.query.slice(0, 8)}
+                            </span>
                           </button>
-                        </Tooltip>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Scanner disclaimer */}
-                  <div className="mt-3 w-full rounded-md border border-amber-700/60 bg-amber-900/20 px-3 py-2 text-xs text-amber-200 text-center">
-                    <p className="font-semibold text-amber-100 uppercase">Heads up</p>
-                    <p className="text-amber-200/90">
-                      Scanning takes <strong>5-8 minutes</strong>. May find slightly different
-                      counts than explorer due to: transfers vs current holdings, timing
-                      differences, and API rate limits.
-                    </p>
-                    <p className="text-amber-200/90 mt-2">
-                      <strong>More tokens and NFTs may appear than what you currently hold</strong>,
-                      as the scanner may detect tokens and NFTs you&apos;ve held in the past.
-                    </p>
-                  </div>
-
-                  {/* Scan Progress Indicator */}
-                  {scanState.phase !== "idle" && scanState.phase !== "complete" && (
-                    <div className="mt-3 p-3 rounded-md bg-space-900 border border-space-700">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <div
-                            className={`p-1 rounded ${scanState.phase === "quick" ? "bg-green-900 text-green-300" : scanState.phase === "deep-v2" ? "bg-blue-900 text-blue-300" : scanState.phase === "deep-v1" ? "bg-purple-900 text-purple-300" : "bg-orange-900 text-orange-300"}`}
-                          >
-                            <Loader2 size={12} className="animate-spin" />
-                          </div>
-                          <span className="text-xs font-medium text-slate-300">
-                            {scanState.phase === "quick"
-                              ? "Quick Scan"
-                              : scanState.phase === "deep-v2"
-                                ? "Deep Scan (V2)"
-                                : scanState.phase === "deep-v1"
-                                  ? "Deep Scan (V1)"
-                                  : "Balance Check"}
-                          </span>
-                        </div>
-                        <span className="text-xs text-slate-400">{scanState.progress}%</span>
-                      </div>
-
-                      {/* Progress Bar */}
-                      <div className="w-full h-2 bg-space-800 rounded-full overflow-hidden mb-2">
-                        <div
-                          className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300 ease-out"
-                          style={{ width: `${scanState.progress}%` }}
-                        />
-                      </div>
-
-                      {/* Current Operation */}
-                      <p className="text-xs text-slate-400 mb-2">{scanState.currentOperation}</p>
-
-                      {/* Asset Counts */}
-                      <div className="flex items-center gap-3 text-xs">
-                        <span className="flex items-center gap-1 text-purple-300">
-                          <Coins size={12} />
-                          {scanState.tokensFound} tokens
-                        </span>
-                        <span className="flex items-center gap-1 text-blue-300">
-                          <ImageIcon size={12} />
-                          {scanState.nftsFound} NFTs
-                        </span>
-                        {scanState.startTime > 0 && (
-                          <span className="text-slate-500">
-                            {Math.floor((Date.now() - scanState.startTime) / 1000)}s
-                          </span>
-                        )}
+                        ))}
                       </div>
                     </div>
                   )}
-                  {/* Add contract manually */}
-                  <div className="mt-3 flex gap-2">
-                    <input
-                      type="text"
-                      value={contractInput}
-                      onChange={(e) => setContractInput(e.target.value)}
-                      placeholder="Add contract address"
-                      className="flex-1 bg-space-900 border border-space-700 rounded-md px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-space-500"
-                    />
-                    <button
-                      onClick={handleAddContract}
-                      className="px-3 py-2 rounded-md bg-space-700 hover:bg-space-600 text-xs font-medium text-white border border-space-600"
-                    >
-                      Add
-                    </button>
-                  </div>
-                  {(() => {
-                    const dedupe = (list: Token[]) => {
-                      const seen = new Set<string>();
-                      return list.filter((t) => {
-                        const key = t.address.toLowerCase();
-                        if (seen.has(key)) return false;
-                        seen.add(key);
-                        return true;
-                      });
-                    };
-                    const allTokens = dedupe([...forcedAssets.tokens, ...walletAssets.tokens]);
-                    const allNfts = dedupe([...forcedAssets.nfts, ...walletAssets.nfts]);
 
-                    if (walletScanError && allTokens.length === 0 && allNfts.length === 0) {
-                      return <p className="mt-2 text-xs text-red-400">{walletScanError}</p>;
-                    }
+                  {/* Wallet Scanner */}
+                  <div className="mt-4 p-3 rounded-lg bg-space-800 border border-space-700 shadow-lg">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="flex items-center gap-2">
+                        <div className="p-2 rounded-md bg-space-700 text-purple-300">
+                          <ScanLine size={16} />
+                        </div>
+                        <div className="text-center sm:text-left">
+                          <p className="text-xs uppercase tracking-wide text-slate-400">
+                            Wallet Scanner
+                          </p>
+                          <p className="text-sm text-white font-semibold">
+                            {userAddress
+                              ? `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`
+                              : "Connect wallet to scan"}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap justify-center gap-2 w-full">
+                        <Tooltip content="Fresh scan (bypasses cache)">
+                          <button
+                            onClick={handleManualScan}
+                            className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-purple-600 hover:bg-purple-700 text-white disabled:opacity-50 transition-colors"
+                            disabled={isScanningWallet || !userAddress}
+                          >
+                            {isScanningWallet ? (
+                              <Loader2 size={14} className="animate-spin" />
+                            ) : (
+                              <WalletIcon size={14} />
+                            )}
+                            <span>{isScanningWallet ? "Scanning" : "Scan"}</span>
+                          </button>
+                        </Tooltip>
+                        <Tooltip content="Quick reload (uses cache if available)">
+                          <button
+                            onClick={handleRefreshScan}
+                            className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-space-700 hover:bg-space-600 text-white disabled:opacity-50 transition-colors border border-space-600"
+                            disabled={isScanningWallet || !userAddress}
+                          >
+                            <RefreshCw
+                              size={14}
+                              className={isScanningWallet ? "animate-spin" : ""}
+                            />
+                            <span className="hidden sm:inline">Refresh</span>
+                          </button>
+                        </Tooltip>
+                        {isScanningWallet && (
+                          <Tooltip content="Stop scan">
+                            <button
+                              onClick={handleCancelScan}
+                              className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium bg-red-600 hover:bg-red-700 text-white transition-colors"
+                            >
+                              <X size={14} />
+                              <span className="hidden sm:inline">Stop</span>
+                            </button>
+                          </Tooltip>
+                        )}
+                      </div>
+                    </div>
 
-                    return (
-                      (allTokens.length > 0 || allNfts.length > 0) && (
-                        <div className="mt-3 space-y-2">
-                          {allTokens.length > 0 && (
-                            <div>
-                              <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide text-slate-400 mb-1">
-                                <Coins size={12} /> Tokens{" "}
-                                <span className="text-slate-500">({allTokens.length})</span>
-                              </div>
-                              <div className="flex flex-wrap gap-2 max-h-[200px] overflow-y-auto">
-                                {allTokens.map((asset) => (
-                                  <button
-                                    key={asset.address}
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      e.stopPropagation();
+                    {/* Scanner disclaimer */}
+                    <div className="mt-3 w-full rounded-md border border-amber-700/60 bg-amber-900/20 px-3 py-2 text-xs text-amber-200 text-center">
+                      <p className="font-semibold text-amber-100 uppercase">Heads up</p>
+                      <p className="text-amber-200/90">
+                        Scanning takes <strong>5-8 minutes</strong>. May find slightly different
+                        counts than explorer due to: transfers vs current holdings, timing
+                        differences, and API rate limits.
+                      </p>
+                      <p className="text-amber-200/90 mt-2">
+                        <strong>
+                          More tokens and NFTs may appear than what you currently hold
+                        </strong>
+                        , as the scanner may detect tokens and NFTs you&apos;ve held in the past.
+                      </p>
+                    </div>
 
-                                      // Scroll to search input and focus it for visual feedback
-                                      searchInputRef.current?.scrollIntoView({
-                                        behavior: "smooth",
-                                        block: "center",
-                                      });
-                                      setTimeout(() => {
-                                        searchInputRef.current?.focus();
-                                      }, 300);
-
-                                      handleSearch(e, asset.address, asset.type);
-                                    }}
-                                    className="px-2 py-1 rounded bg-space-900 border border-space-700 text-xs text-slate-200 hover:border-purple-500 hover:text-white transition-colors font-mono truncate max-w-[140px]"
-                                    title={`${asset.symbol} • ${asset.address}`}
-                                  >
-                                    {asset.symbol}
-                                  </button>
-                                ))}
-                              </div>
+                    {/* Scan Progress Indicator */}
+                    {scanState.phase !== "idle" && scanState.phase !== "complete" && (
+                      <div className="mt-3 p-3 rounded-md bg-space-900 border border-space-700">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <div
+                              className={`p-1 rounded ${scanState.phase === "quick" ? "bg-green-900 text-green-300" : scanState.phase === "deep-v2" ? "bg-blue-900 text-blue-300" : scanState.phase === "deep-v1" ? "bg-purple-900 text-purple-300" : "bg-orange-900 text-orange-300"}`}
+                            >
+                              <Loader2 size={12} className="animate-spin" />
                             </div>
-                          )}
-                          {allNfts.length > 0 && (
-                            <div>
-                              <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide text-slate-400 mb-1">
-                                <ImageIcon size={12} /> NFT Collections{" "}
-                                <span className="text-slate-500">({allNfts.length})</span>
-                              </div>
-                              <div className="flex flex-wrap gap-2 max-h-[200px] overflow-y-auto">
-                                {allNfts.map((asset) => (
-                                  <button
-                                    key={asset.address}
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      e.stopPropagation();
+                            <span className="text-xs font-medium text-slate-300">
+                              {scanState.phase === "quick"
+                                ? "Quick Scan"
+                                : scanState.phase === "deep-v2"
+                                  ? "Deep Scan (V2)"
+                                  : scanState.phase === "deep-v1"
+                                    ? "Deep Scan (V1)"
+                                    : "Balance Check"}
+                            </span>
+                          </div>
+                          <span className="text-xs text-slate-400">{scanState.progress}%</span>
+                        </div>
 
-                                      // Scroll to search input and focus it for visual feedback
-                                      searchInputRef.current?.scrollIntoView({
-                                        behavior: "smooth",
-                                        block: "center",
-                                      });
-                                      setTimeout(() => {
-                                        searchInputRef.current?.focus();
-                                      }, 300);
+                        {/* Progress Bar */}
+                        <div className="w-full h-2 bg-space-800 rounded-full overflow-hidden mb-2">
+                          <div
+                            className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300 ease-out"
+                            style={{ width: `${scanState.progress}%` }}
+                          />
+                        </div>
 
-                                      handleSearch(e, asset.address, asset.type);
-                                    }}
-                                    className="px-2 py-1 rounded bg-space-900 border border-space-700 text-xs text-slate-200 hover:border-blue-500 hover:text-white transition-colors font-mono truncate max-w-[140px]"
-                                    title={`${asset.name} • ${asset.address}`}
-                                  >
-                                    {asset.symbol || asset.name}
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
+                        {/* Current Operation */}
+                        <p className="text-xs text-slate-400 mb-2">{scanState.currentOperation}</p>
+
+                        {/* Asset Counts */}
+                        <div className="flex items-center gap-3 text-xs">
+                          <span className="flex items-center gap-1 text-purple-300">
+                            <Coins size={12} />
+                            {scanState.tokensFound} tokens
+                          </span>
+                          <span className="flex items-center gap-1 text-blue-300">
+                            <ImageIcon size={12} />
+                            {scanState.nftsFound} NFTs
+                          </span>
+                          {scanState.startTime > 0 && (
+                            <span className="text-slate-500">
+                              {Math.floor((Date.now() - scanState.startTime) / 1000)}s
+                            </span>
                           )}
                         </div>
-                      )
-                    );
-                  })()}
+                      </div>
+                    )}
+                    {/* Add contract manually */}
+                    <div className="mt-3 flex gap-2">
+                      <input
+                        type="text"
+                        value={contractInput}
+                        onChange={(e) => setContractInput(e.target.value)}
+                        placeholder="Add contract address"
+                        className="flex-1 bg-space-900 border border-space-700 rounded-md px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-space-500"
+                      />
+                      <button
+                        onClick={handleAddContract}
+                        className="px-3 py-2 rounded-md bg-space-700 hover:bg-space-600 text-xs font-medium text-white border border-space-600"
+                      >
+                        Add
+                      </button>
+                    </div>
+                    {(() => {
+                      const dedupe = (list: Token[]) => {
+                        const seen = new Set<string>();
+                        return list.filter((t) => {
+                          const key = t.address.toLowerCase();
+                          if (seen.has(key)) return false;
+                          seen.add(key);
+                          return true;
+                        });
+                      };
+                      const allTokens = dedupe([...forcedAssets.tokens, ...walletAssets.tokens]);
+                      const allNfts = dedupe([...forcedAssets.nfts, ...walletAssets.nfts]);
+
+                      if (walletScanError && allTokens.length === 0 && allNfts.length === 0) {
+                        return <p className="mt-2 text-xs text-red-400">{walletScanError}</p>;
+                      }
+
+                      return (
+                        (allTokens.length > 0 || allNfts.length > 0) && (
+                          <div className="mt-3 space-y-2">
+                            {allTokens.length > 0 && (
+                              <div>
+                                <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide text-slate-400 mb-1">
+                                  <Coins size={12} /> Tokens{" "}
+                                  <span className="text-slate-500">({allTokens.length})</span>
+                                </div>
+                                <div className="flex flex-wrap gap-2 max-h-[200px] overflow-y-auto">
+                                  {allTokens.map((asset) => (
+                                    <button
+                                      key={asset.address}
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+
+                                        // Scroll to search input and focus it for visual feedback
+                                        searchInputRef.current?.scrollIntoView({
+                                          behavior: "smooth",
+                                          block: "center",
+                                        });
+                                        setTimeout(() => {
+                                          searchInputRef.current?.focus();
+                                        }, 300);
+
+                                        handleSearch(e, asset.address, asset.type);
+                                      }}
+                                      className="px-2 py-1 rounded bg-space-900 border border-space-700 text-xs text-slate-200 hover:border-purple-500 hover:text-white transition-colors font-mono truncate max-w-[140px]"
+                                      title={`${asset.symbol} • ${asset.address}`}
+                                    >
+                                      {asset.symbol}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                            {allNfts.length > 0 && (
+                              <div>
+                                <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide text-slate-400 mb-1">
+                                  <ImageIcon size={12} /> NFT Collections{" "}
+                                  <span className="text-slate-500">({allNfts.length})</span>
+                                </div>
+                                <div className="flex flex-wrap gap-2 max-h-[200px] overflow-y-auto">
+                                  {allNfts.map((asset) => (
+                                    <button
+                                      key={asset.address}
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+
+                                        // Scroll to search input and focus it for visual feedback
+                                        searchInputRef.current?.scrollIntoView({
+                                          behavior: "smooth",
+                                          block: "center",
+                                        });
+                                        setTimeout(() => {
+                                          searchInputRef.current?.focus();
+                                        }, 300);
+
+                                        handleSearch(e, asset.address, asset.type);
+                                      }}
+                                      className="px-2 py-1 rounded bg-space-900 border border-space-700 text-xs text-slate-200 hover:border-blue-500 hover:text-white transition-colors font-mono truncate max-w-[140px]"
+                                      title={`${asset.name} • ${asset.address}`}
+                                    >
+                                      {asset.symbol || asset.name}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        )
+                      );
+                    })()}
+                  </div>
                 </div>
+
+                {/* Trending Sections */}
+                <TrendingSection
+                  title="Trending Tokens"
+                  icon={<Coins size={14} />}
+                  assets={trendingTokens}
+                  onAssetClick={(e, asset) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    searchInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+                    setTimeout(() => {
+                      searchInputRef.current?.focus();
+                    }, 300);
+                    handleSearch(e, asset.address, asset.type);
+                  }}
+                />
+
+                <TrendingSection
+                  title="Trending NFTs"
+                  icon={<ImageIcon size={14} />}
+                  assets={trendingNfts}
+                  onAssetClick={(e, asset) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    searchInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+                    setTimeout(() => {
+                      searchInputRef.current?.focus();
+                    }, 300);
+                    handleSearch(e, asset.address, asset.type);
+                  }}
+                />
               </div>
 
-              {/* Trending Sections */}
-              <TrendingSection
-                title="Trending Tokens"
-                icon={<Coins size={14} />}
-                assets={trendingTokens}
-                onAssetClick={(e, asset) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  searchInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-                  setTimeout(() => {
-                    searchInputRef.current?.focus();
-                  }, 300);
-                  handleSearch(e, asset.address, asset.type);
-                }}
-              />
-
-              <TrendingSection
-                title="Trending NFTs"
-                icon={<ImageIcon size={14} />}
-                assets={trendingNfts}
-                onAssetClick={(e, asset) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  searchInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-                  setTimeout(() => {
-                    searchInputRef.current?.focus();
-                  }, 300);
-                  handleSearch(e, asset.address, asset.type);
-                }}
-              />
+              {/* Footer */}
+              <div className="w-full mt-auto">
+                <Footer onOpenGuide={openOnboarding} />
+              </div>
             </div>
+          )}
 
-            {/* Footer */}
-            <div className="w-full mt-auto">
-              <Footer onOpenGuide={openOnboarding} />
-            </div>
-          </div>
-        )}
-
-        {/* ANALYSIS VIEW */}
-        {view === ViewState.ANALYSIS && (
-          <>
-            {token ? (
-              <div className="flex h-[calc(100dvh-64px)] overflow-hidden">
-                {/* Sidebar Left (Stats) - Responsive Drawer for Mobile */}
-                <div
-                  className={`
+          {/* ANALYSIS VIEW */}
+          {view === ViewState.ANALYSIS && (
+            <>
+              {token ? (
+                <div className="flex h-[calc(100dvh-64px)] overflow-hidden">
+                  {/* Sidebar Left (Stats) - Responsive Drawer for Mobile */}
+                  <div
+                    className={`
                         fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] bg-space-800 border-r border-space-700 p-4 lg:p-6 overflow-y-auto transition-transform duration-300 ease-in-out
                         lg:relative lg:translate-x-0 lg:z-0 lg:max-w-none
                         ${isMobileStatsOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"}
                     `}
-                >
-                  {/* Mobile Close Button */}
-                  <div className="lg:hidden flex justify-end mb-4">
-                    <button
-                      onClick={() => setIsMobileStatsOpen(false)}
-                      className="p-2 text-slate-400 hover:text-white bg-space-700 rounded-lg"
-                    >
-                      <X size={20} />
-                    </button>
-                  </div>
-
-                  <div className="mb-6">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h2 className="text-2xl font-bold text-white truncate" title={token.name}>
-                        {token.name}
-                      </h2>
-                      {token.type === AssetType.NFT && (
-                        <span className="px-2 py-0.5 bg-purple-600/20 text-purple-400 text-[10px] font-bold rounded border border-purple-600/20">
-                          NFT
-                        </span>
-                      )}
-                      {token.isVerified ? (
-                        <Tooltip content="Verified Source">
-                          <span className="text-green-500">
-                            <ShieldCheck size={16} />
-                          </span>
-                        </Tooltip>
-                      ) : (
-                        <Tooltip content="Unverified Source">
-                          <span className="text-slate-500">
-                            <AlertTriangle size={16} />
-                          </span>
-                        </Tooltip>
-                      )}
-                    </div>
-                    <p className="text-sm text-slate-400 font-mono truncate">
-                      {token.symbol} - {token.address.slice(0, 8)}...
-                    </p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="p-4 bg-space-900 rounded-lg border border-space-700">
-                      <div className="flex items-center justify-between gap-2 text-slate-400 mb-1">
-                        <span className="flex items-center gap-1">
-                          <Users size={14} /> Holders Tracked
-                        </span>
-                        <span className="text-[10px] bg-green-500 text-white px-1.5 py-0.5 rounded live-badge-pulse">
-                          Live
-                        </span>
-                      </div>
-                      <div className="text-xl font-bold text-white">
-                        {wallets.length.toLocaleString()}
-                      </div>
-                      {/* Mapped Count Detail */}
-                      <div className="text-[10px] text-slate-500 mt-1">
-                        {wallets.length === 100
-                          ? "Showing top 100 holders from blockchain"
-                          : `${wallets.length} total holders tracked`}
-                      </div>
-                    </div>
-                    <div className="p-4 bg-space-900 rounded-lg border border-space-700">
-                      <div className="flex items-center gap-2 text-slate-400 mb-1">
-                        <Layers size={14} /> Total Supply
-                      </div>
-                      <div className="text-xl font-bold text-white">
-                        {token.type === AssetType.NFT
-                          ? token.totalSupply.toLocaleString()
-                          : `${token.totalSupply.toLocaleString(undefined, { notation: "compact" })}`}
-                      </div>
-                    </div>
-
-                    {/* Gemini Summary Widget - COMING SOON */}
-                    <div className="p-4 bg-gradient-to-br from-purple-900/20 to-space-900 rounded-lg border border-purple-500/20 mt-6 relative overflow-hidden">
-                      <div className="absolute inset-0 bg-space-900 flex items-center justify-center z-10">
-                        <div className="text-center">
-                          <p className="text-sm font-bold text-purple-400 mb-1">
-                            FEATURE COMING SOON
-                          </p>
-                          <p className="text-xs text-slate-500">AI-Powered Token Analysis</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 text-purple-300 mb-2 font-bold text-sm opacity-0 pointer-events-none">
-                        <Sparkles size={14} /> AI Summary
-                      </div>
-                      {summary ? (
-                        <p className="text-xs text-slate-300 leading-relaxed animate-fade-in opacity-0 pointer-events-none">
-                          {summary}
-                        </p>
-                      ) : (
-                        <div className="flex items-center gap-2 text-xs text-slate-500 opacity-0 pointer-events-none">
-                          <Loader2 className="animate-spin" size={12} /> Analyzing live data...
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="mt-8">
-                    <div className="flex justify-between items-center mb-3">
-                      <h3 className="text-sm font-bold text-slate-300 uppercase tracking-wider">
-                        Top Holders
-                      </h3>
-                      <span className="text-xs text-slate-500">
-                        {Math.min(holdersPage * 10, wallets.length)} of {wallets.length}
-                      </span>
-                    </div>
-                    <div className="space-y-2">
-                      {wallets.slice((holdersPage - 1) * 10, holdersPage * 10).map((w, i) => {
-                        const globalIndex = (holdersPage - 1) * 10 + i;
-                        const isSelected = selectedWallet?.id === w.id || targetWalletId === w.id;
-                        return (
-                          <div
-                            key={w.id}
-                            className={`flex items-center justify-between text-sm p-2 rounded cursor-pointer transition-colors ${
-                              isSelected
-                                ? "bg-purple-500/30 border border-purple-500/50"
-                                : "hover:bg-space-700"
-                            }`}
-                            onClick={() => handleSelectWalletOnMap(w)}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter" || e.key === " ") {
-                                e.preventDefault();
-                                handleSelectWalletOnMap(w);
-                              }
-                            }}
-                            role="button"
-                            tabIndex={0}
-                          >
-                            <div className="flex items-center gap-2 overflow-hidden">
-                              <span
-                                className={`w-4 shrink-0 ${isSelected ? "text-purple-300" : "text-slate-500"}`}
-                              >
-                                {globalIndex + 1}
-                              </span>
-                              <span
-                                className={`font-mono text-xs ${isSelected ? "text-purple-400" : "text-slate-300"}`}
-                                title={w.address}
-                              >
-                                {w.address.slice(0, 6)}...{w.address.slice(-4)}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <span
-                                className={`font-bold text-xs ${
-                                  isSelected
-                                    ? "text-purple-400"
-                                    : token.type === AssetType.NFT
-                                      ? "text-purple-400"
-                                      : "text-doge-500"
-                                }`}
-                              >
-                                {w.percentage.toFixed(1)}%
-                              </span>
-                              <Tooltip content="View wallet on Dogechain Explorer">
-                                <a
-                                  href={`https://explorer.dogechain.dog/address/${w.address}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className={`transition-colors p-2 rounded min-w-[44px] min-h-[44px] inline-flex items-center justify-center [touch-action:manipulation] ${
-                                    isSelected
-                                      ? "text-purple-300 hover:text-white bg-purple-900/30 hover:bg-purple-900/50"
-                                      : "text-slate-500 hover:text-white hover:bg-space-600"
-                                  }`}
-                                  onClick={(e) => e.stopPropagation()}
-                                  onKeyDown={(e) => {
-                                    if (e.key === "Enter" || e.key === " ") {
-                                      e.stopPropagation();
-                                      e.preventDefault();
-                                      window.open(
-                                        `https://explorer.dogechain.dog/address/${w.address}`,
-                                        "_blank",
-                                        "noopener,noreferrer"
-                                      );
-                                    }
-                                  }}
-                                >
-                                  <ExternalLink size={12} />
-                                </a>
-                              </Tooltip>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    {/* Pagination Controls */}
-                    {wallets.length > 10 && (
-                      <div className="flex items-center justify-center gap-2 mt-3">
-                        <button
-                          onClick={() => {
-                            setHoldersPage(Math.max(1, holdersPage - 1));
-                            if (!hasInteractedWithTokenPanel) setHasInteractedWithTokenPanel(true);
-                          }}
-                          disabled={holdersPage === 1}
-                          className="px-3 py-1 text-xs bg-space-800 border border-space-700 rounded hover:bg-space-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                        >
-                          Prev
-                        </button>
-                        <span className="text-xs text-slate-400">
-                          Page {holdersPage} of {Math.ceil(wallets.length / 10)}
-                        </span>
-                        <button
-                          onClick={() => {
-                            setHoldersPage(
-                              Math.min(Math.ceil(wallets.length / 10), holdersPage + 1)
-                            );
-                            if (!hasInteractedWithTokenPanel) setHasInteractedWithTokenPanel(true);
-                          }}
-                          disabled={holdersPage >= Math.ceil(wallets.length / 10)}
-                          className="px-3 py-1 text-xs bg-space-800 border border-space-700 rounded hover:bg-space-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                        >
-                          Next
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Mobile Sidebar Overlay */}
-                {isMobileStatsOpen && (
-                  <div
-                    className="fixed inset-0 bg-black/70 z-40 lg:hidden"
-                    onClick={() => setIsMobileStatsOpen(false)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        setIsMobileStatsOpen(false);
-                      }
-                    }}
-                    role="button"
-                    tabIndex={0}
-                    aria-label="Close sidebar"
-                  />
-                )}
-
-                {/* Main Visualization Area */}
-                <div className="flex-1 relative bg-space-900">
-                  {/* Mobile Stats Toggle Button */}
-                  <button
-                    className="lg:hidden absolute top-4 left-4 z-30 p-2 bg-space-800 rounded-lg border border-space-700 text-slate-300 hover:text-white shadow-lg"
-                    onClick={() => setIsMobileStatsOpen(true)}
                   >
-                    <Menu size={20} />
-                  </button>
-
-                  {/* Desktop Controls Top Right */}
-                  <div className="absolute top-4 right-4 z-30 flex gap-2 flex-wrap justify-end">
-                    <Tooltip content="Export all data as CSV file">
+                    {/* Mobile Close Button */}
+                    <div className="lg:hidden flex justify-end mb-4">
                       <button
-                        onClick={handleExportCSV}
-                        className="bg-space-800 border border-space-700 text-slate-200 px-3 sm:px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg hover:bg-space-700 transition-colors"
+                        onClick={() => setIsMobileStatsOpen(false)}
+                        className="p-2 text-slate-400 hover:text-white bg-space-700 rounded-lg"
                       >
-                        <Download size={14} /> <span className="hidden sm:inline">CSV</span>
+                        <X size={20} />
                       </button>
-                    </Tooltip>
+                    </div>
 
-                    <button
-                      onClick={handleShare}
-                      className="bg-space-800 border border-space-700 text-slate-200 px-3 sm:px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg hover:bg-space-700 transition-colors"
-                    >
-                      <Share2 size={14} /> <span className="hidden sm:inline">Share</span>
-                    </button>
+                    <div className="mb-6">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h2 className="text-2xl font-bold text-white truncate" title={token.name}>
+                          {token.name}
+                        </h2>
+                        {token.type === AssetType.NFT && (
+                          <span className="px-2 py-0.5 bg-purple-600/20 text-purple-400 text-[10px] font-bold rounded border border-purple-600/20">
+                            NFT
+                          </span>
+                        )}
+                        {token.isVerified ? (
+                          <Tooltip content="Verified Source">
+                            <span className="text-green-500">
+                              <ShieldCheck size={16} />
+                            </span>
+                          </Tooltip>
+                        ) : (
+                          <Tooltip content="Unverified Source">
+                            <span className="text-slate-500">
+                              <AlertTriangle size={16} />
+                            </span>
+                          </Tooltip>
+                        )}
+                      </div>
+                      <p className="text-sm text-slate-400 font-mono truncate">
+                        {token.symbol} - {token.address.slice(0, 8)}...
+                      </p>
+                    </div>
 
-                    <div className="bg-space-800 border border-space-700 text-slate-200 px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg whitespace-nowrap">
-                      <History size={14} className="text-green-500" />
-                      <span className="text-slate-400 hidden sm:inline">Source:</span>
-                      <span className="text-white font-bold text-xs sm:text-sm">Explorer</span>
+                    <div className="space-y-4">
+                      <div className="p-4 bg-space-900 rounded-lg border border-space-700">
+                        <div className="flex items-center justify-between gap-2 text-slate-400 mb-1">
+                          <span className="flex items-center gap-1">
+                            <Users size={14} /> Holders Tracked
+                          </span>
+                          <span className="text-[10px] bg-green-500 text-white px-1.5 py-0.5 rounded live-badge-pulse">
+                            Live
+                          </span>
+                        </div>
+                        <div className="text-xl font-bold text-white">
+                          {wallets.length.toLocaleString()}
+                        </div>
+                        {/* Mapped Count Detail */}
+                        <div className="text-[10px] text-slate-500 mt-1">
+                          {wallets.length === 100
+                            ? "Showing top 100 holders from blockchain"
+                            : `${wallets.length} total holders tracked`}
+                        </div>
+                      </div>
+                      <div className="p-4 bg-space-900 rounded-lg border border-space-700">
+                        <div className="flex items-center gap-2 text-slate-400 mb-1">
+                          <Layers size={14} /> Total Supply
+                        </div>
+                        <div className="text-xl font-bold text-white">
+                          {token.type === AssetType.NFT
+                            ? token.totalSupply.toLocaleString()
+                            : `${token.totalSupply.toLocaleString(undefined, { notation: "compact" })}`}
+                        </div>
+                      </div>
+
+                      {/* Gemini Summary Widget - COMING SOON */}
+                      <div className="p-4 bg-gradient-to-br from-purple-900/20 to-space-900 rounded-lg border border-purple-500/20 mt-6 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-space-900 flex items-center justify-center z-10">
+                          <div className="text-center">
+                            <p className="text-sm font-bold text-purple-400 mb-1">
+                              FEATURE COMING SOON
+                            </p>
+                            <p className="text-xs text-slate-500">AI-Powered Token Analysis</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 text-purple-300 mb-2 font-bold text-sm opacity-0 pointer-events-none">
+                          <Sparkles size={14} /> AI Summary
+                        </div>
+                        {summary ? (
+                          <p className="text-xs text-slate-300 leading-relaxed animate-fade-in opacity-0 pointer-events-none">
+                            {summary}
+                          </p>
+                        ) : (
+                          <div className="flex items-center gap-2 text-xs text-slate-500 opacity-0 pointer-events-none">
+                            <Loader2 className="animate-spin" size={12} /> Analyzing live data...
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="mt-8">
+                      <div className="flex justify-between items-center mb-3">
+                        <h3 className="text-sm font-bold text-slate-300 uppercase tracking-wider">
+                          Top Holders
+                        </h3>
+                        <span className="text-xs text-slate-500">
+                          {Math.min(holdersPage * 10, wallets.length)} of {wallets.length}
+                        </span>
+                      </div>
+                      <div className="space-y-2">
+                        {wallets.slice((holdersPage - 1) * 10, holdersPage * 10).map((w, i) => {
+                          const globalIndex = (holdersPage - 1) * 10 + i;
+                          const isSelected = selectedWallet?.id === w.id || targetWalletId === w.id;
+                          return (
+                            <div
+                              key={w.id}
+                              className={`flex items-center justify-between text-sm p-2 rounded cursor-pointer transition-colors ${
+                                isSelected
+                                  ? "bg-purple-500/30 border border-purple-500/50"
+                                  : "hover:bg-space-700"
+                              }`}
+                              onClick={() => handleSelectWalletOnMap(w)}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                  e.preventDefault();
+                                  handleSelectWalletOnMap(w);
+                                }
+                              }}
+                              role="button"
+                              tabIndex={0}
+                            >
+                              <div className="flex items-center gap-2 overflow-hidden">
+                                <span
+                                  className={`w-4 shrink-0 ${isSelected ? "text-purple-300" : "text-slate-500"}`}
+                                >
+                                  {globalIndex + 1}
+                                </span>
+                                <span
+                                  className={`font-mono text-xs ${isSelected ? "text-purple-400" : "text-slate-300"}`}
+                                  title={w.address}
+                                >
+                                  {w.address.slice(0, 6)}...{w.address.slice(-4)}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span
+                                  className={`font-bold text-xs ${
+                                    isSelected
+                                      ? "text-purple-400"
+                                      : token.type === AssetType.NFT
+                                        ? "text-purple-400"
+                                        : "text-doge-500"
+                                  }`}
+                                >
+                                  {w.percentage.toFixed(1)}%
+                                </span>
+                                <Tooltip content="View wallet on Dogechain Explorer">
+                                  <a
+                                    href={`https://explorer.dogechain.dog/address/${w.address}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`transition-colors p-2 rounded min-w-[44px] min-h-[44px] inline-flex items-center justify-center [touch-action:manipulation] ${
+                                      isSelected
+                                        ? "text-purple-300 hover:text-white bg-purple-900/30 hover:bg-purple-900/50"
+                                        : "text-slate-500 hover:text-white hover:bg-space-600"
+                                    }`}
+                                    onClick={(e) => e.stopPropagation()}
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter" || e.key === " ") {
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        window.open(
+                                          `https://explorer.dogechain.dog/address/${w.address}`,
+                                          "_blank",
+                                          "noopener,noreferrer"
+                                        );
+                                      }
+                                    }}
+                                  >
+                                    <ExternalLink size={12} />
+                                  </a>
+                                </Tooltip>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Pagination Controls */}
+                      {wallets.length > 10 && (
+                        <div className="flex items-center justify-center gap-2 mt-3">
+                          <button
+                            onClick={() => {
+                              setHoldersPage(Math.max(1, holdersPage - 1));
+                              if (!hasInteractedWithTokenPanel)
+                                setHasInteractedWithTokenPanel(true);
+                            }}
+                            disabled={holdersPage === 1}
+                            className="px-3 py-1 text-xs bg-space-800 border border-space-700 rounded hover:bg-space-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                          >
+                            Prev
+                          </button>
+                          <span className="text-xs text-slate-400">
+                            Page {holdersPage} of {Math.ceil(wallets.length / 10)}
+                          </span>
+                          <button
+                            onClick={() => {
+                              setHoldersPage(
+                                Math.min(Math.ceil(wallets.length / 10), holdersPage + 1)
+                              );
+                              if (!hasInteractedWithTokenPanel)
+                                setHasInteractedWithTokenPanel(true);
+                            }}
+                            disabled={holdersPage >= Math.ceil(wallets.length / 10)}
+                            className="px-3 py-1 text-xs bg-space-800 border border-space-700 rounded hover:bg-space-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                          >
+                            Next
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
 
-                  {loading && (
-                    <div className="absolute inset-0 z-50 bg-space-900/90 flex items-center justify-center">
-                      <div className="flex flex-col items-center gap-4">
-                        <Loader2 className="animate-spin text-purple-500" size={48} />
-                        <span className="text-white font-medium">Fetching Live Data...</span>
-                        <span className="text-xs text-slate-500">
-                          Connecting to Dogechain Explorer API
-                        </span>
-                      </div>
-                    </div>
+                  {/* Mobile Sidebar Overlay */}
+                  {isMobileStatsOpen && (
+                    <div
+                      className="fixed inset-0 bg-black/70 z-40 lg:hidden"
+                      onClick={() => setIsMobileStatsOpen(false)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setIsMobileStatsOpen(false);
+                        }
+                      }}
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Close sidebar"
+                    />
                   )}
 
-                  <BubbleMap
+                  {/* Main Visualization Area */}
+                  <div className="flex-1 relative bg-space-900">
+                    {/* Mobile Stats Toggle Button */}
+                    <button
+                      className="lg:hidden absolute top-4 left-4 z-30 p-2 bg-space-800 rounded-lg border border-space-700 text-slate-300 hover:text-white shadow-lg"
+                      onClick={() => setIsMobileStatsOpen(true)}
+                    >
+                      <Menu size={20} />
+                    </button>
+
+                    {/* Desktop Controls Top Right */}
+                    <div className="absolute top-4 right-4 z-30 flex gap-2 flex-wrap justify-end">
+                      <Tooltip content="Export all data as CSV file">
+                        <button
+                          onClick={handleExportCSV}
+                          className="bg-space-800 border border-space-700 text-slate-200 px-3 sm:px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg hover:bg-space-700 transition-colors"
+                        >
+                          <Download size={14} /> <span className="hidden sm:inline">CSV</span>
+                        </button>
+                      </Tooltip>
+
+                      <button
+                        onClick={handleShare}
+                        className="bg-space-800 border border-space-700 text-slate-200 px-3 sm:px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg hover:bg-space-700 transition-colors"
+                      >
+                        <Share2 size={14} /> <span className="hidden sm:inline">Share</span>
+                      </button>
+
+                      <div className="bg-space-800 border border-space-700 text-slate-200 px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg whitespace-nowrap">
+                        <History size={14} className="text-green-500" />
+                        <span className="text-slate-400 hidden sm:inline">Source:</span>
+                        <span className="text-white font-bold text-xs sm:text-sm">Explorer</span>
+                      </div>
+                    </div>
+
+                    {loading && (
+                      <div className="absolute inset-0 z-50 bg-space-900/90 flex items-center justify-center">
+                        <div className="flex flex-col items-center gap-4">
+                          <Loader2 className="animate-spin text-purple-500" size={48} />
+                          <span className="text-white font-medium">Fetching Live Data...</span>
+                          <span className="text-xs text-slate-500">
+                            Connecting to Dogechain Explorer API
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    <BubbleMap
+                      wallets={wallets}
+                      links={links}
+                      assetType={token.type}
+                      userAddress={userAddress}
+                      onWalletClick={handleWalletClickOnMap}
+                      targetWalletId={targetWalletId}
+                      onConnectionClick={handleConnectionClick}
+                      selectedConnectionId={selectedConnectionId}
+                      freezeLayout={isMapLayoutFrozen}
+                    />
+                  </div>
+
+                  {/* Slide Over Details */}
+                  <WalletSidebar
+                    wallet={selectedWallet}
+                    connection={selectedConnection}
                     wallets={wallets}
-                    links={links}
+                    tokenSymbol={token.symbol}
+                    tokenName={token.name}
+                    tokenAddress={token.address}
+                    tokenDecimals={token.decimals}
                     assetType={token.type}
-                    userAddress={userAddress}
-                    onWalletClick={handleWalletClickOnMap}
-                    targetWalletId={targetWalletId}
-                    onConnectionClick={handleConnectionClick}
-                    selectedConnectionId={selectedConnectionId}
-                    freezeLayout={isMapLayoutFrozen}
+                    iconUrl={token.iconUrl}
+                    onClose={() => {
+                      setSelectedWallet(null);
+                      setSelectedConnection(null);
+                      setSelectedConnectionId(null);
+                    }}
+                    onOpenAlertModal={() =>
+                      selectedWallet &&
+                      handleOpenAlertModal({
+                        walletAddress: selectedWallet.address,
+                        tokenAddress: token.address,
+                        tokenSymbol: token.symbol,
+                      })
+                    }
+                    onTraceConnections={handleTraceConnections}
                   />
                 </div>
-
-                {/* Slide Over Details */}
-                <WalletSidebar
-                  wallet={selectedWallet}
-                  connection={selectedConnection}
-                  wallets={wallets}
-                  tokenSymbol={token.symbol}
-                  tokenName={token.name}
-                  tokenAddress={token.address}
-                  tokenDecimals={token.decimals}
-                  assetType={token.type}
-                  iconUrl={token.iconUrl}
-                  onClose={() => {
-                    setSelectedWallet(null);
-                    setSelectedConnection(null);
-                    setSelectedConnectionId(null);
-                  }}
-                  onOpenAlertModal={() =>
-                    selectedWallet &&
-                    handleOpenAlertModal({
-                      walletAddress: selectedWallet.address,
-                      tokenAddress: token.address,
-                      tokenSymbol: token.symbol,
-                    })
-                  }
-                  onTraceConnections={handleTraceConnections}
-                />
-              </div>
-            ) : (
-              // EMPTY STATE FOR ANALYSIS
-              <div className="flex-1 flex flex-col items-center justify-center min-h-[60vh] p-8 text-center">
-                <div className="w-20 h-20 bg-space-800 rounded-full flex items-center justify-center mb-6 shadow-xl">
-                  <AlertCircle size={40} className="text-slate-500" />
+              ) : (
+                // EMPTY STATE FOR ANALYSIS
+                <div className="flex-1 flex flex-col items-center justify-center min-h-[60vh] p-8 text-center">
+                  <div className="w-20 h-20 bg-space-800 rounded-full flex items-center justify-center mb-6 shadow-xl">
+                    <AlertCircle size={40} className="text-slate-500" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-white mb-3">No Analysis Active</h2>
+                  <p className="text-slate-400 max-w-md mb-8">
+                    You haven&apos;t selected a token to analyze yet. Use the search bar on the home
+                    page or check the dashboard.
+                  </p>
+                  <button
+                    onClick={() => handleViewChange(ViewState.HOME)}
+                    className="flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-500 transition-colors font-medium"
+                  >
+                    <ArrowLeft size={18} /> Return to Search
+                  </button>
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-3">No Analysis Active</h2>
-                <p className="text-slate-400 max-w-md mb-8">
-                  You haven&apos;t selected a token to analyze yet. Use the search bar on the home
-                  page or check the dashboard.
-                </p>
-                <button
-                  onClick={() => handleViewChange(ViewState.HOME)}
-                  className="flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-500 transition-colors font-medium"
-                >
-                  <ArrowLeft size={18} /> Return to Search
-                </button>
-              </div>
-            )}
-          </>
-        )}
+              )}
+            </>
+          )}
 
-        {/* DASHBOARD VIEW */}
-        {view === ViewState.DASHBOARD && (
-          <div className="flex flex-col min-h-full">
-            {!userAddress ? (
-              <div className="flex-1 flex flex-col items-center justify-center min-h-[60vh] p-8 text-center">
-                <div className="w-20 h-20 bg-space-800 rounded-full flex items-center justify-center mb-6 shadow-xl">
-                  <WalletIcon size={40} className="text-slate-500" />
-                </div>
-                <h2 className="text-2xl font-bold text-white mb-3">Wallet Connection Required</h2>
-                <p className="text-slate-400 max-w-md mb-8">
-                  Please connect your wallet to access the Dashboard and manage your alerts.
-                </p>
-                {/* RainbowKit Connect Button handles wallet connection */}
-                <div className="flex justify-center">
-                  <ConnectButton />
-                </div>
-              </div>
-            ) : (
-              <Dashboard
-                alerts={alerts}
-                statuses={alertStatuses}
-                onUpdateStatuses={setAlertStatuses}
-                onRemoveAlert={handleRemoveAlert}
-                onAddAlert={handleCreateAlert}
-                onUpdateAlert={handleUpdateAlert}
-                triggeredEvents={triggeredEvents}
-                onTriggeredEventsChange={setTriggeredEvents}
-                isAlertModalOpen={isAlertModalOpen}
-                alertModalPrefill={alertModalPrefill}
-                onAlertModalOpen={(prefill) => {
-                  setAlertModalPrefill(prefill);
-                  setIsAlertModalOpen(true);
-                }}
-                onAlertModalClose={() => {
-                  setIsAlertModalOpen(false);
-                  setAlertModalPrefill(null);
-                }}
-                onAlertTriggered={handleAlertTriggered}
-              />
-            )}
-            <div className="mt-auto">
-              <Footer onOpenGuide={openOnboarding} />
-            </div>
-          </div>
-        )}
-
-        {/* NETWORK HEALTH VIEW */}
-        {view === ViewState.NETWORK_HEALTH && (
-          <div className="flex flex-col min-h-full">
-            <div className="px-6 py-4 bg-purple-500/10 border-b border-purple-500/20">
-              <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">
-                <div className="flex items-center gap-3">
-                  <BarChart3 className="w-5 h-5 text-purple-400" />
-                  <div>
-                    <p className="text-white font-medium">
-                      Network Health is now part of Unified Analytics
-                    </p>
-                    <p className="text-sm text-slate-400">
-                      Get comprehensive insights in one dashboard with User Behavior, Platform
-                      Health, and Wallet Flows
-                    </p>
+          {/* DASHBOARD VIEW */}
+          {view === ViewState.DASHBOARD && (
+            <div className="flex flex-col min-h-full">
+              {!userAddress ? (
+                <div className="flex-1 flex flex-col items-center justify-center min-h-[60vh] p-8 text-center">
+                  <div className="w-20 h-20 bg-space-800 rounded-full flex items-center justify-center mb-6 shadow-xl">
+                    <WalletIcon size={40} className="text-slate-500" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-white mb-3">Wallet Connection Required</h2>
+                  <p className="text-slate-400 max-w-md mb-8">
+                    Please connect your wallet to access the Dashboard and manage your alerts.
+                  </p>
+                  {/* RainbowKit Connect Button handles wallet connection */}
+                  <div className="flex justify-center">
+                    <ConnectButton />
                   </div>
                 </div>
-                <button
-                  onClick={() => handleViewChange(ViewState.UNIFIED_ANALYTICS)}
-                  className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
-                >
-                  <LayoutDashboard size={16} />
-                  Go to Unified Analytics
-                </button>
+              ) : (
+                <Dashboard
+                  alerts={alerts}
+                  statuses={alertStatuses}
+                  onUpdateStatuses={setAlertStatuses}
+                  onRemoveAlert={handleRemoveAlert}
+                  onAddAlert={handleCreateAlert}
+                  onUpdateAlert={handleUpdateAlert}
+                  triggeredEvents={triggeredEvents}
+                  onTriggeredEventsChange={setTriggeredEvents}
+                  isAlertModalOpen={isAlertModalOpen}
+                  alertModalPrefill={alertModalPrefill}
+                  onAlertModalOpen={(prefill) => {
+                    setAlertModalPrefill(prefill);
+                    setIsAlertModalOpen(true);
+                  }}
+                  onAlertModalClose={() => {
+                    setIsAlertModalOpen(false);
+                    setAlertModalPrefill(null);
+                  }}
+                  onAlertTriggered={handleAlertTriggered}
+                />
+              )}
+              <div className="mt-auto">
+                <Footer onOpenGuide={openOnboarding} />
               </div>
             </div>
-            <div className="flex-1 p-6">
-              <NetworkHealth />
-            </div>
-            <div className="mt-auto">
-              <Footer onOpenGuide={openOnboarding} />
-            </div>
-          </div>
-        )}
+          )}
 
-        {/* DISTRIBUTION ANALYTICS VIEW */}
-        {view === ViewState.DISTRIBUTION && (
-          <div className="flex flex-col min-h-full">
-            <div className="flex-1 p-6">
-              <DistributionAnalytics token={token} />
+          {/* NETWORK HEALTH VIEW */}
+          {view === ViewState.NETWORK_HEALTH && (
+            <div className="flex flex-col min-h-full">
+              <div className="px-6 py-4 bg-purple-500/10 border-b border-purple-500/20">
+                <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">
+                  <div className="flex items-center gap-3">
+                    <BarChart3 className="w-5 h-5 text-purple-400" />
+                    <div>
+                      <p className="text-white font-medium">
+                        Network Health is now part of Unified Analytics
+                      </p>
+                      <p className="text-sm text-slate-400">
+                        Get comprehensive insights in one dashboard with User Behavior, Platform
+                        Health, and Wallet Flows
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => handleViewChange(ViewState.UNIFIED_ANALYTICS)}
+                    className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+                  >
+                    <LayoutDashboard size={16} />
+                    Go to Unified Analytics
+                  </button>
+                </div>
+              </div>
+              <div className="flex-1 p-6">
+                <NetworkHealth />
+              </div>
+              <div className="mt-auto">
+                <Footer onOpenGuide={openOnboarding} />
+              </div>
             </div>
-            <div className="mt-auto">
-              <Footer onOpenGuide={openOnboarding} />
-            </div>
-          </div>
-        )}
+          )}
 
-        {/* WALLET ACTIVITY ANALYTICS VIEW */}
-        {view === ViewState.WALLET_ACTIVITY && (
-          <div className="flex flex-col min-h-full">
-            <div className="flex-1 p-6">
-              <WalletActivityAnalytics
-                token={token}
-                onWalletSelect={handleWalletSelectFromAnalytics}
-                wallets={wallets}
-              />
+          {/* DISTRIBUTION ANALYTICS VIEW */}
+          {view === ViewState.DISTRIBUTION && (
+            <div className="flex flex-col min-h-full">
+              <div className="flex-1 p-6">
+                <DistributionAnalytics token={token} />
+              </div>
+              <div className="mt-auto">
+                <Footer onOpenGuide={openOnboarding} />
+              </div>
             </div>
-            <div className="mt-auto">
-              <Footer onOpenGuide={openOnboarding} />
-            </div>
-          </div>
-        )}
+          )}
 
-        {/* UNIFIED ANALYTICS VIEW */}
-        {view === ViewState.UNIFIED_ANALYTICS && (
-          <div className="flex flex-col min-h-full">
-            <div className="flex-1 p-6">
-              <UnifiedAnalyticsDashboard />
+          {/* WALLET ACTIVITY ANALYTICS VIEW */}
+          {view === ViewState.WALLET_ACTIVITY && (
+            <div className="flex flex-col min-h-full">
+              <div className="flex-1 p-6">
+                <WalletActivityAnalytics
+                  token={token}
+                  onWalletSelect={handleWalletSelectFromAnalytics}
+                  wallets={wallets}
+                />
+              </div>
+              <div className="mt-auto">
+                <Footer onOpenGuide={openOnboarding} />
+              </div>
             </div>
-            <div className="mt-auto">
-              <Footer onOpenGuide={openOnboarding} />
+          )}
+
+          {/* UNIFIED ANALYTICS VIEW */}
+          {view === ViewState.UNIFIED_ANALYTICS && (
+            <div className="flex flex-col min-h-full">
+              <div className="flex-1 p-6">
+                <UnifiedAnalyticsDashboard />
+              </div>
+              <div className="mt-auto">
+                <Footer onOpenGuide={openOnboarding} />
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
+
+        {/* Onboarding Modal */}
+        <OnboardingModal
+          isOpen={isOnboardingOpen}
+          currentStep={onboardingStep}
+          totalSteps={onboardingTotalSteps}
+          progress={onboardingProgress}
+          onNext={nextOnboardingStep}
+          onPrevious={prevOnboardingStep}
+          onClose={handleOnboardingClose}
+          onSkip={handleOnboardingSkip}
+        />
+
+        {/* Map Analysis Context-Aware Guides */}
+        <BubbleVisualizationGuide
+          isOpen={bubbleGuide.isOpen}
+          currentStep={bubbleGuide.currentStep}
+          totalSteps={bubbleGuide.totalSteps}
+          progress={bubbleGuide.progress}
+          onNext={bubbleGuide.nextStep}
+          onPrevious={bubbleGuide.prevStep}
+          onClose={bubbleGuide.closeGuide}
+          onSkip={bubbleGuide.skipGuide}
+        />
+
+        <TokenInfoPanelGuide
+          isOpen={tokenPanelGuide.isOpen}
+          currentStep={tokenPanelGuide.currentStep}
+          totalSteps={tokenPanelGuide.totalSteps}
+          progress={tokenPanelGuide.progress}
+          onNext={tokenPanelGuide.nextStep}
+          onPrevious={tokenPanelGuide.prevStep}
+          onClose={tokenPanelGuide.closeGuide}
+          onSkip={tokenPanelGuide.skipGuide}
+        />
+
+        <WalletDetailsGuide
+          isOpen={walletDetailsGuide.isOpen}
+          currentStep={walletDetailsGuide.currentStep}
+          totalSteps={walletDetailsGuide.totalSteps}
+          progress={walletDetailsGuide.progress}
+          onNext={walletDetailsGuide.nextStep}
+          onPrevious={walletDetailsGuide.prevStep}
+          onClose={walletDetailsGuide.closeGuide}
+          onSkip={walletDetailsGuide.skipGuide}
+        />
+
+        {/* Dashboard Guide */}
+        <DashboardGuide
+          isOpen={dashboardGuide.isOpen}
+          currentStep={dashboardGuide.currentStep}
+          totalSteps={dashboardGuide.totalSteps}
+          progress={dashboardGuide.progress}
+          onNext={dashboardGuide.nextStep}
+          onPrevious={dashboardGuide.prevStep}
+          onClose={dashboardGuide.closeGuide}
+          onSkip={dashboardGuide.skipGuide}
+        />
       </div>
-
-      {/* Onboarding Modal */}
-      <OnboardingModal
-        isOpen={isOnboardingOpen}
-        currentStep={onboardingStep}
-        totalSteps={onboardingTotalSteps}
-        progress={onboardingProgress}
-        onNext={nextOnboardingStep}
-        onPrevious={prevOnboardingStep}
-        onClose={handleOnboardingClose}
-        onSkip={handleOnboardingSkip}
-      />
-
-      {/* Map Analysis Context-Aware Guides */}
-      <BubbleVisualizationGuide
-        isOpen={bubbleGuide.isOpen}
-        currentStep={bubbleGuide.currentStep}
-        totalSteps={bubbleGuide.totalSteps}
-        progress={bubbleGuide.progress}
-        onNext={bubbleGuide.nextStep}
-        onPrevious={bubbleGuide.prevStep}
-        onClose={bubbleGuide.closeGuide}
-        onSkip={bubbleGuide.skipGuide}
-      />
-
-      <TokenInfoPanelGuide
-        isOpen={tokenPanelGuide.isOpen}
-        currentStep={tokenPanelGuide.currentStep}
-        totalSteps={tokenPanelGuide.totalSteps}
-        progress={tokenPanelGuide.progress}
-        onNext={tokenPanelGuide.nextStep}
-        onPrevious={tokenPanelGuide.prevStep}
-        onClose={tokenPanelGuide.closeGuide}
-        onSkip={tokenPanelGuide.skipGuide}
-      />
-
-      <WalletDetailsGuide
-        isOpen={walletDetailsGuide.isOpen}
-        currentStep={walletDetailsGuide.currentStep}
-        totalSteps={walletDetailsGuide.totalSteps}
-        progress={walletDetailsGuide.progress}
-        onNext={walletDetailsGuide.nextStep}
-        onPrevious={walletDetailsGuide.prevStep}
-        onClose={walletDetailsGuide.closeGuide}
-        onSkip={walletDetailsGuide.skipGuide}
-      />
-
-      {/* Dashboard Guide */}
-      <DashboardGuide
-        isOpen={dashboardGuide.isOpen}
-        currentStep={dashboardGuide.currentStep}
-        totalSteps={dashboardGuide.totalSteps}
-        progress={dashboardGuide.progress}
-        onNext={dashboardGuide.nextStep}
-        onPrevious={dashboardGuide.prevStep}
-        onClose={dashboardGuide.closeGuide}
-        onSkip={dashboardGuide.skipGuide}
-      />
-    </div>
+    </FilterProvider>
   );
 };
 

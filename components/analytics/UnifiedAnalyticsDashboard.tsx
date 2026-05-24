@@ -102,8 +102,8 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
     <div className="space-y-6">
       {/* Overview Cards - Row 1 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Active Users</span>
             <Users className="w-4 h-4 text-purple-500" />
           </div>
@@ -115,8 +115,8 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
           </div>
         </div>
 
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Total Searches</span>
             <Search className="w-4 h-4 text-blue-500" />
           </div>
@@ -128,8 +128,8 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
           </div>
         </div>
 
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Search Success</span>
             <Target className="w-4 h-4 text-green-500" />
           </div>
@@ -152,8 +152,8 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
 
       {/* Overview Cards - Row 2 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Avg Results</span>
             <TrendingUp className="w-4 h-4 text-purple-500" />
           </div>
@@ -163,8 +163,8 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
           <div className="text-xs text-slate-500 mt-1">Per search</div>
         </div>
 
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Avg Session</span>
             <TrendingUp className="w-4 h-4 text-green-500" />
           </div>
@@ -178,8 +178,8 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
           <div className="text-xs text-slate-500 mt-1">Average visit duration</div>
         </div>
 
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Data Points</span>
             <BarChart3 className="w-4 h-4 text-blue-500" />
           </div>
@@ -198,42 +198,42 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <button
           onClick={() => handleTabChange("user-behavior")}
-          className="p-6 bg-space-800 rounded-xl border border-space-700 hover:border-purple-500/50 transition-all text-left"
+          className="p-6 bg-space-800 rounded-xl border border-space-700 hover:border-purple-500/50 transition-all text-center"
         >
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <div className="font-semibold text-white">User Behavior</div>
             <Users className="text-purple-500" size={20} />
           </div>
           <div className="text-sm text-slate-400">Track sessions, searches, and user flows</div>
-          <div className="mt-3 flex items-center text-sm text-purple-400">
+          <div className="mt-3 flex items-center justify-center text-sm text-purple-400">
             View Details <ArrowRight size={16} />
           </div>
         </button>
 
         <button
           onClick={() => handleTabChange("platform-health")}
-          className="p-6 bg-space-800 rounded-xl border border-space-700 hover:border-green-500/50 transition-all text-left"
+          className="p-6 bg-space-800 rounded-xl border border-space-700 hover:border-green-500/50 transition-all text-center"
         >
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <div className="font-semibold text-white">Platform Health</div>
             <Server className="text-green-500" size={20} />
           </div>
           <div className="text-sm text-slate-400">Monitor API performance and system status</div>
-          <div className="mt-3 flex items-center text-sm text-green-400">
+          <div className="mt-3 flex items-center justify-center text-sm text-green-400">
             View Details <ArrowRight size={16} />
           </div>
         </button>
 
         <button
           onClick={() => handleTabChange("network-health")}
-          className="p-6 bg-space-800 rounded-xl border border-space-700 hover:border-blue-500/50 transition-all text-left"
+          className="p-6 bg-space-800 rounded-xl border border-space-700 hover:border-blue-500/50 transition-all text-center"
         >
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <div className="font-semibold text-white">Network Health</div>
             <Activity className="text-blue-500" size={20} />
           </div>
           <div className="text-sm text-slate-400">Real-time Dogechain blockchain metrics</div>
-          <div className="mt-3 flex items-center text-sm text-blue-400">
+          <div className="mt-3 flex items-center justify-center text-sm text-blue-400">
             View Details <ArrowRight size={16} />
           </div>
         </button>
@@ -293,7 +293,7 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
       </div>
 
       {/* Tabs */}
-      <div className="bg-space-800 rounded-xl p-1 border border-space-700 overflow-x-auto">
+      <div className="bg-space-800 rounded-xl p-1 border border-space-700 overflow-x-auto w-fit mx-auto">
         <div className="flex gap-1">
           <button
             onClick={() => handleTabChange("overview")}

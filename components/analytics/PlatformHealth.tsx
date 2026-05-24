@@ -159,8 +159,8 @@ export const PlatformHealth: React.FC<PlatformHealthProps> = ({
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Cache Hit Rate */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Cache Hit Rate</span>
             <Database className="w-4 h-4 text-blue-500" />
           </div>
@@ -171,8 +171,8 @@ export const PlatformHealth: React.FC<PlatformHealthProps> = ({
         </div>
 
         {/* Overall Status */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">System Status</span>
             <Activity className="w-4 h-4 text-green-500" />
           </div>
@@ -181,8 +181,8 @@ export const PlatformHealth: React.FC<PlatformHealthProps> = ({
         </div>
 
         {/* Avg API Latency */}
-        <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-          <div className="flex items-center justify-between mb-2">
+        <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">Avg Latency</span>
             <Zap className="w-4 h-4 text-yellow-500" />
           </div>
@@ -198,7 +198,7 @@ export const PlatformHealth: React.FC<PlatformHealthProps> = ({
       </div>
 
       {/* API Performance Table */}
-      <div className="bg-space-800 rounded-xl p-6 border border-space-700">
+      <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
         <h4 className="text-lg font-semibold text-white mb-4">API Performance</h4>
         {apiEntries.length > 0 ? (
           <div className="overflow-x-auto">
@@ -254,8 +254,8 @@ export const PlatformHealth: React.FC<PlatformHealthProps> = ({
       </div>
 
       {/* Cache Statistics */}
-      <div className="bg-space-800 rounded-xl p-6 border border-space-700">
-        <div className="flex items-center gap-3 mb-4">
+      <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
+        <div className="flex items-center justify-center gap-3 mb-4">
           <Database className="text-blue-500" size={20} />
           <h4 className="text-lg font-semibold text-white">Cache Statistics</h4>
         </div>

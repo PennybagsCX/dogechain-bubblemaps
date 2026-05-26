@@ -546,14 +546,14 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     const maxBalance = d3.max(nodes, (d: NodeDatum) => d.balance) || 1;
     const minBalance = d3.min(nodes, (d: NodeDatum) => d.balance) || 0;
 
-    const radiusScale = d3.scaleSqrt().domain([minBalance, maxBalance]).range([6, 55]);
+    const radiusScale = d3.scaleSqrt().domain([minBalance, maxBalance]).range([8, 50]);
 
     nodes.forEach((n) => {
       n.r = radiusScale(n.balance);
     });
 
     // HYBRID LAYOUT: Initial Pack (only for nodes without saved positions)
-    const pack = d3.pack().size([width, height]).padding(5);
+    const pack = d3.pack().size([width, height]).padding(12);
 
     const root = d3.hierarchy({ children: nodes }).sum((d: any) => d.balance);
 
@@ -586,31 +586,44 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     const simulation = d3
       .forceSimulation(nodes)
-      .velocityDecay(0.2)
-      .alphaDecay(0.02) // Balanced decay speed
-      .alpha(hasSettledPositions ? 0.3 : 1) // Moderate alpha if we have settled positions
+      .velocityDecay(0.3)
+      .alphaDecay(0.015)
+      .alpha(hasSettledPositions ? 0.6 : 1)
       .force(
         "link",
         d3
           .forceLink<NodeDatum, LinkDatum>(linksCopy)
           .id((d: NodeDatum) => d.id)
-          .distance(80)
-          .strength(0.1)
+          .distance((d: any) => {
+            // Dynamic link distance based on connected node sizes
+            const src = d.source as NodeDatum;
+            const tgt = d.target as NodeDatum;
+            return Math.max(src.r + tgt.r + 30, 80);
+          })
+          .strength(0.08)
       )
       .force(
         "charge",
-        d3.forceManyBody<NodeDatum>().strength((d: NodeDatum) => -d.r * 3 - 15)
+        d3
+          .forceManyBody<NodeDatum>()
+          .strength((d: NodeDatum) => -Math.max(d.r * 4, 40) - 20)
+          .distanceMax(300)
       )
       .force(
         "collide",
         d3
           .forceCollide<NodeDatum>()
-          .radius((d: NodeDatum) => d.r + 4)
-          .strength(0.8)
-          .iterations(3)
+          .radius((d: NodeDatum) => {
+            // Larger bubbles get more padding to prevent overlap with labels
+            if (d.r >= 25) return d.r + 12;
+            if (d.r >= 15) return d.r + 8;
+            return d.r + 5;
+          })
+          .strength(0.9)
+          .iterations(5)
       )
-      .force("x", d3.forceX(width / 2).strength(0.02))
-      .force("y", d3.forceY(height / 2).strength(0.02));
+      .force("x", d3.forceX(width / 2).strength(0.015))
+      .force("y", d3.forceY(height / 2).strength(0.015));
 
     simulationRef.current = simulation;
 

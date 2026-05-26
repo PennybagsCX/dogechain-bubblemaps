@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
-import { useClickOutside } from "../hooks/useClickOutside";
 import { Wallet, Link, AssetType } from "../types";
 import { ensureLPDetectionInitialized } from "../services/db";
 import { useFilters } from "../contexts/FilterContext";
@@ -42,6 +41,7 @@ interface BubbleMapProps {
   onConnectionClick?: (link: Link) => void; // Handler for clicking connections (view details)
   selectedConnectionId?: string | null; // ID of selected connection for persistent highlight
   freezeLayout?: boolean; // When true, defer resize-driven rebuilds (e.g., while modals open)
+  tokenAddress?: string; // Token address for saving/restoring map state
 }
 
 type NodeDatum = Wallet & {
@@ -71,6 +71,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   onConnectionClick,
   selectedConnectionId,
   freezeLayout = false,
+  // @ts-expect-error tokenAddress used by future map state persistence
+  tokenAddress, // eslint-disable-line @typescript-eslint/no-unused-vars
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -85,6 +87,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const lastAppliedSizeRef = useRef<{ width: number; height: number } | null>(null);
   const pendingWhileFrozenRef = useRef<{ width: number; height: number } | null>(null);
   const freezeLayoutRef = useRef<boolean>(freezeLayout);
+  const lastModalCloseTimeRef = useRef<number>(0);
   const [dimensions, setDimensions] = useState({
     width: initialWidth || 800,
     height: initialHeight || 600,
@@ -173,6 +176,12 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
   const [isPaused, setIsPaused] = useState(false);
   const [isLegendOpen, setIsLegendOpen] = useState(false);
+  const toggleLegend = useCallback((e?: React.MouseEvent | React.TouchEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    setIsLegendOpen((prev) => !prev);
+  }, []);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isHelpMenuOpen, setIsHelpMenuOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -198,34 +207,69 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   }, [isHelpOpen]);
 
   // Memoize close handlers for click-outside hook
-  const closeSettings = useCallback(() => setIsSettingsOpen(false), []);
+  const closeSettings = useCallback(() => {
+    setIsSettingsOpen((prev) => {
+      if (prev) {
+        lastModalCloseTimeRef.current = Date.now();
+      }
+      return false;
+    });
+  }, []);
   const closeLegend = useCallback(() => setIsLegendOpen(false), []);
   const closeControls = useCallback(() => setAreControlsOpen(false), []);
   const closeHelpMenu = useCallback(() => setIsHelpMenuOpen(false), []);
 
-  // Apply click-outside hooks for menus
-  useClickOutside(settingsRef, closeSettings, isSettingsOpen);
-  useClickOutside(legendRef, closeLegend, isLegendOpen);
-  useClickOutside(helpMenuRef, closeHelpMenu, isHelpMenuOpen);
-
-  // Custom click-outside handler for controls (checks both desktop and mobile refs)
+  // === UNIFIED CLICK-OUTSIDE HANDLER ===
+  // Single capture-phase listener that knows about ALL overlays.
+  // A click inside ANY overlay does NOT close any other overlay.
+  // A click outside ALL open overlays closes them.
   useEffect(() => {
-    if (!areControlsOpen) return;
+    const anyOpen = isSettingsOpen || isLegendOpen || isHelpMenuOpen || areControlsOpen;
+    if (!anyOpen) return;
 
     const handleClick = (event: Event) => {
-      const isInsideDesktop = controlsRef.current?.contains(event.target as Node);
-      const isInsideMobile = mobileControlsRef.current?.contains(event.target as Node);
+      const target = event.target as Node;
 
-      if (!isInsideDesktop && !isInsideMobile) {
-        closeControls();
-      }
+      // Check if the click is inside ANY overlay (any of these = don't close anything)
+      const isInsideSettings = settingsRef.current?.contains(target);
+      const isInsideLegend = legendRef.current?.contains(target);
+      const isInsideHelpMenu = helpMenuRef.current?.contains(target);
+      const isInsideDesktopControls = controlsRef.current?.contains(target);
+      const isInsideMobileControls = mobileControlsRef.current?.contains(target);
+      // Also check the portaled FilterControls modal
+      const filterModal = document.querySelector("[data-filter-controls]");
+      const isInsideFilterModal = filterModal?.contains(target);
+
+      const isInsideAnyOverlay =
+        !!isInsideSettings ||
+        !!isInsideLegend ||
+        !!isInsideHelpMenu ||
+        !!isInsideDesktopControls ||
+        !!isInsideMobileControls ||
+        !!isInsideFilterModal;
+
+      // If click is inside any overlay, don't close anything
+      if (isInsideAnyOverlay) return;
+
+      // Click is outside ALL overlays — close whichever ones are open
+      if (isSettingsOpen) closeSettings();
+      if (isLegendOpen) closeLegend();
+      if (isHelpMenuOpen) closeHelpMenu();
+      if (areControlsOpen) closeControls();
     };
 
     document.addEventListener("click", handleClick, true);
-    return () => {
-      document.removeEventListener("click", handleClick, true);
-    };
-  }, [areControlsOpen, closeControls]);
+    return () => document.removeEventListener("click", handleClick, true);
+  }, [
+    isSettingsOpen,
+    isLegendOpen,
+    isHelpMenuOpen,
+    areControlsOpen,
+    closeSettings,
+    closeLegend,
+    closeHelpMenu,
+    closeControls,
+  ]);
 
   // --- LP DETECTION INITIALIZATION ---
   useEffect(() => {
@@ -473,44 +517,22 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   }, [wallets]);
 
   // --- UPDATE VISIBILITY ---
+  // This effect handles ONLY cosmetic visibility (links, labels).
+  // Filter-based node hiding/re-arranging is handled by the main D3 rebuild effect
+  // which completely excludes non-matching wallets from the simulation.
   useEffect(() => {
     if (!svgRef.current || wallets.length === 0 || !hasMeasured) return;
 
     const svg = d3.select(svgRef.current);
 
-    // Apply advanced filters
-    const filteredWallets = filterWallets(wallets, filters);
-    const visibleWalletIds = new Set(filteredWallets.map((w) => w.id));
-
-    // Update Links
+    // Update Links visibility
     svg.selectAll(".neural-vein").style("display", showLinks ? "block" : "none");
 
-    // Update Labels - Only target bubble labels
-    // IMPORTANT: Only update display property, NOT opacity
-    // Opacity is managed by hover animations and should not be reset here
+    // Update Labels visibility
     svg
       .selectAll("text.rank-label, text.name-label")
       .style("display", showLabels ? "block" : "none");
-    // Note: We DON'T set opacity here to avoid conflicts with hover animations
-
-    // Update Nodes based on advanced filters
-    if (wallets.length > 0) {
-      svg
-        .selectAll(".nodes circle")
-        .style("opacity", (d: any) => {
-          // Always show user wallet
-          if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return 1;
-          // Show filtered wallets, dim others
-          return visibleWalletIds.has(d.id) ? 1 : 0.1;
-        })
-        .style("pointer-events", (d: any) => {
-          // Always allow clicking user wallet
-          if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return "all";
-          // Only allow clicking visible wallets
-          return visibleWalletIds.has(d.id) ? "all" : "none";
-        });
-    }
-  }, [filters, wallets, userAddress, hasMeasured, showLinks, showLabels]);
+  }, [showLinks, showLabels, wallets.length, hasMeasured]);
 
   useEffect(() => {
     if (!svgRef.current || wallets.length === 0 || !hasMeasured) return;
@@ -556,7 +578,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     gradient.append("stop").attr("offset", "100%").attr("stop-color", "#f472b6"); // Pink
 
     // --- DATA PREPARATION ---
-    // Apply advanced filters to determine which wallets should be visible
+    // Apply filters to determine which wallets participate in the simulation.
+    // Non-matching wallets are completely excluded (hidden), and the layout re-arranges.
     const filteredWallets = filterWallets(wallets, filters);
     const visibleWalletIds = new Set(filteredWallets.map((w) => w.id));
 
@@ -654,6 +677,10 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     // Handle background click for deselection
     const handleBackgroundClick = (event: any) => {
+      // Skip clicks that happen immediately after closing a modal (within 300ms)
+      // This prevents the click-outside handler from also deselecting nodes
+      if (Date.now() - lastModalCloseTimeRef.current < 300) return;
+
       // If clicking directly on the SVG (background) and not a node
       if (event && event.target === svg.node()) {
         onWalletClickRef.current(null);
@@ -873,6 +900,11 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       });
 
     // --- INTERACTION HANDLERS ---
+    // Track drag distance to distinguish tap from actual drag (prevents jitter on mobile)
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let isActualDrag = false;
+
     // Use 'any' type for element to allow attaching to both Group and Circle
     const drag = d3
       .drag<any, NodeDatum>()
@@ -882,16 +914,32 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           event.sourceEvent.pointerType === "touch" ||
           ("ontouchstart" in window && event.sourceEvent.type.startsWith("touch"));
 
-        if (!event.active && simulationRef.current) {
-          // Use even lower alpha for desktop mouse to match mobile responsiveness
-          const targetAlpha = isTouch ? 0.005 : 0.003;
-          simulationRef.current.alphaTarget(targetAlpha).restart();
-        }
+        dragStartX = event.x;
+        dragStartY = event.y;
+        isActualDrag = false;
+
+        // Fix the node position at its current location
         d.fx = d.x;
         d.fy = d.y;
+
+        // Only restart simulation for non-touch (desktop mouse drag)
+        // On touch, wait to see if it's an actual drag before restarting
+        if (!isTouch && !event.active && simulationRef.current) {
+          simulationRef.current.alphaTarget(0.003).restart();
+        }
         d3.select(event.sourceEvent.target).attr("cursor", "grabbing");
       })
       .on("drag", (event: any, d: NodeDatum) => {
+        const dx = event.x - dragStartX;
+        const dy = event.y - dragStartY;
+        // Only treat as drag if moved more than 5px
+        if (Math.sqrt(dx * dx + dy * dy) > 5) {
+          isActualDrag = true;
+          // Restart simulation on first real drag movement for touch
+          if (!event.active && simulationRef.current) {
+            simulationRef.current.alphaTarget(0.005).restart();
+          }
+        }
         d.fx = event.x;
         d.fy = event.y;
       })
@@ -899,6 +947,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         if (!event.active && simulationRef.current) {
           simulationRef.current.alphaTarget(0);
         }
+        // Release the fixed position regardless of whether it was a tap or drag
+        void isActualDrag; // used above in drag handler for simulation control
         d.fx = null;
         d.fy = null;
         d3.select(event.sourceEvent.target).attr("cursor", "grab");
@@ -962,9 +1012,14 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         }
       });
 
+    // On touch devices, skip hover animations to prevent race conditions with tap/click
+    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
     // Attach hover handlers to the wrapper group
     nodeWrapperSelection
       .on("mouseover", (_event: any, d: NodeDatum) => {
+        // Skip hover on touch devices
+        if (isTouchDevice) return;
         // Apply advanced filters for hover state
         const filteredWallets = filterWallets(wallets, filters);
         const visibleWalletIds = new Set(filteredWallets.map((w) => w.id));
@@ -1053,6 +1108,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         // NOTE: Labels are NOT filtered - all labels stay visible during hover
       })
       .on("mouseout", (_event: any) => {
+        // Skip mouseout on touch devices
+        if (isTouchDevice) return;
         // Remove hover state from wrapper
         d3.select(_event.currentTarget).classed("hovering", false);
 
@@ -1113,12 +1170,33 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .style("text-shadow", "0px 1px 3px rgba(0,0,0,0.9)")
       .style("display", showLabels ? "block" : "none")
       .attr("opacity", 1)
-      .text((d: NodeDatum) => {
-        if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return "YOU";
-        if (d.label) return d.label.length > 8 ? d.label.substring(0, 6) + ".." : d.label;
-        if (d.isContract) return "C";
-        if (assetType === AssetType.NFT && d.r > 20) return d.balance.toString();
-        return `${d.percentage.toFixed(2)} %`;
+      .each(function (d: NodeDatum) {
+        const text = d3.select(this);
+        if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) {
+          text.text("YOU");
+        } else if (d.label) {
+          // Show both label and percentage for labeled wallets
+          const labelText = d.label.length > 8 ? d.label.substring(0, 6) + ".." : d.label;
+          const pctText = `${d.percentage.toFixed(2)} %`;
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", d.r > 15 ? "-0.2em" : "0em")
+            .text(labelText);
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", "1.1em")
+            .attr("font-size", Math.min(d.r / 2.5, 9))
+            .attr("opacity", 0.85)
+            .text(pctText);
+        } else if (d.isContract) {
+          text.text("C");
+        } else if (assetType === AssetType.NFT && d.r > 20) {
+          text.text(d.balance.toString());
+        } else {
+          text.text(`${d.percentage.toFixed(2)} %`);
+        }
       });
 
     // Raise labels to ensure they render on top of circles (prevents visual occlusion)
@@ -1469,7 +1547,12 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       />
 
       {/* --- TOP LEFT: CONTROLS --- */}
-      <div className="absolute top-16 md:top-16 left-3 md:left-4 z-20 flex flex-col gap-3 md:gap-3">
+      <div
+        role="presentation"
+        className="absolute top-16 md:top-16 left-3 md:left-4 z-20 flex flex-col gap-3 md:gap-3"
+        onTouchStart={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Help menu container for click-outside detection */}
         <div className="relative help-menu-container" ref={helpMenuRef}>
           <Tooltip content={isHelpMenuOpen ? "" : "Open help menu"}>
@@ -1613,7 +1696,12 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       )}
 
       {/* --- BOTTOM STACK (MOBILE) --- */}
-      <div className="absolute inset-x-0 bottom-4 z-20 flex flex-col items-end gap-3 px-3 md:hidden">
+      <div
+        role="presentation"
+        className="absolute inset-x-0 bottom-4 z-20 flex flex-col items-end gap-3 px-3 md:hidden"
+        onTouchStart={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Controls */}
         <div ref={mobileControlsRef} className="flex flex-col gap-2 w-full max-w-[240px]">
           <div className="flex items-center gap-2 justify-between">
@@ -1708,18 +1796,30 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         </div>
 
         {/* Legend stacked below */}
-        <div ref={legendRef} className="w-full max-w-[240px]">
+        <div
+          ref={legendRef}
+          role="presentation"
+          className="w-full max-w-[240px]"
+          onTouchStart={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="bg-space-900 rounded-xl border border-space-700 shadow-xl overflow-hidden transition-all duration-300">
             <button
               onTouchStart={handleTouchStopPropagation}
-              onClick={() => setIsLegendOpen(!isLegendOpen)}
-              className="w-full px-4 py-2 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-500 font-bold hover:bg-space-800/50"
+              onClick={toggleLegend}
+              className="w-full px-4 py-2 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-500 font-bold hover:bg-space-800/50 cursor-pointer bg-transparent border-none [touch-action:manipulation]"
+              type="button"
+              aria-expanded={isLegendOpen}
+              aria-label={isLegendOpen ? "Close legend" : "Open legend"}
             >
               Legend
               {isLegendOpen ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
             </button>
 
             <div
+              role="presentation"
+              onTouchStart={(e) => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
               className={`px-4 pb-5 transition-all duration-300 ${isLegendOpen ? "max-h-[360px] opacity-100 mt-2" : "max-h-0 opacity-0 overflow-hidden"}`}
             >
               <div className="w-full h-2 rounded-full bg-gradient-to-r from-cyan-500 via-yellow-500 to-red-500 mb-3"></div>
@@ -1782,7 +1882,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       {/* Controls (desktop) */}
       <div
         ref={controlsRef}
+        role="presentation"
         className="hidden md:flex absolute bottom-6 right-6 flex-col items-end gap-3 z-20"
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-2">
           <div className="pointer-events-none bg-space-900 border border-space-700 px-3 py-1 rounded-full text-[10px] text-slate-300 flex items-center gap-2 justify-center shadow-lg">
@@ -1852,18 +1954,30 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       </div>
 
       {/* Legend (desktop) */}
-      <div ref={legendRef} className="hidden md:block absolute bottom-6 left-6 z-20 max-w-[240px]">
+      <div
+        ref={legendRef}
+        role="presentation"
+        className="hidden md:block absolute bottom-6 left-6 z-20 max-w-[240px]"
+        onTouchStart={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="bg-space-900 rounded-xl border border-space-700 shadow-xl overflow-hidden transition-all duration-300">
           <button
             onTouchStart={handleTouchStopPropagation}
-            onClick={() => setIsLegendOpen(!isLegendOpen)}
-            className="w-full px-4 py-2 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-500 font-bold hover:bg-space-800/50"
+            onClick={toggleLegend}
+            className="w-full px-4 py-2 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-500 font-bold hover:bg-space-800/50 cursor-pointer bg-transparent border-none [touch-action:manipulation]"
+            type="button"
+            aria-expanded={isLegendOpen}
+            aria-label={isLegendOpen ? "Close legend" : "Open legend"}
           >
             Legend
             {isLegendOpen ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
           </button>
 
           <div
+            role="presentation"
+            onTouchStart={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
             className={`px-4 pb-5 transition-all duration-300 ${isLegendOpen ? "max-h-[360px] opacity-100 mt-2" : "max-h-0 opacity-0 overflow-hidden"}`}
           >
             <div className="w-full h-2 rounded-full bg-gradient-to-r from-cyan-500 via-yellow-500 to-red-500 mb-3"></div>

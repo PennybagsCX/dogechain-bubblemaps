@@ -1,1 +1,107 @@
-[]
+[
+  {
+    "id": "frontend",
+    "name": "Frontend Components",
+    "description": "React UI components, layouts, and user interface elements",
+    "icon": "layout",
+    "color": "#3b82f6"
+  },
+  {
+    "id": "visualization",
+    "name": "Data Visualization",
+    "description": "D3.js bubble maps, charts, and interactive visualizations",
+    "icon": "bar-chart",
+    "color": "#8b5cf6"
+  },
+  {
+    "id": "blockchain",
+    "name": "Blockchain Integration",
+    "description": "RPC clients, wallet scanning, transaction analysis, and Web3 integration",
+    "icon": "link",
+    "color": "#10b981"
+  },
+  {
+    "id": "analytics",
+    "name": "Analytics & Insights",
+    "description": "Data analysis, metrics, statistics, and reporting features",
+    "icon": "trending-up",
+    "color": "#f59e0b"
+  },
+  {
+    "id": "backend",
+    "name": "Backend Services",
+    "description": "API endpoints, data services, caching, and business logic",
+    "icon": "server",
+    "color": "#ef4444"
+  },
+  {
+    "id": "storage",
+    "name": "Data Storage",
+    "description": "IndexedDB, local storage, caching, and data persistence",
+    "icon": "database",
+    "color": "#6366f1"
+  },
+  {
+    "id": "security",
+    "name": "Security & Validation",
+    "description": "Input validation, rate limiting, CSP, and security hardening",
+    "icon": "shield",
+    "color": "#dc2626"
+  },
+  {
+    "id": "performance",
+    "name": "Performance Optimization",
+    "description": "Code splitting, lazy loading, caching, and optimization",
+    "icon": "zap",
+    "color": "#eab308"
+  },
+  {
+    "id": "ux",
+    "name": "User Experience",
+    "description": "Accessibility, responsive design, animations, and user interactions",
+    "icon": "users",
+    "color": "#ec4899"
+  },
+  {
+    "id": "testing",
+    "name": "Testing & Quality",
+    "description": "Unit tests, integration tests, and test coverage",
+    "icon": "check-circle",
+    "color": "#14b8a6"
+  },
+  {
+    "id": "monitoring",
+    "name": "Monitoring & Logging",
+    "description": "Error tracking, metrics, health checks, and diagnostics",
+    "icon": "activity",
+    "color": "#f97316"
+  },
+  {
+    "id": "ai",
+    "name": "AI & Machine Learning",
+    "description": "Personalized ranking, fuzzy search, and intelligent features",
+    "icon": "cpu",
+    "color": "#a855f7"
+  },
+  {
+    "id": "documentation",
+    "name": "Documentation",
+    "description": "README files, guides, API docs, and inline documentation",
+    "icon": "book",
+    "color": "#64748b"
+  },
+  {
+    "id": "build",
+    "name": "Build & Deployment",
+    "description": "Vite config, bundling, CI/CD, and deployment pipelines",
+    "icon": "package",
+    "color": "#78716c"
+  },
+  {
+    "id": "core",
+    "name": "Core Architecture",
+    "description": "Type definitions, configuration, and foundational code",
+    "icon": "code",
+    "color": "#0f172a"
+  }
+]

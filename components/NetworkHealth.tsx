@@ -108,18 +108,22 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col items-center sm:flex-row sm:justify-between gap-3 text-center sm:text-left">
         <div>
-          <div className="flex items-center gap-2">
-            <h2 className="text-2xl font-bold text-white">Network Health</h2>
-            <span className="px-2 py-0.5 text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30 rounded-full">
-              Live Data
+          <div className="flex items-center justify-center sm:justify-start gap-2">
+            <h2 className="text-lg sm:text-2xl font-bold text-white">Network Health</h2>
+            <span className="px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30 rounded-full whitespace-nowrap">
+              Live
             </span>
           </div>
           <p className="text-slate-400">Real-time Dogechain metrics</p>
         </div>
-        <div className={`px-4 py-2 rounded-lg border ${getCongestionColor(stats.congestion)}`}>
-          <span className="font-medium capitalize">{stats.congestion}</span> Congestion
+        <div
+          className={`px-2 sm:px-4 py-1 sm:py-2 rounded-lg border text-xs sm:text-sm ${getCongestionColor(stats.congestion)}`}
+        >
+          <span className="font-medium capitalize">{stats.congestion}</span>{" "}
+          <span className="hidden sm:inline">Congestion</span>
+          <span className="sm:hidden">Cong.</span>
         </div>
       </div>
 

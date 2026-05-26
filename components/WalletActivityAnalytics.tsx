@@ -671,8 +671,12 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
       <div className={`space-y-6 ${className}`}>
         {/* Header */}
         <div>
-          <h2 className="text-2xl font-bold text-white">Wallet Activity Analytics</h2>
-          <p className="text-slate-400">Activity analysis for {token?.symbol || "..."}</p>
+          <h2 className="text-2xl font-bold text-white text-center sm:text-left">
+            Wallet Activity Analytics
+          </h2>
+          <p className="text-slate-400 text-center sm:text-left">
+            Activity analysis for {token?.symbol || "..."}
+          </p>
         </div>
 
         {/* Progress Card */}
@@ -731,7 +735,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
           )}
 
           {/* Estimated time remaining hint with dynamic loading message */}
-          <div className="mt-6 flex items-center gap-2 text-sm text-slate-500">
+          <div className="mt-6 flex items-center justify-center gap-2 text-sm text-slate-500">
             <Clock className="w-4 h-4" />
             <span>
               {loadingMessage ||
@@ -748,8 +752,8 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
           </div>
 
           {/* Optimization notice */}
-          <div className="mt-4 p-3 bg-purple-500/10 border border-purple-500/20 rounded-lg">
-            <div className="flex items-start gap-2 text-sm">
+          <div className="mt-4 p-3 bg-purple-500/10 border border-purple-500/20 rounded-lg text-center">
+            <div className="flex items-center justify-center gap-2 text-sm">
               <Zap className="w-4 h-4 text-purple-400 mt-0.5 flex-shrink-0" />
               <p className="text-purple-300">
                 Performance optimized with parallel processing and reduced API delays
@@ -768,8 +772,12 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           <div className="sm:w-48">
-            <h2 className="text-2xl font-bold text-white">Wallet Activity Analytics</h2>
-            <p className="text-slate-400">Activity analysis for {token.symbol}</p>
+            <h2 className="text-2xl font-bold text-white text-center sm:text-left">
+              Wallet Activity Analytics
+            </h2>
+            <p className="text-slate-400 text-center sm:text-left">
+              Activity analysis for {token.symbol}
+            </p>
           </div>
 
           {/* Time Range Selector - Centered */}
@@ -831,8 +839,12 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
         <div className="sm:w-48">
-          <h2 className="text-2xl font-bold text-white">Wallet Activity Analytics</h2>
-          <p className="text-slate-400">Activity analysis for {token.symbol}</p>
+          <h2 className="text-2xl font-bold text-white text-center sm:text-left">
+            Wallet Activity Analytics
+          </h2>
+          <p className="text-slate-400 text-center sm:text-left">
+            Activity analysis for {token.symbol}
+          </p>
         </div>
 
         {/* Time Range Selector - Centered */}
@@ -859,12 +871,12 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
           </div>
         </div>
 
-        {/* Last Updated / Refresh - Right aligned with fixed width */}
-        <div className="sm:w-48 flex justify-end">
+        {/* Last Updated / Refresh */}
+        <div className="flex justify-end">
           {stats ? (
-            <div className="flex items-center gap-3 text-sm">
+            <div className="flex items-center gap-3 text-sm whitespace-nowrap">
               <div className="flex items-center gap-2 text-slate-400">
-                <Clock className="w-4 h-4" />
+                <Clock className="w-4 h-4 shrink-0" />
                 <span>Data from {formatTimeAgo(stats.lastUpdated)}</span>
               </div>
               {!loading && (
@@ -1294,69 +1306,71 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                       </div>
 
                       {/* Inline Transaction Details */}
-                      {isExpanded && (
-                        <div className="border-t border-space-700 bg-space-800/50 p-3">
-                          {isLoadingTxs ? (
-                            <div className="text-center py-4 text-slate-400 text-sm">
-                              <RefreshCw className="w-4 h-4 mx-auto mb-2 animate-spin" />
-                              Loading transactions...
+                      <div
+                        className={`border-t border-space-700 bg-space-800/50 transition-all duration-200 origin-top overflow-hidden ${
+                          isExpanded
+                            ? "max-h-[400px] opacity-100 p-3 pointer-events-auto"
+                            : "max-h-0 opacity-0 p-0 border-t-0 pointer-events-none"
+                        }`}
+                      >
+                        {isLoadingTxs ? (
+                          <div className="text-center py-4 text-slate-400 text-sm">
+                            <RefreshCw className="w-4 h-4 mx-auto mb-2 animate-spin" />
+                            Loading transactions...
+                          </div>
+                        ) : transactions.length > 0 ? (
+                          <div className="space-y-2 max-h-60 overflow-y-auto">
+                            <div className="text-xs text-slate-400 mb-2">
+                              Recent transactions (showing first 10)
                             </div>
-                          ) : transactions.length > 0 ? (
-                            <div className="space-y-2 max-h-60 overflow-y-auto">
-                              <div className="text-xs text-slate-400 mb-2">
-                                Recent transactions (showing first 10)
-                              </div>
-                              {transactions.slice(0, 10).map((tx, idx) => (
-                                <div
-                                  key={idx}
-                                  className="flex items-center justify-between p-2 bg-space-700/30 rounded text-xs"
-                                >
-                                  <div className="flex-1">
-                                    <div className="flex items-center gap-2">
-                                      <span className="text-slate-400">
-                                        {formatTimeAgo(tx.timestamp)}
-                                      </span>
-                                      <span
-                                        className={`px-1.5 py-0.5 rounded ${
-                                          tx.to.toLowerCase() ===
-                                          activity.walletAddress.toLowerCase()
-                                            ? "bg-green-500/20 text-green-400"
-                                            : "bg-red-500/20 text-red-400"
-                                        }`}
-                                      >
-                                        {tx.to.toLowerCase() ===
-                                        activity.walletAddress.toLowerCase()
-                                          ? "IN"
-                                          : "OUT"}
-                                      </span>
-                                    </div>
-                                    <div className="text-slate-500 mt-1">
-                                      {formatAddress(tx.from)} → {formatAddress(tx.to)}
-                                    </div>
-                                  </div>
-                                  <div className="text-right">
-                                    <div className="text-white font-medium">
-                                      {formatNumber(tx.value)} {token.symbol}
-                                    </div>
-                                    <a
-                                      href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-purple-400 hover:text-purple-300 flex items-center gap-1"
+                            {transactions.slice(0, 10).map((tx, idx) => (
+                              <div
+                                key={idx}
+                                className="flex items-center justify-between p-2 bg-space-700/30 rounded text-xs"
+                              >
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-slate-400">
+                                      {formatTimeAgo(tx.timestamp)}
+                                    </span>
+                                    <span
+                                      className={`px-1.5 py-0.5 rounded ${
+                                        tx.to.toLowerCase() === activity.walletAddress.toLowerCase()
+                                          ? "bg-green-500/20 text-green-400"
+                                          : "bg-red-500/20 text-red-400"
+                                      }`}
                                     >
-                                      View <ExternalLink className="w-3 h-3" />
-                                    </a>
+                                      {tx.to.toLowerCase() === activity.walletAddress.toLowerCase()
+                                        ? "IN"
+                                        : "OUT"}
+                                    </span>
+                                  </div>
+                                  <div className="text-slate-500 mt-1">
+                                    {formatAddress(tx.from)} → {formatAddress(tx.to)}
                                   </div>
                                 </div>
-                              ))}
-                            </div>
-                          ) : (
-                            <div className="text-center py-4 text-slate-400 text-sm">
-                              No transactions found
-                            </div>
-                          )}
-                        </div>
-                      )}
+                                <div className="text-right">
+                                  <div className="text-white font-medium">
+                                    {formatNumber(tx.value)} {token.symbol}
+                                  </div>
+                                  <a
+                                    href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-purple-400 hover:text-purple-300 flex items-center gap-1"
+                                  >
+                                    View <ExternalLink className="w-3 h-3" />
+                                  </a>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="text-center py-4 text-slate-400 text-sm">
+                            No transactions found
+                          </div>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
@@ -1436,69 +1450,71 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                       </div>
 
                       {/* Inline Transaction Details */}
-                      {isExpanded && (
-                        <div className="border-t border-space-700 bg-space-800/50 p-3">
-                          {isLoadingTxs ? (
-                            <div className="text-center py-4 text-slate-400 text-sm">
-                              <RefreshCw className="w-4 h-4 mx-auto mb-2 animate-spin" />
-                              Loading transactions...
+                      <div
+                        className={`border-t border-space-700 bg-space-800/50 transition-all duration-200 origin-top overflow-hidden ${
+                          isExpanded
+                            ? "max-h-[400px] opacity-100 p-3 pointer-events-auto"
+                            : "max-h-0 opacity-0 p-0 border-t-0 pointer-events-none"
+                        }`}
+                      >
+                        {isLoadingTxs ? (
+                          <div className="text-center py-4 text-slate-400 text-sm">
+                            <RefreshCw className="w-4 h-4 mx-auto mb-2 animate-spin" />
+                            Loading transactions...
+                          </div>
+                        ) : transactions.length > 0 ? (
+                          <div className="space-y-2 max-h-60 overflow-y-auto">
+                            <div className="text-xs text-slate-400 mb-2">
+                              Recent transactions (showing first 10)
                             </div>
-                          ) : transactions.length > 0 ? (
-                            <div className="space-y-2 max-h-60 overflow-y-auto">
-                              <div className="text-xs text-slate-400 mb-2">
-                                Recent transactions (showing first 10)
-                              </div>
-                              {transactions.slice(0, 10).map((tx, idx) => (
-                                <div
-                                  key={idx}
-                                  className="flex items-center justify-between p-2 bg-space-700/30 rounded text-xs"
-                                >
-                                  <div className="flex-1">
-                                    <div className="flex items-center gap-2">
-                                      <span className="text-slate-400">
-                                        {formatTimeAgo(tx.timestamp)}
-                                      </span>
-                                      <span
-                                        className={`px-1.5 py-0.5 rounded ${
-                                          tx.to.toLowerCase() ===
-                                          activity.walletAddress.toLowerCase()
-                                            ? "bg-green-500/20 text-green-400"
-                                            : "bg-red-500/20 text-red-400"
-                                        }`}
-                                      >
-                                        {tx.to.toLowerCase() ===
-                                        activity.walletAddress.toLowerCase()
-                                          ? "IN"
-                                          : "OUT"}
-                                      </span>
-                                    </div>
-                                    <div className="text-slate-500 mt-1">
-                                      {formatAddress(tx.from)} → {formatAddress(tx.to)}
-                                    </div>
-                                  </div>
-                                  <div className="text-right">
-                                    <div className="text-white font-medium">
-                                      {formatNumber(tx.value)} {token.symbol}
-                                    </div>
-                                    <a
-                                      href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-purple-400 hover:text-purple-300 flex items-center gap-1"
+                            {transactions.slice(0, 10).map((tx, idx) => (
+                              <div
+                                key={idx}
+                                className="flex items-center justify-between p-2 bg-space-700/30 rounded text-xs"
+                              >
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-slate-400">
+                                      {formatTimeAgo(tx.timestamp)}
+                                    </span>
+                                    <span
+                                      className={`px-1.5 py-0.5 rounded ${
+                                        tx.to.toLowerCase() === activity.walletAddress.toLowerCase()
+                                          ? "bg-green-500/20 text-green-400"
+                                          : "bg-red-500/20 text-red-400"
+                                      }`}
                                     >
-                                      View <ExternalLink className="w-3 h-3" />
-                                    </a>
+                                      {tx.to.toLowerCase() === activity.walletAddress.toLowerCase()
+                                        ? "IN"
+                                        : "OUT"}
+                                    </span>
+                                  </div>
+                                  <div className="text-slate-500 mt-1">
+                                    {formatAddress(tx.from)} → {formatAddress(tx.to)}
                                   </div>
                                 </div>
-                              ))}
-                            </div>
-                          ) : (
-                            <div className="text-center py-4 text-slate-400 text-sm">
-                              No transactions found
-                            </div>
-                          )}
-                        </div>
-                      )}
+                                <div className="text-right">
+                                  <div className="text-white font-medium">
+                                    {formatNumber(tx.value)} {token.symbol}
+                                  </div>
+                                  <a
+                                    href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-purple-400 hover:text-purple-300 flex items-center gap-1"
+                                  >
+                                    View <ExternalLink className="w-3 h-3" />
+                                  </a>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="text-center py-4 text-slate-400 text-sm">
+                            No transactions found
+                          </div>
+                        )}
+                      </div>
                     </div>
                   );
                 })}

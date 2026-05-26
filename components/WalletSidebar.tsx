@@ -551,7 +551,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
             <>
               {/* Quick Stats */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-4 rounded-lg bg-space-900 border border-space-700">
+                <div className="p-4 rounded-lg bg-space-900 border border-space-700 text-center">
                   <p className="text-[10px] uppercase tracking-wide text-slate-400">
                     {isNFT ? "Owned NFTs" : "Balance"}
                   </p>
@@ -564,7 +564,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                     })}
                   </p>
                 </div>
-                <div className="p-4 rounded-lg bg-space-900 border border-space-700">
+                <div className="p-4 rounded-lg bg-space-900 border border-space-700 text-center">
                   <p className="text-[10px] uppercase tracking-wide text-slate-400">Supply Share</p>
                   <p className="text-lg font-bold text-white truncate">
                     {wallet?.percentage.toFixed(2)}%
@@ -573,7 +573,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
               </div>
 
               {/* Tags */}
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap justify-center gap-2">
                 {wallet?.isWhale && (
                   <span
                     className={`px-2 py-1 text-xs font-bold rounded border border-space-700/20 ${isNFT ? "text-purple-400 bg-purple-400/10 border-purple-400/30" : "text-doge-600 bg-doge-600/10 border-doge-600/30"}`}

@@ -122,15 +122,60 @@ export const PlatformHealth: React.FC<PlatformHealthProps> = ({
   const apiEntries = Object.entries(stats.apis.performance);
   const statusEntries = Object.entries(stats.apis.status);
 
+  // Compute system status from actual data instead of hardcoded "Healthy"
+  type SystemStatus = "Healthy" | "Degraded" | "Degraded Performance" | "Unhealthy" | "Unknown";
+  const systemStatus: SystemStatus = (() => {
+    if (apiEntries.length === 0) return "Unknown";
+
+    // Calculate overall error rate and average latency across all APIs
+    const avgErrorRate =
+      apiEntries.length > 0
+        ? apiEntries.reduce((sum, [, data]) => sum + (1 - data.successRate), 0) / apiEntries.length
+        : 0;
+    const avgLatency =
+      apiEntries.length > 0
+        ? apiEntries.reduce((sum, [, data]) => sum + data.avgLatency, 0) / apiEntries.length
+        : 0;
+
+    if (avgErrorRate > 0.5) return "Unhealthy";
+    if (avgErrorRate > 0.1) return "Degraded";
+    if (avgLatency > 5000) return "Degraded Performance";
+    return "Healthy";
+  })();
+
+  const statusColorMap: Record<SystemStatus, string> = {
+    Healthy: "text-green-400",
+    Degraded: "text-yellow-400",
+    "Degraded Performance": "text-yellow-400",
+    Unhealthy: "text-red-400",
+    Unknown: "text-slate-400",
+  };
+
+  const statusDescriptionMap: Record<SystemStatus, string> = {
+    Healthy: "All systems operational",
+    Degraded: "Some services experiencing issues",
+    "Degraded Performance": "High latency detected",
+    Unhealthy: "Major service disruptions",
+    Unknown: "No data available",
+  };
+
+  const statusIconColorMap: Record<SystemStatus, string> = {
+    Healthy: "text-green-500",
+    Degraded: "text-yellow-500",
+    "Degraded Performance": "text-yellow-500",
+    Unhealthy: "text-red-500",
+    Unknown: "text-slate-500",
+  };
+
   return (
     <div className={`space-y-4 ${className}`}>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
+      <div className="flex flex-col items-center sm:items-start sm:flex-row sm:justify-between gap-4">
+        <div className="w-full text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start gap-2">
             <h3 className="text-lg font-semibold text-white">Platform Health</h3>
-            <span className="px-2 py-0.5 text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30 rounded-full">
-              Live Data
+            <span className="px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30 rounded-full whitespace-nowrap">
+              Live
             </span>
           </div>
           <p className="text-sm text-slate-400">API performance and system status</p>
@@ -174,10 +219,10 @@ export const PlatformHealth: React.FC<PlatformHealthProps> = ({
         <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-slate-400 text-sm">System Status</span>
-            <Activity className="w-4 h-4 text-green-500" />
+            <Activity className={`w-4 h-4 ${statusIconColorMap[systemStatus]}`} />
           </div>
-          <div className="text-3xl font-bold text-green-400">Healthy</div>
-          <div className="text-xs text-slate-500 mt-1">All systems operational</div>
+          <div className={`text-3xl font-bold ${statusColorMap[systemStatus]}`}>{systemStatus}</div>
+          <div className="text-xs text-slate-500 mt-1">{statusDescriptionMap[systemStatus]}</div>
         </div>
 
         {/* Avg API Latency */}

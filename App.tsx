@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import ReactDOM from "react-dom";
 import { Analytics } from "@vercel/analytics/react";
-import { useAccount } from "wagmi";
+import { useWallet } from "./hooks/useWallet";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Search } from "lucide-react";
 import { Navbar } from "./components/Navbar";
@@ -215,7 +215,7 @@ const generateAlertId = () => {
 
 const App: React.FC = () => {
   // Wagmi hooks for wallet connection
-  const { address: userAddress, isConnected } = useAccount();
+  const { address: userAddress, isConnected } = useWallet();
 
   // Stats counters hook
   const {
@@ -249,8 +249,29 @@ const App: React.FC = () => {
     }
   }, []);
 
+  // Check URL params early to determine if we should skip onboarding and set initial view
+  const getInitialViewFromUrl = (): ViewState => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const viewParam = params.get("view");
+      if (viewParam === "dashboard") return ViewState.DASHBOARD;
+      if (viewParam === "analysis") return ViewState.ANALYSIS;
+      if (viewParam === "distribution") return ViewState.DISTRIBUTION;
+      if (viewParam === "wallet-activity") return ViewState.WALLET_ACTIVITY;
+      if (viewParam === "network-health") return ViewState.NETWORK_HEALTH;
+      // Support both underscore and hyphen variants for unified_analytics
+      if (viewParam === "unified-analytics" || viewParam === "unified_analytics")
+        return ViewState.UNIFIED_ANALYTICS;
+    } catch {
+      // ignore
+    }
+    return ViewState.HOME;
+  };
+
+  const initialView = getInitialViewFromUrl();
+
   // View state (must be declared before onboarding hook since it depends on it)
-  const [view, setView] = useState<ViewState>(ViewState.HOME);
+  const [view, setView] = useState<ViewState>(initialView);
 
   // Onboarding: show once per session (resets on hard refresh naturally via sessionStorage)
   const sessionOnboardingKey = "dogechain_onboarding_session_shown";
@@ -264,7 +285,7 @@ const App: React.FC = () => {
   };
 
   const [hasShownOnboardingSession, setHasShownOnboardingSession] = useState<boolean>(
-    hasSeenOnboardingThisSession()
+    hasSeenOnboardingThisSession() || initialView !== ViewState.HOME
   );
 
   const shouldAutoOpen = view === ViewState.HOME && !hasShownOnboardingSession;
@@ -348,7 +369,7 @@ const App: React.FC = () => {
     view === ViewState.ANALYSIS && !!token && wallets.length > 0
   );
   const walletDetailsGuide = useWalletDetailsGuide(!!selectedWallet);
-  const dashboardGuide = useDashboardGuide(view === ViewState.DASHBOARD);
+  const dashboardGuide = useDashboardGuide(view === ViewState.DASHBOARD && isConnected);
 
   // When overlays/wizards are open (or loading overlay), freeze map layout updates to avoid churn
   const isMapLayoutFrozen =
@@ -1181,6 +1202,33 @@ const App: React.FC = () => {
     }
   };
 
+  // --- RESTORE MAP STATE LINKS ---
+  useEffect(() => {
+    const handleRestoreLinks = (e: Event) => {
+      const { links: restoredLinks } = (e as CustomEvent).detail;
+      if (restoredLinks && restoredLinks.length > 0) {
+        setLinks((prev) => {
+          const existing = new Set(
+            prev.map((l) => {
+              const s = typeof l.source === "string" ? l.source : l.source.id;
+              const t = typeof l.target === "string" ? l.target : l.target.id;
+              return `${s}-${t}`;
+            })
+          );
+          const uniqueNew = restoredLinks.filter((l: { source: string; target: string }) => {
+            const key = `${l.source}-${l.target}`;
+            return !existing.has(key);
+          });
+          return [...prev, ...uniqueNew];
+        });
+        addToast(`Restored ${restoredLinks.length} traced connection(s)`, "success");
+      }
+    };
+
+    window.addEventListener("bubblemap:restore-links", handleRestoreLinks);
+    return () => window.removeEventListener("bubblemap:restore-links", handleRestoreLinks);
+  }, []);
+
   // --- CONNECTION DETAILS ---
   const handleConnectionClick = useCallback(
     async (link: Link) => {
@@ -1467,7 +1515,8 @@ const App: React.FC = () => {
         if (viewParam === "distribution") setView(ViewState.DISTRIBUTION);
         else if (viewParam === "wallet-activity") setView(ViewState.WALLET_ACTIVITY);
         else if (viewParam === "network-health") setView(ViewState.NETWORK_HEALTH);
-        else if (viewParam === "unified-analytics") setView(ViewState.UNIFIED_ANALYTICS);
+        else if (viewParam === "unified-analytics" || viewParam === "unified_analytics")
+          setView(ViewState.UNIFIED_ANALYTICS);
         else setView(ViewState.ANALYSIS);
       } catch {
         /* ignore */
@@ -1560,7 +1609,7 @@ const App: React.FC = () => {
       setView(ViewState.WALLET_ACTIVITY);
     } else if (viewParam === "network-health") {
       setView(ViewState.NETWORK_HEALTH);
-    } else if (viewParam === "unified-analytics") {
+    } else if (viewParam === "unified-analytics" || viewParam === "unified_analytics") {
       setView(ViewState.UNIFIED_ANALYTICS);
     }
 
@@ -1585,7 +1634,8 @@ const App: React.FC = () => {
       else if (v === "distribution") setView(ViewState.DISTRIBUTION);
       else if (v === "wallet-activity") setView(ViewState.WALLET_ACTIVITY);
       else if (v === "network-health") setView(ViewState.NETWORK_HEALTH);
-      else if (v === "unified-analytics") setView(ViewState.UNIFIED_ANALYTICS);
+      else if (v === "unified-analytics" || v === "unified_analytics")
+        setView(ViewState.UNIFIED_ANALYTICS);
       else setView(ViewState.HOME);
     };
 
@@ -2676,7 +2726,7 @@ const App: React.FC = () => {
                   {/* Sidebar Left (Stats) - Responsive Drawer for Mobile */}
                   <div
                     className={`
-                        fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] bg-space-800 border-r border-space-700 p-4 lg:p-6 overflow-y-auto transition-transform duration-300 ease-in-out
+                        fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] bg-space-800 border-r border-space-700 p-4 lg:p-6 overflow-y-auto overflow-x-hidden transition-transform duration-300 ease-in-out
                         lg:relative lg:translate-x-0 lg:z-0 lg:max-w-none
                         ${isMobileStatsOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"}
                     `}
@@ -2721,8 +2771,8 @@ const App: React.FC = () => {
                     </div>
 
                     <div className="space-y-4">
-                      <div className="p-4 bg-space-900 rounded-lg border border-space-700">
-                        <div className="flex items-center justify-between gap-2 text-slate-400 mb-1">
+                      <div className="p-4 bg-space-900 rounded-lg border border-space-700 text-center">
+                        <div className="flex items-center justify-between gap-2 text-slate-400 mb-1 justify-center">
                           <span className="flex items-center gap-1">
                             <Users size={14} /> Holders Tracked
                           </span>
@@ -2740,8 +2790,8 @@ const App: React.FC = () => {
                             : `${wallets.length} total holders tracked`}
                         </div>
                       </div>
-                      <div className="p-4 bg-space-900 rounded-lg border border-space-700">
-                        <div className="flex items-center gap-2 text-slate-400 mb-1">
+                      <div className="p-4 bg-space-900 rounded-lg border border-space-700 text-center">
+                        <div className="flex items-center gap-2 text-slate-400 mb-1 justify-center">
                           <Layers size={14} /> Total Supply
                         </div>
                         <div className="text-xl font-bold text-white">
@@ -2792,7 +2842,7 @@ const App: React.FC = () => {
                           return (
                             <div
                               key={w.id}
-                              className={`flex items-center justify-between text-sm p-2 rounded cursor-pointer transition-colors ${
+                              className={`flex items-center justify-between text-sm py-2 px-2 rounded cursor-pointer transition-colors min-w-0 overflow-hidden ${
                                 isSelected
                                   ? "bg-purple-500/30 border border-purple-500/50"
                                   : "hover:bg-space-700"
@@ -2807,18 +2857,36 @@ const App: React.FC = () => {
                               role="button"
                               tabIndex={0}
                             >
-                              <div className="flex items-center gap-2 overflow-hidden">
+                              <div className="flex items-center gap-2 overflow-hidden min-w-0">
                                 <span
-                                  className={`w-4 shrink-0 ${isSelected ? "text-purple-300" : "text-slate-500"}`}
+                                  className={`w-4 shrink-0 text-xs tabular-nums ${isSelected ? "text-purple-300" : "text-slate-500"}`}
                                 >
                                   {globalIndex + 1}
                                 </span>
-                                <span
-                                  className={`font-mono text-xs ${isSelected ? "text-purple-400" : "text-slate-300"}`}
-                                  title={w.address}
-                                >
-                                  {w.address.slice(0, 6)}...{w.address.slice(-4)}
-                                </span>
+                                <div className="flex flex-col min-w-0 overflow-hidden">
+                                  {w.label ? (
+                                    <>
+                                      <span
+                                        className={`text-xs font-semibold truncate ${isSelected ? "text-purple-300" : "text-white"}`}
+                                      >
+                                        {w.label}
+                                      </span>
+                                      <span
+                                        className={`font-mono text-[10px] truncate ${isSelected ? "text-purple-400/70" : "text-slate-500"}`}
+                                        title={w.address}
+                                      >
+                                        {w.address.slice(0, 6)}...{w.address.slice(-4)}
+                                      </span>
+                                    </>
+                                  ) : (
+                                    <span
+                                      className={`font-mono text-xs truncate ${isSelected ? "text-purple-400" : "text-slate-300"}`}
+                                      title={w.address}
+                                    >
+                                      {w.address.slice(0, 6)}...{w.address.slice(-4)}
+                                    </span>
+                                  )}
+                                </div>
                               </div>
                               <div className="flex items-center gap-2">
                                 <span
@@ -2973,6 +3041,7 @@ const App: React.FC = () => {
                       onConnectionClick={handleConnectionClick}
                       selectedConnectionId={selectedConnectionId}
                       freezeLayout={isMapLayoutFrozen}
+                      tokenAddress={token.address}
                     />
                   </div>
 
@@ -3063,6 +3132,7 @@ const App: React.FC = () => {
                     setAlertModalPrefill(null);
                   }}
                   onAlertTriggered={handleAlertTriggered}
+                  isConnected={isConnected}
                 />
               )}
               <div className="mt-auto">

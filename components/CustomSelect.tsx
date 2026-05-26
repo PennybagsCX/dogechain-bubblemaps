@@ -139,47 +139,47 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
       </button>
 
       {/* Dropdown Menu */}
-      {isOpen && (
-        <ul
-          id="custom-select-listbox"
-          ref={listRef}
-          role="listbox"
-          className={`
-            absolute z-50 w-full mt-1 bg-space-800 border border-space-700
-            rounded-lg shadow-2xl max-h-60 overflow-auto
-            animate-in fade-in slide-in-from-top-1 duration-200
-          `}
-          style={{
-            // Ensure dropdown doesn't go off screen on mobile
-            left: 0,
-            right: 0,
-          }}
-        >
-          {options.map((option, index) => {
-            const isSelected = option.value === value;
+      <ul
+        id="custom-select-listbox"
+        ref={listRef}
+        role="listbox"
+        className={`
+          absolute z-50 w-full mt-1 bg-space-800 border border-space-700
+          rounded-lg shadow-2xl max-h-60 overflow-auto
+          transition-all duration-200 origin-top
+          ${isOpen ? "opacity-100 scale-y-100 pointer-events-auto" : "opacity-0 scale-y-95 max-h-0 border-0 pointer-events-none"}
+        `}
+        style={{
+          // Ensure dropdown doesn't go off screen on mobile
+          left: 0,
+          right: 0,
+        }}
+      >
+        {options.map((option, index) => {
+          const isSelected = option.value === value;
 
-            return (
-              <li
-                key={option.value}
-                role="option"
-                aria-selected={isSelected}
-                onClick={() => {
+          return (
+            <li
+              key={option.value}
+              role="option"
+              aria-selected={isSelected}
+              onClick={() => {
+                onChange(option.value);
+                setIsOpen(false);
+                focusedIndexRef.current = -1;
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
                   onChange(option.value);
                   setIsOpen(false);
                   focusedIndexRef.current = -1;
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    onChange(option.value);
-                    setIsOpen(false);
-                    focusedIndexRef.current = -1;
-                  }
-                }}
-                onMouseEnter={() => {
-                  focusedIndexRef.current = index;
-                }}
-                className={`
+                }
+              }}
+              onMouseEnter={() => {
+                focusedIndexRef.current = index;
+              }}
+              className={`
                   px-4 py-2.5 cursor-pointer transition-colors
                   flex items-center justify-between gap-3
                   ${
@@ -188,23 +188,22 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
                       : "text-slate-300 hover:bg-space-700 hover:text-white"
                   }
                 `}
-              >
-                <div className="flex-1 min-w-0">
-                  <div className="font-medium truncate">{option.label}</div>
-                  {option.description && (
-                    <div
-                      className={`text-xs mt-0.5 truncate ${isSelected ? "text-purple-200" : "text-slate-500"}`}
-                    >
-                      {option.description}
-                    </div>
-                  )}
-                </div>
-                {isSelected && <Check size={18} className="flex-shrink-0" />}
-              </li>
-            );
-          })}
-        </ul>
-      )}
+            >
+              <div className="flex-1 min-w-0">
+                <div className="font-medium truncate">{option.label}</div>
+                {option.description && (
+                  <div
+                    className={`text-xs mt-0.5 truncate ${isSelected ? "text-purple-200" : "text-slate-500"}`}
+                  >
+                    {option.description}
+                  </div>
+                )}
+              </div>
+              {isSelected && <Check size={18} className="flex-shrink-0" />}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };

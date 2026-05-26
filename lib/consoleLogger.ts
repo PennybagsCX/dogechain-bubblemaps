@@ -126,12 +126,13 @@ class DiagnosticLogger {
       this.logError(`Unhandled promise rejection: ${event.reason}`, event.reason?.stack);
     });
 
-    // Auto-send logs every 30 seconds
-    this.autoSendInterval = window.setInterval(() => {
-      this.sendLogs().catch((err) =>
-        this.originalConsole.error("[DiagnosticLogger] Auto-send failed:", err)
-      );
-    }, 30000);
+    // Auto-send disabled: the /api/log-diagnostics endpoint does not exist,
+    // causing 404 errors every 30s. Re-enable only after a server endpoint is deployed.
+    // this.autoSendInterval = window.setInterval(() => {
+    //   this.sendLogs().catch((err) =>
+    //     this.originalConsole.error("[DiagnosticLogger] Auto-send failed:", err)
+    //   );
+    // }, 30000);
 
     this.isInitialized = true;
     this.originalConsole.log("[DiagnosticLogger] Initialized with session:", this.sessionId);
@@ -240,26 +241,9 @@ class DiagnosticLogger {
   }
 
   public sendLogsOnKeyEvents(): void {
-    // Send on page hide (user navigates away)
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        // Use sendBeacon for more reliable delivery during page unload
-        const data = this.prepareLogData();
-        const blob = new Blob([JSON.stringify(data)], {
-          type: "application/json",
-        });
-        navigator.sendBeacon("/api/log-diagnostics", blob);
-      }
-    });
-
-    // Send on page unload
-    window.addEventListener("beforeunload", () => {
-      const data = this.prepareLogData();
-      const blob = new Blob([JSON.stringify(data)], {
-        type: "application/json",
-      });
-      navigator.sendBeacon("/api/log-diagnostics", blob);
-    });
+    // Beacon calls disabled: the /api/log-diagnostics endpoint does not exist,
+    // causing 404 errors on visibility change and page unload.
+    // Re-enable only after a server endpoint is deployed.
   }
 
   public getSessionId(): string {

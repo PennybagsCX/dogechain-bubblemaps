@@ -683,10 +683,11 @@ export function TokenSearchInput({
 
       {/* Search Input */}
       <form onSubmit={handleSubmit} className="relative">
-        <div className="flex items-center bg-space-800 rounded-lg border border-space-700 overflow-hidden">
-          <div className="pl-3 pr-2 text-slate-500">
-            <Search size={18} />
-          </div>
+        <div
+          className={`flex items-center bg-space-800 rounded-lg border overflow-hidden transition-colors duration-300 ${
+            disabled ? "border-purple-500/50 shadow-lg shadow-purple-500/10" : "border-space-700"
+          }`}
+        >
           <input
             ref={inputRef}
             type="text"
@@ -725,22 +726,22 @@ export function TokenSearchInput({
           <button
             type="submit"
             disabled={disabled || isSearching || !query.trim()}
-            className="px-3 sm:px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium disabled:opacity-50 transition-colors flex items-center gap-2 shrink-0"
+            className="self-stretch px-3 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium disabled:opacity-50 transition-colors flex items-center justify-center shrink-0 rounded-r-lg"
+            aria-label={disabled ? "Fetching data" : isSearching ? "Searching" : "Search"}
           >
-            {isSearching ? (
-              <>
-                <Loader2 className="animate-spin" size={16} />
-                <span>Searching...</span>
-              </>
+            {disabled || isSearching ? (
+              <Loader2 className="animate-spin" size={16} />
             ) : (
-              <>
-                <Search size={16} />
-                <span>Go</span>
-              </>
+              <Search size={16} />
             )}
           </button>
         </div>
       </form>
+      {disabled && query && (
+        <div className="flex items-center justify-center mt-2">
+          <Loader2 className="animate-spin text-purple-500" size={14} />
+        </div>
+      )}
 
       {/* Search History Chips - shown when input is focused but empty, and dropdown not shown */}
       {!showDropdown && !showHistory && query.trim() === "" && recentSearches.length > 0 && (

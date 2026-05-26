@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, {
   createContext,
   useContext,
@@ -8,7 +9,7 @@ import React, {
 } from "react";
 
 export type HoldingSizeFilter = "all" | "micro" | "retail" | "whale" | "mega";
-export type LabelFilter = "all" | "labeled" | "unlabeled" | "contracts";
+export type LabelFilter = "all" | "labeled" | "unlabeled" | "contracts" | "noContracts";
 export type ActivityFilter = "all" | "inactive" | "low" | "medium" | "high";
 
 export interface FilterPreset {

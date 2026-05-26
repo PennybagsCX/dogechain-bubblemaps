@@ -289,20 +289,25 @@ async function getCacheEntryCount(): Promise<number> {
 }
 
 /**
- * Get cache hit rate (simplified - returns 0 if no tracking)
- * A full implementation would track cache hits/misses
+ * Get cache hit rate from actual search cache tracking.
+ *
+ * Uses the SearchCache singleton which already tracks hits per entry.
+ * The hit rate is calculated as: total_hits / (total_hits + total_entries).
+ * Returns 0 if no tracking data is available (never returns a fabricated value).
  */
 async function getCacheHitRate(): Promise<number> {
-  // For now, return a reasonable default
-  // A full implementation would track actual cache hits vs misses
   try {
-    const { db } = await import("./db");
-    if ("assetMetadataCache" in db) {
-      const cacheSize = await db.assetMetadataCache.count();
-      // Estimate hit rate based on cache utilization
-      // (this is a simplification - real hit rate requires tracking)
-      return cacheSize > 0 ? 0.75 : 0;
+    // Use the existing searchCache which already tracks hits per entry
+    const { searchCache } = await import("./searchCache");
+    const stats = searchCache.getStats();
+
+    if (stats.size === 0) {
+      return 0; // No data — show 0%, not a fabricated 75%
     }
+
+    // searchCache.getHitRate() returns 0-100 percentage
+    const hitRatePercent = searchCache.getHitRate();
+    return hitRatePercent / 100; // Convert to 0-1 decimal
   } catch {
     // Error handled silently
   }

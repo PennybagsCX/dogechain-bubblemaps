@@ -1445,10 +1445,48 @@ export class DogechainRPCClient {
           congestion = "high";
         }
 
+        // Compute true average block time from the last N blocks.
+        // Fetches up to 20 recent blocks and averages their inter-block timestamps.
+        let averageBlockTime = blockTime; // Fallback to current block time
+        try {
+          const SAMPLE_SIZE = 20;
+          const startBlockNum =
+            blockNumber > BigInt(SAMPLE_SIZE) ? blockNumber - BigInt(SAMPLE_SIZE) + 1n : 0n;
+
+          if (Number(blockNumber) - Number(startBlockNum) >= 2) {
+            const historicalBlocks = await this.fetchBlockRange(startBlockNum, blockNumber, {
+              includeTransactions: false,
+              batchSize: 20,
+            });
+
+            if (historicalBlocks.length >= 2) {
+              // Sort by block number ascending to compute time differences
+              const sorted = historicalBlocks
+                .slice()
+                .sort((a, b) => (a.number && b.number ? Number(a.number) - Number(b.number) : 0));
+
+              const blockTimes: number[] = [];
+              for (let i = 1; i < sorted.length; i++) {
+                const prevTs = Number(sorted[i - 1].timestamp);
+                const currTs = Number(sorted[i].timestamp);
+                if (prevTs > 0 && currTs > 0 && currTs > prevTs) {
+                  blockTimes.push((currTs - prevTs) * 1000); // Convert to ms
+                }
+              }
+
+              if (blockTimes.length > 0) {
+                averageBlockTime = blockTimes.reduce((sum, t) => sum + t, 0) / blockTimes.length;
+              }
+            }
+          }
+        } catch {
+          // Fallback to single block measurement if historical fetch fails
+        }
+
         return {
           currentBlockNumber: Number(blockNumber),
           blockTime,
-          averageBlockTime: blockTime, // Will be calculated from historical data
+          averageBlockTime,
           gasPrice: gasPrice.toString(),
           tps,
           congestion,

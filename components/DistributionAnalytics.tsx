@@ -237,8 +237,10 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
       <div className={`space-y-6 ${className}`}>
         {/* Header */}
         <div>
-          <h2 className="text-2xl font-bold text-white">Distribution Analytics</h2>
-          <p className="text-slate-400">Wealth concentration analysis</p>
+          <h2 className="text-2xl font-bold text-white text-center sm:text-left">
+            Distribution Analytics
+          </h2>
+          <p className="text-slate-400 text-center sm:text-left">Wealth concentration analysis</p>
         </div>
 
         {/* No token selected state */}
@@ -259,8 +261,12 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
       <div className={`space-y-6 ${className}`}>
         {/* Header */}
         <div>
-          <h2 className="text-2xl font-bold text-white">Distribution Analytics</h2>
-          <p className="text-slate-400">Wealth concentration analysis for {token.symbol}</p>
+          <h2 className="text-2xl font-bold text-white text-center sm:text-left">
+            Distribution Analytics
+          </h2>
+          <p className="text-slate-400 text-center sm:text-left">
+            Wealth concentration analysis for {token.symbol}
+          </p>
         </div>
 
         {/* Progress Card */}
@@ -328,7 +334,7 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
 
           {/* Optimization notice */}
           <div className="mt-4 p-3 bg-purple-500/10 border border-purple-500/20 rounded-lg">
-            <div className="flex items-start gap-2 text-sm">
+            <div className="flex items-center justify-center gap-2 text-sm">
               <Zap className="w-4 h-4 text-purple-400 mt-0.5 flex-shrink-0" />
               <p className="text-purple-300">
                 Loading distribution metrics and holder concentration data
@@ -347,8 +353,12 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-white">Distribution Analytics</h2>
-            <p className="text-slate-400">Wealth concentration analysis for {token.symbol}</p>
+            <h2 className="text-2xl font-bold text-white text-center sm:text-left">
+              Distribution Analytics
+            </h2>
+            <p className="text-slate-400 text-center sm:text-left">
+              Wealth concentration analysis for {token.symbol}
+            </p>
           </div>
 
           {/* Refresh button */}
@@ -386,8 +396,12 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-white">Distribution Analytics</h2>
-            <p className="text-slate-400">Wealth concentration analysis for {token.symbol}</p>
+            <h2 className="text-2xl font-bold text-white text-center sm:text-left">
+              Distribution Analytics
+            </h2>
+            <p className="text-slate-400 text-center sm:text-left">
+              Wealth concentration analysis for {token.symbol}
+            </p>
           </div>
 
           {/* Refresh button */}
@@ -421,12 +435,16 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Distribution Analytics</h2>
-          <p className="text-slate-400">Wealth concentration analysis for {token.symbol}</p>
+          <h2 className="text-2xl font-bold text-white text-center sm:text-left">
+            Distribution Analytics
+          </h2>
+          <p className="text-slate-400 text-center sm:text-left">
+            Wealth concentration analysis for {token.symbol}
+          </p>
         </div>
 
         {/* Last Updated and Refresh */}
-        <div className="flex items-center gap-3 text-sm">
+        <div className="flex items-center justify-center gap-3 text-sm">
           <div className="flex items-center gap-2 text-slate-400">
             <Clock className="w-4 h-4" />
             <span>Data from {formatTimeAgo(lastRefreshed)}</span>
@@ -443,36 +461,32 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
       </div>
 
       {/* Data Source Disclaimer */}
-      <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
-        <div className="flex items-start gap-3">
-          <AlertTriangle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
-          <div>
-            <h3 className="text-yellow-400 font-semibold">Limited Data Analysis</h3>
-            <p className="text-sm text-yellow-300/80 mt-1">
-              <strong>Why not full data?</strong> The Dogechain Explorer API only provides paginated
-              holder data (100 per request). Fetching all holders would take dozens of API calls and
-              cause significant delays. Metrics shown are calculated from the top{" "}
-              {analysis.totalHolders} holders fetched from the Explorer, which includes all major
-              holders (whales, ecosystem wallets, LP pools). For complete blockchain analysis,
-              consider using dedicated blockchain explorers or running your own full node.
-            </p>
-          </div>
+      <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 text-center">
+        <div className="flex items-center justify-center gap-2 mb-1">
+          <AlertTriangle className="w-4 h-4 text-yellow-400 flex-shrink-0" />
+          <h3 className="text-yellow-400 font-semibold">Limited Data Analysis</h3>
         </div>
+        <p className="text-sm text-yellow-300/80">
+          <strong>Why not full data?</strong> The Dogechain Explorer API only provides paginated
+          holder data (100 per request). Fetching all holders would take dozens of API calls and
+          cause significant delays. Metrics shown are calculated from the top{" "}
+          {analysis.totalHolders} holders fetched from the Explorer, which includes all major
+          holders (whales, ecosystem wallets, LP pools). For complete blockchain analysis, consider
+          using dedicated blockchain explorers or running your own full node.
+        </p>
       </div>
 
       {/* Centralization Alert */}
       {analysis.isCentralized && (
-        <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-            <div>
-              <h3 className="text-red-400 font-semibold">Centralization Alert</h3>
-              <p className="text-sm text-red-300/80 mt-1">
-                Top 10% of holders control more than 50% of the total supply. This indicates high
-                concentration of wealth in this token.
-              </p>
-            </div>
+        <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 text-center">
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <AlertTriangle className="w-4 h-4 text-red-400 flex-shrink-0" />
+            <h3 className="text-red-400 font-semibold">Centralization Alert</h3>
           </div>
+          <p className="text-sm text-red-300/80">
+            Top 10% of holders control more than 50% of the total supply. This indicates high
+            concentration of wealth in this token.
+          </p>
         </div>
       )}
 
@@ -480,39 +494,41 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Gini Coefficient */}
         <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="text-slate-400 text-sm">Gini Coefficient</span>
+          <span className="text-slate-400 text-sm">Gini Coefficient</span>
+          <div className="flex items-center justify-center gap-2 mt-1">
             <TrendingUp className="w-4 h-4 text-purple-500" />
+            <span className="text-3xl font-bold text-white">
+              {analysis.giniCoefficient.toFixed(3)}
+            </span>
           </div>
-          <div className="text-3xl font-bold text-white">{analysis.giniCoefficient.toFixed(3)}</div>
           <div className={`text-sm mt-1 ${giniInfo.color}`}>{giniInfo.label} inequality</div>
           <div className="text-xs text-slate-500 mt-2">{giniInfo.description}</div>
         </div>
 
         {/* Total Holders */}
         <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="text-slate-400 text-sm">Total Holders</span>
+          <span className="text-slate-400 text-sm">Total Holders</span>
+          <div className="flex items-center justify-center gap-2 mt-1">
             <Users className="w-4 h-4 text-blue-500" />
-          </div>
-          <div className="text-3xl font-bold text-white">
-            {analysis.totalHolders.toLocaleString()}
+            <span className="text-3xl font-bold text-white">
+              {analysis.totalHolders.toLocaleString()}
+            </span>
           </div>
           <div className="text-xs text-slate-500 mt-2">Unique wallet addresses</div>
         </div>
 
         {/* Centralization Status */}
         <div className="bg-space-800 rounded-xl p-6 border border-space-700 text-center">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="text-slate-400 text-sm">Centralization</span>
+          <span className="text-slate-400 text-sm">Centralization</span>
+          <div className="flex items-center justify-center gap-2 mt-1">
             <Wallet className="w-4 h-4 text-yellow-500" />
-          </div>
-          <div
-            className={`text-2xl font-bold ${
-              analysis.isCentralized ? "text-red-400" : "text-green-400"
-            }`}
-          >
-            {analysis.isCentralized ? "High" : "Low"}
+            <span
+              className={`text-2xl font-bold ${
+                analysis.isCentralized ? "text-red-400" : "text-green-400"
+              }`}
+            >
+              {analysis.isCentralized ? "High" : "Low"}
+            </span>
           </div>
           <div className="text-xs text-slate-500 mt-2">
             Top 10% owns {analysis.concentrationBands.top10Pct.toFixed(1)}%

@@ -241,7 +241,9 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
 
       {/* Mini Preview Sections */}
       <div className="bg-space-800 rounded-xl border border-space-700 p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Quick User Behavior</h3>
+        <h3 className="text-lg font-semibold text-white mb-4 text-center sm:text-left">
+          Quick User Behavior
+        </h3>
         <UserBehaviorAnalytics
           className="border-none p-0"
           externalStats={userStats}
@@ -293,58 +295,60 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
       </div>
 
       {/* Tabs */}
-      <div className="bg-space-800 rounded-xl p-1 border border-space-700 overflow-x-auto w-fit mx-auto">
-        <div className="flex gap-1">
+      <div className="bg-space-800 rounded-xl p-1 border border-space-700 w-full">
+        <div className="grid grid-cols-4 gap-1">
           <button
             onClick={() => handleTabChange("overview")}
-            className={`px-4 sm:px-6 py-2.5 font-medium rounded-lg transition-all relative whitespace-nowrap focus-ring ${
+            className={`px-1 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium rounded-lg transition-all focus-ring ${
               activeTab === "overview"
                 ? "bg-purple-500 text-white"
                 : "text-slate-400 hover:text-white hover:bg-space-700"
             }`}
           >
-            <div className="flex items-center gap-2">
-              <LayoutDashboard size={16} />
+            <div className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2">
+              <LayoutDashboard size={14} className="sm:w-4 sm:h-4" />
               <span>Overview</span>
             </div>
           </button>
           <button
             onClick={() => handleTabChange("user-behavior")}
-            className={`px-4 sm:px-6 py-2.5 font-medium rounded-lg transition-all relative whitespace-nowrap focus-ring ${
+            className={`px-1 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium rounded-lg transition-all focus-ring ${
               activeTab === "user-behavior"
                 ? "bg-purple-500 text-white"
                 : "text-slate-400 hover:text-white hover:bg-space-700"
             }`}
           >
-            <div className="flex items-center gap-2">
-              <Users size={16} />
-              <span>User Behavior</span>
+            <div className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2">
+              <Users size={14} className="sm:w-4 sm:h-4" />
+              <span>Users</span>
             </div>
           </button>
           <button
             onClick={() => handleTabChange("platform-health")}
-            className={`px-4 sm:px-6 py-2.5 font-medium rounded-lg transition-all relative whitespace-nowrap focus-ring ${
+            className={`px-1 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium rounded-lg transition-all focus-ring ${
               activeTab === "platform-health"
                 ? "bg-purple-500 text-white"
                 : "text-slate-400 hover:text-white hover:bg-space-700"
             }`}
           >
-            <div className="flex items-center gap-2">
-              <Server size={16} />
-              <span>Platform Health</span>
+            <div className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2">
+              <Server size={14} className="sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Platform</span>
+              <span className="sm:hidden">Platform</span>
             </div>
           </button>
           <button
             onClick={() => handleTabChange("network-health")}
-            className={`px-4 sm:px-6 py-2.5 font-medium rounded-lg transition-all relative whitespace-nowrap focus-ring ${
+            className={`px-1 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium rounded-lg transition-all focus-ring ${
               activeTab === "network-health"
                 ? "bg-purple-500 text-white"
                 : "text-slate-400 hover:text-white hover:bg-space-700"
             }`}
           >
-            <div className="flex items-center gap-2">
-              <Activity size={16} />
-              <span>Network Health</span>
+            <div className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2">
+              <Activity size={14} className="sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Network</span>
+              <span className="sm:hidden">Network</span>
             </div>
           </button>
         </div>

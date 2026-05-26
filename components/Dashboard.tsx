@@ -221,6 +221,7 @@ interface DashboardProps {
     alertType: "WALLET" | "TOKEN" | "WHALE";
   }) => void;
   onAlertTriggered?: () => void; // Callback when alert triggers to refresh stats
+  isConnected?: boolean;
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({
@@ -237,6 +238,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   onAlertModalClose,
   onAlertModalOpen,
   onAlertTriggered,
+  isConnected = false,
 }) => {
   // === GRACE PERIOD MECHANISM ===
   // Prevent automatic scans for 30 seconds after manual clear operations
@@ -330,7 +332,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const activeTriggers = Object.values(statuses).filter((s: AlertStatus) => s.triggered).length;
 
   // Dashboard guide integration
-  const dashboardGuide = useDashboardGuide(true);
+  const dashboardGuide = useDashboardGuide(isConnected);
 
   // Helper: Extract primary token from transactions (declared before use)
   const extractPrimaryToken = useCallback(
@@ -1772,20 +1774,20 @@ export const Dashboard: React.FC<DashboardProps> = ({
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="p-6 bg-space-800 rounded-xl border border-space-700">
+        <div className="p-6 bg-space-800 rounded-xl border border-space-700 text-center">
           <p className="text-slate-400 text-sm">Tracked Wallets</p>
           <p className="text-3xl font-bold text-white mt-2">{trackedWalletsCount}</p>
         </div>
-        <div className="p-6 bg-space-800 rounded-xl border border-space-700">
+        <div className="p-6 bg-space-800 rounded-xl border border-space-700 text-center">
           <p className="text-slate-400 text-sm">Active Alerts</p>
           <p className="text-3xl font-bold text-white mt-2">{alerts.length}</p>
         </div>
-        <div className="p-6 bg-space-800 rounded-xl border border-space-700 relative overflow-hidden">
+        <div className="p-6 bg-space-800 rounded-xl border border-space-700 relative overflow-hidden text-center">
           {activeTriggers > 0 && (
             <div className="absolute top-0 right-0 w-16 h-16 bg-red-500/20 rounded-bl-full -mr-8 -mt-8"></div>
           )}
           <p className="text-slate-400 text-sm">Triggered Events</p>
-          <div className="flex items-center gap-2 mt-2">
+          <div className="flex items-center justify-center gap-2 mt-2">
             <p
               className={`text-3xl font-bold ${activeTriggers > 0 ? "text-red-500" : "text-green-500"}`}
             >

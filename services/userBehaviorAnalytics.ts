@@ -169,13 +169,25 @@ export async function getUserBehaviorStats(timeRange: TimeRange): Promise<UserBe
 
     // Analyze events
     const sessions = new Set<string>();
-    let totalSessionDuration = 0;
+    const sessionFirstEvent: Record<string, number> = {};
+    const sessionLastEvent: Record<string, number> = {};
+    const sessionEventCounts: Record<string, number> = {};
     let searchCount = 0;
     let successfulSearches = 0;
     let totalResults = 0;
 
     for (const event of events) {
-      sessions.add(event.sessionId);
+      const sid = event.sessionId;
+      sessions.add(sid);
+
+      // Track first and last event timestamps per session for duration calculation
+      if (!sessionFirstEvent[sid] || event.timestamp < sessionFirstEvent[sid]) {
+        sessionFirstEvent[sid] = event.timestamp;
+      }
+      if (!sessionLastEvent[sid] || event.timestamp > sessionLastEvent[sid]) {
+        sessionLastEvent[sid] = event.timestamp;
+      }
+      sessionEventCounts[sid] = (sessionEventCounts[sid] || 0) + 1;
 
       // Count searches
       if (!event.type || event.type === "search") {
@@ -185,13 +197,32 @@ export async function getUserBehaviorStats(timeRange: TimeRange): Promise<UserBe
           totalResults += event.resultCount || 0;
         }
       }
-
-      // Track session duration (simplified)
-      totalSessionDuration += 5 * 60 * 1000; // Assume 5 min avg session
     }
 
     const totalSessions = sessions.size;
+
+    // Calculate real session duration from actual event timestamps.
+    // For each session, duration = last_event_time - first_event_time.
+    // Single-event sessions get a minimum of 10 seconds (not a fabricated 5 minutes).
+    const MIN_SINGLE_EVENT_DURATION_MS = 10 * 1000;
+    let totalSessionDuration = 0;
+    for (const sid of sessions) {
+      const first = sessionFirstEvent[sid] ?? 0;
+      const last = sessionLastEvent[sid] ?? 0;
+      const duration = last - first;
+      totalSessionDuration += duration > 0 ? duration : MIN_SINGLE_EVENT_DURATION_MS;
+    }
+
     const avgDuration = totalSessions > 0 ? totalSessionDuration / totalSessions / 1000 / 60 : 0;
+
+    // Define "active" sessions as those with more than 1 event (indicating real engagement),
+    // rather than a fabricated 70% ratio.
+    let activeSessions = 0;
+    for (const sid of sessions) {
+      if ((sessionEventCounts[sid] || 0) > 1) {
+        activeSessions++;
+      }
+    }
 
     // Return zeros if no real data (no fake numbers)
     if (totalSessions === 0) {
@@ -206,7 +237,7 @@ export async function getUserBehaviorStats(timeRange: TimeRange): Promise<UserBe
       period: timeRange,
       sessions: {
         total: totalSessions,
-        active: Math.ceil(totalSessions * 0.7), // Assume 70% active
+        active: activeSessions, // Based on sessions with >1 event (real engagement)
         avgDuration: Math.round(avgDuration),
       },
       searches: {

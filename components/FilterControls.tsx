@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { createPortal } from "react-dom";
 import { X, Save, FolderOpen, Trash2, ChevronDown, ChevronUp, Sliders, Tag } from "lucide-react";
 import {
   useFilters,
@@ -24,8 +25,6 @@ export const FilterControls: React.FC<FilterControlsProps> = ({ isOpen, onClose 
 
   useClickOutside(presetRef, () => setShowPresets(false), showPresets);
 
-  if (!isOpen) return null;
-
   const handleSavePreset = () => {
     if (newPresetName.trim()) {
       savePreset(newPresetName.trim());
@@ -45,7 +44,6 @@ export const FilterControls: React.FC<FilterControlsProps> = ({ isOpen, onClose 
     { value: "all", label: "All Wallets", description: "Show all wallets" },
     { value: "labeled", label: "Known Only", description: "Only identified entities" },
     { value: "unlabeled", label: "Unknown Only", description: "Only unidentified wallets" },
-    { value: "contracts", label: "Contracts Only", description: "Only smart contracts" },
   ];
 
   const activityFilterOptions: { value: ActivityFilter; label: string; description: string }[] = [
@@ -56,127 +54,130 @@ export const FilterControls: React.FC<FilterControlsProps> = ({ isOpen, onClose 
     { value: "high", label: "High Activity", description: "15+ connections" },
   ];
 
-  return (
+  // Render via portal to escape parent stacking contexts (z-20 container)
+  const modalContent = (
     <div
-      className="absolute top-12 left-0 z-30 bg-space-800 rounded-xl border border-space-700 shadow-2xl w-80 max-w-[calc(100vw-2rem)] overflow-hidden flex flex-col animate-in fade-in slide-in-from-left-2"
-      style={{ maxHeight: "calc(100vh - 180px)", minHeight: 0 }}
+      data-filter-controls
+      role="presentation"
+      className={`fixed top-16 left-0 right-0 bottom-0 z-[9999] flex items-center justify-center bg-black/50 transition-all duration-200 overflow-y-auto ${
+        isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      }`}
+      onTouchStart={(e) => e.stopPropagation()}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          e.stopPropagation();
+          onClose();
+        }
+      }}
     >
-      {/* Header */}
-      <div className="flex-shrink-0 bg-space-800 border-b border-space-700 px-4 py-3 flex justify-between items-center">
-        <h4 className="text-sm font-bold text-white flex items-center gap-2">
-          <Sliders size={16} /> Advanced Filters
-        </h4>
-        <button
-          onClick={onClose}
-          className="text-slate-400 hover:text-white transition-colors"
-          aria-label="Close filters"
-        >
-          <X size={18} />
-        </button>
-      </div>
-
-      <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4">
-        {/* Basic Filters */}
-        <div className="space-y-3">
-          <h5 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Basic</h5>
-
-          {/* Show Links */}
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-200">Links</span>
-            <button
-              onClick={() => updateFilters({ showLinks: !filters.showLinks })}
-              className={`w-10 h-5 rounded-full relative transition-colors ${
-                filters.showLinks ? "bg-purple-600" : "bg-space-600"
-              }`}
-            >
-              <span
-                className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-transform ${
-                  filters.showLinks ? "left-6" : "left-1"
-                }`}
-              />
-            </button>
-          </div>
-
-          {/* Show Labels */}
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-200">Labels</span>
-            <button
-              onClick={() => updateFilters({ showLabels: !filters.showLabels })}
-              className={`w-10 h-5 rounded-full relative transition-colors ${
-                filters.showLabels ? "bg-purple-600" : "bg-space-600"
-              }`}
-            >
-              <span
-                className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-transform ${
-                  filters.showLabels ? "left-6" : "left-1"
-                }`}
-              />
-            </button>
-          </div>
-
-          {/* Min Balance Slider */}
-          <div>
-            <div className="flex justify-between text-xs text-slate-400 mb-1">
-              <span>Filter Dust</span>
-              <span>{filters.minBalancePercent}%</span>
-            </div>
-            <input
-              type="range"
-              min="0"
-              max="50"
-              step="1"
-              value={filters.minBalancePercent}
-              onChange={(e) => updateFilters({ minBalancePercent: parseInt(e.target.value) })}
-              className="w-full h-1 bg-space-600 rounded-lg appearance-none cursor-pointer accent-purple-500"
-            />
-          </div>
-
-          {/* Quick Filters */}
-          <div className="flex flex-wrap gap-2 pt-2">
-            <button
-              onClick={() => updateFilters({ hideDust: !filters.hideDust })}
-              className={`px-2 py-1 text-xs rounded-md transition-colors ${
-                filters.hideDust
-                  ? "bg-purple-600 text-white"
-                  : "bg-space-700 text-slate-300 hover:bg-space-600"
-              }`}
-            >
-              Hide Dust
-            </button>
-            <button
-              onClick={() => updateFilters({ hideContracts: !filters.hideContracts })}
-              className={`px-2 py-1 text-xs rounded-md transition-colors ${
-                filters.hideContracts
-                  ? "bg-purple-600 text-white"
-                  : "bg-space-700 text-slate-300 hover:bg-space-600"
-              }`}
-            >
-              No Contracts
-            </button>
-            <button
-              onClick={() => updateFilters({ onlyWhales: !filters.onlyWhales })}
-              className={`px-2 py-1 text-xs rounded-md transition-colors ${
-                filters.onlyWhales
-                  ? "bg-purple-600 text-white"
-                  : "bg-space-700 text-slate-300 hover:bg-space-600"
-              }`}
-            >
-              Whales Only
-            </button>
-          </div>
+      <div
+        className={`bg-space-800 rounded-xl border border-space-700 shadow-2xl w-[90vw] max-w-sm md:w-80 overflow-hidden flex flex-col transition-all duration-200 origin-top ${
+          isOpen ? "scale-100" : "scale-95 max-h-0 border-0"
+        }`}
+        onTouchStart={(e) => e.stopPropagation()}
+        style={{ maxHeight: "calc(100dvh - 6rem)", minHeight: 0 }}
+      >
+        {/* Header */}
+        <div className="flex-shrink-0 bg-space-800 border-b border-space-700 px-4 py-3 flex justify-between items-center">
+          <h4 className="text-sm font-bold text-white flex items-center gap-2">
+            <Sliders size={16} /> Advanced Filters
+          </h4>
+          <button
+            onClick={onClose}
+            className="text-slate-400 hover:text-white transition-colors"
+            aria-label="Close filters"
+          >
+            <X size={18} />
+          </button>
         </div>
 
-        {/* Advanced Filters Toggle */}
-        <button
-          onClick={() => setShowAdvanced(!showAdvanced)}
-          className="w-full flex items-center justify-between text-xs font-semibold text-slate-400 uppercase tracking-wider hover:text-slate-300 transition-colors"
-        >
-          <span>Advanced Filters</span>
-          {showAdvanced ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-        </button>
+        <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4">
+          {/* Basic Filters */}
+          <div className="space-y-3">
+            <h5 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Basic</h5>
 
-        {showAdvanced && (
-          <div className="space-y-4 animate-in slide-in-from-top-2">
+            {/* Show Links */}
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-200">Links</span>
+              <button
+                onClick={() => updateFilters({ showLinks: !filters.showLinks })}
+                className={`w-10 h-5 rounded-full relative transition-colors ${
+                  filters.showLinks ? "bg-purple-600" : "bg-space-600"
+                }`}
+              >
+                <span
+                  className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-transform ${
+                    filters.showLinks ? "left-6" : "left-1"
+                  }`}
+                />
+              </button>
+            </div>
+
+            {/* Show Labels */}
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-200">Labels</span>
+              <button
+                onClick={() => updateFilters({ showLabels: !filters.showLabels })}
+                className={`w-10 h-5 rounded-full relative transition-colors ${
+                  filters.showLabels ? "bg-purple-600" : "bg-space-600"
+                }`}
+              >
+                <span
+                  className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-transform ${
+                    filters.showLabels ? "left-6" : "left-1"
+                  }`}
+                />
+              </button>
+            </div>
+
+            {/* Min Balance Slider */}
+            <div>
+              <div className="flex justify-between text-xs text-slate-400 mb-1">
+                <span>Filter Dust</span>
+                <span>{filters.minBalancePercent}%</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="50"
+                step="1"
+                value={filters.minBalancePercent}
+                onChange={(e) => updateFilters({ minBalancePercent: parseInt(e.target.value) })}
+                className="w-full"
+              />
+            </div>
+
+            {/* Quick Filters */}
+            <div className="flex flex-wrap gap-2 pt-2 justify-center">
+              <button
+                onClick={() => updateFilters({ onlyWhales: !filters.onlyWhales })}
+                className={`px-2 py-1 text-xs rounded-md transition-colors ${
+                  filters.onlyWhales
+                    ? "bg-purple-600 text-white"
+                    : "bg-space-700 text-slate-300 hover:bg-space-600"
+                }`}
+              >
+                Whales Only
+              </button>
+            </div>
+          </div>
+
+          {/* Advanced Filters Toggle */}
+          <button
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className="w-full flex items-center justify-between text-xs font-semibold text-slate-400 uppercase tracking-wider hover:text-slate-300 transition-colors"
+          >
+            <span>Advanced Filters</span>
+            {showAdvanced ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+          </button>
+
+          <div
+            className={`space-y-4 transition-all duration-200 origin-top overflow-hidden ${
+              showAdvanced
+                ? "max-h-[600px] opacity-100 py-1 pointer-events-auto"
+                : "max-h-0 opacity-0 pointer-events-none"
+            }`}
+          >
             {/* Holding Size Filter */}
             <div>
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-2">
@@ -270,49 +271,53 @@ export const FilterControls: React.FC<FilterControlsProps> = ({ isOpen, onClose 
               )}
             </div>
           </div>
-        )}
 
-        {/* Filter Presets */}
-        <div className="space-y-2 pt-2 border-t border-space-700">
-          <h5 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-            Filter Presets
-          </h5>
+          {/* Filter Presets */}
+          <div className="space-y-2 pt-2 border-t border-space-700">
+            <h5 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              Filter Presets
+            </h5>
 
-          <div className="flex gap-2">
-            <input
-              type="text"
-              placeholder="Preset name..."
-              value={newPresetName}
-              onChange={(e) => setNewPresetName(e.target.value)}
-              className="flex-1 px-3 py-2 bg-space-700 border border-space-600 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
-              onKeyPress={(e) => e.key === "Enter" && handleSavePreset()}
-            />
-            <Tooltip content="Save current filters as preset">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                placeholder="Preset name..."
+                value={newPresetName}
+                onChange={(e) => setNewPresetName(e.target.value)}
+                className="flex-1 px-3 py-2 bg-space-700 border border-space-600 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
+                onKeyPress={(e) => e.key === "Enter" && handleSavePreset()}
+              />
+              <Tooltip content="Save current filters as preset">
+                <button
+                  onClick={handleSavePreset}
+                  disabled={!newPresetName.trim()}
+                  className="px-3 py-2 bg-purple-600 hover:bg-purple-500 disabled:bg-space-600 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
+                >
+                  <Save size={16} />
+                </button>
+              </Tooltip>
+            </div>
+
+            {/* Presets Dropdown */}
+            <div className="relative" ref={presetRef}>
               <button
-                onClick={handleSavePreset}
-                disabled={!newPresetName.trim()}
-                className="px-3 py-2 bg-purple-600 hover:bg-purple-500 disabled:bg-space-600 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
+                onClick={() => setShowPresets(!showPresets)}
+                className="w-full flex items-center justify-between px-3 py-2 bg-space-700 hover:bg-space-600 border border-space-600 rounded-lg text-sm text-slate-200 transition-colors"
               >
-                <Save size={16} />
+                <span className="flex items-center gap-2">
+                  <FolderOpen size={14} />
+                  {presets.length > 0 ? `${presets.length} Saved` : "No presets saved"}
+                </span>
+                {showPresets ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
               </button>
-            </Tooltip>
-          </div>
 
-          {/* Presets Dropdown */}
-          <div className="relative" ref={presetRef}>
-            <button
-              onClick={() => setShowPresets(!showPresets)}
-              className="w-full flex items-center justify-between px-3 py-2 bg-space-700 hover:bg-space-600 border border-space-600 rounded-lg text-sm text-slate-200 transition-colors"
-            >
-              <span className="flex items-center gap-2">
-                <FolderOpen size={14} />
-                {presets.length > 0 ? `${presets.length} Saved` : "No presets saved"}
-              </span>
-              {showPresets ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-            </button>
-
-            {showPresets && presets.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-space-800 border border-space-700 rounded-lg shadow-xl z-50 max-h-48 overflow-y-auto">
+              <div
+                className={`absolute top-full left-0 right-0 mt-1 bg-space-800 border border-space-700 rounded-lg shadow-xl z-50 max-h-48 overflow-y-auto transition-all duration-200 origin-top ${
+                  showPresets && presets.length > 0
+                    ? "opacity-100 scale-y-100 pointer-events-auto"
+                    : "opacity-0 scale-y-95 max-h-0 border-0 pointer-events-none"
+                }`}
+              >
                 {presets.map((preset) => (
                   <div
                     key={preset.id}
@@ -337,20 +342,22 @@ export const FilterControls: React.FC<FilterControlsProps> = ({ isOpen, onClose 
                   </div>
                 ))}
               </div>
-            )}
+            </div>
           </div>
-        </div>
 
-        {/* Reset Button */}
-        <div className="flex-shrink-0 pt-2 border-t border-space-700">
-          <button
-            onClick={resetFilters}
-            className="w-full px-4 py-2 bg-space-700 hover:bg-space-600 border border-space-600 text-slate-300 rounded-lg text-sm transition-colors"
-          >
-            Reset All Filters
-          </button>
+          {/* Reset Button */}
+          <div className="flex-shrink-0 pt-2 border-t border-space-700">
+            <button
+              onClick={resetFilters}
+              className="w-full px-4 py-2 bg-space-700 hover:bg-space-600 border border-space-600 text-slate-300 rounded-lg text-sm transition-colors"
+            >
+              Reset All Filters
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };

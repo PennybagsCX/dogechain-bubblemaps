@@ -194,96 +194,100 @@ export const EmbeddedChart: React.FC<EmbeddedChartProps> = ({
       )}
 
       {/* Inline Chart Container */}
-      {isExpanded && (
-        <div className="mt-4 animate-in slide-in-from-top-2 duration-200">
-          {/* Toolbar */}
-          <div className="flex items-center justify-between mb-2 px-2">
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-500">Dexscreener</span>
-              {iframeError && (
-                <span className="flex items-center gap-1 text-xs text-amber-500">
-                  <AlertCircle size={12} />
-                  Failed to load
-                </span>
-              )}
-            </div>
-
-            <div className="flex items-center gap-1">
-              {/* Reload Button */}
-              <Tooltip content="Reload chart">
-                <button
-                  onClick={reloadIframe}
-                  className="p-1.5 text-slate-400 hover:text-white hover:bg-space-700 rounded transition-colors"
-                  aria-label="Reload chart"
-                >
-                  <RefreshCw size={14} />
-                </button>
-              </Tooltip>
-
-              {/* External Link Button */}
-              <Tooltip content="View on Dexscreener">
-                <button
-                  onClick={openExternalLink}
-                  className="p-1.5 text-slate-400 hover:text-white hover:bg-space-700 rounded transition-colors"
-                  aria-label="Open on Dexscreener"
-                >
-                  <ExternalLink size={14} />
-                </button>
-              </Tooltip>
-
-              {/* Copy Address Button */}
-              <Tooltip content="Copy pair address">
-                <button
-                  onClick={copyAddress}
-                  data-copy-action={tokenAddress}
-                  className="p-1.5 text-slate-400 hover:text-white hover:bg-space-700 rounded transition-colors text-xs"
-                  aria-label="Copy pair address"
-                >
-                  Copy
-                </button>
-              </Tooltip>
-            </div>
+      <div
+        className={`mt-4 transition-all duration-300 origin-top overflow-hidden ${
+          isExpanded
+            ? "max-h-[600px] opacity-100 pointer-events-auto"
+            : "max-h-0 opacity-0 mt-0 pointer-events-none"
+        }`}
+      >
+        {/* Toolbar */}
+        <div className="flex items-center justify-between mb-2 px-2">
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-slate-500">Dexscreener</span>
+            {iframeError && (
+              <span className="flex items-center gap-1 text-xs text-amber-500">
+                <AlertCircle size={12} />
+                Failed to load
+              </span>
+            )}
           </div>
 
-          {/* Loading State */}
-          {isLoading && (
-            <div className="w-full h-[300px] sm:h-[400px] lg:h-[500px] border border-space-700 rounded-lg bg-space-800 flex items-center justify-center">
-              <RefreshCw size={24} className="text-doge-500 animate-spin" />
-            </div>
-          )}
+          <div className="flex items-center gap-1">
+            {/* Reload Button */}
+            <Tooltip content="Reload chart">
+              <button
+                onClick={reloadIframe}
+                className="p-1.5 text-slate-400 hover:text-white hover:bg-space-700 rounded transition-colors"
+                aria-label="Reload chart"
+              >
+                <RefreshCw size={14} />
+              </button>
+            </Tooltip>
 
-          {/* Iframe */}
-          <iframe
-            ref={iframeRef}
-            src={isExpanded ? chartUrl : undefined}
-            className={`w-full h-[300px] sm:h-[400px] lg:h-[500px] border border-space-700 rounded-lg bg-space-800 transition-all ${
-              isLoading ? "opacity-0" : "opacity-100"
-            }`}
-            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation"
-            referrerPolicy="no-referrer"
-            onLoad={handleIframeLoad}
-            onError={handleIframeError}
-            title={`${tokenSymbol} chart on Dexscreener`}
-            aria-label={`Embedded ${tokenSymbol} price chart from Dexscreener`}
-          />
+            {/* External Link Button */}
+            <Tooltip content="View on Dexscreener">
+              <button
+                onClick={openExternalLink}
+                className="p-1.5 text-slate-400 hover:text-white hover:bg-space-700 rounded transition-colors"
+                aria-label="Open on Dexscreener"
+              >
+                <ExternalLink size={14} />
+              </button>
+            </Tooltip>
 
-          {/* Fallback error UI */}
-          {iframeError && (
-            <div className="w-full h-[300px] border border-space-700 rounded-lg bg-space-800 flex items-center justify-center">
-              <div className="text-center">
-                <AlertCircle size={32} className="text-amber-500 mx-auto mb-2" />
-                <p className="text-slate-400 text-sm mb-3">Chart unavailable</p>
-                <button
-                  onClick={openExternalLink}
-                  className="text-doge-500 hover:text-doge-400 text-sm underline"
-                >
-                  View on Dexscreener
-                </button>
-              </div>
-            </div>
-          )}
+            {/* Copy Address Button */}
+            <Tooltip content="Copy pair address">
+              <button
+                onClick={copyAddress}
+                data-copy-action={tokenAddress}
+                className="p-1.5 text-slate-400 hover:text-white hover:bg-space-700 rounded transition-colors text-xs"
+                aria-label="Copy pair address"
+              >
+                Copy
+              </button>
+            </Tooltip>
+          </div>
         </div>
-      )}
+
+        {/* Loading State */}
+        {isLoading && (
+          <div className="w-full h-[300px] sm:h-[400px] lg:h-[500px] border border-space-700 rounded-lg bg-space-800 flex items-center justify-center">
+            <RefreshCw size={24} className="text-doge-500 animate-spin" />
+          </div>
+        )}
+
+        {/* Iframe */}
+        <iframe
+          ref={iframeRef}
+          src={isExpanded ? chartUrl : undefined}
+          className={`w-full h-[300px] sm:h-[400px] lg:h-[500px] border border-space-700 rounded-lg bg-space-800 transition-all ${
+            isLoading ? "opacity-0" : "opacity-100"
+          }`}
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation"
+          referrerPolicy="no-referrer"
+          onLoad={handleIframeLoad}
+          onError={handleIframeError}
+          title={`${tokenSymbol} chart on Dexscreener`}
+          aria-label={`Embedded ${tokenSymbol} price chart from Dexscreener`}
+        />
+
+        {/* Fallback error UI */}
+        {iframeError && (
+          <div className="w-full h-[300px] border border-space-700 rounded-lg bg-space-800 flex items-center justify-center">
+            <div className="text-center">
+              <AlertCircle size={32} className="text-amber-500 mx-auto mb-2" />
+              <p className="text-slate-400 text-sm mb-3">Chart unavailable</p>
+              <button
+                onClick={openExternalLink}
+                className="text-doge-500 hover:text-doge-400 text-sm underline"
+              >
+                View on Dexscreener
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

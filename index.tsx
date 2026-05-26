@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import { DevWalletBanner } from "./components/DevWalletBanner";
+import { DevWalletProvider } from "./contexts/DevWalletContext";
 import "./index.css";
 import "./styles/glassmorphism.css";
 import { initSentry } from "./utils/sentry.config";
@@ -144,9 +146,12 @@ root.render(
             overlayBlur: "large",
           })}
         >
-          <ErrorBoundary>
-            <App />
-          </ErrorBoundary>
+          <DevWalletProvider>
+            <ErrorBoundary>
+              <DevWalletBanner />
+              <App />
+            </ErrorBoundary>
+          </DevWalletProvider>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

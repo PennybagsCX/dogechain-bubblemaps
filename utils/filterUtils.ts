@@ -36,6 +36,8 @@ export function filterWallets(wallets: Wallet[], filters: FilterState): Wallet[]
           return !wallet.label;
         case "contracts":
           return wallet.isContract;
+        case "noContracts":
+          return !wallet.isContract;
         default:
           return true;
       }

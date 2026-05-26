@@ -98,12 +98,12 @@ export const UserBehaviorAnalytics: React.FC<UserBehaviorAnalyticsProps> = ({
   return (
     <div className={`space-y-4 ${className}`}>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
+      <div className="flex flex-col items-center sm:items-start sm:flex-row sm:justify-between gap-4 text-center sm:text-left">
+        <div className="w-full text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start gap-2">
             <h3 className="text-lg font-semibold text-white">User Behavior</h3>
-            <span className="px-2 py-0.5 text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full">
-              Local Data
+            <span className="px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full whitespace-nowrap">
+              Local
             </span>
           </div>
           <p className="text-sm text-slate-400">Track sessions, searches, and user flows</p>

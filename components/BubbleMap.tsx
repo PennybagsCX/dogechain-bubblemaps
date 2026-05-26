@@ -345,8 +345,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const getNodeColor = useCallback(
     (d: any) => {
       if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) return "#fbbf24"; // Amber-400 (User)
-      if (d.label) return "#fb7185"; // Rose-400 (Known Entity)
-      if (d.isContract) return "#fb7185"; // Rose-400 (Warning/Special)
+      if (d.label) return "#a855f7"; // Purple-500 (Known Entity)
+      if (d.isContract) return "#a855f7"; // Purple-500 (Known Entity)
 
       // Logic for NFTs (Count based)
       if (assetType === AssetType.NFT) {
@@ -904,7 +904,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .data(nodes)
       .enter()
       .append("g")
-      .attr("class", "node-wrapper");
+      .attr("class", "node-wrapper")
+      .attr("transform", (d: NodeDatum) => `translate(${d.x},${d.y})`);
 
     // Render circle inside the wrapper
     const nodeSelection = nodeWrapperSelection
@@ -1103,7 +1104,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .text((d: NodeDatum) => (d.r >= MIN_LABEL_RADIUS ? `#${d.rank}` : ""));
 
     // Render name label inside the wrapper
-    const labelSelection = nodeWrapperSelection
+    nodeWrapperSelection
       .append("text")
       .attr("class", "name-label")
       .attr("text-anchor", "middle")
@@ -1212,11 +1213,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       // Update visible vein starting exactly at bubble edge
       linkSelection.select(".neural-vein").attr("d", (d: any) => getLinkPath(d, 0));
 
-      nodeSelection.attr("cx", (d: NodeDatum) => d.x).attr("cy", (d: NodeDatum) => d.y);
-      rankSelection
-        .attr("x", (d: NodeDatum) => d.x)
-        .attr("y", (d: NodeDatum) => d.y - Math.min(d.r * 0.4, 12));
-      labelSelection.attr("x", (d: NodeDatum) => d.x).attr("y", (d: NodeDatum) => d.y);
+      nodeWrapperSelection.attr("transform", (d: NodeDatum) => `translate(${d.x},${d.y})`);
 
       // Apply deferred zoom once layout is reasonably stable
       if (
@@ -1800,11 +1797,11 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               <div className="flex flex-col gap-3 text-xs text-slate-200">
                 <div className="flex items-start gap-3">
                   <span className="flex items-center gap-2">
-                    <span className="inline-block w-3 h-3 rounded-full bg-rose-400 shadow-[0_0_10px_rgba(251,113,133,0.85)] shrink-0"></span>
-                    <span className="font-semibold">Protocol / LP / DAO</span>
+                    <span className="inline-block w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.85)] shrink-0"></span>
+                    <span className="font-semibold">Labeled Wallet</span>
                   </span>
                   <span className="text-slate-500 text-[11px] leading-tight">
-                    Smart contracts, LP pools, ecosystem funds
+                    Identified wallets: exchanges, teams, known entities
                   </span>
                 </div>
 
@@ -1958,11 +1955,11 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
             <div className="flex flex-col gap-3 text-xs text-slate-200">
               <div className="flex items-start gap-3">
                 <span className="flex items-center gap-2">
-                  <span className="inline-block w-3 h-3 rounded-full bg-rose-400 shadow-[0_0_10px_rgba(251,113,133,0.85)] shrink-0"></span>
-                  <span className="font-semibold">Protocol / LP / DAO</span>
+                  <span className="inline-block w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.85)] shrink-0"></span>
+                  <span className="font-semibold">Labeled Wallet</span>
                 </span>
                 <span className="text-slate-500 text-[11px] leading-tight">
-                  Smart contracts, LP pools, ecosystem funds
+                  Identified wallets: exchanges, teams, known entities
                 </span>
               </div>
 

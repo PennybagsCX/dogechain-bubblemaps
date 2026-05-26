@@ -186,6 +186,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const [isHelpMenuOpen, setIsHelpMenuOpen] = useState(false);
   const [userNodeFound, setUserNodeFound] = useState(false);
   const [isSnapshotting, setIsSnapshotting] = useState(false);
+  const isDraggingRef = useRef(false);
   const [areControlsOpen, setAreControlsOpen] = useState<boolean>(() => {
     if (typeof window !== "undefined") {
       return window.innerWidth >= 768; // default open on desktop, collapsed on small screens
@@ -228,7 +229,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const lastSelectedConnectionIdRef = useRef<string | null>(null);
 
   // Helper: apply highlight and label visibility for a given wallet id
-  const applySelectionHighlight = (walletId: string | null, showLabels: boolean) => {
+  // Labels are now zoom-aware: visibility is based on effective zoomed radius.
+  const applySelectionHighlight = (walletId: string | null, _showLabels: boolean) => {
     if (!svgRef.current) return;
 
     const nodeSelection = d3.select(svgRef.current).selectAll(".synapse-node");
@@ -242,9 +244,14 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     nodeSelection.classed("node-selected", false);
     lastSelectedIdRef.current = null;
     if (!walletId) {
-      // Reset labels to default visibility state
-      rankSelection.style("display", showLabels ? "block" : "none").style("opacity", 1);
-      labelSelection.style("display", showLabels ? "block" : "none").style("opacity", 1);
+      // Reset labels to zoom-aware visibility state
+      const k = zoomTransformRef.current?.k ?? 1;
+      rankSelection
+        .style("display", (d: any) => (d.r * k >= 18 ? "block" : "none"))
+        .style("opacity", 1);
+      labelSelection
+        .style("display", (d: any) => (d.r * k >= 18 ? "block" : "none"))
+        .style("opacity", 1);
       return;
     }
 
@@ -255,9 +262,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     // Raise the entire wrapper so labels remain above the circle
     nodeWrapperSelection.filter((d: any) => d.id === walletId).raise();
 
-    // Ensure labels visible for target
-    rankSelection.style("display", showLabels ? "block" : "none").style("opacity", 1);
-    labelSelection.style("display", showLabels ? "block" : "none").style("opacity", 1);
+    // Ensure labels visible for target (always show for selected wallet)
     rankSelection
       .filter((d: any) => d.id === walletId)
       .style("display", "block")
@@ -460,7 +465,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   }, [wallets]);
 
   // --- UPDATE VISIBILITY ---
-  // This effect handles ONLY cosmetic visibility (links, labels).
+  // This effect handles ONLY cosmetic visibility (links).
+  // Labels are now zoom-aware and managed by the zoom handler, not by showLabels toggle.
   // Filter-based node hiding/re-arranging is handled by the main D3 rebuild effect
   // which completely excludes non-matching wallets from the simulation.
   useEffect(() => {
@@ -471,10 +477,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     // Update Links visibility
     svg.selectAll(".neural-vein").style("display", showLinks ? "block" : "none");
 
-    // Update Labels visibility
-    svg
-      .selectAll("text.rank-label, text.name-label")
-      .style("display", showLabels ? "block" : "none");
+    // Labels are now zoom-aware: visibility is controlled by the zoom handler
+    // based on effective radius (zoom scale * node radius). No global toggle needed.
   }, [showLinks, showLabels, wallets.length, hasMeasured]);
 
   useEffect(() => {
@@ -586,9 +590,9 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     const simulation = d3
       .forceSimulation(nodes)
-      .velocityDecay(0.3)
-      .alphaDecay(0.015)
-      .alpha(hasSettledPositions ? 0.6 : 1)
+      .velocityDecay(0.35)
+      .alphaDecay(0.012)
+      .alpha(hasSettledPositions ? 0.8 : 1)
       .force(
         "link",
         d3
@@ -598,31 +602,31 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
             // Dynamic link distance based on connected node sizes
             const src = d.source as NodeDatum;
             const tgt = d.target as NodeDatum;
-            return Math.max(src.r + tgt.r + 30, 80);
+            return Math.max(src.r + tgt.r + 50, 100);
           })
-          .strength(0.08)
+          .strength(0.06)
       )
       .force(
         "charge",
         d3
           .forceManyBody<NodeDatum>()
-          .strength((d: NodeDatum) => -Math.max(d.r * 4, 40) - 20)
-          .distanceMax(300)
+          .strength((d: NodeDatum) => -Math.max(d.r * 6, 60) - 30)
+          .distanceMax(500)
       )
       .force(
         "collide",
         d3
           .forceCollide<NodeDatum>()
           .radius((d: NodeDatum) => {
-            // Larger bubbles get more padding to prevent overlap with labels
-            if (d.r >= 25) return d.r + 12;
-            if (d.r >= 15) return d.r + 8;
-            return d.r + 5;
+            // Generous padding to guarantee no visual overlap
+            if (d.r >= 25) return d.r + 18;
+            if (d.r >= 15) return d.r + 14;
+            return d.r + 10;
           })
-          .strength(0.9)
-          .iterations(5)
+          .strength(1.0)
+          .iterations(8)
       )
-      .force("x", d3.forceX(width / 2).strength(0.015))
+      .force("x", d3.forceX(width / 2).strength(0.01))
       .force("y", d3.forceY(height / 2).strength(0.015));
 
     simulationRef.current = simulation;
@@ -869,6 +873,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         dragStartY = event.y;
         isActualDrag = false;
 
+        isDraggingRef.current = true;
+
         // Fix the node position at its current location
         d.fx = d.x;
         d.fy = d.y;
@@ -899,6 +905,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           simulationRef.current.alphaTarget(0);
         }
         // Release the fixed position regardless of whether it was a tap or drag
+        isDraggingRef.current = false;
         void isActualDrag; // used above in drag handler for simulation control
         d.fx = null;
         d.fy = null;
@@ -971,7 +978,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     nodeWrapperSelection
       .on("mouseover", (_event: any, d: NodeDatum) => {
         // Skip hover on touch devices
-        if (isTouchDevice) return;
+        if (isTouchDevice || isDraggingRef.current) return;
         // Apply advanced filters for hover state
         const visibleWalletIds = new Set(wallets.map((w) => w.id));
 
@@ -1060,7 +1067,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       })
       .on("mouseout", (_event: any) => {
         // Skip mouseout on touch devices
-        if (isTouchDevice) return;
+        if (isTouchDevice || isDraggingRef.current) return;
         // Remove hover state from wrapper
         d3.select(_event.currentTarget).classed("hovering", false);
 
@@ -1103,18 +1110,15 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .attr("dy", (d: NodeDatum) => (d.r > 20 ? -Math.min(d.r * 0.35, 10) : "0.35em"))
       .attr("fill", "#fff")
       .attr("font-size", (d: NodeDatum) => {
-        if (d.r < MIN_LABEL_RADIUS) return 0; // Hide text on tiny bubbles
+        if (d.r < MIN_LABEL_RADIUS) return Math.max(d.r / 2.2, 5);
         return Math.min(d.r / 2.2, 11);
       })
       .attr("font-weight", "800")
       .style("pointer-events", "none")
       .style("text-shadow", "0px 1px 3px rgba(0,0,0,0.9)")
-      .style(
-        "display",
-        showLabels && ((d: NodeDatum) => d.r >= MIN_LABEL_RADIUS) ? "block" : "none"
-      )
+      .style("display", (d: NodeDatum) => (d.r >= MIN_LABEL_RADIUS ? "block" : "none"))
       .attr("opacity", 1)
-      .text((d: NodeDatum) => (d.r >= MIN_LABEL_RADIUS ? `#${d.rank}` : ""));
+      .text((d: NodeDatum) => `#${d.rank}`);
 
     // Render name label inside the wrapper
     nodeWrapperSelection
@@ -1124,26 +1128,21 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .attr("dy", ".35em")
       .attr("fill", "#fff")
       .attr("font-size", (d: NodeDatum) => {
-        if (d.r < MIN_LABEL_RADIUS) return 0;
-        // Scale font aggressively for small bubbles
+        // Always render with a minimum font size so labels are visible when zoom makes them large enough
+        if (d.r < MIN_LABEL_RADIUS) return Math.max(d.r / 3, 5);
         if (d.r < 20) return Math.max(d.r / 3, 6);
         return Math.min(d.r / 2.5, 10);
       })
       .attr("font-weight", "700")
       .style("pointer-events", "none")
       .style("text-shadow", "0px 1px 3px rgba(0,0,0,0.9)")
-      .style("display", showLabels ? "block" : "none")
+      .style("display", (d: NodeDatum) => (d.r >= MIN_LABEL_RADIUS ? "block" : "none"))
       .style("overflow", "hidden")
       .attr("opacity", 1)
       .each(function (d: NodeDatum) {
         const text = d3.select(this);
 
-        // Hide text entirely for very small bubbles
-        if (d.r < MIN_LABEL_RADIUS) {
-          text.text("");
-          return;
-        }
-
+        // Always render text content (visibility controlled by zoom-aware display)
         if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) {
           text.text("YOU");
         } else if (d.label) {
@@ -1152,36 +1151,27 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           const labelText =
             d.label.length > maxLen ? d.label.substring(0, maxLen - 2) + ".." : d.label;
 
-          // Only show percentage tspan if bubble is large enough
-          if (d.r >= 25) {
-            const pctText = `${d.percentage.toFixed(1)}%`;
-            text
-              .append("tspan")
-              .attr("x", 0)
-              .attr("dy", d.r > 20 ? "-0.3em" : "0em")
-              .text(labelText);
-            text
-              .append("tspan")
-              .attr("x", 0)
-              .attr("dy", "1.0em")
-              .attr("font-size", Math.min(d.r / 3, 8))
-              .attr("opacity", 0.8)
-              .text(pctText);
-          } else {
-            // Small bubble: just show truncated label
-            text.text(labelText);
-          }
+          // Always show percentage alongside label
+          const pctText = `${d.percentage.toFixed(1)}%`;
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", d.r > 20 ? "-0.3em" : "0em")
+            .text(labelText);
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", "1.0em")
+            .attr("font-size", Math.min(d.r / 3, 8))
+            .attr("opacity", 0.8)
+            .text(pctText);
         } else if (d.isContract) {
-          text.text("C");
-        } else if (assetType === AssetType.NFT && d.r > 20) {
+          text.text(`C ${d.percentage.toFixed(1)}%`);
+        } else if (assetType === AssetType.NFT) {
           text.text(d.balance.toString());
         } else {
-          // Unlabeled: show percentage, abbreviated for small bubbles
-          if (d.r < 20) {
-            text.text(`${d.percentage.toFixed(1)}%`);
-          } else {
-            text.text(`${d.percentage.toFixed(2)} %`);
-          }
+          // Unlabeled: always show percentage
+          text.text(`${d.percentage.toFixed(1)}%`);
         }
       });
 
@@ -1257,13 +1247,45 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     });
 
     // --- ZOOM ---
+    // Threshold for effective zoomed radius to show labels
+    const ZOOM_LABEL_THRESHOLD = 18;
+
+    const updateLabelVisibility = (k: number) => {
+      if (!svgRef.current) return;
+      const svg = d3.select(svgRef.current);
+      svg.selectAll<SVGGElement, NodeDatum>(".node-wrapper").each(function (d) {
+        const effectiveR = d.r * k;
+        const shouldShowRank = effectiveR >= ZOOM_LABEL_THRESHOLD;
+        const shouldShowName = effectiveR >= ZOOM_LABEL_THRESHOLD;
+
+        const wrapper = d3.select(this);
+        wrapper
+          .select(".rank-label")
+          .style("display", shouldShowRank ? "block" : "none")
+          .attr("opacity", shouldShowRank ? 1 : 0);
+        wrapper
+          .select(".name-label")
+          .style("display", shouldShowName ? "block" : "none")
+          .attr("opacity", shouldShowName ? 1 : 0);
+      });
+    };
+
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
       .scaleExtent([0.1, 8])
       .on("zoom", (event: any) => {
         g.attr("transform", event.transform);
         zoomTransformRef.current = event.transform;
+        // Update label visibility based on zoom level
+        updateLabelVisibility(event.transform.k);
       });
+
+    // Initial label visibility based on current zoom
+    if (zoomTransformRef.current) {
+      updateLabelVisibility(zoomTransformRef.current.k);
+    } else {
+      updateLabelVisibility(1);
+    }
 
     svg.call(zoom);
     zoomBehaviorRef.current = zoom;
@@ -1365,7 +1387,35 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     // Set pending target; handled in simulation tick when alpha is low/stable
     pendingZoomTargetRef.current = targetWalletId ?? null;
     pendingZoomHandledRef.current = false;
-  }, [targetWalletId]);
+
+    // If simulation has already settled (alpha ≈ 0), ticks won't fire anymore.
+    // Execute the zoom immediately in that case.
+    if (!targetWalletId) return;
+    if (!simulationRef.current || !svgRef.current || !zoomBehaviorRef.current) return;
+
+    const sim = simulationRef.current;
+    // If alpha is already low enough, the simulation is settled — tick won't fire again
+    if (sim.alpha() < 0.35) {
+      const nodes = sim.nodes() as NodeDatum[];
+      const targetNode = nodes.find((n: NodeDatum) => n.id === targetWalletId);
+      if (targetNode) {
+        const { width, height } = dimensions;
+        const scale = 1.9;
+        const translateX = width / 2 - targetNode.x * scale;
+        const translateY = height / 2 - targetNode.y * scale;
+        const transform = d3.zoomIdentity.translate(translateX, translateY).scale(scale);
+
+        d3.select(svgRef.current)
+          .transition()
+          .duration(450)
+          .ease(d3.easeCubicOut)
+          .call(zoomBehaviorRef.current.transform, transform);
+
+        applySelectionHighlight(targetWalletId, showLabels);
+        pendingZoomHandledRef.current = true;
+      }
+    }
+  }, [targetWalletId, dimensions, showLabels]);
 
   // Ensure selection highlight matches target wallet even outside zoom timing
   useEffect(() => {

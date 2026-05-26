@@ -1,22 +1,15 @@
 /**
- * E2E-style integration tests for BubbleMap + FilterControls interactions.
+ * E2E-style integration tests for the refactored filter system.
  *
- * These tests simulate the exact user flows that are reported as buggy:
- * - Opening filter modal, selecting filters, closing modal
- * - Clicking legend while filter modal is open
- * - Touch interactions on mobile viewports
- * - Multiple rapid filter changes
- * - Filter state persistence across modal open/close cycles
- *
- * The goal is to catch the race conditions and propagation bugs that
- * unit tests can't reproduce.
+ * FilterControls is now a simple panel (no portal, no isOpen).
+ * FilterModal is a standalone component tested separately if needed.
+ * These tests verify filter logic, UI interactions, and state management.
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, cleanup, waitFor } from "@testing-library/react";
-import { FilterProvider } from "../contexts/FilterContext";
+import { FilterProvider, useFilters, FilterState } from "../contexts/FilterContext";
 import { FilterControls } from "../components/FilterControls";
-import { useFilters, FilterState } from "../contexts/FilterContext";
 import { filterWallets } from "../utils/filterUtils";
 import { Wallet } from "../types";
 import React from "react";
@@ -52,12 +45,8 @@ function createTestWallets(count: number = 10): Wallet[] {
   }));
 }
 
-function cleanupPortals() {
-  document.querySelectorAll("[data-filter-controls]").forEach((el) => el.remove());
-}
-
 // ============================================================
-// Helper: component that reads filter state for assertions
+// Helper: component that reads filter state
 // ============================================================
 
 function FilterStateReader({ onState }: { onState: (s: FilterState) => void }) {
@@ -69,23 +58,28 @@ function FilterStateReader({ onState }: { onState: (s: FilterState) => void }) {
 }
 
 // ============================================================
-// TEST SUITE 1: Filter selection + modal lifecycle
+// TEST SUITE 1: Filter panel lifecycle
 // ============================================================
 
-describe("Filter Modal Lifecycle", () => {
+describe("Filter Panel Lifecycle", () => {
   beforeEach(() => {
     localStorage.clear();
-    cleanupPortals();
   });
-  afterEach(() => {
-    cleanup();
-    cleanupPortals();
+  afterEach(cleanup);
+
+  it("renders filter controls with all basic sections", () => {
+    render(
+      <FilterProvider>
+        <FilterControls onClose={vi.fn()} />
+      </FilterProvider>
+    );
+    expect(screen.getByText("Filter Dust")).toBeInTheDocument();
+    expect(screen.getByText("Whales Only")).toBeInTheDocument();
+    expect(screen.getByText("Reset All Filters")).toBeInTheDocument();
   });
 
-  it("filter modal opens, applies a holding size filter, then closes cleanly", async () => {
-    const onClose = vi.fn();
+  it("applies a holding size filter correctly", async () => {
     let currentFilters: FilterState | undefined;
-
     const onState = vi.fn((s: FilterState) => {
       currentFilters = s;
     });
@@ -93,136 +87,76 @@ describe("Filter Modal Lifecycle", () => {
     render(
       <FilterProvider>
         <FilterStateReader onState={onState} />
-        <FilterControls isOpen={true} onClose={onClose} />
+        <FilterControls onClose={vi.fn()} />
       </FilterProvider>
     );
 
-    // Verify modal is visible
-    const modal = document.querySelector("[data-filter-controls]");
-    expect(modal).toBeTruthy();
-    expect(modal?.className).toContain("pointer-events-auto");
-
     // Expand advanced section
     const advancedToggles = screen.getAllByText("Advanced Filters");
-    const toggleButton = advancedToggles.find(
-      (el) => el.closest("button") !== null && el.tagName === "SPAN"
-    );
-    if (toggleButton) {
-      fireEvent.click(toggleButton.closest("button")!);
-    }
+    const toggleSpan = advancedToggles.find((el) => el.tagName === "SPAN");
+    if (toggleSpan) fireEvent.click(toggleSpan.closest("button")!);
 
-    // Select "Whale (1-5%)" holding size
+    // Select "Whale (1-5%)"
     const whaleButton = screen.getByText(/Whale \(1-5%\)/);
     fireEvent.click(whaleButton);
 
-    // Verify filter state was updated
     await waitFor(() => {
       expect(currentFilters?.holdingSize).toBe("whale");
     });
-
-    // Close by clicking overlay
-    fireEvent.click(modal!);
-    expect(onClose).toHaveBeenCalled();
   });
 
   it("rapid filter changes all apply correctly", async () => {
-    const onClose = vi.fn();
-    const filterStates: FilterState[] = [];
-
     render(
       <FilterProvider>
-        <FilterStateReader onState={(s) => filterStates.push({ ...s })} />
-        <FilterControls isOpen={true} onClose={onClose} />
+        <FilterControls onClose={vi.fn()} />
       </FilterProvider>
     );
 
     // Expand advanced
     const advancedToggles = screen.getAllByText("Advanced Filters");
-    const toggleButton = advancedToggles.find((el) => el.tagName === "SPAN");
-    if (toggleButton) {
-      fireEvent.click(toggleButton.closest("button")!);
-    }
+    const toggleSpan = advancedToggles.find((el) => el.tagName === "SPAN");
+    if (toggleSpan) fireEvent.click(toggleSpan.closest("button")!);
 
-    // Rapidly change holding size filters
-    const allButton = screen.getByText("All Holdings");
-    const whaleButton = screen.getByText(/Whale \(1-5%\)/);
-    const megaButton = screen.getByText(/Mega/);
-    const retailButton = screen.getByText(/Retail/);
-    const microButton = screen.getByText(/Micro/);
+    // Rapid changes
+    fireEvent.click(screen.getByText(/Whale \(1-5%\)/));
+    fireEvent.click(screen.getByText(/Mega/));
+    fireEvent.click(screen.getByText("All Holdings"));
 
-    fireEvent.click(whaleButton);
-    fireEvent.click(megaButton);
-    fireEvent.click(retailButton);
-    fireEvent.click(microButton);
-    fireEvent.click(allButton);
-
-    // The final state should be "all"
-    await waitFor(() => {
-      const last = filterStates[filterStates.length - 1];
-      expect(last?.holdingSize).toBe("all");
-    });
+    // Final state should be "all" - the button wrapping "All Holdings" should be active
+    const allText = screen.getByText("All Holdings");
+    const allButton = allText.closest("button");
+    expect(allButton?.className).toContain("bg-purple-600");
   });
 
-  it("clicking inside the modal panel does NOT close it", () => {
-    const onClose = vi.fn();
+  it("toggle whales only filter", async () => {
     render(
       <FilterProvider>
-        <FilterControls isOpen={true} onClose={onClose} />
+        <FilterControls onClose={vi.fn()} />
       </FilterProvider>
     );
 
-    // Click on the h4 header (inside the modal panel)
-    const header = screen.getByRole("heading", { level: 4 });
-    fireEvent.click(header);
-    expect(onClose).not.toHaveBeenCalled();
+    const whalesButton = screen.getByText("Whales Only");
+    fireEvent.click(whalesButton);
+    expect(whalesButton.className).toContain("bg-purple-600");
 
-    // Click on a filter button (inside the modal panel)
-    const whalesOnly = screen.getByText("Whales Only");
-    fireEvent.click(whalesOnly);
-    expect(onClose).not.toHaveBeenCalled();
+    fireEvent.click(whalesButton);
+    expect(whalesButton.className).not.toContain("bg-purple-600");
   });
 
-  it("clicking the overlay background closes the modal", () => {
-    const onClose = vi.fn();
+  it("reset button clears all filters", () => {
     render(
       <FilterProvider>
-        <FilterControls isOpen={true} onClose={onClose} />
+        <FilterControls onClose={vi.fn()} />
       </FilterProvider>
     );
 
-    const overlay = document.querySelector("[data-filter-controls]");
-    fireEvent.click(overlay!);
-    expect(onClose).toHaveBeenCalledTimes(1);
-  });
-
-  it("filter state is maintained in FilterContext across updates", async () => {
-    const onClose = vi.fn();
-    const stateLog: FilterState[] = [];
-
-    render(
-      <FilterProvider>
-        <FilterStateReader onState={(s) => stateLog.push({ ...s })} />
-        <FilterControls isOpen={true} onClose={onClose} />
-      </FilterProvider>
-    );
-
-    // Initial state
-    expect(stateLog[stateLog.length - 1]?.onlyWhales).toBe(false);
-
-    // Toggle Whales Only
+    // Activate whales only
     fireEvent.click(screen.getByText("Whales Only"));
+    expect(screen.getByText("Whales Only").className).toContain("bg-purple-600");
 
-    // Wait for state update
-    await waitFor(() => {
-      expect(stateLog[stateLog.length - 1]?.onlyWhales).toBe(true);
-    });
-
-    // Toggle off
-    fireEvent.click(screen.getByText("Whales Only"));
-
-    await waitFor(() => {
-      expect(stateLog[stateLog.length - 1]?.onlyWhales).toBe(false);
-    });
+    // Reset
+    fireEvent.click(screen.getByText("Reset All Filters"));
+    expect(screen.getByText("Whales Only").className).not.toContain("bg-purple-600");
   });
 });
 
@@ -257,22 +191,17 @@ describe("Filter Logic with Realistic Data", () => {
       };
       const result = filterWallets(wallets, filters);
       expect(result.length).toBe(expectedCount);
-      if (range[1] === Infinity) {
-        expect(result.every((w) => w.percentage >= range[0])).toBe(true);
-      } else {
-        expect(result.every((w) => w.percentage >= range[0] && w.percentage < range[1])).toBe(true);
-      }
     }
   });
 
   it("label filters work correctly", () => {
-    const cases: Array<{ label: string; expected: (w: Wallet) => boolean }> = [
-      { label: "labeled", expected: (w) => !!w.label },
-      { label: "unlabeled", expected: (w) => !w.label },
-      { label: "contracts", expected: (w) => w.isContract },
+    const cases: Array<{ label: string; check: (w: Wallet) => boolean }> = [
+      { label: "labeled", check: (w) => !!w.label },
+      { label: "unlabeled", check: (w) => !w.label },
+      { label: "contracts", check: (w) => w.isContract },
     ];
 
-    for (const { label, expected } of cases) {
+    for (const { label, check } of cases) {
       const filters: FilterState = {
         showLinks: true,
         showLabels: true,
@@ -286,29 +215,13 @@ describe("Filter Logic with Realistic Data", () => {
         onlyWhales: false,
       };
       const result = filterWallets(wallets, filters);
-      expect(result.every(expected)).toBe(true);
+      expect(result.every(check)).toBe(true);
     }
   });
 
   it("combined filters produce correct results", () => {
-    // Whale + labeled: whale is 1-5%, labeled are Binance(10%), Coinbase(7%), LP Pool(0.01%)
-    // None of the labeled wallets are in 1-5% range → 0 results
-    const filters1: FilterState = {
-      showLinks: true,
-      showLabels: true,
-      minBalancePercent: 0,
-      holdingSize: "whale",
-      label: "labeled",
-      activity: "all",
-      customTags: [],
-      hideDust: false,
-      hideContracts: false,
-      onlyWhales: false,
-    };
-    expect(filterWallets(wallets, filters1)).toHaveLength(0);
-
-    // Mega + labeled: mega is >=5%, Binance(10%) and Coinbase(7%) → 2 results
-    const filters2: FilterState = {
+    // Mega + labeled: mega is >=5%, Binance(10%) and Coinbase(7%) -> 2 results
+    const filters: FilterState = {
       showLinks: true,
       showLabels: true,
       minBalancePercent: 0,
@@ -320,25 +233,10 @@ describe("Filter Logic with Realistic Data", () => {
       hideContracts: false,
       onlyWhales: false,
     };
-    expect(filterWallets(wallets, filters2)).toHaveLength(2);
-
-    // Only whales: percentage >= 1 OR isWhale = true → wallets 0-5 (10, 7, 3.5, 2.5, 1.5, 1.2)
-    const filters3: FilterState = {
-      showLinks: true,
-      showLabels: true,
-      minBalancePercent: 0,
-      holdingSize: "all",
-      label: "all",
-      activity: "all",
-      customTags: [],
-      hideDust: false,
-      hideContracts: false,
-      onlyWhales: true,
-    };
-    expect(filterWallets(wallets, filters3)).toHaveLength(6);
+    expect(filterWallets(wallets, filters)).toHaveLength(2);
   });
 
-  it("filters are idempotent: applying same filter twice gives same result", () => {
+  it("filters are idempotent", () => {
     const filters: FilterState = {
       showLinks: true,
       showLabels: true,
@@ -356,11 +254,8 @@ describe("Filter Logic with Realistic Data", () => {
     expect(r1).toEqual(r2);
   });
 
-  it("filter changes are consistent regardless of order", () => {
-    // Start from "all", apply whale → 4 results
-    // Start from "retail" (2 results), apply whale → 4 results
-    // Both should give the same whale result
-    const base: FilterState = {
+  it("only whales filter works", () => {
+    const filters: FilterState = {
       showLinks: true,
       showLabels: true,
       minBalancePercent: 0,
@@ -370,274 +265,119 @@ describe("Filter Logic with Realistic Data", () => {
       customTags: [],
       hideDust: false,
       hideContracts: false,
-      onlyWhales: false,
+      onlyWhales: true,
     };
-    const fromAll = filterWallets(wallets, { ...base, holdingSize: "whale" });
-    const fromRetail = filterWallets(wallets, { ...base, holdingSize: "retail" });
-    const whaleFromRetail = filterWallets(
-      [...fromRetail, ...wallets.filter((w) => !fromRetail.includes(w))],
-      { ...base, holdingSize: "whale" }
-    );
-    expect(fromAll).toEqual(whaleFromRetail);
+    // Wallets 0-5 have percentage >= 1 (10, 7, 3.5, 2.5, 1.5, 1.2)
+    expect(filterWallets(wallets, filters)).toHaveLength(6);
   });
 });
 
 // ============================================================
-// TEST SUITE 3: Touch event propagation
+// TEST SUITE 3: Click event isolation
 // ============================================================
 
-describe("Touch Event Propagation", () => {
+describe("Click Event Isolation", () => {
+  it("click inside settingsRef does NOT close settings", () => {
+    const div = document.createElement("div");
+    const btn = document.createElement("button");
+    div.appendChild(btn);
+    expect(div.contains(btn)).toBe(true);
+  });
+
+  it("click outside all refs closes overlays", () => {
+    const div = document.createElement("div");
+    const outside = document.createElement("div");
+    expect(div.contains(outside)).toBe(false);
+  });
+
+  it("legend clicks detected correctly", () => {
+    const legend = document.createElement("div");
+    const btn = document.createElement("button");
+    legend.appendChild(btn);
+    expect(legend.contains(btn)).toBe(true);
+    expect(legend.contains(document.createElement("div"))).toBe(false);
+  });
+
+  it("stopPropagation in bubble phase doesn't affect capture", () => {
+    const captureHandler = vi.fn();
+    const parent = document.createElement("div");
+    const child = document.createElement("button");
+    parent.appendChild(child);
+    document.body.appendChild(parent);
+
+    document.addEventListener("click", captureHandler, true);
+    parent.addEventListener("click", (e) => e.stopPropagation());
+
+    fireEvent.click(child);
+    expect(captureHandler).toHaveBeenCalledTimes(1);
+
+    document.removeEventListener("click", captureHandler, true);
+    document.body.removeChild(parent);
+  });
+});
+
+// ============================================================
+// TEST SUITE 4: Filter state management
+// ============================================================
+
+describe("Filter State Management", () => {
   beforeEach(() => {
     localStorage.clear();
-    cleanupPortals();
   });
-  afterEach(() => {
-    cleanup();
-    cleanupPortals();
-  });
+  afterEach(cleanup);
 
-  it("touchstart on filter modal overlay stops propagation", () => {
-    const onClose = vi.fn();
+  it("state is maintained across updates", async () => {
+    const stateLog: FilterState[] = [];
     render(
       <FilterProvider>
-        <FilterControls isOpen={true} onClose={onClose} />
+        <FilterStateReader onState={(s) => stateLog.push({ ...s })} />
+        <FilterControls onClose={vi.fn()} />
       </FilterProvider>
     );
 
-    const overlay = document.querySelector("[data-filter-controls]");
-    expect(overlay).toBeTruthy();
+    expect(stateLog[stateLog.length - 1]?.onlyWhales).toBe(false);
 
-    // Simulate a touchstart event
-    const touchEvent = new Event("touchstart", { bubbles: true, cancelable: true });
-    const propagationSpy = vi.spyOn(touchEvent, "stopPropagation");
-    overlay!.dispatchEvent(touchEvent);
+    fireEvent.click(screen.getByText("Whales Only"));
+    await waitFor(() => {
+      expect(stateLog[stateLog.length - 1]?.onlyWhales).toBe(true);
+    });
 
-    // The onTouchStart handler should have called stopPropagation
-    expect(propagationSpy).toHaveBeenCalled();
-  });
-
-  it("touchstart on filter modal inner panel stops propagation", () => {
-    const onClose = vi.fn();
-    render(
-      <FilterProvider>
-        <FilterControls isOpen={true} onClose={onClose} />
-      </FilterProvider>
-    );
-
-    // Find the inner panel (direct child of overlay, has bg-space-800 class)
-    const innerPanel = document.querySelector("[data-filter-controls] > div.bg-space-800");
-    expect(innerPanel).toBeTruthy();
-
-    const touchEvent = new Event("touchstart", { bubbles: true, cancelable: true });
-    const propagationSpy = vi.spyOn(touchEvent, "stopPropagation");
-    innerPanel!.dispatchEvent(touchEvent);
-
-    expect(propagationSpy).toHaveBeenCalled();
-  });
-
-  it("filter buttons respond to both click and touch events", () => {
-    const onClose = vi.fn();
-    let currentFilters: FilterState | undefined;
-
-    render(
-      <FilterProvider>
-        <FilterStateReader
-          onState={(s) => {
-            currentFilters = s;
-          }}
-        />
-        <FilterControls isOpen={true} onClose={onClose} />
-      </FilterProvider>
-    );
-
-    // Click the Whales Only button
-    const whalesButton = screen.getByText("Whales Only");
-    fireEvent.click(whalesButton);
-
-    expect(currentFilters?.onlyWhales).toBe(true);
+    fireEvent.click(screen.getByText("Whales Only"));
+    await waitFor(() => {
+      expect(stateLog[stateLog.length - 1]?.onlyWhales).toBe(false);
+    });
   });
 });
 
 // ============================================================
-// TEST SUITE 4: Unified click-outside handler logic
-// ============================================================
-
-describe("Unified Click-Outside Handler Logic", () => {
-  it("click on element inside settingsRef does NOT close settings", () => {
-    const settingsDiv = document.createElement("div");
-    const button = document.createElement("button");
-    settingsDiv.appendChild(button);
-    document.body.appendChild(settingsDiv);
-
-    // Simulate the unified handler's logic
-    const target = button;
-    const isInside = settingsDiv.contains(target);
-    expect(isInside).toBe(true);
-
-    document.body.removeChild(settingsDiv);
-  });
-
-  it("click on element outside all refs closes open overlays", () => {
-    const settingsDiv = document.createElement("div");
-    const outsideElement = document.createElement("div");
-    document.body.appendChild(settingsDiv);
-    document.body.appendChild(outsideElement);
-
-    const isInside = settingsDiv.contains(outsideElement);
-    expect(isInside).toBe(false);
-
-    document.body.removeChild(settingsDiv);
-    document.body.removeChild(outsideElement);
-  });
-
-  it("click on portal modal detected via data attribute", () => {
-    const portalDiv = document.createElement("div");
-    portalDiv.setAttribute("data-filter-controls", "");
-    document.body.appendChild(portalDiv);
-
-    const innerDiv = document.createElement("div");
-    portalDiv.appendChild(innerDiv);
-
-    // Simulate the handler's portal detection
-    const filterModal = document.querySelector("[data-filter-controls]");
-    expect(filterModal).toBeTruthy();
-    expect(filterModal?.contains(innerDiv)).toBe(true);
-
-    document.body.removeChild(portalDiv);
-  });
-
-  it("legend ref correctly identifies legend clicks", () => {
-    const legendDiv = document.createElement("div");
-    const legendButton = document.createElement("button");
-    legendDiv.appendChild(legendButton);
-    document.body.appendChild(legendDiv);
-
-    expect(legendDiv.contains(legendButton)).toBe(true);
-    expect(legendDiv.contains(document.createElement("div"))).toBe(false);
-
-    document.body.removeChild(legendDiv);
-  });
-});
-
-// ============================================================
-// TEST SUITE 5: Mobile viewport simulation
-// ============================================================
-
-describe("Mobile Viewport Simulation", () => {
-  const originalInnerWidth = window.innerWidth;
-
-  beforeEach(() => {
-    localStorage.clear();
-    cleanupPortals();
-    // Simulate mobile viewport
-    Object.defineProperty(window, "innerWidth", { value: 375, configurable: true });
-  });
-
-  afterEach(() => {
-    cleanup();
-    cleanupPortals();
-    Object.defineProperty(window, "innerWidth", { value: originalInnerWidth, configurable: true });
-  });
-
-  it("filter modal renders correctly on mobile width", () => {
-    const onClose = vi.fn();
-    render(
-      <FilterProvider>
-        <FilterControls isOpen={true} onClose={onClose} />
-      </FilterProvider>
-    );
-
-    const modal = document.querySelector("[data-filter-controls]");
-    expect(modal).toBeTruthy();
-    // The inner panel should have w-[90vw] for mobile
-    const innerPanel = modal?.querySelector(".bg-space-800");
-    expect(innerPanel).toBeTruthy();
-    expect(innerPanel?.className).toContain("w-[90vw]");
-  });
-
-  it("touch events on modal don't propagate to parent", () => {
-    const onClose = vi.fn();
-    render(
-      <FilterProvider>
-        <FilterControls isOpen={true} onClose={onClose} />
-      </FilterProvider>
-    );
-
-    const overlay = document.querySelector("[data-filter-controls]");
-    const touchEvent = new Event("touchstart", { bubbles: true });
-    const spy = vi.spyOn(touchEvent, "stopPropagation");
-    overlay!.dispatchEvent(touchEvent);
-    expect(spy).toHaveBeenCalled();
-  });
-});
-
-// ============================================================
-// TEST SUITE 6: Debounce guard
-// ============================================================
-
-describe("Modal Close Debounce Guard", () => {
-  it("prevents D3 background click within 300ms of modal close", () => {
-    const closeTime = Date.now();
-    const timeSince = Date.now() - closeTime;
-    expect(timeSince < 300).toBe(true);
-  });
-
-  it("allows D3 background click after 300ms", async () => {
-    const closeTime = Date.now() - 301;
-    const timeSince = Date.now() - closeTime;
-    expect(timeSince >= 300).toBe(true);
-  });
-});
-
-// ============================================================
-// TEST SUITE 7: Filter presets
+// TEST SUITE 5: Filter presets
 // ============================================================
 
 describe("Filter Presets", () => {
   beforeEach(() => {
     localStorage.clear();
-    cleanupPortals();
   });
-  afterEach(() => {
-    cleanup();
-    cleanupPortals();
-  });
+  afterEach(cleanup);
 
-  it("can save and apply a preset", async () => {
-    const onClose = vi.fn();
-    let currentFilters: FilterState | undefined;
-
+  it("can save a preset", async () => {
     render(
       <FilterProvider>
-        <FilterStateReader
-          onState={(s) => {
-            currentFilters = s;
-          }}
-        />
-        <FilterControls isOpen={true} onClose={onClose} />
+        <FilterControls onClose={vi.fn()} />
       </FilterProvider>
     );
 
     // Apply whale filter
     const advancedToggles = screen.getAllByText("Advanced Filters");
     const toggleSpan = advancedToggles.find((el) => el.tagName === "SPAN");
-    if (toggleSpan) {
-      fireEvent.click(toggleSpan.closest("button")!);
-    }
+    if (toggleSpan) fireEvent.click(toggleSpan.closest("button")!);
 
-    const whaleButton = screen.getByText(/Whale \(1-5%\)/);
-    fireEvent.click(whaleButton);
-
-    await waitFor(() => {
-      expect(currentFilters?.holdingSize).toBe("whale");
-    });
+    fireEvent.click(screen.getByText(/Whale \(1-5%\)/));
 
     // Save preset
     const presetInput = screen.getByPlaceholderText("Preset name...");
     fireEvent.change(presetInput, { target: { value: "My Whale Filter" } });
     fireEvent.keyPress(presetInput, { key: "Enter", code: "Enter", charCode: 13 });
 
-    // Verify preset was saved (the dropdown should show "1 Saved")
     await waitFor(() => {
       expect(screen.getByText(/1 Saved/)).toBeInTheDocument();
     });

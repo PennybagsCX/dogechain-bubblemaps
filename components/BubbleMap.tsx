@@ -3,12 +3,12 @@ import * as d3 from "d3";
 import { Wallet, Link, AssetType } from "../types";
 import { ensureLPDetectionInitialized } from "../services/db";
 import { useFilters } from "../contexts/FilterContext";
-import { FilterControls } from "./FilterControls";
-import { filterWallets } from "../utils/filterUtils";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // D3.js requires 'any' types for its dynamic simulation system
+import { filterWallets } from "../utils/filterUtils";
 import { handleTouchStopPropagation } from "../utils/touchHandlers";
+import { useClickOutside } from "../hooks/useClickOutside";
 import {
   Move,
   MousePointer2,
@@ -40,7 +40,8 @@ interface BubbleMapProps {
   targetWalletId?: string | null; // New: ID of wallet to zoom to
   onConnectionClick?: (link: Link) => void; // Handler for clicking connections (view details)
   selectedConnectionId?: string | null; // ID of selected connection for persistent highlight
-  freezeLayout?: boolean; // When true, defer resize-driven rebuilds (e.g., while modals open)
+  freezeLayout?: boolean;
+  onOpenFilters?: () => void; // When true, defer resize-driven rebuilds (e.g., while modals open)
   tokenAddress?: string; // Token address for saving/restoring map state
 }
 
@@ -71,12 +72,12 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   onConnectionClick,
   selectedConnectionId,
   freezeLayout = false,
+  onOpenFilters,
   // @ts-expect-error tokenAddress used by future map state persistence
   tokenAddress, // eslint-disable-line @typescript-eslint/no-unused-vars
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
-  const settingsRef = useRef<HTMLDivElement>(null);
   const legendRef = useRef<HTMLDivElement>(null);
   const controlsRef = useRef<HTMLDivElement>(null);
   const mobileControlsRef = useRef<HTMLDivElement>(null);
@@ -87,7 +88,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const lastAppliedSizeRef = useRef<{ width: number; height: number } | null>(null);
   const pendingWhileFrozenRef = useRef<{ width: number; height: number } | null>(null);
   const freezeLayoutRef = useRef<boolean>(freezeLayout);
-  const lastModalCloseTimeRef = useRef<number>(0);
   const [dimensions, setDimensions] = useState({
     width: initialWidth || 800,
     height: initialHeight || 600,
@@ -184,7 +184,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   }, []);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isHelpMenuOpen, setIsHelpMenuOpen] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [userNodeFound, setUserNodeFound] = useState(false);
   const [isSnapshotting, setIsSnapshotting] = useState(false);
   const [areControlsOpen, setAreControlsOpen] = useState<boolean>(() => {
@@ -206,71 +205,15 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isHelpOpen]);
 
-  // Memoize close handlers for click-outside hook
-  const closeSettings = useCallback(() => {
-    setIsSettingsOpen((prev) => {
-      if (prev) {
-        lastModalCloseTimeRef.current = Date.now();
-      }
-      return false;
-    });
-  }, []);
   const closeLegend = useCallback(() => setIsLegendOpen(false), []);
   const closeControls = useCallback(() => setAreControlsOpen(false), []);
   const closeHelpMenu = useCallback(() => setIsHelpMenuOpen(false), []);
 
-  // === UNIFIED CLICK-OUTSIDE HANDLER ===
-  // Single capture-phase listener that knows about ALL overlays.
-  // A click inside ANY overlay does NOT close any other overlay.
-  // A click outside ALL open overlays closes them.
-  useEffect(() => {
-    const anyOpen = isSettingsOpen || isLegendOpen || isHelpMenuOpen || areControlsOpen;
-    if (!anyOpen) return;
-
-    const handleClick = (event: Event) => {
-      const target = event.target as Node;
-
-      // Check if the click is inside ANY overlay (any of these = don't close anything)
-      const isInsideSettings = settingsRef.current?.contains(target);
-      const isInsideLegend = legendRef.current?.contains(target);
-      const isInsideHelpMenu = helpMenuRef.current?.contains(target);
-      const isInsideDesktopControls = controlsRef.current?.contains(target);
-      const isInsideMobileControls = mobileControlsRef.current?.contains(target);
-      // Also check the portaled FilterControls modal
-      const filterModal = document.querySelector("[data-filter-controls]");
-      const isInsideFilterModal = filterModal?.contains(target);
-
-      const isInsideAnyOverlay =
-        !!isInsideSettings ||
-        !!isInsideLegend ||
-        !!isInsideHelpMenu ||
-        !!isInsideDesktopControls ||
-        !!isInsideMobileControls ||
-        !!isInsideFilterModal;
-
-      // If click is inside any overlay, don't close anything
-      if (isInsideAnyOverlay) return;
-
-      // Click is outside ALL overlays — close whichever ones are open
-      if (isSettingsOpen) closeSettings();
-      if (isLegendOpen) closeLegend();
-      if (isHelpMenuOpen) closeHelpMenu();
-      if (areControlsOpen) closeControls();
-    };
-
-    document.addEventListener("click", handleClick, true);
-    return () => document.removeEventListener("click", handleClick, true);
-  }, [
-    isSettingsOpen,
-    isLegendOpen,
-    isHelpMenuOpen,
-    areControlsOpen,
-    closeSettings,
-    closeLegend,
-    closeHelpMenu,
-    closeControls,
-  ]);
-
+  // Simple click-outside hooks for remaining overlays
+  useClickOutside(legendRef, closeLegend, isLegendOpen);
+  useClickOutside(helpMenuRef, closeHelpMenu, isHelpMenuOpen);
+  useClickOutside(controlsRef, closeControls, areControlsOpen);
+  useClickOutside(mobileControlsRef, closeControls, areControlsOpen);
   // --- LP DETECTION INITIALIZATION ---
   useEffect(() => {
     // Initialize LP detection database on first load (non-blocking)
@@ -579,7 +522,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     // --- DATA PREPARATION ---
     // Apply filters to determine which wallets participate in the simulation.
-    // Non-matching wallets are completely excluded (hidden), and the layout re-arranges.
     const filteredWallets = filterWallets(wallets, filters);
     const visibleWalletIds = new Set(filteredWallets.map((w) => w.id));
 
@@ -677,10 +619,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     // Handle background click for deselection
     const handleBackgroundClick = (event: any) => {
-      // Skip clicks that happen immediately after closing a modal (within 300ms)
-      // This prevents the click-outside handler from also deselecting nodes
-      if (Date.now() - lastModalCloseTimeRef.current < 300) return;
-
       // If clicking directly on the SVG (background) and not a node
       if (event && event.target === svg.node()) {
         onWalletClickRef.current(null);
@@ -1021,8 +959,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         // Skip hover on touch devices
         if (isTouchDevice) return;
         // Apply advanced filters for hover state
-        const filteredWallets = filterWallets(wallets, filters);
-        const visibleWalletIds = new Set(filteredWallets.map((w) => w.id));
+        const visibleWalletIds = new Set(wallets.map((w) => w.id));
 
         // Logic to dim everyone but connected
         nodeSelection
@@ -1114,8 +1051,7 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         d3.select(_event.currentTarget).classed("hovering", false);
 
         // Apply advanced filters for reset state
-        const filteredWallets = filterWallets(wallets, filters);
-        const visibleWalletIds = new Set(filteredWallets.map((w) => w.id));
+        const visibleWalletIds = new Set(wallets.map((w) => w.id));
 
         // Reset all nodes to normal appearance
         nodeSelection
@@ -1142,20 +1078,29 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         // NOTE: Labels are NOT reset - they stay visible throughout since we no longer dim them on hover
       });
 
+    // Minimum radius to show any text (prevents overflow on tiny bubbles)
+    const MIN_LABEL_RADIUS = 14;
+
     // Render rank label inside the wrapper (after circle so circle receives events first)
     const rankSelection = nodeWrapperSelection
       .append("text")
       .attr("class", "rank-label")
       .attr("text-anchor", "middle")
-      .attr("dy", (d: NodeDatum) => -Math.min(d.r * 0.4, 12))
+      .attr("dy", (d: NodeDatum) => (d.r > 20 ? -Math.min(d.r * 0.35, 10) : "0.35em"))
       .attr("fill", "#fff")
-      .attr("font-size", (d: NodeDatum) => Math.min(d.r / 1.8, 12))
+      .attr("font-size", (d: NodeDatum) => {
+        if (d.r < MIN_LABEL_RADIUS) return 0; // Hide text on tiny bubbles
+        return Math.min(d.r / 2.2, 11);
+      })
       .attr("font-weight", "800")
       .style("pointer-events", "none")
       .style("text-shadow", "0px 1px 3px rgba(0,0,0,0.9)")
-      .style("display", showLabels ? "block" : "none")
+      .style(
+        "display",
+        showLabels && ((d: NodeDatum) => d.r >= MIN_LABEL_RADIUS) ? "block" : "none"
+      )
       .attr("opacity", 1)
-      .text((d: NodeDatum) => `#${d.rank}`);
+      .text((d: NodeDatum) => (d.r >= MIN_LABEL_RADIUS ? `#${d.rank}` : ""));
 
     // Render name label inside the wrapper
     const labelSelection = nodeWrapperSelection
@@ -1164,38 +1109,65 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       .attr("text-anchor", "middle")
       .attr("dy", ".35em")
       .attr("fill", "#fff")
-      .attr("font-size", (d: NodeDatum) => Math.min(d.r / 2, 11))
+      .attr("font-size", (d: NodeDatum) => {
+        if (d.r < MIN_LABEL_RADIUS) return 0;
+        // Scale font aggressively for small bubbles
+        if (d.r < 20) return Math.max(d.r / 3, 6);
+        return Math.min(d.r / 2.5, 10);
+      })
       .attr("font-weight", "700")
       .style("pointer-events", "none")
       .style("text-shadow", "0px 1px 3px rgba(0,0,0,0.9)")
       .style("display", showLabels ? "block" : "none")
+      .style("overflow", "hidden")
       .attr("opacity", 1)
       .each(function (d: NodeDatum) {
         const text = d3.select(this);
+
+        // Hide text entirely for very small bubbles
+        if (d.r < MIN_LABEL_RADIUS) {
+          text.text("");
+          return;
+        }
+
         if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) {
           text.text("YOU");
         } else if (d.label) {
-          // Show both label and percentage for labeled wallets
-          const labelText = d.label.length > 8 ? d.label.substring(0, 6) + ".." : d.label;
-          const pctText = `${d.percentage.toFixed(2)} %`;
-          text
-            .append("tspan")
-            .attr("x", 0)
-            .attr("dy", d.r > 15 ? "-0.2em" : "0em")
-            .text(labelText);
-          text
-            .append("tspan")
-            .attr("x", 0)
-            .attr("dy", "1.1em")
-            .attr("font-size", Math.min(d.r / 2.5, 9))
-            .attr("opacity", 0.85)
-            .text(pctText);
+          // Truncate label more aggressively for small bubbles
+          const maxLen = d.r < 20 ? 5 : d.r < 30 ? 7 : 8;
+          const labelText =
+            d.label.length > maxLen ? d.label.substring(0, maxLen - 2) + ".." : d.label;
+
+          // Only show percentage tspan if bubble is large enough
+          if (d.r >= 25) {
+            const pctText = `${d.percentage.toFixed(1)}%`;
+            text
+              .append("tspan")
+              .attr("x", 0)
+              .attr("dy", d.r > 20 ? "-0.3em" : "0em")
+              .text(labelText);
+            text
+              .append("tspan")
+              .attr("x", 0)
+              .attr("dy", "1.0em")
+              .attr("font-size", Math.min(d.r / 3, 8))
+              .attr("opacity", 0.8)
+              .text(pctText);
+          } else {
+            // Small bubble: just show truncated label
+            text.text(labelText);
+          }
         } else if (d.isContract) {
           text.text("C");
         } else if (assetType === AssetType.NFT && d.r > 20) {
           text.text(d.balance.toString());
         } else {
-          text.text(`${d.percentage.toFixed(2)} %`);
+          // Unlabeled: show percentage, abbreviated for small bubbles
+          if (d.r < 20) {
+            text.text(`${d.percentage.toFixed(1)}%`);
+          } else {
+            text.text(`${d.percentage.toFixed(2)} %`);
+          }
         }
       });
 
@@ -1608,21 +1580,17 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           )}
         </div>
 
-        {/* Settings button and popup container for click-outside detection */}
-        <div className="relative" ref={settingsRef}>
-          <Tooltip content="Open advanced filters">
-            <button
-              onTouchStart={handleTouchStopPropagation}
-              onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-              className={`p-2 rounded-full border shadow-lg transition-colors ${isSettingsOpen ? "bg-purple-600 border-purple-500 text-white" : "bg-space-800 border border-space-700 text-slate-400 hover:text-white hover:border-space-600"}`}
-            >
-              <Settings size={20} />
-            </button>
-          </Tooltip>
-
-          {/* --- ADVANCED FILTER CONTROLS --- */}
-          <FilterControls isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
-        </div>
+        {/* Settings / Filter button */}
+        <Tooltip content="Open filters">
+          <button
+            onTouchStart={handleTouchStopPropagation}
+            onClick={() => onOpenFilters?.()}
+            className="p-2 bg-space-800 border border-space-700 text-slate-400 hover:text-white hover:border-space-600 rounded-full shadow-lg transition-colors"
+            aria-label="Open filters"
+          >
+            <Settings size={20} />
+          </button>
+        </Tooltip>
       </div>
       {/* --- HELP MODAL --- */}
       {isHelpOpen && (

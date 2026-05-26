@@ -39,10 +39,10 @@ export const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
 
   return (
     <div
-      className={`flex items-start gap-3 p-4 rounded-lg shadow-lg animate-in slide-in-from-right-full transition-all w-80 pointer-events-auto ${styles[toast.type]}`}
+      className={`flex items-center gap-3 p-4 rounded-lg shadow-lg animate-in slide-in-from-right-full transition-all w-80 pointer-events-auto ${styles[toast.type]}`}
     >
-      <div className="shrink-0 mt-0.5">{icons[toast.type]}</div>
-      <p className="text-sm text-slate-50 font-medium flex-1 leading-tight drop-shadow-sm">
+      <div className="shrink-0">{icons[toast.type]}</div>
+      <p className="text-sm text-slate-50 font-medium flex-1 leading-tight drop-shadow-sm text-center">
         {toast.message}
       </p>
       <button

@@ -32,6 +32,7 @@ import { useTokenInfoPanelGuide } from "./hooks/useTokenInfoPanelGuide";
 import { useWalletDetailsGuide } from "./hooks/useWalletDetailsGuide";
 import { useDashboardGuide } from "./hooks/useDashboardGuide";
 import { FilterProvider } from "./contexts/FilterContext";
+import { FilterModal } from "./components/FilterModal";
 import {
   Token,
   Wallet,
@@ -361,6 +362,7 @@ const App: React.FC = () => {
   const [targetWalletId, setTargetWalletId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [summary, setSummary] = useState<string | null>(null);
+  const [isFilterModalOpen, setIsFilterModalOpen] = React.useState(false);
 
   // Map Analysis Context-Aware Guides hooks
   // Trigger conditions: guides show when respective sections are active/interacted with
@@ -1116,14 +1118,41 @@ const App: React.FC = () => {
   // --- SHARE FUNCTIONALITY ---
   const handleShare = () => {
     const url = window.location.href;
-    navigator.clipboard
-      .writeText(url)
-      .then(() => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          addToast("Link copied to clipboard!", "success");
+        })
+        .catch(() => {
+          // Fallback for HTTP / embedded browsers / restricted contexts
+          fallbackCopyToClipboard(url);
+        });
+    } else {
+      fallbackCopyToClipboard(url);
+    }
+  };
+
+  const fallbackCopyToClipboard = (text: string) => {
+    try {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      textarea.style.top = "-9999px";
+      textarea.setAttribute("readonly", "");
+      document.body.appendChild(textarea);
+      textarea.select();
+      const success = document.execCommand("copy");
+      document.body.removeChild(textarea);
+      if (success) {
         addToast("Link copied to clipboard!", "success");
-      })
-      .catch(() => {
+      } else {
         addToast("Failed to copy link", "error");
-      });
+      }
+    } catch {
+      addToast("Failed to copy link", "error");
+    }
   };
 
   // --- WALLET ACTIVITY ANALYTICS WALLET SELECTION ---
@@ -3042,6 +3071,7 @@ const App: React.FC = () => {
                       selectedConnectionId={selectedConnectionId}
                       freezeLayout={isMapLayoutFrozen}
                       tokenAddress={token.address}
+                      onOpenFilters={() => setIsFilterModalOpen(true)}
                     />
                   </div>
 
@@ -3275,6 +3305,7 @@ const App: React.FC = () => {
           onSkip={dashboardGuide.skipGuide}
         />
       </div>
+      <FilterModal isOpen={isFilterModalOpen} onClose={() => setIsFilterModalOpen(false)} />
     </FilterProvider>
   );
 };

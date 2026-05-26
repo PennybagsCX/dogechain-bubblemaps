@@ -93,11 +93,11 @@ const DEFAULT_FILTERS: FilterState = {
 // Helper: render FilterControls with context
 // ============================================================
 
-function renderFilterControls(isOpen = true) {
+function renderFilterControls() {
   const onClose = vi.fn();
   const result = render(
     <FilterProvider>
-      <FilterControls isOpen={isOpen} onClose={onClose} />
+      <FilterControls onClose={onClose} />
     </FilterProvider>
   );
   return { ...result, onClose };
@@ -288,51 +288,46 @@ describe("Filter State Transitions", () => {
 // TEST SUITE 3: FilterControls modal behavior
 // ============================================================
 
-describe("FilterControls Modal", () => {
+describe("FilterControls Panel", () => {
   beforeEach(() => {
-    // Clean up any leftover portal elements before each test
-    cleanupPortals();
+    localStorage.clear();
   });
 
   afterEach(() => {
-    // Let React Testing Library cleanup run first to unmount portals properly
     cleanup();
-    // Then clean up any remaining portal orphans
-    cleanupPortals();
   });
 
-  it("renders the modal when isOpen is true", () => {
-    renderFilterControls(true);
-    // "Advanced Filters" appears in both h4 header and the toggle button span
-    const advancedFilters = screen.getAllByText("Advanced Filters");
-    expect(advancedFilters.length).toBeGreaterThanOrEqual(1);
-    const modal = document.querySelector("[data-filter-controls]");
-    expect(modal).toBeTruthy();
-    expect(modal?.className).toContain("pointer-events-auto");
+  it("renders the filter controls panel", () => {
+    renderFilterControls();
+    expect(screen.getByText("Whales Only")).toBeInTheDocument();
+    expect(screen.getByText("All Holdings")).toBeInTheDocument();
   });
 
-  it("does not render visible modal when isOpen is false", () => {
-    renderFilterControls(false);
-    const modal = document.querySelector("[data-filter-controls]");
-    expect(modal).toBeTruthy();
-    expect(modal?.className).toContain("pointer-events-none");
+  it("always renders filter content (no open/close state)", () => {
+    renderFilterControls();
+    // Basic filters always visible
+    expect(screen.getByText("Filter Dust")).toBeInTheDocument();
+    expect(screen.getByText("Reset All Filters")).toBeInTheDocument();
   });
 
-  it("calls onClose when clicking the overlay background", () => {
-    const { onClose } = renderFilterControls(true);
-    const overlay = document.querySelector("[data-filter-controls]");
-    expect(overlay).toBeTruthy();
-    if (overlay) fireEvent.click(overlay);
-    expect(onClose).toHaveBeenCalledTimes(1);
+  it("filter buttons update filter state", () => {
+    renderFilterControls();
+    const whalesButton = screen.getByText("Whales Only");
+    fireEvent.click(whalesButton);
+    // Button should now show active state
+    expect(whalesButton.className).toContain("bg-purple-600");
   });
 
-  it("does NOT call onClose when clicking inside the modal panel", () => {
-    const { onClose } = renderFilterControls(true);
-    // Use getByRole to target the h4 header specifically
-    const header = screen.getByRole("heading", { level: 4 });
-    expect(header.textContent).toContain("Advanced Filters");
-    fireEvent.click(header);
-    expect(onClose).not.toHaveBeenCalled();
+  it("advanced section toggles correctly", () => {
+    renderFilterControls();
+    const advancedToggles = screen.getAllByText("Advanced Filters");
+    const toggleSpan = advancedToggles.find((el) => el.tagName === "SPAN");
+    expect(toggleSpan).toBeTruthy();
+    if (toggleSpan) {
+      fireEvent.click(toggleSpan.closest("button")!);
+    }
+    // After expanding, holding size options should be visible
+    expect(screen.getByText(/Whale \(1-5%\)/)).toBeInTheDocument();
   });
 
   it("renders holding size filter options", () => {
@@ -344,14 +339,13 @@ describe("FilterControls Modal", () => {
     expect(screen.getByText(/Mega/)).toBeInTheDocument();
   });
 
-  it("renders activity filter options after expanding advanced", () => {
-    renderFilterControls(true);
-    // Verify quick filter renders
+  it("renders quick filters", () => {
+    renderFilterControls();
     expect(screen.getByText("Whales Only")).toBeInTheDocument();
   });
 
   it("renders reset button", () => {
-    renderFilterControls(true);
+    renderFilterControls();
     expect(screen.getByText("Reset All Filters")).toBeInTheDocument();
   });
 });

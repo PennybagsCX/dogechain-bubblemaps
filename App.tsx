@@ -2755,7 +2755,7 @@ const App: React.FC = () => {
                   {/* Sidebar Left (Stats) - Responsive Drawer for Mobile */}
                   <div
                     className={`
-                        fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] bg-space-800 border-r border-space-700 p-4 lg:p-6 overflow-y-auto overflow-x-hidden transition-transform duration-300 ease-in-out
+                        fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] bg-space-800 border-r border-space-700 p-4 lg:p-6 overflow-y-auto overflow-x-hidden scroll-fade transition-transform duration-300 ease-in-out
                         lg:relative lg:translate-x-0 lg:z-0 lg:max-w-none
                         ${isMobileStatsOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"}
                     `}

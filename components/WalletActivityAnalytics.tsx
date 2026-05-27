@@ -1319,7 +1319,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                             Loading transactions...
                           </div>
                         ) : transactions.length > 0 ? (
-                          <div className="space-y-2 max-h-60 overflow-y-auto">
+                          <div className="space-y-2 max-h-60 overflow-y-auto scroll-fade">
                             <div className="text-xs text-slate-400 mb-2">
                               Recent transactions (showing first 10)
                             </div>
@@ -1463,7 +1463,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                             Loading transactions...
                           </div>
                         ) : transactions.length > 0 ? (
-                          <div className="space-y-2 max-h-60 overflow-y-auto">
+                          <div className="space-y-2 max-h-60 overflow-y-auto scroll-fade">
                             <div className="text-xs text-slate-400 mb-2">
                               Recent transactions (showing first 10)
                             </div>

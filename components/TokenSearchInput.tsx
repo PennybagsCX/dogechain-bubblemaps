@@ -813,7 +813,7 @@ export function TokenSearchInput({
       {showDropdown && results.length > 0 && (
         <div
           ref={dropdownRef}
-          className="fixed left-0 right-0 mx-4 md:absolute md:mx-0 md:w-full mt-2 bg-space-800 border border-space-700 rounded-lg shadow-xl max-h-96 overflow-y-auto z-50"
+          className="fixed left-0 right-0 mx-4 md:absolute md:mx-0 md:w-full mt-2 bg-space-800 border border-space-700 rounded-lg shadow-xl max-h-96 overflow-y-auto z-50 scroll-fade"
           style={{ top: "100%" }}
           role="listbox"
           id="search-results-listbox"

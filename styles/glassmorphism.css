@@ -274,6 +274,7 @@
 }
 
 /* Scrollbar styling */
+/* WebKit/Blink — purple gradient thumb for glassmorphism containers */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -292,6 +293,22 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #9333ea 0%, #2563eb 100%);
+}
+
+/* Standard scrollbar fallback for glassmorphism elements — Firefox only.
+   Scoped via @supports so Chrome/Edge/Safari keep the ::-webkit-scrollbar
+   purple gradient thumbs defined above. */
+@supports not selector(::-webkit-scrollbar) {
+  .glass,
+  .glass-dark,
+  .glass-card,
+  .glass-modal,
+  .card-enhanced,
+  .stat-card,
+  .table-row-glass {
+    scrollbar-width: thin;
+    scrollbar-color: #a855f7 rgba(30, 41, 59, 0.5); /* purple thumb / dark track */
+  }
 }
 
 /* Loading skeleton with glassmorphism */

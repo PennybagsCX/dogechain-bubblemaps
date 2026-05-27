@@ -171,6 +171,7 @@ body {
 }
 
 /* Custom Scrollbar */
+/* WebKit/Blink (Chrome, Edge, Safari desktop) */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -186,6 +187,54 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #475569;
+}
+
+/* Standard scrollbar fallback — scoped to Firefox only via @supports.
+   Chrome/Edge/Safari desktop use ::-webkit-scrollbar (gradient thumbs) above,
+   and scrollbar-color would override those with a flat solid color.
+   Firefox only supports the standard properties, so this is the correct target.
+   iOS Safari / Arc mobile do not support custom scrollbar styling at all. */
+@supports not selector(::-webkit-scrollbar) {
+  html,
+  body,
+  .overflow-y-auto,
+  .overflow-auto,
+  .overflow-x-auto,
+  [class*="overflow-"] {
+    scrollbar-width: thin;
+    scrollbar-color: #334155 #15192b; /* thumb track */
+  }
+}
+
+/* Scroll fade indicators — visible on mobile/touch devices only */
+/* Provides visual scrollability hints on iOS/Arc mobile where custom scrollbars are unsupported. */
+@media (max-width: 768px), (pointer: coarse) {
+  .scroll-fade {
+    position: relative;
+  }
+
+  .scroll-fade::before,
+  .scroll-fade::after {
+    content: "";
+    position: sticky;
+    left: 0;
+    right: 0;
+    display: block;
+    height: 24px;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: inherit;
+  }
+
+  .scroll-fade::before {
+    top: 0;
+    background: linear-gradient(to bottom, #0b0d17, transparent);
+  }
+
+  .scroll-fade::after {
+    bottom: 0;
+    background: linear-gradient(to top, #0b0d17, transparent);
+  }
 }
 
 /* Range Slider Styling - must be outside @layer to override Tailwind base */

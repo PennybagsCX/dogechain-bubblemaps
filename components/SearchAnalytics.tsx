@@ -130,7 +130,7 @@ export function SearchAnalytics({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto flex-1">
+        <div className="p-6 overflow-y-auto flex-1 scroll-fade">
           {stats && (
             <div className="space-y-6">
               {/* Session Info */}

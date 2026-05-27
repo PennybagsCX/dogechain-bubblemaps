@@ -60,6 +60,9 @@ type LinkDatum = {
   value: number;
 };
 
+// Minimum bubble radius to render text labels (prevents overflow on tiny bubbles)
+const MIN_LABEL_RADIUS = 14;
+
 export const BubbleMap: React.FC<BubbleMapProps> = ({
   wallets,
   links,
@@ -229,7 +232,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const lastSelectedConnectionIdRef = useRef<string | null>(null);
 
   // Helper: apply highlight and label visibility for a given wallet id
-  // Labels are now zoom-aware: visibility is based on effective zoomed radius.
   const applySelectionHighlight = (walletId: string | null, _showLabels: boolean) => {
     if (!svgRef.current) return;
 
@@ -237,20 +239,15 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     const nodeWrapperSelection = d3
       .select(svgRef.current)
       .selectAll<SVGGElement, any>(".node-wrapper");
-    const rankSelection = d3.select(svgRef.current).selectAll(".rank-label");
-    const labelSelection = d3.select(svgRef.current).selectAll(".name-label");
+    const bubbleLabelSelection = d3.select(svgRef.current).selectAll(".bubble-label");
 
     // Clear previous
     nodeSelection.classed("node-selected", false);
     lastSelectedIdRef.current = null;
     if (!walletId) {
-      // Reset labels to zoom-aware visibility state
       const k = zoomTransformRef.current?.k ?? 1;
-      rankSelection
-        .style("display", (d: any) => (d.r * k >= 18 ? "block" : "none"))
-        .style("opacity", 1);
-      labelSelection
-        .style("display", (d: any) => (d.r * k >= 18 ? "block" : "none"))
+      bubbleLabelSelection
+        .style("display", (d: any) => (d.r * k >= MIN_LABEL_RADIUS ? "block" : "none"))
         .style("opacity", 1);
       return;
     }
@@ -262,13 +259,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     // Raise the entire wrapper so labels remain above the circle
     nodeWrapperSelection.filter((d: any) => d.id === walletId).raise();
 
-    // Ensure labels visible for target (always show for selected wallet)
-    rankSelection
-      .filter((d: any) => d.id === walletId)
-      .style("display", "block")
-      .style("opacity", 1)
-      .raise();
-    labelSelection
+    // Ensure label visible for target (always show for selected wallet)
+    bubbleLabelSelection
       .filter((d: any) => d.id === walletId)
       .style("display", "block")
       .style("opacity", 1)
@@ -855,61 +847,59 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
       });
 
     // --- INTERACTION HANDLERS ---
-    // Track drag distance to distinguish tap from actual drag (prevents jitter on mobile)
-    let dragStartX = 0;
-    let dragStartY = 0;
-    let isActualDrag = false;
-
     // Use 'any' type for element to allow attaching to both Group and Circle
     const drag = d3
       .drag<any, NodeDatum>()
+      // CRITICAL: Set container to the zoomed <g> so drag coordinates are resolved
+      // in simulation-space, not screen-space. Without this, dragging while zoomed
+      // or panned produces wildly incorrect coordinates causing jitter/jumping.
+      .container((_d: any, i: number, nodes: any[] | ArrayLike<any>) => {
+        // The drag is attached to circles (.synapse-node) inside:
+        //   <g zoom-transform> > <g .nodes> > <g .node-wrapper> > <circle>
+        // We want the zoom <g> as the container so drag coordinates are resolved
+        // in the simulation's coordinate space (pre-zoom), not screen-space.
+        const circle = nodes[i] as SVGElement;
+        // circle > .node-wrapper > .nodes > zoom <g>
+        return circle?.parentNode?.parentNode?.parentNode as SVGGElement;
+      })
       .on("start", (event: any, d: NodeDatum) => {
-        // Detect input type - touch events use pointerType property
-        const isTouch =
-          event.sourceEvent.pointerType === "touch" ||
-          ("ontouchstart" in window && event.sourceEvent.type.startsWith("touch"));
-
-        dragStartX = event.x;
-        dragStartY = event.y;
-        isActualDrag = false;
-
         isDraggingRef.current = true;
+
+        // Interrupt any running D3 transitions on ALL nodes to prevent
+        // visual conflicts between scheduled opacity/style tweens and
+        // the simulation tick handler's position updates.
+        nodeWrapperSelection.interrupt();
+        nodeSelection.interrupt();
+        linkSelection.select(".neural-vein").interrupt();
 
         // Fix the node position at its current location
         d.fx = d.x;
         d.fy = d.y;
 
-        // Only restart simulation for non-touch (desktop mouse drag)
-        // On touch, wait to see if it's an actual drag before restarting
-        if (!isTouch && !event.active && simulationRef.current) {
-          simulationRef.current.alphaTarget(0.003).restart();
-        }
+        // Do NOT restart the simulation here — that would re-activate all
+        // forces and push non-dragged nodes around, causing jitter.
+        // The simulation tick handler will still run if alpha > 0 (it usually
+        // is from initial layout), and will respect fx/fy as fixed positions.
+
         d3.select(event.sourceEvent.target).attr("cursor", "grabbing");
       })
       .on("drag", (event: any, d: NodeDatum) => {
-        const dx = event.x - dragStartX;
-        const dy = event.y - dragStartY;
-        // Only treat as drag if moved more than 5px
-        if (Math.sqrt(dx * dx + dy * dy) > 5) {
-          isActualDrag = true;
-          // Restart simulation on first real drag movement for touch
-          if (!event.active && simulationRef.current) {
-            simulationRef.current.alphaTarget(0.005).restart();
-          }
-        }
+        // Coordinates are now in simulation-space (thanks to .container())
         d.fx = event.x;
         d.fy = event.y;
       })
       .on("end", (event: any, d: NodeDatum) => {
-        if (!event.active && simulationRef.current) {
-          simulationRef.current.alphaTarget(0);
-        }
-        // Release the fixed position regardless of whether it was a tap or drag
+        // Release the fixed position so the simulation can settle the node
         isDraggingRef.current = false;
-        void isActualDrag; // used above in drag handler for simulation control
         d.fx = null;
         d.fy = null;
         d3.select(event.sourceEvent.target).attr("cursor", "grab");
+
+        // Gently reheat simulation so neighbors can settle after the drag.
+        // Low alpha + short duration prevents visible "jumping".
+        if (simulationRef.current) {
+          simulationRef.current.alpha(0.15).restart();
+        }
       });
 
     // --- RENDER: WALLETS ---
@@ -1099,84 +1089,135 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         // NOTE: Labels are NOT reset - they stay visible throughout since we no longer dim them on hover
       });
 
-    // Minimum radius to show any text (prevents overflow on tiny bubbles)
-    const MIN_LABEL_RADIUS = 14;
-
-    // Render rank label inside the wrapper (after circle so circle receives events first)
-    const rankSelection = nodeWrapperSelection
+    // --- UNIFIED BUBBLE LABEL ---
+    // Single text element with stacked tspans for clean vertical layout:
+    //   Labeled wallets: #N → Label → X.X%  (3 lines)
+    //   Unlabeled wallets: #N → X.X%        (2 lines)
+    const bubbleLabelSelection = nodeWrapperSelection
       .append("text")
-      .attr("class", "rank-label")
+      .attr("class", "bubble-label")
       .attr("text-anchor", "middle")
-      .attr("dy", (d: NodeDatum) => (d.r > 20 ? -Math.min(d.r * 0.35, 10) : "0.35em"))
       .attr("fill", "#fff")
-      .attr("font-size", (d: NodeDatum) => {
-        if (d.r < MIN_LABEL_RADIUS) return Math.max(d.r / 2.2, 5);
-        return Math.min(d.r / 2.2, 11);
-      })
-      .attr("font-weight", "800")
-      .style("pointer-events", "none")
-      .style("text-shadow", "0px 1px 3px rgba(0,0,0,0.9)")
-      .style("display", (d: NodeDatum) => (d.r >= MIN_LABEL_RADIUS ? "block" : "none"))
-      .attr("opacity", 1)
-      .text((d: NodeDatum) => `#${d.rank}`);
-
-    // Render name label inside the wrapper
-    nodeWrapperSelection
-      .append("text")
-      .attr("class", "name-label")
-      .attr("text-anchor", "middle")
-      .attr("dy", ".35em")
-      .attr("fill", "#fff")
-      .attr("font-size", (d: NodeDatum) => {
-        // Always render with a minimum font size so labels are visible when zoom makes them large enough
-        if (d.r < MIN_LABEL_RADIUS) return Math.max(d.r / 3, 5);
-        if (d.r < 20) return Math.max(d.r / 3, 6);
-        return Math.min(d.r / 2.5, 10);
-      })
       .attr("font-weight", "700")
       .style("pointer-events", "none")
       .style("text-shadow", "0px 1px 3px rgba(0,0,0,0.9)")
       .style("display", (d: NodeDatum) => (d.r >= MIN_LABEL_RADIUS ? "block" : "none"))
-      .style("overflow", "hidden")
       .attr("opacity", 1)
       .each(function (d: NodeDatum) {
         const text = d3.select(this);
+        const isUser = userAddress && d.address.toLowerCase() === userAddress.toLowerCase();
+        const hasLabel = !!d.label;
+        const lineCount = hasLabel || isUser ? 3 : 2;
+        const pct = `${d.percentage.toFixed(1)}%`;
+        const rankStr = `#${d.rank}`;
 
-        // Always render text content (visibility controlled by zoom-aware display)
-        if (userAddress && d.address.toLowerCase() === userAddress.toLowerCase()) {
-          text.text("YOU");
-        } else if (d.label) {
-          // Truncate label more aggressively for small bubbles
-          const maxLen = d.r < 20 ? 5 : d.r < 30 ? 7 : 8;
-          const labelText =
-            d.label.length > maxLen ? d.label.substring(0, maxLen - 2) + ".." : d.label;
+        // Font sizing: scale to fit inside bubble with room for all lines
+        // Each line needs ~1.2em of height; we need total text height < diameter
+        const maxFontSize = (d.r * 2) / (lineCount * 1.3);
+        const baseFontSize = Math.min(maxFontSize, d.r < 18 ? 7 : d.r < 30 ? 9 : 11);
+        const pctFontSize = Math.max(baseFontSize * 0.78, 5);
 
-          // Always show percentage alongside label
-          const pctText = `${d.percentage.toFixed(1)}%`;
+        text.attr("font-size", baseFontSize);
+
+        // Vertical offset to center the block of lines
+        // For 2 lines: shift up by ~0.3em. For 3 lines: shift up by ~0.8em.
+        const topDy = lineCount === 3 ? "-0.8em" : "-0.2em";
+
+        if (isUser) {
+          // YOU wallet: rank + YOU + pct
           text
             .append("tspan")
             .attr("x", 0)
-            .attr("dy", d.r > 20 ? "-0.3em" : "0em")
+            .attr("dy", topDy)
+            .attr("font-weight", "800")
+            .text(rankStr);
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", "1.15em")
+            .attr("font-size", Math.min(baseFontSize, 9))
+            .text("YOU");
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", "1.1em")
+            .attr("font-size", pctFontSize)
+            .attr("opacity", 0.8)
+            .text(pct);
+        } else if (hasLabel) {
+          // Labeled wallet: rank + label + pct
+          const maxLen = d.r < 20 ? 5 : d.r < 30 ? 7 : 9;
+          const labelText =
+            d.label!.length > maxLen ? d.label!.substring(0, maxLen - 2) + ".." : d.label!;
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", topDy)
+            .attr("font-weight", "800")
+            .text(rankStr);
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", "1.15em")
+            .attr("font-size", Math.min(baseFontSize, 9))
             .text(labelText);
           text
             .append("tspan")
             .attr("x", 0)
-            .attr("dy", "1.0em")
-            .attr("font-size", Math.min(d.r / 3, 8))
+            .attr("dy", "1.1em")
+            .attr("font-size", pctFontSize)
             .attr("opacity", 0.8)
-            .text(pctText);
+            .text(pct);
         } else if (d.isContract) {
-          text.text(`C ${d.percentage.toFixed(1)}%`);
-        } else if (assetType === AssetType.NFT) {
-          text.text(d.balance.toString());
+          // Contract: rank + C marker + pct
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", "-0.2em")
+            .attr("font-weight", "800")
+            .text(rankStr);
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", "1.2em")
+            .attr("font-size", pctFontSize)
+            .attr("opacity", 0.8)
+            .text(pct);
+        } else if (assetType === AssetType.NFT && d.r > 20) {
+          // NFT: rank + balance
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", "-0.2em")
+            .attr("font-weight", "800")
+            .text(rankStr);
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", "1.2em")
+            .attr("font-size", pctFontSize)
+            .attr("opacity", 0.8)
+            .text(d.balance.toString());
         } else {
-          // Unlabeled: always show percentage
-          text.text(`${d.percentage.toFixed(1)}%`);
+          // Default unlabeled: rank + pct
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", "-0.2em")
+            .attr("font-weight", "800")
+            .text(rankStr);
+          text
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", "1.2em")
+            .attr("font-size", pctFontSize)
+            .attr("opacity", 0.8)
+            .text(pct);
         }
       });
 
-    // Raise labels to ensure they render on top of circles (prevents visual occlusion)
-    rankSelection.raise();
+    // Raise labels to ensure they render on top of circles
+    bubbleLabelSelection.raise();
 
     // Helper to calculate link path with optional gap
     const getLinkPath = (d: any, gap: number = 0) => {
@@ -1248,25 +1289,23 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
 
     // --- ZOOM ---
     // Threshold for effective zoomed radius to show labels
-    const ZOOM_LABEL_THRESHOLD = 18;
+    // Aligned with MIN_LABEL_RADIUS so zoom level 1x matches initial render
+    const ZOOM_LABEL_THRESHOLD = 14;
 
     const updateLabelVisibility = (k: number) => {
       if (!svgRef.current) return;
       const svg = d3.select(svgRef.current);
+      const selectedId = lastSelectedIdRef.current;
       svg.selectAll<SVGGElement, NodeDatum>(".node-wrapper").each(function (d) {
         const effectiveR = d.r * k;
-        const shouldShowRank = effectiveR >= ZOOM_LABEL_THRESHOLD;
-        const shouldShowName = effectiveR >= ZOOM_LABEL_THRESHOLD;
+        const isSelected = d.id === selectedId;
+        const shouldShow = isSelected || effectiveR >= ZOOM_LABEL_THRESHOLD;
 
         const wrapper = d3.select(this);
         wrapper
-          .select(".rank-label")
-          .style("display", shouldShowRank ? "block" : "none")
-          .attr("opacity", shouldShowRank ? 1 : 0);
-        wrapper
-          .select(".name-label")
-          .style("display", shouldShowName ? "block" : "none")
-          .attr("opacity", shouldShowName ? 1 : 0);
+          .select(".bubble-label")
+          .style("display", shouldShow ? "block" : "none")
+          .attr("opacity", shouldShow ? 1 : 0);
       });
     };
 

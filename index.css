@@ -39,11 +39,19 @@ body {
 }
 
 /* Smooth expand/collapse transitions on interactive containers */
-* {
+/* Exclude SVG elements – D3 manages transforms directly on tick; CSS transitions
+   on SVG attributes (transform, opacity, fill, etc.) cause jitter during drag and
+   simulation updates by fighting with D3's per-frame attribute writes. */
+*:not(svg):not(svg *) {
   transition-property:
-    max-height, height, width, padding, margin, opacity, transform, background-color, border-color,
-    box-shadow;
+    max-height, height, width, padding, margin, opacity, background-color, border-color, box-shadow;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Explicitly prevent any CSS transition leakage into SVG */
+svg,
+svg * {
+  transition: none !important;
 }
 
 /* Smooth scrolling for all scrollable containers */
@@ -341,4 +349,9 @@ textarea {
   [data-rk] ._1ckjpok6 {
     max-width: calc(100vw - 32px) !important;
   }
+}
+
+/* Tooltip: only show after positioned (prevents fly-in) */
+.tooltip-portal.tooltip-ready {
+  opacity: 1 !important;
 }

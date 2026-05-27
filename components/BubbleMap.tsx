@@ -850,18 +850,17 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     // Use 'any' type for element to allow attaching to both Group and Circle
     const drag = d3
       .drag<any, NodeDatum>()
-      // CRITICAL: Set container to the zoomed <g> so drag coordinates are resolved
-      // in simulation-space, not screen-space. Without this, dragging while zoomed
-      // or panned produces wildly incorrect coordinates causing jitter/jumping.
-      .container((_d: any, i: number, nodes: any[] | ArrayLike<any>) => {
-        // The drag is attached to circles (.synapse-node) inside:
-        //   <g zoom-transform> > <g .nodes> > <g .node-wrapper> > <circle>
-        // We want the zoom <g> as the container so drag coordinates are resolved
-        // in the simulation's coordinate space (pre-zoom), not screen-space.
-        const circle = nodes[i] as SVGElement;
-        // circle > .node-wrapper > .nodes > zoom <g>
-        return circle?.parentNode?.parentNode?.parentNode as SVGGElement;
-      })
+      // Set the container to the zoom <g> element directly.
+      // This is critical because:
+      // 1. The default container is the circle's parent (node-wrapper <g>),
+      //    whose transform changes on EVERY simulation tick — this creates a
+      //    feedback loop where getScreenCTM() returns different matrices each
+      //    frame, producing ghost/double bubbles.
+      // 2. The zoom <g> is stable (only changes on zoom events), so drag
+      //    coordinates are resolved consistently in simulation-space.
+      // 3. Since `g` is the zoom transform target, event.x/y are already in
+      //    simulation coordinates — no manual zoom inversion needed.
+      .container(g.node() as SVGGElement)
       .on("start", (event: any, d: NodeDatum) => {
         isDraggingRef.current = true;
 
@@ -876,15 +875,11 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         d.fx = d.x;
         d.fy = d.y;
 
-        // Do NOT restart the simulation here — that would re-activate all
-        // forces and push non-dragged nodes around, causing jitter.
-        // The simulation tick handler will still run if alpha > 0 (it usually
-        // is from initial layout), and will respect fx/fy as fixed positions.
-
         d3.select(event.sourceEvent.target).attr("cursor", "grabbing");
       })
       .on("drag", (event: any, d: NodeDatum) => {
-        // Coordinates are now in simulation-space (thanks to .container())
+        // With .container(g), event.x/y are already in simulation-space
+        // because `g` is the zoom transform target.
         d.fx = event.x;
         d.fy = event.y;
       })
@@ -896,7 +891,6 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         d3.select(event.sourceEvent.target).attr("cursor", "grab");
 
         // Gently reheat simulation so neighbors can settle after the drag.
-        // Low alpha + short duration prevents visible "jumping".
         if (simulationRef.current) {
           simulationRef.current.alpha(0.15).restart();
         }
@@ -1312,6 +1306,18 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
       .scaleExtent([0.1, 8])
+      // CRITICAL: Prevent zoom from capturing events that originate on bubble circles.
+      // Without this filter, both d3-zoom (pan) and d3-drag fire simultaneously when
+      // clicking a bubble — the zoom pans the entire <g> while drag moves the node's
+      // simulation position, creating a ghost/double bubble that flickers.
+      .filter((event: any) => {
+        // Allow wheel events (scroll zoom) always
+        if (event.type === "wheel") return true;
+        // For mouse/touch gestures: only zoom if the target is NOT a bubble circle.
+        // This lets d3-drag handle circle interactions exclusively.
+        const target = event.target as SVGElement;
+        return !target.classList.contains("synapse-node");
+      })
       .on("zoom", (event: any) => {
         g.attr("transform", event.transform);
         zoomTransformRef.current = event.transform;

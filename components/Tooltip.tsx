@@ -25,6 +25,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   zIndex = 130,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isPositioned, setIsPositioned] = useState(false);
   const [actualPosition, setActualPosition] = useState<TooltipPosition>(position);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
 
@@ -50,6 +51,15 @@ export const Tooltip: React.FC<TooltipProps> = ({
     left: "right-0 top-1/2 -translate-y-1/2 rotate-45 border-b border-r",
     right: "left-0 top-1/2 -translate-y-1/2 rotate-45 border-t border-l",
   };
+
+  const hide = useCallback(() => {
+    setIsVisible(false);
+    setIsPositioned(false);
+  }, []);
+
+  const show = useCallback(() => {
+    setIsVisible(true);
+  }, []);
 
   // Calculate fixed position when visible (portal mode)
   useLayoutEffect(() => {
@@ -85,13 +95,12 @@ export const Tooltip: React.FC<TooltipProps> = ({
         break;
     }
 
-    // Center tooltip on position
+    // Center tooltip on position once mounted
     requestAnimationFrame(() => {
       if (tooltipRef.current) {
         const tooltipRect = tooltipRef.current.getBoundingClientRect();
-        left -= tooltipRect.width / 2;
-        top -= tooltipRect.height / 2;
-        setCoords({ top, left });
+        setCoords({ top: top - tooltipRect.height / 2, left: left - tooltipRect.width / 2 });
+        setIsPositioned(true);
       }
     });
   }, [isVisible, actualPosition, portal]);
@@ -292,7 +301,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
         text-xs text-slate-300
         opacity-0 transition-opacity duration-200
         pointer-events-none
-        ${isVisible ? "opacity-100" : ""}
+        ${isVisible && isPositioned ? "opacity-100" : ""}
         ${portal ? "" : positionClasses[actualPosition]}
       `}
       role="tooltip"
@@ -301,6 +310,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
         top: portal ? `${coords.top}px` : undefined,
         left: portal ? `${coords.left}px` : undefined,
         zIndex,
+        transitionProperty: "opacity",
       }}
     >
       {typeof content === "string" ? (
@@ -324,10 +334,10 @@ export const Tooltip: React.FC<TooltipProps> = ({
     <div
       ref={containerRef}
       className={`relative ${className}`}
-      onMouseEnter={() => setIsVisible(true)}
-      onMouseLeave={() => setIsVisible(false)}
-      onFocus={() => setIsVisible(true)}
-      onBlur={() => setIsVisible(false)}
+      onMouseEnter={show}
+      onMouseLeave={hide}
+      onFocus={show}
+      onBlur={hide}
     >
       {children}
       {isVisible && portal

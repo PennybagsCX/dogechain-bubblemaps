@@ -63,7 +63,6 @@ import {
 } from "./services/dataService";
 import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 import { fetchConnectionDetails } from "./services/connectionService";
-import { initializeDiagnosticLogger, getDiagnosticLogger } from "./lib/consoleLogger";
 import { resetAllGuides } from "./utils/guideStorage";
 import { hasCreatedFirstAlert, markFirstAlertCreated } from "./utils/alertFirstTimeStorage";
 
@@ -669,29 +668,6 @@ const App: React.FC = () => {
 
     performSync();
   }, [dbLoaded, userAddress, isConnected]);
-
-  // Initialize diagnostic logger for remote debugging
-  useEffect(() => {
-    const logger = initializeDiagnosticLogger();
-    const browserInfo = logger.getBrowserInfo();
-
-    console.log("[App] 📊 Diagnostic logger initialized:", {
-      sessionId: logger.getSessionId(),
-      browser: browserInfo,
-    });
-
-    // Send initial diagnostic data
-    logger.sendLogs().catch((err) => {
-      console.warn("[App] Failed to send initial diagnostics:", err);
-    });
-
-    return () => {
-      // Send final logs before unmount
-      logger.sendLogs().catch((err) => {
-        console.warn("[App] Failed to send final diagnostics:", err);
-      });
-    };
-  }, []);
 
   // Fetch server-side trending on mount and refresh periodically
   useEffect(() => {
@@ -1405,30 +1381,10 @@ const App: React.FC = () => {
       const tokenData = await fetchTokenData(cleanQuery, typeToUse);
 
       if (!tokenData) {
-        // Log to diagnostic system
-        try {
-          const logger = getDiagnosticLogger();
-          logger.logTokenSearch(cleanQuery, typeToUse, false, 0, "Token data is NULL");
-          logger.sendLogs().catch(() => {
-            // Ignore send errors
-          });
-        } catch {
-          // Ignore logger errors
-        }
-        addToast("Token not found. Please verify the address.", "error");
         setLoading(false);
         return;
       }
 
-      // Log successful token search to diagnostic system
-      try {
-        const logger = getDiagnosticLogger();
-        logger.logTokenSearch(cleanQuery, typeToUse, true, 1);
-      } catch {
-        // Ignore logger errors
-      }
-
-      // Enforce type match; if mismatch, prompt user
       if (tokenData.type !== typeToUse) {
         const targetLabel = tokenData.type === AssetType.NFT ? "NFT" : "Token";
         console.warn(`[App] ⚠️ Type mismatch: expected ${typeToUse}, got ${tokenData.type}`);
@@ -1455,20 +1411,6 @@ const App: React.FC = () => {
       // Fetch Data (Live)
       const result = await fetchTokenHolders(tokenData);
 
-      // Log token holder fetch to diagnostic system
-      try {
-        const logger = getDiagnosticLogger();
-        logger.logTokenHolderFetch(
-          tokenData.address,
-          tokenData.symbol || "UNKNOWN",
-          result.wallets.length > 0,
-          result.wallets.length,
-          result.links.length
-        );
-      } catch {
-        // Ignore logger errors
-      }
-
       let finalWallets = result.wallets;
 
       // Inject User if connected
@@ -1485,24 +1427,6 @@ const App: React.FC = () => {
           originalWalletsCount: result.wallets.length,
           finalWalletsCount: finalWallets.length,
         });
-
-        // Log failure to diagnostic system and send immediately
-        try {
-          const logger = getDiagnosticLogger();
-          logger.logTokenHolderFetch(
-            tokenData.address,
-            tokenData.symbol || "UNKNOWN",
-            false,
-            0,
-            0,
-            "No wallets found"
-          );
-          logger.sendLogs().catch(() => {
-            // Ignore send errors
-          });
-        } catch {
-          // Ignore logger errors
-        }
 
         if (isArcMobile) {
           addToast(
@@ -2293,14 +2217,6 @@ const App: React.FC = () => {
       <div className="min-h-screen bg-space-900 text-slate-100 font-sans selection:bg-purple-500 selection:text-white flex flex-col overflow-x-hidden">
         <Analytics />
         <ToastContainer toasts={toasts} onClose={removeToast} />
-
-        {/* Diagnostic Mode Indicator */}
-        {import.meta.env.MODE === "production" && (
-          <div className="fixed bottom-2 left-2 z-50 flex items-center gap-2 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-full border border-purple-500/30 shadow-lg">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-xs text-purple-300 font-medium">Diagnostic Mode Active</span>
-          </div>
-        )}
 
         <Navbar currentView={view} onChangeView={handleViewChange} hasAnalysisData={!!token} />
 

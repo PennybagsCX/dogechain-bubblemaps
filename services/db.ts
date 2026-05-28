@@ -756,6 +756,22 @@ class DogeDatabase extends Dexie {
         allTransactionsCache: "tokenAddress, &tokenAddress, cachedAt, expiresAt",
         analyticsStateCache: "[tokenAddress+timeRange], &tokenAddress, lastUpdated, expiresAt",
       });
+
+      // Version 23: Fix searchAnalytics unique constraint on sessionId
+      // The &sessionId prevented storing multiple events per session (only the first event was saved)
+      this.version(23).stores({
+        searchAnalytics: "++id, sessionId, timestamp, query, clickedAddress",
+        allTransactionsCache: "tokenAddress, cachedAt, expiresAt",
+      });
+
+      this.version(23).upgrade(async (tx) => {
+        // Clear stale searchAnalytics data that was limited to 1 event per session
+        try {
+          await tx.table("searchAnalytics").clear();
+        } catch {
+          // Table may not exist in older versions
+        }
+      });
     } catch {
       // Error handled silently
 

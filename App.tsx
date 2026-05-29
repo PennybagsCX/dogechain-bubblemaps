@@ -2667,11 +2667,11 @@ const App: React.FC = () => {
           {view === ViewState.ANALYSIS && (
             <>
               {token ? (
-                <div className="flex h-[calc(100dvh-64px)] overflow-hidden">
+                <div className="flex min-w-0 h-[calc(100dvh-64px)] overflow-hidden">
                   {/* Sidebar Left (Stats) - Responsive Drawer for Mobile */}
                   <div
                     className={`
-                        fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] bg-space-800 border-r border-space-700 p-4 lg:p-6 overflow-y-auto overflow-x-hidden scroll-fade transition-transform duration-300 ease-in-out
+                        fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] bg-space-800 border-r border-space-700 p-4 lg:p-6 overflow-y-auto overflow-x-hidden scroll-fade transition-transform duration-300 ease-in-out hidden lg:block
                         lg:relative lg:translate-x-0 lg:z-0 lg:max-w-none
                         ${isMobileStatsOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"}
                     `}
@@ -2930,7 +2930,7 @@ const App: React.FC = () => {
                   )}
 
                   {/* Main Visualization Area */}
-                  <div className="flex-1 relative bg-space-900">
+                  <div className="flex-1 min-w-0 relative bg-space-900">
                     {/* Mobile Stats Toggle Button */}
                     <button
                       className="lg:hidden absolute top-4 left-4 z-30 p-2 bg-space-800 rounded-lg border border-space-700 text-slate-300 hover:text-white shadow-lg"

@@ -140,6 +140,9 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
             </button>
           </div>
 
+          {/* Icon */}
+          <div className="flex justify-center mb-2">{step.icon}</div>
+
           {/* Title */}
           <h3 id="onboarding-title" className="text-lg sm:text-xl font-bold text-white text-center">
             {step.title}
@@ -148,9 +151,6 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
         {/* Content */}
         <div className="p-6">
-          {/* Icon */}
-          <div className="flex justify-center mb-4">{step.icon}</div>
-
           {/* Step indicator */}
           <div className="flex items-center justify-center gap-2 mb-4">
             <span className="text-sm text-slate-400">

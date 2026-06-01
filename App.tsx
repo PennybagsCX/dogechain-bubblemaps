@@ -365,9 +365,18 @@ const App: React.FC = () => {
 
   // Map Analysis Context-Aware Guides hooks
   // Trigger conditions: guides show when respective sections are active/interacted with
-  const bubbleGuide = useBubbleVisualizationGuide(view === ViewState.ANALYSIS && !!token);
+  const bubbleGuide = useBubbleVisualizationGuide(
+    view === ViewState.ANALYSIS &&
+      !!token &&
+      typeof window !== "undefined" &&
+      window.innerWidth >= 1024
+  );
   const tokenPanelGuide = useTokenInfoPanelGuide(
-    view === ViewState.ANALYSIS && !!token && wallets.length > 0
+    view === ViewState.ANALYSIS &&
+      !!token &&
+      wallets.length > 0 &&
+      typeof window !== "undefined" &&
+      window.innerWidth >= 1024
   );
   const walletDetailsGuide = useWalletDetailsGuide(!!selectedWallet);
   const dashboardGuide = useDashboardGuide(view === ViewState.DASHBOARD && isConnected);
@@ -2671,22 +2680,46 @@ const App: React.FC = () => {
                   {/* Sidebar Left (Stats) - Responsive Drawer for Mobile */}
                   <div
                     className={`
-                        fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] bg-space-800 border-r border-space-700 p-4 lg:p-6 overflow-y-auto overflow-x-hidden scroll-fade transition-transform duration-300 ease-in-out hidden lg:block
-                        lg:relative lg:translate-x-0 lg:z-0 lg:max-w-none
+                        fixed top-16 bottom-0 left-0 z-50 w-80 max-w-[85vw] bg-space-800 border-r border-space-700 p-4 lg:p-6 overflow-y-auto overflow-x-hidden transition-transform duration-300 ease-in-out lg:block
+                        lg:relative lg:inset-y-0 lg:translate-x-0 lg:z-0 lg:max-w-none
                         ${isMobileStatsOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"}
                     `}
                   >
-                    {/* Mobile Close Button */}
-                    <div className="lg:hidden flex justify-end mb-4">
+                    {/* Mobile header: token name + close button on same row */}
+                    <div className="lg:hidden flex items-center justify-between gap-2 mb-4">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <h2 className="text-lg font-bold text-white truncate" title={token.name}>
+                          {token.name}
+                        </h2>
+                        {token.type === AssetType.NFT && (
+                          <span className="px-2 py-0.5 bg-purple-600/20 text-purple-400 text-[10px] font-bold rounded border border-purple-600/20">
+                            NFT
+                          </span>
+                        )}
+                        {token.isVerified ? (
+                          <Tooltip content="Verified Source">
+                            <span className="text-green-500 shrink-0">
+                              <ShieldCheck size={14} />
+                            </span>
+                          </Tooltip>
+                        ) : (
+                          <Tooltip content="Unverified Source">
+                            <span className="text-slate-500 shrink-0">
+                              <AlertTriangle size={14} />
+                            </span>
+                          </Tooltip>
+                        )}
+                      </div>
                       <button
                         onClick={() => setIsMobileStatsOpen(false)}
-                        className="p-2 text-slate-400 hover:text-white bg-space-700 rounded-lg"
+                        className="p-2 text-slate-400 hover:text-white bg-space-700 rounded-lg shrink-0"
                       >
                         <X size={20} />
                       </button>
                     </div>
 
-                    <div className="mb-6">
+                    {/* Desktop header block (hidden on mobile) */}
+                    <div className="hidden lg:block mb-6">
                       <div className="flex items-center gap-2 mb-1">
                         <h2 className="text-2xl font-bold text-white truncate" title={token.name}>
                           {token.name}
@@ -2933,7 +2966,7 @@ const App: React.FC = () => {
                   <div className="flex-1 min-w-0 relative bg-space-900">
                     {/* Mobile Stats Toggle Button */}
                     <button
-                      className="lg:hidden absolute top-4 left-4 z-30 p-2 bg-space-800 rounded-lg border border-space-700 text-slate-300 hover:text-white shadow-lg"
+                      className="lg:hidden absolute top-4 left-4 z-30 p-1.5 bg-space-800 border border-space-700 text-slate-300 hover:text-white shadow-lg rounded-full"
                       onClick={() => setIsMobileStatsOpen(true)}
                     >
                       <Menu size={20} />

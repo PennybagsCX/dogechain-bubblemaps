@@ -209,7 +209,7 @@ body {
 /* Scroll fade indicators — visible on mobile/touch devices only */
 /* Provides visual scrollability hints on iOS/Arc mobile where custom scrollbars are unsupported. */
 @media (max-width: 768px), (pointer: coarse) {
-  .scroll-fade {
+  .scroll-fade:not(.fixed) {
     position: relative;
   }
 

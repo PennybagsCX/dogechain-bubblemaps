@@ -201,6 +201,9 @@ export const WalletDetailsGuide: React.FC<WalletDetailsGuideProps> = ({
             </button>
           </div>
 
+          {/* Icon */}
+          <div className="flex justify-center mb-2">{step.icon}</div>
+
           {/* Title */}
           <h3
             id="wallet-details-guide-title"
@@ -212,9 +215,6 @@ export const WalletDetailsGuide: React.FC<WalletDetailsGuideProps> = ({
 
         {/* Content */}
         <div className="p-6">
-          {/* Icon */}
-          <div className="flex justify-center mb-4">{step.icon}</div>
-
           {/* Step indicator */}
           <div className="flex items-center justify-center gap-2 mb-4">
             <span className="text-sm text-slate-400">

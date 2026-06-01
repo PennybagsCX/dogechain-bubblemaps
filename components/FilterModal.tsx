@@ -84,7 +84,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose }) => 
         </div>
 
         {/* Filter content */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden scroll-fade">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden">
           <FilterControls onClose={onClose} />
         </div>
       </div>

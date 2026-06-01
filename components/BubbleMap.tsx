@@ -26,6 +26,7 @@ import {
   X,
   Layers,
   RefreshCw,
+  Lightbulb,
 } from "lucide-react";
 import { Tooltip } from "./Tooltip";
 
@@ -84,6 +85,8 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
   const legendRef = useRef<HTMLDivElement>(null);
   const controlsRef = useRef<HTMLDivElement>(null);
   const mobileControlsRef = useRef<HTMLDivElement>(null);
+  const skipControlsCloseRef = useRef(false);
+  const skipLegendToggleRef = useRef(false);
   const helpMenuRef = useRef<HTMLDivElement>(null);
   const resizeRafRef = useRef<number | null>(null);
   const resizeDebounceRef = useRef<number | null>(null);
@@ -209,15 +212,31 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isHelpOpen]);
 
-  const closeLegend = useCallback(() => setIsLegendOpen(false), []);
-  const closeControls = useCallback(() => setAreControlsOpen(false), []);
+  const closeLegend = useCallback(() => {
+    if (skipLegendToggleRef.current) {
+      skipLegendToggleRef.current = false;
+      return;
+    }
+    setIsLegendOpen(false);
+  }, []);
+  const closeControls = useCallback(() => {
+    if (skipControlsCloseRef.current) {
+      skipControlsCloseRef.current = false;
+      return;
+    }
+    setAreControlsOpen(false);
+  }, []);
   const closeHelpMenu = useCallback(() => setIsHelpMenuOpen(false), []);
 
   // Simple click-outside hooks for remaining overlays
   useClickOutside(legendRef, closeLegend, isLegendOpen);
   useClickOutside(helpMenuRef, closeHelpMenu, isHelpMenuOpen);
-  useClickOutside(controlsRef, closeControls, areControlsOpen);
-  useClickOutside(mobileControlsRef, closeControls, areControlsOpen);
+  // Only activate the matching controls ref for the current viewport
+  // Desktop controls ref is hidden on mobile (display:none) so its click-outside
+  // would incorrectly fire when tapping mobile controls, and vice versa
+  const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
+  useClickOutside(controlsRef, closeControls, areControlsOpen && isDesktop);
+  useClickOutside(mobileControlsRef, closeControls, areControlsOpen && !isDesktop);
   // --- LP DETECTION INITIALIZATION ---
   useEffect(() => {
     // Initialize LP detection database on first load (non-blocking)
@@ -1730,35 +1749,30 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               </button>
             </div>
             <div className="p-4 space-y-4 text-sm text-slate-300">
-              <div className="flex gap-3">
-                <div className="p-2 bg-space-900 border border-space-700 rounded h-fit">
-                  <Move size={16} />
+              <div className="text-center">
+                <div className="flex justify-center mb-1">
+                  <Move size={16} className="text-slate-400" />
                 </div>
-                <div>
-                  <strong className="text-white block">Pan & Drag</strong>
-                  Click and drag background to pan. Drag individual bubbles to rearrange them.
+                <strong className="text-white block">Pan & Drag</strong>
+                Click and drag background to pan. Drag individual bubbles to rearrange them.
+              </div>
+              <div className="text-center">
+                <div className="flex justify-center mb-1">
+                  <MousePointer2 size={16} className="text-slate-400" />
+                </div>
+                <strong className="text-white block">Inspect Wallet</strong>
+                Click any bubble to view balance, transactions, and get AI insights.
+                <div className="text-xs text-slate-500 mt-1">
+                  <Lightbulb size={12} className="inline" /> Use Arrow Keys to cycle through
+                  bubbles!
                 </div>
               </div>
-              <div className="flex gap-3">
-                <div className="p-2 bg-space-900 border border-space-700 rounded h-fit">
-                  <MousePointer2 size={16} />
+              <div className="text-center">
+                <div className="flex justify-center mb-1">
+                  <ZoomIn size={16} className="text-slate-400" />
                 </div>
-                <div>
-                  <strong className="text-white block">Inspect Wallet</strong>
-                  Click any bubble to view balance, transactions, and get AI insights.
-                  <div className="text-xs text-slate-500 mt-1">
-                    💡 Use Arrow Keys to cycle through bubbles!
-                  </div>
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <div className="p-2 bg-space-900 border border-space-700 rounded h-fit">
-                  <ZoomIn size={16} />
-                </div>
-                <div>
-                  <strong className="text-white block">Zoom</strong>
-                  Scroll or use the buttons to zoom in/out on complex clusters.
-                </div>
+                <strong className="text-white block">Zoom</strong>
+                Scroll or use the buttons to zoom in/out on complex clusters.
               </div>
             </div>
             <div className="p-4 bg-space-900 text-xs text-center text-slate-500">
@@ -1788,10 +1802,12 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
               onTouchEnd={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
+                skipControlsCloseRef.current = true;
                 setAreControlsOpen((prev) => !prev);
               }}
               onClick={(e) => {
                 e.stopPropagation();
+                skipControlsCloseRef.current = true;
                 setAreControlsOpen((prev) => !prev);
               }}
               className="p-2 bg-space-800 border border-space-700 rounded-lg text-slate-200 hover:bg-space-700 transition-all cursor-pointer [touch-action:manipulation]"
@@ -1876,23 +1892,37 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
           onTouchStart={(e) => e.stopPropagation()}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="bg-space-900 rounded-xl border border-space-700 shadow-xl overflow-hidden transition-all duration-300">
-            <button
-              onTouchStart={handleTouchStopPropagation}
-              onClick={toggleLegend}
-              className="w-full px-4 py-2 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-500 font-bold hover:bg-space-800/50 cursor-pointer bg-transparent border-none [touch-action:manipulation]"
-              type="button"
+          <div
+            className="bg-space-900 rounded-xl border border-space-700 shadow-xl overflow-hidden transition-all duration-300 cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              skipLegendToggleRef.current = true;
+              toggleLegend();
+            }}
+            onTouchStart={handleTouchStopPropagation}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                e.stopPropagation();
+                skipLegendToggleRef.current = true;
+                toggleLegend();
+              }
+            }}
+            role="button"
+            tabIndex={0}
+          >
+            <div
+              className="w-full px-4 py-2 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-500 font-bold hover:bg-space-800/50"
+              role="button"
               aria-expanded={isLegendOpen}
               aria-label={isLegendOpen ? "Close legend" : "Open legend"}
             >
               Legend
               {isLegendOpen ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
-            </button>
+            </div>
 
             <div
               role="presentation"
-              onTouchStart={(e) => e.stopPropagation()}
-              onClick={(e) => e.stopPropagation()}
               className={`px-4 pb-5 transition-all duration-300 ${isLegendOpen ? "max-h-[360px] opacity-100 mt-2" : "max-h-0 opacity-0 overflow-hidden"}`}
             >
               <div className="w-full h-2 rounded-full bg-gradient-to-r from-cyan-500 via-yellow-500 to-red-500 mb-3"></div>
@@ -2034,23 +2064,36 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         onTouchStart={(e) => e.stopPropagation()}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="bg-space-900 rounded-xl border border-space-700 shadow-xl overflow-hidden transition-all duration-300">
-          <button
-            onTouchStart={handleTouchStopPropagation}
-            onClick={toggleLegend}
-            className="w-full px-4 py-2 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-500 font-bold hover:bg-space-800/50 cursor-pointer bg-transparent border-none [touch-action:manipulation]"
-            type="button"
+        <div
+          className="bg-space-900 rounded-xl border border-space-700 shadow-xl overflow-hidden transition-all duration-300 cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation();
+            skipLegendToggleRef.current = true;
+            toggleLegend();
+          }}
+          onTouchStart={handleTouchStopPropagation}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              e.stopPropagation();
+              skipLegendToggleRef.current = true;
+              toggleLegend();
+            }
+          }}
+          role="button"
+          tabIndex={0}
+        >
+          <div
+            className="w-full px-4 py-2 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-500 font-bold hover:bg-space-800/50"
             aria-expanded={isLegendOpen}
             aria-label={isLegendOpen ? "Close legend" : "Open legend"}
           >
             Legend
             {isLegendOpen ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
-          </button>
+          </div>
 
           <div
             role="presentation"
-            onTouchStart={(e) => e.stopPropagation()}
-            onClick={(e) => e.stopPropagation()}
             className={`px-4 pb-5 transition-all duration-300 ${isLegendOpen ? "max-h-[360px] opacity-100 mt-2" : "max-h-0 opacity-0 overflow-hidden"}`}
           >
             <div className="w-full h-2 rounded-full bg-gradient-to-r from-cyan-500 via-yellow-500 to-red-500 mb-3"></div>

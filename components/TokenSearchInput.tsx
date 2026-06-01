@@ -1,6 +1,14 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
-import { Search, Loader2, Coins, Image as ImageIcon, Clock, TrendingUp } from "lucide-react";
+import {
+  Search,
+  Loader2,
+  Coins,
+  Image as ImageIcon,
+  Clock,
+  TrendingUp,
+  Lightbulb,
+} from "lucide-react";
 import { Tooltip } from "./Tooltip";
 
 import { AssetType, SearchResult, TokenSearchInputProps } from "../types";
@@ -1027,7 +1035,8 @@ export function TokenSearchInput({
                   </div>
                 )}
                 <p className="text-xs text-slate-600 mt-3">
-                  💡 Search by token symbol, name, or contract address. Press 1-
+                  <Lightbulb size={12} className="inline" /> Search by token symbol, name, or
+                  contract address. Press 1-
                   {Math.min(9, suggestionTokens.length)} for quick select.
                 </p>
               </div>

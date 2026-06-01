@@ -88,7 +88,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b border-space-700 bg-space-900/95 backdrop-blur-md">
+      <nav className="fixed top-0 left-0 right-0 z-[55] w-full border-b border-space-700 bg-space-900/95 backdrop-blur-md">
         <div className="w-full flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
             {/* Mobile: hamburger menu button replaces logo circle */}
@@ -390,7 +390,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Mobile Navigation Dropdown */}
         <div
           ref={mobileMenuRef}
-          className={`md:hidden border-t border-space-700 bg-space-800 px-4 flex flex-col gap-2 absolute w-full shadow-2xl z-50 transition-all duration-300 origin-top ${
+          className={`md:hidden border-t border-space-700 bg-space-800 px-4 flex flex-col gap-2 absolute w-full shadow-2xl z-[60] transition-all duration-300 origin-top ${
             isMobileMenuOpen
               ? "opacity-100 scale-y-100 py-4 pointer-events-auto"
               : "opacity-0 scale-y-95 py-0 max-h-0 overflow-hidden pointer-events-none"

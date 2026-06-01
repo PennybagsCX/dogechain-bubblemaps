@@ -530,7 +530,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
         )}
 
         {/* Scrollable Content Area */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-5 overscroll-contain scroll-fade">
+        <div className="flex-1 overflow-y-auto p-5 space-y-5 overscroll-contain">
           {/* Connection Details View or Wallet Details */}
           {isConnectionView && connection ? (
             <ConnectionDetailsView
@@ -631,7 +631,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   </div>
 
                   {/* Messages Area */}
-                  <div className="flex-1 overflow-y-auto p-3 space-y-3 scroll-fade">
+                  <div className="flex-1 overflow-y-auto p-3 space-y-3">
                     {messages.map((msg, i) => (
                       <div
                         key={i}
@@ -733,7 +733,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   </div>
 
                   {/* Transactions List */}
-                  <div className="flex-1 overflow-y-auto space-y-3 min-h-0 px-5 scroll-fade">
+                  <div className="flex-1 overflow-y-auto space-y-3 min-h-0 px-5">
                     {isTransactionsLoading ? (
                       <div className="flex flex-col items-center justify-center py-8 space-y-3">
                         <Loader2 size={24} className="text-doge-500 animate-spin" />

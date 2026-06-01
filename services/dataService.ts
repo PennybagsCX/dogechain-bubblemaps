@@ -238,6 +238,8 @@ const KNOWN_LABELS: Record<string, string> = {
   "0xf82e972e10fad1c8856832187adfc436edf38288": "Market Making",
   "0x009d2bff6cade60d8bcce580424c72a67d3961b6": "Robinhood Reserve",
   "0x1d4c74827e3a0b0cd13f76974f145295f7468d41": "Polygon Reserve",
+  // Notable Wallets
+  "0xab5801a7d398351b8be11c439e05c5b3259aec9b": "Vitalik Buterin",
   // Exchanges
   "0x0f2d557587022a8f500d7b9ca099342af796b946": "MEXC",
 };

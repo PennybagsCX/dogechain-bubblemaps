@@ -254,7 +254,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Right Side Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             {/* RainbowKit Connect Button - Custom styled to match original design */}
             <ConnectButton.Custom>
               {({
@@ -342,7 +342,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           <button
                             onClick={openConnectModal}
                             onTouchStart={handleTouchStopPropagation}
-                            className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-lg transition-all duration-200 bg-purple-600 text-white shadow-lg shadow-purple-600/20 hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm md:text-base font-medium whitespace-nowrap"
+                            className="flex items-center gap-1.5 px-2 py-1 md:px-4 md:py-2 rounded-lg transition-all duration-200 bg-purple-600 text-white shadow-lg shadow-purple-600/20 hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:outline-none text-xs md:text-base font-medium whitespace-nowrap"
                             type="button"
                           >
                             <span className="hidden sm:inline">Connect Wallet</span>
@@ -356,7 +356,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           <button
                             onClick={openChainModal}
                             onTouchStart={handleTouchStopPropagation}
-                            className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-lg transition-all duration-200 bg-red-600 text-white shadow-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:outline-none text-sm md:text-base font-medium whitespace-nowrap"
+                            className="flex items-center gap-1.5 px-2 py-1 md:px-4 md:py-2 rounded-lg transition-all duration-200 bg-red-600 text-white shadow-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:outline-none text-xs md:text-base font-medium whitespace-nowrap"
                             type="button"
                           >
                             <span className="hidden sm:inline">Wrong network</span>
@@ -369,10 +369,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                         <button
                           onClick={openAccountModal}
                           onTouchStart={handleTouchStopPropagation}
-                          className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-lg transition-all duration-200 bg-purple-600 text-white shadow-lg shadow-purple-600/20 hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm md:text-base font-medium"
+                          className="flex items-center gap-1.5 px-2 py-1 md:px-4 md:py-2 rounded-lg transition-all duration-200 bg-purple-600 text-white shadow-lg shadow-purple-600/20 hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:outline-none text-xs md:text-base font-medium"
                           type="button"
                         >
-                          <span className="max-w-[120px] md:max-w-[200px] truncate">
+                          <span className="max-w-[72px] md:max-w-[200px] truncate">
                             {account.displayName}
                           </span>
                         </button>

@@ -22,8 +22,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenGuide }) => {
         <div className="flex flex-col items-center justify-center gap-6 text-center">
           <div className="text-center">
             <h3 className="text-lg font-bold text-white flex items-center justify-center gap-2">
-              <span className="text-purple-600">Ð</span> Dogechain{" "}
-              <span className="text-purple-500">BubbleMaps</span>
+              <div className="h-8 w-8 flex items-center justify-center rounded-full bg-purple-600 text-white font-bold shadow-lg shadow-purple-600/20">
+                Ð
+              </div>{" "}
+              Dogechain <span className="text-purple-500">BubbleMaps</span>
             </h3>
             <p className="text-slate-500 text-sm mt-2 max-w-full sm:max-w-md">
               An advanced on-chain intelligence platform providing live visualization of token

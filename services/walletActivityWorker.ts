@@ -179,11 +179,13 @@ function buildActivityTimeline(
   const uniqueWalletsPerPeriod = new Map<string, Set<string>>();
   filteredTxs.forEach((tx) => {
     const dateKey = formatTimelineDate(tx.timestamp, timeRange);
-    if (!uniqueWalletsPerPeriod.has(dateKey)) {
-      uniqueWalletsPerPeriod.set(dateKey, new Set());
+    let walletsForDate = uniqueWalletsPerPeriod.get(dateKey);
+    if (!walletsForDate) {
+      walletsForDate = new Set();
+      uniqueWalletsPerPeriod.set(dateKey, walletsForDate);
     }
-    uniqueWalletsPerPeriod.get(dateKey)!.add(tx.from);
-    uniqueWalletsPerPeriod.get(dateKey)!.add(tx.to);
+    walletsForDate.add(tx.from);
+    walletsForDate.add(tx.to);
   });
 
   timeline.forEach((point) => {

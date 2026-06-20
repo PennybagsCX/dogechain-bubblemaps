@@ -55,7 +55,8 @@ export function trackSearchForAlias(query: string, results: SearchResult[]): voi
   }
 
   // Mark that we showed these results for this query
-  const pattern = searchPatterns.get(normalizedQuery)!;
+  const pattern = searchPatterns.get(normalizedQuery);
+  if (!pattern) return;
   for (const result of results) {
     pattern.set(result.address.toLowerCase(), (pattern.get(result.address.toLowerCase()) || 0) + 1);
   }

@@ -1927,7 +1927,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             {expandedNotificationCharts.has(txChartId) && hasValidToken && (
                               <div className="mt-2 -mx-3 w-[calc(100%+0.75rem)] animate-in slide-in-from-top-2 duration-200">
                                 <EmbeddedChart
-                                  tokenAddress={tx.tokenAddress!}
+                                  tokenAddress={tx.tokenAddress ?? ""}
                                   tokenSymbol={tx.tokenSymbol || "Token"}
                                   className="w-full"
                                   theme="dark"

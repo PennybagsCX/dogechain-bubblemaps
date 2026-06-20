@@ -100,7 +100,10 @@ describe("Filter Panel Lifecycle", () => {
     // Expand advanced section
     const advancedToggles = screen.getAllByText("Advanced Filters");
     const toggleSpan = advancedToggles.find((el) => el.tagName === "SPAN");
-    if (toggleSpan) fireEvent.click(toggleSpan.closest("button")!);
+    if (toggleSpan) {
+      const btn = toggleSpan.closest("button");
+      if (btn) fireEvent.click(btn);
+    }
 
     // Select "Whale (1-5%)"
     const whaleButton = screen.getByText(/Whale \(1-5%\)/);
@@ -121,7 +124,10 @@ describe("Filter Panel Lifecycle", () => {
     // Expand advanced
     const advancedToggles = screen.getAllByText("Advanced Filters");
     const toggleSpan = advancedToggles.find((el) => el.tagName === "SPAN");
-    if (toggleSpan) fireEvent.click(toggleSpan.closest("button")!);
+    if (toggleSpan) {
+      const btn = toggleSpan.closest("button");
+      if (btn) fireEvent.click(btn);
+    }
 
     // Rapid changes
     fireEvent.click(screen.getByText(/Whale \(1-5%\)/));
@@ -379,7 +385,10 @@ describe("Filter Presets", () => {
     // Apply whale filter
     const advancedToggles = screen.getAllByText("Advanced Filters");
     const toggleSpan = advancedToggles.find((el) => el.tagName === "SPAN");
-    if (toggleSpan) fireEvent.click(toggleSpan.closest("button")!);
+    if (toggleSpan) {
+      const btn = toggleSpan.closest("button");
+      if (btn) fireEvent.click(btn);
+    }
 
     fireEvent.click(screen.getByText(/Whale \(1-5%\)/));
 

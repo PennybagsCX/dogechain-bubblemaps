@@ -316,7 +316,8 @@ describe("FilterControls Panel", () => {
     const toggleSpan = advancedToggles.find((el) => el.tagName === "SPAN");
     expect(toggleSpan).toBeTruthy();
     if (toggleSpan) {
-      fireEvent.click(toggleSpan.closest("button")!);
+      const btn = toggleSpan.closest("button");
+      if (btn) fireEvent.click(btn);
     }
     // After expanding, holding size options should be visible
     expect(screen.getByText(/Whale \(1-5%\)/)).toBeInTheDocument();

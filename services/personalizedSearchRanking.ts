@@ -109,7 +109,8 @@ export async function getUserSearchHistory(
           });
         }
 
-        const history = historyMap.get(address)!;
+        const history = historyMap.get(address);
+        if (!history) continue;
         history.searchCount++;
         history.lastSearched = Math.max(history.lastSearched, event.timestamp);
 

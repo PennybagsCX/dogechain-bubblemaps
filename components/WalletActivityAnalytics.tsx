@@ -143,7 +143,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
 
     const interval = setInterval(() => {
       messageIndexRef.current = (messageIndexRef.current + 1) % loadingMessages.length;
-      setLoadingMessage(loadingMessages[messageIndexRef.current]!);
+      setLoadingMessage(loadingMessages[messageIndexRef.current] ?? loadingMessages[0] ?? "");
     }, 3000);
 
     return () => clearInterval(interval);
@@ -417,7 +417,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
         setProgressDetails(`Found ${wallets.length} wallets, analyzing transactions...`);
       } else {
         // Same token, different timeframe - use cached wallets (instant switch!)
-        wallets = walletsCache!;
+        wallets = walletsCache ?? [];
         console.log(
           `[WalletActivityAnalytics] Using cached ${wallets.length} wallets for ${token.address}`
         );
@@ -597,7 +597,8 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
     if (!walletTransactions[walletAddress] && !loadingTransactions[walletAddress]) {
       setLoadingTransactions((prev) => ({ ...prev, [walletAddress]: true }));
       try {
-        const txs = await fetchWalletTransactions(walletAddress, token!.address, token!.type);
+        if (!token) return;
+        const txs = await fetchWalletTransactions(walletAddress, token.address, token.type);
         setWalletTransactions((prev) => ({ ...prev, [walletAddress]: txs }));
       } catch (error) {
         console.error(

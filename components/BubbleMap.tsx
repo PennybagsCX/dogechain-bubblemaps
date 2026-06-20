@@ -1160,8 +1160,10 @@ export const BubbleMap: React.FC<BubbleMapProps> = ({
         } else if (hasLabel) {
           // Labeled wallet: rank + label + pct
           const maxLen = d.r < 20 ? 5 : d.r < 30 ? 7 : 9;
-          const labelText =
-            d.label!.length > maxLen ? d.label!.substring(0, maxLen - 2) + ".." : d.label!;
+          const labelText = (() => {
+            const label = d.label ?? "";
+            return label.length > maxLen ? label.substring(0, maxLen - 2) + ".." : label;
+          })();
           text
             .append("tspan")
             .attr("x", 0)

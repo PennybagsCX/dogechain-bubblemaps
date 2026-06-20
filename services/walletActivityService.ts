@@ -207,11 +207,13 @@ export async function buildActivityTimeline(
   const uniqueWalletsPerPeriod = new Map<string, Set<string>>();
   filteredTxs.forEach((tx) => {
     const dateKey = formatTimelineDate(tx.timestamp, timeRange);
-    if (!uniqueWalletsPerPeriod.has(dateKey)) {
-      uniqueWalletsPerPeriod.set(dateKey, new Set());
+    let walletsForDate = uniqueWalletsPerPeriod.get(dateKey);
+    if (!walletsForDate) {
+      walletsForDate = new Set();
+      uniqueWalletsPerPeriod.set(dateKey, walletsForDate);
     }
-    uniqueWalletsPerPeriod.get(dateKey)!.add(tx.from);
-    uniqueWalletsPerPeriod.get(dateKey)!.add(tx.to);
+    walletsForDate.add(tx.from);
+    walletsForDate.add(tx.to);
   });
 
   timeline.forEach((point) => {
@@ -840,7 +842,8 @@ export async function prefetchOtherTimeRanges(
 
   // Stagger fetches with 2 second delays to prevent rate limiting
   for (let i = 0; i < timeRangesToPrefetch.length; i++) {
-    const timeRange = timeRangesToPrefetch[i]!;
+    const timeRange = timeRangesToPrefetch[i];
+    if (!timeRange) continue;
 
     // Add delay between fetches (skip delay for first one)
     if (i > 0) {
@@ -898,7 +901,8 @@ export async function prefetchOtherTimeRangesWithProgress(
 
   // Stagger fetches with 2 second delays to prevent rate limiting
   for (let i = 0; i < timeRangesToPrefetch.length; i++) {
-    const timeRange = timeRangesToPrefetch[i]!;
+    const timeRange = timeRangesToPrefetch[i];
+    if (!timeRange) continue;
 
     // Add delay between fetches (skip delay for first one)
     if (i > 0) {
@@ -1162,18 +1166,22 @@ async function analyzeWalletActivitiesFromTransactions(
 
     // Track incoming transactions (to is wallet)
     if (walletAddresses.includes(fromLower)) {
-      if (!walletTxs.has(fromLower)) {
-        walletTxs.set(fromLower, []);
+      let fromList = walletTxs.get(fromLower);
+      if (!fromList) {
+        fromList = [];
+        walletTxs.set(fromLower, fromList);
       }
-      walletTxs.get(fromLower)!.push(tx);
+      fromList.push(tx);
     }
 
     // Track outgoing transactions (from is wallet)
     if (walletAddresses.includes(toLower)) {
-      if (!walletTxs.has(toLower)) {
-        walletTxs.set(toLower, []);
+      let toList = walletTxs.get(toLower);
+      if (!toList) {
+        toList = [];
+        walletTxs.set(toLower, toList);
       }
-      walletTxs.get(toLower)!.push(tx);
+      toList.push(tx);
     }
   });
 

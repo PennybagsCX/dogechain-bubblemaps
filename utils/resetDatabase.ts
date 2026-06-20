@@ -6,7 +6,6 @@
  * when you encounter schema errors or corruption.
  */
 
-/* eslint-disable no-console */
 export async function resetDatabaseFromConsole(): Promise<void> {
   const confirmed = confirm(
     "⚠️ WARNING: This will delete all cached data including:\n" +

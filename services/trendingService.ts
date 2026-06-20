@@ -47,7 +47,6 @@ export async function logSearchQuery(
   if (isLocalDev) return false;
 
   try {
-    // eslint-disable-next-line no-console -- Intentional debug logging for search tracking
     console.log("[Search] Logging search for", address, assetType);
     // Use /api/interactions endpoint which writes to token_interactions table
     // This table is queried by /api/stats for the search counter

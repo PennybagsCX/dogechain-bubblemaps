@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Link, Connection, Transaction, ConnectionStats, AssetType } from "../types";
 import { fetchWalletTransactions } from "./dataService";
 

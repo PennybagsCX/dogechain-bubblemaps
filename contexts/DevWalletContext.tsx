@@ -10,7 +10,7 @@ import React, { createContext, useContext, useState, useCallback, type ReactNode
 
 const isDev = typeof import.meta !== "undefined" && import.meta.env?.DEV;
 
-export const DEV_WALLET_ADDRESS = "0x742d35Cc6634C0532925a3b844Bc9e7595f2BD38" as const;
+const DEV_WALLET_ADDRESS = "0x742d35Cc6634C0532925a3b844Bc9e7595f2BD38" as const;
 
 interface DevWalletState {
   isDevMode: boolean;

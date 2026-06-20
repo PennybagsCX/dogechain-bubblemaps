@@ -35,7 +35,12 @@
     }
   },
   "rules": {
-    "react-refresh/only-export-components": ["warn", { "allowConstantExport": true }],
+    "react-refresh/only-export-components": [
+      "warn",
+      {
+        "allowConstantExport": true
+      }
+    ],
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
@@ -53,7 +58,7 @@
     "no-console": [
       "warn",
       {
-        "allow": ["warn", "error"]
+        "allow": ["log", "info", "warn", "error", "debug", "table"]
       }
     ]
   },

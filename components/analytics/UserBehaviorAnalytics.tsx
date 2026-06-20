@@ -41,6 +41,7 @@ export const UserBehaviorAnalytics: React.FC<UserBehaviorAnalyticsProps> = ({
 
   useEffect(() => {
     loadStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- loadStats intentionally excluded: stable function defined in the same render; adding it would re-trigger the mount-only fetch on every render.
   }, [selectedTimeRange]);
 
   const loadStats = async () => {

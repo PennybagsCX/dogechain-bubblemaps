@@ -147,6 +147,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
     }, 3000);
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- loadingMessages intentionally excluded: stable module-scope constant array; adding it is a no-op that only satisfies the linter.
   }, [loading]);
 
   // Reset status when token changes
@@ -174,6 +175,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
     } catch {
       // SessionStorage cleanup failed, ignore
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- token intentionally excluded (only token?.address tracked): the full token object changes on every fetch and would re-run cleanup, wiping valid sessionStorage entries.
   }, [token?.address]);
 
   // Memoized fetch function with progress tracking
@@ -567,6 +569,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
     } finally {
       setLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- walletsCache intentionally excluded: ref-backed cache (mutated, not reassigned); including it would bust the memoization this useCallback exists to provide.
   }, [token, timeRange, refreshKey]);
 
   // Fetch analytics data when dependencies change

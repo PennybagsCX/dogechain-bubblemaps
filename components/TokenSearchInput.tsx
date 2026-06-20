@@ -665,6 +665,7 @@ export function TokenSearchInput({
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- handlePopularTokenClick and inputRef intentionally excluded: the keydown handler only needs to rebind when dropdown/history/suggestions visibility changes.
   }, [showDropdown, showHistory, suggestionTokens]);
 
   return (

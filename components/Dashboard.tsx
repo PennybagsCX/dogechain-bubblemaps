@@ -896,6 +896,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       // CRITICAL FIX: Race scan against timeout to prevent indefinite hanging
       await Promise.race([scanPromise, scanTimeout]);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- fetchTransactionsHybrid intentionally excluded: it closes over alert-scoped state; including it would re-create this useCallback every render and cascade into the scan interval (re-scan storms).
     [isInGracePeriod, rpcClient] // Dependencies: grace period check and RPC client instance
   );
 
@@ -1038,6 +1039,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
     // Cleanup interval on unmount
     return () => clearInterval(intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- isScanning intentionally excluded: adding it would restart the 10s scan interval every time a scan starts/ends, producing overlapping intervals.
   }, [alerts.length, runScan, isInGracePeriod]); // Include runScan and isInGracePeriod as dependencies
 
   // Show browser notifications when alerts trigger
@@ -1215,6 +1217,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         }
       });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- onAlertTriggered intentionally excluded: parent-defined callback whose identity is not stable; adding it would re-fire the notification effect on every parent render.
   }, [
     statuses,
     alerts,

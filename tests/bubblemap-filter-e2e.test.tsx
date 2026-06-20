@@ -176,7 +176,7 @@ describe("Filter Logic with Realistic Data", () => {
       { size: "micro", expectedCount: 2, range: [0, 0.1] },
     ];
 
-    for (const { size, expectedCount, range } of cases) {
+    for (const { size, expectedCount, _range } of cases) {
       const filters: FilterState = {
         showLinks: true,
         showLabels: true,

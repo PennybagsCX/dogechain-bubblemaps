@@ -104,14 +104,6 @@ function renderFilterControls() {
 }
 
 // ============================================================
-// Portal cleanup: remove orphaned portal DOM from document.body
-// ============================================================
-
-function cleanupPortals() {
-  document.querySelectorAll("[data-filter-controls]").forEach((el) => el.remove());
-}
-
-// ============================================================
 // TEST SUITE 1: Filter logic correctness
 // ============================================================
 

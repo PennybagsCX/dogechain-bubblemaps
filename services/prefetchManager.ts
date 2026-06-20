@@ -110,7 +110,7 @@ class PrefetchManagerClass {
     try {
       const channel = new BroadcastChannel(SYNC_CHANNEL);
       channel.postMessage({ type: "STATE_UPDATE" });
-    } catch (e) {
+    } catch {
       // BroadcastChannel not supported
     }
   }

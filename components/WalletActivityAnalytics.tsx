@@ -171,7 +171,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
           }
         }
       });
-    } catch (e) {
+    } catch {
       // SessionStorage cleanup failed, ignore
     }
   }, [token?.address]);

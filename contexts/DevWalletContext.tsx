@@ -28,6 +28,7 @@ const DevWalletContext = createContext<DevWalletState>({
   disconnect: () => {},
 });
 
+// eslint-disable-next-line react-refresh/only-export-components -- context hook co-located with provider; splitting adds import churn for a dev-HMR-only concern
 export const useDevWallet = () => useContext(DevWalletContext);
 
 export const DevWalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- Test stub file: mock fixtures intentionally use any */
 /**
  * Minimal alert test setup stub
  * This file provides stub exports for the alert test utilities

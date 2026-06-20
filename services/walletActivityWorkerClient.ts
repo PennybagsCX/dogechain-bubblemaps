@@ -49,7 +49,10 @@ class WalletActivityWorkerClient {
   private worker: Worker | null = null;
   private pendingRequests = new Map<
     string,
-    { resolve: (value: any) => void; reject: (error: Error) => void }
+    {
+      resolve: (value: ActivityTimelinePoint[] | FlowPattern[] | undefined) => void;
+      reject: (error: Error) => void;
+    }
   >();
   private requestIdCounter = 0;
 
@@ -118,7 +121,8 @@ class WalletActivityWorkerClient {
       this.pendingRequests.set(requestId, {
         resolve: (value) => {
           clearTimeout(timeout);
-          resolve(value);
+          // Worker response shape matches T by contract; narrow at the boundary.
+          resolve(value as T);
         },
         reject: (error) => {
           clearTimeout(timeout);

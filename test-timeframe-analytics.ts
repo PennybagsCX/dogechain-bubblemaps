@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- Standalone diagnostic CLI script; loose typing is intentional */
 /**
  * Wallet Activity Analytics Timeframe Testing Script
  *

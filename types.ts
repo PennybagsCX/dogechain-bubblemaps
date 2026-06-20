@@ -557,7 +557,7 @@ export interface AnalyticsExportData {
   type: string;
   timeRange: string;
   exportDate: string;
-  data: any;
+  data: unknown;
 }
 
 // =====================================================

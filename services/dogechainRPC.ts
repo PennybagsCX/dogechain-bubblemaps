@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- viem Client/Log/Block generics are intentionally loose: this module bridges raw RPC responses via Client<any> & Record<string, any> to access viem action methods (getBlock/getLogs/readContract). Tightening breaks compilation. */
 import { createPublicClient, http } from "viem";
 import type { Client } from "viem";
 import { trackApiCall } from "./apiMetrics";

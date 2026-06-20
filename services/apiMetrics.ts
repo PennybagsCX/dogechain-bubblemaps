@@ -88,8 +88,17 @@ export async function trackApiCall<T>(
     const result = await fn();
     success = true;
     return result;
-  } catch (error: any) {
-    statusCode = error?.status || error?.statusCode;
+  } catch (error: unknown) {
+    if (typeof error === "object" && error !== null) {
+      if ("status" in error && typeof (error as { status?: unknown }).status === "number") {
+        statusCode = (error as { status: number }).status;
+      } else if (
+        "statusCode" in error &&
+        typeof (error as { statusCode?: unknown }).statusCode === "number"
+      ) {
+        statusCode = (error as { statusCode: number }).statusCode;
+      }
+    }
     throw error;
   } finally {
     const duration = performance.now() - startTime;

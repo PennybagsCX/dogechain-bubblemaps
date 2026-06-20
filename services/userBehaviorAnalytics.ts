@@ -162,7 +162,14 @@ export async function getUserBehaviorStats(timeRange: TimeRange): Promise<UserBe
     const startTime = now - timeRangeMs;
 
     // Get events from IndexedDB
-    let events: any[] = [];
+    // Shape of rows from the searchAnalytics Dexie table (SearchAnalyticsEvent + optional fields)
+    type AnalyticsEventRow = {
+      sessionId: string;
+      timestamp: number;
+      type?: string;
+      resultCount?: number;
+    };
+    let events: AnalyticsEventRow[] = [];
     if ("searchAnalytics" in db) {
       events = await db.searchAnalytics.where("timestamp").above(startTime).toArray();
     }
@@ -192,7 +199,7 @@ export async function getUserBehaviorStats(timeRange: TimeRange): Promise<UserBe
       // Count searches
       if (!event.type || event.type === "search") {
         searchCount++;
-        if (event.resultCount > 0) {
+        if ((event.resultCount ?? 0) > 0) {
           successfulSearches++;
           totalResults += event.resultCount || 0;
         }

@@ -8,7 +8,13 @@
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, cleanup, waitFor } from "@testing-library/react";
-import { FilterProvider, useFilters, FilterState } from "../contexts/FilterContext";
+import {
+  FilterProvider,
+  useFilters,
+  FilterState,
+  HoldingSizeFilter,
+  LabelFilter,
+} from "../contexts/FilterContext";
 import { FilterControls } from "../components/FilterControls";
 import { filterWallets } from "../utils/filterUtils";
 import { Wallet } from "../types";
@@ -168,12 +174,16 @@ describe("Filter Logic with Realistic Data", () => {
   const wallets = createTestWallets(10);
 
   it("each holding size filter returns the correct wallets", () => {
-    const cases: Array<{ size: string; expectedCount: number; range: [number, number] }> = [
-      { size: "all", expectedCount: 10, range: [0, Infinity] },
-      { size: "mega", expectedCount: 2, range: [5, Infinity] },
-      { size: "whale", expectedCount: 4, range: [1, 5] },
-      { size: "retail", expectedCount: 2, range: [0.1, 1] },
-      { size: "micro", expectedCount: 2, range: [0, 0.1] },
+    const cases: Array<{
+      size: HoldingSizeFilter;
+      expectedCount: number;
+      _range: [number, number];
+    }> = [
+      { size: "all", expectedCount: 10, _range: [0, Infinity] },
+      { size: "mega", expectedCount: 2, _range: [5, Infinity] },
+      { size: "whale", expectedCount: 4, _range: [1, 5] },
+      { size: "retail", expectedCount: 2, _range: [0.1, 1] },
+      { size: "micro", expectedCount: 2, _range: [0, 0.1] },
     ];
 
     for (const { size, expectedCount, _range } of cases) {
@@ -181,7 +191,7 @@ describe("Filter Logic with Realistic Data", () => {
         showLinks: true,
         showLabels: true,
         minBalancePercent: 0,
-        holdingSize: size as any,
+        holdingSize: size,
         label: "all",
         activity: "all",
         customTags: [],
@@ -195,7 +205,7 @@ describe("Filter Logic with Realistic Data", () => {
   });
 
   it("label filters work correctly", () => {
-    const cases: Array<{ label: string; check: (w: Wallet) => boolean }> = [
+    const cases: Array<{ label: LabelFilter; check: (w: Wallet) => boolean }> = [
       { label: "labeled", check: (w) => !!w.label },
       { label: "unlabeled", check: (w) => !w.label },
       { label: "contracts", check: (w) => w.isContract },
@@ -207,7 +217,7 @@ describe("Filter Logic with Realistic Data", () => {
         showLabels: true,
         minBalancePercent: 0,
         holdingSize: "all",
-        label: label as any,
+        label: label,
         activity: "all",
         customTags: [],
         hideDust: false,

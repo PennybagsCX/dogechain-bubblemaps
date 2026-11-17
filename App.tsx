@@ -155,35 +155,30 @@ interface TrendingAsset {
   hits: number; // Number of times searched/viewed
 }
 
-// Initial Real Data (Verified Contracts)
+// Initial seeds: contracts that actually exist on DogeOS Chikyū testnet (verified with
+// blockscout getToken, 2026-11-17). `hits` is a LOCAL view counter — it starts at 0 so the
+// ranking is not seeded with invented popularity; real usage moves it.
 const INITIAL_TRENDING: TrendingAsset[] = [
   {
-    symbol: "wDOGE",
-    name: "Wrapped Doge",
-    address: "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101",
+    symbol: "LINK",
+    name: "ChainLink Token",
+    address: "0xe5e3a4fF1773d043a387b16Ceb3c91cC49bAFD54",
     type: AssetType.TOKEN,
-    hits: 100,
+    hits: 0,
   },
   {
-    symbol: "USDT",
-    name: "Tether USD",
-    address: "0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d",
+    symbol: "SUCH",
+    name: "SUCH",
+    address: "0x555de2148Ef9FF0fEf70FaF7587C3492eb468A91",
     type: AssetType.TOKEN,
-    hits: 85,
+    hits: 0,
   },
   {
-    symbol: "DC",
-    name: "Dogechain",
-    address: "0x7B4328c127B85369D9f82ca0503B000D09CF9180",
+    symbol: "mWDOGE",
+    name: "Moar interest bearing WDOGE",
+    address: "0xA69d8Ac86502e4E08c812c64675a4892dfe6870f",
     type: AssetType.TOKEN,
-    hits: 70,
-  },
-  {
-    symbol: "DPunks",
-    name: "RealDogePunks",
-    address: "0xd38b22794b308a2e55808a13d1e6a80c4be94fd5",
-    type: AssetType.NFT,
-    hits: 50,
+    hits: 0,
   },
 ];
 
@@ -925,18 +920,18 @@ const App: React.FC = () => {
   }, [selectedWallet, isMobileStatsOpen]);
   // --- DYNAMIC TITLE ---
   useEffect(() => {
-    if (view === ViewState.HOME) document.title = "Dogechain BubbleMaps - On-Chain Intelligence";
-    else if (view === ViewState.DASHBOARD) document.title = "My Dashboard | Dogechain BubbleMaps";
+    if (view === ViewState.HOME) document.title = "DogeOS Bubblemaps - On-Chain Intelligence";
+    else if (view === ViewState.DASHBOARD) document.title = "My Dashboard | DogeOS Bubblemaps";
     else if (view === ViewState.ANALYSIS && token)
-      document.title = `Analysis: ${token.symbol} | Dogechain BubbleMaps`;
+      document.title = `Analysis: ${token.symbol} | DogeOS Bubblemaps`;
     else if (view === ViewState.NETWORK_HEALTH)
-      document.title = "Network Health | Dogechain BubbleMaps";
+      document.title = "Network Health | DogeOS Bubblemaps";
     else if (view === ViewState.DISTRIBUTION)
-      document.title = "Distribution Analytics | Dogechain BubbleMaps";
+      document.title = "Distribution Analytics | DogeOS Bubblemaps";
     else if (view === ViewState.WALLET_ACTIVITY)
-      document.title = "Wallet Activity Analytics | Dogechain BubbleMaps";
+      document.title = "Wallet Activity Analytics | DogeOS Bubblemaps";
     else if (view === ViewState.UNIFIED_ANALYTICS)
-      document.title = "Unified Analytics | Dogechain BubbleMaps";
+      document.title = "Unified Analytics | DogeOS Bubblemaps";
 
     // Track page view for analytics
     trackPageView(view, token?.address);
@@ -2266,7 +2261,7 @@ const App: React.FC = () => {
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
                       Reveal the
                     </span>{" "}
-                    <span className="text-purple-500">Dogechain</span>
+                    <span className="text-purple-500">DogeOS</span>
                   </h1>
 
                   {/* Description */}
@@ -2877,9 +2872,9 @@ const App: React.FC = () => {
                                 >
                                   {w.percentage.toFixed(1)}%
                                 </span>
-                                <Tooltip content="View wallet on Dogechain Explorer">
+                                <Tooltip content="View wallet on DogeOS Explorer">
                                   <a
-                                    href={`https://explorer.dogechain.dog/address/${w.address}`}
+                                    href={`https://dogeos-testnet.l2scan.co/address/${w.address}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className={`transition-colors p-2 rounded min-w-[44px] min-h-[44px] inline-flex items-center justify-center [touch-action:manipulation] ${
@@ -2893,7 +2888,7 @@ const App: React.FC = () => {
                                         e.stopPropagation();
                                         e.preventDefault();
                                         window.open(
-                                          `https://explorer.dogechain.dog/address/${w.address}`,
+                                          `https://dogeos-testnet.l2scan.co/address/${w.address}`,
                                           "_blank",
                                           "noopener,noreferrer"
                                         );
@@ -3002,7 +2997,7 @@ const App: React.FC = () => {
                           <Loader2 className="animate-spin text-purple-500" size={48} />
                           <span className="text-white font-medium">Fetching Live Data...</span>
                           <span className="text-xs text-slate-500">
-                            Connecting to Dogechain Explorer API
+                            Connecting to DogeOS Explorer API
                           </span>
                         </div>
                       </div>

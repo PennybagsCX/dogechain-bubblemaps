@@ -232,7 +232,7 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
             <div className="font-semibold text-white">Network Health</div>
             <Activity className="text-blue-500" size={20} />
           </div>
-          <div className="text-sm text-slate-400">Real-time Dogechain blockchain metrics</div>
+          <div className="text-sm text-slate-400">Real-time DogeOS Chikyū blockchain metrics</div>
           <div className="mt-3 flex items-center justify-center text-sm text-blue-400">
             View Details <ArrowRight size={16} />
           </div>

@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 /**
- * Validation schemas for Dogechain BubbleMaps
+ * Validation schemas for DogeOS Bubblemaps
  * Provides type-safe input validation and sanitization
  */
 
-// Ethereum/Dogechain address validation (checksummed)
+// EVM address validation (checksummed)
 export const addressSchema = z
   .string()
   .regex(/^0x[a-fA-F0-9]{40}$/, {

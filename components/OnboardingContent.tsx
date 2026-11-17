@@ -40,10 +40,10 @@ export const onboardingContent: OnboardingContent = {
   steps: [
     {
       id: "welcome",
-      title: "Welcome to Dogechain BubbleMaps",
+      title: "Welcome to DogeOS Bubblemaps",
       icon: <Sparkles size={48} className="text-purple-500" />,
       content:
-        "Discover the hidden patterns of Dogechain's token ecosystem. Our advanced visualization tools reveal whale movements, wallet connections, and distribution insights invisible to most users.",
+        "Discover the hidden patterns of DogeOS Chikyū's token ecosystem. Our advanced visualization tools reveal whale movements, wallet connections, and distribution insights invisible to most users.",
       featureHighlight: null,
       primaryAction: "Get Started",
       secondaryAction: "Skip Tour",

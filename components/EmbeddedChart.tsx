@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronDown, ChevronUp, ExternalLink, RefreshCw, AlertCircle } from "lucide-react";
 import { Tooltip } from "./Tooltip";
+import { CHAIN } from "../lib/chain";
 
 interface EmbeddedChartProps {
   tokenAddress: string;
@@ -17,7 +18,9 @@ interface EmbeddedChartProps {
 export const EmbeddedChart: React.FC<EmbeddedChartProps> = ({
   tokenAddress,
   tokenSymbol = "Unknown",
-  chainId = "dogechain",
+  // DogeOS Chikyū by default. Dexscreener has no feed for this chain yet, so the provider
+  // check below reports "chart unavailable" instead of embedding a foreign chain's chart.
+  chainId = CHAIN.network,
   className = "",
   onLoad,
   onError,

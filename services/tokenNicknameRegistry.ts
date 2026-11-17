@@ -53,8 +53,8 @@ const NICKNAME_MAP: Record<string, string[]> = {
   cro: ["crypto.com", "cro", "crypto.com coin"],
   gt: ["gate", "gate token"],
 
-  // Dogechain specific
-  dc: ["dogechain", "dc"],
+  // legacy tickers from the mainnet build (kept so old nicknames still resolve)
+  dc: ["dc"],
   kibo: ["kibo"],
   rino: ["rino"],
   bone: ["bone shibaswap", "bone"],

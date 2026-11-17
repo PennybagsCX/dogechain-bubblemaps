@@ -10,8 +10,9 @@
 import { PAIR_CREATED_EVENT_SIGNATURE } from "./knownFactories";
 import type { DbLPPair } from "./db";
 import type { ScanCheckpoint, ScanError } from "./scanProgress";
+import { EXPLORER_API, RPC_URL } from "../lib/chain";
 
-const EXPLORER_API_V1 = "https://explorer.dogechain.dog/api";
+const EXPLORER_API_V1 = EXPLORER_API;
 
 export interface BatchScanConfig {
   factoryAddress: string;
@@ -45,12 +46,27 @@ export interface BatchScanResult {
 /**
  * Calculate total blocks for a scan range
  */
-function calculateTotalBlocks(startBlock: number, endBlock: number | "latest"): number {
-  if (endBlock === "latest") {
-    // This is an estimate, will be updated during scan
-    return 20000000; // Approximate current Dogechain block
+async function calculateTotalBlocks(
+  startBlock: number,
+  endBlock: number | "latest"
+): Promise<number> {
+  if (endBlock !== "latest") return endBlock - startBlock + 1;
+
+  // "latest" scans are open-ended. Read the live head so the progress percentage is honest
+  // (the upstream code hardcoded the old mainnet's ~20M block height, meaningless here).
+  try {
+    const res = await fetch(RPC_URL, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_blockNumber", params: [] }),
+    });
+    const json = (await res.json()) as { result?: string };
+    const head = json.result ? Number.parseInt(json.result, 16) : NaN;
+    if (Number.isFinite(head) && head > startBlock) return head - startBlock + 1;
+  } catch {
+    // fall through to the unknown estimate below
   }
-  return endBlock - startBlock + 1;
+  return 0; // unknown: progress is reported without a percentage rather than against a fake total
 }
 
 /**
@@ -175,8 +191,8 @@ export async function scanFactoryInBatches(config: BatchScanConfig): Promise<Bat
   let blocksScanned = 0;
   let currentBlock = config.startBlock;
 
-  // Calculate total blocks
-  const totalBlocks = calculateTotalBlocks(config.startBlock, config.endBlock);
+  // Calculate total blocks (live head read for open-ended scans)
+  const totalBlocks = await calculateTotalBlocks(config.startBlock, config.endBlock);
   const totalBatches = Math.ceil(totalBlocks / config.batchSize);
   let batchNumber = 0;
 
@@ -202,7 +218,7 @@ export async function scanFactoryInBatches(config: BatchScanConfig): Promise<Bat
     }
 
     // Report progress
-    const progressPercent = (currentBlock / totalBlocks) * 100;
+    const progressPercent = totalBlocks > 0 ? (currentBlock / totalBlocks) * 100 : 0;
     config.onProgress?.({
       factoryAddress: config.factoryAddress,
       factoryName: config.factoryName,
@@ -234,7 +250,7 @@ export async function scanFactoryInBatches(config: BatchScanConfig): Promise<Bat
     }
 
     // Rate limiting: wait between batches to avoid API throttling
-    // Dogechain Explorer API has ~60 req/min limit
+    // DogeOS Explorer API has ~60 req/min limit
     await new Promise((resolve) => setTimeout(resolve, 1000)); // 1 second delay between batches
   }
 

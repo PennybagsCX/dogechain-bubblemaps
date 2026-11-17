@@ -1,7 +1,7 @@
 /**
  * Network Health Dashboard Component
  *
- * Displays real-time Dogechain network metrics including:
+ * Displays real-time DogeOS Chikyū testnet metrics including:
  * - Block time monitoring
  * - Gas price trends
  * - Transaction throughput (TPS)
@@ -10,7 +10,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Activity, Zap, Clock, TrendingUp } from "lucide-react";
-import { DogechainRPCClient } from "@/services/dogechainRPC";
+import { EvmRPCClient } from "@/services/evmRPC";
 
 interface NetworkStats {
   currentBlockNumber: number;
@@ -26,7 +26,7 @@ interface NetworkHealthProps {
 }
 
 // Create RPC client outside component to avoid re-creation on every render
-const rpcClient = new DogechainRPCClient();
+const rpcClient = new EvmRPCClient();
 
 export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) => {
   const [stats, setStats] = useState<NetworkStats | null>(null);
@@ -116,7 +116,7 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
               Live
             </span>
           </div>
-          <p className="text-slate-400">Real-time Dogechain metrics</p>
+          <p className="text-slate-400">Real-time DogeOS Chikyū metrics</p>
         </div>
         <div
           className={`px-2 sm:px-4 py-1 sm:py-2 rounded-lg border text-xs sm:text-sm ${getCongestionColor(stats.congestion)}`}
@@ -138,7 +138,7 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
           <div className="text-3xl font-bold text-white">
             #{stats.currentBlockNumber.toLocaleString()}
           </div>
-          <div className="text-xs text-slate-500 mt-1">Target: ~2.5s block time</div>
+          <div className="text-xs text-slate-500 mt-1">Target: ~3s block time</div>
         </div>
 
         {/* Block Time */}
@@ -231,7 +231,7 @@ export const NetworkHealth: React.FC<NetworkHealthProps> = ({ className = "" }) 
             {stats.blockTime < 3000 ? "Excellent" : stats.blockTime < 5000 ? "Good" : "Slow"}{" "}
             performance
           </span>
-          <span className="text-slate-500">• Target: ~2.5s</span>
+          <span className="text-slate-500">• Target: ~3s (measured)</span>
         </div>
       </div>
 

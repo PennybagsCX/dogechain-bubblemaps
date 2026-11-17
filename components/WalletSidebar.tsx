@@ -398,9 +398,9 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                       {copied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
                     </button>
                   </Tooltip>
-                  <Tooltip content="View wallet on Dogechain Explorer">
+                  <Tooltip content="View wallet on DogeOS Explorer">
                     <a
-                      href={`https://explorer.dogechain.dog/address/${wallet?.address}`}
+                      href={`https://dogeos-testnet.l2scan.co/address/${wallet?.address}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       onTouchStart={handleTouchStopPropagation}
@@ -457,7 +457,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   </button>
                 </div>
                 <a
-                  href={`https://explorer.dogechain.dog/address/${
+                  href={`https://dogeos-testnet.l2scan.co/address/${
                     wallets.find(
                       (w) =>
                         w.id ===
@@ -507,7 +507,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   </button>
                 </div>
                 <a
-                  href={`https://explorer.dogechain.dog/address/${
+                  href={`https://dogeos-testnet.l2scan.co/address/${
                     wallets.find(
                       (w) =>
                         w.id ===
@@ -749,11 +749,11 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                       paginatedTransactions.map((tx) => (
                         <Tooltip
                           key={tx.hash}
-                          content="View transaction on Dogechain Explorer"
+                          content="View transaction on DogeOS Explorer"
                           className="block w-full"
                         >
                           <a
-                            href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                            href={`https://dogeos-testnet.l2scan.co/tx/${tx.hash}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onTouchStart={handleTouchStopPropagation}

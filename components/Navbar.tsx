@@ -115,7 +115,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 Ð
               </div>
               <span className="text-lg md:text-xl font-bold tracking-tight text-white whitespace-nowrap">
-                Dogechain <span className="text-purple-500">BubbleMaps</span>
+                DogeOS <span className="text-purple-500">BubbleMaps</span>
               </span>
             </div>
           </div>

@@ -6,6 +6,7 @@
  */
 
 import { AssetType } from "../types";
+import { EXPLORER_API_V2 } from "../lib/chain";
 
 // =====================================================
 // TOKEN SUBMISSION
@@ -155,9 +156,7 @@ export async function voteOnCorrection(
  */
 async function verifyContract(contractAddress: string): Promise<boolean> {
   try {
-    const response = await fetch(
-      `https://explorer.dogechain.dog/api/v2/smart-contracts/${contractAddress}`
-    );
+    const response = await fetch(`${EXPLORER_API_V2}/smart-contracts/${contractAddress}`);
 
     if (!response.ok) {
       return false;

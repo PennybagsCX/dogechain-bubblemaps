@@ -1,7 +1,7 @@
 /**
  * ChainOverview Component
  *
- * Displays chain-level metrics for Dogechain including:
+ * Displays chain-level metrics for DogeOS Chikyū including:
  * - Total TVL
  * - 24h DEX volume
  * - Active pools count
@@ -113,7 +113,7 @@ export const ChainOverview: React.FC<ChainOverviewProps> = ({
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-xl font-bold text-white">Chain Overview</h3>
-          <p className="text-slate-400 text-sm">Dogechain network metrics</p>
+          <p className="text-slate-400 text-sm">DogeOS Chikyū testnet metrics</p>
         </div>
         <div className="px-3 py-1 bg-space-700 rounded-full">
           <span className="text-xs text-slate-300">Live</span>

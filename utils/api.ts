@@ -40,16 +40,14 @@ export function getApiBaseUrl(): string {
     return "";
   }
 
-  // In production, use relative path so Vercel rewrites can handle it
-  // The vercel.json rewrites /api/* to dogechain-bubblemaps-api.vercel.app
-  // Check for env var override first (for testing)
+  // In production, use a relative path so this fork's own deployment serves /api/*.
+  // (The upstream build rewrote /api/* to its own backend; this fork must never
+  // call that backend.) Check for an env-var override first (for testing).
   const envUrl = import.meta.env.VITE_API_BASE_URL;
-  if (envUrl && envUrl.trim() !== "" && !envUrl.includes("vercel.app")) {
-    // Only use custom env URL if it's not a vercel URL (to avoid conflicts with rewrites)
+  if (envUrl && envUrl.trim() !== "") {
     return envUrl;
   }
 
-  // Use relative path for production - Vercel rewrites handle routing to backend
   return "";
 }
 

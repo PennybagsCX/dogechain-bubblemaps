@@ -16,36 +16,11 @@ export interface WhaleWalletEntry {
   transactionCount: number;
 }
 
-// Known whale wallets on Dogechain
-export const WHALE_WALLETS: WhaleWalletEntry[] = [
-  {
-    address: "0x66aB144DEE239bb9FE2fB6FA28672611A2C0D854", // Dogechain Bridge
-    name: "Dogechain Bridge",
-    volume: "high",
-    priority: 1,
-    discoveredAt: 0,
-    lastVerified: 0,
-    transactionCount: 0,
-  },
-  {
-    address: "0xf93cE2EeF8a97e6D9c0d39bb9cEbA8bbDbAa4570", // Dogechain Token
-    name: "Dogechain Token Contract",
-    volume: "high",
-    priority: 2,
-    discoveredAt: 0,
-    lastVerified: 0,
-    transactionCount: 0,
-  },
-  {
-    address: "0xd7eF39F971F5199EB3661F1C6947EA27d6D173c5", // Multisig
-    name: "Multi-sig Wallet",
-    volume: "medium",
-    priority: 3,
-    discoveredAt: 0,
-    lastVerified: 0,
-    transactionCount: 0,
-  },
-];
+// Known whale wallets on DogeOS Chikyū.
+// Empty by design: the upstream mainnet whales (bridge, multisig, DC token) are
+// different accounts on this chain, and labelling arbitrary Chikyū addresses as "whales"
+// would be invented data. Populate from observed activity once the testnet has volume.
+export const WHALE_WALLETS: WhaleWalletEntry[] = [];
 
 const whaleWalletRegistry = new Map<string, WhaleWalletEntry>();
 

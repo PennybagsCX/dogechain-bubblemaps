@@ -36,7 +36,7 @@ function getAssetIcon(asset: TrendingAsset, index: number): React.ReactNode {
     );
   }
 
-  // DC (Dogechain) gets amber Shield
+  // legacy DC ticker keeps the amber Shield
   if (asset.symbol === "DC") {
     return <Shield className={`${baseClass} text-amber-300`} size={30} strokeWidth={1.5} />;
   }

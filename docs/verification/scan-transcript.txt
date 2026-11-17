@@ -1,0 +1,60 @@
+🔄 Setting up CK semantic search aliases...
+✅ CK aliases configured:
+   grep → CK wrapper (auto-routes to semantic search)
+   rg → CK wrapper (auto-routes to semantic search)
+
+💡 Usage:
+   grep 'error handling' src/     → Uses CK semantic search
+   grep -n 'TODO' src/            → Uses CK grep mode (exact match)
+   rg 'authentication' components/ → Uses CK semantic search
+
+🔧 To disable temporarily:
+   unalias grep  # Use original grep
+   unalias rg    # Use original rg
+🔄 Setting up CK semantic search aliases for Gemini...
+]1337;RemoteHost=dts@Daniels-MacBook-Air.local]1337;CurrentDir=/Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS]1337;ShellIntegrationVersion=14;shell=zshTSC=0
+  chunk 57: blocks 9046655-9055654 -> 0 transfers (total 31)
+  chunk 58: blocks 9037655-9046654 -> 0 transfers (total 31)
+  chunk 59: blocks 9028655-9037654 -> 0 transfers (total 31)
+  chunk 60: blocks 9019655-9028654 -> 0 transfers (total 31)
+  chunk 61: blocks 9010655-9019654 -> 0 transfers (total 31)
+  chunk 62: blocks 9001655-9010654 -> 0 transfers (total 31)
+  chunk 63: blocks 8992655-9001654 -> 0 transfers (total 31)
+  chunk 64: blocks 8983655-8992654 -> 0 transfers (total 31)
+  chunk 65: blocks 8974655-8983654 -> 0 transfers (total 31)
+  chunk 66: blocks 8965655-8974654 -> 0 transfers (total 31)
+  chunk 67: blocks 8956655-8965654 -> 68 transfers (total 99)
+  chunk 68: blocks 8947655-8956654 -> 168 transfers (total 267)
+  chunk 69: blocks 8938655-8947654 -> 189 transfers (total 456)
+  chunk 70: blocks 8929655-8938654 -> 191 transfers (total 647)
+
+=== HOLDERS (from live Transfer logs) ===
+  0x67d41b95e40ad2e9a1aa0da15c8386268a452629  0.0500 SUCH  (window delta 0.0200)  https://dogeos-testnet.l2scan.co/address/0x67d41b95e40ad2e9a1aa0da15c8386268a452629
+  0x36397e1c1b136c3fa28c5e440cc0e074ababf0b9  8.1100 SUCH  (window delta -0.0200)  https://dogeos-testnet.l2scan.co/address/0x36397e1c1b136c3fa28c5e440cc0e074ababf0b9
+
+=== GRAPH: 2 nodes / 2 links -> /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/docs/verification/such-graph.json
+
+=== TOP LINKS ===
+  0x36397e1c1b136c3fa28c5e440cc0e074ababf0b9 -> 0x67d41b95e40ad2e9a1aa0da15c8386268a452629  3.1000 SUCH over 31 tx
+  0x67d41b95e40ad2e9a1aa0da15c8386268a452629 -> 0x36397e1c1b136c3fa28c5e440cc0e074ababf0b9  3.0800 SUCH over 308 tx
+
+=== SAMPLE TRANSFERS (verify each hash on the explorer) ===
+  0x73935d7ec166671ba9d712f79bb049946856b3efb69449c866bbc19f5ea20d39  block 9534188  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0x73935d7ec166671ba9d712f79bb049946856b3efb69449c866bbc19f5ea20d39
+  0x2252f9c88bd92229b5750b822d76ec254ddede6bc718ee23685b1d064fb288eb  block 9535388  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0x2252f9c88bd92229b5750b822d76ec254ddede6bc718ee23685b1d064fb288eb
+  0xa1bb3f1c33048f3a8c32f1dc50fa318f371f3a0826d202047ddda3392e9e268e  block 9110778  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0xa1bb3f1c33048f3a8c32f1dc50fa318f371f3a0826d202047ddda3392e9e268e
+  0x8ea1a6dad543dc86e109f49c3e248b46dca5032a16bc19a4b53de3bf1d196346  block 9111978  0.1000 SUCH  https://dogeos-testnet.l2scan.co/tx/0x8ea1a6dad543dc86e109f49c3e248b46dca5032a16bc19a4b53de3bf1d196346
+  0xcaefedbd9012f43cd344a8c72d0bde599340dc73e91b4f8b1eee378806444f83  block 9111980  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0xcaefedbd9012f43cd344a8c72d0bde599340dc73e91b4f8b1eee378806444f83
+  0xe10ac945313e54c25d11bcc9cd8dcc420ac2d5c94ea5bdd4d8b7309491f4b538  block 9113178  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0xe10ac945313e54c25d11bcc9cd8dcc420ac2d5c94ea5bdd4d8b7309491f4b538
+
+=== WALLET 0x36397e1c1b136c3fa28c5e440cc0e074ababf0b9 — 339 transfers in the scanned window ===
+  IN  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0x73935d7ec166671ba9d712f79bb049946856b3efb69449c866bbc19f5ea20d39
+  IN  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0x2252f9c88bd92229b5750b822d76ec254ddede6bc718ee23685b1d064fb288eb
+  IN  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0xa1bb3f1c33048f3a8c32f1dc50fa318f371f3a0826d202047ddda3392e9e268e
+  OUT 0.1000 SUCH  https://dogeos-testnet.l2scan.co/tx/0x8ea1a6dad543dc86e109f49c3e248b46dca5032a16bc19a4b53de3bf1d196346
+  IN  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0xcaefedbd9012f43cd344a8c72d0bde599340dc73e91b4f8b1eee378806444f83
+  IN  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0xe10ac945313e54c25d11bcc9cd8dcc420ac2d5c94ea5bdd4d8b7309491f4b538
+  IN  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0xe5a7edea05497d3d97f7531733a09d0d3241708e73dcb7709e63d0521bc6a99b
+  IN  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0x4ade90ee7ff1c4f0cc03f3886c15555d80854d61753f26b86838d6397200d6b6
+  IN  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0x52c49ba32195515284d6da4ffa81a421b5da23f95782748df98314f9234ff209
+  IN  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0xfc3c4fc7ef2d7c59df6bafa9585b12ddffeafd92b8ec9f1708c141653501c255
+explorer: https://dogeos-testnet.l2scan.co

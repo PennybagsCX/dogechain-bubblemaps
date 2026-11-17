@@ -16,11 +16,11 @@ const getAIUnavailableMessage = (): string => {
 // List of addresses that should be excluded from "Whale Risk" calculations
 // 1. Null Address
 // 2. Dead Address (Burn)
-// 3. Dogechain Bridge
+// The upstream mainnet bridge address was removed: it has no meaning on Chikyū and would
+// have silently excluded an unrelated account from whale-risk math.
 const INFRASTRUCTURE_ADDRESSES = [
   "0x0000000000000000000000000000000000000000",
   "0x000000000000000000000000000000000000dead",
-  "0x352569c5392c81d2442d66608f4755b967420729",
 ];
 
 export const createWalletChatSystemInstruction = (
@@ -38,7 +38,7 @@ export const createWalletChatSystemInstruction = (
   const isInfrastructure = INFRASTRUCTURE_ADDRESSES.includes(wallet.address.toLowerCase());
 
   return `
-    You are "DogeDetective", an expert blockchain analyst for the Dogechain network. 
+    You are "DogeDetective", an expert blockchain analyst for the DogeOS Chikyū testnet. 
     You are analyzing a specific wallet.
     
     CONTEXT DATA:

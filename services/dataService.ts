@@ -26,12 +26,13 @@ import {
 } from "./db";
 import { submitWalletScanResults } from "./learnedTokensService";
 import { trackApiCall } from "./apiMetrics";
+import { EXPLORER_API as EXPLORER_API_V1, EXPLORER_API_V2 } from "../lib/chain";
 
-// Proxy to Dogechain Explorer to avoid CORS issues
-// Using relative URL since the proxy endpoint is in the same app
-const EXPLORER_API_V1 = "/api/dogechain-proxy";
-const EXPLORER_API_V2 = "/api/dogechain-proxy";
-const METADATA_CACHE_KEY = "doge_token_metadata_cache_v2";
+// Explorer access: DogeOS Chikyū exposes a blockscout instance that speaks the
+// etherscan-compatible v1 API and the blockscout v2 API, and it sends
+// `access-control-allow-origin: *`, so the browser calls it directly from lib/chain.ts.
+// No local proxy, and explicitly not the upstream app's production backend.
+const METADATA_CACHE_KEY = "dogeos_token_metadata_cache_v3";
 // Note: DISABLE_WALLET_ENDPOINTS removed - using fetchWalletAssetsHybrid instead
 
 // --- Local Storage Cache Helpers ---
@@ -193,54 +194,35 @@ const BOOTSTRAP_TOKENS: Record<
   string,
   { decimals: number; symbol?: string; name?: string; type?: AssetType }
 > = {
-  "0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d": {
-    decimals: 6,
-    symbol: "USDT",
-    name: "Tether USD",
-    type: AssetType.TOKEN,
-  },
-  "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101": {
+  // Real contracts on DogeOS Chikyū testnet (blockscout getToken, verified 2026-11-17).
+  // The upstream seed list pointed at mainnet addresses that do not exist here.
+  "0xe5e3a4ff1773d043a387b16ceb3c91cc49bafd54": {
     decimals: 18,
-    symbol: "wDOGE",
-    name: "Wrapped DOGE",
+    symbol: "LINK",
+    name: "ChainLink Token",
     type: AssetType.TOKEN,
   },
-  "0x7b4328c127b85369d9f82ca0503b000d09cf9180": {
+  "0x555de2148ef9ff0fef70faf7587c3492eb468a91": {
     decimals: 18,
-    symbol: "DC",
-    name: "Dogechain",
+    symbol: "SUCH",
+    name: "SUCH",
     type: AssetType.TOKEN,
   },
-  "0xd38b22794b308a2e55808a13d1e6a80c4be94fd5": {
-    decimals: 0,
-    symbol: "DPunks",
-    name: "RealDogePunks",
-    type: AssetType.NFT,
+  "0xa69d8ac86502e4e08c812c64675a4892dfe6870f": {
+    decimals: 18,
+    symbol: "mWDOGE",
+    name: "Moar interest bearing WDOGE",
+    type: AssetType.TOKEN,
   },
 };
 
 // Known Infrastructure Labels
 const KNOWN_LABELS: Record<string, string> = {
+  // Only chain-agnostic labels belong here. The upstream list labelled mainnet
+  // bridges, exchange wallets and a personality address; those accounts do not exist at these
+  // addresses on Chikyū, so carrying the labels over would have mislabelled real testnet holders.
   "0x0000000000000000000000000000000000000000": "Null Address",
   "0x000000000000000000000000000000000000dead": "Burn Address",
-  "0x352569c5392c81d2442d66608f4755b967420729": "Dogechain Bridge",
-  // Dogechain Ecosystem Wallets
-  "0x73b56aa56b35a9eb062ebb0e187fe0f2603dbd25": "Dogechain Ecosystem Treasury",
-  "0x64c53d47d879eb3d1a311c7110a3964909a60bec": "Ecosystem DAO Fund",
-  "0x6c13d0978d4d1eb1208c93ad630c79d1728495c3": "Network Operations",
-  "0x5a3c2e0a005883c598430f1ab303411db1e0ba3a": "Early Shibes",
-  "0xbce77b0d91e98e4524e74fd378a3af5c9b94528e": "Loyal Shibes",
-  "0x07be55dcbea6ac1bb0a8d89c88485f483e0add80": "Foundation",
-  "0x85217a346f3fa64893bab3caea59effd0df8bc9": "Treasury",
-  "0xc1efe7aa280f7c63a4b1da26ae0f7e64ce7f2a8a": "Contributing Team",
-  "0x9f6a749acb49852ffe423408067938af7a36e15f": "Advisor & Marketing",
-  "0xf82e972e10fad1c8856832187adfc436edf38288": "Market Making",
-  "0x009d2bff6cade60d8bcce580424c72a67d3961b6": "Robinhood Reserve",
-  "0x1d4c74827e3a0b0cd13f76974f145295f7468d41": "Polygon Reserve",
-  // Notable Wallets
-  "0xab5801a7d398351b8be11c439e05c5b3259aec9b": "Vitalik Buterin",
-  // Exchanges
-  "0x0f2d557587022a8f500d7b9ca099342af796b946": "MEXC",
 };
 
 // --- Helpers ---
@@ -903,7 +885,7 @@ export const fetchWalletTransactions = async (
           const value = parsedValue / Math.pow(10, decimals);
 
           // Parse timestamp safely - validate before parseInt to prevent NaN
-          // timeStamp from Dogechain API is unix timestamp in seconds
+          // timeStamp from the explorer API is a unix timestamp in seconds
           let parsedTimestamp = Date.now(); // Default to current time if invalid
           const rawTimestamp = tx.timeStamp;
 
@@ -1097,12 +1079,11 @@ export const fetchTokenBalance = async (
 // Fetch distinct token/NFT contracts a wallet has interacted with recently
 // --- Whale Contract Enumeration ---
 
-// Known high-volume whale addresses on Dogechain for contract discovery
-// These are wallets that have interacted with many contracts
-const WHALE_ADDRESSES = [
-  "0x352569c5392c81d2442d66608f4755b967420729", // Dogechain Bridge
-  "0x7b4328c127b85369d9f82ca0503b000d09cf9180", // Dogechain token contract
-  // Add more whale addresses as discovered
+// High-volume addresses used to enumerate contracts a wallet might hold.
+// Empty on Chikyū: no address has mainnet-scale history here yet, and seeding mainnet
+// addresses would have produced labels and token lists for a chain that is not this one.
+const WHALE_ADDRESSES: string[] = [
+  // Add observed Chikyū addresses as the testnet accumulates activity.
 ];
 
 /**

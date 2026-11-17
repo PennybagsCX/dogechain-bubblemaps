@@ -2,10 +2,11 @@ import { useState, useMemo, useCallback } from "react";
 import { Connection, Wallet, ConnectionStats } from "../types";
 import { ExternalLink } from "lucide-react";
 import { Tooltip } from "./Tooltip";
+import { EXPLORER_URL } from "../lib/chain";
 
 type DirectionFilter = "ALL" | "IN" | "OUT";
 
-const BLOCKSCOUT_BASE_URL = "https://explorer.dogechain.dog";
+const BLOCKSCOUT_BASE_URL = EXPLORER_URL;
 
 interface ConnectionDetailsViewProps {
   connection: Connection;
@@ -290,9 +291,9 @@ export function ConnectionDetailsView({
                         {formatValue(tx.value)} {tokenSymbol}
                       </p>
                     </div>
-                    <Tooltip content="View transaction on Dogechain Explorer">
+                    <Tooltip content="View transaction on DogeOS Explorer">
                       <a
-                        href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                        href={`https://dogeos-testnet.l2scan.co/tx/${tx.hash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-shrink-0 text-purple-400 hover:text-purple-300 transition-colors p-2 rounded hover:bg-space-700 min-w-[44px] min-h-[44px] inline-flex items-center justify-center"

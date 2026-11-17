@@ -467,12 +467,12 @@ export const DistributionAnalytics: React.FC<DistributionAnalyticsProps> = ({
           <h3 className="text-yellow-400 font-semibold">Limited Data Analysis</h3>
         </div>
         <p className="text-sm text-yellow-300/80">
-          <strong>Why not full data?</strong> The Dogechain Explorer API only provides paginated
-          holder data (100 per request). Fetching all holders would take dozens of API calls and
-          cause significant delays. Metrics shown are calculated from the top{" "}
-          {analysis.totalHolders} holders fetched from the Explorer, which includes all major
-          holders (whales, ecosystem wallets, LP pools). For complete blockchain analysis, consider
-          using dedicated blockchain explorers or running your own full node.
+          <strong>Why not full data?</strong> The DogeOS Explorer API only provides paginated holder
+          data (100 per request). Fetching all holders would take dozens of API calls and cause
+          significant delays. Metrics shown are calculated from the top {analysis.totalHolders}{" "}
+          holders fetched from the Explorer, which includes all major holders (whales, ecosystem
+          wallets, LP pools). For complete blockchain analysis, consider using dedicated blockchain
+          explorers or running your own full node.
         </p>
       </div>
 

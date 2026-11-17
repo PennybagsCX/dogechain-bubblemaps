@@ -1,0 +1,44 @@
+{
+  "chainId": 6281971,
+  "token": {
+    "address": "0x555de2148Ef9FF0fEf70FaF7587C3492eb468A91",
+    "name": "SUCH",
+    "symbol": "SUCH",
+    "decimals": 18
+  },
+  "scanned": {
+    "fromBlock": "8859654",
+    "toBlock": "9559654",
+    "chunks": 70
+  },
+  "nodes": [
+    {
+      "address": "0x67d41b95e40ad2e9a1aa0da15c8386268a452629",
+      "balance": 0.05,
+      "rawDelta": "20000000000000000",
+      "isContract": false,
+      "rank": 1
+    },
+    {
+      "address": "0x36397e1c1b136c3fa28c5e440cc0e074ababf0b9",
+      "balance": 8.11,
+      "rawDelta": "-20000000000000000",
+      "isContract": false,
+      "rank": 2
+    }
+  ],
+  "links": [
+    {
+      "source": "0x36397e1c1b136c3fa28c5e440cc0e074ababf0b9",
+      "target": "0x67d41b95e40ad2e9a1aa0da15c8386268a452629",
+      "value": 3.1,
+      "txCount": 31
+    },
+    {
+      "source": "0x67d41b95e40ad2e9a1aa0da15c8386268a452629",
+      "target": "0x36397e1c1b136c3fa28c5e440cc0e074ababf0b9",
+      "value": 3.08,
+      "txCount": 308
+    }
+  ]
+}

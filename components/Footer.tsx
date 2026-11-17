@@ -25,11 +25,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenGuide }) => {
               <div className="h-8 w-8 flex items-center justify-center rounded-full bg-purple-600 text-white font-bold shadow-lg shadow-purple-600/20">
                 Ð
               </div>{" "}
-              Dogechain <span className="text-purple-500">BubbleMaps</span>
+              DogeOS <span className="text-purple-500">BubbleMaps</span>
             </h3>
             <p className="text-slate-500 text-sm mt-2 max-w-full sm:max-w-md">
               An advanced on-chain intelligence platform providing live visualization of token
-              distributions and whale activities on the Dogechain network.
+              distributions and whale activities on the DogeOS Chikyū testnet.
             </p>
           </div>
 
@@ -70,7 +70,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenGuide }) => {
         </div>
 
         <div className="mt-12 pt-8 border-t border-space-700 flex flex-col items-center justify-center text-xs text-slate-600 gap-4 text-center">
-          <p>&copy; 2026 Dogechain BubbleMaps. All rights reserved.</p>
+          <p>&copy; 2026 DogeOS Bubblemaps. All rights reserved.</p>
           <p>Beta Build #{__BETA_BUILD_NUMBER__}</p>
 
           {/* Stats Counters */}
@@ -101,7 +101,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenGuide }) => {
 
         <div className="mt-6 p-4 rounded-lg bg-space-800/50 border border-space-800 text-[10px] text-slate-500 text-center">
           <strong>Disclaimer:</strong> This platform is for informational purposes only. Data is
-          fetched in real-time from the Dogechain Explorer and may contain inaccuracies. Nothing on
+          fetched in real-time from the DogeOS Explorer and may contain inaccuracies. Nothing on
           this site constitutes financial advice. Cryptocurrency investments carry high risk.
         </div>
       </div>

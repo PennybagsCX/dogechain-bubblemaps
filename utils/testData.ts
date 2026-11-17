@@ -14,59 +14,12 @@ import { db, toDbAlert, toDbTriggeredEvent } from "../services/db";
 import type { AlertConfig, TriggeredEvent } from "../types";
 
 /**
- * Mock test alerts with real Dogechain token addresses
+ * Test-alert helpers (empty seed list: see MOCK_TEST_ALERTS)
  */
 export const MOCK_TEST_ALERTS: AlertConfig[] = [
-  {
-    id: "test-wdoge-001",
-    name: "wDOGE Test Alert",
-    walletAddress: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
-    tokenAddress: "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101",
-    tokenSymbol: "wDOGE",
-    tokenName: "Wrapped Doge",
-    threshold: 5000000000,
-    initialValue: 10000000000,
-  },
-  {
-    id: "test-doge-002",
-    name: "DOGE Liquidity Pool Alert",
-    walletAddress: "0x3525ed5f48eb3a3a0442dbb72a5ee48f749f7b07",
-    tokenAddress: "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101",
-    tokenSymbol: "wDOGE",
-    tokenName: "Wrapped Doge",
-    threshold: 10000000000,
-    initialValue: 50000000000,
-  },
-  {
-    id: "test-eth-003",
-    name: "wETH Test Alert",
-    walletAddress: "0x73b5298c6c1a31b29b2234ab19d3a4a5a0810149",
-    tokenAddress: "0xb65043c45b24122b0b7984ffed87fd7bcf9fdf68",
-    tokenSymbol: "wETH",
-    tokenName: "Wrapped Ethereum",
-    threshold: 1000000000000000000, // 1 wETH
-    initialValue: 5000000000000000000, // 5 wETH
-  },
-  {
-    id: "test-usdt-004",
-    name: "USDT Test Alert",
-    walletAddress: "0x64c516a6eaa8b8fc4d6b0b5e5b5e5e5e5e5e5e5e",
-    tokenAddress: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-    tokenSymbol: "USDT",
-    tokenName: "Tether USD",
-    threshold: 1000000000, // 1000 USDT (6 decimals)
-    initialValue: 10000000000, // 10000 USDT
-  },
-  {
-    id: "test-usdc-005",
-    name: "USDC Test Alert",
-    walletAddress: "0x6c13963e0d30f4a1cf4c8cff4a9afc35cf6f7d87",
-    tokenAddress: "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
-    tokenSymbol: "USDC",
-    tokenName: "USD Coin",
-    threshold: 1000000000, // 1000 USDC (6 decimals)
-    initialValue: 10000000000, // 10000 USDC
-  },
+  // Intentionally empty. The upstream mocks pointed at mainnet wallets/tokens, which
+  // on Chikyū are just empty accounts — injecting them would have shown fake "live" alerts.
+  // Build test alerts against real Chikyū tokens you scanned (LINK, SUCH, mWDOGE) instead.
 ];
 
 /**
@@ -166,7 +119,7 @@ export async function generateMockTestAlerts(): Promise<void> {
  */
 export const BROWSER_CONSOLE_SCRIPT = `
 (async () => {
-  const DB_NAME = 'DogechainBubbleMapsDB';
+  const DB_NAME = 'DogeOSBubbleMapsTestDB';
   const DB_VERSION = 16;
 
   // Test alerts data

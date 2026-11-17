@@ -2,26 +2,12 @@
 import { createPublicClient, http } from "viem";
 import type { Client } from "viem";
 import { trackApiCall } from "./apiMetrics";
+import { CHAIN, RPC_URL } from "../lib/chain";
 
-const RPC_ENDPOINTS = [
-  "https://rpc.dogechain.dog",
-  "https://rpc-us.dogechain.dog",
-  "https://rpc-sg.dogechain.dog",
-];
+// Chikyū documents exactly one public RPC endpoint: no failover list, no stale alternates.
 
-// Dogechain chain configuration
-const dogechain = {
-  id: 2000,
-  name: "Dogechain",
-  nativeCurrency: { name: "DOGE", symbol: "DOGE", decimals: 18 },
-  rpcUrls: {
-    public: { http: ["https://rpc.dogechain.dog"] },
-    default: { http: ["https://rpc.dogechain.dog"] },
-  },
-  blockExplorers: {
-    default: { name: "DogeScan", url: "https://dogechain.dog" },
-  },
-} as const;
+// Chain identity is owned by lib/chain.ts (DogeOS Chikyū testnet). Nothing chain-specific
+// may be redefined in this module.
 
 /**
  * Token metadata interface
@@ -38,25 +24,21 @@ export interface TokenMetadata {
  * Sourced from dataService.ts BOOTSTRAP_TOKENS
  */
 const KNOWN_TOKENS: Record<string, Omit<TokenMetadata, "address">> = {
-  "0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d": {
-    name: "Tether USD",
-    symbol: "USDT",
-    decimals: 6,
-  },
-  "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101": {
-    name: "Wrapped DOGE",
-    symbol: "wDOGE",
+  // Verified on DogeOS Chikyū testnet (blockscout getToken, 2026-11-17)
+  "0xe5e3a4ff1773d043a387b16ceb3c91cc49bafd54": {
+    name: "ChainLink Token",
+    symbol: "LINK",
     decimals: 18,
   },
-  "0x7b4328c127b85369d9f82ca0503b000d09cf9180": {
-    name: "Dogechain",
-    symbol: "DC",
+  "0x555de2148ef9ff0fef70faf7587c3492eb468a91": {
+    name: "SUCH",
+    symbol: "SUCH",
     decimals: 18,
   },
-  "0xd38b22794b308a2e55808a13d1e6a80c4be94fd5": {
-    name: "RealDogePunks",
-    symbol: "DPunks",
-    decimals: 0,
+  "0xa69d8ac86502e4e08c812c64675a4892dfe6870f": {
+    name: "Moar interest bearing WDOGE",
+    symbol: "mWDOGE",
+    decimals: 18,
   },
 };
 
@@ -148,7 +130,7 @@ interface FetchBlockRangeOptions {
 // RPC Configuration with environment variable support
 // ============================================================================
 
-interface DogechainRPCConfig {
+interface EvmRPCConfig {
   timeout: number;
   retryCount: number;
   maxRetries: number;
@@ -158,7 +140,7 @@ interface DogechainRPCConfig {
 }
 
 // Get configuration from environment variables or use optimized defaults
-const getRPCConfig = (): DogechainRPCConfig => {
+const getRPCConfig = (): EvmRPCConfig => {
   // Check if running in browser or Node environment
   const isBrowser = typeof window !== "undefined";
 
@@ -175,29 +157,45 @@ const getRPCConfig = (): DogechainRPCConfig => {
 
   return {
     // Timeout for individual RPC requests
-    timeout: parseInt(getEnv("DOGECHAIN_RPC_TIMEOUT", "8000"), 10),
+    timeout: parseInt(getEnv("DOGEOS_RPC_TIMEOUT", "8000"), 10),
 
     // Retries per provider
-    retryCount: parseInt(getEnv("DOGECHAIN_RPC_RETRY_COUNT", "3"), 10),
+    retryCount: parseInt(getEnv("DOGEOS_RPC_RETRY_COUNT", "3"), 10),
 
     // Max retries before giving up
-    maxRetries: parseInt(getEnv("DOGECHAIN_RPC_MAX_RETRIES", "2"), 10),
+    maxRetries: parseInt(getEnv("DOGEOS_RPC_MAX_RETRIES", "2"), 10),
 
     // Concurrent requests
-    concurrencyLimit: parseInt(getEnv("DOGECHAIN_RPC_CONCURRENCY_LIMIT", "10"), 10),
+    concurrencyLimit: parseInt(getEnv("DOGEOS_RPC_CONCURRENCY_LIMIT", "10"), 10),
 
     // Blocks per batch (for old block-fetching method)
-    batchSize: BigInt(getEnv("DOGECHAIN_RPC_BATCH_SIZE", "50")),
+    batchSize: BigInt(getEnv("DOGEOS_RPC_BATCH_SIZE", "50")),
 
     // Enable console log suppression for cleaner production output
     suppressConsoleLogs: true,
   };
 };
 
-export class DogechainRPCClient {
-  private clients: Array<Client<any> & Record<string, any>>;
-  private currentProvider: number = 0;
-  private config: DogechainRPCConfig;
+/**
+ * THE single public client for the app: one viem client over CHAIN.RPC_URL.
+ *
+ * Chikyū documents exactly one public endpoint, so there is no endpoint array and no
+ * provider failover: retries hit the same URL. Every RPC read in this module goes through
+ * this client.
+ */
+const rpcConfig = getRPCConfig();
+
+export const publicClient: Client<any> & Record<string, any> = createPublicClient({
+  chain: CHAIN,
+  transport: http(RPC_URL, {
+    retryCount: rpcConfig.retryCount,
+    timeout: rpcConfig.timeout,
+  }),
+}) as Client<any> & Record<string, any>;
+
+export class EvmRPCClient {
+  private client: Client<any> & Record<string, any> = publicClient;
+  private config: EvmRPCConfig = rpcConfig;
   private blockCache: Map<bigint, BlockCacheEntry> = new Map();
   private readonly CACHE_TTL: number = 30000; // 30 seconds in milliseconds
 
@@ -205,18 +203,8 @@ export class DogechainRPCClient {
   private tokenMetadataCache: Map<string, TokenMetadata> = new Map();
 
   constructor() {
-    this.config = getRPCConfig();
-    this.clients = RPC_ENDPOINTS.map((url) =>
-      createPublicClient({
-        chain: dogechain,
-        transport: http(url, {
-          retryCount: this.config.retryCount,
-          timeout: this.config.timeout,
-        }),
-      })
-    );
-
-    // Initialize cache with known tokens
+    // Nothing to build: the single public client is module-level and shared by every
+    // instance. Only the token metadata cache is per-instance state.
     this.initializeKnownTokens();
   }
 
@@ -233,58 +221,33 @@ export class DogechainRPCClient {
   }
 
   /**
-   * Get current provider with automatic failover
+   * The one shared RPC client.
    */
-  private getClient() {
-    return this.clients[this.currentProvider];
+  private getClient(): Client<any> & Record<string, any> {
+    return this.client;
   }
 
   /**
-   * Switch to next provider in round-robin fashion
-   */
-  private switchProvider(): void {
-    this.currentProvider = (this.currentProvider + 1) % this.clients.length;
-  }
-
-  /**
-   * Execute a provider operation with retry logic and provider switching
-   * OPTIMIZED: Suppress console spam in production, show only first attempt failure
+   * Execute an RPC operation with retries against the single endpoint.
+   * OPTIMIZED: Suppress console spam in production, show only the first attempt failure.
    */
   private async executeWithRetry<T>(operation: (client: any) => Promise<T>): Promise<T> {
     let lastError: Error | undefined;
 
     for (let attempt = 0; attempt < this.config.maxRetries; attempt++) {
       try {
-        const client = this.getClient();
-        return await operation(client);
+        return await operation(this.getClient());
       } catch (error) {
         lastError = error as Error;
 
         // Suppress console spam in production - only log first attempt
-        if (this.config.suppressConsoleLogs) {
-          if (attempt === 0) {
-            console.warn(
-              `[RPC] First attempt failed for provider ${this.currentProvider}, switching...`
-            );
-          }
-          // Silent retry for subsequent attempts
-        } else {
+        if (!this.config.suppressConsoleLogs || attempt === 0) {
           console.warn(
-            `RPC attempt ${attempt + 1} failed (provider ${this.currentProvider}):`,
+            `[RPC] attempt ${attempt + 1}/${this.config.maxRetries} failed:`,
             lastError.message
           );
         }
-
-        // Switch to next provider for retry
-        this.switchProvider();
       }
-    }
-
-    // Log final failure in production with summary
-    if (this.config.suppressConsoleLogs && lastError) {
-      console.warn(
-        `[RPC] All ${this.config.maxRetries} attempts failed. Last error: ${lastError.message}`
-      );
     }
 
     throw new Error(
@@ -327,7 +290,7 @@ export class DogechainRPCClient {
 
   /**
    * Estimate the number of blocks for a given timeframe in minutes
-   * Dogechain block time is approximately 2-3 seconds (using 2.5s for calculations)
+   * DogeOS Chikyū block time is approximately 3 seconds (blockscout average_block_time = 3000ms)
    */
   estimateBlocksForTimeframe(minutes: number): number {
     const blockTimeInSeconds = 2.5;
@@ -1387,17 +1350,18 @@ export class DogechainRPCClient {
   }
 
   /**
-   * Get current provider index (useful for monitoring)
+   * Kept for source compatibility: this build has a single provider, so the index is
+   * always 0.
    */
   getCurrentProviderIndex(): number {
-    return this.currentProvider;
+    return 0;
   }
 
   /**
-   * Get list of all RPC endpoints
+   * Kept for source compatibility: exactly one endpoint, sourced from lib/chain.ts.
    */
   getRPCEndpoints(): string[] {
-    return [...RPC_ENDPOINTS];
+    return [RPC_URL];
   }
 
   /**

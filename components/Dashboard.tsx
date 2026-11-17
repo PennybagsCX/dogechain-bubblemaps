@@ -38,7 +38,7 @@ import {
 import { exportDatabaseAsCSV } from "../services/db";
 import { validateTokenAddress, validateWalletAddress } from "../utils/validation";
 import { getApiUrl } from "../utils/api";
-import { DogechainRPCClient } from "../services/dogechainRPC";
+import { EvmRPCClient } from "../services/evmRPC";
 import { getSessionId } from "../services/searchAnalytics";
 
 interface InAppNotification {
@@ -256,7 +256,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   // === RPC CLIENT INSTANCE ===
   // Create RPC client instance for real-time transaction monitoring
-  const rpcClient = useMemo(() => new DogechainRPCClient(), []);
+  const rpcClient = useMemo(() => new EvmRPCClient(), []);
 
   // === REF-BASED STATE ACCESS ===
   // Use refs to avoid stale closures in periodic scan interval
@@ -431,7 +431,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
     // For new alerts without baseline, use a reasonable window (last 2000 blocks)
     if (!existingStatus?.baselineEstablished || !existingStatus?.checkedAt) {
-      // Dogechain block time is ~2.5 seconds, so 2000 blocks ≈ 80 minutes
+      // DogeOS Chikyū block time is ~3 seconds, so 2000 blocks ≈ 100 minutes
       const lookbackBlocks = BigInt(2000);
       const fromBlock = latestBlock - lookbackBlocks;
       return fromBlock < 0n ? 0n : fromBlock;
@@ -489,7 +489,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         `[HybridFetch] Attempting RPC for ${alert.name} (${alert.type}) - block range: ${fromBlock} to ${toBlock}`
       );
 
-      let walletTransactions: import("../services/dogechainRPC").WalletTransaction[] = [];
+      let walletTransactions: import("../services/evmRPC").WalletTransaction[] = [];
 
       if (alert.type === "WALLET") {
         // WALLET alert: Get all token transfers for the wallet (FAST - uses getLogs)
@@ -1611,7 +1611,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                               <div className="flex items-center gap-1">
                                 <Tooltip content={notif.transaction.from}>
                                   <a
-                                    href={`https://explorer.dogechain.dog/address/${notif.transaction.from}`}
+                                    href={`https://dogeos-testnet.l2scan.co/address/${notif.transaction.from}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-purple-400 hover:text-purple-300 transition-colors font-mono text-xs"
@@ -1620,9 +1620,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
                                     {notif.transaction.from.slice(-6)}
                                   </a>
                                 </Tooltip>
-                                <Tooltip content="View sender on Dogechain Explorer">
+                                <Tooltip content="View sender on DogeOS Explorer">
                                   <a
-                                    href={`https://explorer.dogechain.dog/address/${notif.transaction.from}`}
+                                    href={`https://dogeos-testnet.l2scan.co/address/${notif.transaction.from}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-slate-500 hover:text-white transition-colors p-1 rounded hover:bg-black/20"
@@ -1639,7 +1639,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                               <div className="flex items-center gap-1">
                                 <Tooltip content={notif.transaction.to}>
                                   <a
-                                    href={`https://explorer.dogechain.dog/address/${notif.transaction.to}`}
+                                    href={`https://dogeos-testnet.l2scan.co/address/${notif.transaction.to}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-purple-400 hover:text-purple-300 transition-colors font-mono text-xs"
@@ -1648,9 +1648,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
                                     {notif.transaction.to.slice(-6)}
                                   </a>
                                 </Tooltip>
-                                <Tooltip content="View receiver on Dogechain Explorer">
+                                <Tooltip content="View receiver on DogeOS Explorer">
                                   <a
-                                    href={`https://explorer.dogechain.dog/address/${notif.transaction.to}`}
+                                    href={`https://dogeos-testnet.l2scan.co/address/${notif.transaction.to}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-slate-500 hover:text-white transition-colors p-1 rounded hover:bg-black/20"
@@ -1667,7 +1667,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                               <div className="flex items-center gap-1">
                                 <Tooltip content={notif.transaction.hash}>
                                   <a
-                                    href={`https://explorer.dogechain.dog/tx/${notif.transaction.hash}`}
+                                    href={`https://dogeos-testnet.l2scan.co/tx/${notif.transaction.hash}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-purple-400 hover:text-purple-300 transition-colors font-mono text-xs truncate max-w-[200px]"
@@ -1676,9 +1676,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
                                     {notif.transaction.hash.slice(-8)}
                                   </a>
                                 </Tooltip>
-                                <Tooltip content="View transaction on Dogechain Explorer">
+                                <Tooltip content="View transaction on DogeOS Explorer">
                                   <a
-                                    href={`https://explorer.dogechain.dog/tx/${notif.transaction.hash}`}
+                                    href={`https://dogeos-testnet.l2scan.co/tx/${notif.transaction.hash}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-slate-500 hover:text-white transition-colors p-1 rounded hover:bg-black/20"
@@ -1885,9 +1885,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="text-center">
-                              <Tooltip content="View transaction on Dogechain Explorer">
+                              <Tooltip content="View transaction on DogeOS Explorer">
                                 <a
-                                  href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                                  href={`https://dogeos-testnet.l2scan.co/tx/${tx.hash}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-sm font-medium text-white hover:text-purple-400 transition-colors truncate inline-block"
@@ -1899,10 +1899,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             <p className="text-xs text-slate-500 mt-1">
                               {isIncoming ? "From" : "To"}:{" "}
                               <Tooltip
-                                content={`View ${isIncoming ? "sender" : "receiver"} on Dogechain Explorer`}
+                                content={`View ${isIncoming ? "sender" : "receiver"} on DogeOS Explorer`}
                               >
                                 <a
-                                  href={`https://explorer.dogechain.dog/address/${isIncoming ? tx.from : tx.to}`}
+                                  href={`https://dogeos-testnet.l2scan.co/address/${isIncoming ? tx.from : tx.to}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="font-mono text-purple-400 hover:text-purple-300 transition-colors"
@@ -2087,9 +2087,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         <div className="text-sm font-medium text-white">{alert.name}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <Tooltip content="View wallet on Dogechain Explorer">
+                        <Tooltip content="View wallet on DogeOS Explorer">
                           <a
-                            href={`https://explorer.dogechain.dog/address/${alert.walletAddress}`}
+                            href={`https://dogeos-testnet.l2scan.co/address/${alert.walletAddress}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-sm font-mono text-purple-400 hover:text-purple-300 transition-colors inline-flex items-center gap-1"
@@ -2100,9 +2100,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         {alert.tokenAddress && (
                           <div className="text-xs text-slate-400 mt-1">
                             Token:{" "}
-                            <Tooltip content="View token on Dogechain Explorer">
+                            <Tooltip content="View token on DogeOS Explorer">
                               <a
-                                href={`https://explorer.dogechain.dog/address/${alert.tokenAddress}`}
+                                href={`https://dogeos-testnet.l2scan.co/address/${alert.tokenAddress}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-purple-400 hover:text-purple-300 transition-colors"

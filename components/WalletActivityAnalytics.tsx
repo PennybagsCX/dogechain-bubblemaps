@@ -1358,7 +1358,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                                     {formatNumber(tx.value)} {token.symbol}
                                   </div>
                                   <a
-                                    href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                                    href={`https://dogeos-testnet.l2scan.co/tx/${tx.hash}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-purple-400 hover:text-purple-300 flex items-center gap-1"
@@ -1502,7 +1502,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                                     {formatNumber(tx.value)} {token.symbol}
                                   </div>
                                   <a
-                                    href={`https://explorer.dogechain.dog/tx/${tx.hash}`}
+                                    href={`https://dogeos-testnet.l2scan.co/tx/${tx.hash}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-purple-400 hover:text-purple-300 flex items-center gap-1"

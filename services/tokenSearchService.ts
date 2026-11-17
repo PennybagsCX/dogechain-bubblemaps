@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AssetType, SearchResult } from "../types";
+import { EXPLORER_API_V2 } from "../lib/chain";
 import {
   loadAllLPPairs,
   loadDiscoveredContracts,
@@ -477,29 +478,16 @@ export async function searchTokensBlockscout(
   if (!query || query.length < 2) return [];
 
   try {
-    // Try proxy first (bypasses CORS for Arc mobile and other strict browsers)
-    const proxyUrl = `/api/token-search?q=${encodeURIComponent(query)}`;
-    const directUrl = `https://explorer.dogechain.dog/tokens?type=JSON&query=${encodeURIComponent(query)}`;
+    // DogeOS blockscout v2 search: structured JSON and CORS-open, so no proxy is needed.
+    // (Upstream scraped HTML out of `/tokens?type=JSON&query=`; modern blockscout no longer
+    // serves that shape, so this uses the documented v2 search endpoint.)
+    const directUrl = `${EXPLORER_API_V2}/search?q=${encodeURIComponent(query)}`;
 
     let response: Response;
-
     try {
-      response = await fetch(proxyUrl);
-
-      // If proxy fails, fall back to direct API
-      if (!response.ok) {
-        console.warn(
-          `[Token Search] Proxy failed with status ${response.status}, falling back to direct API`
-        );
-        response = await fetch(directUrl);
-      }
-    } catch {
-      // Network error with proxy, fall back to direct API
-
       response = await fetch(directUrl);
-    }
-
-    if (!response.ok) {
+    } catch {
+      // Network failure: search degrades to local-only results, never to invented ones.
       return [];
     }
 
@@ -509,49 +497,23 @@ export async function searchTokensBlockscout(
       return [];
     }
 
-    // Parse HTML table rows to extract token data
+    // v2 search items are typed objects: {type:"token", token_type:"ERC-20", address, name, symbol}
     const results: SearchResult[] = [];
 
-    for (const htmlRow of data.items) {
+    for (const item of data.items as Array<Record<string, unknown>>) {
       try {
-        // Extract token address from href="/token/0x..."
-        const addressMatch = htmlRow.match(/href="\/token\/(0x[a-fA-F0-9]+)"/);
-        if (!addressMatch) continue;
+        if (String(item.type || "") !== "token") continue;
+        const address = String(item.address || item.address_hash || "");
+        if (!/^0x[0-9a-fA-F]{40}$/.test(address)) continue;
 
-        const address = addressMatch[1];
+        const name = String(item.name || "").trim() || "Unknown Token";
+        const symbol =
+          String(item.symbol || "")
+            .trim()
+            .toUpperCase() || "UNKNOWN";
 
-        // Extract token name from <a href...>Token Name (SYMBOL)</a>
-        const nameMatch = htmlRow.match(/<a[^>]*>.*?<\/a>/);
-        if (!nameMatch) continue;
-
-        const fullText = nameMatch[0].replace(/<[^>]+>/g, "").trim();
-        let name = fullText;
-        let symbol = "UNKNOWN";
-
-        // Parse "Name (SYMBOL)" format
-        const symbolMatch = fullText.match(/^(.+)\s+([A-Z0-9]+)\)$/);
-        if (symbolMatch) {
-          name = symbolMatch[1].trim();
-          symbol = symbolMatch[2].trim();
-        }
-
-        // Fallback: extract from the supply cell (5th cell typically has the symbol)
-        if (symbol === "UNKNOWN") {
-          const cells = htmlRow.match(/<td[^>]*>([\s\S]*?)<\/td>/g);
-          if (cells && cells.length >= 5) {
-            const fifthCell = cells[4].replace(/<[^>]*>/g, "").trim();
-            // The 5th cell often has format: <span>...</span> SYMBOL
-            const symbolFallback = fifthCell.match(/([A-Z0-9]+)$/);
-            if (symbolFallback) {
-              symbol = symbolFallback[1];
-            }
-          }
-        }
-
-        // For now, assume all are TOKEN type (NFT detection would need additional API call)
+        // v2 search does not return decimals; 18 is the default and token metadata corrects it.
         const matchesType = type === AssetType.TOKEN;
-
-        // Validate relevance before adding
         const tempResult = {
           address,
           name,
@@ -562,11 +524,9 @@ export async function searchTokensBlockscout(
         };
         const relevanceScore = calculateSearchRelevance(tempResult, query, query.toLowerCase());
 
-        // Only add if it's actually relevant (score > 0)
         if (matchesType && relevanceScore > 0) {
           results.push(tempResult);
 
-          // Auto-save to local cache
           await saveTokenToSearchIndex({
             address,
             name,
@@ -578,11 +538,9 @@ export async function searchTokensBlockscout(
           });
         }
 
-        // Stop if we've reached the limit
         if (results.length >= limit) break;
       } catch {
-        // Skip rows that fail to parse
-
+        // Skip items that fail to parse
         continue;
       }
     }

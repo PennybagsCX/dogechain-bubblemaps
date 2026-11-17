@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { EXPLORER_API } from "../lib/chain";
+
 /**
  * DEX Factory Discovery Service
  *
@@ -56,7 +58,7 @@ export async function verifyFactory(address: string): Promise<{
   try {
     // Check if contract has createPair method
     const response = await fetch(
-      `https://explorer.dogechain.dog/api?v1&module=contract&action=getabi&address=${address}`
+      `${EXPLORER_API}?module=contract&action=getabi&address=${address}`
     );
 
     if (!response.ok) {
@@ -187,7 +189,7 @@ export async function scanForNewFactories(): Promise<number> {
 
 // Auto-initialize with known factories
 export function initializeFactoryRegistry(): void {
-  // Add some known Dogechain DEX factories
+  // Add known DEX factories (none verified on this chain yet)
   registerFactory("0xA10207210e5C87684Ecc26585A87eb21C4dC746", "Uniswap V2 Factory", "QuickSwap");
 
   registerFactory("0x4e6391e41262c3014964b4c6af2f2b6b2b28B9d8", "PancakeSwap Factory", "ChewySwap");

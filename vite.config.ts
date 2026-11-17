@@ -67,10 +67,26 @@ export default defineConfig(({ mode }) => {
     server: {
       port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
       host: "0.0.0.0",
+      // Tooling noise (ck context links, agent caches) must not be watched: a dangling
+      // symlink there crashes the dev server with ELOOP.
+      watch: {
+        ignored: [
+          "**/.context/**",
+          "**/.ck/**",
+          "**/.claude/**",
+          "**/.moat/**",
+          "**/.automaker/**",
+          "**/.playwright-mcp/**",
+        ],
+      },
       proxy: {
-        // Proxy all API requests to the backend deployment during development
+        // Local/dev API server for this fork. The upstream config proxied /api/* to the live
+        // upstream production backend — pointing a DogeOS fork at the
+        // production API is exactly what must not happen, so the target is now the fork's own dev
+        // server (override with VITE_DEV_API_TARGET). Direct chain reads do not use this proxy at
+        // all: they go to the RPC/blockscout hosts in lib/chain.ts.
         "/api": {
-          target: "https://dogechain-bubblemaps-api.vercel.app",
+          target: process.env.VITE_DEV_API_TARGET || "http://localhost:3001",
           changeOrigin: true,
           rewrite: (path: string) => path,
         },
@@ -115,9 +131,9 @@ export default defineConfig(({ mode }) => {
                 },
               },
             },
-            // Backend API direct calls (for compatibility)
+            // DogeOS explorer API (blockscout) — cache briefly, it is the discovery source
             {
-              urlPattern: /^https:\/\/dogechain-bubblemaps-api\.vercel\.app\/api\/.*/i,
+              urlPattern: /^https:\/\/blockscout\.testnet\.dogeos\.com\/.*/i,
               handler: "NetworkFirst",
               options: {
                 cacheName: "api-cache-v2",
@@ -160,9 +176,9 @@ export default defineConfig(({ mode }) => {
           ],
         },
         manifest: {
-          name: "Dogechain Bubblemaps",
+          name: "DogeOS Bubblemaps",
           short_name: "Bubblemaps",
-          description: "Visualize token distribution on Dogechain",
+          description: "Visualize token distribution on the DogeOS Chikyū testnet",
           theme_color: "#8b5cf6",
           background_color: "#0f172a",
           display: "standalone",

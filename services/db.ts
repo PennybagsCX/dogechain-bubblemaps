@@ -241,7 +241,7 @@ class DogeDatabase extends Dexie {
   analyticsStateCache!: Table<DbWalletAnalyticsStateCache>; // Analytics state for instant restoration
 
   constructor() {
-    super("DogechainBubbleMapsDB");
+    super("DogeOSBubbleMapsDB");
 
     // Add error handler for database migration failures
     this.on("blocked", () => {});

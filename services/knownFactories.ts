@@ -1,7 +1,7 @@
 /**
- * Known DEX Factory Contracts on Dogechain
+ * Known DEX Factory Contracts
  *
- * This file contains a registry of verified DEX factory contracts deployed on Dogechain.
+ * Registry of verified DEX factory contracts deployed on this chain.
  *
  * **IMPORTANT:** The deployBlock field is set to 0 for newly added factories.
  * This is intentional - the actual deployBlock is discovered by running the
@@ -34,91 +34,22 @@ export interface DEXFactory {
 }
 
 /**
- * Known DEX Factory Contracts on Dogechain
+ * Known DEX Factory Contracts
  *
- * This list will be expanded as more DEXes are discovered and verified.
+ * This list is expanded as more DEXes are discovered and verified.
  * To add a new factory:
- * 1. Verify the factory address on Dogechain explorer
+ * 1. Verify the factory address on the DogeOS explorer
  * 2. Determine the DEX type (Uniswap V2 fork, etc.)
  * 3. Get the init code hash (from contract verification or known bytecode)
  * 4. Add to this array
  */
 export const KNOWN_FACTORIES: DEXFactory[] = [
-  {
-    address: "0x7C10a3b7EcD42dd7D79C0b9d58dDB812f92B574A",
-    name: "ChewySwap",
-    type: "UNISWAP_V2",
-    // Standard Uniswap V2 init code hash (most forks use this)
-    initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
-    deployBlock: 0, // TODO: Find actual deployment block
-    status: "ACTIVE",
-    description: "Formerly Dogeshrek - Uniswap V2 fork on Dogechain",
-  },
-  {
-    address: "0xC3550497E591Ac6ed7a7E03ffC711CfB7412E57F",
-    name: "QuickSwap",
-    type: "UNISWAP_V2",
-    // Standard Uniswap V2 init code hash
-    initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
-    deployBlock: 0, // TODO: Find actual deployment block
-    status: "ACTIVE",
-    description: "QuickSwap V2 on Dogechain - 2nd largest DEX by volume (~45% market share)",
-  },
-  {
-    address: "0xf4bc79d32a7defd87c8a9c100fd83206bbf19af5",
-    name: "KibbleSwap",
-    type: "UNISWAP_V2",
-    // Standard Uniswap V2 init code hash
-    initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
-    deployBlock: 0, // TODO: Find actual deployment block
-    status: "ACTIVE",
-    description: "First native DEX on Dogechain - discovered via pair contract queries",
-  },
-  {
-    address: "0xd27d9d61590874bf9ee2a19b27e265399929c9c3",
-    name: "DogeSwap",
-    type: "UNISWAP_V2",
-    // Standard Uniswap V2 init code hash
-    initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
-    deployBlock: 0, // TODO: Find actual deployment block
-    status: "ACTIVE",
-    description:
-      "DogeSwap V1 - LARGEST DEX on Dogechain (~54.6% market share) - discovered via OMNOM/WWDOGE pair",
-  },
-  {
-    address: "0x72ca245B078966578aB45e89067cc1245E3186c0",
-    name: "DogeSwap V2",
-    type: "UNISWAP_V2",
-    // Standard Uniswap V2 init code hash
-    initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
-    deployBlock: 0,
-    status: "ACTIVE",
-    description: "DogeSwap V2 - Updated factory contract (user-provided address)",
-  },
-  {
-    address: "0xAaA04462e35f3e40D798331657cA015169e005d7",
-    name: "YodeSwap",
-    type: "UNISWAP_V2",
-    // Standard Uniswap V2 init code hash
-    initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
-    deployBlock: 0,
-    status: "ACTIVE",
-    description: "YodeSwap AMM on Dogechain",
-  },
-  {
-    address: "0xc7c86B4f940Ff1C13c736b697e3FbA5a6Bc979F9",
-    name: "Wojak Finance",
-    type: "UNISWAP_V2",
-    // Standard Uniswap V2 init code hash
-    initCodeHash: "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5",
-    deployBlock: 0,
-    status: "ACTIVE",
-    description: "Wojak Finance DEX on Dogechain",
-  },
-  // Additional factories will be added here as they are discovered
-  // Priority targets:
-  // - ToolSwap - factory address TBD
-  // - DegenDex - factory address TBD
+  // DogeOS Chikyū testnet has no verified DEX deployments yet, so this registry starts empty.
+  // The upstream mainnet factories (ChewySwap/QuickSwap/DogeSwap/YodeSwap/Wojak)
+  // do not exist at these addresses on Chikyū — keeping them would have made the LP scanner
+  // report "0 pairs" for factories that are not there. Add entries as they are discovered:
+  // run `discoverFactoriesWithCheckpoint()` (utils/discoverFactories.ts) in the browser console
+  // and paste the generated entries here.
 ];
 
 /**

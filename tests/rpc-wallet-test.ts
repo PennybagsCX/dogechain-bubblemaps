@@ -3,10 +3,10 @@
  * This file demonstrates the usage of the new wallet monitoring methods
  */
 
-import { DogechainRPCClient } from "../services/dogechainRPC";
+import { EvmRPCClient } from "../services/evmRPC";
 
 async function testWalletTransactionMonitoring() {
-  const rpcClient = new DogechainRPCClient();
+  const rpcClient = new EvmRPCClient();
 
   // Test 1: Get latest block
   console.log("Test 1: Getting latest block...");

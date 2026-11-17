@@ -53,7 +53,7 @@ export function isValidTokenAddress(address: string): boolean {
  */
 export function getChainDisplayName(chainId: string): string {
   const chainNames: Record<string, string> = {
-    dogechain: "Dogechain",
+    "dogeos-chikyu": "DogeOS Chikyū Testnet",
     ethereum: "Ethereum",
     bsc: "BNB Chain",
     polygon: "Polygon",

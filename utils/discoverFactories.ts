@@ -5,11 +5,11 @@
  *
  * ⚠️ **DEVELOPER TOOL - NOT PRODUCTION CODE** ⚠️
  *
- * This utility is used ONCE to discover new DEX factory contracts on Dogechain
+ * This utility is used ONCE to discover new DEX factory contracts on DogeOS Chikyū
  * and generate the deployBlock values for knownFactories.ts.
  *
  * **WHEN TO USE:**
- * - A new DEX launches on Dogechain
+ * - A new DEX launches on DogeOS Chikyū
  * - You need to add its factory to the registry
  * - You need to find its first pair creation block
  *
@@ -45,8 +45,9 @@
  */
 
 import type { ScanCheckpoint, ScanError } from "../services/scanProgress";
+import { EXPLORER_API } from "../lib/chain";
 
-const EXPLORER_API_V1 = "https://explorer.dogechain.dog/api";
+const EXPLORER_API_V1 = EXPLORER_API;
 const PAIR_CREATED_EVENT_SIGNATURE =
   "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9";
 
@@ -151,7 +152,7 @@ export async function discoverAllFactories(
  * Fetch all PairCreated events from blockchain
  */
 async function fetchPairCreatedEvents(fromBlock: number, toBlock: number | string): Promise<any[]> {
-  // Note: Dogechain explorer API has limitations on log range
+  // Note: the explorer API has limitations on log range
   // We may need to fetch in batches
 
   const allEvents: any[] = [];
@@ -299,7 +300,7 @@ export async function getFactoryName(factoryAddress: string): Promise<string> {
  * This makes it easy to add them to knownFactories.ts
  */
 export function generateFactoryCode(factories: DiscoveredFactory[]): string {
-  let code = "// Discovered DEX Factories on Dogechain\n";
+  let code = "// Discovered DEX Factories on DogeOS Chikyū\n";
   code += "// Add these to KNOWN_FACTORIES in /services/knownFactories.ts\n\n";
 
   for (const factory of factories) {
@@ -323,7 +324,7 @@ export function generateFactoryCode(factories: DiscoveredFactory[]): string {
 export async function runFactoryDiscovery(
   onProgress?: (message: string, progress: number) => void
 ): Promise<void> {
-  onProgress?.("Discovering ALL DEX factories on Dogechain...", 0);
+  onProgress?.("Discovering ALL DEX factories on DogeOS Chikyū...", 0);
 
   // Discover all factories
   const factories = await discoverAllFactories(0, "latest", onProgress);
@@ -370,7 +371,7 @@ export async function discoverAllFactoriesWithCheckpoint(
     10
   );
 
-  // Since the Dogechain Explorer API doesn't support topic-only queries,
+  // Since the DogeOS Explorer API doesn't support topic-only queries,
   // we'll use a different approach: use the known factories as a starting point
   // and try to discover more by looking at their events
 
@@ -497,7 +498,7 @@ export async function runFactoryDiscoveryWithCheckpoint(
   onProgress?: (message: string, progress: number) => void,
   autoAdd: boolean = true
 ): Promise<{ factories: DiscoveredFactory[]; checkpoint: ScanCheckpoint }> {
-  onProgress?.("Discovering ALL DEX factories on Dogechain...", 0);
+  onProgress?.("Discovering ALL DEX factories on DogeOS Chikyū...", 0);
 
   // Check for existing checkpoint
   const { loadCheckpoint, saveCheckpoint } = await import("../services/scanProgress");

@@ -303,6 +303,55 @@ export async function buildTokenGraph(
 }
 
 /**
+ * Default block window the analysis view scans when a token is older than it.
+ *
+ * 40,000 blocks is ~33 h at Chikyū's 3 s block time: big enough that a token deployed in the
+ * last day (the common case for a bubble map) is scanned from its deploy block, small enough
+ * that a 25k-holder token is 5 chunked `eth_getLogs` calls instead of a 100+ chunk crawl.
+ */
+export const UI_GRAPH_LOOKBACK_BLOCKS = 40000n;
+
+export interface UiGraphOptions {
+  /** Max blocks to walk back from head when the deploy anchor is older. */
+  lookbackBlocks?: bigint;
+  /** Per-chunk progress (used by the app's loading overlay). */
+  onProgress?: TransferProgressCallback;
+  /** Reuse a client (e.g. one that already cached metadata/anchor). */
+  client?: EvmRPCClient;
+}
+
+/**
+ * The app's entry point: build the graph for a token at head, picking the scan window so the
+ * map is both complete for young tokens and bounded for old ones.
+ *
+ * Window rule: if the token's deploy anchor is within `lookbackBlocks` of head, scan
+ * anchor → head (whole history, no gaps); otherwise scan the last `lookbackBlocks` blocks and
+ * let the payload advertise that window in `scanned.fromBlock/toBlock`.
+ */
+export async function buildUiTokenGraph(
+  tokenAddress: string,
+  options: UiGraphOptions = {}
+): Promise<TokenGraph> {
+  if (!isAddress(tokenAddress)) {
+    throw new Error(`buildUiTokenGraph: invalid token address ${tokenAddress}`);
+  }
+
+  const client = options.client ?? new EvmRPCClient();
+  const lookback = options.lookbackBlocks ?? UI_GRAPH_LOOKBACK_BLOCKS;
+  const toBlock = await client.getLatestBlockNumber();
+  const anchorBlock = await client.findDeployBlock(tokenAddress, toBlock);
+  const fromBlock =
+    anchorBlock <= toBlock && toBlock - anchorBlock <= lookback ? anchorBlock : toBlock - lookback;
+
+  return buildTokenGraph(tokenAddress, {
+    client,
+    fromBlock,
+    toBlock,
+    onProgress: options.onProgress,
+  });
+}
+
+/**
  * Adapt a `TokenGraph` to the exact `Wallet[]` / `Link[]` props `BubbleMap` already takes.
  * Components stay untouched; this is the only conversion point.
  */

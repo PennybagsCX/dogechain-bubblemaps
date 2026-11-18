@@ -64,6 +64,8 @@ import {
 } from "./services/dataService";
 import { logSearchQuery, getTrendingAssets } from "./services/trendingService";
 import { fetchConnectionDetails } from "./services/connectionService";
+import { buildUiTokenGraph, toBubbleMapData } from "./services/graphService";
+import type { TokenGraph } from "./services/graphService";
 import { resetAllGuides } from "./utils/guideStorage";
 import { hasCreatedFirstAlert, markFirstAlertCreated } from "./utils/alertFirstTimeStorage";
 
@@ -158,6 +160,38 @@ interface TrendingAsset {
   type: AssetType;
   hits: number; // Number of times searched/viewed
 }
+
+/**
+ * Which data source produced the bubbles currently on screen.
+ *
+ * `logs`    — built from the token's Transfer logs on chain (`services/graphService`), the
+ *             product path: the map is a wallet connection graph.
+ * `holders` — the log scan returned nothing, so the blockscout holder list is drawn instead;
+ *             the UI labels this as a fallback and states why the log scan was empty.
+ * `empty`   — both sources returned nothing. No bubbles are invented.
+ */
+interface GraphSourceInfo {
+  kind: "logs" | "holders" | "empty";
+  /** Short label for the source pill ("Transfer logs", "Explorer holders (fallback)"). */
+  pill: string;
+  /** One-line provenance: what was read, how much, which blocks / which API. */
+  detail: string;
+  /** Why the Transfer-log scan yielded no graph (holders/empty kinds only). */
+  emptyReason?: string;
+}
+
+/** 9562825 → "9,562,825". Block numbers arrive as decimal strings from the payload. */
+const fmtBlock = (value: string): string => Number(value).toLocaleString("en-US");
+
+/** Provenance line for a rendered log-derived graph. */
+const graphSourceFromLogs = (graph: TokenGraph): GraphSourceInfo => ({
+  kind: "logs",
+  pill: "Transfer logs",
+  detail:
+    `${graph.scanned.transfers} Transfer log(s) → ${graph.nodes.length} address(es) · ` +
+    `blocks ${fmtBlock(graph.scanned.fromBlock)}–${fmtBlock(graph.scanned.toBlock)} · ` +
+    `${graph.scanned.chunks} chunk(s)`,
+});
 
 // Initial seeds: contracts that actually exist on DogeOS Chikyū testnet (verified with
 // blockscout getToken, 2026-11-17). `hits` is a LOCAL view counter — it starts at 0 so the
@@ -368,6 +402,10 @@ const App: React.FC = () => {
 
   const [wallets, setWallets] = useState<Wallet[]>([]);
   const [links, setLinks] = useState<Link[]>([]);
+  /** Which source produced `wallets`/`links` — rendered in the UI, never inferred. */
+  const [graphSource, setGraphSource] = useState<GraphSourceInfo | null>(null);
+  /** Live progress line from the Transfer-log walk ("chunk 2/5: blocks …"). */
+  const [graphProgress, setGraphProgress] = useState<string | null>(null);
   const [selectedWallet, setSelectedWallet] = useState<Wallet | null>(null);
   const [selectedConnection, setSelectedConnection] = useState<Connection | null>(null);
   const [selectedConnectionId, setSelectedConnectionId] = useState<string | null>(null);
@@ -1371,6 +1409,73 @@ const App: React.FC = () => {
     });
   }, []);
 
+  /**
+   * Graph-first load for the analysis view.
+   *
+   * 1. `buildUiTokenGraph` walks the token's Transfer logs on chain (≤9,000-block chunks —
+   *    Chikyū rejects wider `eth_getLogs` ranges) and returns nodes/links plus their provenance.
+   * 2. Only when that walk returns *zero* logs does the blockscout holder list get used, and the
+   *    returned `source` says so, so the UI labels the fallback and shows why the logs were empty.
+   *
+   * An RPC failure is reported as a failure, not as "no logs": the message travels with the
+   * source line so nobody reads a broken scan as an empty token.
+   */
+  const loadAnalysisData = useCallback(
+    async (
+      tokenData: Token
+    ): Promise<{ wallets: Wallet[]; links: Link[]; source: GraphSourceInfo }> => {
+      try {
+        const graph = await buildUiTokenGraph(tokenData.address, {
+          onProgress: (progress) => setGraphProgress(progress.message),
+        });
+
+        if (!graph.empty) {
+          const { wallets: graphWallets, links: graphLinks } = toBubbleMapData(graph);
+          return { wallets: graphWallets, links: graphLinks, source: graphSourceFromLogs(graph) };
+        }
+
+        // Log scan completed and found nothing — say why, then fall back to the holder list.
+        const emptyReason = graph.message ?? "no Transfer logs in the scanned range";
+        const holders = await fetchTokenHolders(tokenData);
+        return {
+          wallets: holders.wallets,
+          links: holders.links,
+          source: {
+            kind: holders.wallets.length > 0 ? "holders" : "empty",
+            pill: holders.wallets.length > 0 ? "Explorer holders (fallback)" : "No data",
+            detail:
+              holders.wallets.length > 0
+                ? `blockscout holder list · ${holders.wallets.length} holder(s)`
+                : "0 Transfer logs on chain and 0 holders from blockscout",
+            emptyReason,
+          },
+        };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.warn("[App] Transfer-log scan failed, falling back to the holder list:", message);
+        const holders = await fetchTokenHolders(tokenData).catch(() => ({
+          wallets: [],
+          links: [],
+        }));
+        return {
+          wallets: holders.wallets,
+          links: holders.links,
+          source: {
+            kind: holders.wallets.length > 0 ? "holders" : "empty",
+            pill: holders.wallets.length > 0 ? "Explorer holders (fallback)" : "No data",
+            detail:
+              `Transfer-log scan did not complete · ` +
+              `blockscout holder list: ${holders.wallets.length} holder(s)`,
+            emptyReason: `The on-chain Transfer-log scan failed: ${message}`,
+          },
+        };
+      } finally {
+        setGraphProgress(null);
+      }
+    },
+    []
+  );
+
   // --- SEARCH LOGIC ---
   const handleSearch = async (
     e?: React.FormEvent,
@@ -1395,6 +1500,8 @@ const App: React.FC = () => {
     setSummary(null);
     setWallets([]);
     setLinks([]);
+    setGraphSource(null);
+    setGraphProgress(null);
     setIsMobileStatsOpen(false);
 
     try {
@@ -1431,8 +1538,10 @@ const App: React.FC = () => {
         }
       );
 
-      // Fetch Data (Live)
-      const result = await fetchTokenHolders(tokenData);
+      // Fetch Data (Live) — graph first: bubbles come from this token's Transfer logs, and the
+      // blockscout holder list is only the labelled fallback when the log scan finds nothing.
+      const result = await loadAnalysisData(tokenData);
+      setGraphSource(result.source);
 
       let finalWallets = result.wallets;
 
@@ -1442,13 +1551,12 @@ const App: React.FC = () => {
       }
 
       if (finalWallets.length === 0) {
-        console.error(`[App] ❌ No wallets found. Token holders API returned empty result.`);
-        console.error(`[App] 📋 Debug info:`, {
+        console.error(`[App] ❌ No wallets found from either source.`, {
           tokenAddress: tokenData.address,
           tokenSymbol: tokenData.symbol,
           isArcMobile,
-          originalWalletsCount: result.wallets.length,
-          finalWalletsCount: finalWallets.length,
+          logDerivedWallets: result.source.kind === "logs" ? result.wallets.length : 0,
+          emptyReason: result.source.emptyReason,
         });
 
         if (isArcMobile) {
@@ -1457,7 +1565,10 @@ const App: React.FC = () => {
             "warning"
           );
         } else {
-          addToast("No active holders found or API limit reached.", "warning");
+          addToast(
+            result.source.emptyReason ?? "No Transfer logs and no holders found for this token.",
+            "warning"
+          );
         }
         setLoading(false);
         return;
@@ -2794,13 +2905,64 @@ const App: React.FC = () => {
                           <div className="text-xl font-bold text-white">
                             {wallets.length.toLocaleString()}
                           </div>
-                          {/* Mapped Count Detail */}
+                          {/* Mapped Count Detail — states which source produced these bubbles */}
                           <div className="text-[10px] text-slate-500 mt-1">
-                            {wallets.length === 100
-                              ? "Showing top 100 holders from blockchain"
-                              : `${wallets.length} total holders tracked`}
+                            {graphSource?.kind === "logs"
+                              ? "from this token's Transfer logs"
+                              : graphSource?.kind === "holders"
+                                ? "from the blockscout holder list (fallback)"
+                                : graphSource?.kind === "empty"
+                                  ? "no holders found"
+                                  : wallets.length === 100
+                                    ? "Showing top 100 holders from blockchain"
+                                    : `${wallets.length} total holders tracked`}
                           </div>
                         </div>
+
+                        {/* Graph source — the one line that says where the map came from */}
+                        {graphSource && (
+                          <div
+                            data-testid="graph-source"
+                            className={`p-3 rounded-lg border text-left ${
+                              graphSource.kind === "logs"
+                                ? "bg-green-500/10 border-green-500/30"
+                                : "bg-amber-500/10 border-amber-500/30"
+                            }`}
+                          >
+                            <div
+                              className={`flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide mb-1 ${
+                                graphSource.kind === "logs" ? "text-green-400" : "text-amber-400"
+                              }`}
+                            >
+                              {graphSource.kind === "logs" ? (
+                                <ScanLine size={12} />
+                              ) : (
+                                <AlertTriangle size={12} />
+                              )}
+                              Graph source
+                            </div>
+                            <div
+                              data-testid="graph-source-pill"
+                              className="text-xs font-bold text-white"
+                            >
+                              {graphSource.pill}
+                            </div>
+                            <p
+                              data-testid="graph-source-detail"
+                              className="text-[10px] text-slate-400 mt-0.5 break-words leading-relaxed"
+                            >
+                              {graphSource.detail}
+                            </p>
+                            {graphSource.emptyReason && (
+                              <p
+                                data-testid="graph-empty-reason"
+                                className="text-[10px] text-amber-300 mt-1 break-words leading-relaxed"
+                              >
+                                {graphSource.emptyReason}
+                              </p>
+                            )}
+                          </div>
+                        )}
                         <div className="p-4 bg-space-900 rounded-lg border border-space-700 text-center">
                           <div className="flex items-center gap-2 text-slate-400 mb-1 justify-center">
                             <Layers size={14} /> Total Supply
@@ -3024,10 +3186,19 @@ const App: React.FC = () => {
                           <Share2 size={14} /> <span className="hidden sm:inline">Share</span>
                         </button>
 
-                        <div className="bg-space-800 border border-space-700 text-slate-200 px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg whitespace-nowrap">
-                          <History size={14} className="text-green-500" />
+                        <div
+                          data-testid="source-pill"
+                          className="bg-space-800 border border-space-700 text-slate-200 px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg whitespace-nowrap"
+                        >
+                          {graphSource?.kind === "logs" ? (
+                            <ScanLine size={14} className="text-green-500" />
+                          ) : (
+                            <History size={14} className="text-amber-500" />
+                          )}
                           <span className="text-slate-400 hidden sm:inline">Source:</span>
-                          <span className="text-white font-bold text-xs sm:text-sm">Explorer</span>
+                          <span className="text-white font-bold text-xs sm:text-sm">
+                            {graphSource?.pill ?? "Explorer"}
+                          </span>
                         </div>
                       </div>
 
@@ -3036,26 +3207,49 @@ const App: React.FC = () => {
                           <div className="flex flex-col items-center gap-4">
                             <Loader2 className="animate-spin text-purple-500" size={48} />
                             <span className="text-white font-medium">Fetching Live Data...</span>
-                            <span className="text-xs text-slate-500">
-                              Connecting to DogeOS Explorer API
+                            <span className="text-xs text-slate-500 text-center px-6">
+                              {graphProgress ?? "Scanning this token's Transfer logs on chain"}
                             </span>
                           </div>
                         </div>
                       )}
 
-                      <BubbleMap
-                        wallets={wallets}
-                        links={links}
-                        assetType={token.type}
-                        userAddress={userAddress}
-                        onWalletClick={handleWalletClickOnMap}
-                        targetWalletId={targetWalletId}
-                        onConnectionClick={handleConnectionClick}
-                        selectedConnectionId={selectedConnectionId}
-                        freezeLayout={isMapLayoutFrozen}
-                        tokenAddress={token.address}
-                        onOpenFilters={() => setIsFilterModalOpen(true)}
-                      />
+                      {wallets.length === 0 && graphSource?.kind === "empty" ? (
+                        <div
+                          data-testid="graph-empty-state"
+                          className="absolute inset-0 flex items-center justify-center p-6"
+                        >
+                          <div className="max-w-md w-full text-center bg-space-800 border border-amber-500/30 rounded-xl p-6">
+                            <AlertTriangle className="mx-auto text-amber-400 mb-3" size={32} />
+                            <h3 className="text-white font-bold mb-2">
+                              No graph data for this token
+                            </h3>
+                            <p className="text-sm text-slate-400 leading-relaxed">
+                              The on-chain Transfer-log scan and the blockscout holder list both
+                              returned nothing, so there is no wallet graph to draw.
+                            </p>
+                            {graphSource.emptyReason && (
+                              <p className="text-xs text-amber-300/90 mt-3 break-words">
+                                {graphSource.emptyReason}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      ) : (
+                        <BubbleMap
+                          wallets={wallets}
+                          links={links}
+                          assetType={token.type}
+                          userAddress={userAddress}
+                          onWalletClick={handleWalletClickOnMap}
+                          targetWalletId={targetWalletId}
+                          onConnectionClick={handleConnectionClick}
+                          selectedConnectionId={selectedConnectionId}
+                          freezeLayout={isMapLayoutFrozen}
+                          tokenAddress={token.address}
+                          onOpenFilters={() => setIsFilterModalOpen(true)}
+                        />
+                      )}
                     </div>
 
                     {/* Slide Over Details */}

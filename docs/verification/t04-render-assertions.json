@@ -1,0 +1,86 @@
+{
+  "base": "http://localhost:5199",
+  "token": "0x12525A2Ab363005D2Ad7D931B06B804bEbDeBc27",
+  "chainLogs": 7,
+  "chainChunks": 3,
+  "headBlock": "9586791",
+  "blockedHolderRequests": [],
+  "holderRequestsSeen": [],
+  "results": [
+    {
+      "name": "independent eth_getLogs count is 7",
+      "ok": true,
+      "detail": "logs=7 chunks=3"
+    },
+    {
+      "name": "app names its source as Transfer logs",
+      "ok": true,
+      "detail": "Transfer logs"
+    },
+    {
+      "name": "source pill in the map controls says Transfer logs",
+      "ok": true,
+      "detail": "Source: Transfer logs"
+    },
+    {
+      "name": "source line states the log count and block range",
+      "ok": true,
+      "detail": "7 Transfer log(s) → 5 address(es) · blocks 9,562,825–9,586,793 · 3 chunk(s)"
+    },
+    {
+      "name": "UI log count equals the independent eth_getLogs count",
+      "ok": true,
+      "detail": "ui=7 chain=7"
+    },
+    {
+      "name": "log graph renders no empty-state reason",
+      "ok": true,
+      "detail": "reasons=0"
+    },
+    {
+      "name": "bubbles drawn from the log graph",
+      "ok": true,
+      "detail": "circles=22"
+    },
+    {
+      "name": "no blockscout holder-list request while rendering",
+      "ok": true,
+      "detail": "holderCalls=0"
+    },
+    {
+      "name": "with the holder API blocked the map still renders",
+      "ok": true,
+      "detail": "circles=17"
+    },
+    {
+      "name": "with the holder API blocked the source is still Transfer logs",
+      "ok": true,
+      "detail": "Transfer logs"
+    },
+    {
+      "name": "empty log scan is labelled as a fallback (or as no data)",
+      "ok": true,
+      "detail": "Explorer holders (fallback)"
+    },
+    {
+      "name": "fallback states why the log scan was empty",
+      "ok": true,
+      "detail": "EMPTY STATE: no Transfer logs for 0xe5e3a4ff1773d043a387b16ceb3c91cc49bafd54 in blocks 9546803-9586803 (5 chunk(s), anchor 2473639). No nodes or links are fabri"
+    },
+    {
+      "name": "[mobile] source pill says Transfer logs",
+      "ok": true,
+      "detail": "Transfer logs"
+    },
+    {
+      "name": "[mobile] bubbles drawn",
+      "ok": true,
+      "detail": "circles=22"
+    },
+    {
+      "name": "no uncaught page errors",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}

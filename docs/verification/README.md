@@ -5,23 +5,25 @@ No fixture, mock or seeded holder list is used anywhere in this directory.
 
 Chain: DogeOS Chikyū testnet, id 6281971, RPC https://rpc.testnet.dogeos.com/
 
-| Evidence                                       | File                                      | What proves it                                                                                                                                                                                                                 |
-| ---------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Bubble map rendered from live holders          | `01-bubble-map-mwdoge.png`                | App analysis view for mWDOGE (`0xA69d8Ac86502e4E08c812c64675a4892dfe6870f`) showing 100 tracked holders and the D3 bubble map; holder percentages in the sidebar match the on-chain balances in `mwdoge-graph.json`            |
-| Real transfer confirmed on the explorer        | `02-explorer-tx-confirmation.png`         | tx `0x06f07c3c41dccb2d44128206de685de0abd56aa927c4b964944ba80547572adb` — Status Success, block 9,550,688, "Transferred 0.217773 mWDOGE" (same leg the scanner returned)                                                       |
-| Wallet connected to chain 6281971              | `03-wallet-connected-chain-6281971.png`   | Production build (`vite preview`) with an EIP-1193 wallet reporting `eth_chainId = 0x5fdaf3`; account modal shows the connected address and its live DOGE balance                                                              |
-| App reading live chain metrics                 | `04-network-health-live.png`              | Network Health page: current block #9,559,876, block time 3.00s, gas price 0.02 gwei, 2.3 TPS — read through the app's own RPC client                                                                                          |
-| Machine-readable chain probe                   | `wallet-chain-probe.json`                 | `{walletChainId:"0x5fdaf3", walletChainIdDec:6281971, rpcHead:9559878, address:"0x3639…f0b9"}` captured in the same page session                                                                                               |
-| Connected wallet + chain badge on 6281971      | `05-wallet-connected-chain-6281971.png`   | Production build, injected EIP-1193 wallet reporting `eth_chainId = 0x5fdaf3`: navbar shows the truncated address and the `Chikyū 6281971` badge (T-07, `wallet-guard-proof.mjs` S1)                                           |
-| Wrong-chain guard replaces all app data        | `06-wrong-chain-guard.png`                | Wallet on chain 1 (Ethereum): the guard states the actual chain, names Chikyū 6281971 / 0x5fdaf3, shows RPC/explorer/currency, and offers switch + add-network. Hero, stats and the search input are absent (S2)               |
-| Guard clears on switch                         | `07-after-chain-switch.png`               | Same session after `Switch to DogeOS Chikyū Testnet`: guard gone, chain badge back on 6281971, wallet reports 0x5fdaf3 (S2)                                                                                                    |
-| Rejected switch keeps the guard up             | `08-wrong-chain-switch-rejected.png`      | Wallet answers 4001: guard stays, error `Request rejected in your wallet.` is shown, no chain data rendered (S3)                                                                                                               |
-| Add-network sends the chain module's values    | `09-add-network-then-connected.png`       | `wallet_addEthereumChain` payload recorded from the page: chainId `0x5fdaf3`, rpcUrls `["https://rpc.testnet.dogeos.com/"]`, blockExplorerUrls `["https://dogeos-testnet.l2scan.co"]`, nativeCurrency DOGE/18; guard gone (S4) |
-| Unknown chain (4902) auto-adds                 | `10-chain-unknown-then-added.png`         | Wallet answers 4902 to a plain switch: the guard falls back to add-network and ends on 0x5fdaf3 with no error left (S5)                                                                                                        |
-| Wrong-chain guard on mobile                    | `11-wrong-chain-guard-mobile-390x844.png` | Same guard at 390×844: card, URLs and both actions fit with no clipping                                                                                                                                                        |
-| Wallet-flow/guard assertions                   | `wallet-guard-probe.json`                 | Machine-readable output of all 26 checks (6 scenarios, incl. no-wallet baseline) from `scripts/dogeos-verify/wallet-guard-proof.mjs`; 0 failed                                                                                 |
-| Scanner transcript (holders, links, transfers) | `scan-transcript.txt`                     | Output of `scripts/dogeos-verify/run-scan.sh` running THIS APP'S `services/evmRPC.ts` against Chikyū                                                                                                                           |
-| Graph payload                                  | `mwdoge-graph.json`, `such-graph.json`    | nodes/links built from live `Transfer` logs: mWDOGE 411 nodes / 643 links from 1,654 logs in a 40,000-block window; SUCH 2 nodes / 2 links / 339 wallet transfers                                                              |
+| Evidence                                       | File                                      | What proves it                                                                                                                                                                                                                        |
+| ---------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Bubble map rendered from live holders          | `01-bubble-map-mwdoge.png`                | App analysis view for mWDOGE (`0xA69d8Ac86502e4E08c812c64675a4892dfe6870f`) showing 100 tracked holders and the D3 bubble map; holder percentages in the sidebar match the on-chain balances in `mwdoge-graph.json`                   |
+| Real transfer confirmed on the explorer        | `02-explorer-tx-confirmation.png`         | tx `0x06f07c3c41dccb2d44128206de685de0abd56aa927c4b964944ba80547572adb` — Status Success, block 9,550,688, "Transferred 0.217773 mWDOGE" (same leg the scanner returned)                                                              |
+| Wallet connected to chain 6281971              | `03-wallet-connected-chain-6281971.png`   | Production build (`vite preview`) with an EIP-1193 wallet reporting `eth_chainId = 0x5fdaf3`; account modal shows the connected address and its live DOGE balance                                                                     |
+| App reading live chain metrics                 | `04-network-health-live.png`              | Network Health page: current block #9,559,876, block time 3.00s, gas price 0.02 gwei, 2.3 TPS — read through the app's own RPC client                                                                                                 |
+| Machine-readable chain probe                   | `wallet-chain-probe.json`                 | `{walletChainId:"0x5fdaf3", walletChainIdDec:6281971, rpcHead:9559878, address:"0x3639…f0b9"}` captured in the same page session                                                                                                      |
+| Connected wallet + chain badge on 6281971      | `05-wallet-connected-chain-6281971.png`   | Production build, injected EIP-1193 wallet reporting `eth_chainId = 0x5fdaf3`: navbar shows the truncated address and the `Chikyū 6281971` badge (T-07, `wallet-guard-proof.mjs` S1)                                                  |
+| Wrong-chain guard replaces all app data        | `06-wrong-chain-guard.png`                | Wallet on chain 1 (Ethereum): the guard states the actual chain, names Chikyū 6281971 / 0x5fdaf3, shows RPC/explorer/currency, and offers switch + add-network. Hero, stats and the search input are absent (S2)                      |
+| Guard clears on switch                         | `07-after-chain-switch.png`               | Same session after `Switch to DogeOS Chikyū Testnet`: guard gone, chain badge back on 6281971, wallet reports 0x5fdaf3 (S2)                                                                                                           |
+| Rejected switch keeps the guard up             | `08-wrong-chain-switch-rejected.png`      | Wallet answers 4001: guard stays, error `Request rejected in your wallet.` is shown, no chain data rendered (S3)                                                                                                                      |
+| Add-network sends the chain module's values    | `09-add-network-then-connected.png`       | `wallet_addEthereumChain` payload recorded from the page: chainId `0x5fdaf3`, rpcUrls `["https://rpc.testnet.dogeos.com/"]`, blockExplorerUrls `["https://dogeos-testnet.l2scan.co"]`, nativeCurrency DOGE/18; guard gone (S4)        |
+| Unknown chain (4902) auto-adds                 | `10-chain-unknown-then-added.png`         | Wallet answers 4902 to a plain switch: the guard falls back to add-network and ends on 0x5fdaf3 with no error left (S5)                                                                                                               |
+| Wrong-chain guard on mobile                    | `11-wrong-chain-guard-mobile-390x844.png` | Same guard at 390×844: card, URLs and both actions fit with no clipping                                                                                                                                                               |
+| Wallet-flow/guard assertions                   | `wallet-guard-probe.json`                 | Machine-readable output of all 26 checks (6 scenarios, incl. no-wallet baseline) from `scripts/dogeos-verify/wallet-guard-proof.mjs`; 0 failed                                                                                        |
+| Scanner transcript (holders, links, transfers) | `scan-transcript.txt`                     | Output of `scripts/dogeos-verify/run-scan.sh` running THIS APP'S `services/evmRPC.ts` against Chikyū                                                                                                                                  |
+| Graph payload                                  | `mwdoge-graph.json`, `such-graph.json`    | nodes/links built from live `Transfer` logs: mWDOGE 411 nodes / 643 links from 1,654 logs in a 40,000-block window; SUCH 2 nodes / 2 links / 339 wallet transfers                                                                     |
+| Bubble map rendered from Transfer logs (T-04)  | `t04-01-graph-from-logs-t09p.png`         | Analysis view for T09P with the "Graph source → Transfer logs" card: **7 Transfer log(s) → 5 address(es) · blocks 9,562,825–9,586,641 · 3 chunk(s)**, bubbles and edges from those logs. 15/15 checks in `t04-render-assertions.json` |
+| Fallback is labelled, not silent (T-04)        | `t04-03-fallback-holder-list.png`         | LINK `0xe5e3…FD54`: log scan returns `EMPTY STATE` (5 chunks, no Transfer logs), so the card reads "Explorer holders (fallback)" and the empty reason is on screen                                                                    |
 
 ## Wallet flow and chain guard (T-07)
 
@@ -129,8 +131,11 @@ the corrected figure matches the explorer exactly.
   proof come from `/api/v2` and from the app's own scanner, both of which agree.
 - The explorer renders the mint as `999,999.999999 T09P` (float64 rounding in its UI); on-chain
   `totalSupply` is exactly 1,000,000e18.
-- The bubble map still draws blockscout's holder list (not `graphService`); the log-derived payload is
-  emitted by the scanner harness. Feeding it into `Dashboard` remains follow-up (T-04 gap, unchanged).
+- The bubble map now draws the log-derived graph (see "T-04 — the log-derived graph in the
+  dashboard" below). It is **not** every holder: the default window is the deploy block when the
+  token is younger than 40,000 blocks, otherwise the last 40,000 blocks — so a token older than
+  ~33 h shows the addresses active in that window, and the card states the range on screen. The
+  mint origin `0x000…000` appears as a node (it is one end of the mint leg) at 0.0 %.
 - The wallet drawer's tx list comes from blockscout's `tokentx` API; the log-derived list is in
   `t09-scan-transcript.txt`. Both are live, they are different sources.
 
@@ -208,6 +213,44 @@ over a range that genuinely has no logs.
 
 Reproduce: `TOKEN=<erc20> [BLOCKS=<n>] [OUT=docs/verification/x.json] bash scripts/dogeos-verify/graph-probe.sh`.
 
-Not wired into the analysis view: the map still renders blockscout's top-100 holders; the log-derived
-payload is the contract the scanner harness emits. Feeding it into `Dashboard` is follow-up work, not
-part of this contract.
+## T-04 — the log-derived graph in the dashboard
+
+The analysis view is now graph-first. `App.handleSearch` calls `loadAnalysisData()`, which calls
+`buildUiTokenGraph()` (`services/graphService.ts`) — the same contract the harness proved, reached
+from the product instead of a script:
+
+1. **Logs are the product path.** The walk resolves the token's deploy anchor (`eth_getCode` binary
+   search), then scans anchor → head in **≤9,000-block chunks** (`EVM_LOG_CHUNK_SIZE`; Chikyū rejects
+   ranges wider than 10,000 blocks outright). Window rule: if the anchor is within
+   `UI_GRAPH_LOOKBACK_BLOCKS` (40,000 blocks ≈ 33 h) of head the walk is the token's whole history,
+   otherwise the last 40,000 blocks — the payload advertises whichever it used in
+   `scanned.fromBlock/toBlock`, and the UI prints that range.
+2. **The blockscout holder list is a labelled fallback.** It is fetched _only_ when the log walk
+   returns zero logs. The card then reads "Explorer holders (fallback)" and carries the scan's own
+   `EMPTY STATE` message; when both sources are empty the map is replaced by an explicit
+   "No graph data for this token" panel. Nothing is fabricated to fill either case.
+3. **The source is on screen, not implied.** The map's control pill and the "Graph source" card both
+   name the source, and the card states the log count, the address count, the block range and the
+   chunk count that produced the bubbles.
+4. **Both payloads are live.** Balances are `balanceOf` pinned to the scan's `toBlock`, `isContract`
+   is `eth_getCode` at the same block, and links are the aggregated `Transfer` legs.
+
+Proof: `node scripts/dogeos-verify/t04/render-graph-proof.mjs http://localhost:5199` against
+`npm run build && npx vite preview --port 5199` (Playwright, system Chrome). It asserts, not narrates:
+
+| Check                                                                            | Result                                               |
+| -------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| Source card + pill read "Transfer logs"                                          | PASS                                                 |
+| Independent `eth_getLogs` count (no app code) equals the count printed in the UI | PASS — 7 = 7                                         |
+| No request to `/tokens/<addr>/holders` while the map renders                     | PASS — 0 calls                                       |
+| With that endpoint blocked at the network layer the map still renders            | PASS — bubbles present, source still "Transfer logs" |
+| LINK (no Transfer logs in range) shows the labelled fallback + empty reason      | PASS                                                 |
+| Desktop 1440×900 and mobile 390×844 captures                                     | `t04-01`, `t04-02`                                   |
+
+One line for the record: **the rendered graph in `t04-01-graph-from-logs-t09p.png` was supplied by
+on-chain Transfer logs — 7 `eth_getLogs` results in 3 × ≤9,000-block chunks — and the blockscout
+holder API was never called.**
+
+Unit coverage for the window rule and the payload→`BubbleMap` adaptation: `tests/graph-service.test.ts`
+(young token scans anchor→head, old token scans the bounded window, zero-log range stays an explicit
+empty state, `toBubbleMapData` keeps the component props).

@@ -3,6 +3,8 @@
  * Supports Dexscreener and GeckoTerminal embedding
  */
 
+import { CHAIN } from "../lib/chain";
+
 export type ChartSource = "dexscreener" | "geckoterminal";
 
 export interface ChartUrlOptions {
@@ -15,7 +17,7 @@ export interface ChartUrlOptions {
  * Constructs the chart URL based on the source platform
  */
 export function getChartUrl(options: ChartUrlOptions): string {
-  const { tokenAddress, chainId = "dogechain", source } = options;
+  const { tokenAddress, chainId = CHAIN.network, source } = options;
 
   switch (source) {
     case "dexscreener":
@@ -32,7 +34,7 @@ export function getChartUrl(options: ChartUrlOptions): string {
 /**
  * Get both chart URLs for a token
  */
-export function getAllChartUrls(tokenAddress: string, chainId: string = "dogechain") {
+export function getAllChartUrls(tokenAddress: string, chainId: string = CHAIN.network) {
   return {
     dexscreener: getChartUrl({ tokenAddress, chainId, source: "dexscreener" }),
     geckoterminal: getChartUrl({ tokenAddress, chainId, source: "geckoterminal" }),

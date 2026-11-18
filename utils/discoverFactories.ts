@@ -45,11 +45,33 @@
  */
 
 import type { ScanCheckpoint, ScanError } from "../services/scanProgress";
-import { EXPLORER_API } from "../lib/chain";
+import { EXPLORER_API, RPC_URL } from "../lib/chain";
 
 const EXPLORER_API_V1 = EXPLORER_API;
 const PAIR_CREATED_EVENT_SIGNATURE =
   "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9";
+
+/**
+ * Current chain head from the configured RPC.
+ *
+ * The upstream code hardcoded `toBlock=100000` here, which was fine on a long-lived
+ * mainnet but silently returns "no logs" on a testnet whose head is in the millions.
+ * Returns 0 when the RPC is unreachable so callers can fall back explicitly.
+ */
+async function getChainHead(): Promise<number> {
+  try {
+    const res = await fetch(RPC_URL, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_blockNumber", params: [] }),
+    });
+    const json = (await res.json()) as { result?: string };
+    const head = json.result ? Number.parseInt(json.result, 16) : NaN;
+    return Number.isFinite(head) ? head : 0;
+  } catch {
+    return 0;
+  }
+}
 
 export interface DiscoveredFactory {
   address: string;
@@ -388,7 +410,11 @@ export async function discoverAllFactoriesWithCheckpoint(
     );
 
     try {
-      const url = `${EXPLORER_API_V1}?module=logs&action=getLogs&address=${factory.address}&topic0=${PAIR_CREATED_EVENT_SIGNATURE}&fromBlock=${factory.deployBlock}&toBlock=100000`;
+      // Scan from the factory's first known block up to the current head. A fixed upper bound
+      // (the upstream code used 100000) returns "No logs found" on any chain further along.
+      const head = await getChainHead();
+      const toBlock = head > factory.deployBlock ? head : factory.deployBlock;
+      const url = `${EXPLORER_API_V1}?module=logs&action=getLogs&address=${factory.address}&topic0=${PAIR_CREATED_EVENT_SIGNATURE}&fromBlock=${factory.deployBlock}&toBlock=${toBlock}`;
 
       const response = await fetch(url);
       const data = await response.json();

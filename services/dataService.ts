@@ -14,7 +14,7 @@ import { validateTokenAddress, validateWalletAddress } from "../utils/validation
 import {
   fetchWithRateLimit,
   fetchWithRetry,
-  dogechainApiLimiter,
+  evmApiLimiter,
   AdaptiveRequestScheduler,
 } from "../utils/rateLimit";
 import {
@@ -26,17 +26,41 @@ import {
 } from "./db";
 import { submitWalletScanResults } from "./learnedTokensService";
 import { trackApiCall } from "./apiMetrics";
-import { EXPLORER_API as EXPLORER_API_V1, EXPLORER_API_V2 } from "../lib/chain";
+import { EXPLORER_API as EXPLORER_API_V1, EXPLORER_API_V2, CHAIN_ID } from "../lib/chain";
 
 // Explorer access: DogeOS Chikyū exposes a blockscout instance that speaks the
 // etherscan-compatible v1 API and the blockscout v2 API, and it sends
 // `access-control-allow-origin: *`, so the browser calls it directly from lib/chain.ts.
 // No local proxy, and explicitly not the upstream app's production backend.
-const METADATA_CACHE_KEY = "dogeos_token_metadata_cache_v3";
+//
+// Cache key is namespaced by chain id: a metadata entry cached against another chain
+// (e.g. the pre-fork Dogechain build) lives under a different key and can never be
+// served here. The legacy keys are actively removed on first read.
+const METADATA_CACHE_KEY = `dogeos_token_metadata_cache:${CHAIN_ID}:v4`;
+const LEGACY_METADATA_CACHE_KEYS = [
+  "dogeos_token_metadata_cache_v3",
+  "dogeos_token_metadata_cache_v2",
+  "dogechain_token_metadata_cache_v3",
+  "dogechain_token_metadata_cache_v2",
+];
+let legacyMetadataCachePurged = false;
+
+function purgeLegacyMetadataCaches(): void {
+  if (legacyMetadataCachePurged) return;
+  legacyMetadataCachePurged = true;
+  for (const key of LEGACY_METADATA_CACHE_KEYS) {
+    try {
+      localStorage.removeItem(key);
+    } catch {
+      // localStorage unavailable — nothing to purge
+    }
+  }
+}
 // Note: DISABLE_WALLET_ENDPOINTS removed - using fetchWalletAssetsHybrid instead
 
 // --- Local Storage Cache Helpers ---
 const getCachedMetadata = (address: string) => {
+  purgeLegacyMetadataCaches();
   try {
     const cacheRaw = localStorage.getItem(METADATA_CACHE_KEY);
     if (!cacheRaw) return null;
@@ -83,7 +107,10 @@ export const detectContractType = async (address: string): Promise<AssetType | n
 
       // 2) Check V2 token metadata
       try {
-        const v2Res = await fetchSafe(`${EXPLORER_API_V2}?path=/v2/tokens/${address}`);
+        // Blockscout v2 is a plain path-based REST API: /api/v2/tokens/{addr}.
+        // (The upstream proxy-style `?path=/v2/...` form returns HTTP 400
+        //  "Params 'module' and 'action' are required" on this instance — measured.)
+        const v2Res = await fetchSafe(`${EXPLORER_API_V2}/tokens/${address}`);
         if (v2Res.ok) {
           const v2Json = await v2Res.json();
           const typeField = v2Json?.type?.toString().toLowerCase();
@@ -157,15 +184,22 @@ export const detectContractType = async (address: string): Promise<AssetType | n
         }
       }
 
-      // 5) Check fungible token tx endpoint
-      const ftRes = await fetchSafe(
-        `${EXPLORER_API_V1}?module=account&action=tokentx&contractaddress=${address}&page=1&offset=1&sort=desc`
-      );
-      if (ftRes.ok) {
-        const ftJson = await ftRes.json();
-        if (Array.isArray(ftJson.result) && ftJson.result.length > 0) {
-          return AssetType.TOKEN;
+      // 5) Check fungible transfers via v2. The v1 `action=tokentx` endpoint on this
+      //    blockscout requires an `address` holder param and answers
+      //    {"status":"0","message":"Query parameter address is required"} without it (measured),
+      //    so contract-only "does this token move?" detection has to go through v2.
+      try {
+        const ftRes = await fetchSafe(`${EXPLORER_API_V2}/tokens/${address}/transfers?limit=1`);
+        if (ftRes.ok) {
+          const ftJson = await ftRes.json();
+          if (Array.isArray(ftJson?.items) && ftJson.items.length > 0) {
+            const tokenType = ftJson.items[0]?.token?.type?.toString().toLowerCase();
+            if (tokenType?.includes("721") || tokenType?.includes("1155")) return AssetType.NFT;
+            return AssetType.TOKEN;
+          }
         }
+      } catch {
+        /* ignore */
       }
 
       return null;
@@ -244,7 +278,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const fetchSafe = async (url: string, options: any = {}, retries = 2): Promise<Response> => {
   try {
     return await fetchWithRetry(
-      () => fetchWithRateLimit(url, options, dogechainApiLimiter),
+      () => fetchWithRateLimit(url, options, evmApiLimiter),
       retries,
       1000
     );
@@ -332,7 +366,7 @@ export const fetchMetadataFromTransfers = async (
 ): Promise<{ name?: string; symbol?: string; decimals?: number } | null> => {
   try {
     // Fetch 1 recent transfer. The 'token' object in the transfer usually contains accurate metadata from the logs
-    const res = await fetchSafe(`${EXPLORER_API_V2}?path=/v2/tokens/${address}/transfers&limit=1`);
+    const res = await fetchSafe(`${EXPLORER_API_V2}/tokens/${address}/transfers?limit=1`);
     if (res.ok) {
       const data = await res.json();
       if (data.items && data.items.length > 0) {
@@ -502,7 +536,8 @@ const fetchTokenDataInternal = async (
         totalSupply,
         decimals: finalDecimals,
         type,
-        priceUsd: 0,
+        // No market/price feed on this chain (blockscout exchange_rate and coin_price are null),
+        // so priceUsd stays undefined: panels report "unavailable", never a fake $0.
         isVerified,
       };
     } catch (error: any) {
@@ -527,7 +562,6 @@ const fetchTokenDataInternal = async (
             totalSupply: 0,
             decimals: cachedData.decimals ?? (type === AssetType.NFT ? 0 : 18),
             type,
-            priceUsd: 0,
             isVerified: false,
           };
         }
@@ -606,24 +640,56 @@ export const fetchTokenHolders = async (
     const decimals =
       token.decimals !== undefined ? token.decimals : token.type === AssetType.NFT ? 0 : 18;
 
-    // V1-only: avoid V2 holders endpoint (returns 400 in production)
+    // Holders: blockscout v2 `/tokens/{addr}/holders` (paged, and it flags contract holders,
+    // which the LP heuristic below consumes). The legacy etherscan-style
+    // `action=getTokenHolders` still happens to answer on this instance, so it is kept only as
+    // a fallback for tokens the v2 indexer has not picked up yet.
     try {
-      // OPTIMIZATION: Removed 150ms sleep - rate limiter handles spacing
-      const v1Response = await fetchSafe(
-        `${EXPLORER_API_V1}?module=token&action=getTokenHolders&contractaddress=${cleanAddress}&page=1&offset=100`
-      );
-      const v1Json = await v1Response.json();
+      const holders: { address: string; balance: string; is_contract: boolean }[] = [];
 
-      if (!(v1Json.status === "1" && Array.isArray(v1Json.result))) {
-        return { wallets: [], links: [] };
+      let nextPageParams: string | undefined;
+      for (let page = 0; page < 3 && holders.length < 100; page++) {
+        const query = nextPageParams ? `?${nextPageParams}` : "";
+        const v2Res = await fetchSafe(`${EXPLORER_API_V2}/tokens/${cleanAddress}/holders${query}`);
+        if (!v2Res.ok) break;
+        const v2Json = await v2Res.json();
+        const items: any[] = Array.isArray(v2Json?.items) ? v2Json.items : [];
+        for (const item of items) {
+          const holderAddress = item?.address?.hash || item?.address;
+          if (typeof holderAddress !== "string") continue;
+          holders.push({
+            address: holderAddress,
+            balance: String(item?.value ?? "0"),
+            is_contract: Boolean(item?.address?.is_contract),
+          });
+          if (holders.length >= 100) break;
+        }
+
+        const next = v2Json?.next_page_params;
+        nextPageParams =
+          next && typeof next === "object"
+            ? Object.entries(next)
+                .map(([key, value]) => `${key}=${encodeURIComponent(String(value))}`)
+                .join("&")
+            : undefined;
+        if (!nextPageParams) break;
       }
 
-      const holders: { address: string; balance: string; is_contract: boolean }[] =
-        v1Json.result.map((item: any) => ({
-          address: item.TokenHolderAddress || item.address,
-          balance: item.TokenHolderQuantity || item.value,
-          is_contract: false,
-        }));
+      if (holders.length === 0) {
+        const v1Response = await fetchSafe(
+          `${EXPLORER_API_V1}?module=token&action=getTokenHolders&contractaddress=${cleanAddress}&page=1&offset=100`
+        );
+        const v1Json = await v1Response.json();
+        if (v1Json.status === "1" && Array.isArray(v1Json.result)) {
+          for (const item of v1Json.result as any[]) {
+            holders.push({
+              address: item.TokenHolderAddress || item.address,
+              balance: item.TokenHolderQuantity || item.value,
+              is_contract: false,
+            });
+          }
+        }
+      }
 
       if (holders.length === 0) return { wallets: [], links: [] };
 
@@ -1221,7 +1287,7 @@ export const fetchWalletAssets = async (
       for (let page = 1; page <= maxPages; page++) {
         try {
           const res = await fetchSafe(
-            `${EXPLORER_API_V2}?path=/v2/addresses/${cleanWallet}/token-transfers&page=${page}&limit=200`
+            `${EXPLORER_API_V2}/addresses/${cleanWallet}/token-transfers?page=${page}&limit=200`
           );
           if (!res.ok) break;
           const json = await res.json();
@@ -1239,12 +1305,14 @@ export const fetchWalletAssets = async (
       for (let page = 1; page <= maxPages; page++) {
         try {
           const res = await fetchSafe(
-            `${EXPLORER_API_V2}?path=/v2/addresses/${cleanWallet}/token-balances&page=${page}&limit=200`
+            `${EXPLORER_API_V2}/addresses/${cleanWallet}/token-balances?page=${page}&limit=200`
           );
           if (!res.ok) break;
           const json = await res.json();
-          if (!Array.isArray(json?.items) || json.items.length === 0) break;
-          collected.push(...json.items);
+          // v2 /addresses/{a}/token-balances answers with a bare array, not {items}.
+          const items = Array.isArray(json) ? json : json?.items;
+          if (!Array.isArray(items) || items.length === 0) break;
+          collected.push(...items);
         } catch {
           break;
         }
@@ -1397,7 +1465,6 @@ export const fetchWalletAssetsHybrid = async (
         decimals: decimals ?? (type === AssetType.NFT ? 0 : 18),
         type,
         hits: 0,
-        priceUsd: 0,
       };
       base.hits += 1;
       // Update metadata if newly available

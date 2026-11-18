@@ -91,6 +91,28 @@ export interface TransferProgressCallback {
   }): void;
 }
 
+/**
+ * Result of a full token scan: the TransferEvent[] plus explicit empty-state metadata.
+ *
+ * `empty` is true when the chain returned zero Transfer logs across the whole scanned
+ * window — that is a legitimate answer on a young chain, not an error. Consumers that
+ * only want the events keep using getTransferEvents() and its plain TransferEvent[].
+ */
+export interface TransferScanResult {
+  tokenAddress: string;
+  transfers: TransferEvent[];
+  empty: boolean;
+  /** Lowest block scanned (the deploy anchor unless an explicit range was given). */
+  fromBlock: bigint;
+  /** Highest block scanned. */
+  toBlock: bigint;
+  /** First block at which the token had code (0n when it predates the scanned chain). */
+  anchorBlock: bigint;
+  chunks: number;
+  /** Present only when empty is true — why there were no events. */
+  emptyReason?: string;
+}
+
 export interface WalletTransaction {
   hash: string;
   from: string;
@@ -193,6 +215,34 @@ export const publicClient: Client<any> & Record<string, any> = createPublicClien
   }),
 }) as Client<any> & Record<string, any>;
 
+// ============================================================================
+// Transfer log scanning constants
+// ============================================================================
+
+/**
+ * Blocks per eth_getLogs request.
+ *
+ * Chikyū rejects ranges wider than 10,000 blocks outright (measured — it errors instead
+ * of truncating), so every chunk stays at 9,000 with headroom.
+ */
+export const EVM_LOG_CHUNK_SIZE = 9000n;
+
+/** ERC-20 / ERC-721 Transfer(address,address,uint256) topic0. */
+export const TRANSFER_EVENT_SIGNATURE =
+  "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+
+/** Last block of the chunk that begins at `from`, clamped to `to`. */
+function transferChunkEnd(from: bigint, to: bigint): bigint {
+  const end = from + EVM_LOG_CHUNK_SIZE - 1n;
+  return end > to ? to : end;
+}
+
+/** First block of the chunk that ends at `cursor`, clamped to `floor` (walking backwards). */
+function cursorStart(cursor: bigint, floor: bigint): bigint {
+  const start = cursor - EVM_LOG_CHUNK_SIZE + 1n;
+  return start > floor ? start : floor;
+}
+
 export class EvmRPCClient {
   private client: Client<any> & Record<string, any> = publicClient;
   private config: EvmRPCConfig = rpcConfig;
@@ -201,6 +251,9 @@ export class EvmRPCClient {
 
   // Token metadata cache - persists for the lifetime of the client
   private tokenMetadataCache: Map<string, TokenMetadata> = new Map();
+
+  // Deploy anchors resolved by binary search over eth_getCode, keyed by lowercase address
+  private deployBlockCache: Map<string, bigint> = new Map();
 
   constructor() {
     // Nothing to build: the single public client is module-level and shared by every
@@ -646,24 +699,18 @@ export class EvmRPCClient {
         const transferEventSignature =
           "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
 
-        // Split large block ranges into smaller chunks to avoid RPC timeouts
-        const MAX_RANGE_SIZE = BigInt(5000); // Maximum 5000 blocks per request
+        // Split large block ranges into chunks (Chikyū rejects eth_getLogs ranges wider
+        // than 10k blocks) and retry each chunk on its own, so a single flaky request
+        // cannot fail a long scan.
         const allLogs: any[] = [];
         let currentFrom = fromBlock;
 
         while (currentFrom <= toBlock) {
-          const rangeEnd =
-            currentFrom + MAX_RANGE_SIZE - 1n > toBlock
-              ? toBlock
-              : currentFrom + MAX_RANGE_SIZE - 1n;
+          const rangeEnd = transferChunkEnd(currentFrom, toBlock);
 
           console.log(`[getTransferEvents] Fetching logs for blocks ${currentFrom} to ${rangeEnd}`);
 
-          const logs = await client.getLogs({
-            address: tokenAddress as `0x${string}`,
-            fromBlock: currentFrom,
-            toBlock: rangeEnd,
-          });
+          const logs = await this.getLogsWithRetry(client, tokenAddress, currentFrom, rangeEnd);
 
           allLogs.push(...logs);
           currentFrom = rangeEnd + 1n;
@@ -784,6 +831,216 @@ export class EvmRPCClient {
         return results;
       });
     });
+  }
+
+  /**
+   * One eth_getLogs request with its own retry budget.
+   *
+   * Retried per chunk, not once per whole scan: a 100-chunk walk must not restart from the
+   * head because chunk 60 timed out. Backoff is short (250ms * attempt) because the endpoint
+   * is the single public Chikyū RPC and a stalled chunk normally succeeds on the next try.
+   */
+  private async getLogsWithRetry(
+    client: any,
+    tokenAddress: string,
+    fromBlock: bigint,
+    toBlock: bigint
+  ): Promise<any[]> {
+    const attempts = Math.max(3, this.config.maxRetries || 3);
+    let lastError: Error | undefined;
+
+    for (let attempt = 1; attempt <= attempts; attempt++) {
+      try {
+        return await client.getLogs({
+          address: tokenAddress as `0x${string}`,
+          fromBlock,
+          toBlock,
+        });
+      } catch (error) {
+        lastError = error as Error;
+        if (!this.config.suppressConsoleLogs || attempt === attempts) {
+          console.warn(
+            `[getLogs] chunk ${fromBlock}-${toBlock} attempt ${attempt}/${attempts} failed: ${lastError.message}`
+          );
+        }
+        if (attempt < attempts) {
+          await new Promise((resolve) => setTimeout(resolve, 250 * attempt));
+        }
+      }
+    }
+
+    throw new Error(
+      `getLogs ${fromBlock}-${toBlock} failed after ${attempts} attempts. Last error: ${lastError?.message}`
+    );
+  }
+
+  /**
+   * Deploy anchor: the first block at which `tokenAddress` has code.
+   *
+   * eth_getCode has no "since when" API, so this binary-searches block tags (~24 calls for
+   * a 10M-block chain) and caches the answer per address. An address with no code at head
+   * (EOA, or not deployed yet) returns the head block — callers treat that as an empty scan.
+   */
+  async findDeployBlock(tokenAddress: string, headBlock?: bigint): Promise<bigint> {
+    const key = tokenAddress.toLowerCase();
+    const cached = this.deployBlockCache.get(key);
+    if (cached !== undefined) return cached;
+
+    const client = this.getClient();
+    const head = headBlock ?? (await this.getLatestBlockNumber());
+    const hasCode = async (blockNumber: bigint): Promise<boolean> => {
+      const code = await client.getCode({
+        address: tokenAddress as `0x${string}`,
+        blockNumber,
+      });
+      return Boolean(code && code !== "0x");
+    };
+
+    if (!(await hasCode(head))) {
+      this.deployBlockCache.set(key, head);
+      return head;
+    }
+
+    let lo = 0n;
+    let hi = head;
+    while (lo < hi) {
+      const mid = (lo + hi) / 2n;
+      if (await hasCode(mid)) {
+        hi = mid;
+      } else {
+        lo = mid + 1n;
+      }
+    }
+
+    this.deployBlockCache.set(key, lo);
+    return lo;
+  }
+
+  /**
+   * Scan every Transfer log for a token from head back to a deploy anchor (or an explicit
+   * range), in ≤9,000-block chunks with per-chunk retry, resolving timestamps with getBlock
+   * per log block (viem logs carry no timestamp).
+   *
+   * Returns the unchanged `TransferEvent[]` shape plus explicit empty-state metadata: a token
+   * with no Transfer logs yields `{ transfers: [], empty: true }` — never an error.
+   */
+  async scanTokenTransfers(
+    tokenAddress: string,
+    options: {
+      /** Highest block to scan; defaults to the current head. */
+      toBlock?: bigint;
+      /** Lowest block to scan; defaults to the deploy anchor. */
+      fromBlock?: bigint;
+      /** Scan only this many blocks back from toBlock (overrides the deploy anchor). */
+      lookback?: bigint;
+      onProgress?: TransferProgressCallback;
+    } = {}
+  ): Promise<TransferScanResult> {
+    if (!tokenAddress.startsWith("0x") || tokenAddress.length !== 42) {
+      throw new Error(`Invalid token address: ${tokenAddress}`);
+    }
+
+    const toBlock = options.toBlock ?? (await this.getLatestBlockNumber());
+    const anchorBlock = await this.findDeployBlock(tokenAddress, toBlock);
+
+    let fromBlock: bigint;
+    if (options.fromBlock !== undefined) {
+      fromBlock = options.fromBlock;
+    } else if (options.lookback !== undefined && toBlock > options.lookback) {
+      fromBlock = toBlock - options.lookback;
+    } else {
+      fromBlock = anchorBlock;
+    }
+    if (fromBlock > toBlock) fromBlock = toBlock;
+
+    const client = this.getClient();
+    const logs: any[] = [];
+    const totalChunks = Number((toBlock - fromBlock) / EVM_LOG_CHUNK_SIZE) + 1;
+    let chunks = 0;
+    let cursor = toBlock;
+
+    while (cursor >= fromBlock) {
+      const chunkStart = cursorStart(cursor, fromBlock);
+      const batch = await this.getLogsWithRetry(client, tokenAddress, chunkStart, cursor);
+      logs.push(...batch);
+      chunks += 1;
+
+      options.onProgress?.({
+        phase: "fetching_logs",
+        current: chunks,
+        total: totalChunks,
+        message: `chunk ${chunks}/${totalChunks}: blocks ${chunkStart}-${cursor} (${batch.length} logs)`,
+      });
+
+      if (chunkStart === fromBlock) break;
+      cursor = chunkStart - 1n;
+    }
+
+    const transferLogs = logs.filter((log: any) => log.topics?.[0] === TRANSFER_EVENT_SIGNATURE);
+
+    // Timestamps: a log carries no timestamp, so resolve each unique block once, in batches.
+    const blockNumbers = Array.from(
+      new Set(transferLogs.map((log: any) => log.blockNumber as bigint))
+    );
+    const timestampMap = new Map<bigint, number>();
+    const concurrencyLimit = Math.max(1, this.config.concurrencyLimit);
+
+    for (let i = 0; i < blockNumbers.length; i += concurrencyLimit) {
+      const batch = blockNumbers.slice(i, i + concurrencyLimit);
+      const results = await Promise.all(
+        batch.map((blockNumber) =>
+          client
+            .getBlock({ blockNumber, includeTransactions: false })
+            .then((block: { timestamp: bigint }) => ({
+              blockNumber,
+              timestamp: Number(block.timestamp) * 1000,
+            }))
+            .catch(() => null)
+        )
+      );
+      for (const result of results) {
+        if (result) timestampMap.set(result.blockNumber, result.timestamp);
+      }
+
+      options.onProgress?.({
+        phase: "processing_events",
+        current: Math.min(i + batch.length, blockNumbers.length),
+        total: blockNumbers.length,
+        message: `Fetching block timestamps (${Math.min(i + batch.length, blockNumbers.length)}/${blockNumbers.length})`,
+      });
+    }
+
+    const transfers: TransferEvent[] = [];
+    for (const log of transferLogs) {
+      const timestamp = timestampMap.get(log.blockNumber);
+      if (timestamp === undefined) continue; // block vanished/reorged — skip rather than fake it
+
+      transfers.push({
+        transactionHash: log.transactionHash,
+        blockNumber: log.blockNumber,
+        from: `0x${log.topics[1]?.slice(26) || "0".repeat(40)}`,
+        to: `0x${log.topics[2]?.slice(26) || "0".repeat(40)}`,
+        value: BigInt(log.data || "0"),
+        timestamp,
+        tokenAddress: log.address,
+      });
+    }
+
+    const result: TransferScanResult = {
+      tokenAddress,
+      transfers,
+      empty: transfers.length === 0,
+      fromBlock,
+      toBlock,
+      anchorBlock,
+      chunks,
+    };
+    if (result.empty) {
+      result.emptyReason =
+        `no Transfer logs for ${tokenAddress} in blocks ${fromBlock}-${toBlock} ` +
+        `(${chunks} chunk(s), anchor ${anchorBlock})`;
+    }
+    return result;
   }
 
   /**

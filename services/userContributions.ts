@@ -163,7 +163,15 @@ async function verifyContract(contractAddress: string): Promise<boolean> {
     }
 
     const data = await response.json();
-    return !!(data && data.address);
+    // Blockscout v2 /smart-contracts/{addr} does not echo an `address` field (measured: verified
+    // contracts return abi + source_code; unverified ones return creation_bytecode). Treat the
+    // contract as present when it has bytecode or an ABI, not on a field the API never sends.
+    return !!(
+      data &&
+      (data.creation_bytecode ||
+        data.deployed_bytecode ||
+        (Array.isArray(data.abi) && data.abi.length > 0))
+    );
   } catch {
     // Error handled silently
 

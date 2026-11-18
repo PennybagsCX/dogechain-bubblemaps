@@ -60,6 +60,17 @@ function getBuildNumber(): number {
 // Get build number synchronously before defining config
 const buildNumber = getBuildNumber();
 
+/**
+ * Service-worker cache namespace.
+ *
+ * Upstream cached `/api/*` and blockscout responses under "api-cache-v2" with no chain
+ * identity, so a browser that had visited the Dogechain build could be served those
+ * bodies after the retarget. A new cache name is a clean flush: workbox deletes caches
+ * it no longer references (`cleanupOutdatedCaches: true`), and nothing can read the old
+ * chain's rows back under the new name.
+ */
+const API_CACHE_NAME = "api-cache-dogeos-chikyu-6281971-v1";
+
 export default defineConfig(({ mode }) => {
   const isProduction = mode === "production";
 
@@ -120,7 +131,7 @@ export default defineConfig(({ mode }) => {
               urlPattern: /^\/api\/.*/i,
               handler: "NetworkFirst",
               options: {
-                cacheName: "api-cache-v2",
+                cacheName: API_CACHE_NAME,
                 expiration: {
                   maxEntries: 50,
                   maxAgeSeconds: 10, // 10 seconds for near real-time data
@@ -136,7 +147,7 @@ export default defineConfig(({ mode }) => {
               urlPattern: /^https:\/\/blockscout\.testnet\.dogeos\.com\/.*/i,
               handler: "NetworkFirst",
               options: {
-                cacheName: "api-cache-v2",
+                cacheName: API_CACHE_NAME,
                 expiration: {
                   maxEntries: 50,
                   maxAgeSeconds: 10,

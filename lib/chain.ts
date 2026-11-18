@@ -94,3 +94,19 @@ export const isExpectedChain = (chainIdHex?: string | number | null): boolean =>
   const value = typeof chainIdHex === "number" ? chainIdHex : Number.parseInt(chainIdHex, 16);
   return value === CHAIN_ID;
 };
+
+/**
+ * `wallet_addEthereumChain` parameters, derived from CHAIN — never hand-written at a call site.
+ *
+ * The chain guard sends these when the wallet does not know Chikyū yet (JSON-RPC error 4902),
+ * and `wallet_switchEthereumChain` only needs `{ chainId: CHAIN_ID_HEX }`.
+ */
+export const walletAddChainParams = () => ({
+  chainId: CHAIN_ID_HEX,
+  chainName: CHAIN.name,
+  nativeCurrency: { ...CHAIN.nativeCurrency },
+  rpcUrls: [...CHAIN.rpcUrls.default.http],
+  blockExplorerUrls: [EXPLORER_URL],
+});
+
+export type WalletAddChainParams = ReturnType<typeof walletAddChainParams>;

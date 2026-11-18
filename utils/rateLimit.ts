@@ -165,7 +165,7 @@ export class TokenBucket {
  */
 
 // DogeOS Explorer API - 60 requests per minute
-export const dogechainApiLimiter = new RateLimiter({
+export const evmApiLimiter = new RateLimiter({
   maxRequests: 60,
   windowMs: 60 * 1000,
 });

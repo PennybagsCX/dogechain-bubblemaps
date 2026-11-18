@@ -1,30 +1,62 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { getApiUrl } from "../utils/api";
+import { CHAIN_ID } from "../lib/chain";
 
-const CACHE_KEY = "doge_stats_cache";
+/**
+ * Stats counters hook.
+ *
+ * Two honesty rules from the API retarget:
+ *  1. The cache key is namespaced by chain id, so a stats payload cached against the
+ *     Dogechain backend (or any other chain) can never be read back here. The legacy
+ *     un-namespaced keys are deleted on first read.
+ *  2. `searches` has no source on DogeOS Chikyū testnet (`/api/stats` returns
+ *     `searches: null` + an explicit `unavailable` entry), so the value stays `null` and
+ *     callers render "—" instead of a fabricated 0.
+ */
+
+const CACHE_KEY = `dogeos_stats_cache:${CHAIN_ID}`;
+/** Pre-fork keys: dropped on read so Dogechain-era counters never surface. */
+const LEGACY_CACHE_KEYS = ["doge_stats_cache", "dogeos_stats_cache"];
 const CACHE_TTL = 10 * 1000; // 10 seconds for near real-time counter updates
 
 interface StatsData {
-  searches: number;
-  alerts: number;
+  /** null = no analytics source on this chain (rendered as "—"), never 0-as-data. */
+  searches: number | null;
+  /** null = the alert store was unreachable for this response. */
+  alerts: number | null;
   timestamp: number;
 }
 
+interface StatsResponse {
+  searches?: number | null;
+  alerts?: number | null;
+  unavailable?: { searches?: { reason?: string } };
+}
+
 interface StatsCounters {
-  totalSearches: number;
-  totalAlerts: number;
+  totalSearches: number | null;
+  totalAlerts: number | null;
   isLoading: boolean;
   error: string | null;
   refresh: () => Promise<void>;
 }
 
+function purgeLegacyCache(): void {
+  for (const key of LEGACY_CACHE_KEYS) {
+    try {
+      localStorage.removeItem(key);
+    } catch {
+      // storage unavailable (private mode) — nothing to purge
+    }
+  }
+}
+
 /**
- * Hook to fetch and manage stats counters (total searches and alerts)
- * Implements 5-minute caching with localStorage backup
- * Auto-refreshes every 5 minutes
+ * Hook to fetch and manage stats counters (total searches and alert triggers).
+ * 10s localStorage backup, auto-refresh every 10s.
  */
 export function useStatsCounters(): StatsCounters {
-  const [stats, setStats] = useState<StatsData>({ searches: 0, alerts: 0, timestamp: 0 });
+  const [stats, setStats] = useState<StatsData>({ searches: null, alerts: null, timestamp: 0 });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const refreshIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -44,24 +76,23 @@ export function useStatsCounters(): StatsCounters {
         const url = bypassCache
           ? getApiUrl("/api/stats") + "?t=" + Date.now()
           : getApiUrl("/api/stats");
-        console.log("[useStatsCounters] Fetching stats:", { bypassCache, url });
 
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}`);
         }
 
-        const data = await response.json();
+        const data = (await response.json()) as StatsResponse;
         const newStats: StatsData = {
-          searches: data.searches || 0,
-          alerts: data.alerts || 0,
+          // Never coerce a missing counter to 0: `null` renders as "—".
+          searches: typeof data.searches === "number" ? data.searches : null,
+          alerts: typeof data.alerts === "number" ? data.alerts : null,
           timestamp: Date.now(),
         };
 
-        console.log("[useStatsCounters] Stats received:", newStats);
         setStats(newStats);
 
-        // Save to localStorage as backup
+        // Save to localStorage as backup (chain-namespaced key)
         localStorage.setItem(CACHE_KEY, JSON.stringify(newStats));
       } catch (err) {
         console.error("[useStatsCounters] Failed to fetch stats:", err);
@@ -80,7 +111,7 @@ export function useStatsCounters(): StatsCounters {
   );
 
   /**
-   * Get cached stats from localStorage
+   * Get cached stats from localStorage (this chain's namespace only)
    */
   const getCachedStats = (): StatsData | null => {
     try {
@@ -105,12 +136,13 @@ export function useStatsCounters(): StatsCounters {
    * Manual refresh function (bypasses cache)
    */
   const refresh = async () => {
-    console.log("[useStatsCounters] Manual refresh - bypassing cache");
     await fetchStats(true, true);
   };
 
   // Initial fetch with cache check
   useEffect(() => {
+    purgeLegacyCache();
+
     const cached = getCachedStats();
     if (cached) {
       setStats(cached);

@@ -8,6 +8,7 @@
  */
 
 import { SearchResult } from "../types";
+import { CHAIN_ID } from "../lib/chain";
 
 /**
  * Cache entry interface
@@ -51,7 +52,8 @@ class SearchCache {
    * @returns Cached results or null if not found/expired
    */
   get(query: string, type: string): SearchResult[] | null {
-    const key = `${query.toLowerCase()}:${type}`;
+    // Chain-namespaced: results cached for another chain must never be replayed.
+    const key = `${CHAIN_ID}:${query.toLowerCase()}:${type}`;
     const entry = this.cache.get(key);
 
     if (entry) {
@@ -88,7 +90,8 @@ class SearchCache {
    * @param results - Search results to cache
    */
   set(query: string, type: string, results: SearchResult[]): void {
-    const key = `${query.toLowerCase()}:${type}`;
+    // Chain-namespaced: results cached for another chain must never be replayed.
+    const key = `${CHAIN_ID}:${query.toLowerCase()}:${type}`;
 
     // LRU eviction if over capacity
     if (this.cache.size >= this.MAX_SIZE) {
@@ -116,7 +119,8 @@ class SearchCache {
    * @returns true if cached and not expired
    */
   has(query: string, type: string): boolean {
-    const key = `${query.toLowerCase()}:${type}`;
+    // Chain-namespaced: results cached for another chain must never be replayed.
+    const key = `${CHAIN_ID}:${query.toLowerCase()}:${type}`;
     const entry = this.cache.get(key);
 
     if (!entry) return false;

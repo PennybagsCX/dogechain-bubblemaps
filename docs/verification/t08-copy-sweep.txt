@@ -1,0 +1,63 @@
+T-08 copy + explorer-link sweep — proof transcript (2026-11-17T18:05Z)
+
+== 1. grep -rn "Dogechain" App.tsx components services lib utils app src ==
+components/CLAUDE.md:52:- **DC (Dogechain)**: Amber Shield (lucide-react)
+components/CLAUDE.md:82:`/Volumes/DEV Projects/Dogechain Bubblemaps/components/TrendingSection.tsx`
+services/CLAUDE.md:21:- **Dogechain Bridge** (0x3525...0729)
+services/CLAUDE.md:23:#### Dogechain Ecosystem Wallets (Added Jan 12, 2026)
+services/CLAUDE.md:25:- **Dogechain Ecosystem Treasury** (0x73b5...bd25)
+total=5
+
+== 2. grep -rn "dogechain.dog" --include=*.ts --include=*.tsx . ==
+total=0
+
+== 3. explorer literals left in app source (must be lib/chain.ts only) ==
+lib/chain.ts:27:      url: "https://dogeos-testnet.l2scan.co",
+
+== 4. lowercase dogechain substrings that remain (localStorage keys / repo URL / helper name) ==
+   App.tsx:277:  const sessionOnboardingKey = "dogechain_onboarding_session_shown";
+   components/Dashboard.tsx:958:      const CLEANUP_KEY = "dogechain_bubblemaps_cleanup_v1";
+   components/Footer.tsx:50:              href="https://github.com/PennybagsCX/dogechain-bubblemaps"
+   utils/alertFirstTimeStorage.ts:6:const STORAGE_KEY = "dogechain_first_alert_created";
+   utils/dashboardGuideStorage.ts:12:  SEEN: "dogechain_dashboard_guide_seen",
+   utils/dashboardGuideStorage.ts:13:  VERSION: "dogechain_dashboard_guide_version",
+   utils/dashboardGuideStorage.ts:14:  DISMISSED: "dogechain_dashboard_guide_dismissed_count",
+   utils/dashboardGuideStorage.ts:15:  LAST_STEP: "dogechain_dashboard_guide_last_step",
+   utils/userPreferences.ts:5:const CHART_HEIGHT_KEY = "dogechain-bubblemaps-chart-height";
+   utils/guideStorage.ts:32:  BUBBLE_SEEN: "dogechain_bubble_guide_seen",
+   utils/guideStorage.ts:33:  BUBBLE_VERSION: "dogechain_bubble_guide_version",
+   utils/guideStorage.ts:34:  BUBBLE_DISMISSED: "dogechain_bubble_guide_dismissed_count",
+   utils/guideStorage.ts:35:  BUBBLE_LAST_STEP: "dogechain_bubble_guide_last_step",
+   utils/guideStorage.ts:38:  TOKEN_PANEL_SEEN: "dogechain_token_panel_guide_seen",
+   utils/guideStorage.ts:39:  TOKEN_PANEL_VERSION: "dogechain_token_panel_guide_version",
+   utils/guideStorage.ts:40:  TOKEN_PANEL_DISMISSED: "dogechain_token_panel_guide_dismissed_count",
+   utils/guideStorage.ts:41:  TOKEN_PANEL_LAST_STEP: "dogechain_token_panel_guide_last_step",
+   utils/guideStorage.ts:44:  WALLET_DETAILS_SEEN: "dogechain_wallet_details_guide_seen",
+   utils/guideStorage.ts:45:  WALLET_DETAILS_VERSION: "dogechain_wallet_details_guide_version",
+   utils/guideStorage.ts:46:  WALLET_DETAILS_DISMISSED: "dogechain_wallet_details_guide_dismissed_count",
+   utils/guideStorage.ts:47:  WALLET_DETAILS_LAST_STEP: "dogechain_wallet_details_guide_last_step",
+   utils/onboardingStorage.ts:8:  HAS_SEEN_ONBOARDING: "dogechain_onboarding_seen",
+   utils/onboardingStorage.ts:9:  ONBOARDING_VERSION: "dogechain_onboarding_version",
+   utils/onboardingStorage.ts:10:  LAST_STEP: "dogechain_onboarding_last_step",
+   utils/onboardingStorage.ts:11:  DISMISSED_COUNT: "dogechain_onboarding_dismissed_count",
+   utils/onboardingStorage.ts:12:  COMPLETED_AT: "dogechain_onboarding_completed_at",
+   utils/encryption.ts:20:      salt: encoder.encode("dogechain-bubblemaps-salt"),
+
+== 5. shipped bundle (dist) brand check ==
+Dogechain=0  dogechain.dog=0  DogeScan=0
+
+== 6. vercel.json: any Dogechain host / rewrite? ==
+   none
+
+== 7. browser spot-check (3 explorer links, measured) ==
+   tx     https://dogeos-testnet.l2scan.co/tx/0x665982281b6d6fc37c8a66e16c67c6f2bb24c7d01d97743fe4016f48b944261c
+          -> host=dogeos-testnet.l2scan.co title='🐄 Transaction 0x66598228…44261c · DogeOS Scan' h1=transaction notFound=false
+   addr1  https://dogeos-testnet.l2scan.co/address/0xbc1Be4cC8790b0C99cff76100E0e6d01E32C6A2C  (rendered anchor in token view)
+          -> host=dogeos-testnet.l2scan.co title='Address 0xbc1Be4cC…62C6A2C · DogeOS Scan' h1=address notFound=false
+   addr2  https://dogeos-testnet.l2scan.co/address/0xc932AaCaB07B225938341A9574D6549fe2905f0f  (rendered anchor in token view)
+          -> host=dogeos-testnet.l2scan.co title='Address 0xc932AaCa…905f0f · DogeOS Scan' h1=address notFound=false
+
+== 8. gates ==
+   npx tsc --noEmit            -> exit 0
+   npx eslint <changed files>  -> exit 0
+   npm run build               -> exit 0 (built in ~10s, precache 205 entries)

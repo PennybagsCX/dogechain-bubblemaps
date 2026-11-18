@@ -1,0 +1,471 @@
+T-06 API layer proof — 2026-11-17T19:15:15Z
+repo: /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS
+api : http://127.0.0.1:3141 (chain 6281971 / DogeOS Chikyū testnet)
+
+== 0. fork database
+database: up (fork-local cluster, 127.0.0.1:55432)
+
+== 1. starting API server
+api server: ready (DogeOS Chikyū fork API listening on http://127.0.0.1:3141 (chain 6281971, database configured))
+
+== 2. route transcript (real data or explicit unavailable)
+
+### GET /api/health
+HTTP 200
+BODY {"status":"healthy","chain":{"id":6281971,"name":"DogeOS Chikyū Testnet","rpc":"https://rpc.testnet.dogeos.com/"},"database":"connected","cache":{"namespace":"chain-6281971","entries":0,"keys":[]},"timestamp":"2026-11-17T19:15:16.623Z"}
+PASS health
+
+### GET /api/stats
+HTTP 200
+BODY {"chain":{"id":6281971,"name":"DogeOS Chikyū Testnet","network":"dogeos-chikyu","nativeCurrency":"DOGE","rpc":"https://rpc.testnet.dogeos.com/","explorer":"https://dogeos-testnet.l2scan.co","explorerApi":"https://blockscout.testnet.dogeos.com/api"},"blockNumber":9562510,"explorer":{"totalBlocks":9562369,"totalTransactions":26767240,"totalAddresses":458615,"transactionsToday":348070,"averageBlockTimeMs":3000},"alerts":0,"searches":null,"unavailable":{"searches":{"unavailable":true,"reason":"no search-analytics source on DogeOS Chikyū testnet (token_interactions is not part of the fork schema, so interactions are not recorded on DogeOS Chikyū testnet)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:18.570Z"}},"timestamp":"2026-11-17T19:15:18.570Z","cache":{"hit":false,"namespace":"chain-6281971","ageMs":0,"ttlMs":10000}}
+PASS stats: live chain counters + honest searches:null
+
+### GET /api/tvl
+HTTP 200
+BODY {"unavailable":true,"reason":"no TVL source on DogeOS Chikyū testnet (blockscout /api/v2/stats returns tvl: null)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:18.630Z"}
+PASS tvl: unavailable
+
+### GET /api/chain-metrics
+HTTP 200
+BODY {"unavailable":true,"reason":"no TVL/DEX-volume/active-pool/daily-user source on DogeOS Chikyū testnet (no DEX indexer or analytics source is deployed for the Chikyū testnet)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:18.691Z","metrics":null}
+PASS chain-metrics: unavailable
+
+### GET /api/market
+HTTP 200
+BODY {"unavailable":true,"reason":"no market/price source on DogeOS Chikyū testnet (blockscout reports coin_price: null and market_cap: \"0\" — zeros are not served as data)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:18.750Z"}
+PASS market: unavailable
+
+### GET /api/price?token=0x2222222222222222222222222222222222222222
+HTTP 200
+BODY {"unavailable":true,"reason":"no market/price source on DogeOS Chikyū testnet (no price oracle or DEX feed on the Chikyū testnet)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:18.816Z","token":"0x2222222222222222222222222222222222222222"}
+PASS price: unavailable
+
+### GET /api/candles?token=0x2222222222222222222222222222222222222222&interval=1h
+HTTP 200
+BODY {"unavailable":true,"reason":"no candle/OHLCV source on DogeOS Chikyū testnet (neither blockscout nor the Chikyū RPC exposes traded prices)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:18.888Z","candles":[],"token":"0x2222222222222222222222222222222222222222","interval":"1h"}
+PASS candles: unavailable
+
+### GET /api/trending?type=TOKEN&limit=10&cache=true
+HTTP 200
+BODY {"unavailable":true,"reason":"no search-analytics source on DogeOS Chikyū testnet (token_interactions / token_popularity are not part of the fork schema, so nothing is recorded on the Chikyū testnet)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:18.961Z","assets":[],"cached":false,"stale":false,"timestamp":"2026-11-17T19:15:18.961Z"}
+PASS trending: unavailable
+
+### GET /api/trending-wallet?type=TOKEN&limit=5
+HTTP 200
+BODY {"success":false,"unavailable":true,"reason":"no search-analytics source on DogeOS Chikyū testnet (token_interactions / token_popularity are not part of the fork schema, so nothing is recorded on the Chikyū testnet)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:19.029Z","assets":[]}
+PASS trending-wallet: unavailable
+
+### GET /api/learned-tokens?type=TOKEN&limit=5&min_popularity=10
+HTTP 200
+BODY {"success":false,"unavailable":true,"reason":"no learned-token index source on DogeOS Chikyū testnet (token_interactions / token_popularity are not part of the fork schema, so nothing is recorded on the Chikyū testnet)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:19.094Z","tokens":[]}
+PASS learned-tokens: unavailable
+
+### GET /api/trending/popularity?addresses[]=0x1111111111111111111111111111111111111111
+HTTP 200
+BODY {"unavailable":true,"reason":"no popularity-analytics source on DogeOS Chikyū testnet (token_interactions / token_popularity are not part of the fork schema, so nothing is recorded on the Chikyū testnet)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:19.162Z","popularity":{}}
+PASS popularity: unavailable
+
+### GET /api/recommendations/peers?query=DOGE&type=TOKEN&limit=5
+HTTP 200
+BODY {"unavailable":true,"reason":"no peer-recommendation source on DogeOS Chikyū testnet (collaborative filtering needs interaction history, which is not collected here)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:19.236Z","recommendations":[]}
+PASS peer recommendations: unavailable
+
+### GET /api/cache
+HTTP 200
+BODY {"namespace":"chain-6281971","entries":1,"keys":["chain-6281971:stats"]}
+PASS cache: every key chain-namespaced
+
+### GET /api/explorer-proxy?module=stats&action=tokensupply&contractaddress=0xA69d8Ac86502e4E08c812c64675a4892dfe6870f
+HTTP 200
+BODY {"message":"OK","result":"525198951913694496638741","status":"1"}
+PASS explorer-proxy: live chain data
+
+== 3. alert routes against the fork database (real rows, then cleaned up)
+
+### POST /api/alerts
+HTTP 200
+BODY {"success":true,"saved":true,"alertId":"t06-proof-alert","chainId":6281971}
+PASS alerts: create
+
+### GET /api/alerts?wallet=0x000000000000000000000000000000000000dEaD
+HTTP 200
+BODY {"success":true,"count":1,"data":[{"alert_id":"t06-proof-alert","name":"T-06 proof alert","wallet_address":"0x1111111111111111111111111111111111111111","token_address":"0x2222222222222222222222222222222222222222","token_name":"Proof Token","token_symbol":"PRF","initial_value":123.5,"type":"TOKEN","created_at":1794940000000,"is_active":true}],"chainId":6281971}
+PASS alerts: read back the stored row
+
+### POST /api/alerts?action=trigger
+HTTP 200
+BODY {"success":true,"logged":true,"id":10,"triggeredAt":"2026-11-17T19:15:21.098Z","chainId":6281971}
+PASS alerts: trigger event
+
+### GET /api/stats?t=1794942921
+HTTP 200
+BODY {"chain":{"id":6281971,"name":"DogeOS Chikyū Testnet","network":"dogeos-chikyu","nativeCurrency":"DOGE","rpc":"https://rpc.testnet.dogeos.com/","explorer":"https://dogeos-testnet.l2scan.co","explorerApi":"https://blockscout.testnet.dogeos.com/api"},"blockNumber":9562511,"explorer":{"totalBlocks":9562369,"totalTransactions":26767240,"totalAddresses":458615,"transactionsToday":348070,"averageBlockTimeMs":3000},"alerts":1,"searches":null,"unavailable":{"searches":{"unavailable":true,"reason":"no search-analytics source on DogeOS Chikyū testnet (token_interactions is not part of the fork schema, so interactions are not recorded on DogeOS Chikyū testnet)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:21.450Z"}},"timestamp":"2026-11-17T19:15:21.450Z","cache":{"hit":false,"namespace":"chain-6281971","ageMs":0,"ttlMs":10000}}
+PASS stats: alert counter reflects the real row
+
+### POST /api/alerts?action=sync
+HTTP 200
+BODY {"success":true,"uploaded":1,"downloaded":0,"conflicts":0,"syncTimestamp":1794942921528,"chainId":6281971}
+PASS alerts: sync uploads without inventing downloads
+
+### GET /api/alerts?wallet=0x000000000000000000000000000000000000dEaD
+HTTP 200
+BODY {"success":true,"count":2,"data":[{"alert_id":"t06-sync-alert","name":"T-06 sync alert","wallet_address":"0x1111111111111111111111111111111111111111","token_address":null,"token_name":null,"token_symbol":null,"initial_value":null,"type":"WALLET","created_at":1794940001000,"is_active":true},{"alert_id":"t06-proof-alert","name":"T-06 proof alert","wallet_address":"0x1111111111111111111111111111111111111111","token_address":"0x2222222222222222222222222222222222222222","token_name":"Proof Token","token_symbol":"PRF","initial_value":123.5,"type":"TOKEN","created_at":1794940000000,"is_active":true}],"chainId":6281971}
+PASS alerts: both rows present after sync
+
+### DELETE /api/alerts?wallet=0x000000000000000000000000000000000000dEaD&alertId=t06-proof-alert
+HTTP 200
+BODY {"success":true,"deleted":1,"chainId":6281971}
+PASS alerts: delete the created row
+
+### DELETE /api/alerts?wallet=0x000000000000000000000000000000000000dEaD&alertId=t06-sync-alert
+HTTP 200
+BODY {"success":true,"deleted":1,"chainId":6281971}
+PASS alerts: delete the synced row
+
+### GET /api/alerts?wallet=0x000000000000000000000000000000000000dEaD
+HTTP 200
+BODY {"success":true,"count":0,"data":[],"chainId":6281971}
+PASS alerts: empty after delete (a real zero)
+
+### POST /api/analytics/search
+HTTP 200
+BODY {"success":false,"recorded":false,"unavailable":true,"reason":"no search-analytics source on DogeOS Chikyū testnet (token_interactions / token_popularity are not part of the fork schema, so nothing is recorded on the Chikyū testnet)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:21.898Z"}
+PASS analytics: write endpoint reports recorded:false
+
+### POST /api/interactions
+HTTP 200
+BODY {"success":false,"recorded":false,"unavailable":true,"reason":"no search-interaction source on DogeOS Chikyū testnet (token_interactions / token_popularity are not part of the fork schema, so nothing is recorded on the Chikyū testnet)","chainId":6281971,"chainName":"DogeOS Chikyū Testnet","checkedAt":"2026-11-17T19:15:21.975Z"}
+PASS interactions: write endpoint reports recorded:false
+
+== 4. static gates
+grep -rn "dogechain" app src/api --include=*.ts → 0 hits
+PASS no Dogechain references under app/ or src/api/
+
+### npx tsc --noEmit
+PASS type-check clean
+
+### npm run build
+
+> dogechain-bubblemaps@0.0.0 build
+> vite build
+
+[vite.config] Using build-metadata.json: 2661 from /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/build-metadata.json
+vite v6.4.1 building for production...
+transforming...
+Found 2 warnings while optimizing generated CSS:
+
+Issue #1:
+[2m│   border-width: 0;[22m
+[2m│ }[22m
+[2m│[22m .focus:not-sr-only:focus,
+[2m┆[22m        [33m[2m^--[22m 'not-sr-only' is not recognized as a valid pseudo-class. Did you mean '::not-sr-only' (pseudo-element) or is this a typo?[39m
+[2m┆[22m
+[2m│ .focus\\:not-sr-only:focus {[22m
+[2m│   position: static;[22m
+
+Issue #2:
+[2m│ }[22m
+[2m│ .focus:not-sr-only:focus,[22m
+[2m│[22m .focus\\:not-sr-only:focus {
+[2m┆[22m          [33m[2m^--[22m 'not-sr-only' is not recognized as a valid pseudo-class. Did you mean '::not-sr-only' (pseudo-element) or is this a typo?[39m
+[2m┆[22m
+[2m│   position: static;[22m
+[2m│   width: auto;[22m
+
+node_modules/ox/_esm/core/Base64.js (6:27): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/ox/_esm/core/Base64.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@base-org/account/node_modules/ox/_esm/core/Address.js (6:21): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@base-org/account/node_modules/ox/_esm/core/Address.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@base-org/account/node_modules/ox/_esm/core/Base64.js (6:27): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@base-org/account/node_modules/ox/_esm/core/Base64.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/porto/node_modules/ox/_esm/core/Base64.js (6:27): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/porto/node_modules/ox/_esm/core/Base64.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@coinbase/wallet-sdk/node_modules/ox/_esm/core/Address.js (6:21): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@coinbase/wallet-sdk/node_modules/ox/_esm/core/Address.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@coinbase/wallet-sdk/node_modules/ox/_esm/core/Base64.js (6:27): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@coinbase/wallet-sdk/node_modules/ox/_esm/core/Base64.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@base-org/account/node_modules/ox/_esm/core/internal/cursor.js (2:21): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@base-org/account/node_modules/ox/_esm/core/internal/cursor.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@coinbase/wallet-sdk/node_modules/ox/_esm/core/internal/cursor.js (2:21): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@coinbase/wallet-sdk/node_modules/ox/_esm/core/internal/cursor.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@walletconnect/utils/node_modules/ox/_esm/core/Address.js (6:21): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@walletconnect/utils/node_modules/ox/_esm/core/Address.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@walletconnect/utils/node_modules/ox/_esm/core/internal/cursor.js (2:21): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@walletconnect/utils/node_modules/ox/_esm/core/internal/cursor.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@reown/appkit/node_modules/ox/_esm/core/internal/cursor.js (2:21): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@reown/appkit/node_modules/ox/_esm/core/internal/cursor.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@reown/appkit/node_modules/ox/_esm/core/Address.js (6:21): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@reown/appkit/node_modules/ox/_esm/core/Address.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@reown/appkit-controllers/node_modules/ox/_esm/core/internal/cursor.js (2:21): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@reown/appkit-controllers/node_modules/ox/_esm/core/internal/cursor.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+node_modules/@reown/appkit-controllers/node_modules/ox/_esm/core/Address.js (6:21): A comment
+
+"/*#__PURE__*/"
+
+in "node_modules/@reown/appkit-controllers/node_modules/ox/_esm/core/Address.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+✓ 8479 modules transformed.
+rendering chunks...
+[plugin vite:reporter] 
+(!) /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/searchCache.ts is dynamically imported by /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/apiMetrics.ts but also statically imported by /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/tokenSearchService.ts, dynamic import will not move module into another chunk.
+
+[plugin vite:reporter] 
+(!) /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/tokenSearchService.ts is dynamically imported by /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/App.tsx but also statically imported by /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/TokenSearchInput.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/db.ts, dynamic import will not move module into another chunk.
+
+[plugin vite:reporter] 
+(!) /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/db.ts is dynamically imported by /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/TokenSearchInput.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/WalletActivityAnalytics.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/WalletActivityAnalytics.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/WalletActivityAnalytics.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/WalletActivityAnalytics.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/WalletActivityAnalytics.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/WalletActivityAnalytics.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/WalletActivityAnalytics.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/WalletActivityAnalytics.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/apiMetrics.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/apiMetrics.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/apiMetrics.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/apiMetrics.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/apiMetrics.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/fuzzySearchService.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/popularityScoring.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/popularityScoring.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/popularityScoring.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/searchAnalytics.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/searchAnalytics.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/searchAnalytics.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/searchAnalytics.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/tokenSearchService.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/tokenSearchService.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/tokenSearchService.ts but also statically imported by /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/App.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/BubbleMap.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/Dashboard.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/abbreviationCache.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/chainCacheNamespace.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/dataService.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/tokenSearchService.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/userBehaviorAnalytics.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/walletActivityService.ts, dynamic import will not move module into another chunk.
+
+[plugin vite:reporter] 
+(!) /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/dataService.ts is dynamically imported by /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/WalletActivityAnalytics.tsx but also statically imported by /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/App.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/Dashboard.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/DistributionAnalytics.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/WalletActivityAnalytics.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/components/WalletSidebar.tsx, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/connectionService.ts, /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/services/walletActivityService.ts, dynamic import will not move module into another chunk.
+
+computing gzip size...
+dist/manifest.webmanifest                                 0.47 kB
+dist/assets/walletActivityWorker-XvfOIQSs.js              2.39 kB
+dist/assets/searchWorker-DnvutB16.js                      2.77 kB
+dist/index.html                                           3.56 kB │ gzip:   1.37 kB
+dist/assets/index-CYyPntNT.css                          113.89 kB │ gzip:  19.14 kB
+dist/assets/cursor-UMvfXaai.js                            0.47 kB │ gzip:   0.31 kB
+dist/assets/celo-GEP4TUHG-CenIBYLU.js                     0.51 kB │ gzip:   0.31 kB
+dist/assets/Windows-PPTHQER6-BlyV2p7Y.js                  0.52 kB │ gzip:   0.29 kB
+dist/assets/phoneticIndex-BhLx1giN.js                     0.56 kB │ gzip:   0.37 kB
+dist/assets/ledgerWallet-ENWBDTSW-BuYJ6Opm.js             0.57 kB │ gzip:   0.33 kB
+dist/assets/zetachain-TLDS5IPW-Udhyw16T.js                0.60 kB │ gzip:   0.37 kB
+dist/assets/base-OAXLRA4F-CoYTVIiL.js                     0.60 kB │ gzip:   0.32 kB
+dist/assets/chevron-left-CeplXHFe.js                      0.61 kB │ gzip:   0.37 kB
+dist/assets/chevron-top-BaYf1WCd.js                       0.61 kB │ gzip:   0.37 kB
+dist/assets/external-link-0OiRX9Vp.js                     0.61 kB │ gzip:   0.37 kB
+dist/assets/chevron-bottom-CEIA0aRG.js                    0.61 kB │ gzip:   0.37 kB
+dist/assets/chevron-right-7pznrrk3.js                     0.61 kB │ gzip:   0.37 kB
+dist/assets/arrow-top-AkGhcM6n.js                         0.62 kB │ gzip:   0.38 kB
+dist/assets/arrow-bottom-C_5N41Qk.js                      0.62 kB │ gzip:   0.38 kB
+dist/assets/arrow-left-DOqmN_Z3.js                        0.62 kB │ gzip:   0.38 kB
+dist/assets/arrow-right-780lC3Qg.js                       0.62 kB │ gzip:   0.38 kB
+dist/assets/off-wXbUXl4y.js                               0.64 kB │ gzip:   0.38 kB
+dist/assets/search-pYmu8D--.js                            0.65 kB │ gzip:   0.39 kB
+dist/assets/close-CPAtzzE5.js                             0.65 kB │ gzip:   0.38 kB
+dist/assets/all-wallets-DqiGaxny.js                       0.66 kB │ gzip:   0.36 kB
+dist/assets/filters-BqRrDYJc.js                           0.66 kB │ gzip:   0.36 kB
+dist/assets/info-circle-DKg6bpqk.js                       0.68 kB │ gzip:   0.39 kB
+dist/assets/more-BJug93Ul.js                              0.70 kB │ gzip:   0.40 kB
+dist/assets/refresh-r03F_j3A.js                           0.70 kB │ gzip:   0.42 kB
+dist/assets/warning-circle-C_Mz7Y9S.js                    0.71 kB │ gzip:   0.41 kB
+dist/assets/coinPlaceholder-Boz1ux0y.js                   0.71 kB │ gzip:   0.45 kB
+dist/assets/hyperevm-VKPAA4SA-CHwraEsx.js                 0.73 kB │ gzip:   0.41 kB
+dist/assets/optimism-HAF2GUT7-ec6Nqxs9.js                 0.73 kB │ gzip:   0.38 kB
+dist/assets/compass-CAeboI2d.js                           0.73 kB │ gzip:   0.43 kB
+dist/assets/monad-4KWC6TSS-DVXSkpiz.js                    0.74 kB │ gzip:   0.40 kB
+dist/assets/swapVertical-CJwq7Fwy.js                      0.76 kB │ gzip:   0.43 kB
+dist/assets/swapHorizontal-CanJywq6.js                    0.76 kB │ gzip:   0.42 kB
+dist/assets/x-CGrntOQ_.js                                 0.78 kB │ gzip:   0.48 kB
+dist/assets/cursor-transparent-Bnpc0I91.js                0.79 kB │ gzip:   0.45 kB
+dist/assets/twitterIcon-DMCDL10u.js                       0.79 kB │ gzip:   0.47 kB
+dist/assets/mobile-D3v6aluf.js                            0.80 kB │ gzip:   0.41 kB
+dist/assets/coinbaseWallet-OKXU3TRC-DnGdeF1T.js           0.82 kB │ gzip:   0.36 kB
+dist/assets/checkmark-bold-BD-5X1tY.js                    0.86 kB │ gzip:   0.53 kB
+dist/assets/flow-5FQJFCTK-CUie2reO.js                     0.86 kB │ gzip:   0.38 kB
+dist/assets/etherscan-CvAP_491.js                         0.91 kB │ gzip:   0.54 kB
+dist/assets/checkmark-9TllxFG-.js                         0.91 kB │ gzip:   0.57 kB
+dist/assets/help-circle-BgINu3dV.js                       0.92 kB │ gzip:   0.52 kB
+dist/assets/wallet-CR6PAPmh.js                            0.93 kB │ gzip:   0.51 kB
+dist/assets/index-nibyPLVP.js                             0.95 kB │ gzip:   0.47 kB
+dist/assets/plus-BwduKWiP.js                              0.97 kB │ gzip:   0.51 kB
+dist/assets/verify-filled-CV4ThiNp.js                     0.98 kB │ gzip:   0.56 kB
+dist/assets/add-CRrrKdFy.js                               0.98 kB │ gzip:   0.52 kB
+dist/assets/unichain-C5BWO2ZY-BfguYsnu.js                 0.98 kB │ gzip:   0.46 kB
+dist/assets/superposition-HG6MMR2Y-bRkgatRO.js            0.99 kB │ gzip:   0.54 kB
+dist/assets/google-DrDkE_j1.js                            1.02 kB │ gzip:   0.55 kB
+dist/assets/three-dots-CnDIXG7r.js                        1.05 kB │ gzip:   0.51 kB
+dist/assets/clock-BUa_Cj97.js                             1.05 kB │ gzip:   0.57 kB
+dist/assets/linea-QRMVQ5DY-DuI3vv0d.js                    1.05 kB │ gzip:   0.46 kB
+dist/assets/injectedWallet-AWJSZPMG-Df9x-YJA.js           1.05 kB │ gzip:   0.48 kB
+dist/assets/disconnect-DK-vmh1w.js                        1.10 kB │ gzip:   0.60 kB
+dist/assets/twitch-qjln459I.js                            1.11 kB │ gzip:   0.60 kB
+dist/assets/zksync-DH7HK5U4-Dt4usFw6.js                   1.11 kB │ gzip:   0.49 kB
+dist/assets/trustWallet-42DZQQWY-B0DkYL5U.js              1.12 kB │ gzip:   0.45 kB
+dist/assets/bank-Z1qZrTXA.js                              1.15 kB │ gzip:   0.62 kB
+dist/assets/apple-DnFBcvcf.js                             1.17 kB │ gzip:   0.62 kB
+dist/assets/trigramIndex-iYz10QBy.js                      1.20 kB │ gzip:   0.59 kB
+dist/assets/play-store-DUfM53tJ.js                        1.22 kB │ gzip:   0.62 kB
+dist/assets/farcaster-CYDSIIIV.js                         1.22 kB │ gzip:   0.63 kB
+dist/assets/avalanche-KOMJD3XY-Dsn_JPR4.js                1.27 kB │ gzip:   0.66 kB
+dist/assets/xdc-KJ3TDBYO-DNV6zchh.js                      1.31 kB │ gzip:   0.59 kB
+dist/assets/arrow-bottom-circle-BXeLrf0W.js               1.34 kB │ gzip:   0.63 kB
+dist/assets/github-Bs71Bn5R.js                            1.34 kB │ gzip:   0.70 kB
+dist/assets/swapHorizontalBold-C_fbLUR-.js                1.37 kB │ gzip:   0.72 kB
+dist/assets/ethereum-RGGVA4PY-SWGOlkuk.js                 1.37 kB │ gzip:   0.44 kB
+dist/assets/ink-FZMYZWHG-62p-5IK5.js                      1.38 kB │ gzip:   0.61 kB
+dist/assets/app-store-D7B1wkKW.js                         1.41 kB │ gzip:   0.77 kB
+dist/assets/mail-V_V0GAfd.js                              1.41 kB │ gzip:   0.75 kB
+dist/assets/facebook-CsrSNeB8.js                          1.44 kB │ gzip:   0.73 kB
+dist/assets/apechain-SX5YFU6N-q5qBv-mp.js                 1.46 kB │ gzip:   0.63 kB
+dist/assets/invertedIndex-f9bM_fgw.js                     1.47 kB │ gzip:   0.70 kB
+dist/assets/wallet-placeholder-DNRf3slQ.js                1.47 kB │ gzip:   0.69 kB
+dist/assets/kaia-65D2U3PU-JmuLQ4gC.js                     1.48 kB │ gzip:   0.67 kB
+dist/assets/desktop-xkkKLToL.js                           1.48 kB │ gzip:   0.74 kB
+dist/assets/degen-FQQ4XGHB-CeHTs88l.js                    1.49 kB │ gzip:   0.71 kB
+dist/assets/discord-B-I6pmW7.js                           1.51 kB │ gzip:   0.75 kB
+dist/assets/swapHorizontalMedium-erWgqf0b.js              1.51 kB │ gzip:   0.77 kB
+dist/assets/cronos-HJPAQTAE-BEOvlOC4.js                   1.52 kB │ gzip:   0.61 kB
+dist/assets/polygon-WW6ZI7PM-DXlmm4L1.js                  1.53 kB │ gzip:   0.62 kB
+dist/assets/gravity-J5YQHTYH-Bj6B0uod.js                  1.54 kB │ gzip:   0.74 kB
+dist/assets/recycle-horizontal-D46XOomN.js                1.55 kB │ gzip:   0.80 kB
+dist/assets/bsc-N647EYR2-B2nLKXWV.js                      1.59 kB │ gzip:   0.61 kB
+dist/assets/distributionCalculations-BkkVBpoT.js          1.61 kB │ gzip:   0.70 kB
+dist/assets/extension-CZAEbehh.js                         1.64 kB │ gzip:   0.80 kB
+dist/assets/telegram-mlNTgG8T.js                          1.66 kB │ gzip:   0.93 kB
+dist/assets/swapHorizontalRoundedBold-DgHtwXms.js         1.66 kB │ gzip:   0.87 kB
+dist/assets/blast-V555OVXZ-BbhJh1tj.js                    1.67 kB │ gzip:   0.72 kB
+dist/assets/verify-CvYKKkEp.js                            1.68 kB │ gzip:   0.82 kB
+dist/assets/Chrome-65Q5P54Y-DR9MQEVr.js                   1.72 kB │ gzip:   0.58 kB
+dist/assets/qr-code-CeX8L-vv.js                           1.72 kB │ gzip:   0.62 kB
+dist/assets/browser-DurB0Fyq.js                           1.79 kB │ gzip:   0.89 kB
+dist/assets/gnosis-37ZC4RBL-B137OtHZ.js                   1.80 kB │ gzip:   0.72 kB
+dist/assets/safeWallet-5MNKTR5Z-D-5imDLD.js               1.82 kB │ gzip:   0.71 kB
+dist/assets/network-placeholder-CMHB2Dci.js               1.86 kB │ gzip:   0.83 kB
+dist/assets/walletConnectWallet-YHWKVTDY-D3lyiczV.js      1.88 kB │ gzip:   0.71 kB
+dist/assets/id-muYgv_Fi.js                                1.96 kB │ gzip:   0.91 kB
+dist/assets/nftPlaceholder-fRqdpKRS.js                    1.96 kB │ gzip:   0.98 kB
+dist/assets/Opera-KQZLSACL-Cwv5MDFy.js                    2.10 kB │ gzip:   0.76 kB
+dist/assets/info-DCvW8gXN.js                              2.47 kB │ gzip:   1.28 kB
+dist/assets/arbitrum-WURIBY6W-CqVkHBr5.js                 2.59 kB │ gzip:   0.85 kB
+dist/assets/exclamation-triangle-CCzRIN52.js              2.63 kB │ gzip:   1.27 kB
+dist/assets/scroll-5OBGQVOV-DJFECiai.js                   2.63 kB │ gzip:   1.03 kB
+dist/assets/send-Bch78-pi.js                              2.63 kB │ gzip:   1.41 kB
+dist/assets/ronin-EMCPYXZT-N-QBHZdV.js                    2.67 kB │ gzip:   1.21 kB
+dist/assets/zora-FYL5H3IO-iB4wygST.js                     2.68 kB │ gzip:   0.59 kB
+dist/assets/card-Dc7QdJ_3.js                              2.80 kB │ gzip:   1.28 kB
+dist/assets/chrome-store-Djcad4ur.js                      2.80 kB │ gzip:   1.12 kB
+dist/assets/reown-logo-C8XvKuPH.js                        2.81 kB │ gzip:   1.20 kB
+dist/assets/ccip-smdBUOqs.js                              2.82 kB │ gzip:   1.35 kB
+dist/assets/lightbulb-wJfk82U0.js                         2.92 kB │ gzip:   1.34 kB
+dist/assets/refresh-S4T5V5GX-CwqIaaxK.js                  3.00 kB │ gzip:   0.95 kB
+dist/assets/rabbyWallet-GFVPHCTK-CCnTfCkL.js              3.16 kB │ gzip:   1.16 kB
+dist/assets/manta-SI27YFEJ-CpVOKa06.js                    3.20 kB │ gzip:   1.34 kB
+dist/assets/connect-UA7M4XW6-IY3X6Bmr.js                  3.55 kB │ gzip:   1.08 kB
+dist/assets/image-DJDqlgHn.js                             3.70 kB │ gzip:   1.65 kB
+dist/assets/berachain-NJECWIVC-DumxnFvf.js                3.78 kB │ gzip:   1.25 kB
+dist/assets/copy-9vZEWItr.js                              4.03 kB │ gzip:   1.58 kB
+dist/assets/hardhat-TX56IT5N-CV1FY-wE.js                  4.20 kB │ gzip:   1.36 kB
+dist/assets/Brave-BRAKJXDS-mq-Xo37j.js                    4.26 kB │ gzip:   1.50 kB
+dist/assets/walletconnect-yLryg_1N.js                     4.27 kB │ gzip:   1.79 kB
+dist/assets/create-FASO7PVG-D_rvSpre.js                   4.33 kB │ gzip:   1.09 kB
+dist/assets/scan-4UYSQ56Q-CjMz6-XC.js                     4.59 kB │ gzip:   1.15 kB
+dist/assets/rainbowWallet-O26YNBMX-DUhYus-9.js            5.12 kB │ gzip:   0.95 kB
+dist/assets/mantle-CKIUT334-DR2WgqzU.js                   5.27 kB │ gzip:   2.32 kB
+dist/assets/sign-A7IJEUT5-CGsRnPrd.js                     5.55 kB │ gzip:   4.23 kB
+dist/assets/workbox-window.prod.es5-BIl4cyR9.js           5.76 kB │ gzip:   2.37 kB
+dist/assets/Edge-XSPUTORV-DEoZslQE.js                     5.82 kB │ gzip:   1.36 kB
+dist/assets/events-DQ172AOg.js                            6.13 kB │ gzip:   2.09 kB
+dist/assets/Arc-VDBY7LNS-BChRXCXW.js                      6.62 kB │ gzip:   1.66 kB
+dist/assets/metaMaskWallet-SITXT2FV-BlemcphV.js           8.51 kB │ gzip:   1.24 kB
+dist/assets/index-DpcvQ6eX.js                             9.54 kB │ gzip:   3.18 kB
+dist/assets/Browser-76IHF3Y2-BMhRaC5Z.js                 11.82 kB │ gzip:   2.21 kB
+dist/assets/login-UP3DZBGS-Db_wM5oQ.js                   12.00 kB │ gzip:   3.00 kB
+dist/assets/react-vendor-CvrAlPOO.js                     12.41 kB │ gzip:   4.41 kB
+dist/assets/walletActivityService-pmmNyJHk.js            12.78 kB │ gzip:   4.50 kB
+dist/assets/Safari-ZPL37GXR-C4Ggg6rz.js                  13.75 kB │ gzip:   3.80 kB
+dist/assets/Firefox-AAHGJQIP-Bp_Hm04m.js                 15.19 kB │ gzip:   3.46 kB
+dist/assets/hooks.module-CRTr1Ar6.js                     15.35 kB │ gzip:   6.14 kB
+dist/assets/index-kzlEvkEN.js                            17.28 kB │ gzip:   4.71 kB
+dist/assets/sanko-RHQYXGM5-OX010CbN.js                   21.93 kB │ gzip:  16.55 kB
+dist/assets/assets-Q6ZU7ZJ5-P8HioiAD.js                  23.62 kB │ gzip:   4.14 kB
+dist/assets/secp256k1-K9IYt7AI.js                        32.11 kB │ gzip:  12.64 kB
+dist/assets/secp256k1-Ds5ZFhFU.js                        32.13 kB │ gzip:  12.65 kB
+dist/assets/lucide-react-5BddZRF4.js                     33.47 kB │ gzip:   7.27 kB
+dist/assets/index-BBscuPLd.js                            39.96 kB │ gzip:   9.48 kB
+dist/assets/w3m-modal-Bubag-Nm.js                        40.26 kB │ gzip:   9.48 kB
+dist/assets/genai-CymUOuQn.js                            47.19 kB │ gzip:  14.38 kB
+dist/assets/Macos-MW4AE7LN-Vvm8Drw3.js                   49.68 kB │ gzip:  35.99 kB
+dist/assets/zh_CN-HJBN674C-Baf0GEeT.js                   53.48 kB │ gzip:   5.58 kB
+dist/assets/zh_TW-VNNRNXY7-aWfg7Qp4.js                   53.48 kB │ gzip:   5.25 kB
+dist/assets/zh_HK-JW3WLRKE-VztJKXL5.js                   54.34 kB │ gzip:   5.29 kB
+dist/assets/id_ID-KUOB4UAL-K9y-nRWm.js                   58.82 kB │ gzip:   5.44 kB
+dist/assets/ms_MY-6VZW6Q3Z-BtFD07hR.js                   59.65 kB │ gzip:   5.09 kB
+dist/assets/pt_BR-N3XOZ4SV-CvVpfsHb.js                   59.96 kB │ gzip:   5.21 kB
+dist/assets/es_419-HRGOJ6VT-D-qzxUM-.js                  60.30 kB │ gzip:   5.58 kB
+dist/assets/tr_TR-QUPUGMUF-CwpF6ZFn.js                   61.98 kB │ gzip:   5.66 kB
+dist/assets/ko_KR-I2K7AIEP-B5gw8Mwb.js                   63.98 kB │ gzip:   6.36 kB
+dist/assets/de_DE-PYAO5YD6-BWlqPWgO.js                   65.39 kB │ gzip:   5.48 kB
+dist/assets/fr_FR-IGGVC6RM-D8LpUM75.js                   66.06 kB │ gzip:   5.51 kB
+dist/assets/vi_VN-7BUVRNYY-CZ9S75qZ.js                   67.43 kB │ gzip:   5.34 kB
+dist/assets/ar_AR-44JUQ6EW-BMX-am0v.js                   69.61 kB │ gzip:   6.10 kB
+dist/assets/ja_JP-4WRQ63RX-Ct5pF4ug.js                   72.05 kB │ gzip:   6.48 kB
+dist/assets/uk_UA-SSN6SV5E-IlYYyRC6.js                   87.23 kB │ gzip:   6.19 kB
+dist/assets/ru_RU-IITAPRET-DOj6Jzj7.js                   88.79 kB │ gzip:   6.86 kB
+dist/assets/Linux-OO4TNCLJ-B0aw93n9.js                   91.13 kB │ gzip:  15.08 kB
+dist/assets/dexie-D5ZPAh2a.js                            95.73 kB │ gzip:  31.96 kB
+dist/assets/th_TH-3ZQCKCQE-BcHUN2Q4.js                  104.07 kB │ gzip:   7.70 kB
+dist/assets/hi_IN-XSKAA3MF-C3QUpWyP.js                  108.00 kB │ gzip:   8.19 kB
+dist/assets/d3-J2Gb5ERm.js                              123.05 kB │ gzip:  40.53 kB
+dist/assets/basic-BlN_zPgY.js                           144.52 kB │ gzip:  33.50 kB
+dist/assets/index-ooTQlB6D.js                           299.54 kB │ gzip:  89.40 kB
+dist/assets/index-DuKy3m9L.js                           410.31 kB │ gzip: 121.45 kB
+dist/assets/index.es-AlsUBQKC.js                        417.15 kB │ gzip: 119.09 kB
+dist/assets/core-A4bKosum.js                            499.21 kB │ gzip: 135.21 kB
+dist/assets/metamask-sdk-CSuzrIgx.js                    558.48 kB │ gzip: 169.62 kB
+dist/assets/index-CWUGjf6p.js                           577.15 kB │ gzip: 157.83 kB
+dist/assets/index-BWMoyyWP.js                         1,763.65 kB │ gzip: 505.12 kB
+
+(!) Some chunks are larger than 600 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 8.54s
+Browserslist: browsers data (caniuse-lite) is 11 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+PWA v1.2.0
+mode      generateSW
+precache  205 entries (9945.45 KiB)
+files generated
+  dist/sw.js
+  dist/workbox-85a87e6d.js
+PASS npm run build green
+
+== 5. cleanup
+cleanup: synthetic triggered_alerts row removed
+cleanup: proof API server stopped
+
+== summary
+PASS: 28
+FAIL: 0
+all checks passed — transcript: docs/verification/t06-api-layer.txt

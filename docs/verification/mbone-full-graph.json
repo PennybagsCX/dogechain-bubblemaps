@@ -1,0 +1,113 @@
+{
+  "chainId": 6281971,
+  "token": {
+    "address": "0x4A821daf2AED3e12253c527F06A7A2F802ae3B44",
+    "name": "Moon Bone",
+    "symbol": "MBONE",
+    "decimals": 18
+  },
+  "scanned": {
+    "fromBlock": "8985569",
+    "toBlock": "9561651",
+    "anchorBlock": "8985569",
+    "chunks": 65,
+    "transfers": 6,
+    "empty": false
+  },
+  "nodes": [
+    {
+      "address": "0x818be6335111b4ccfc7387c71d61a8e1b9adc27e",
+      "balance": 338370989.17790014,
+      "isContract": true,
+      "windowDelta": 338370989.17790014,
+      "rank": 1
+    },
+    {
+      "address": "0x1652c4078cd133193b7b4e930abcb0f9abb9c76b",
+      "balance": 244255975.32767925,
+      "isContract": false,
+      "windowDelta": 244255975.32767925,
+      "rank": 2
+    },
+    {
+      "address": "0x192ef736afc178d743902a8ce4c42f8e7b65729e",
+      "balance": 210263393.39541975,
+      "isContract": false,
+      "windowDelta": 210263393.39541975,
+      "rank": 3
+    },
+    {
+      "address": "0x579bb3c071d5947358f1130db447d38096779c1b",
+      "balance": 107552155.26982363,
+      "isContract": false,
+      "windowDelta": 107552155.26982363,
+      "rank": 4
+    },
+    {
+      "address": "0x568eba6891cce8ff8848a7334e150c8af4426e2f",
+      "balance": 51485633.97639047,
+      "isContract": false,
+      "windowDelta": 51485633.97639047,
+      "rank": 5
+    },
+    {
+      "address": "0x0044dd83bcb91759e43bf66262b68be5521f3480",
+      "balance": 48071852.85278678,
+      "isContract": false,
+      "windowDelta": 48071852.85278678,
+      "rank": 6
+    },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "balance": 0,
+      "isContract": false,
+      "windowDelta": -1000000000,
+      "rank": 7
+    }
+  ],
+  "links": [
+    {
+      "source": "0x0000000000000000000000000000000000000000",
+      "target": "0x818be6335111b4ccfc7387c71d61a8e1b9adc27e",
+      "value": 1000000000,
+      "txCount": 1
+    },
+    {
+      "source": "0x818be6335111b4ccfc7387c71d61a8e1b9adc27e",
+      "target": "0x1652c4078cd133193b7b4e930abcb0f9abb9c76b",
+      "value": 244255975.32767925,
+      "txCount": 1
+    },
+    {
+      "source": "0x818be6335111b4ccfc7387c71d61a8e1b9adc27e",
+      "target": "0x192ef736afc178d743902a8ce4c42f8e7b65729e",
+      "value": 210263393.39541975,
+      "txCount": 1
+    },
+    {
+      "source": "0x818be6335111b4ccfc7387c71d61a8e1b9adc27e",
+      "target": "0x579bb3c071d5947358f1130db447d38096779c1b",
+      "value": 107552155.26982363,
+      "txCount": 1
+    },
+    {
+      "source": "0x818be6335111b4ccfc7387c71d61a8e1b9adc27e",
+      "target": "0x568eba6891cce8ff8848a7334e150c8af4426e2f",
+      "value": 51485633.97639047,
+      "txCount": 1
+    },
+    {
+      "source": "0x818be6335111b4ccfc7387c71d61a8e1b9adc27e",
+      "target": "0x0044dd83bcb91759e43bf66262b68be5521f3480",
+      "value": 48071852.85278678,
+      "txCount": 1
+    }
+  ],
+  "empty": false,
+  "stats": {
+    "distinctAddresses": 7,
+    "contractNodes": 1,
+    "totalBalance": 1000000000,
+    "largestTransfer": 1000000000
+  }
+}

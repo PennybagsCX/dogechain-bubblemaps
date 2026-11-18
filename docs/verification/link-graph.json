@@ -1,0 +1,19 @@
+{
+  "chainId": 6281971,
+  "token": {
+    "address": "0xe5e3a4fF1773d043a387b16Ceb3c91cC49bAFD54",
+    "name": "ChainLink Token",
+    "symbol": "LINK",
+    "decimals": 18
+  },
+  "scanned": {
+    "fromBlock": "9470067",
+    "toBlock": "9560067",
+    "anchorBlock": "2473639",
+    "chunks": 11,
+    "transfers": 0,
+    "empty": true
+  },
+  "nodes": [],
+  "links": []
+}

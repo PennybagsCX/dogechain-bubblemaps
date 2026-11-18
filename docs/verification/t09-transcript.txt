@@ -1,0 +1,72 @@
+T-09 — live end-to-end verification on DogeOS Chikyū (chain 6281971)
+Every number below was re-read from the chain; every hash was opened on
+https://dogeos-testnet.l2scan.co (screenshots t09-explorer-*.png, assertions t09-explorer-assertions.json).
+captured_at_utc: 2026-11-17T19:55:03.959250Z
+
+== 1. DEPLOY (ethers v6 ContractFactory — forge --broadcast silently dry-runs on this chain) ==
+contract            : T09ProofToken (T09 Proof Token / T09P, 18 decimals, 1,000,000 supply)
+token address       : 0x12525A2Ab363005D2Ad7D931B06B804bEbDeBc27
+deploy tx           : 0x5a8a5ce80b12ce388a6e3cb8cddc654fffaca13399f71af5830a0fff85efa368
+block               : 9562825   status 1
+deployer            : 0x9bad5588d63e20Bde1a4E72f2DDfd900288B2BAf
+bytecode            : 1498 bytes initcode, 1342 bytes runtime code on chain
+gasLimit / gasUsed  : 415971 / 391886
+receipt claims      : effectiveGasPrice 1000000000 wei/gas -> 0.000391886 DOGE
+balance really moved: 0.19353024612628087 DOGE  (493.8 gwei/gas)
+receipt understates : 493.8x
+
+== 2. SEED — real transfers from the operator's funded testnet keys (fee excludes moved value) ==
+label                                        block  gasUsed    receipt DOGE         real fee DOGE     x         wei/gas
+doge forwarder->deployer 0.08              9562865    21000        0.000021  0.017312731026104367   824    824415763147
+token deployer->author 250000              9562868    51674     0.000051674  0.023492392421721144   455    454626938532
+token deployer->forwarder 250000           9562870    51674     0.000051674  0.023492392421721144   455    454626938532
+token deployer->tipper 200000              9562873    51662     0.000051662  0.023492380421721144   455    454732306564
+token author->tipper 60000                 9562876    34574     0.000034574  0.023475292421721144   679    678986880942
+token tipper->forwarder 40000              9562878    34562     0.000034562  0.023475280421721144   679    679222279431
+token forwarder->author 25000              9562881    34574     0.000034574  0.024429846453102871   707    706595894403
+
+  doge forwarder->deployer 0.08            0x90bf0426aacb58283924d0a2e59f2ee73f7222b16ad129fbc0671be73d5df8da
+  token deployer->author 250000            0x67ebfb3ea0dec99da9764015996357dba3cccd5078b48b05785a2034ed53b00c
+  token deployer->forwarder 250000         0x336cd35f0ad4882a2ff1fd1ba02308c9649f7e148c97d5ee539ced70ef41f924
+  token deployer->tipper 200000            0x59c40b884a10ecdc6c615bc2292570b27f36d76fe380bd5ec9a04928c56c4e22
+  token author->tipper 60000               0xb28a6e0b144ea53eb9c255dd932a4b34630d74af1926131f561c4e5cba80da17
+  token tipper->forwarder 40000            0x8b04e76b4ccdbbacef407be3ab11226875fe48432cb09404d77abdd42d1ef7dc
+  token forwarder->author 25000            0x87eb7ae765b11785e87cb40c69ed8083fac1ff79c10f6282e7fab4d46406948c
+
+== 3. HOLDER LIST (contract balanceOf; matches the app scanner and blockscout) ==
+  0x9bad5588d63e20Bde1a4E72f2DDfd900288B2BAf    300000.0 T09P   role=deployer
+  0x4dab72dc6Ac534852bE9fb3C56a128C74cb1A36b    265000.0 T09P   role=forwarder
+  0x033fAF7Ad41087C0Bb5Cf223Fd4DfA756c4359F6    220000.0 T09P   role=tipper
+  0xC576cdd08BE613c4e072Aa3bbEDf1FF68Df5Fe02    215000.0 T09P   role=author
+
+== 4. APP SCANNER (services/evmRPC.ts) — raw run in t09-scan-transcript.txt ==
+  anchor walk -> deploy block 9562825; 1 chunk (<=9k blocks, Chikyū's log-range limit)
+  7 Transfer logs, 4 non-zero holders, graph 5 nodes / 7 links (t09p-graph.json)
+  the 5th node is the 0x0 mint origin, which blockscout does not count as a holder
+
+== 5. RECONCILIATION vs the chain's own indexer (blockscout) ==
+  transfers_count        blockscout   7  scanner 7  -> EXACT
+  token_holders_count    blockscout   4  scanner 4  -> EXACT
+  total_supply           blockscout 1000000000000000000000000  on-chain totalSupply 1000000000000000000000000 -> EXACT
+  type / symbol          blockscout ERC-20 / T09P -> matches the compiled contract
+
+== 6. FEE REALITY CHECK ==
+  eth_gasPrice reports 15680007 wei (0.0157 gwei). Real debits are 455x-825x the receipt's
+  gasUsed*effectiveGasPrice, i.e. 454-824 gwei per gas:
+    deploy            494x   493.8 gwei/gas
+    doge forwarder->deployer 0.08   824x    824.4 gwei/gas
+    token deployer->author 250000   455x    454.6 gwei/gas
+    token deployer->forwarder 250000   455x    454.6 gwei/gas
+    token deployer->tipper 200000   455x    454.7 gwei/gas
+    token author->tipper 60000     679x    679.0 gwei/gas
+    token tipper->forwarder 40000   679x    679.2 gwei/gas
+    token forwarder->author 25000   707x    706.6 gwei/gas
+
+  The explorer's 'Transaction fee' row equals the measured balance delta on all 9 txs, so the
+  indexer knows the real fee while eth_getTransactionReceipt does not. Two lessons that cost time:
+   - a deploy's price cannot be derived from gas: the node's pre-flight check (gasLimit * ~4.5e11
+     wei) is the only pre-broadcast predictor, and it was within 3% of the real debit (0.1879 vs
+     0.1935 DOGE) while the receipt was off by 494x.
+   - when measuring a NATIVE transfer, subtract tx.value from the balance delta (the first pass of
+     this transcript did not, and the explorer's fee row caught the error).
+

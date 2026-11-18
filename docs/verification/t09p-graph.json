@@ -1,0 +1,98 @@
+{
+  "chainId": 6281971,
+  "token": {
+    "address": "0x12525A2Ab363005D2Ad7D931B06B804bEbDeBc27",
+    "name": "T09 Proof Token",
+    "symbol": "T09P",
+    "decimals": 18
+  },
+  "scanned": {
+    "fromBlock": "9562825",
+    "toBlock": "9563085",
+    "anchorBlock": "9562825",
+    "chunks": 1,
+    "transfers": 7,
+    "empty": false
+  },
+  "nodes": [
+    {
+      "address": "0x9bad5588d63e20bde1a4e72f2ddfd900288b2baf",
+      "balance": 300000,
+      "rawDelta": "300000000000000000000000",
+      "isContract": false,
+      "rank": 1
+    },
+    {
+      "address": "0x4dab72dc6ac534852be9fb3c56a128c74cb1a36b",
+      "balance": 265000,
+      "rawDelta": "265000000000000000000000",
+      "isContract": false,
+      "rank": 2
+    },
+    {
+      "address": "0x033faf7ad41087c0bb5cf223fd4dfa756c4359f6",
+      "balance": 220000,
+      "rawDelta": "220000000000000000000000",
+      "isContract": false,
+      "rank": 3
+    },
+    {
+      "address": "0xc576cdd08be613c4e072aa3bbedf1ff68df5fe02",
+      "balance": 215000,
+      "rawDelta": "215000000000000000000000",
+      "isContract": false,
+      "rank": 4
+    },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "balance": 0,
+      "rawDelta": "-1000000000000000000000000",
+      "isContract": false,
+      "rank": 5
+    }
+  ],
+  "links": [
+    {
+      "source": "0x0000000000000000000000000000000000000000",
+      "target": "0x9bad5588d63e20bde1a4e72f2ddfd900288b2baf",
+      "value": 1000000,
+      "txCount": 1
+    },
+    {
+      "source": "0x9bad5588d63e20bde1a4e72f2ddfd900288b2baf",
+      "target": "0xc576cdd08be613c4e072aa3bbedf1ff68df5fe02",
+      "value": 250000,
+      "txCount": 1
+    },
+    {
+      "source": "0x9bad5588d63e20bde1a4e72f2ddfd900288b2baf",
+      "target": "0x4dab72dc6ac534852be9fb3c56a128c74cb1a36b",
+      "value": 250000,
+      "txCount": 1
+    },
+    {
+      "source": "0x9bad5588d63e20bde1a4e72f2ddfd900288b2baf",
+      "target": "0x033faf7ad41087c0bb5cf223fd4dfa756c4359f6",
+      "value": 199999.99999999997,
+      "txCount": 1
+    },
+    {
+      "source": "0xc576cdd08be613c4e072aa3bbedf1ff68df5fe02",
+      "target": "0x033faf7ad41087c0bb5cf223fd4dfa756c4359f6",
+      "value": 60000,
+      "txCount": 1
+    },
+    {
+      "source": "0x033faf7ad41087c0bb5cf223fd4dfa756c4359f6",
+      "target": "0x4dab72dc6ac534852be9fb3c56a128c74cb1a36b",
+      "value": 40000,
+      "txCount": 1
+    },
+    {
+      "source": "0x4dab72dc6ac534852be9fb3c56a128c74cb1a36b",
+      "target": "0xc576cdd08be613c4e072aa3bbedf1ff68df5fe02",
+      "value": 24999.999999999996,
+      "txCount": 1
+    }
+  ]
+}

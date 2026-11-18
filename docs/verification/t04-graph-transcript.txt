@@ -1,0 +1,138 @@
+======================================================================
+T-04 graph data contract — live Chikyū proof (2026-11-17T18:31:07Z)
+source: services/graphService.ts  harness: scripts/dogeos-verify/graph-live.ts
+node v24.22.2 | tsc --noEmit exit 0 | eslint exit 0 on both files
+======================================================================
+
+### RUN 1 — mWDOGE, windowed 40,000 blocks (bulk payload) ###
+  chunk 1/5: blocks 9552628-9561627 (1302 logs)
+  chunk 2/5: blocks 9543628-9552627 (1448 logs)
+  chunk 3/5: blocks 9534628-9543627 (1148 logs)
+  chunk 4/5: blocks 9525628-9534627 (1459 logs)
+  chunk 5/5: blocks 9521627-9525627 (588 logs)
+=== GRAPH PAYLOAD ===
+  token      : Moar interest bearing WDOGE (mWDOGE), 18 decimals, 0xA69d8Ac86502e4E08c812c64675a4892dfe6870f
+  window     : blocks 9521627-9561627 (anchor 573746, 5 chunk(s))
+  transfers  : 2542
+  nodes      : 576 (distinct addresses 576, contracts 1)
+  links      : 922
+  empty      : false
+shape      : nodes OK (address/balance/isContract), links OK (source/target/value/txCount)
+d3 safety  : 0 dangling link endpoint(s) (every link resolves to a node)
+bubble map : 576 Wallet / 922 Link props, no component change
+=== RECONCILIATION (blockscout /api/v2/tokens/{addr}/counters) ===
+  transfers_count        : 242099 chain-wide vs 2542 in this payload (blocks 9521627-9561627)
+  token_holders_count    : 25232 current holders vs 575 distinct non-zero holder addresses in the payload
+  note                   : windowed scan (40000 blocks), so its transfer count is a subset of the chain-wide counter — the delta is the window, not missing data.
+=== TOP NODES (real balanceOf) ===
+  #1 0xdd32d4da5a1cbb4e077d1c0c5e6659ebc5f59855  5956.303581 mWDOGE  contract=false  https://dogeos-testnet.l2scan.co/address/0xdd32d4da5a1cbb4e077d1c0c5e6659ebc5f59855
+  #2 0xa53227ae8f5c44ff805cf5acdfd1f3dbfc5dac3c  5013.676173 mWDOGE  contract=false  https://dogeos-testnet.l2scan.co/address/0xa53227ae8f5c44ff805cf5acdfd1f3dbfc5dac3c
+  #3 0x74378d53f653f588700a8cfa0b81f2f3decbec66  4782.185874 mWDOGE  contract=false  https://dogeos-testnet.l2scan.co/address/0x74378d53f653f588700a8cfa0b81f2f3decbec66
+  #4 0x95a34d3a397621b60bb8320dc5ff2e9288cd4e6d  4259.206419 mWDOGE  contract=false  https://dogeos-testnet.l2scan.co/address/0x95a34d3a397621b60bb8320dc5ff2e9288cd4e6d
+  #5 0x51527ef717c5dd216421c862ee257e91dafb25b5  4005.573779 mWDOGE  contract=false  https://dogeos-testnet.l2scan.co/address/0x51527ef717c5dd216421c862ee257e91dafb25b5
+  #6 0xf9b82e91eb92c0e56bb122bf25bc0d0e434b83f7  3685.296970 mWDOGE  contract=false  https://dogeos-testnet.l2scan.co/address/0xf9b82e91eb92c0e56bb122bf25bc0d0e434b83f7
+  #7 0x39452f031db267c0301efd8265e0cc3da3bee315  2607.099761 mWDOGE  contract=false  https://dogeos-testnet.l2scan.co/address/0x39452f031db267c0301efd8265e0cc3da3bee315
+  #8 0x04d02d0ffac017e7e54000941656c36ec5c0316c  2417.103404 mWDOGE  contract=false  https://dogeos-testnet.l2scan.co/address/0x04d02d0ffac017e7e54000941656c36ec5c0316c
+  #9 0x2955e3afaae84579b99d2afca71ba21c68948155  2409.035655 mWDOGE  contract=false  https://dogeos-testnet.l2scan.co/address/0x2955e3afaae84579b99d2afca71ba21c68948155
+  #10 0xfc0abc78563bbbd0e79dea200c4e0c3570111ef5  2172.185266 mWDOGE  contract=false  https://dogeos-testnet.l2scan.co/address/0xfc0abc78563bbbd0e79dea200c4e0c3570111ef5
+  #11 0x8992ba1c4e6304ff6d03a4599a74096fb5a91aa9  1925.221637 mWDOGE  contract=false  https://dogeos-testnet.l2scan.co/address/0x8992ba1c4e6304ff6d03a4599a74096fb5a91aa9
+  #12 0xa490dc34cfc8fb82e332d572a3a873d17ed8f10c  1712.637402 mWDOGE  contract=false  https://dogeos-testnet.l2scan.co/address/0xa490dc34cfc8fb82e332d572a3a873d17ed8f10c
+=== TOP LINKS (aggregated Transfer legs) ===
+  0x899d68bfba7e1f365f0fe7c1c35e66512ddc52da -> 0x0000000000000000000000000000000000000000  10162.986900 mWDOGE over 422 tx
+  0x0000000000000000000000000000000000000000 -> 0x8992ba1c4e6304ff6d03a4599a74096fb5a91aa9  5100.000000 mWDOGE over 2 tx
+  0x8992ba1c4e6304ff6d03a4599a74096fb5a91aa9 -> 0x899d68bfba7e1f365f0fe7c1c35e66512ddc52da  5040.000000 mWDOGE over 2 tx
+  0x0000000000000000000000000000000000000000 -> 0x48c79f961ca05ee9d4633807918584677615dfd7  1499.000000 mWDOGE over 2 tx
+  0x48c79f961ca05ee9d4633807918584677615dfd7 -> 0x899d68bfba7e1f365f0fe7c1c35e66512ddc52da  1154.000000 mWDOGE over 3 tx
+  0x0000000000000000000000000000000000000000 -> 0x79ab9a4054f49edc9cf120f0239ae3d3faeebee4  1050.000000 mWDOGE over 2 tx
+  0x0000000000000000000000000000000000000000 -> 0xdd32d4da5a1cbb4e077d1c0c5e6659ebc5f59855  1000.000000 mWDOGE over 1 tx
+  0xdd32d4da5a1cbb4e077d1c0c5e6659ebc5f59855 -> 0x899d68bfba7e1f365f0fe7c1c35e66512ddc52da  1000.000000 mWDOGE over 1 tx
+  0x79ab9a4054f49edc9cf120f0239ae3d3faeebee4 -> 0x899d68bfba7e1f365f0fe7c1c35e66512ddc52da  950.000000 mWDOGE over 2 tx
+  0x0000000000000000000000000000000000000000 -> 0x839f823b10dbdac629ae3777209f4a9ae2c1bb99  600.000000 mWDOGE over 1 tx
+GRAPH OK -> /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/docs/verification/mwdoge-graph-t04.json
+
+### RUN 2 — MBONE, whole history (anchor -> head), exact reconciliation ###
+=== GRAPH PAYLOAD ===
+  token      : Moon Bone (MBONE), 18 decimals, 0x4A821daf2AED3e12253c527F06A7A2F802ae3B44
+  window     : blocks 8985569-9561651 (anchor 8985569, 65 chunk(s))
+  transfers  : 6
+  nodes      : 7 (distinct addresses 7, contracts 1)
+  links      : 6
+  empty      : false
+
+shape      : nodes OK (address/balance/isContract), links OK (source/target/value/txCount)
+d3 safety  : 0 dangling link endpoint(s) (every link resolves to a node)
+bubble map : 7 Wallet / 6 Link props, no component change
+
+=== RECONCILIATION (blockscout /api/v2/tokens/{addr}/counters) ===
+  transfers_count        : 6 chain-wide vs 6 in this payload (blocks 8985569-9561651)
+  token_holders_count    : 6 current holders vs 6 distinct non-zero holder addresses in the payload
+  transfers verdict      : EXACT MATCH
+
+=== TOP NODES (real balanceOf) ===
+  #1 0x818be6335111b4ccfc7387c71d61a8e1b9adc27e  338370989.177900 MBONE  contract=true  https://dogeos-testnet.l2scan.co/address/0x818be6335111b4ccfc7387c71d61a8e1b9adc27e
+  #2 0x1652c4078cd133193b7b4e930abcb0f9abb9c76b  244255975.327679 MBONE  contract=false  https://dogeos-testnet.l2scan.co/address/0x1652c4078cd133193b7b4e930abcb0f9abb9c76b
+  #3 0x192ef736afc178d743902a8ce4c42f8e7b65729e  210263393.395420 MBONE  contract=false  https://dogeos-testnet.l2scan.co/address/0x192ef736afc178d743902a8ce4c42f8e7b65729e
+  #4 0x579bb3c071d5947358f1130db447d38096779c1b  107552155.269824 MBONE  contract=false  https://dogeos-testnet.l2scan.co/address/0x579bb3c071d5947358f1130db447d38096779c1b
+  #5 0x568eba6891cce8ff8848a7334e150c8af4426e2f  51485633.976390 MBONE  contract=false  https://dogeos-testnet.l2scan.co/address/0x568eba6891cce8ff8848a7334e150c8af4426e2f
+  #6 0x0044dd83bcb91759e43bf66262b68be5521f3480  48071852.852787 MBONE  contract=false  https://dogeos-testnet.l2scan.co/address/0x0044dd83bcb91759e43bf66262b68be5521f3480
+  #7 0x0000000000000000000000000000000000000000  0.000000 MBONE  contract=false  https://dogeos-testnet.l2scan.co/address/0x0000000000000000000000000000000000000000
+
+=== TOP LINKS (aggregated Transfer legs) ===
+  0x0000000000000000000000000000000000000000 -> 0x818be6335111b4ccfc7387c71d61a8e1b9adc27e  1000000000.000000 MBONE over 1 tx
+  0x818be6335111b4ccfc7387c71d61a8e1b9adc27e -> 0x1652c4078cd133193b7b4e930abcb0f9abb9c76b  244255975.327679 MBONE over 1 tx
+  0x818be6335111b4ccfc7387c71d61a8e1b9adc27e -> 0x192ef736afc178d743902a8ce4c42f8e7b65729e  210263393.395420 MBONE over 1 tx
+  0x818be6335111b4ccfc7387c71d61a8e1b9adc27e -> 0x579bb3c071d5947358f1130db447d38096779c1b  107552155.269824 MBONE over 1 tx
+  0x818be6335111b4ccfc7387c71d61a8e1b9adc27e -> 0x568eba6891cce8ff8848a7334e150c8af4426e2f  51485633.976390 MBONE over 1 tx
+  0x818be6335111b4ccfc7387c71d61a8e1b9adc27e -> 0x0044dd83bcb91759e43bf66262b68be5521f3480  48071852.852787 MBONE over 1 tx
+
+GRAPH OK -> /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/docs/verification/mbone-full-graph.json
+
+### RUN 3 — LINK, real token over a 90,000-block range with zero Transfer logs (empty state) ###
+  chunk 1/11: blocks 9552662-9561661 (0 logs)
+  chunk 2/11: blocks 9543662-9552661 (0 logs)
+  chunk 3/11: blocks 9534662-9543661 (0 logs)
+  chunk 4/11: blocks 9525662-9534661 (0 logs)
+  chunk 5/11: blocks 9516662-9525661 (0 logs)
+  chunk 6/11: blocks 9507662-9516661 (0 logs)
+  chunk 7/11: blocks 9498662-9507661 (0 logs)
+  chunk 8/11: blocks 9489662-9498661 (0 logs)
+  chunk 9/11: blocks 9480662-9489661 (0 logs)
+  chunk 10/11: blocks 9471662-9480661 (0 logs)
+  chunk 11/11: blocks 9471661-9471661 (0 logs)
+=== GRAPH PAYLOAD ===
+  token      : ChainLink Token (LINK), 18 decimals, 0xe5e3a4fF1773d043a387b16Ceb3c91cC49bAFD54
+  window     : blocks 9471661-9561661 (anchor 2473639, 11 chunk(s))
+  transfers  : 0
+  nodes      : 0 (distinct addresses 0, contracts 0)
+  links      : 0
+  empty      : true
+EMPTY STATE: no Transfer logs for 0xe5e3a4fF1773d043a387b16Ceb3c91cC49bAFD54 in blocks 9471661-9561661 (11 chunk(s), anchor 2473639). No nodes or links are fabricated — an empty map is the correct answer for this range.
+shape      : nodes OK (address/balance/isContract), links OK (source/target/value/txCount)
+d3 safety  : 0 dangling link endpoint(s) (every link resolves to a node)
+bubble map : 0 Wallet / 0 Link props, no component change
+=== RECONCILIATION (blockscout /api/v2/tokens/{addr}/counters) ===
+  transfers_count        : 2 chain-wide vs 0 in this payload (blocks 9471661-9561661)
+  token_holders_count    : 2 current holders vs 0 distinct non-zero holder addresses in the payload
+  note                   : windowed scan (90000 blocks), so its transfer count is a subset of the chain-wide counter — the delta is the window, not missing data.
+=== TOP NODES (real balanceOf) ===
+=== TOP LINKS (aggregated Transfer legs) ===
+GRAPH OK -> /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/docs/verification/link-empty-graph.json
+
+### INDEPENDENT CHECKS (written outside the app's code path) ###
+
+docs/verification/mwdoge-graph-t04.json
+  schema: nodes address/balance/isContract + links source/target/value/txCount -> OK
+  nodes 576 | links 922 | dangling link endpoints 0 | max link-sum vs windowDelta drift 8.3e-14
+  balanceOf pinned at block 9561627: 5/5 sampled nodes match the JSON exactly
+  isContract flags verified by eth_getCode: {'0x899d68bfba7e1f365f0fe7c1c35e66512ddc52da': 5616}
+
+docs/verification/mbone-full-graph.json
+  schema: nodes address/balance/isContract + links source/target/value/txCount -> OK
+  nodes 7 | links 6 | dangling link endpoints 0 | max link-sum vs windowDelta drift 0.0e+00
+  balanceOf pinned at block 9561651: 5/5 sampled nodes match the JSON exactly
+  isContract flags verified by eth_getCode: {'0x818be6335111b4ccfc7387c71d61a8e1b9adc27e': 14688}
+
+docs/verification/link-empty-graph.json
+  schema: nodes address/balance/isContract + links source/target/value/txCount -> OK
+  nodes 0 | links 0 | dangling link endpoints 0 | max link-sum vs windowDelta drift 0.0e+00
+  empty=True nodes=0 links=0 message present=True -> nothing fabricated

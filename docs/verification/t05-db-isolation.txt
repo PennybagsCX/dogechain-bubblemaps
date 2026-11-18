@@ -1,0 +1,57 @@
+# T-05 database isolation — evidence (2026-11-17 13:48 EST)
+
+$ npm run db:local:status
+postgres  : up on 127.0.0.1:55432 (data: /Users/dts/.local-pg/dogechain-bubblemaps-dogeos)
+database  : dogechain_bubblemaps_dogeos as dogechain_app on 127.0.0.1/32:55432
+
+$ npx prisma migrate status
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "dogechain_bubblemaps_dogeos", schema "public" at "127.0.0.1:55432"
+3 migrations found in prisma/migrations
+Database schema is up to date!
+
+$ npx prisma generate
+✔ Generated Prisma Client (v6.19.3) to ./node_modules/@prisma/client in 95ms
+
+$ git check-ignore -v .env.local
+.gitignore:13:*.local	.env.local
+
+$ git status --porcelain | grep -i env   # expect nothing
+(empty — no env file staged or untracked)
+
+$ git ls-files | grep '^\.env'    # .env.local must not appear
+.env.example
+.env.production
+
+$ host comparison (values redacted)
+fork  DATABASE_URL host : 127.0.0.1:55432/dogechain_bubblemaps_dogeos  (user=dogechain_app, password=<redacted>)
+prod  DATABASE_URL host : ep-…-pooler.us-east-1.aws.neon.tech/neondb  (commented out, inactive)
+hosts differ            : True
+fork host is loopback   : True
+
+$ npm run db:roundtrip
+PASS  connected to fork database (not prod) — db=dogechain_bubblemaps_dogeos user=dogechain_app server=127.0.0.1/32:55432
+PASS  all three migrated tables exist — _prisma_migrations,diagnostic_logs,triggered_alerts,user_alerts
+PASS  write user_alerts — id=3
+PASS  read user_alerts round-trip — id=3 name="T-05 isolation proof" initial_value=1234.5
+PASS  decimal + BigInt columns survive the round-trip — initial_value=1234.5 createdAtType=bigint
+PASS  write+read triggered_alerts — id=3 count=3
+PASS  write+read diagnostic_logs (JSONB) — id=3 console_logs=[{"msg":"t05 proof","level":"info"}]
+PASS  update path — is_active=false
+PASS  cleanup left no residue — rows=0
+
+RESULT: PASS — 9/9 checks against 127.0.0.1:55432/dogechain_bubblemaps_dogeos at 2026-11-17T18:48:14.702Z
+
+$ npx prisma migrate diff --from-migrations prisma/migrations --to-schema-datamodel prisma/schema.prisma --shadow-database-url <admin> --exit-code
+No difference detected.   (prisma exit 0)
+
+## Why the round-trip is at the Prisma layer, not literally via services/db.ts
+
+$ grep -nE "from ['\"]dexie['\"]|PrismaClient|from ['\"]pg['\"]|@neondatabase" services/db.ts
+3:import Dexie, { Table } from "dexie";
+
+services/db.ts is a browser-side Dexie (IndexedDB) layer. Its only server path is
+fetch("/api/alerts…") (syncAlertsToServer / syncAlertsFromServer), and the handlers that turn that
+payload into user_alerts / triggered_alerts rows do not exist in this fork yet (card T-06).
+`db-roundtrip.mjs` therefore exercises the storage layer those handlers will use, with the same row
+shapes, and refuses to run against any non-loopback host.

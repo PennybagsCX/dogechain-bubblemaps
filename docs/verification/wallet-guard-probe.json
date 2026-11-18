@@ -1,0 +1,212 @@
+{
+  "baseUrl": "http://localhost:5199",
+  "expectedChainId": 6281971,
+  "scenarios": [
+    {
+      "scenario": "no-wallet",
+      "guardCount": 0,
+      "connectVisible": true
+    },
+    {
+      "scenario": "connected-on-chikyu",
+      "guardCount": 0,
+      "badgeText": "Chikyū 6281971",
+      "walletChain": "0x5fdaf3",
+      "addressVisible": true
+    },
+    {
+      "scenario": "wrong-chain-then-switch",
+      "guardVisible": true,
+      "actualChainText": "1 (0x1)",
+      "expectedChainText": "6281971",
+      "heroVisible": false,
+      "statsVisible": false,
+      "searchInput": 0,
+      "guardAfter": 0,
+      "badgeAfter": "Chikyū 6281971",
+      "walletChain": "0x5fdaf3",
+      "addCalls": []
+    },
+    {
+      "scenario": "wrong-chain-rejected",
+      "guardVisible": true,
+      "errorText": "Request rejected in your wallet."
+    },
+    {
+      "scenario": "add-network",
+      "params": {
+        "chainId": "0x5fdaf3",
+        "chainName": "DogeOS Chikyū Testnet",
+        "nativeCurrency": {
+          "name": "DOGE",
+          "symbol": "DOGE",
+          "decimals": 18
+        },
+        "rpcUrls": [
+          "https://rpc.testnet.dogeos.com/"
+        ],
+        "blockExplorerUrls": [
+          "https://dogeos-testnet.l2scan.co"
+        ]
+      },
+      "walletChain": "0x5fdaf3",
+      "guardAfter": 0
+    },
+    {
+      "scenario": "4902-auto-add",
+      "calls": [
+        {
+          "chainId": "0x5fdaf3",
+          "chainName": "DogeOS Chikyū Testnet",
+          "nativeCurrency": {
+            "name": "DOGE",
+            "symbol": "DOGE",
+            "decimals": 18
+          },
+          "rpcUrls": [
+            "https://rpc.testnet.dogeos.com/"
+          ],
+          "blockExplorerUrls": [
+            "https://dogeos-testnet.l2scan.co"
+          ]
+        }
+      ],
+      "walletChain": "0x5fdaf3",
+      "guardAfter": 0,
+      "errorText": ""
+    }
+  ],
+  "assertions": [
+    {
+      "name": "S0 no guard while no wallet is connected",
+      "ok": true,
+      "detail": "guard count=0"
+    },
+    {
+      "name": "S0 connect action still offered",
+      "ok": true,
+      "detail": "visible=true"
+    },
+    {
+      "name": "S1 no guard when wallet is on 0x5fdaf3",
+      "ok": true,
+      "detail": "guard count=0"
+    },
+    {
+      "name": "S1 chain badge shows 6281971",
+      "ok": true,
+      "detail": "badge=\"Chikyū 6281971\""
+    },
+    {
+      "name": "S1 connected address visible",
+      "ok": true,
+      "detail": "nav=\"Ð DogeOS BubbleMaps Search Analysis Bubble Map Distribution Wallet Activity Dashboards Alerts Unified Analytics Chikyū 6\""
+    },
+    {
+      "name": "S1 wallet chain id is 0x5fdaf3",
+      "ok": true,
+      "detail": "0x5fdaf3"
+    },
+    {
+      "name": "S2 guard replaces app data on chain 1",
+      "ok": true,
+      "detail": "visible=true"
+    },
+    {
+      "name": "S2 guard names the actual chain",
+      "ok": true,
+      "detail": "1 (0x1)"
+    },
+    {
+      "name": "S2 guard names the expected chain id",
+      "ok": true,
+      "detail": "6281971"
+    },
+    {
+      "name": "S2 no app data rendered (hero/stats/search input absent)",
+      "ok": true,
+      "detail": "hero=false stats=false inputs=0"
+    },
+    {
+      "name": "S2 navbar shows wrong-network action",
+      "ok": true,
+      "detail": "count=1"
+    },
+    {
+      "name": "S2 guard disappears after switch",
+      "ok": true,
+      "detail": "guard count=0"
+    },
+    {
+      "name": "S2 app data renders after switch",
+      "ok": true,
+      "detail": "badge=\"Chikyū 6281971\""
+    },
+    {
+      "name": "S2 wallet switched to 0x5fdaf3",
+      "ok": true,
+      "detail": "0x5fdaf3"
+    },
+    {
+      "name": "S3 rejected switch keeps the guard up",
+      "ok": true,
+      "detail": "visible=true"
+    },
+    {
+      "name": "S3 guard reports the rejection",
+      "ok": true,
+      "detail": "Request rejected in your wallet."
+    },
+    {
+      "name": "S4 add-network sends chainId 0x5fdaf3",
+      "ok": true,
+      "detail": "\"0x5fdaf3\""
+    },
+    {
+      "name": "S4 add-network sends the chain module RPC URL",
+      "ok": true,
+      "detail": "[\"https://rpc.testnet.dogeos.com/\"]"
+    },
+    {
+      "name": "S4 add-network sends the explorer",
+      "ok": true,
+      "detail": "[\"https://dogeos-testnet.l2scan.co\"]"
+    },
+    {
+      "name": "S4 add-network sends DOGE/18",
+      "ok": true,
+      "detail": "{\"name\":\"DOGE\",\"symbol\":\"DOGE\",\"decimals\":18}"
+    },
+    {
+      "name": "S4 wallet ends on 0x5fdaf3",
+      "ok": true,
+      "detail": "0x5fdaf3"
+    },
+    {
+      "name": "S4 guard gone after add+switch",
+      "ok": true,
+      "detail": "guard count=0"
+    },
+    {
+      "name": "S5 4902 on switch falls back to wallet_addEthereumChain",
+      "ok": true,
+      "detail": "addCalls=1"
+    },
+    {
+      "name": "S5 add used chain 0x5fdaf3",
+      "ok": true,
+      "detail": "\"0x5fdaf3\""
+    },
+    {
+      "name": "S5 wallet ends on 0x5fdaf3",
+      "ok": true,
+      "detail": "0x5fdaf3"
+    },
+    {
+      "name": "S5 guard gone, no error left",
+      "ok": true,
+      "detail": "guard=0 error=\"\""
+    }
+  ],
+  "failed": 0
+}

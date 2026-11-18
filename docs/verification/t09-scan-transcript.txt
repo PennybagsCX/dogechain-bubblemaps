@@ -1,0 +1,39 @@
+chain id from lib/chain.ts : 6281971
+rpc url                    : https://rpc.testnet.dogeos.com/
+rpc reported chain id      : 6281971
+head block                 : 9563085
+token                      : T09 Proof Token (T09P) decimals 18 0x12525A2Ab363005D2Ad7D931B06B804bEbDeBc27
+  chunk 1/1: blocks 9562825-9563085 (7 logs)
+scan window                : blocks 9562825-9563085 (anchor 9562825, 1 chunk(s), 7 transfers)
+
+=== HOLDERS (from live Transfer logs) ===
+  0x9bad5588d63e20bde1a4e72f2ddfd900288b2baf  300000.0000 T09P  (window delta 300000.0000)  https://dogeos-testnet.l2scan.co/address/0x9bad5588d63e20bde1a4e72f2ddfd900288b2baf
+  0x4dab72dc6ac534852be9fb3c56a128c74cb1a36b  265000.0000 T09P  (window delta 265000.0000)  https://dogeos-testnet.l2scan.co/address/0x4dab72dc6ac534852be9fb3c56a128c74cb1a36b
+  0x033faf7ad41087c0bb5cf223fd4dfa756c4359f6  220000.0000 T09P  (window delta 220000.0000)  https://dogeos-testnet.l2scan.co/address/0x033faf7ad41087c0bb5cf223fd4dfa756c4359f6
+  0xc576cdd08be613c4e072aa3bbedf1ff68df5fe02  215000.0000 T09P  (window delta 215000.0000)  https://dogeos-testnet.l2scan.co/address/0xc576cdd08be613c4e072aa3bbedf1ff68df5fe02
+  0x0000000000000000000000000000000000000000  0.0000 T09P  (window delta -1000000.0000)  https://dogeos-testnet.l2scan.co/address/0x0000000000000000000000000000000000000000
+
+=== GRAPH: 5 nodes / 7 links -> /Volumes/DEV Projects/Dogechain-Bubblemaps-DogeOS/docs/verification/t09p-graph.json
+
+=== TOP LINKS ===
+  0x0000000000000000000000000000000000000000 -> 0x9bad5588d63e20bde1a4e72f2ddfd900288b2baf  1000000.0000 T09P over 1 tx
+  0x9bad5588d63e20bde1a4e72f2ddfd900288b2baf -> 0xc576cdd08be613c4e072aa3bbedf1ff68df5fe02  250000.0000 T09P over 1 tx
+  0x9bad5588d63e20bde1a4e72f2ddfd900288b2baf -> 0x4dab72dc6ac534852be9fb3c56a128c74cb1a36b  250000.0000 T09P over 1 tx
+  0x9bad5588d63e20bde1a4e72f2ddfd900288b2baf -> 0x033faf7ad41087c0bb5cf223fd4dfa756c4359f6  200000.0000 T09P over 1 tx
+  0xc576cdd08be613c4e072aa3bbedf1ff68df5fe02 -> 0x033faf7ad41087c0bb5cf223fd4dfa756c4359f6  60000.0000 T09P over 1 tx
+  0x033faf7ad41087c0bb5cf223fd4dfa756c4359f6 -> 0x4dab72dc6ac534852be9fb3c56a128c74cb1a36b  40000.0000 T09P over 1 tx
+  0x4dab72dc6ac534852be9fb3c56a128c74cb1a36b -> 0xc576cdd08be613c4e072aa3bbedf1ff68df5fe02  25000.0000 T09P over 1 tx
+
+=== SAMPLE TRANSFERS (verify each hash on the explorer) ===
+  0x5a8a5ce80b12ce388a6e3cb8cddc654fffaca13399f71af5830a0fff85efa368  block 9562825  1000000.0000 T09P  https://dogeos-testnet.l2scan.co/tx/0x5a8a5ce80b12ce388a6e3cb8cddc654fffaca13399f71af5830a0fff85efa368
+  0x67ebfb3ea0dec99da9764015996357dba3cccd5078b48b05785a2034ed53b00c  block 9562868  250000.0000 T09P  https://dogeos-testnet.l2scan.co/tx/0x67ebfb3ea0dec99da9764015996357dba3cccd5078b48b05785a2034ed53b00c
+  0x336cd35f0ad4882a2ff1fd1ba02308c9649f7e148c97d5ee539ced70ef41f924  block 9562870  250000.0000 T09P  https://dogeos-testnet.l2scan.co/tx/0x336cd35f0ad4882a2ff1fd1ba02308c9649f7e148c97d5ee539ced70ef41f924
+  0x59c40b884a10ecdc6c615bc2292570b27f36d76fe380bd5ec9a04928c56c4e22  block 9562873  200000.0000 T09P  https://dogeos-testnet.l2scan.co/tx/0x59c40b884a10ecdc6c615bc2292570b27f36d76fe380bd5ec9a04928c56c4e22
+  0xb28a6e0b144ea53eb9c255dd932a4b34630d74af1926131f561c4e5cba80da17  block 9562876  60000.0000 T09P  https://dogeos-testnet.l2scan.co/tx/0xb28a6e0b144ea53eb9c255dd932a4b34630d74af1926131f561c4e5cba80da17
+  0x8b04e76b4ccdbbacef407be3ab11226875fe48432cb09404d77abdd42d1ef7dc  block 9562878  40000.0000 T09P  https://dogeos-testnet.l2scan.co/tx/0x8b04e76b4ccdbbacef407be3ab11226875fe48432cb09404d77abdd42d1ef7dc
+
+=== WALLET 0x4dab72dc6ac534852be9fb3c56a128c74cb1a36b — 3 transfers in the scanned window ===
+  IN  250000.0000 T09P  https://dogeos-testnet.l2scan.co/tx/0x336cd35f0ad4882a2ff1fd1ba02308c9649f7e148c97d5ee539ced70ef41f924
+  IN  40000.0000 T09P  https://dogeos-testnet.l2scan.co/tx/0x8b04e76b4ccdbbacef407be3ab11226875fe48432cb09404d77abdd42d1ef7dc
+  OUT 25000.0000 T09P  https://dogeos-testnet.l2scan.co/tx/0x87eb7ae765b11785e87cb40c69ed8083fac1ff79c10f6282e7fab4d46406948c
+explorer: https://dogeos-testnet.l2scan.co

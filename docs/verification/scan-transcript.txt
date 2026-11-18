@@ -58,3 +58,45 @@
   IN  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0x52c49ba32195515284d6da4ffa81a421b5da23f95782748df98314f9234ff209
   IN  0.0100 SUCH  https://dogeos-testnet.l2scan.co/tx/0xfc3c4fc7ef2d7c59df6bafa9585b12ddffeafd92b8ec9f1708c141653501c255
 explorer: https://dogeos-testnet.l2scan.co
+
+================================================================================
+T-03 RE-VERIFICATION (2026-11-17) — chunks ≤9,000, deploy-anchor walk, empty state
+================================================================================
+Scanner source: services/evmRPC.ts
+  - EVM_LOG_CHUNK_SIZE = 9000 (exported). chunk span = 8,999 blocks (≤9,000).
+  - getLogsWithRetry() retries each chunk independently (3 attempts, 250ms*attempt).
+  - findDeployBlock() binary-searches eth_getCode over block tags (cached) → anchor.
+  - scanTokenTransfers() walks head -> anchor, per-chunk, timestamps via getBlock.
+  - Empty result returns { transfers: [], empty: true, emptyReason } (never throws).
+
+Measured RPC range limit (live, mWDOGE dense window):
+  eth_getLogs 9,000 blocks  -> accepted (1,386 logs)
+  eth_getLogs 10,000 blocks -> accepted (1,558 logs)
+  eth_getLogs 10,001 blocks -> accepted (1,560 logs)   [span 10,000]
+  eth_getLogs 10,500 blocks -> REJECTED: "query exceeds max block range 10000"
+  => cap is a 10,000-block span (10,001 inclusive); 9,000 leaves headroom.
+
+Live scan A — LINK 0xe5e3a4fF1773d043a387b16Ceb3c91cC49bAFD54, full anchor walk:
+  chain id 6281971, head 9,560,232, anchor 2,473,639, 788 chunk(s), 2 transfers, empty=false
+  0x792df2376f550f3fb0d1b6bcee263a5a8577069446e8539b38a3e7c787a89f44  block 2,474,763  10,000,000 LINK
+       getBlock ts=2026-02-03T20:20:08.000Z (1770150008000)
+       explorer  ts=2026-02-03T20:20:08.000000Z  status=ok  block=2,474,763  (resolves on https://dogeos-testnet.l2scan.co)
+  0x665982281b6d6fc37c8a66e16c67c6f2bb24c7d01d97743fe4016f48b944261c  block 6,199,387  20 LINK
+       getBlock ts=2026-07-08T07:56:03.000Z (1783497363000)
+       explorer  ts=2026-07-08T07:56:03.000000Z  status=ok  block=6,199,387  (resolves on https://dogeos-testnet.l2scan.co)
+  Both hashes confirmed via https://dogeos-testnet.l2scan.co/tx/<hash> (UI shows "Success",
+  matching block + timestamp) and via blockscout v2 API status=ok.
+
+Live scan B — LINK, 90,000-block window (9,470,067-9,560,067): 0 transfers
+  EMPTY STATE: no Transfer logs for 0xe5e3a4fF... in blocks 9470067-9560067 (11 chunk(s))
+  A token with no transfers in the window returns [] + empty:true + reason, not an error.
+
+Live scan C — LINK, single-block window at head (9,560,186): 0 transfers
+  EMPTY STATE: ... blocks 9560186-9560186 (1 chunk) — explicit empty-state flag.
+
+Live scan (earlier) — mWDOGE 0xa69d8ac86502e4e08c812c64675a4892dfe6870f:
+  1,654 Transfer logs across 40,000 blocks; sample hash
+  0x06f07c3c41dccb2d44128206de685de0abd56aa927c4b964944ba80547572adb (block 9,550,688)
+  resolves on https://dogeos-testnet.l2scan.co (screenshot docs/verification/02-explorer-tx-confirmation.png).
+
+tsc: `npx tsc --noEmit` exit 0 (verified 2026-11-17 12:15).

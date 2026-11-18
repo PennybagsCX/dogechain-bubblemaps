@@ -5,3 +5,6 @@ console.md
 # Build outputs
 dist/
 build/
+
+# Verification evidence (captured output — keep byte-exact, do not reformat)
+docs/verification/*.json

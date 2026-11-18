@@ -1,0 +1,81 @@
+{
+  "base": "http://localhost:5199",
+  "token": "0x12525A2Ab363005D2Ad7D931B06B804bEbDeBc27",
+  "wallet": "0x4dab72dc6Ac534852bE9fb3C56a128C74cb1A36b",
+  "results": [
+    {
+      "name": "token name rendered",
+      "ok": true
+    },
+    {
+      "name": "symbol rendered",
+      "ok": true
+    },
+    {
+      "name": "4 holders tracked",
+      "ok": true
+    },
+    {
+      "name": "holder 30.0% rendered",
+      "ok": true
+    },
+    {
+      "name": "chain badge 6281971",
+      "ok": true
+    },
+    {
+      "name": "bubble circles drawn",
+      "ok": true,
+      "detail": "circles=21"
+    },
+    {
+      "name": "drawer shows top-holder balance",
+      "ok": true
+    },
+    {
+      "name": "drawer shows live transfer rows",
+      "ok": true,
+      "detail": "4 transactions"
+    },
+    {
+      "name": "direction labels are mixed (IN+OUT), not all IN",
+      "ok": true
+    },
+    {
+      "name": "transaction rows split 1 IN / 3 OUT for the deployer wallet",
+      "ok": true,
+      "detail": "rows=4 IN=1 OUT=3"
+    },
+    {
+      "name": "navbar shows Chikyū 6281971 badge",
+      "ok": true,
+      "detail": " Ð DogeOS BubbleMaps Search Analysis Bubble Map Distribution Wallet Activity Dashboards Alerts Unified Analytics Chikyū "
+    },
+    {
+      "name": "navbar shows the connected wallet",
+      "ok": true
+    },
+    {
+      "name": "account modal shows wallet address",
+      "ok": true
+    },
+    {
+      "name": "no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "[mobile] holder percentages rendered",
+      "ok": true
+    },
+    {
+      "name": "[mobile] connected wallet pill rendered",
+      "ok": true
+    },
+    {
+      "name": "[mobile] bubbles drawn",
+      "ok": true,
+      "detail": "circles=21"
+    }
+  ]
+}

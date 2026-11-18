@@ -1,0 +1,27 @@
+{
+  "chainId": 6281971,
+  "token": {
+    "address": "0xe5e3a4fF1773d043a387b16Ceb3c91cC49bAFD54",
+    "name": "ChainLink Token",
+    "symbol": "LINK",
+    "decimals": 18
+  },
+  "scanned": {
+    "fromBlock": "9471661",
+    "toBlock": "9561661",
+    "anchorBlock": "2473639",
+    "chunks": 11,
+    "transfers": 0,
+    "empty": true
+  },
+  "nodes": [],
+  "links": [],
+  "empty": true,
+  "message": "EMPTY STATE: no Transfer logs for 0xe5e3a4fF1773d043a387b16Ceb3c91cC49bAFD54 in blocks 9471661-9561661 (11 chunk(s), anchor 2473639). No nodes or links are fabricated — an empty map is the correct answer for this range.",
+  "stats": {
+    "distinctAddresses": 0,
+    "contractNodes": 0,
+    "totalBalance": 0,
+    "largestTransfer": 0
+  }
+}

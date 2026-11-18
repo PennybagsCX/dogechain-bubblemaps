@@ -1,0 +1,73 @@
+{
+  "explorer": "https://dogeos-testnet.l2scan.co",
+  "token": "0x12525A2Ab363005D2Ad7D931B06B804bEbDeBc27",
+  "results": [
+    {
+      "name": "explorer 01-deploy (contract creation)",
+      "ok": true,
+      "detail": "hash=true success=true notFound=false feeShown=0.19353024612628087 feeMatchesBalanceDelta=true"
+    },
+    {
+      "name": "explorer 02-mint-deployer (deployer->author 250000)",
+      "ok": true,
+      "detail": "hash=true success=true notFound=false feeShown=0.023492392421721144 feeMatchesBalanceDelta=true"
+    },
+    {
+      "name": "explorer 03-deployer-forwarder (deployer->forwarder 250000)",
+      "ok": true,
+      "detail": "hash=true success=true notFound=false feeShown=0.023492392421721144 feeMatchesBalanceDelta=true"
+    },
+    {
+      "name": "explorer 04-deployer-tipper (deployer->tipper 200000)",
+      "ok": true,
+      "detail": "hash=true success=true notFound=false feeShown=0.023492380421721144 feeMatchesBalanceDelta=true"
+    },
+    {
+      "name": "explorer 05-author-tipper (author->tipper 60000)",
+      "ok": true,
+      "detail": "hash=true success=true notFound=false feeShown=0.023475292421721144 feeMatchesBalanceDelta=true"
+    },
+    {
+      "name": "explorer 06-tipper-forwarder (tipper->forwarder 40000)",
+      "ok": true,
+      "detail": "hash=true success=true notFound=false feeShown=0.023475280421721144 feeMatchesBalanceDelta=true"
+    },
+    {
+      "name": "explorer 07-forwarder-author (forwarder->author 25000)",
+      "ok": true,
+      "detail": "hash=true success=true notFound=false feeShown=0.024429846453102871 feeMatchesBalanceDelta=true"
+    },
+    {
+      "name": "explorer 08-doge-funding (forwarder->deployer 0.08 DOGE)",
+      "ok": true,
+      "detail": "hash=true success=true notFound=false feeShown=0.017312731026104367 feeMatchesBalanceDelta=true"
+    },
+    {
+      "name": "explorer 09-fee-probe (deployer->tipper 0.001 DOGE)",
+      "ok": true,
+      "detail": "hash=true success=true notFound=false feeShown=0.018142495562886194 feeMatchesBalanceDelta=true"
+    },
+    {
+      "name": "explorer token page shows T09 Proof Token / T09P / ERC-20",
+      "ok": true
+    },
+    {
+      "name": "explorer token page shows 1,000,000 max supply",
+      "ok": true
+    },
+    {
+      "name": "explorer token page lists 7 total transfers",
+      "ok": true,
+      "detail": "7 total"
+    },
+    {
+      "name": "explorer token page holder counter",
+      "ok": null,
+      "detail": "UI shows 0 holders while /api/v2/tokens/{addr} reports 4 — UI counter not reconciled"
+    },
+    {
+      "name": "explorer holder page resolves",
+      "ok": true
+    }
+  ]
+}

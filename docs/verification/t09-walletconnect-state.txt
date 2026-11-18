@@ -1,0 +1,13 @@
+# WalletConnect connector state — Chikyū (chain 6281971)
+# Generated 2026-11-18T12:21:41Z by scripts/dogeos-verify/walletconnect-state-probe.mjs
+# Each build below: rm -rf dist && <ENV> npm run build, served by: npx vite preview --port 5201
+
+## 1. build WITHOUT a project id (git-clean default; .env files provide none)
+$ env -u VITE_WALLETCONNECT_PROJECT_ID npm run build && node scripts/dogeos-verify/walletconnect-state-probe.mjs http://localhost:5201/ no-project-id
+{"label":"no-project-id","step":"connect-modal","walletConnectOffered":false,"offered":["Browser Wallet","Rabby Wallet","Coinbase Wallet","Get a Wallet"]}
+
+## 2. build WITH a syntactically valid but UNREGISTERED project id (proves the connector is
+#    wired to the live relay and that only a real Cloud project id is missing)
+$ VITE_WALLETCONNECT_PROJECT_ID=0000000000000000000000000000000b npm run build && node scripts/dogeos-verify/walletconnect-state-probe.mjs http://localhost:5201/ bogus-project-id
+{"label":"bogus-project-id","step":"connect-modal","walletConnectOffered":true,"offered":["Browser Wallet","Rabby Wallet","Coinbase Wallet","MetaMask","Rainbow","WalletConnect","Trust Wallet","Ledger","Get a Wallet"]}
+{"label":"bogus-project-id","step":"walletconnect-clicked","relayReached":2,"relayProjectNotFound":true,"detail":[{"http":403,"url":"https://api.web3modal.org/appkit/v1/config"},{"http":403,"url":"https://pulse.walletconnect.org/e"},{"relay":"wss://relay.walletconnect.org/"},{"console":"{time: 1795004543399, level: 60, context: core/relayer, msg: Fatal socket error: WebSocket connection closed abnormally with code: 3000 (Project not found)}"},{"console":"{time: 1795004543400, level: 60, context: core/relayer, msg: Fatal socket error received, closing transport}"},{"relay":"wss://relay.walletconnect.org/"},{"console":"{time: 1795004549118, level: 60, context: core/relayer, msg: Fatal socket error: WebSocket connection closed abnormally with code: 3000 (Project not found)}"},{"console":"{time: 1795004549118, level: 60, context: core/relayer, msg: Fatal socket error received, closing transport}"}]}

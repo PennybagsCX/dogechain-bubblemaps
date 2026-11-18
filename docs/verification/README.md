@@ -28,9 +28,13 @@ Chain: DogeOS Chikyū testnet, id 6281971, RPC https://rpc.testnet.dogeos.com/
 `wagmi.ts` builds exactly one chain — DogeOS Chikyū, derived from `lib/chain.ts`. With
 `VITE_WALLETCONNECT_PROJECT_ID` unset the connector list is `injected, injected, coinbaseWalletSDK,
 safe` and `walletConnectEnabled === false` (measured with `scripts/dogeos-verify/wagmi-connectors-probe.mjs`);
-setting the variable adds the WalletConnect connectors. No placeholder project id exists anywhere —
-the old `8d2cf68c…` literal was redacted from the historical `console.md`,
-`docs/archive/console.md`, `CONSOLE_FIXES_PLAN.md` captures so a repo-wide grep finds zero hits.
+setting the variable adds the WalletConnect connectors. No placeholder project id is left in **code**:
+`lib/chain.ts`, `wagmi.ts` and every component resolve the id from the env only, and grep over the
+shipped source returns zero hits for the old `8d2cf68c…` literal. It still appears in _historical_
+capture files that are not compiled or served — `console.md`, `docs/archive/console.md`,
+`CONSOLE_FIXES_PLAN.md`, `CONSOLE_FIXES_SUMMARY.md`, `RAINBOWKIT_*.md` — where it was redacted
+in place (`8d2cf68c…<placeholder-id-redacted>`) rather than deleted, because those files record what
+the upstream build did.
 
 The shell gate is `hooks/useWalletChain.ts` + `components/ChainGuard.tsx`: the wallet's real chain is
 read from `eth_chainId` on the injected provider and followed through `chainChanged`; while it is not
@@ -109,7 +113,17 @@ the corrected figure matches the explorer exactly.
 
 ### Not verified (kept out of "verified")
 
-- **WalletConnect** still has no project id, so that connector path is untested (operator item).
+- **WalletConnect** has no `project id` yet, so no WC _session_ exists and there is nothing to
+  screenshot (operator item). What IS proven — `t09-walletconnect-state.txt`, produced by
+  `scripts/dogeos-verify/walletconnect-state-probe.mjs`: with `VITE_WALLETCONNECT_PROJECT_ID` unset the
+  production build does not offer the connector at all (Browser Wallet / Rabby / Coinbase only); with
+  any syntactically valid id it offers the full list (… + MetaMask, Rainbow, WalletConnect, Trust,
+  Ledger) and the app opens a real socket to `wss://relay.walletconnect.org`, which the relay closes
+  with code **3000 "Project not found"** for an unregistered id — i.e. the connector path is wired to
+  the live relay and only a Cloud-registered id is missing.
+  **Unblock:** paste the id into `.env.local` (`VITE_WALLETCONNECT_PROJECT_ID=<id>`, gitignored — the
+  empty slot with instructions is already there), `npm run build`, then pair once and capture the
+  session (`docs/verification/t09-12-walletconnect-chain-6281971.png`).
 - The explorer's **token page UI shows `Holders 0`** for T09P while its own `/api/v2` reports 4 — an
   indexer/UI disagreement inside blockscout, not something this app can fix. Holder counts used in the
   proof come from `/api/v2` and from the app's own scanner, both of which agree.
@@ -119,6 +133,11 @@ the corrected figure matches the explorer exactly.
   emitted by the scanner harness. Feeding it into `Dashboard` remains follow-up (T-04 gap, unchanged).
 - The wallet drawer's tx list comes from blockscout's `tokentx` API; the log-derived list is in
   `t09-scan-transcript.txt`. Both are live, they are different sources.
+
+Reproduce the WalletConnect connector state (`t09-walletconnect-state.txt`):
+`npm run build && npx vite preview --port 5201` then
+`node scripts/dogeos-verify/walletconnect-state-probe.mjs http://localhost:5201/ <label>` — repeat
+the build with `VITE_WALLETCONNECT_PROJECT_ID=<any id>` for the enabled-connector case.
 
 Reproduce: `node scripts/dogeos-verify/t09/render-proof.mjs` and
 `node scripts/dogeos-verify/t09/explorer-proof.mjs` against `npx vite preview --port 5199`
@@ -133,7 +152,9 @@ Reproduce: `node scripts/dogeos-verify/t09/render-proof.mjs` and
    explorer confirmation, not a screenshot of the app's Wallet Activity drawer. The drawer needs the
    5–8 minute full wallet scan to populate, which was not run in this window.
 3. **WalletConnect path not exercised** — no real WalletConnect Cloud project id was supplied; the
-   connector is disabled by design and the connection proof uses an injected EIP-1193 wallet.
+   connector is disabled by design and the connection proof uses an injected EIP-1193 wallet. The
+   connector/relay reachability evidence is in `t09-walletconnect-state.txt`; the unblock step is in
+   the WalletConnect bullet above.
 4. **Database layer not exercised end to end** — the fork's Prisma/Neon target was not provisioned in
    this run; the app runs on its local IndexedDB (Dexie) cache. No production Neon tables were touched.
 5. **mWDOGE holder coverage**: the map shows the top 100 holders served by blockscout, while the

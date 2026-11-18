@@ -1,12 +1,7 @@
 {
-  "buildNumber": 2673,
-  "lastUpdated": "2026-11-18T12:15:23.546Z",
+  "buildNumber": 2674,
+  "lastUpdated": "2026-11-18T12:25:30.665Z",
   "commits": [
-    {
-      "build": 2574,
-      "commit": "305ff9c",
-      "timestamp": "2026-01-28T14:35:37.564Z"
-    },
     {
       "build": 2575,
       "commit": "1e53056",
@@ -502,6 +497,11 @@
       "build": 2673,
       "commit": "4113964",
       "timestamp": "2026-11-18T12:15:23.546Z"
+    },
+    {
+      "build": 2674,
+      "commit": "25945a4",
+      "timestamp": "2026-11-18T12:25:30.665Z"
     }
   ]
 }

@@ -23,7 +23,6 @@ import {
 
 const TOKEN = process.env.TOKEN ?? "0x555de2148Ef9FF0fEf70FaF7587C3492eb468A91";
 const LOOKBACK = BigInt(process.env.BLOCKS ?? "180000");
-const CHUNK = 9000n;
 
 const client = new EvmRPCClient();
 const viem = createPublicClient({ chain: CHAIN, transport: http(RPC_URL) });
@@ -47,27 +46,23 @@ console.log(
   TOKEN
 );
 
-// 2. Walk Transfer logs backwards in <=9k-block chunks (Chikyū rejects larger ranges).
-let cursor = head;
-const floor = head > LOOKBACK ? head - LOOKBACK : 0n;
-const events: Array<{
-  transactionHash: string;
-  blockNumber: bigint;
-  from: string;
-  to: string;
-  value: bigint;
-}> = [];
-let chunks = 0;
-while (cursor > floor) {
-  const from = cursor - CHUNK + 1n > floor ? cursor - CHUNK + 1n : floor;
-  const batch = await client.getTransferEvents(TOKEN, from, cursor);
-  events.push(...batch);
-  chunks += 1;
-  cursor = from - 1n;
-  console.log(
-    `  chunk ${chunks}: blocks ${from}-${cursor + CHUNK} -> ${batch.length} transfers (total ${events.length})`
-  );
-  if (events.length >= Number(process.env.MAX_EVENTS ?? 600)) break;
+// 2. Walk Transfer logs backwards from head to the token's deploy anchor, in <=9k-block
+//    chunks (Chikyū rejects larger ranges), with per-chunk retry inside the service.
+const scan = await client.scanTokenTransfers(TOKEN, {
+  // BLOCKS=<n> bounds the walk for a quick proof; unset means "anchor -> head".
+  lookback: process.env.BLOCKS ? LOOKBACK : undefined,
+  onProgress: (p) => {
+    if (p.phase === "fetching_logs") console.log(`  ${p.message}`);
+  },
+});
+const events = scan.transfers;
+console.log(
+  `scan window                : blocks ${scan.fromBlock}-${scan.toBlock} ` +
+    `(anchor ${scan.anchorBlock}, ${scan.chunks} chunk(s), ${events.length} transfers)`
+);
+if (scan.empty) {
+  console.log(`\nEMPTY STATE: ${scan.emptyReason}`);
+  console.log("A blank map is a correct result on a young testnet — nothing is fabricated here.");
 }
 
 // The service returns one entry per Transfer log; a single tx can carry several (fee splits).
@@ -109,7 +104,14 @@ for (const e of legs) {
 const graph = {
   chainId: CHAIN_ID,
   token: { ...meta, address: TOKEN },
-  scanned: { fromBlock: floor.toString(), toBlock: head.toString(), chunks },
+  scanned: {
+    fromBlock: scan.fromBlock.toString(),
+    toBlock: scan.toBlock.toString(),
+    anchorBlock: scan.anchorBlock.toString(),
+    chunks: scan.chunks,
+    transfers: events.length,
+    empty: scan.empty,
+  },
   nodes: holders.map((h, i) => ({
     address: h.address,
     balance: fmt(h.delta < 0n ? 0n : h.delta),

@@ -1,5 +1,5 @@
-pulse.walletconnect.org/e?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8:1  Failed to load resource: the server responded with a status of 400 ()
-api.web3modal.org/appkit/v1/config?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8:1  Failed to load resource: the server responded with a status of 403 ()
+pulse.walletconnect.org/e?projectId=8d2cf68c…<placeholder-id-redacted>&st=appkit&sv=html-core-1.7.8:1  Failed to load resource: the server responded with a status of 400 ()
+api.web3modal.org/appkit/v1/config?projectId=8d2cf68c…<placeholder-id-redacted>&st=appkit&sv=html-core-1.7.8:1  Failed to load resource: the server responded with a status of 403 ()
 index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast: Filtered to 0 wallet Transfer events
 console.error @ index-Cs2hFjIa.js:1858
 index-Cs2hFjIa.js:1858 [RPC] getWalletTransfersFast END: returning 0 transactions

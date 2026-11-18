@@ -675,7 +675,7 @@ consoleLogger.ts:111 Lit is in dev mode. Not recommended for production! See htt
 console.warn @ consoleLogger.ts:111
 issueWarning @ chunk-5UZ2YBY4.js?v=f9323ae9:23
 (anonymous) @ chunk-5UZ2YBY4.js?v=f9323ae9:28
-chunk-YCHRWQVV.js?v=f9323ae9:2957  GET https://api.web3modal.org/appkit/v1/config?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8 403 (Forbidden)
+chunk-YCHRWQVV.js?v=f9323ae9:2957  GET https://api.web3modal.org/appkit/v1/config?projectId=8d2cf68c…<placeholder-id-redacted>&st=appkit&sv=html-core-1.7.8 403 (Forbidden)
 fetchData @ chunk-YCHRWQVV.js?v=f9323ae9:2957
 get @ chunk-YCHRWQVV.js?v=f9323ae9:2973
 fetchProjectConfig @ chunk-YCHRWQVV.js?v=f9323ae9:6107
@@ -706,7 +706,7 @@ consoleLogger.ts:100 [DB SAVE] Saving 3 alerts to IndexedDB...
 content_script.js:3944 Uncaught TypeError: e.target.matches is not a function
     at HTMLDocument.<anonymous> (content_script.js:3944:18)
 (anonymous) @ content_script.js:3944
-chunk-YCHRWQVV.js?v=f9323ae9:2957  POST https://pulse.walletconnect.org/e?projectId=8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d&st=appkit&sv=html-core-1.7.8 400 (Bad Request)
+chunk-YCHRWQVV.js?v=f9323ae9:2957  POST https://pulse.walletconnect.org/e?projectId=8d2cf68c…<placeholder-id-redacted>&st=appkit&sv=html-core-1.7.8 400 (Bad Request)
 fetchData @ chunk-YCHRWQVV.js?v=f9323ae9:2957
 post @ chunk-YCHRWQVV.js?v=f9323ae9:2983
 _sendAnalyticsEvent @ chunk-YCHRWQVV.js?v=f9323ae9:4126

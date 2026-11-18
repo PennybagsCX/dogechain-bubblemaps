@@ -25,7 +25,7 @@ The production console has 5 categories of errors/warnings. All have been analyz
 
 **Location**: `/Volumes/DEV Projects/Dogechain Bubblemaps/wagmi.ts:36-38`
 
-**Root Cause**: Anonymous/placeholder project ID `8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d` is rejected by WalletConnect API.
+**Root Cause**: Anonymous/placeholder project ID `8d2cf68c…<placeholder-id-redacted>` is rejected by WalletConnect API.
 
 **Fix**: Set `projectId: undefined` to skip remote config fetch entirely.
 
@@ -34,7 +34,7 @@ The production console has 5 categories of errors/warnings. All have been analyz
 // BEFORE:
 projectId:
   process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ||
-  "8d2cf68c8ec5b9c3b3a1e3b0d7e9f5a2c0d1e2f3a4b5c6d",
+  "8d2cf68c…<placeholder-id-redacted>",
 
 // AFTER:
 projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, // Remove placeholder

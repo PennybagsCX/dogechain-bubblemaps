@@ -396,9 +396,13 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                       return (
                         <div className="flex items-center gap-2">
-                          {/* Visible proof of the chain the app is reading. */}
+                          {/* Visible proof of the chain the app is reading. `data-wallet-chain-id`
+                              is the value the wallet's provider returned for `eth_chainId`
+                              (injected provider, or the WalletConnect connector's provider when
+                              the browser has no extension) — not the configured constant. */}
                           <span
                             data-testid="chain-badge"
+                            data-wallet-chain-id={walletChain.walletChainIdHex ?? ""}
                             title={`DogeOS Chikyū Testnet — chain ${String(CHAIN_ID)}`}
                             className="hidden sm:inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-[10px] md:text-xs font-mono"
                           >

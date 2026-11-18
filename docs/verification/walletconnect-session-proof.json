@@ -1,0 +1,151 @@
+{
+  "baseUrl": "http://localhost:5199/",
+  "expectedChain": "eip155:6281971",
+  "walletPeer": {
+    "address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "transport": "walletconnect v2 relay"
+  },
+  "projectId": {
+    "len": 32,
+    "prefix": "de5c…"
+  },
+  "steps": [
+    {
+      "step": "connect-modal",
+      "offered": [
+        "Browser Wallet",
+        "Rabby Wallet",
+        "Coinbase Wallet",
+        "MetaMask",
+        "Rainbow",
+        "WalletConnect",
+        "Trust Wallet",
+        "Ledger",
+        "Get a Wallet"
+      ]
+    },
+    {
+      "step": "pairing-uri",
+      "uri": "wc:10adb9912b99ceafacaef…(187 chars)",
+      "relay": "wss://relay.walletconnect.org",
+      "screenshot": "docs/verification/t09-11-walletconnect-pairing-qr.png"
+    },
+    {
+      "step": "session-approved",
+      "topic": "8d37baac5ab3…",
+      "namespaces": {
+        "eip155": {
+          "accounts": [
+            "eip155:6281971:0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+          ],
+          "methods": [
+            "eth_accounts",
+            "eth_requestAccounts",
+            "eth_sendRawTransaction",
+            "eth_sign",
+            "eth_signTransaction",
+            "eth_signTypedData",
+            "eth_signTypedData_v3",
+            "eth_signTypedData_v4",
+            "eth_sendTransaction",
+            "personal_sign",
+            "wallet_switchEthereumChain",
+            "wallet_addEthereumChain",
+            "wallet_getPermissions",
+            "wallet_requestPermissions",
+            "wallet_registerOnboarding",
+            "wallet_watchAsset",
+            "wallet_scanQRCode",
+            "wallet_sendCalls",
+            "wallet_getCapabilities",
+            "wallet_getCallsStatus",
+            "wallet_showCallsStatus"
+          ],
+          "events": [
+            "chainChanged",
+            "accountsChanged",
+            "message",
+            "disconnect",
+            "connect"
+          ]
+        }
+      }
+    },
+    {
+      "step": "connected-ui",
+      "badgeText": "Chikyū 6281971",
+      "guardCount": 0,
+      "addressVisible": true,
+      "requests": [],
+      "screenshots": [
+        "docs/verification/t09-12-walletconnect-session-chain-6281971.png",
+        "docs/verification/t09-13-walletconnect-account-modal.png"
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "name": "S0 no chain readout before any wallet is connected",
+      "ok": true,
+      "detail": "badge count=0"
+    },
+    {
+      "name": "S1 production build offers WalletConnect",
+      "ok": true,
+      "detail": [
+        "Browser Wallet",
+        "Rabby Wallet",
+        "Coinbase Wallet",
+        "MetaMask",
+        "Rainbow",
+        "WalletConnect",
+        "Trust Wallet",
+        "Ledger",
+        "Get a Wallet"
+      ]
+    },
+    {
+      "name": "S2 pairing URI generated against the WC relay",
+      "ok": true,
+      "detail": "wc:10adb9912b99ceafacaef…(187 chars)"
+    },
+    {
+      "name": "S3 WC session settled over the relay",
+      "ok": true,
+      "detail": "8d37baac5ab3…"
+    },
+    {
+      "name": "S3 session namespace is exactly eip155:6281971",
+      "ok": true,
+      "detail": [
+        "eip155:6281971:0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+      ]
+    },
+    {
+      "name": "S4 app renders the chain badge with 6281971",
+      "ok": true,
+      "detail": "Chikyū 6281971"
+    },
+    {
+      "name": "S4 no wrong-chain guard (session chain == app chain)",
+      "ok": true,
+      "detail": "guard=0"
+    },
+    {
+      "name": "S4 connected wallet address visible",
+      "ok": true,
+      "detail": "7099"
+    },
+    {
+      "name": "S4 no injected provider in this browser (chain can only come from the WC connector)",
+      "ok": true,
+      "detail": "window.ethereum=false"
+    },
+    {
+      "name": "S4 eth_chainId read through the WC connector provider == 0x5fdaf3",
+      "ok": true,
+      "detail": "0x5fdaf3"
+    }
+  ],
+  "failed": 0
+}

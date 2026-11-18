@@ -203,6 +203,24 @@ const bCircles = await bp.locator("circle").count();
 check("with the holder API blocked the map still renders", bCircles >= 4, `circles=${bCircles}`);
 check("with the holder API blocked the source is still Transfer logs", /Transfer logs/.test(bPill), bPill);
 await bp.screenshot({ path: `${OUT}/t04-04-holder-api-blocked.png` });
+
+// Positive control for the interception itself: the empty-log token NEEDS the holder list, so with
+// the endpoint blocked it must fall to the "No data" state and the route must actually have fired.
+// Without this, "0 holder calls" could just mean the route never matched.
+await bp.goto(analysisUrl(EMPTY_TOKEN), { waitUntil: "domcontentloaded", timeout: 120000 });
+await dismissTour(bp);
+await bp
+  .locator('[data-testid="graph-source-pill"]')
+  .waitFor({ state: "visible", timeout: 180000 })
+  .catch(() => {});
+await bp.waitForTimeout(2000);
+const blockedPill = await bp.locator("[data-testid='graph-source-pill']").innerText().catch(() => "");
+check(
+  "interception is effective: blocked holder API leaves the empty-log token with no data",
+  blocked.length > 0 && /No data/i.test(blockedPill),
+  `blockedRequests=${blocked.length} pill=${blockedPill}`
+);
+await bp.screenshot({ path: `${OUT}/t04-05-holder-api-blocked-empty-state.png` });
 await bctx.close();
 
 // =====================================================================================

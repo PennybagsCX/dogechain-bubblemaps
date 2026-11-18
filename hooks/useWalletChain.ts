@@ -5,9 +5,11 @@
  * chain, so a wallet sitting on another network produces no usable chain data; instead of
  * rendering empty/stale numbers, the app shell swaps the content for `ChainGuard`.
  *
- * Source of truth for the wallet's chain is `eth_chainId` on the injected provider (the same
- * provider wagmi's injected connector drives), refreshed on every `chainChanged`, with wagmi's
- * `useAccount().chainId` as the fallback when no provider object is reachable.
+ * Source of truth for the wallet's chain is `eth_chainId` on the wallet's EIP-1193 provider —
+ * the injected one when the browser has it, otherwise the provider of the connector wagmi
+ * actually connected through (e.g. WalletConnect, which installs no `window.ethereum`).
+ * Refreshed on every `chainChanged`, with wagmi's `useAccount().chainId` as the fallback when
+ * no provider object is reachable.
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -82,6 +84,25 @@ export const useWalletChain = (): WalletChainState => {
   const [error, setError] = useState<string | undefined>(undefined);
   const mounted = useRef(true);
 
+  /**
+   * The EIP-1193 provider the chain must be read from.
+   *
+   * Injected wallets expose `window.ethereum`, so that wins. WalletConnect (and any other
+   * non-injected connector) exposes no global, but wagmi's connector resolves the very provider
+   * it is talking to — reading the chain from anything else would report the app's configured
+   * chain instead of the wallet's.
+   */
+  const resolveProvider = useCallback(async (): Promise<InjectedProvider | undefined> => {
+    const injected = getInjectedProvider();
+    if (injected) return injected;
+    if (!connector?.getProvider) return undefined;
+    try {
+      return ((await connector.getProvider()) as InjectedProvider) ?? undefined;
+    } catch {
+      return undefined;
+    }
+  }, [connector]);
+
   useEffect(() => {
     mounted.current = true;
     return () => {
@@ -90,7 +111,7 @@ export const useWalletChain = (): WalletChainState => {
   }, []);
 
   const readProviderChainId = useCallback(async (): Promise<number | undefined> => {
-    const provider = getInjectedProvider();
+    const provider = await resolveProvider();
     if (!provider) return undefined;
     try {
       const hex = await provider.request({ method: "eth_chainId" });
@@ -98,37 +119,33 @@ export const useWalletChain = (): WalletChainState => {
     } catch {
       return undefined;
     }
-  }, []);
+  }, [resolveProvider]);
 
   // Read on connect / reconnect, and follow the wallet's own chainChanged events.
   useEffect(() => {
     let cancelled = false;
-    const provider = getInjectedProvider();
+    let detach: (() => void) | undefined;
 
-    const sync = () => {
-      void readProviderChainId().then((value) => {
-        if (!cancelled && value !== undefined) setProviderChainId(value);
-      });
-    };
-
-    if (isConnected && provider) {
-      sync();
+    const sync = async () => {
+      const provider = await resolveProvider();
+      if (cancelled || !provider) return;
+      const value = await readProviderChainId();
+      if (!cancelled && value !== undefined) setProviderChainId(value);
+      if (cancelled) return;
       const onChainChanged = (chainIdHex: unknown) => {
         const next = asNumber(chainIdHex);
         if (!cancelled && next !== undefined) setProviderChainId(next);
       };
       provider.on?.("chainChanged", onChainChanged);
-      return () => {
-        cancelled = true;
-        provider.removeListener?.("chainChanged", onChainChanged);
-      };
-    }
+      detach = () => provider.removeListener?.("chainChanged", onChainChanged);
+    };
 
-    if (isConnected) sync();
+    if (isConnected) void sync();
     return () => {
       cancelled = true;
+      detach?.();
     };
-  }, [isConnected, address, connector, readProviderChainId]);
+  }, [isConnected, address, connector, readProviderChainId, resolveProvider]);
 
   // Provider read wins; wagmi's account chain is the fallback (e.g. non-injected connectors).
   const effectiveChainId = providerChainId ?? (isConnected ? wagmiChainId : undefined);
@@ -140,9 +157,9 @@ export const useWalletChain = (): WalletChainState => {
   }, [isConnected, effectiveChainId]);
 
   const addExpectedChain = useCallback(async () => {
-    const provider = getInjectedProvider();
+    const provider = await resolveProvider();
     if (!provider) {
-      setError("No injected wallet is available in this browser.");
+      setError("No wallet is available in this browser.");
       return;
     }
     setIsSwitching(true);
@@ -164,12 +181,12 @@ export const useWalletChain = (): WalletChainState => {
     } finally {
       if (mounted.current) setIsSwitching(false);
     }
-  }, [readProviderChainId]);
+  }, [readProviderChainId, resolveProvider]);
 
   const switchToExpectedChain = useCallback(async () => {
-    const provider = getInjectedProvider();
+    const provider = await resolveProvider();
     if (!provider) {
-      setError("No injected wallet is available in this browser.");
+      setError("No wallet is available in this browser.");
       return;
     }
     setIsSwitching(true);
@@ -193,7 +210,7 @@ export const useWalletChain = (): WalletChainState => {
     } finally {
       if (mounted.current) setIsSwitching(false);
     }
-  }, [addExpectedChain, readProviderChainId]);
+  }, [addExpectedChain, readProviderChainId, resolveProvider]);
 
   return {
     walletChainId: effectiveChainId,

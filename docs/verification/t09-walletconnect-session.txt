@@ -1,0 +1,23 @@
+# WalletConnect session proof — DogeOS Bubblemaps on Chikyū (6281971)
+# run: 2026-11-18T15:31:05.727Z
+# app: http://localhost:5199/  (vite preview of the production build)
+# wallet peer: local WalletConnect v2 client (@walletconnect/sign-client), address 0x70997970C51812dc3A010C7d01b50e0d17dc79C8
+# project id: 32 chars, prefix de5c… (from gitignored .env.local)
+
+PASS  S0 no chain readout before any wallet is connected  "badge count=0"
+PASS  S1 production build offers WalletConnect  ["Browser Wallet","Rabby Wallet","Coinbase Wallet","MetaMask","Rainbow","WalletConnect","Trust Wallet","Ledger","Get a Wallet"]
+PASS  S2 pairing URI generated against the WC relay  "wc:10adb9912b99ceafacaef…(187 chars)"
+PASS  S3 WC session settled over the relay  "8d37baac5ab3…"
+PASS  S3 session namespace is exactly eip155:6281971  ["eip155:6281971:0x70997970C51812dc3A010C7d01b50e0d17dc79C8"]
+PASS  S4 app renders the chain badge with 6281971  "Chikyū 6281971"
+PASS  S4 no wrong-chain guard (session chain == app chain)  "guard=0"
+PASS  S4 connected wallet address visible  "7099"
+PASS  S4 no injected provider in this browser (chain can only come from the WC connector)  "window.ethereum=false"
+PASS  S4 eth_chainId read through the WC connector provider == 0x5fdaf3  "0x5fdaf3"
+
+session namespaces:
+  eip155: chains=["eip155:6281971:0x70997970C51812dc3A010C7d01b50e0d17dc79C8"]
+
+session_request payloads handled by the wallet peer:
+
+10/10 checks passed

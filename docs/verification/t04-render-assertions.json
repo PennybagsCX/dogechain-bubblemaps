@@ -3,7 +3,7 @@
   "token": "0x12525A2Ab363005D2Ad7D931B06B804bEbDeBc27",
   "chainLogs": 7,
   "chainChunks": 3,
-  "headBlock": "9586853",
+  "headBlock": "9586947",
   "blockedHolderRequests": [
     "https://blockscout.testnet.dogeos.com/api/v2/tokens/0xe5e3a4ff1773d043a387b16ceb3c91cc49bafd54/holders",
     "https://blockscout.testnet.dogeos.com/api/v2/tokens/0xe5e3a4ff1773d043a387b16ceb3c91cc49bafd54/holders",
@@ -38,7 +38,7 @@
     {
       "name": "source line states the log count and block range",
       "ok": true,
-      "detail": "7 Transfer log(s) → 5 address(es) · blocks 9,562,825–9,586,855 · 3 chunk(s)"
+      "detail": "7 Transfer log(s) → 5 address(es) · blocks 9,562,825–9,586,949 · 3 chunk(s)"
     },
     {
       "name": "UI log count equals the independent eth_getLogs count",
@@ -83,7 +83,7 @@
     {
       "name": "fallback states why the log scan was empty",
       "ok": true,
-      "detail": "EMPTY STATE: no Transfer logs for 0xe5e3a4ff1773d043a387b16ceb3c91cc49bafd54 in blocks 9546877-9586877 (5 chunk(s), anchor 2473639). No nodes or links are fabri"
+      "detail": "EMPTY STATE: no Transfer logs for 0xe5e3a4ff1773d043a387b16ceb3c91cc49bafd54 in blocks 9546972-9586972 (5 chunk(s), anchor 2473639). No nodes or links are fabri"
     },
     {
       "name": "[mobile] source pill says Transfer logs",

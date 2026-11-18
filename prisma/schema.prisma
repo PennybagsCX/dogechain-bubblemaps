@@ -1,0 +1,98 @@
+// Prisma schema for the DogeOS (Chikyū) fork of Dogechain Bubblemaps.
+//
+// History: the upstream repo shipped `prisma/migrations/*` SQL but never a
+// `schema.prisma` or a prisma dependency, so `prisma migrate status` could not
+// be run at all. These models are written to match the three existing
+// migrations exactly, which is verified by:
+//
+//   npx prisma migrate diff \
+//     --from-migrations prisma/migrations \
+//     --to-schema-datamodel prisma/schema.prisma \
+//     --shadow-database-url "$SHADOW_DATABASE_URL"
+//
+// A clean diff means this schema and the migration history describe the same
+// database, so the migration journal (not this file) stays the source of truth.
+//
+// Note: `user_alerts.type` carries a CHECK constraint that Prisma's DSL cannot
+// express; it is created by the migration SQL and is intentionally absent here.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Remote diagnostic logs from client applications (server-side, opt-in).
+model DiagnosticLog {
+  id                     Int      @id @default(autoincrement())
+  session_id             String
+  timestamp              BigInt
+  user_agent             String?
+  platform               String?
+  vendor                 String?
+  is_arc_mobile          Boolean? @default(false)
+  is_arc                 Boolean? @default(false)
+  is_mobile              Boolean? @default(false)
+  console_logs           Json?
+  token_searches         Json?
+  token_holder_fetches   Json?
+  errors                 Json?
+  screen_resolution      String?
+  viewport               String?
+  network_status         String?
+  language               String?
+  url                    String?
+  received_at            DateTime? @default(now()) @db.Timestamp(6)
+  created_at             DateTime? @default(now()) @db.Timestamp(6)
+
+  @@index([session_id], map: "idx_diagnostic_logs_session_id")
+  @@index([timestamp(sort: Desc)], map: "idx_diagnostic_logs_timestamp")
+  @@index([received_at], map: "idx_diagnostic_logs_received_at")
+  @@map("diagnostic_logs")
+}
+
+/// Every triggered alert event, across all users, for aggregate statistics.
+model TriggeredAlert {
+  id                Int      @id @default(autoincrement())
+  alert_id          String   @db.VarChar(255)
+  alert_name        String   @db.VarChar(255)
+  wallet_address    String   @db.VarChar(42)
+  token_address     String?  @db.VarChar(42)
+  token_symbol      String?  @db.VarChar(50)
+  transaction_count Int      @default(1)
+  triggered_at      DateTime? @default(now()) @db.Timestamptz(6)
+  session_id        String?  @db.VarChar(64)
+  created_at        DateTime? @default(now()) @db.Timestamptz(6)
+
+  @@index([created_at], map: "idx_triggered_alerts_created_at")
+  @@index([wallet_address], map: "idx_triggered_alerts_wallet")
+  @@index([alert_id], map: "idx_triggered_alerts_alert_id")
+  @@map("triggered_alerts")
+}
+
+/// User alert configurations, for cross-device sync and backup.
+model UserAlert {
+  id                  Int      @id @default(autoincrement())
+  user_wallet_address String   @db.VarChar(42)
+  alert_id            String   @db.VarChar(255)
+  name                String   @db.VarChar(255)
+  wallet_address      String   @db.VarChar(42)
+  token_address       String?  @db.VarChar(42)
+  token_name          String?  @db.VarChar(255)
+  token_symbol        String?  @db.VarChar(50)
+  initial_value       Decimal?    @db.Decimal
+  /// WALLET | TOKEN | WHALE (CHECK constraint lives in the migration SQL).
+  type                String?  @db.VarChar(20)
+  created_at          BigInt
+  updated_at          DateTime? @default(now()) @db.Timestamptz(6)
+  is_active           Boolean? @default(true)
+
+  @@unique([user_wallet_address, alert_id])
+  @@index([user_wallet_address], map: "idx_user_alerts_wallet")
+  @@index([user_wallet_address, is_active], map: "idx_user_alerts_active")
+  @@index([alert_id], map: "idx_user_alerts_alert_id")
+  @@map("user_alerts")
+}

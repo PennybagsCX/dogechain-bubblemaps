@@ -4,6 +4,8 @@ import { useClickOutside } from "../hooks/useClickOutside";
 import { handleTouchStopPropagation } from "../utils/touchHandlers";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useDevWallet } from "../contexts/DevWalletContext";
+import { useWalletChain } from "../hooks/useWalletChain";
+import { CHAIN_ID } from "../lib/chain";
 import {
   LayoutDashboard,
   Map,
@@ -34,6 +36,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   // Dev wallet state
   const devWallet = useDevWallet();
+  // The wallet's real chain — drives the wrong-network button and the chain badge.
+  const walletChain = useWalletChain();
 
   // Create refs for click-outside detection
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -268,14 +272,18 @@ export const Navbar: React.FC<NavbarProps> = ({
               }) => {
                 // Check if all data is ready
                 const ready = mounted && authenticationStatus !== "loading";
-                const connected =
+                const hasAccount = Boolean(
                   ready &&
                   account &&
-                  chain &&
-                  (!authenticationStatus || authenticationStatus === "authenticated");
+                  (!authenticationStatus || authenticationStatus === "authenticated")
+                );
+                // RainbowKit reports `chain` as undefined for a chain that is missing from the
+                // wagmi config, so a wallet connected to the wrong network must not fall through
+                // to the address button — the guard/switch button takes over instead.
+                const wrongChain = hasAccount && walletChain.isWrongChain;
 
                 // Dev wallet: show simulated address when real wallet not connected
-                const devConnected = !connected && devWallet.isActive;
+                const devConnected = !hasAccount && devWallet.isActive;
 
                 return (
                   <div
@@ -310,7 +318,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         );
                       }
 
-                      if (!connected) {
+                      if (!hasAccount) {
                         // In dev mode, show dev wallet as primary option with real wallet as secondary
                         if (devWallet.isDevMode) {
                           return (
@@ -351,6 +359,27 @@ export const Navbar: React.FC<NavbarProps> = ({
                         );
                       }
 
+                      if (wrongChain) {
+                        return (
+                          <button
+                            onClick={() => void walletChain.switchToExpectedChain()}
+                            onTouchStart={handleTouchStopPropagation}
+                            disabled={walletChain.isSwitching}
+                            data-testid="navbar-wrong-network"
+                            className="flex items-center gap-1.5 px-2 py-1 md:px-4 md:py-2 rounded-lg transition-all duration-200 bg-red-600 text-white shadow-lg hover:bg-red-700 disabled:opacity-60 focus:ring-2 focus:ring-red-500 focus:outline-none text-xs md:text-base font-medium whitespace-nowrap"
+                            type="button"
+                            title={`Switch to chain ${String(CHAIN_ID)}`}
+                          >
+                            {walletChain.isSwitching && <span className="animate-pulse">…</span>}
+                            <span className="hidden sm:inline">Wrong network</span>
+                            <span className="sm:hidden">Wrong net</span>
+                          </button>
+                        );
+                      }
+
+                      // Everything below describes a connected wallet on the expected chain.
+                      if (!account || !chain) return null;
+
                       if (chain.unsupported) {
                         return (
                           <button
@@ -366,16 +395,28 @@ export const Navbar: React.FC<NavbarProps> = ({
                       }
 
                       return (
-                        <button
-                          onClick={openAccountModal}
-                          onTouchStart={handleTouchStopPropagation}
-                          className="flex items-center gap-1.5 px-2 py-1 md:px-4 md:py-2 rounded-lg transition-all duration-200 bg-purple-600 text-white shadow-lg shadow-purple-600/20 hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:outline-none text-xs md:text-base font-medium"
-                          type="button"
-                        >
-                          <span className="max-w-[72px] md:max-w-[200px] truncate">
-                            {account.displayName}
+                        <div className="flex items-center gap-2">
+                          {/* Visible proof of the chain the app is reading. */}
+                          <span
+                            data-testid="chain-badge"
+                            title={`DogeOS Chikyū Testnet — chain ${String(CHAIN_ID)}`}
+                            className="hidden sm:inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-[10px] md:text-xs font-mono"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                            <span className="hidden md:inline">Chikyū</span>
+                            {CHAIN_ID}
                           </span>
-                        </button>
+                          <button
+                            onClick={openAccountModal}
+                            onTouchStart={handleTouchStopPropagation}
+                            className="flex items-center gap-1.5 px-2 py-1 md:px-4 md:py-2 rounded-lg transition-all duration-200 bg-purple-600 text-white shadow-lg shadow-purple-600/20 hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:outline-none text-xs md:text-base font-medium"
+                            type="button"
+                          >
+                            <span className="max-w-[72px] md:max-w-[200px] truncate">
+                              {account.displayName}
+                            </span>
+                          </button>
+                        </div>
                       );
                     })()}
                   </div>

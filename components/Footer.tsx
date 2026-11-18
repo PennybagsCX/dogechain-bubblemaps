@@ -81,7 +81,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenGuide }) => {
                 <Search size={14} className="text-purple-500" />
                 <span className="text-slate-500">Total Searches:</span>
                 <span className="font-mono font-semibold text-purple-400">
-                  {isLoading ? "..." : formatNumber(totalSearches)}
+                  {isLoading ? "..." : totalSearches === null ? "—" : formatNumber(totalSearches)}
                 </span>
               </div>
             </Tooltip>
@@ -92,7 +92,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenGuide }) => {
                 <AlertTriangle size={14} className="text-amber-500" />
                 <span className="text-slate-500">Alerts Fired:</span>
                 <span className="font-mono font-semibold text-amber-400">
-                  {isLoading ? "..." : formatNumber(totalAlerts)}
+                  {isLoading ? "..." : totalAlerts === null ? "—" : formatNumber(totalAlerts)}
                 </span>
               </div>
             </Tooltip>

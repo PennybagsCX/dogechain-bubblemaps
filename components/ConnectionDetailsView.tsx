@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from "react";
 import { Connection, Wallet, ConnectionStats } from "../types";
 import { ExternalLink } from "lucide-react";
 import { Tooltip } from "./Tooltip";
-import { EXPLORER_URL } from "../lib/chain";
+import { EXPLORER_URL, explorerTxUrl } from "../lib/chain";
 
 type DirectionFilter = "ALL" | "IN" | "OUT";
 
@@ -293,7 +293,7 @@ export function ConnectionDetailsView({
                     </div>
                     <Tooltip content="View transaction on DogeOS Explorer">
                       <a
-                        href={`https://dogeos-testnet.l2scan.co/tx/${tx.hash}`}
+                        href={explorerTxUrl(tx.hash)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-shrink-0 text-purple-400 hover:text-purple-300 transition-colors p-2 rounded hover:bg-space-700 min-w-[44px] min-h-[44px] inline-flex items-center justify-center"

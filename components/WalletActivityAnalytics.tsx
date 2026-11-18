@@ -52,6 +52,7 @@ import {
   Wallet,
 } from "../types";
 import { fetchWalletTransactions } from "../services/dataService";
+import { explorerTxUrl } from "../lib/chain";
 
 interface WalletActivityAnalyticsProps {
   token?: Token | null;
@@ -1358,7 +1359,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                                     {formatNumber(tx.value)} {token.symbol}
                                   </div>
                                   <a
-                                    href={`https://dogeos-testnet.l2scan.co/tx/${tx.hash}`}
+                                    href={explorerTxUrl(tx.hash)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-purple-400 hover:text-purple-300 flex items-center gap-1"
@@ -1502,7 +1503,7 @@ export const WalletActivityAnalytics: React.FC<WalletActivityAnalyticsProps> = (
                                     {formatNumber(tx.value)} {token.symbol}
                                   </div>
                                   <a
-                                    href={`https://dogeos-testnet.l2scan.co/tx/${tx.hash}`}
+                                    href={explorerTxUrl(tx.hash)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-purple-400 hover:text-purple-300 flex items-center gap-1"

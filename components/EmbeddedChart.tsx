@@ -158,6 +158,16 @@ export const EmbeddedChart: React.FC<EmbeddedChartProps> = ({
         return;
       }
 
+      // Chikyū testnet has no market/price feed (blockscout reports coin_price: null) and
+      // Dexscreener has no listing for it. Report "unavailable" up front instead of probing a
+      // third-party API for a chain it cannot serve, and never embed a foreign chain's chart.
+      if (chainId === CHAIN.network) {
+        setIsLoading(false);
+        setIframeError(true);
+        onError?.();
+        return;
+      }
+
       // Validate token exists on Dexscreener
       try {
         const response = await fetch(
@@ -179,7 +189,7 @@ export const EmbeddedChart: React.FC<EmbeddedChartProps> = ({
     };
 
     validateChart();
-  }, [tokenAddress, onError]);
+  }, [tokenAddress, chainId, onError]);
 
   return (
     <div ref={containerRef} className={`w-full ${className}`}>

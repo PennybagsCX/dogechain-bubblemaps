@@ -40,6 +40,7 @@ import { validateTokenAddress, validateWalletAddress } from "../utils/validation
 import { getApiUrl } from "../utils/api";
 import { EvmRPCClient } from "../services/evmRPC";
 import { getSessionId } from "../services/searchAnalytics";
+import { explorerAddressUrl, explorerTxUrl } from "../lib/chain";
 
 interface InAppNotification {
   id: string;
@@ -1332,7 +1333,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `dogechain-bubblemaps-backup-${new Date().toISOString().split("T")[0]}.csv`;
+      a.download = `dogeos-bubblemaps-backup-${new Date().toISOString().split("T")[0]}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -1611,7 +1612,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                               <div className="flex items-center gap-1">
                                 <Tooltip content={notif.transaction.from}>
                                   <a
-                                    href={`https://dogeos-testnet.l2scan.co/address/${notif.transaction.from}`}
+                                    href={explorerAddressUrl(notif.transaction.from)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-purple-400 hover:text-purple-300 transition-colors font-mono text-xs"
@@ -1622,7 +1623,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                                 </Tooltip>
                                 <Tooltip content="View sender on DogeOS Explorer">
                                   <a
-                                    href={`https://dogeos-testnet.l2scan.co/address/${notif.transaction.from}`}
+                                    href={explorerAddressUrl(notif.transaction.from)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-slate-500 hover:text-white transition-colors p-1 rounded hover:bg-black/20"
@@ -1639,7 +1640,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                               <div className="flex items-center gap-1">
                                 <Tooltip content={notif.transaction.to}>
                                   <a
-                                    href={`https://dogeos-testnet.l2scan.co/address/${notif.transaction.to}`}
+                                    href={explorerAddressUrl(notif.transaction.to)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-purple-400 hover:text-purple-300 transition-colors font-mono text-xs"
@@ -1650,7 +1651,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                                 </Tooltip>
                                 <Tooltip content="View receiver on DogeOS Explorer">
                                   <a
-                                    href={`https://dogeos-testnet.l2scan.co/address/${notif.transaction.to}`}
+                                    href={explorerAddressUrl(notif.transaction.to)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-slate-500 hover:text-white transition-colors p-1 rounded hover:bg-black/20"
@@ -1667,7 +1668,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                               <div className="flex items-center gap-1">
                                 <Tooltip content={notif.transaction.hash}>
                                   <a
-                                    href={`https://dogeos-testnet.l2scan.co/tx/${notif.transaction.hash}`}
+                                    href={explorerTxUrl(notif.transaction.hash)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-purple-400 hover:text-purple-300 transition-colors font-mono text-xs truncate max-w-[200px]"
@@ -1678,7 +1679,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                                 </Tooltip>
                                 <Tooltip content="View transaction on DogeOS Explorer">
                                   <a
-                                    href={`https://dogeos-testnet.l2scan.co/tx/${notif.transaction.hash}`}
+                                    href={explorerTxUrl(notif.transaction.hash)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-slate-500 hover:text-white transition-colors p-1 rounded hover:bg-black/20"
@@ -1887,7 +1888,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             <div className="text-center">
                               <Tooltip content="View transaction on DogeOS Explorer">
                                 <a
-                                  href={`https://dogeos-testnet.l2scan.co/tx/${tx.hash}`}
+                                  href={explorerTxUrl(tx.hash)}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-sm font-medium text-white hover:text-purple-400 transition-colors truncate inline-block"
@@ -1902,7 +1903,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                                 content={`View ${isIncoming ? "sender" : "receiver"} on DogeOS Explorer`}
                               >
                                 <a
-                                  href={`https://dogeos-testnet.l2scan.co/address/${isIncoming ? tx.from : tx.to}`}
+                                  href={explorerAddressUrl(isIncoming ? tx.from : tx.to)}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="font-mono text-purple-400 hover:text-purple-300 transition-colors"
@@ -2089,7 +2090,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       <td className="px-6 py-4">
                         <Tooltip content="View wallet on DogeOS Explorer">
                           <a
-                            href={`https://dogeos-testnet.l2scan.co/address/${alert.walletAddress}`}
+                            href={explorerAddressUrl(alert.walletAddress)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-sm font-mono text-purple-400 hover:text-purple-300 transition-colors inline-flex items-center gap-1"
@@ -2102,7 +2103,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             Token:{" "}
                             <Tooltip content="View token on DogeOS Explorer">
                               <a
-                                href={`https://dogeos-testnet.l2scan.co/address/${alert.tokenAddress}`}
+                                href={explorerAddressUrl(alert.tokenAddress)}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-purple-400 hover:text-purple-300 transition-colors"

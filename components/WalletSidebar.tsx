@@ -23,6 +23,7 @@ import { createWalletChatSystemInstruction, sendChatToAI } from "../services/gem
 import { fetchWalletTransactions, fetchTokenBalance } from "../services/dataService";
 import { handleTouchStopPropagation } from "../utils/touchHandlers";
 import { ConnectionDetailsView } from "./ConnectionDetailsView";
+import { explorerAddressUrl, explorerTxUrl } from "../lib/chain";
 
 interface WalletSidebarProps {
   wallet: Wallet | null;
@@ -400,7 +401,7 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   </Tooltip>
                   <Tooltip content="View wallet on DogeOS Explorer">
                     <a
-                      href={`https://dogeos-testnet.l2scan.co/address/${wallet?.address}`}
+                      href={explorerAddressUrl(wallet?.address ?? "")}
                       target="_blank"
                       rel="noopener noreferrer"
                       onTouchStart={handleTouchStopPropagation}
@@ -457,15 +458,15 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   </button>
                 </div>
                 <a
-                  href={`https://dogeos-testnet.l2scan.co/address/${
+                  href={explorerAddressUrl(
                     wallets.find(
                       (w) =>
                         w.id ===
                         (typeof connection.source === "string"
                           ? connection.source
                           : connection.source.id)
-                    )?.address
-                  }`}
+                    )?.address ?? ""
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
                   onTouchStart={handleTouchStopPropagation}
@@ -507,15 +508,15 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                   </button>
                 </div>
                 <a
-                  href={`https://dogeos-testnet.l2scan.co/address/${
+                  href={explorerAddressUrl(
                     wallets.find(
                       (w) =>
                         w.id ===
                         (typeof connection.target === "string"
                           ? connection.target
                           : connection.target.id)
-                    )?.address
-                  }`}
+                    )?.address ?? ""
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
                   onTouchStart={handleTouchStopPropagation}
@@ -753,17 +754,26 @@ export const WalletSidebar: React.FC<WalletSidebarProps> = (props: WalletSidebar
                           className="block w-full"
                         >
                           <a
-                            href={`https://dogeos-testnet.l2scan.co/tx/${tx.hash}`}
+                            href={explorerTxUrl(tx.hash)}
                             target="_blank"
                             rel="noopener noreferrer"
                             onTouchStart={handleTouchStopPropagation}
                             className="w-full p-4 rounded-lg bg-space-900 border border-space-700 flex justify-between items-center gap-2 hover:border-space-600 hover:border-blue-500/50 transition-colors group [touch-action:manipulation]"
                           >
-                            <div className="min-w-0 flex-1">
+                            <div className={`min-w-0 flex-1`}>
+                              {/* Blockscout's v1 tokentx API returns lowercase addresses while
+                                  wallet.address is checksummed — compare case-insensitively or
+                                  every transfer renders as IN (found live on T09P, T-09). */}
                               <div
-                                className={`text-xs font-bold ${tx.from === wallet?.address ? "text-red-400" : "text-green-400"}`}
+                                className={`text-xs font-bold ${
+                                  tx.from?.toLowerCase() === wallet?.address?.toLowerCase()
+                                    ? "text-red-400"
+                                    : "text-green-400"
+                                }`}
                               >
-                                {tx.from === wallet?.address ? "OUT" : "IN"}
+                                {tx.from?.toLowerCase() === wallet?.address?.toLowerCase()
+                                  ? "OUT"
+                                  : "IN"}
                               </div>
                               <div className="text-xs text-slate-500">
                                 {new Date(tx.timestamp).toLocaleDateString()}
